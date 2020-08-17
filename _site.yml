@@ -1,0 +1,5 @@
+name:"Home"
+navbar: 
+  title: "Home"
+  - text: "Home"
+    href: index.html
