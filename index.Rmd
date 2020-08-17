@@ -48,7 +48,7 @@ All of these data-science learning goals will be realized in the framework of th
 
 #Course timeline
 
-Bicep F-Length isometric
+Bicep F-Length isometric 
 
 Temp project 1: Temp in human high and low, circadian rhythm
 
