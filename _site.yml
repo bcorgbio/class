@@ -1,5 +1,11 @@
-name:"Home"
+name: "Experimental Methods in Experimental Biology"
 navbar: 
-  title: "Home"
-  - text: "Home"
-    href: index.html
+  title: "Welcome!"
+  left: 
+    - text: "Home"
+      href: index.html
+    
+ 
+    
+    
+ 
