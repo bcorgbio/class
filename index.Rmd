@@ -54,7 +54,7 @@ Temp project 1: Temp in human high and low, circadian rhythm
 
 Temp porject 2:Build phylotree, test hypotheses in phylogenetic context.
 
-Ebird data (auk package)
+Ebird data (auk package from R)
 
 Jump acceleration with accelerometer
 
