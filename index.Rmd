@@ -3,28 +3,80 @@
 title: "Welcome"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+#Welcome
+
+Welcome to BIOL 3140, Experimental Methods in Organismal Biology!!! 
+
+Organismal biology is the study of living systems of all scales that shape the structure, function, ecology, and evolution of individual organisms. Experiments that elucidate how organisms respond to biotic and abiotic environmental stimulus over broad time scales—from changes in behavior to adaptation—are crucial to understanding biological diversity. In this course we’ll explore the concepts and experimental and analytical tools that frame research in organismal biology. Through group projects and active learning exercises, students will make hypotheses concerning how organisms respond in time, space, and behavior to changes in environment and then design experiments and instruments that produce data to evaluate these hypotheses. Topics covered will include reconstructing phylogenetic history and the evolution of organismal form and function, evaluating form-function relationships, and the correlates of spatial and temporal distribution of organisms. In addition, the development of an analytical toolbox—specifically, learning the principles of data science and statistical analysis—is a central theme of this course.
+
+
+To be an effective organismal biologist, one we must prepare, analyze, visualize, and communicate data as we formulate answers to the questions we're asking. Despite the importance of these technological skills to our discipline, students often see the acquisition and analysis of data as technological black boxes. Cuntless times in previous course, instructors have no doubt demonstrated foundational principles and concepts through the presentation of data, usually through figures in papers or lecture slides. However, where these data come from and how they have answered a question remain often remain a mystery. In turn, students must to rely on the authority of their instructors rather than their grasp of the quantitative skills and data collection to make meaningful connections.
+
+As a course-based research experience, BIOL 3140 is meant to develop and hone skils related to instrumentation and data science in the context of organismal biology. The thrust of this course will center around the development of simple sensor-data acquisition systems and the analysis of data collected from them. Through hands-on design and fabrication of sensor-based instrument prototypes representing models of more complex instrumentation, students will develop a direct relationship with the source of data in scientific research. 
+
+#Course goals
+
+With respect to instrumentation, the learning goals of this program include:
+
+1.	Understanding of how common sensors convert physical phenomena into electrical signals.
+2.	Familiarity with the basics of signal conditioning, amplification, and the conversion of sensor signals into a form that can be converted into digital values.
+3.	Understanding the basics of analog-to-digital conversion and digital signal acquisition.
+4.	Development of basic programming skills that permit flexible repurposing of a common data-acquisition system.
+ 
+The specific learning objectives of our instrumentation work include:
+ 
+1.	Development of 5 instruments which detect temperature, force, acceleration, heart rate, etc.
+2.	Assembly and programming of an Arduino-based data-acquisition system to process and condition signals from a variety of sensor types.
+ 
+For students in the natural sciences, perhaps more important than understanding how data is acquired is understanding how to analyze data in the context of answering a specific question. To this end, we will pursue the following data science learning goals that include:
+ 
+1.	Learning how to import data into a computing environment.
+2.	Understanding basic tidying and transforming (i.e., wrangling) operations of data to answer scientific questions.
+3.	Developing competency in basic data visualization.
+4.	Learning how to model data in the context of answering a scientific question.
+5.	Executing the critical basics of communication in a data science framework.
+                                  
+All of these data-science learning goals will be realized in the framework of the R computing environment. Using R, students will open the black box of data analysis and pursue these specific objectives:
+           
+1.	Import, tidy, and transform sensor data so that specific scientific questions can be asked.
+2.	Visualize sensor data in the R environment using ggplot, an elegant and versatile tool for data visualization.
+3.	Evaluate a-priori scientific questions within a modeling framework, rejecting or accepting hypotheses according to model expectations.
+4.	Report answers in concise reports, leveraging R's fast and reproducible markdown capabilities.
+
+#Course assessment
+
+
+#Course timeline
+
+Bicep F-Length isometric
+
+Temp project 1: Temp in human high and low, circadian rhythm
+
+Temp porject 2:Build phylotree, test hypotheses in phylogenetic context.
+
+Ebird data (auk package)
+
+Jump acceleration with accelerometer
+
+#Course schedule
+
+## Week 1 (August 31—Sep 4)
+### Monday
+  + *Read:* Course Welcome
+
+### Wednesday
+  + *Read:* 
+  + *Watch*
+```{r}
+library(knitr)
+
+sched <- data.frame(
+  
+  Week=c(1:16),
+  Date=c("Aug31—Sep4","Sep7—11","Sep14—Sep18","Sep21-25","Sep20-Oct2","Oct5—9","Oct12—16","Oct19—16","Oct19—3","Oct26—30","Nov2—6","Nov9—13","Nov16—20","Nov23—27","Nov30—Dec4","Dec7—10"),
+  Monday=""
+  
+  
+)
+write.csv(sched,"3140Sched.csv",row.names = F)
 ```
-
-## R Markdown
-
-https://norcalbiostat.github.io/ADS/lec/lec01a_rmarkdown_website.html
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

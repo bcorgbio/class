@@ -292,25 +292,73 @@ $(document).ready(function () {
 </div>
 
 
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p><a href="https://norcalbiostat.github.io/ADS/lec/lec01a_rmarkdown_website.html" class="uri">https://norcalbiostat.github.io/ADS/lec/lec01a_rmarkdown_website.html</a></p>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<p>#Welcome</p>
+<p>Welcome to BIOL 3140, Experimental Methods in Organismal Biology!!!</p>
+<p>Organismal biology is the study of living systems of all scales that shape the structure, function, ecology, and evolution of individual organisms. Experiments that elucidate how organisms respond to biotic and abiotic environmental stimulus over broad time scales—from changes in behavior to adaptation—are crucial to understanding biological diversity. In this course we’ll explore the concepts and experimental and analytical tools that frame research in organismal biology. Through group projects and active learning exercises, students will make hypotheses concerning how organisms respond in time, space, and behavior to changes in environment and then design experiments and instruments that produce data to evaluate these hypotheses. Topics covered will include reconstructing phylogenetic history and the evolution of organismal form and function, evaluating form-function relationships, and the correlates of spatial and temporal distribution of organisms. In addition, the development of an analytical toolbox—specifically, learning the principles of data science and statistical analysis—is a central theme of this course.</p>
+<p>To be an effective organismal biologist, one we must prepare, analyze, visualize, and communicate data as we formulate answers to the questions we’re asking. Despite the importance of these technological skills to our discipline, students often see the acquisition and analysis of data as technological black boxes. Cuntless times in previous course, instructors have no doubt demonstrated foundational principles and concepts through the presentation of data, usually through figures in papers or lecture slides. However, where these data come from and how they have answered a question remain often remain a mystery. In turn, students must to rely on the authority of their instructors rather than their grasp of the quantitative skills and data collection to make meaningful connections.</p>
+<p>As a course-based research experience, BIOL 3140 is meant to develop and hone skils related to instrumentation and data science in the context of organismal biology. The thrust of this course will center around the development of simple sensor-data acquisition systems and the analysis of data collected from them. Through hands-on design and fabrication of sensor-based instrument prototypes representing models of more complex instrumentation, students will develop a direct relationship with the source of data in scientific research.</p>
+<p>#Course goals</p>
+<p>With respect to instrumentation, the learning goals of this program include:</p>
+<ol style="list-style-type: decimal">
+<li>Understanding of how common sensors convert physical phenomena into electrical signals.</li>
+<li>Familiarity with the basics of signal conditioning, amplification, and the conversion of sensor signals into a form that can be converted into digital values.</li>
+<li>Understanding the basics of analog-to-digital conversion and digital signal acquisition.</li>
+<li>Development of basic programming skills that permit flexible repurposing of a common data-acquisition system.</li>
+</ol>
+<p>The specific learning objectives of our instrumentation work include:</p>
+<ol style="list-style-type: decimal">
+<li>Development of 5 instruments which detect temperature, force, acceleration, heart rate, etc.</li>
+<li>Assembly and programming of an Arduino-based data-acquisition system to process and condition signals from a variety of sensor types.</li>
+</ol>
+<p>For students in the natural sciences, perhaps more important than understanding how data is acquired is understanding how to analyze data in the context of answering a specific question. To this end, we will pursue the following data science learning goals that include:</p>
+<ol style="list-style-type: decimal">
+<li>Learning how to import data into a computing environment.</li>
+<li>Understanding basic tidying and transforming (i.e., wrangling) operations of data to answer scientific questions.</li>
+<li>Developing competency in basic data visualization.</li>
+<li>Learning how to model data in the context of answering a scientific question.</li>
+<li>Executing the critical basics of communication in a data science framework.</li>
+</ol>
+<p>All of these data-science learning goals will be realized in the framework of the R computing environment. Using R, students will open the black box of data analysis and pursue these specific objectives:</p>
+<ol style="list-style-type: decimal">
+<li>Import, tidy, and transform sensor data so that specific scientific questions can be asked.</li>
+<li>Visualize sensor data in the R environment using ggplot, an elegant and versatile tool for data visualization.</li>
+<li>Evaluate a-priori scientific questions within a modeling framework, rejecting or accepting hypotheses according to model expectations.</li>
+<li>Report answers in concise reports, leveraging R’s fast and reproducible markdown capabilities.</li>
+</ol>
+<p>#Course assessment</p>
+<p>#Course timeline</p>
+<p>Bicep F-Length isometric</p>
+<p>Temp project 1: Temp in human high and low, circadian rhythm</p>
+<p>Temp porject 2:Build phylotree, test hypotheses in phylogenetic context.</p>
+<p>Ebird data (auk package)</p>
+<p>Jump acceleration with accelerometer</p>
+<p>#Course schedule</p>
+<div id="week-1-august-31sep-4" class="section level2">
+<h2>Week 1 (August 31—Sep 4)</h2>
+<div id="monday" class="section level3">
+<h3>Monday</h3>
+<ul>
+<li><em>Read:</em> Course Welcome</li>
+</ul>
 </div>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
-<p><img src="index_files/figure-html/pressure-1.png" width="672" /></p>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<div id="wednesday" class="section level3">
+<h3>Wednesday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch</em></li>
+</ul>
+<pre class="r"><code>library(knitr)
+
+sched &lt;- data.frame(
+  
+  Week=c(1:16),
+  Date=c(&quot;Aug31—Sep4&quot;,&quot;Sep7—11&quot;,&quot;Sep14—Sep18&quot;,&quot;Sep21-25&quot;,&quot;Sep20-Oct2&quot;,&quot;Oct5—9&quot;,&quot;Oct12—16&quot;,&quot;Oct19—16&quot;,&quot;Oct19—3&quot;,&quot;Oct26—30&quot;,&quot;Nov2—6&quot;,&quot;Nov9—13&quot;,&quot;Nov16—20&quot;,&quot;Nov23—27&quot;,&quot;Nov30—Dec4&quot;,&quot;Dec7—10&quot;),
+  Monday=&quot;&quot;
+  
+  
+)
+write.csv(sched,&quot;3140Sched.csv&quot;,row.names = F)</code></pre>
+</div>
 </div>
 
 
