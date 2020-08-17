@@ -1,4 +1,5 @@
 name: "Experimental Methods in Experimental Biology"
+output_dir: "."
 navbar: 
   title: "Welcome!"
   left: 
