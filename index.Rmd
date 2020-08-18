@@ -1,20 +1,25 @@
 
 ---
 title: "Welcome"
+html_document:
+output:
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
-#Welcome
 
 Welcome to BIOL 3140, Experimental Methods in Organismal Biology!!! 
 
 Organismal biology is the study of living systems of all scales that shape the structure, function, ecology, and evolution of individual organisms. Experiments that elucidate how organisms respond to biotic and abiotic environmental stimulus over broad time scales—from changes in behavior to adaptation—are crucial to understanding biological diversity. In this course we’ll explore the concepts and experimental and analytical tools that frame research in organismal biology. Through group projects and active learning exercises, students will make hypotheses concerning how organisms respond in time, space, and behavior to changes in environment and then design experiments and instruments that produce data to evaluate these hypotheses. Topics covered will include reconstructing phylogenetic history and the evolution of organismal form and function, evaluating form-function relationships, and the correlates of spatial and temporal distribution of organisms. In addition, the development of an analytical toolbox—specifically, learning the principles of data science and statistical analysis—is a central theme of this course.
 
+# Course scope, goals, and objectives
 
-To be an effective organismal biologist, one we must prepare, analyze, visualize, and communicate data as we formulate answers to the questions we're asking. Despite the importance of these technological skills to our discipline, students often see the acquisition and analysis of data as technological black boxes. Cuntless times in previous course, instructors have no doubt demonstrated foundational principles and concepts through the presentation of data, usually through figures in papers or lecture slides. However, where these data come from and how they have answered a question remain often remain a mystery. In turn, students must to rely on the authority of their instructors rather than their grasp of the quantitative skills and data collection to make meaningful connections.
+To be an effective organismal biologist, one we must prepare, analyze, visualize, and communicate data as we formulate answers to the questions we're asking. Despite the importance of these technological skills to our discipline, students often see the acquisition and analysis of data as technological black boxes. Countless times in previous course, instructors have no doubt demonstrated foundational principles and concepts through the presentation of data, usually through figures in papers or lecture slides. However, where these data come from and how they have answered a question remain often remain a mystery. In turn, students must to rely on the authority of their instructors rather than their own grasp of the quantitative skills and data collection to make meaningful connections.
 
 As a course-based research experience, BIOL 3140 is meant to develop and hone skils related to instrumentation and data science in the context of organismal biology. The thrust of this course will center around the development of simple sensor-data acquisition systems and the analysis of data collected from them. Through hands-on design and fabrication of sensor-based instrument prototypes representing models of more complex instrumentation, students will develop a direct relationship with the source of data in scientific research. 
 
-#Course goals
+## Course goals and objectives
 
 With respect to instrumentation, the learning goals of this program include:
 
@@ -25,7 +30,7 @@ With respect to instrumentation, the learning goals of this program include:
  
 The specific learning objectives of our instrumentation work include:
  
-1.	Development of 5 instruments which detect temperature, force, acceleration, heart rate, etc.
+1.	Development of 3 instruments which detect temperature, force, and acceleration in human subjects.
 2.	Assembly and programming of an Arduino-based data-acquisition system to process and condition signals from a variety of sensor types.
  
 For students in the natural sciences, perhaps more important than understanding how data is acquired is understanding how to analyze data in the context of answering a specific question. To this end, we will pursue the following data science learning goals that include:
@@ -43,11 +48,25 @@ All of these data-science learning goals will be realized in the framework of th
 3.	Evaluate a-priori scientific questions within a modeling framework, rejecting or accepting hypotheses according to model expectations.
 4.	Report answers in concise reports, leveraging R's fast and reproducible markdown capabilities.
 
-#Course assessment
+# Course requirements
+Read: https://r4ds.had.co.nz/introduction.html
+Read: https://rstudio-education.github.io/hopr/
+
+# Course assessment
 
 
-#Course timeline
 
+How grades will be determined.
+
+# Course outline
+
+## Phase I: Didactic Head Banging
+
+In this phase, we'll learn the basics of instrumentation and data analysis by working through XX leraning modules devoted to instrument desgin and data analysis. This will most likely be the most challenging part of the course in that many, if not most of you will not have ever designed and built instruments and data acquisition systems, let alone analyzed data from them. Rest assured, your experience will be curated, sticking to the bare bones of instrument design and data science. This introductory phase will set the groundwork for Phase II, the independent developement of sensors and data analysis.
+
+## Phase II: Thrown to the Wolves
+
+In Phase II, we'll use our new-found instrument- and code-development skills to address key questions in organismal biology, 
 Bicep F-Length isometric contract
 
 Temp project 1: Temp in human high and low, circadian rhythm
@@ -58,15 +77,227 @@ Ebird data (auk package from R)
 
 Jump acceleration with accelerometer
 
-#Course schedule
+## Phase III: Unleashing Your Inner Scientist
 
-## Week 1 (August 31—Sep 4)
+In Phase III, you'll be tasked with quickly developing a project of your own design the requires the fabrication of a new or modified data aquisition system 
+
+# Course schedule
+
+## Week 1 (Aug 31—Sep 4)
+
+```{r}
+#Instal r codetools
+#https://rstudio-education.github.io/hopr/starting.html]  
+
+```
+
+
+            Monday            Wednesday             Friday
+--------   --------------   ----------------       ----------------
+Read:      Course Welcome                
+Watch:    
+Deliver:                    Install R and Rstudio
+--------   --------------   ----------------   ----------------
+
+## Week 2 (Sep 7—11)
+
+            Monday            Wednesday          Friday
+--------   --------------   ----------------   ----------------
+Read:      Course Welcome                   
+Watch:    
+Deliver:  
+--------   --------------   ----------------   ----------------
+
+## Week 3 (Sep 14–Sep 18)
+
+            Monday            Wednesday          Friday
+--------   --------------   ----------------   ----------------
+Read:      Course Welcome                   
+Watch:    
+Deliver:  
+--------   --------------   ----------------   ----------------
+
+## Week 4 (Sep 21–Sep 25)
+
+            Monday            Wednesday          Friday
+--------   --------------   ----------------   ----------------
+Read:      Course Welcome                   
+Watch:    
+Deliver:  
+--------   --------------   ----------------   ----------------
+
+## Week 5 (Sep 28–Oct 2)
+
+            Monday            Wednesday          Friday
+--------   --------------   ----------------   ----------------
+Read:      Course Welcome                   
+Watch:    
+Deliver:  
+--------   --------------   ----------------   ----------------
+
+## Week 6 (Oct 5–9)
 ### Monday
-  + *Read:* Course Welcome
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
 
 ### Wednesday
   + *Read:* 
-  + *Watch*
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+## Week 7 (Oct 12–16)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 8 (Oct 19–23)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+## Week 9 (Oct 26–30)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 10 (Nov 2–6)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 11 (Nov 9–13)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 12 (Nov 16–20)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 12 (Nov 23–27)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 13 (Nov 30–Dec 4)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 14 (Dec 7–Dec 10)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 15 (Sep 28–Oct 2)
+
+
 ```{r}
 library(knitr)
 

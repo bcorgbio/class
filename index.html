@@ -20,6 +20,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -249,6 +252,63 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -256,6 +316,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -292,12 +362,14 @@ $(document).ready(function () {
 </div>
 
 
-<p>#Welcome</p>
 <p>Welcome to BIOL 3140, Experimental Methods in Organismal Biology!!!</p>
 <p>Organismal biology is the study of living systems of all scales that shape the structure, function, ecology, and evolution of individual organisms. Experiments that elucidate how organisms respond to biotic and abiotic environmental stimulus over broad time scales—from changes in behavior to adaptation—are crucial to understanding biological diversity. In this course we’ll explore the concepts and experimental and analytical tools that frame research in organismal biology. Through group projects and active learning exercises, students will make hypotheses concerning how organisms respond in time, space, and behavior to changes in environment and then design experiments and instruments that produce data to evaluate these hypotheses. Topics covered will include reconstructing phylogenetic history and the evolution of organismal form and function, evaluating form-function relationships, and the correlates of spatial and temporal distribution of organisms. In addition, the development of an analytical toolbox—specifically, learning the principles of data science and statistical analysis—is a central theme of this course.</p>
-<p>To be an effective organismal biologist, one we must prepare, analyze, visualize, and communicate data as we formulate answers to the questions we’re asking. Despite the importance of these technological skills to our discipline, students often see the acquisition and analysis of data as technological black boxes. Cuntless times in previous course, instructors have no doubt demonstrated foundational principles and concepts through the presentation of data, usually through figures in papers or lecture slides. However, where these data come from and how they have answered a question remain often remain a mystery. In turn, students must to rely on the authority of their instructors rather than their grasp of the quantitative skills and data collection to make meaningful connections.</p>
+<div id="course-scope-goals-and-objectives" class="section level1">
+<h1>Course scope, goals, and objectives</h1>
+<p>To be an effective organismal biologist, one we must prepare, analyze, visualize, and communicate data as we formulate answers to the questions we’re asking. Despite the importance of these technological skills to our discipline, students often see the acquisition and analysis of data as technological black boxes. Countless times in previous course, instructors have no doubt demonstrated foundational principles and concepts through the presentation of data, usually through figures in papers or lecture slides. However, where these data come from and how they have answered a question remain often remain a mystery. In turn, students must to rely on the authority of their instructors rather than their own grasp of the quantitative skills and data collection to make meaningful connections.</p>
 <p>As a course-based research experience, BIOL 3140 is meant to develop and hone skils related to instrumentation and data science in the context of organismal biology. The thrust of this course will center around the development of simple sensor-data acquisition systems and the analysis of data collected from them. Through hands-on design and fabrication of sensor-based instrument prototypes representing models of more complex instrumentation, students will develop a direct relationship with the source of data in scientific research.</p>
-<p>#Course goals</p>
+<div id="course-goals-and-objectives" class="section level2">
+<h2>Course goals and objectives</h2>
 <p>With respect to instrumentation, the learning goals of this program include:</p>
 <ol style="list-style-type: decimal">
 <li>Understanding of how common sensors convert physical phenomena into electrical signals.</li>
@@ -307,7 +379,7 @@ $(document).ready(function () {
 </ol>
 <p>The specific learning objectives of our instrumentation work include:</p>
 <ol style="list-style-type: decimal">
-<li>Development of 5 instruments which detect temperature, force, acceleration, heart rate, etc.</li>
+<li>Development of 3 instruments which detect temperature, force, and acceleration in human subjects.</li>
 <li>Assembly and programming of an Arduino-based data-acquisition system to process and condition signals from a variety of sensor types.</li>
 </ol>
 <p>For students in the natural sciences, perhaps more important than understanding how data is acquired is understanding how to analyze data in the context of answering a specific question. To this end, we will pursue the following data science learning goals that include:</p>
@@ -325,28 +397,476 @@ $(document).ready(function () {
 <li>Evaluate a-priori scientific questions within a modeling framework, rejecting or accepting hypotheses according to model expectations.</li>
 <li>Report answers in concise reports, leveraging R’s fast and reproducible markdown capabilities.</li>
 </ol>
-<p>#Course assessment</p>
-<p>#Course timeline</p>
-<p>Bicep F-Length isometric contract</p>
+</div>
+</div>
+<div id="course-requirements" class="section level1">
+<h1>Course requirements</h1>
+<p>Read: <a href="https://r4ds.had.co.nz/introduction.html" class="uri">https://r4ds.had.co.nz/introduction.html</a> Read: <a href="https://rstudio-education.github.io/hopr/" class="uri">https://rstudio-education.github.io/hopr/</a></p>
+</div>
+<div id="course-assessment" class="section level1">
+<h1>Course assessment</h1>
+<p>How grades will be determined.</p>
+</div>
+<div id="course-outline" class="section level1">
+<h1>Course outline</h1>
+<div id="phase-i-didactic-head-banging" class="section level2">
+<h2>Phase I: Didactic Head Banging</h2>
+<p>In this phase, we’ll learn the basics of instrumentation and data analysis by working through XX leraning modules devoted to instrument desgin and data analysis. This will most likely be the most challenging part of the course in that many, if not most of you will not have ever designed and built instruments and data acquisition systems, let alone analyzed data from them. Rest assured, your experience will be curated, sticking to the bare bones of instrument design and data science. This introductory phase will set the groundwork for Phase II, the independent developement of sensors and data analysis.</p>
+</div>
+<div id="phase-ii-thrown-to-the-wolves" class="section level2">
+<h2>Phase II: Thrown to the Wolves</h2>
+<p>In Phase II, we’ll use our new-found instrument- and code-development skills to address key questions in organismal biology, Bicep F-Length isometric contract</p>
 <p>Temp project 1: Temp in human high and low, circadian rhythm</p>
 <p>Temp porject 2:Build phylotree, test hypotheses in phylogenetic context.</p>
 <p>Ebird data (auk package from R)</p>
 <p>Jump acceleration with accelerometer</p>
-<p>#Course schedule</p>
-<div id="week-1-august-31sep-4" class="section level2">
-<h2>Week 1 (August 31—Sep 4)</h2>
+</div>
+<div id="phase-iii-unleashing-your-inner-scientist" class="section level2">
+<h2>Phase III: Unleashing Your Inner Scientist</h2>
+<p>In Phase III, you’ll be tasked with quickly developing a project of your own design the requires the fabrication of a new or modified data aquisition system</p>
+</div>
+</div>
+<div id="course-schedule" class="section level1">
+<h1>Course schedule</h1>
+<div id="week-1-aug-31sep-4" class="section level2">
+<h2>Week 1 (Aug 31—Sep 4)</h2>
+<pre class="r"><code>#Instal r codetools
+#https://rstudio-education.github.io/hopr/starting.html]  </code></pre>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">Monday</th>
+<th align="center">Wednesday</th>
+<th align="center">Friday</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Read:</td>
+<td align="center">Course Welcome</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>Watch:</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>Deliver:</td>
+<td align="center"></td>
+<td align="center">Install R and Rstudio</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="week-2-sep-711" class="section level2">
+<h2>Week 2 (Sep 7—11)</h2>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">Monday</th>
+<th align="center">Wednesday</th>
+<th align="center">Friday</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Read:</td>
+<td align="center">Course Welcome</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>Watch:</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>Deliver:</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="week-3-sep-14sep-18" class="section level2">
+<h2>Week 3 (Sep 14–Sep 18)</h2>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">Monday</th>
+<th align="center">Wednesday</th>
+<th align="center">Friday</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Read:</td>
+<td align="center">Course Welcome</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>Watch:</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>Deliver:</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="week-4-sep-21sep-25" class="section level2">
+<h2>Week 4 (Sep 21–Sep 25)</h2>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">Monday</th>
+<th align="center">Wednesday</th>
+<th align="center">Friday</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Read:</td>
+<td align="center">Course Welcome</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>Watch:</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>Deliver:</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="week-5-sep-28oct-2" class="section level2">
+<h2>Week 5 (Sep 28–Oct 2)</h2>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="center">Monday</th>
+<th align="center">Wednesday</th>
+<th align="center">Friday</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Read:</td>
+<td align="center">Course Welcome</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>Watch:</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>Deliver:</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="week-6-oct-59" class="section level2">
+<h2>Week 6 (Oct 5–9)</h2>
 <div id="monday" class="section level3">
 <h3>Monday</h3>
 <ul>
-<li><em>Read:</em> Course Welcome</li>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
 </ul>
 </div>
 <div id="wednesday" class="section level3">
 <h3>Wednesday</h3>
 <ul>
 <li><em>Read:</em></li>
-<li><em>Watch</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
 </ul>
+</div>
+<div id="friday" class="section level3">
+<h3>Friday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+</div>
+<div id="week-7-oct-1216" class="section level2">
+<h2>Week 7 (Oct 12–16)</h2>
+<div id="monday-1" class="section level3">
+<h3>Monday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="wednesday-1" class="section level3">
+<h3>Wednesday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="friday-1" class="section level3">
+<h3>Friday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+</div>
+<div id="week-8-oct-1923" class="section level2">
+<h2>Week 8 (Oct 19–23)</h2>
+<div id="monday-2" class="section level3">
+<h3>Monday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="wednesday-2" class="section level3">
+<h3>Wednesday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="friday-2" class="section level3">
+<h3>Friday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+</div>
+<div id="week-9-oct-2630" class="section level2">
+<h2>Week 9 (Oct 26–30)</h2>
+<div id="monday-3" class="section level3">
+<h3>Monday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="wednesday-3" class="section level3">
+<h3>Wednesday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="friday-3" class="section level3">
+<h3>Friday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+</div>
+<div id="week-10-nov-26" class="section level2">
+<h2>Week 10 (Nov 2–6)</h2>
+<div id="monday-4" class="section level3">
+<h3>Monday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="wednesday-4" class="section level3">
+<h3>Wednesday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="friday-4" class="section level3">
+<h3>Friday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+</div>
+<div id="week-11-nov-913" class="section level2">
+<h2>Week 11 (Nov 9–13)</h2>
+<div id="monday-5" class="section level3">
+<h3>Monday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="wednesday-5" class="section level3">
+<h3>Wednesday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="friday-5" class="section level3">
+<h3>Friday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+</div>
+<div id="week-12-nov-1620" class="section level2">
+<h2>Week 12 (Nov 16–20)</h2>
+<div id="monday-6" class="section level3">
+<h3>Monday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="wednesday-6" class="section level3">
+<h3>Wednesday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="friday-6" class="section level3">
+<h3>Friday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+</div>
+<div id="week-12-nov-2327" class="section level2">
+<h2>Week 12 (Nov 23–27)</h2>
+<div id="monday-7" class="section level3">
+<h3>Monday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="wednesday-7" class="section level3">
+<h3>Wednesday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="friday-7" class="section level3">
+<h3>Friday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+</div>
+<div id="week-13-nov-30dec-4" class="section level2">
+<h2>Week 13 (Nov 30–Dec 4)</h2>
+<div id="monday-8" class="section level3">
+<h3>Monday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="wednesday-8" class="section level3">
+<h3>Wednesday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="friday-8" class="section level3">
+<h3>Friday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+</div>
+<div id="week-14-dec-7dec-10" class="section level2">
+<h2>Week 14 (Dec 7–Dec 10)</h2>
+<div id="monday-9" class="section level3">
+<h3>Monday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="wednesday-9" class="section level3">
+<h3>Wednesday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+<div id="friday-9" class="section level3">
+<h3>Friday</h3>
+<ul>
+<li><em>Read:</em></li>
+<li><em>Watch:</em></li>
+<li><em>Deliver:</em></li>
+</ul>
+</div>
+</div>
+<div id="week-15-sep-28oct-2" class="section level2">
+<h2>Week 15 (Sep 28–Oct 2)</h2>
 <pre class="r"><code>library(knitr)
 
 sched &lt;- data.frame(
@@ -363,6 +883,8 @@ write.csv(sched,&quot;3140Sched.csv&quot;,row.names = F)</code></pre>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -395,6 +917,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

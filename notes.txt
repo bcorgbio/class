@@ -1,0 +1,11 @@
+#notes on building site
+
+#very handy for github publishing
+#not this recommends not building to "_site" and bypassing jekyll workflows
+#https://garrettgman.github.io/rmarkdown/rmarkdown_websites.html#publishing_websites
+
+#to commit and push
+
+git add -A
+git commit -m "some comment"
+git push
