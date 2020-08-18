@@ -1,0 +1,237 @@
+---
+title: "Schedule"
+author: "Christopher P. Kenaley"
+date: "8/17/2020"
+output: html_document
+---
+
+# Course schedule
+
+## Week 1 (Aug 31—Sep 4)
+
+```{r}
+#Instal r codetools
+#https://rstudio-education.github.io/hopr/starting.html]  
+
+```
+
+
+            Monday            Wednesday             Friday
+--------   --------------   ----------------       ----------------
+Read:      Course Welcome                
+Watch:    
+Deliver:                    Install R and Rstudio
+--------   --------------   ----------------   ----------------
+
+## Week 2 (Sep 7—11)
+
+            Monday            Wednesday          Friday
+--------   --------------   ----------------   ----------------
+Read:      Course Welcome                   
+Watch:    
+Deliver:  
+--------   --------------   ----------------   ----------------
+
+## Week 3 (Sep 14–Sep 18)
+
+            Monday            Wednesday          Friday
+--------   --------------   ----------------   ----------------
+Read:      Course Welcome                   
+Watch:    
+Deliver:  
+--------   --------------   ----------------   ----------------
+
+## Week 4 (Sep 21–Sep 25)
+
+            Monday            Wednesday          Friday
+--------   --------------   ----------------   ----------------
+Read:      Course Welcome                   
+Watch:    
+Deliver:  
+--------   --------------   ----------------   ----------------
+
+## Week 5 (Sep 28–Oct 2)
+
+            Monday            Wednesday          Friday
+--------   --------------   ----------------   ----------------
+Read:      Course Welcome                   
+Watch:    
+Deliver:  
+--------   --------------   ----------------   ----------------
+
+## Week 6 (Oct 5–9)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+## Week 7 (Oct 12–16)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 8 (Oct 19–23)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+## Week 9 (Oct 26–30)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 10 (Nov 2–6)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 11 (Nov 9–13)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 12 (Nov 16–20)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 12 (Nov 23–27)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 13 (Nov 30–Dec 4)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 14 (Dec 7–Dec 10)
+### Monday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+### Wednesday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+  
+### Friday
+  + *Read:* 
+  + *Watch:*
+  + *Deliver:*
+
+## Week 15 (Sep 28–Oct 2)
+
+
+```{r}
+library(knitr)
+
+sched <- data.frame(
+  
+  Week=c(1:16),
+  Date=c("Aug31—Sep4","Sep7—11","Sep14—Sep18","Sep21-25","Sep20-Oct2","Oct5—9","Oct12—16","Oct19—16","Oct19—3","Oct26—30","Nov2—6","Nov9—13","Nov16—20","Nov23—27","Nov30—Dec4","Dec7—10"),
+  Monday=""
+  
+  
+)
+write.csv(sched,"3140Sched.csv",row.names = F)
+```

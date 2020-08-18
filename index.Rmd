@@ -17,7 +17,7 @@ Organismal biology is the study of living systems of all scales that shape the s
 
 To be an effective organismal biologist, one we must prepare, analyze, visualize, and communicate data as we formulate answers to the questions we're asking. Despite the importance of these technological skills to our discipline, students often see the acquisition and analysis of data as technological black boxes. Countless times in previous course, instructors have no doubt demonstrated foundational principles and concepts through the presentation of data, usually through figures in papers or lecture slides. However, where these data come from and how they have answered a question remain often remain a mystery. In turn, students must to rely on the authority of their instructors rather than their own grasp of the quantitative skills and data collection to make meaningful connections.
 
-As a course-based research experience, BIOL 3140 is meant to develop and hone skils related to instrumentation and data science in the context of organismal biology. The thrust of this course will center around the development of simple sensor-data acquisition systems and the analysis of data collected from them. Through hands-on design and fabrication of sensor-based instrument prototypes representing models of more complex instrumentation, students will develop a direct relationship with the source of data in scientific research. 
+As a course-based research experience, BIOL 3140 is meant to develop and hone skills related to instrumentation and data science in the context of organismal biology. The thrust of this course will center around the development of simple sensor-data acquisition systems and the analysis of data collected from them. Through hands-on design and fabrication of sensor-based instrument prototypes representing models of more complex instrumentation, students will develop a direct relationship with the source of data in scientific research. 
 
 ## Course goals and objectives
 
@@ -54,260 +54,31 @@ Read: https://rstudio-education.github.io/hopr/
 
 # Course assessment
 
-
-
 How grades will be determined.
 
 # Course outline
 
 ## Phase I: Didactic Head Banging
 
-In this phase, we'll learn the basics of instrumentation and data analysis by working through XX leraning modules devoted to instrument desgin and data analysis. This will most likely be the most challenging part of the course in that many, if not most of you will not have ever designed and built instruments and data acquisition systems, let alone analyzed data from them. Rest assured, your experience will be curated, sticking to the bare bones of instrument design and data science. This introductory phase will set the groundwork for Phase II, the independent developement of sensors and data analysis.
+In this phase, we'll learn the basics of instrumentation and data analysis by working through XX learning modules devoted to instrument design and data analysis. This will most likely be the most challenging part of the course in that many, if not most of you will not have ever designed and built instruments and data acquisition systems, let alone analyzed data from them. Rest assured, your experience will be curated, sticking to the bare bones of instrument design and data science. This introductory phase will set the groundwork for Phase II, the independent development of sensors and data analysis.
+
+Module include:
+
+  1. **Cheap Tricks in Physiology:** Designing and Programming Simple, Low-Cost Data Acquisition Systems
+  2. **Data Wrangling:** Introduction to Tools of the Trade in Data Analysis
+  3. **The Whiz and Viz Bang of Data:** The Basics of Data Visualizations and Modeling
+  4. **Making Messes Pretty:** Leveraging Markdown to Produce Pleasing Reports
 
 ## Phase II: Thrown to the Wolves
 
-In Phase II, we'll use our new-found instrument- and code-development skills to address key questions in organismal biology, 
-Bicep F-Length isometric contract
+In Phase II, we'll use our new-found instrument- and code-development skills to address key questions in organismal biology. These will be largely independent explorations of instrument design and use and data analysis meant to challenge you to put these skills to good use in answering how vertebrates muscles work, how size and phylogeny matters in physiological systems, and how a changing climate impacts the distribution of vertebrates. Within this phase we'll focus on 4 modules, some data driven, the others both data and instrument driven, including:
 
-Temp project 1: Temp in human high and low, circadian rhythm
-
-Temp porject 2:Build phylotree, test hypotheses in phylogenetic context.
-
-Ebird data (auk package from R)
-
-Jump acceleration with accelerometer
+  1. **Birds of a Feather Migrate Together, Sometimes:** Using EBird data to Explore the Phenology of Passerine Migration (auk package from R) (data driven)
+  2. **Beach Muscles:** Exploring Force-Length Relationships in Vertebrate Muscle (instrument and data driven)
+  3. **Hot Flashes I:** Scaling the Diel Temperature Oscillations in Mammals (instrument and data driven)
+  4. **Hot Flashes II:** Not So Fast! Correcting Scaling Models Withing a Phylogenetic Context (data driven)
+  5. **Jumping UGs**: Testing the Limits of Human Lower Body Power (instrument and data driven)
 
 ## Phase III: Unleashing Your Inner Scientist
 
-In Phase III, you'll be tasked with quickly developing a project of your own design the requires the fabrication of a new or modified data aquisition system 
-
-# Course schedule
-
-## Week 1 (Aug 31—Sep 4)
-
-```{r}
-#Instal r codetools
-#https://rstudio-education.github.io/hopr/starting.html]  
-
-```
-
-
-            Monday            Wednesday             Friday
---------   --------------   ----------------       ----------------
-Read:      Course Welcome                
-Watch:    
-Deliver:                    Install R and Rstudio
---------   --------------   ----------------   ----------------
-
-## Week 2 (Sep 7—11)
-
-            Monday            Wednesday          Friday
---------   --------------   ----------------   ----------------
-Read:      Course Welcome                   
-Watch:    
-Deliver:  
---------   --------------   ----------------   ----------------
-
-## Week 3 (Sep 14–Sep 18)
-
-            Monday            Wednesday          Friday
---------   --------------   ----------------   ----------------
-Read:      Course Welcome                   
-Watch:    
-Deliver:  
---------   --------------   ----------------   ----------------
-
-## Week 4 (Sep 21–Sep 25)
-
-            Monday            Wednesday          Friday
---------   --------------   ----------------   ----------------
-Read:      Course Welcome                   
-Watch:    
-Deliver:  
---------   --------------   ----------------   ----------------
-
-## Week 5 (Sep 28–Oct 2)
-
-            Monday            Wednesday          Friday
---------   --------------   ----------------   ----------------
-Read:      Course Welcome                   
-Watch:    
-Deliver:  
---------   --------------   ----------------   ----------------
-
-## Week 6 (Oct 5–9)
-### Monday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-### Wednesday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-  
-### Friday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-  
-## Week 7 (Oct 12–16)
-### Monday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-### Wednesday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-  
-### Friday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-## Week 8 (Oct 19–23)
-### Monday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-### Wednesday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-  
-### Friday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-  
-## Week 9 (Oct 26–30)
-### Monday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-### Wednesday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-  
-### Friday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-## Week 10 (Nov 2–6)
-### Monday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-### Wednesday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-  
-### Friday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-## Week 11 (Nov 9–13)
-### Monday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-### Wednesday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-  
-### Friday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-## Week 12 (Nov 16–20)
-### Monday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-### Wednesday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-  
-### Friday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-## Week 12 (Nov 23–27)
-### Monday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-### Wednesday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-  
-### Friday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-## Week 13 (Nov 30–Dec 4)
-### Monday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-### Wednesday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-  
-### Friday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-## Week 14 (Dec 7–Dec 10)
-### Monday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-### Wednesday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-  
-### Friday
-  + *Read:* 
-  + *Watch:*
-  + *Deliver:*
-
-## Week 15 (Sep 28–Oct 2)
-
-
-```{r}
-library(knitr)
-
-sched <- data.frame(
-  
-  Week=c(1:16),
-  Date=c("Aug31—Sep4","Sep7—11","Sep14—Sep18","Sep21-25","Sep20-Oct2","Oct5—9","Oct12—16","Oct19—16","Oct19—3","Oct26—30","Nov2—6","Nov9—13","Nov16—20","Nov23—27","Nov30—Dec4","Dec7—10"),
-  Monday=""
-  
-  
-)
-write.csv(sched,"3140Sched.csv",row.names = F)
-```
+In Phase III, you'll be tasked with quickly developing a project of your own design that requires the fabrication of a new or modified data acquisition system 
