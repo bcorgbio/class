@@ -7,14 +7,14 @@ title: "Welcome"
 
 Welcome to BIOL 3140, Experimental Methods in Organismal Biology!!! 
 
-Organismal biology is the study of living systems of all scales that shape the structure, function, ecology, and evolution of individual organisms. Experiments that elucidate how organisms respond to biotic and abiotic environmental stimulus over broad time scales—from changes in behavior to adaptation—are crucial to understanding biological diversity. In this course we’ll explore the concepts and experimental and analytical tools that frame research in organismal biology. Through group projects and active learning exercises, students will make hypotheses concerning how organisms respond in time, space, and behavior to changes in environment and then design experiments and instrument protoypes that produce data to evaluate these hypotheses. Topics covered will include reconstructing phylogenetic history and the evolution of organismal form and function, evaluating form-function relationships, and the correlates of spatial and temporal distribution of organisms. In addition, the development of an analytical toolbox—specifically, learning the principles of data science and statistical analysis—is a central theme of this course.
+Organismal biology is the study of living systems of all scales that shape the structure, function, ecology, and evolution of individual organisms. Experiments that elucidate how organisms respond to biotic and abiotic environmental stimulus over broad time scales—from changes in behavior to adaptation—are crucial to understanding biological diversity. In this course we’ll explore the concepts and experimental and analytical tools that frame research in organismal biology. Through group projects and active learning exercises, students will make hypotheses concerning how organisms respond in time, space, and behavior to changes in environment and then design experiments and instrument prototypes that produce data to evaluate these hypotheses. Topics covered will include reconstructing phylogenetic history and the evolution of organismal form and function, evaluating form-function relationships, and the correlates of spatial and temporal distribution of organisms. In addition, the development of an analytical toolbox—specifically, learning the principles of data science and statistical analysis—is a central theme of this course.
 
 <style>
 div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </style>
 <div class = "green">
 
-This is a highly technical course and will surely challenge all us. BIOL 3140 is designed for folks with no coding or protyping experience, so at many times in the course, a student will feel lost and confused. ***This is exactly where we want to be!*** This is where the learning happens. 
+This is a highly technical course and will surely challenge all us. BIOL 3140 is designed for folks with no coding or prototyping experience, so at many times in the course, a student will feel lost and confused. ***This is exactly where we want to be!*** This is where the learning happens. 
 
 
 </div>
@@ -24,11 +24,11 @@ This is a highly technical course and will surely challenge all us. BIOL 3140 is
 
 **Delivery:** Flipped and *synchronous online meetings* M,W,F at 2:00 over Zoom accessible through [this link](https://bccte.zoom.us/j/98903480269?pwd=MVBFUlhqTTE1LzFFRUVpTzZ2S1Vsdz09). 
 
-**Instuctor:** Christopher P. Kenaley (Prof. K)
+**Instructor:** Christopher P. Kenaley (Prof. K)
 
 **email:** kenaley [ahhhht] bc.edu
 
-**offfice hours:** By appointment
+**office hours:** By appointment
 
 # Course materials
 
@@ -46,7 +46,7 @@ What about those optional adapters? Our Arduino units require connections to a s
 
 ## GitHub account
 
-Why a [GitHub account](https://github.com/join)? GitHub is a handy place for those developing code and offers free hosting of websites produced and maintained from a desktop (that's how this site was constructed). Our site is under the ``class" respository (i.e., a space where code resides) within tne organization [bcorgbio](https://github.com/bcorgbio) on GitHub. To access  our organization, create a team, and use bcorgbio discussion pages, you'll need an account. Once you have an account, I'll be able to add you to our [bcorgbio](https://github.com/bcorgbio) organization and the class-wide team for discussion purposes.
+Why a [GitHub account](https://github.com/join)? GitHub is a handy place for those developing code and offers free hosting of websites produced and maintained from a desktop (that's how this site was constructed). Our site is under the ``class" repository (i.e., a space where code resides) within the organization [bcorgbio](https://github.com/bcorgbio) on GitHub. To access  our organization, create a team, and use bcorgbio discussion pages, you'll need an account. Once you have an account, I'll be able to add you to our [bcorgbio](https://github.com/bcorgbio) organization and the class-wide team for discussion purposes.
 
 ## Course DAQPack
 
@@ -60,7 +60,7 @@ To be an effective organismal biologist, one we must prepare, analyze, visualize
 As a course-based research experience, BIOL 3140 is meant to develop and hone skills related to instrumentation and data science in the context of organismal biology. The thrust of this course will center around the development of simple sensor-data acquisition systems and the analysis of data collected from them. Through hands-on design and fabrication of sensor-based instrument prototypes representing models of more complex instrumentation, students will develop a direct relationship with the source of data in scientific research. 
 
 <div class = "green">
-As was mentioned at the top, students will often feel adrift, unsure of how to proceed. This is by design and a model of how experimental work and data analys in biology unfolds. Nonetheless, students may worry about their grade in the course and how to do well when challanges emerge at every turn. Fear not! For each assignment in the course (e.g., module project reports) student or team enagement and effort will be assessed just as much as how well objective questions have been answered.  
+As was mentioned at the top, students will often feel adrift, unsure of how to proceed. This is by design and a model of how experimental work and data analysis in biology unfolds. Nonetheless, students may worry about their grade in the course and how to do well when challenges emerge at every turn. Fear not! For each assignment in the course (e.g., module project reports) student or team engagement and effort will be assessed just as much as how well objective questions have been answered.  
 </div>
 <br>
 
@@ -96,15 +96,15 @@ All of these data-science learning goals will be realized in the framework of th
 
 # Course format and expectations
 
-To quote Joseph Chamberlain, ". . . We are living in most interesting times." A course of this scope, focussing on so much that is technical, would be administered best in small groups, meeting mostly face-to-face. However, in the context of a global pandemic that seems primed to surge again in our corner of the world, I can't in good concience summon us all to meet in cramped quarters. Thus, it seems prudent to ``flip" our 3140 experience and make most of it virtual. This will require students to read and explore outside of class and meet in pre-assigned smaller groups (i.e., teams) on their own to work through the material. I will be available during our set meeting times for discussion and problem solving over Zoom and face-to-face during arranged office hours. 
+To quote Joseph Chamberlain, ". . . We are living in most interesting times." A course of this scope, focusing on so much that is technical, would be administered best in small groups, meeting mostly face-to-face. However, in the context of a global pandemic that seems primed to surge again in our corner of the world, I can't in good conscience summon us all to meet in cramped quarters. Thus, it seems prudent to ``flip" our 3140 experience and make most of it virtual. This will require students to read and explore outside of class and meet in per-assigned smaller groups (i.e., teams) on their own to work through the material. I will be available during our set meeting times for discussion and problem solving over Zoom and face-to-face during arranged office hours. 
 
 ## Teams and team responsibilities
-To fascilitate our team approach, I'll be assigning each student to a team of 4 students. This team must establish two things:
+To facilitate our team approach, I'll be assigning each student to a team of 4 students. This team must establish two things:
 
   1. A unique team name. Puns are welcome and encouraged (e.g., "R-tful Coders") 
   2. A team discussion on GitHub that includes me on the team (see [discussion section](discussion)). 
   
-Each week, teams should use their team discussion boards to generate a question to post on the the class-wide discussion board. A team representative must submit this question and include the team handle in the title surrounded by brackets, like you see below for that make-believe tema "R-tful codes" with the handle "@bcorgbio/r-tful-coders". The team must also decide which question to answer and then post their feedback or answer addressing the handle for the original team posters (see below)
+Each week, teams should use their team discussion boards to generate a question to post on the the class-wide discussion board. A team representative must submit this question and include the team handle in the title surrounded by brackets, like you see below for that make-believe team "R-tful codes" with the handle "@bcorgbio/r-tful-coders". The team must also decide which question to answer and then post their feedback or answer addressing the handle for the original team posters (see below)
 
 <center>
 ![FigName](discexamp.jpg)
@@ -116,7 +116,7 @@ Each week, teams should use their team discussion boards to generate a question 
 A flipped course, especially one of this technical nature, will require sublime concentration and focus. Therefore, we must be clear about our expectations of one another. 
 
   + You, the student, are responsible for reading and adhering to all aspects of the course syllabus as outlined here on this site.
-  + You are responsible for organizing and completing all readings, discussions, excercises, and projects.
+  + You are responsible for organizing and completing all readings, discussions, exercises, and projects.
   + You are responsible for becoming familiar with course-related software (R, RStudio, Arduino, Zoom).
   + You must be aware of your own progress in the course.
   + It is up to you to pursue help and guidance when you feel you need it.
@@ -125,27 +125,27 @@ A flipped course, especially one of this technical nature, will require sublime 
   + I will challenge students intellectually to develop data analysis and experimental skills.
   + I will make expectations clear in the form of this site, syllabus, and course announcements made here and over email.
   + I will be consistent and quick in grading assignments.
-  + I will be available to help and discuss topics during sheduled class time, arranged office hours, and on our class [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) .
+  + I will be available to help and discuss topics during scheduled class time, arranged office hours, and on our class [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) .
 
 
 # Discussion Board {#discussion}
 
-Most weeks, a representative from your teeam you will be asked to submit at least one question and answer another on our class [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140). This is hosted on GitHub, just like our course site and will certainly be an important resource as you work through course material. When you post a question, you should:
+Most weeks, a representative from your team you will be asked to submit at least one question and answer another on our class [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140). This is hosted on GitHub, just like our course site and will certainly be an important resource as you work through course material. When you post a question, you should:
 
   + Be polite and concise.
   + Ask a question that has not be asked before.
   + Post the question with a short descriptive title (e.g.., ``Problems with temp sensor wiring" )
   
-When responding to a quesiton, you should:
+When responding to a question, you should:
 
   + Be polite and concise
   + Provide unique feedback rather than a duplicated answer.
   
 Feel free to post reactions (via the smiley-face icon above the text box), but this won't count as an answer.
   
-A team respresentative is welcome to add another answer to a question that has already been answered as long as it expands upon the previous answers.  I'll be moderating and commenting myself, issuing feedback at the end of each week. 
+A team representative is welcome to add another answer to a question that has already been answered as long as it expands upon the previous answers.  I'll be moderating and commenting myself, issuing feedback at the end of each week. 
 
-Each team is required to make their own discussion board. Please add me to the team as well so that I can monitor questions and provide feedback. This is meant to provide a means to communicate within a team and synthesis of a question to post each week; howeverr any Q&A on a team discussion board **DOES NOT** satisfy the general discusion requirement. You can learn more about making team discussion boards on GitHub [here](https://docs.github.com/en/github/building-a-strong-community/creating-a-team-discussion).
+Each team is required to make their own discussion board. Please add me to the team as well so that I can monitor questions and provide feedback. This is meant to provide a means to communicate within a team and synthesis of a question to post each week; however any Q&A on a team discussion board **DOES NOT** satisfy the general discussion requirement. You can learn more about making team discussion boards on GitHub [here](https://docs.github.com/en/github/building-a-strong-community/creating-a-team-discussion).
 
 
 
@@ -225,11 +225,11 @@ In Phase II, we'll use our new-found instrument- and code-development skills to 
   4. **Hot Flashes II:** Not So Fast! Correcting Scaling Models Withing a Phylogenetic Context (data driven)
   5. **Jumping UGs**: Testing the Limits of Human Lower Body Power (instrument and data driven)
   
-For each module of Phase II, you'll be asked to read one or two important topic papers to set the stage and provide crucial context and then move on to data aquisiton, analysis, and synthesis. The end product of each module will be a short, 3-4 page markdown that includes some background, description of methods, results, and discussion within the context of the topic papers and other relevant research. 
+For each module of Phase II, you'll be asked to read one or two important topic papers to set the stage and provide crucial context and then move on to data acquisition, analysis, and synthesis. The end product of each module will be a short, 3-4 page markdown that includes some background, description of methods, results, and discussion within the context of the topic papers and other relevant research. 
 
 ## Phase III: Independent Project
 
-In Phase III, you'll be tasked with quickly developing a project of your own design that requires the fabrication of a new or modified data acquisition system. The goal of this project is the use your sensor to answer a question personal and interesting to your team (assembled during Phase II). The question should be new within the context of the course and reflect a comparative focus (i.e., not simply a human-based project). This project will require you to first delve into the the scientific literature to set the stage and then leverage your new data-analysis and report-writing skills in the synthesis of 4-5 page markdown. This final porject report should follow the same format and requirements of the reports produced in Phase II, but with expanded content. 
+In Phase III, you'll be tasked with quickly developing a project of your own design that requires the fabrication of a new or modified data acquisition system. The goal of this project is the use your sensor to answer a question personal and interesting to your team (assembled during Phase II). The question should be new within the context of the course and reflect a comparative focus (i.e., not simply a human-based project). This project will require you to first delve into the the scientific literature to set the stage and then leverage your new data-analysis and report-writing skills in the synthesis of 4-5 page markdown. This final project report should follow the same format and requirements of the reports produced in Phase II, but with expanded content. 
 
 
 # Course Assessment
@@ -257,13 +257,13 @@ Your grade will be based on five assignment components: Asking and answering que
 
 <br>
 
-The discussion portion of your grade will be calculated by determining thge percentage of times your team both asked and answered a question when assigned to (usually once per week) and multiplying this by 100. That is, if you are asked to submit 15 questions and answers over the course of the semster and post and answer 12, your discussion points will equal 80. A discussion assignment will be considered complete if and only if a question is posted AND another answered. 
+The discussion portion of your grade will be calculated by determining the percentage of times your team both asked and answered a question when assigned to (usually once per week) and multiplying this by 100. That is, if you are asked to submit 15 questions and answers over the course of the semester and post and answer 12, your discussion points will equal 80. A discussion assignment will be considered complete if and only if a question is posted AND another answered. 
 
 
 More details about the specific requirements of Phase I, II, and III projects can be found under our [course schedule page](~/schedule.html). 
 
 <div class = "green">
-As a reminder, assessment for project reports will incoroporate an evaluation of an individual's or team's effort and engagement in addition to more objective components (i.e., answers, conclusions, etc.). To do well, the formula is simple: students and their teams should remain persistent, ask for guidance, and make clear conclusions using the skills and tools they learn in the course.
+As a reminder, assessment for project reports will incorporate an evaluation of an individual's or team's effort and engagement in addition to more objective components (i.e., answers, conclusions, etc.). To do well, the formula is simple: students and their teams should remain persistent, ask for guidance, and make clear conclusions using the skills and tools they learn in the course.
 </div>
 <br>
 
