@@ -1,29 +1,146 @@
----
-title: "Schedule"
-author: "Christopher P. Kenaley"
-date: "8/17/2020"
-output: html_document
----
 
 # Course schedule
 
-## Week 1 (Aug 31—Sep 4)
 
-```{r}
-#Instal r codetools
-#https://rstudio-education.github.io/hopr/starting.html]  
+## Phase I: Didactic Headbanging 
 
-```
+In this phase, we'll learn the basics of instrumentation and data analysis by working through XX learning modules devoted to instrument design and data analysis. This will most likely be the most challenging part of the course in that many, if not most of you will not have ever designed and built instruments and data acquisition systems, let alone analyzed data from them. Rest assured, your experience will be curated, sticking to the bare bones of instrument design and data science. This introductory phase will set the groundwork for Phase II, the independent development of sensors and data analysis.
+
+### Module 1: Introduction and Cheap Tricks
+
+This module is intended to give students the background and skills to begin designing and programing of simple hardware devices using Arduino.
+
+#### Dates: 
+Week 1 (Aug 31—Sep 4):
+
+#### Key Concepts:
+  + Course workflow
+  + Course expectations
+  + Arduino IDE basics (the sketch)
+  + Digital vs. Analog I/O
+  
+#### Learning Objectives:
+
+Upon completion of this week and module, students will be able to:
+
+  + Know what is expected during Phase I of the course
+  + Design and program a blinking Arduino unit
+  + Design and program a simple Arduino DAQ
+ 
+#### Read: 
+
+  + [What is Arduino?](https://www.arduino.cc/en/Guide/Introduction)
+
+  + [Getting started with Arduino](https://www.arduino.cc/en/Guide)
+
+  + [What is Arduino IDE?](https://www.arduino.cc/en/Guide/Environment)
+
+  + [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno)
+
+#### Do:
+
+  + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
+
+  + [Install Arduino IDE](https://www.arduino.cc/en/Guide)
+
+  + Work through "Blink" sketch in [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno) (work with the desktop IDE)
+
+  + Complete Module 1 Project 
+
+  + [Upload video of temp data](https://forms.gle/gRHLVdGKh4bsF3Md7) passing through serial monitor on Arduino IDE [10 points]
 
 
-            Monday            Wednesday             Friday
---------   --------------   ----------------       ----------------
-Read:      Course Welcome                
-Watch:    
-Deliver:                    Install R and Rstudio
---------   --------------   ----------------   ----------------
+#### Guiding Questions:
 
-## Week 2 (Sep 7—11)
+  + Where does one find important course information?
+  + What are the major components of an Arduino microcontroller?
+  + What are the major components of an Arduino-based DAQ? 
+  + How does one program an Arduino microcontroller?
+  
+
+
+#### Module 1 Schedule
+
+ 
+ 
+ || Monday 8/31 |  Tuesday 9/1 | Wednesday 9/2  |  Thursday 9/3 | Friday 9/5
+| ----------------- |-------------- |-------------- |--------------- | ----------------- | -------------------    
+**Assignment due** |                |               | Post question to board | Answer a question on board  | Upload temp video
+
+  
+
+
+
+### Module 2: Data Pirates Code with. . . . R, Introduction to the Basics
+
+Intro text
+
+#### Dates: 
+Week 2 (Sep 7—11):
+
+#### Key Concepts:
+  + R user interface
+  + Working directory
+  + Objects, functions, arguments, and scripts in R
+  + Lists, data frames, and matrices
+  + Basic R notation
+  + The `for` loop
+  
+#### Learning Objectives:
+
+Upon completion of this week and module, students will be able to:
+
+  + Open R and RStudio
+  + Set a working directory and load data in R
+  + Recognize the difference between different objects (e.g., vectors, lists, data frames etc.)
+  + Perform simple data operations and manipulaiton of data objects in R
+  + Contruct and run a `for` loop in R to automate a interatively redundant task.
+ 
+#### Read: 
+
+  + [Appendix D](https://www.arduino.cc/en/Guide/Introduction)
+
+  + [Getting started with Arduino](https://www.arduino.cc/en/Guide)
+
+  + [What is Arduino IDE?](https://www.arduino.cc/en/Guide/Environment)
+
+  + [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno)
+
+#### Do:
+
+  + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
+
+  + [Install R and RStudio](https://rstudio-education.github.io/hopr/starting.html#starting)
+
+  + Work through "Blink" sketch in [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno) (work with the desktop IDE)
+
+  + Complete Module 1 Project 
+
+  + [Upload video of temp data](https://forms.gle/gRHLVdGKh4bsF3Md7) passing through serial monitor on Arduino IDE [10 points]
+
+
+#### Guiding Questions:
+
+  + Where does one find important course information?
+  + What are the major components of an Arduino microcontroller?
+  + What are the major components of an Arduino-based DAQ? 
+  + How does one program an Arduino microcontroller?
+  
+
+
+
+#### Module 1 Schedule
+---------------      -----------------   ----------------  ------------------------  ----------------------------  ------------------- 
+                      Monday 8/31            Tuesday 9/1         Wednesday 9/2          Thursday 9/3                 Friday 9/5
+---------------      -----------------   ----------------  ------------------------  ----------------------------  -------------------    
+**Assignment due**                                           Post question to board     Answer a question on board   Upload temp video
+
+---------------      --------------   ----------------  ------------------------  ----------------------------  -------------------  
+
+
+### Week 2 (Sep 7—11)
+
+`#https://rstudio-education.github.io/hopr/starting.html`
 
             Monday            Wednesday          Friday
 --------   --------------   ----------------   ----------------

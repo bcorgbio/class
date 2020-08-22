@@ -1,10 +1,23 @@
 name: "Experimental Methods in Experimental Biology"
 output_dir: "."
+output:  
+  html_document:  
+    self_contained: no  
+    theme: sandstone
+    highlight: tango
+    toc: true # adds a table of contents
+    toc_float: true
+    number_sections: TRUE
+    css: style.css
 navbar: 
-  title: "Welcome!"
+  title: "BIOL 3140"
   left: 
     - text: "Home"
       href: index.html
+    - text: "Schedule"
+      href: schedule.html
+    - text: "BIOL 3140 Discussion"
+      href: https://github.com/orgs/bcorgbio/teams/biol-3140
     
  
     
