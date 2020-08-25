@@ -12,5 +12,4 @@ git push
 
 
 #great advice and tips:
-
 https://holtzy.github.io/Pimp-my-rmd/

@@ -330,7 +330,7 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="schudle.html">Schedule</a>
+  <a href="schedule.html">Schedule</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -340,6 +340,9 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Phase I</li>
+    <li>
+      <a href="phaseI_rubric.html">Phase I report rubric</a>
+    </li>
     <li>
       <a href="mod1_proj.html">Module 1 Project</a>
     </li>
@@ -371,6 +374,8 @@ div.tocify {
 <style>
 div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </style>
+<!-- Add icon library -->
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
 <div id="introdution" class="section level1">
 <h1>Introdution</h1>
 <p>Now that we have read and explored the basics of how to program an Arduino unit, we’ll now proceed with prototyping a simple sensor, one that can very accurately record temperature. This project assumes you have worked through the the assigned readings and links and therefore understand how an Arduino Uno (or a clone) is programmed and how serial data are sent and received from an Arduino.</p>
@@ -400,6 +405,17 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <div id="programming" class="section level2">
 <h2>Programming</h2>
 <p>Now program the Arduino by uploading the second sketch from Adafruit’s <a href="https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor">Using a Temp Sensor</a> tutorial. If everything is in order—you’ve chosen the right port and board in Arduino IDE—you can now click on the serial monitor icon in the upper right of the IDE (or pres “cmd/ctrl+shift+m”) to see what data are being printed from the microcontroller to your computer over the serial (USB) port. It should look something like this. If so, CONGRATS! You’re recording temperature data!</p>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+</div>
+<div class="col-sm-9">
+<p>When getting setup with your Arduino, makes sure you’ve selected the correct board and port from the “Tools” dropdown menu in the IDE!</p>
+</div>
+</div>
+</div>
+<p><br></p>
 <center>
 <img src="tempserial.png" alt="FigName" />
 </center>
@@ -623,6 +639,18 @@ void loop(void) {
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
 <p>No need to write anything up. Please merely run the modified sketch on your temp sensor protype and upload a video of the serial monitor printing comma separated values. You can capture the video by recording the screen on your phone and upload it <a href="https://forms.gle/gRHLVdGKh4bsF3Md7">here</a>. Please upload the video by 11:59 PM on Sunday, September 6th.</p>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+</div>
+<div class="col-sm-9">
+As a reminder, please check out the <a href="phaseI_rubric.html">Phase I projects rubric</a> to get a sense of how this project will be assessed.
+</div>
+</div>
+</div>
+</div>
+<p><br></p>
 </div>
 
 

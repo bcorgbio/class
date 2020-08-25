@@ -2,10 +2,13 @@
 title: "Module 2 Project"
 ---
 
-# Introduction
 <style>
 div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </style>
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+# Introduction
 
 Now that we've been introduced to R and its important properties, lets now explore how this knowledge can be put to use in the context of data and a workflow more typical in organismal biology. For this project, we'll be looking at scale puncture data from Prof. Kenaley's lab. Briefly, these data come from experiments in which we used a motorized probe and force transducer to study how much force it takes to puncture fish scales from various locations on several species of fishes. The goal of analyzing these data is to assess if the magnitude of scale puncture resistance varies over the body and according to species. This data set is rather large (>1800 experiments!), but eminently suited for work in R (i.e., your head would spin trying to any of the following operations in Excel, say).  
 
@@ -37,11 +40,15 @@ The console is where you see what's happening or has happened in the R session. 
 Let's move on to another convention of writing an R script: setting the working directory. This is perhaps the most important step when working with external data in R (and doing so many other important tasks, like saving outputs from analyses, e.g., figures, tables, etc.). The working directory is a way of telling R where to find and save things. Without this input, R won't know where to find or place important objects like data or figures, respectively. 
 
 <div class = "green">
-`setwd()` is a command essential to working in R. It's hard to overstate just how important this component of a script is. Over the years, in working with students learning how to use R, I come to have them recite the three most important rules for beginners:
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">`setwd()` is a command essential to working in R. It's hard to overstate just how important this component of a script is. Over the years, in working with students learning how to use R, I come to have them recite the three most important rules for beginners:
 
   1. Always set the working directory!
   2. Never forget to set the working directory!
   3. Set the working directory always and forever!
+</div>
+</div>
 </div>
 <br>
 
@@ -117,19 +124,25 @@ Here, using either method, we see that the "N" column is numeric (it's a continu
 mean(dat$N)
 mean(dat$quadrant)
 ```
-Notice that R tells you that mean can't be computed on "quadrant" because it is not numeric. 
 
-<div class = "green">
-Whenever you get an error in R, the tendency is to go right back to the code and try to fix things, paying little attention to the red text in the console. Errors often tell you something very important about your script and, in this example, your data. Be sure to read these errors carefully and makes sense of them before altering your code. Googling the error is often a huge help.
-</div>
-<br>
+Notice that R tells you that mean can't be computed on "quadrant" because it is not numeric. 
 
 OK, so now we've learned what classes of data we have, but we've done so in no fewer than four lines of code representing operations on each of the columns. The power or R and other programming languages is that there's almost always a faster and simpler way of doing things. In this case, we can inspect the class of out data in just one line using `sapply()`.
 
 ```{r}
 sapply(dat,class)
 ```
+
 Easy peasy with `sapply()`. Have a look at `?sapply()`, the help entry, which explains that this function applies another function over a vector. In the case of data frames, `sapply()` applies a functions over a vector of columns by default. This is considerably more tidy and speedy than subsetting columns and repeating procedures over each. 
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">Whenever you get an error in R, the tendency is to go right back to the code and try to fix things, paying little attention to the red text in the console. Errors often tell you something very important about your script and, in this example, your data. Be sure to read these errors carefully and makes sense of them before altering your code. Googling the error is often a huge help.
+</div>
+</div>
+</div>
+<br>
 
 # Simple Operations: Summarizing
 
@@ -146,6 +159,7 @@ By storing the levels of species and calling "species" on separate line, we see 
 ```{r}
 length(species)
 ```
+
 The names and number of species, revealed in two lines of code. Pretty simple. Now how about how many observations per species. This is often a crucial piece of summary information, i.e., are there 1800 observations for *A. rupestris* and just a handful for all the others? If so, this wouldn't be much of a comprehensive study across these species. Finding how many observations, as with previous operations, can be done in a number of different ways. And like these previous operations, let's consider both cumbersome and more straightforward methods. 
 
 Because we have the levels (all unique values) of species stored, let's use that vector of names and some [logical-test operations we learned about in HOPR](https://rstudio-education.github.io/hopr/modify.html#logical-subsetting) to subset the data frame and the variable `species` and count the observations. Let's take on the first value of the `species` variable first. In the code below, all the values in the species column are compared to the first entry for "species" ("A. rupestris") by using `==`. This asks the question *Does the value to the left equal the value to the right?*  In this specific case, we use `==` to ask *Do the values in `dat$species` equal the first value in the "species" variable?* 
@@ -155,6 +169,7 @@ dat$species==species[1]
 ```
 
 Have a look at the result in the console (I'm not showing the output here, because . . .). You should see hundreds of logical values, `TRUE` and `FALSE` with many `TRUE`'s at first. This indicates that the first 300 or so values for the "species" column matches "A. rupestris". Now we can nest these logical values within the "species" vector (column) to return only those values that match "A. rupestris", like so:
+
 ```{r,results='hide'}
 dat$specie[dat$species==species[1]]
 ```
@@ -205,8 +220,13 @@ dat %>%
   count(species,name = "n.specimens")
 ```
 
+
 <div class = "green">
-By now, you're head may be spinning like a top. This is a lot to take in. Don't worry! We're just running quickly through the basics and won't worry too much about committing any of this to memory. Just keep moving through this project, logging these operations in your R script, and you can always come back to specific parts when challenged by similar tasks in the future.
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">By now, you're head may be spinning like a top. This is a lot to take in. Don't worry! We're just running quickly through the basics and won't worry too much about committing any of this to memory. Just keep moving through this project, logging these operations in your R script, and you can always come back to specific parts when challenged by similar tasks in the future.
+</div>
+</div>
 </div>
 <br>
 
@@ -262,3 +282,14 @@ The goal of this project report is to submit an R script that runs the code pres
     + Code that produces a PDF file containing 6 figures, one for each species that includes a boxplot of puncture force verus quadrant. 
     
 Have one representative of each team submit the code and PDF [here](https://forms.gle/GZotQwqzAFczb8pW9). Submissions are due by 11:59 PM on Sunday, September 13th.
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">As a reminder, please check out the [Phase I projects rubric](phaseI_rubric.html) to get a sense of how this project will be assessed.</div>
+</div>
+</div>
+</div>
+<br>
+
+

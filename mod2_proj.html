@@ -420,7 +420,7 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="schudle.html">Schedule</a>
+  <a href="schedule.html">Schedule</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -430,6 +430,9 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Phase I</li>
+    <li>
+      <a href="phaseI_rubric.html">Phase I report rubric</a>
+    </li>
     <li>
       <a href="mod1_proj.html">Module 1 Project</a>
     </li>
@@ -458,32 +461,45 @@ div.tocify {
 </div>
 
 
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
 <style>
 div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </style>
-<p>Now that we’ve been introduced to R and its important properties, lets now explore how this knowledge can be put to use in the context of data and a worflow more typical in organismal biology. For this porject, we’ll be looking at scale puncture data from Prof. Kenaley’s lab. Briefly, these data come from experiments in which we used a motorized probe and force transducer to study how much force it takes to puncture fish scales from various locations on several species of fishes. The goal of analyzing these data is to assess if the magnitude of scale puncture reistance varies over the body and according to species. This dataset is rather large (&gt;1800 experiments!), but eminently suited for work in R (i.e., your head would spin trying to any of the following operations in Excel, say).</p>
+<!-- Add icon library -->
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Now that we’ve been introduced to R and its important properties, lets now explore how this knowledge can be put to use in the context of data and a workflow more typical in organismal biology. For this project, we’ll be looking at scale puncture data from Prof. Kenaley’s lab. Briefly, these data come from experiments in which we used a motorized probe and force transducer to study how much force it takes to puncture fish scales from various locations on several species of fishes. The goal of analyzing these data is to assess if the magnitude of scale puncture resistance varies over the body and according to species. This data set is rather large (&gt;1800 experiments!), but eminently suited for work in R (i.e., your head would spin trying to any of the following operations in Excel, say).</p>
 </div>
 <div id="set-up" class="section level1">
-<h1>Set up</h1>
+<h1>Set Up</h1>
 <p>Let’s first download these data as .csv file from <a href="scales.csv">this link</a>. <strong>Don’t open the file in Excel</strong> or some other program. If your OS does so automatically, just close the file without making any changes. The file in most cases will be automatically downloaded to a “downloads” directory (i.e., folder). Copy or move this file to a new directory, perhaps one named “scales” in a folder for this and other BIOL 3140 projects.</p>
 <p>Open R Studio and create a new script (File-&gt;New-&gt;R script, see below). Save it (File-&gt;Save) with an appropriate title in your new “scales” directory.</p>
 <img src="newscript.png" alt="FigName" />
 </center>
 <p><br></p>
-<p>In this new R script, let’s add our first lines of code. It’s a general convention that we load the libraries of R packages that we want to use in thr R session (after R has been loaded by R Studio). Without doing so, if you call functions that aren’t loaded in base R, you’ll encounter an error. For this project and script, we only need <code>ggplots</code>, a handy plotting package that we’ll rely on time and time again in the course. Make sure you’ve installed it, something you should have done will reading and working with HOPR. This initial line of code would look like this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a></code></pre></div>
-<p>Go ahead and just copy and paste this line into your script at line 1. Notice that when you do this nothing happens. Entering code, either by typing or pasting doesn’t tell R to run it. <strong>You must do so explicitly</strong> by selecting a section of code you want to run (the first line in this case) and pressing “enter” or compiling the entire script by clicking on the “run” icon at the top of the R Studio screen. Hit “run” and see what happens. In the console tab at the bottom of R Studio, you’ll see this:</p>
+<p>To this new R script, let’s add our first lines of code. It’s a general convention that we load the libraries of R packages that we want to use in the R session (i.e., when R Studio is running R). Without doing so, if you call functions that aren’t loaded in base R, you’ll encounter an error. For this project and script, we need <code>ggplot</code>, a handy plotting package and <code>tidyverse</code>, a collection of data analysis packages. Make sure you’ve installed them, something you should have done will reading and working with HOPR. These initial lines of code would look like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<pre><code>## ── Attaching packages ───────────────</code></pre>
+<pre><code>## ✓ tibble  3.0.2     ✓ dplyr   0.8.3
+## ✓ tidyr   1.0.0     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.4.0
+## ✓ purrr   0.3.3</code></pre>
+<pre><code>## ── Conflicts ────────────────────────
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<p>Go ahead and just copy and paste these line into your script at line 1. Notice that when you do this nothing happens. Entering code, either by typing or pasting doesn’t tell R to run it. <strong>You must do so explicitly</strong> by selecting a section of code you want to run (the first line in this case) and pressing “enter” or compiling the entire script by clicking on the “run” icon at the top of the R Studio screen. Hit “run” and see what happens. In the console tab at the bottom of R Studio, you’ll see this:</p>
 <img src="loadlib.png" alt="FigName" />
 </center>
 <p><br></p>
 <p>The console is where you see what’s happening or has happened in the R session. Go to the console and type in <code>library(ggplot2)</code> and hit return. You’ve just asked R to load the <code>ggplot2</code> library, but because it’s already loaded, you won’t get any red text in response. Working in the console rather than running code line by line in the script or compiling the whole script can be handy, especially when you just want to do simple things that you don’t want saved in the script. For instance, type <code>5000/3</code> into the console and hit return. Notice you get your answer: 1666.667.</p>
-<p>Let’s move on to another convention of writing an R script, setting the working directory. This is perhaps the most important step when working with external data in R (and doing so many other important tasks, like saving outputs from analyses, e.g., figures, tables, etc.). The working directory is a way of telling R where to find and save things. Without this input R won’t know where to find or place important objects like data or figures, respectively.</p>
-<style>
-div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
-</style>
+<p>Let’s move on to another convention of writing an R script: setting the working directory. This is perhaps the most important step when working with external data in R (and doing so many other important tasks, like saving outputs from analyses, e.g., figures, tables, etc.). The working directory is a way of telling R where to find and save things. Without this input, R won’t know where to find or place important objects like data or figures, respectively.</p>
 <div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+</div>
+<div class="col-sm-9">
 <p><code>setwd()</code> is a command essential to working in R. It’s hard to overstate just how important this component of a script is. Over the years, in working with students learning how to use R, I come to have them recite the three most important rules for beginners:</p>
 <ol style="list-style-type: decimal">
 <li>Always set the working directory!</li>
@@ -491,25 +507,27 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <li>Set the working directory always and forever!</li>
 </ol>
 </div>
+</div>
+</div>
 <p><br></p>
-<p>To perform this all important task, we’ll include a <code>setwd()</code> command. This function merely needs a text string that stipulates the path the the directory you want to work in. The path may look something like, “~/Chris/Documents/bc/3140/scales”. <strong>Note: This will be unique to almost everyone</strong>, that is, we all have different naming conventions for our folders on our computers. My name is Chris, I have a documents folder that contains a “bc” directory, which contains a “3140” directory, which, in turn, contains the “scales” directory I want to work in.</p>
-<p>At first, typing in the text of a path may be confusing and less than intuiative. If this is the case, there’s a hack. In R studio, just click on “Session-&gt;Set Working Directory-&gt;Choose Directory” and, in the file browser window, select the directory you want to work in (say “scales” in this case) and press the “OPEN” icon. This will set the working directory to “scales”. Notice that in the console, a <code>setwd()</code> command has been entered and run, complete with the file path. This file path will be the working directory for the script until you change it through the same approach or close R Studio. When you open your script in R Studio again, you’ll have to set the directory again as well. To avoid this cumbersome step each time you start up R and R Studio, just copy and paste the <code>setwd()</code> command from the console into you script. Now your script should look something like the following but with your own unique file path to the working directory:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">setwd</span>(<span class="st">&quot;~/Chris/Documents/bc/3140/scales&quot;</span>)</a></code></pre></div>
-<p>Select these lines in your script and run them or click on “run”. If all goes well you’ll see these lines appear in the console without any warnings. If you made some error in typing in the file path, then you’ll get an error. For example, if I forget the trailing “s” in the “scales” part of the directory path as in this code, I would’ve gotten the following output:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">setwd</span>(<span class="st">&quot;~/Chris/Documents/bc/3140/scale&quot;</span>)</a></code></pre></div>
+<p>To perform this all important task, we’ll include a <code>setwd()</code> command. This function merely needs a text string that stipulates the path of the directory you want to work in. The path may look something like, “~/Chris/Documents/bc/3140/scales”. <strong>Note: This will be unique to almost everyone</strong>, that is, we all have different naming conventions for our folders on our computers. My name is Chris, I have a documents folder that contains a “bc” directory, which contains a “3140” directory, which, in turn, contains the “scales” directory I want to work in.</p>
+<p>At first, typing in the text of a path may be confusing and less than intuitive. If this is the case, there’s a hack. In R studio, just click on “Session-&gt;Set Working Directory-&gt;Choose Directory” and, in the file browser window, select the directory you want to work in (say “scales” in this case) and press the “OPEN” icon. This will set the working directory to “scales”. Notice that in the console, a <code>setwd()</code> command has been entered and run, complete with the file path. This file path will be the working directory for the script until you change it through the same approach or close R Studio. When you open your script in R Studio again, you’ll have to set the directory again as well. To avoid this cumbersome step each time you start up R and R Studio, just copy and paste the <code>setwd()</code> command from the console into you script. Now your script should look something like the following but with your own unique directory path to the working directory:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">setwd</span>(<span class="st">&quot;~/Chris/Documents/bc/3140/scales&quot;</span>)</a></code></pre></div>
+<p>Select these lines in your script and run them or click on “run”. If all goes well you’ll see these lines appear in the console without any errors. If you made some error in typing in the file path, then you’ll get an error. For example, if I forget the trailing “s” in the “scales” part of the directory path as in this code, I would’ve gotten the following output:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">setwd</span>(<span class="st">&quot;~/Chris/Documents/bc/3140/scale&quot;</span>)</a></code></pre></div>
 <pre><code>## Error in setwd(&quot;~/Chris/Documents/bc/3140/scale&quot;): cannot change working directory</code></pre>
 </div>
 <div id="loading-data" class="section level1">
 <h1>Loading Data</h1>
-<p>OK, now that we’ve gotten our working directory set, we can now load the “scalse.csv” file that was placed in the “scales” directory.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">dat &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;scales.csv&quot;</span>)</a></code></pre></div>
-<p>Here, the command <code>read.csv</code> is used to read in the data and the results are passed to the variable named <code>dat</code>, short for data. By default, the results of reading in a .csv file with <code>read.csv</code> are stored as a data frame, a two dimensional table with rows and columns. Before we get to working with these rows and columns, let’s first inspect what sort of data we have and say something about what the mean.</p>
+<p>OK, now that we’ve gotten our working directory set, we can now load the “scales.csv” file that was placed in the “scales” directory.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">dat &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;scales.csv&quot;</span>)</a></code></pre></div>
+<p>Here, the command <code>read.csv()</code> is used to read in the data and the results are passed to the variable named <code>dat</code>, short for data. By default, the results of reading in a .csv file with <code>read.csv()</code> are stored as a data frame, a two dimensional table-like object with rows and columns. Before we get to working with these rows and columns, let’s first inspect what sort of data we have and say something about what they mean.</p>
 <p>One can see how large the data set is with <code>dim()</code> and reveal the first few lines of the data with the function <code>head()</code> :</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">dim</span>(dat)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">dim</span>(dat)</a></code></pre></div>
 <pre><code>## [1] 1842    4</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">head</span>(dat)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">head</span>(dat)</a></code></pre></div>
 <pre><code>##          N quadrant      species specimen
 ## 1 3.558803       UR A. rupestris   Arup_1
 ## 2 3.528323       UR A. rupestris   Arup_1
@@ -517,10 +535,10 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 4 2.988193       UR A. rupestris   Arup_1
 ## 5 4.281844       UR A. rupestris   Arup_1
 ## 6 4.955457       UR A. rupestris   Arup_1</code></pre>
-<p>Using the <code>dim()</code> function reveals that there are 1842 rows and 4 columns, while the <code>head()</code> command reveals that there are columns named “N”, “quadrant”, “species”, and “specimen”. You might simply want to run these lines in the console rather than from the script—if this is in the script, each time you run it, you’ll get the the dimmensions and first 5 lines of the data printed to the console. You really only need to do this once.</p>
+<p>Using the <code>dim()</code> function reveals that there are 1842 rows and 4 columns, while the <code>head()</code> command reveals that there are columns named “N”, “quadrant”, “species”, and “specimen”. You might simply want to run these lines in the console rather than from the script—if this is in the script, each time you run it, you’ll get the the dimensions and first 5 lines of the data printed to the console. You really only need to do this once.</p>
 <p>The 1842 rows represent the results of puncture experiments on that many scales. The four columns represent the following:</p>
 <ul>
-<li>“N” is the force it took the needle to puncture and scale</li>
+<li>“N” is the force (in Newtons) it took the needle to puncture a scale</li>
 <li>“quadrant” indicates from where on the body the scale (see below):
 <ul>
 <li>“UL”: Upper left of the body (anterodorsal quadrant)</li>
@@ -534,69 +552,77 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <img src="quad.png" alt="FigName" />
 </center>
 <p><br></p>
-<p>Now let’s see how these data are stored in R, what class the columns are. We can do this one of several ways using the function <code>class()</code>. The first and most cumbersome would be to use the subsetting techniques we’ve learning in HOPR to evaluate each column. Rember that the <code>$</code> symbol or numbers reflecting column position (i.e., index) can be employed to retrieve specific columns. Somethig like this:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co">#with &quot;$&quot;</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw">class</span>(dat<span class="op">$</span>N)</a></code></pre></div>
+<p>Now let’s see how these data are stored in R, that is, what class the columns are. We can do this one of several ways using the function <code>class()</code>. The first and most cumbersome would be to use the subsetting techniques we’ve learning in HOPR to evaluate each column. Remember that the <code>$</code> symbol or numbers reflecting column position (i.e., index) can be employed to retrieve specific columns. Something like this:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co">#with &quot;$&quot;</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw">class</span>(dat<span class="op">$</span>N)</a></code></pre></div>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">class</span>(dat<span class="op">$</span>quadrant)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">class</span>(dat<span class="op">$</span>quadrant)</a></code></pre></div>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">class</span>(dat<span class="op">$</span>species)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">class</span>(dat<span class="op">$</span>species)</a></code></pre></div>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">class</span>(dat<span class="op">$</span>specimen)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">class</span>(dat<span class="op">$</span>specimen)</a></code></pre></div>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co">#with index #, produces the same result</span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="kw">class</span>(dat[,<span class="dv">1</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co">#with index, produces the same result</span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="kw">class</span>(dat[,<span class="dv">1</span>])</a></code></pre></div>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">class</span>(dat[,<span class="dv">2</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">class</span>(dat[,<span class="dv">2</span>])</a></code></pre></div>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">class</span>(dat[,<span class="dv">3</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">class</span>(dat[,<span class="dv">3</span>])</a></code></pre></div>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">class</span>(dat[,<span class="dv">4</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">class</span>(dat[,<span class="dv">4</span>])</a></code></pre></div>
 <pre><code>## [1] &quot;factor&quot;</code></pre>
 <p>Here, using either method, we see that the “N” column is numeric (it’s a continuous value corresponding to force), while all the other data columns contain factors, text strings to be exact, representing their discrete values for quadrant, species, and specimen. As you learned in HOPR, this means we must treat the numeric values differently than the factors and vice versa. Go ahead and try treating them the same:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">mean</span>(dat<span class="op">$</span>N)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">mean</span>(dat<span class="op">$</span>N)</a></code></pre></div>
 <pre><code>## [1] 4.734429</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">mean</span>(dat<span class="op">$</span>quadrant)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">mean</span>(dat<span class="op">$</span>quadrant)</a></code></pre></div>
 <pre><code>## Warning in mean.default(dat$quadrant): argument is not numeric or logical:
 ## returning NA</code></pre>
 <pre><code>## [1] NA</code></pre>
 <p>Notice that R tells you that mean can’t be computed on “quadrant” because it is not numeric.</p>
-<div class="green">
-<p>Whenever you get an error in R, the tendency to go right back to the code and try to fix things, paying little attention to the red text in the console. Errors often tell you something very important about your script and, in this example, your data. Be sure to read these errors carefully and makes sense of them before altering your code.</p>
-</div>
-<p><br></p>
 <p>OK, so now we’ve learned what classes of data we have, but we’ve done so in no fewer than four lines of code representing operations on each of the columns. The power or R and other programming languages is that there’s almost always a faster and simpler way of doing things. In this case, we can inspect the class of out data in just one line using <code>sapply()</code>.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">sapply</span>(dat,class)</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">sapply</span>(dat,class)</a></code></pre></div>
 <pre><code>##         N  quadrant   species  specimen 
 ## &quot;numeric&quot;  &quot;factor&quot;  &quot;factor&quot;  &quot;factor&quot;</code></pre>
-<p>Easy peasy with <code>sapply()</code>. Have a look at <code>?sapply()</code>, the help entry, which explains that this function applies another function over a vector. In the case of data frames, <code>sapply()</code> applies a functions over a vector of columns be default. This is considerably more tiddy and speedy than subsetting columns and repeating procedures over each.</p>
+<p>Easy peasy with <code>sapply()</code>. Have a look at <code>?sapply()</code>, the help entry, which explains that this function applies another function over a vector. In the case of data frames, <code>sapply()</code> applies a functions over a vector of columns by default. This is considerably more tidy and speedy than subsetting columns and repeating procedures over each.</p>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+</div>
+<div class="col-sm-9">
+<p>Whenever you get an error in R, the tendency is to go right back to the code and try to fix things, paying little attention to the red text in the console. Errors often tell you something very important about your script and, in this example, your data. Be sure to read these errors carefully and makes sense of them before altering your code. Googling the error is often a huge help.</p>
+</div>
+</div>
+</div>
+<p><br></p>
 </div>
 <div id="simple-operations-summarizing" class="section level1">
-<h1>Simple operations: Summarizing</h1>
-<p>Now that we know what sort of data and how much of we have, let’s do some simple operations that a biologist might perform ahead of any analysis. Consider what additional and important things we want to know about our data. How many species are in our data set? How many specimens per species were included? How many observations (punctures) are there for each species? Yes, Yes, and Yes. These and other questions about the make up of your data can be answered through summarizations.</p>
+<h1>Simple Operations: Summarizing</h1>
+<p>Now that we know what sort of data and how much of it we have, let’s do some simple operations that a biologist might perform ahead of any analysis. Consider what additional and important things we want to know about our data. How many species are in our data set? How many specimens per species were included? How many observations (punctures) are there for each species? Yes, Yes, and Yes. These and other questions about the make up of your data can be answered through summarizations.</p>
 <p>Let’s start with how many species we have. Because we’re working with a factor for species, we can inspect the levels, that is, a factor has one or more unique levels to it. To reveal the levels in factor-type data, we simply pass those data through <code>levels</code>:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">species &lt;-<span class="st"> </span><span class="kw">levels</span>(dat<span class="op">$</span>species)</a>
-<a class="sourceLine" id="cb33-2" data-line-number="2">species</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">species &lt;-<span class="st"> </span><span class="kw">levels</span>(dat<span class="op">$</span>species)</a>
+<a class="sourceLine" id="cb36-2" data-line-number="2">species</a></code></pre></div>
 <pre><code>## [1] &quot;A. rupestris&quot;   &quot;L. gibbosus&quot;    &quot;L. macrochirus&quot; &quot;Mi. salmoides&quot; 
 ## [5] &quot;Mo. saxatilis&quot;  &quot;P. flavescens&quot;</code></pre>
-<p>By storing the levels of species and calling “species” on separate line, we see that there are 6 species in our data set. But let’s have R tell us how many. We can count things in R with the <code>length</code> function:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">length</span>(species)</a></code></pre></div>
+<p>By storing the levels of species and calling “species” on separate line, we see that there are 6 species in our data set. But let’s have R tell us how many. We can count things in R with the <code>length()</code> function:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">length</span>(species)</a></code></pre></div>
 <pre><code>## [1] 6</code></pre>
-<p>The names and number of species, revealed in two lines of code. Pretty simple. Now how about how many observations per species. This is often a crucial piece of summary information, i.e., are there 1800 observations for <em>A. rupestris</em> and just a handful for all the others? If so, this wouldn’t be much of a comprehensive study across these species. Finding how many observations, as with previous operations, can be done in a number of different ways. And like these previous operations, let’s consider both cumbersome and more straighforward methods.</p>
-<p>Because we have the levels (all unique values) of species stored, let’s use that vector of names and some <a href="https://rstudio-education.github.io/hopr/modify.html#logical-subsetting">logical-test operations we learned about in HOPR</a> to subset the data frame and the variable “species” and count the observations. Let’s take on the first value of the “species” variable first. In the code below, all the values in the species column are compared to the first entry for “species” (“A. rupestris”) by using <code>==</code>. This asks the question <em>Does value to the left equal value to the right?</em> In this specific case, we use <code>==</code> to ask <em>Do the values in <code>dat$species</code> equal the first value in the “species” variable?</em></p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">1</span>]</a></code></pre></div>
-<p>Have a look at the result in the console (I’m not showing the ouput here, because . . .). You should see hundres of logical values, <code>TRUE</code> and <code>FALSE</code> with many <code>TRUE</code>’s at first. This indicates that the first 300 or so values for the “species” column matches “A. rupestris”. Now we can nest these logical values within the “species” vector (column) to return only those values that match “A. rupestris”, like so:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">dat<span class="op">$</span>specie[dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">1</span>]]</a></code></pre></div>
-<p>From here, we can find the length of this subsetted vector, save the results in a new variable name that resembles that particular level of “species”, and then iterate through all the levels of “species”. After this, let’s combine the results in a data frame using our “species” variable and <code>c()</code> to combine our new length variables.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">A.rup&lt;-<span class="kw">length</span>(dat<span class="op">$</span>species[dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">1</span>]])</a>
-<a class="sourceLine" id="cb39-2" data-line-number="2">L.gib&lt;-<span class="kw">length</span>(dat<span class="op">$</span>species[dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">2</span>]])</a>
-<a class="sourceLine" id="cb39-3" data-line-number="3">L.mac&lt;-<span class="kw">length</span>(dat<span class="op">$</span>species[dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">3</span>]])</a>
-<a class="sourceLine" id="cb39-4" data-line-number="4">M.sal&lt;-<span class="kw">length</span>(dat<span class="op">$</span>species[dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">4</span>]])</a>
-<a class="sourceLine" id="cb39-5" data-line-number="5">M.sax&lt;-<span class="kw">length</span>(dat<span class="op">$</span>species[dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">5</span>]])</a>
-<a class="sourceLine" id="cb39-6" data-line-number="6">P.fla&lt;-<span class="kw">length</span>(dat<span class="op">$</span>species[dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">6</span>]])</a>
-<a class="sourceLine" id="cb39-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb39-8" data-line-number="8">species.obs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sp=</span>species,<span class="dt">n=</span><span class="kw">c</span>(A.rup,L.gib,L.mac,M.sal,M.sax,P.fla))</a>
-<a class="sourceLine" id="cb39-9" data-line-number="9">species.obs</a></code></pre></div>
+<p>The names and number of species, revealed in two lines of code. Pretty simple. Now how about how many observations per species. This is often a crucial piece of summary information, i.e., are there 1800 observations for <em>A. rupestris</em> and just a handful for all the others? If so, this wouldn’t be much of a comprehensive study across these species. Finding how many observations, as with previous operations, can be done in a number of different ways. And like these previous operations, let’s consider both cumbersome and more straightforward methods.</p>
+<p>Because we have the levels (all unique values) of species stored, let’s use that vector of names and some <a href="https://rstudio-education.github.io/hopr/modify.html#logical-subsetting">logical-test operations we learned about in HOPR</a> to subset the data frame and the variable <code>species</code> and count the observations. Let’s take on the first value of the <code>species</code> variable first. In the code below, all the values in the species column are compared to the first entry for “species” (“A. rupestris”) by using <code>==</code>. This asks the question <em>Does the value to the left equal the value to the right?</em> In this specific case, we use <code>==</code> to ask <em>Do the values in <code>dat$species</code> equal the first value in the “species” variable?</em></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">1</span>]</a></code></pre></div>
+<p>Have a look at the result in the console (I’m not showing the output here, because . . .). You should see hundreds of logical values, <code>TRUE</code> and <code>FALSE</code> with many <code>TRUE</code>’s at first. This indicates that the first 300 or so values for the “species” column matches “A. rupestris”. Now we can nest these logical values within the “species” vector (column) to return only those values that match “A. rupestris”, like so:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">dat<span class="op">$</span>specie[dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">1</span>]]</a></code></pre></div>
+<p>From here, we can find the length of this subsetted vector, save the results in a new variable name that resembles that particular level of “species”, and then iterate through all the levels of “species”. After this, let’s combine the results in a data frame using our <code>species</code> variable and <code>c()</code> to combine our new length variables.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">A.rup&lt;-<span class="kw">length</span>(dat<span class="op">$</span>species[dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">1</span>]])</a>
+<a class="sourceLine" id="cb42-2" data-line-number="2">L.gib&lt;-<span class="kw">length</span>(dat<span class="op">$</span>species[dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">2</span>]])</a>
+<a class="sourceLine" id="cb42-3" data-line-number="3">L.mac&lt;-<span class="kw">length</span>(dat<span class="op">$</span>species[dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">3</span>]])</a>
+<a class="sourceLine" id="cb42-4" data-line-number="4">M.sal&lt;-<span class="kw">length</span>(dat<span class="op">$</span>species[dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">4</span>]])</a>
+<a class="sourceLine" id="cb42-5" data-line-number="5">M.sax&lt;-<span class="kw">length</span>(dat<span class="op">$</span>species[dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">5</span>]])</a>
+<a class="sourceLine" id="cb42-6" data-line-number="6">P.fla&lt;-<span class="kw">length</span>(dat<span class="op">$</span>species[dat<span class="op">$</span>species<span class="op">==</span>species[<span class="dv">6</span>]])</a>
+<a class="sourceLine" id="cb42-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb42-8" data-line-number="8"><span class="co">#combine the results with species</span></a>
+<a class="sourceLine" id="cb42-9" data-line-number="9">species.obs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">sp=</span>species,<span class="dt">n=</span><span class="kw">c</span>(A.rup,L.gib,L.mac,M.sal,M.sax,P.fla))</a>
+<a class="sourceLine" id="cb42-10" data-line-number="10">species.obs</a></code></pre></div>
 <pre><code>##               sp   n
 ## 1   A. rupestris 363
 ## 2    L. gibbosus 252
@@ -604,25 +630,12 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 4  Mi. salmoides 310
 ## 5  Mo. saxatilis 289
 ## 6  P. flavescens 260</code></pre>
-<p>There we have it, the number of observations/punctures for each species. Pretty evenly distrubuted, so not to worried about widely uneven sample size. This is great, but, this took many lines of code and some “hard coding”, that is, explicitly inputting a value. The hard coding issue here is with typing in the numeric postion (“1”, “2”, “3”, etc.) for each entry in our “species” variable. This is a drag and opens the door to mistakes. Why not let R do the interations for you?</p>
-<p>As we’re leanring, summarizing data is an important step in any analysis. Forntunately, succinct methods and operations in R for summarizing exist in several popular packages. Perhaps the most widely used are those curated in the “tidyverse”, a set of R packages designed for data science. All the packages in tidyverse share an underlying design philosophy, grammar (what the functions looks like), and data structures, making it a one stop shopping experience for data analysis. We’ll introduce how to summarize data using functions from tidyverse here and move on to more involved operations using tidyverse in the next module.</p>
-<p>Make sure you have the tidyverse packages installed. If not:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</a></code></pre></div>
-<p>Then load the library (rember to put this as the top of your script):</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
-<pre><code>## ── Attaching packages ────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
-<pre><code>## ✓ tibble  3.0.2     ✓ dplyr   0.8.3
-## ✓ tidyr   1.0.0     ✓ stringr 1.4.0
-## ✓ readr   1.3.1     ✓ forcats 0.4.0
-## ✓ purrr   0.3.3</code></pre>
-<pre><code>## Warning: package &#39;tibble&#39; was built under R version 3.6.2</code></pre>
-<pre><code>## ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<p>tidyverse includes the <code>dplyr</code> package, a super helpful library of functions for data analysis. Let’s use it’s <code>summarise()</code> and <code>group_by()</code> functions and pipe convention (<code>%&gt;%</code>) to find the number of punctures per species. The <code>summarise()</code> function creates variables that summarize the data according to variables of interest. We set these variables of interest using <code>group_by()</code>. The pipe, <code>%&gt;%</code>, is used to combine data with these functions. As we’ll take on in more detail later, the pipe <code>%&gt;%</code> passes results from left to right. Using the pipe with the data and the functions <code>group_by()</code> and <code>summarize()</code>, we summarize our data by species rather succinctly.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">dat <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(species) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb47-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>())</a></code></pre></div>
+<p>There we have it, the number of observations/punctures for each species. Pretty evenly distributed, so not to worry about widely uneven sample sizes. This is great, but, this took many lines of code and some “hard coding”, that is, explicitly inputting a value. The hard coding issue here is with typing in the numeric potion (“1”, “2”, “3”, etc.) for each entry in our “species” variable. This is a drag and opens the door to mistakes. Why not let R do the iterations for you?</p>
+<p>As we’re learning, summarizing data is an important step in any analysis. Fortunately, succinct methods and operations in R for summarizing exist in several popular packages. Perhaps the most widely used are those curated in “tidyverse”, a set of R packages designed for data science. All the packages in tidyverse share an underlying design philosophy, grammar (what the functions looks like and ask for), and data structures, making it a one stop shopping experience for data analysis. We’ll introduce how to summarize data using functions from tidyverse here and move on to more involved operations using tidyverse in the next module. Should should already have tidyverse installed and loaded.</p>
+<p>tidyverse includes the <code>dplyr</code> package, a super helpful library of functions for data analysis. Let’s use its <code>summarise()</code> and <code>group_by()</code> functions and pipe convention (<code>%&gt;%</code>) to find the number of punctures per species. The <code>summarise()</code> function creates variables that summarize the data according to variables of interest. We set these variables of interest using <code>group_by()</code>. The pipe, <code>%&gt;%</code>, is used to combine data with these functions. As we’ll see in more detail later, the pipe <code>%&gt;%</code> passes results from left to right. Using the pipe with the data and the functions <code>group_by()</code> and <code>summarize()</code>, we summarize our data by species rather succinctly.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">dat <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(species) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>())</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##   species            n
 ##   &lt;fct&gt;          &lt;int&gt;
@@ -632,12 +645,12 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 4 Mi. salmoides    310
 ## 5 Mo. saxatilis    289
 ## 6 P. flavescens    260</code></pre>
-<p>What this code essentially means is <em>pass the data through the function <code>group_by()</code>, grouping it by the “species” column, and summarize it according to group with a count (<code>n()</code>)</em>. Notice the result is a tibble, a particular type of data object, akin to a data frame. We’ll discuss tibbles more in the next module.</p>
+<p>What this code essentially means is <em>pass the data through the function <code>group_by()</code>, grouping it by the “species” column, and summarize it according to group with a count, <code>n()</code></em>. Notice the result is a tibble, a particular type of data object, akin to a data frame. We’ll discuss tibbles more in the next module.</p>
 <p>Of course, we can save these results to a variable.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">species.n&lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb49-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(species) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb49-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>())</a>
-<a class="sourceLine" id="cb49-4" data-line-number="4">species.n</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">species.n&lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb46-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(species) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb46-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>())</a>
+<a class="sourceLine" id="cb46-4" data-line-number="4">species.n</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##   species            n
 ##   &lt;fct&gt;          &lt;int&gt;
@@ -647,11 +660,11 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 4 Mi. salmoides    310
 ## 5 Mo. saxatilis    289
 ## 6 P. flavescens    260</code></pre>
-<p>Now we haven’t answered one of our questions, <em>How many specimens for each species?</em>. This, again is super easy with <code>dplyr</code> and the pipe. Here, we pass out data to a <code>count()</code> function that counts observations according to groups (“species” and “specimen” in this case), use <code>print()</code> so you can see the output, and then we count this output of observations by “species” to find the unique values of “specimen”.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb51-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(species,specimen) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb51-3" data-line-number="3"><span class="st">  </span><span class="kw">print</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb51-4" data-line-number="4"><span class="st">  </span><span class="kw">count</span>(species,<span class="dt">name =</span> <span class="st">&quot;n.specimens&quot;</span>)</a></code></pre></div>
+<p>Now we haven’t answered one of our questions, <em>How many specimens for each species?</em>. This, again is super easy with <code>dplyr</code> and the pipe. Here, we pass our data to a <code>count()</code> function that counts observations according to groups (“species” and “specimen” in this case), use <code>print()</code> so you can see the output, and then we count this output of observations by “species” to find the unique values of “specimen”.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">dat <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(species,specimen) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-3" data-line-number="3"><span class="st">  </span><span class="kw">print</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-4" data-line-number="4"><span class="st">  </span><span class="kw">count</span>(species,<span class="dt">name =</span> <span class="st">&quot;n.specimens&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 25 x 3
 ##    species        specimen     n
 ##    &lt;fct&gt;          &lt;fct&gt;    &lt;int&gt;
@@ -676,15 +689,22 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 5 Mo. saxatilis            3
 ## 6 P. flavescens            4</code></pre>
 <div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+</div>
+<div class="col-sm-9">
 <p>By now, you’re head may be spinning like a top. This is a lot to take in. Don’t worry! We’re just running quickly through the basics and won’t worry too much about committing any of this to memory. Just keep moving through this project, logging these operations in your R script, and you can always come back to specific parts when challenged by similar tasks in the future.</p>
+</div>
+</div>
 </div>
 <p><br></p>
 </div>
 <div id="loop-when-you-can" class="section level1">
 <h1>Loop When You Can</h1>
-<p>Phew! You’re almost there, the end of the Module 2 Project. Just one last important concept to work through, the loop, specifically, the <code>for</code> loop. This is a great device for interating through operations for which there aren’t dedicated functions. Important examples of this in the context of organismal biology include loading data from many files into one dataset and producing a bunch of figures all at once from a large data set, amongst other things. Since we have a large dataset loaded, why don’t we use a <code>for()</code> loop to produce a bunch of figures.</p>
+<p>Phew! You’re almost there, the end of the Module 2 Project. Just one last important concept to work through, the loop, specifically, the <code>for</code> loop. This is a great device for iterating through operations for which there aren’t dedicated functions. Important examples of this in the context of organismal biology include loading data from many files into one data set and producing a bunch of figures all at once from a large data set, among other things. Since we have a large data set loaded, why don’t we use a <code>for()</code> loop to produce a bunch of figures.</p>
 <p>A <code>for()</code> loop essentially tells R to do something over a set of things in a vector. For instance, for “i” in 1 to 10, print each “i”:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) <span class="kw">print</span>(i)</a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) <span class="kw">print</span>(i)</a></code></pre></div>
 <pre><code>## [1] 1
 ## [1] 2
 ## [1] 3
@@ -695,33 +715,52 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## [1] 8
 ## [1] 9
 ## [1] 10</code></pre>
-<p>In the context of doing something much more complicated, this saves a bunch of time. Back to our example of saving many figures from our large dataset. Consider the case of plotting the mean puncture force for each quadrant in each species. This is easily accomplished with a short <code>for()</code> loop that works over our “species” variable and contains a filter, pipes, and a <code>ggplot()</code> operation.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="cf">for</span>(i <span class="cf">in</span> species){</a>
-<a class="sourceLine" id="cb56-2" data-line-number="2">  p &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb56-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(species<span class="op">==</span>i)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb56-4" data-line-number="4"><span class="st"> </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>quadrant,<span class="dt">y=</span>N))<span class="op">+</span><span class="kw">ggtitle</span>(i)</a>
-<a class="sourceLine" id="cb56-5" data-line-number="5"> <span class="kw">print</span>(p)</a>
-<a class="sourceLine" id="cb56-6" data-line-number="6">}</a></code></pre></div>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-20-1.png" width="672" /><img src="mod2_proj_files/figure-html/unnamed-chunk-20-2.png" width="672" /><img src="mod2_proj_files/figure-html/unnamed-chunk-20-3.png" width="672" /><img src="mod2_proj_files/figure-html/unnamed-chunk-20-4.png" width="672" /><img src="mod2_proj_files/figure-html/unnamed-chunk-20-5.png" width="672" /><img src="mod2_proj_files/figure-html/unnamed-chunk-20-6.png" width="672" /></p>
-<p>Here, for each value <code>i</code> in <code>species</code> we passed <code>dat</code> through a filter where <code>species==i</code>, plotted a boxplot using <code>ggplot</code> where x is the quadrant, y is the puncture force. For each species, this got saved to <code>p</code> and then we printed <code>p</code>. Notice that 6 separate plots are sent sequentially to the “plots” tab in the lower right panel. This is where graphical results are shown in R Studio. No need to establish 6 seperate pieces of code for each figure.</p>
+<p>In the context of doing something much more complicated, this saves a bunch of time. Back to our example of saving many figures from our large data set. Consider the case of plotting the mean puncture force for each quadrant in each species. This is easily accomplished with a short <code>for()</code> loop that works over our <code>species</code> variable and contains a filter, pipes, and a <code>ggplot()</code> operation.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="cf">for</span>(i <span class="cf">in</span> species){</a>
+<a class="sourceLine" id="cb53-2" data-line-number="2">  p &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(species<span class="op">==</span>i)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-4" data-line-number="4"><span class="st"> </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>quadrant,<span class="dt">y=</span>N))<span class="op">+</span><span class="kw">ggtitle</span>(i)</a>
+<a class="sourceLine" id="cb53-5" data-line-number="5"> <span class="kw">print</span>(p)</a>
+<a class="sourceLine" id="cb53-6" data-line-number="6">}</a></code></pre></div>
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-18-1.png" width="672" /><img src="mod2_proj_files/figure-html/unnamed-chunk-18-2.png" width="672" /><img src="mod2_proj_files/figure-html/unnamed-chunk-18-3.png" width="672" /><img src="mod2_proj_files/figure-html/unnamed-chunk-18-4.png" width="672" /><img src="mod2_proj_files/figure-html/unnamed-chunk-18-5.png" width="672" /><img src="mod2_proj_files/figure-html/unnamed-chunk-18-6.png" width="672" /></p>
+<p>Here, for each value <code>i</code> in <code>species</code> we passed <code>dat</code> through a filter where <code>species==i</code>, plotted a boxplot using <code>ggplot</code> where x is the quadrant, y is the puncture force. For each species, this got saved to <code>p</code> and then we printed <code>p</code>. Notice that 6 separate plots are sent sequentially to the “Plots” tab in the lower right panel. This is where graphical results are shown in R Studio. No need to establish 6 separate pieces of code for each figure.</p>
 <p>Let’s wrap this up by saving a PDF file containing all the figures.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="kw">pdf</span>(<span class="st">&quot;species.quadrant.pdf&quot;</span>)</a>
-<a class="sourceLine" id="cb57-2" data-line-number="2"><span class="cf">for</span>(i <span class="cf">in</span> species){</a>
-<a class="sourceLine" id="cb57-3" data-line-number="3">  p &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb57-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(species<span class="op">==</span>i)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb57-5" data-line-number="5"><span class="st"> </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>quadrant,<span class="dt">y=</span>N))<span class="op">+</span><span class="kw">ggtitle</span>(i)</a>
-<a class="sourceLine" id="cb57-6" data-line-number="6"> <span class="kw">print</span>(p)</a>
-<a class="sourceLine" id="cb57-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb57-8" data-line-number="8"><span class="kw">dev.off</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="kw">pdf</span>(<span class="st">&quot;species.quadrant.pdf&quot;</span>)</a>
+<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="cf">for</span>(i <span class="cf">in</span> species){</a>
+<a class="sourceLine" id="cb54-3" data-line-number="3">  p &lt;-<span class="st"> </span>dat <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb54-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(species<span class="op">==</span>i)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb54-5" data-line-number="5"><span class="st"> </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>quadrant,<span class="dt">y=</span>N))<span class="op">+</span><span class="kw">ggtitle</span>(i)</a>
+<a class="sourceLine" id="cb54-6" data-line-number="6"> <span class="kw">print</span>(p)</a>
+<a class="sourceLine" id="cb54-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb54-8" data-line-number="8"><span class="kw">dev.off</span>()</a></code></pre></div>
 <pre><code>## quartz_off_screen 
 ##                 2</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="kw">list.files</span>(<span class="dt">pattern=</span><span class="st">&quot;.pdf&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">list.files</span>(<span class="dt">pattern=</span><span class="st">&quot;.pdf&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;species.quadrant.pdf&quot;</code></pre>
 <p>The wrapping function <code>pdf()</code> prints graphic output to a file, in this case one named “species.quadrant.pdf”. Any plot printed with <code>p()</code> after <code>pdf()</code> and before <code>dev.off()</code> saves the plots in the named file. The <code>list.files()</code> command with <code>pattern=&quot;.pdf&quot;</code> confirms that a PDF file was saved to our working directory.</p>
 </div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
-<p>The goal of this project report is to submit an R script that runs the code presented above and produces the PDF of mean puncture force across each quadrant for each species. Have one representative of each team submit the code and PDF here. Submissions are due by 11:59 PM on Sunday, September 13th.</p>
+<p>The goal of this project report is to submit an R script that runs the code presented above and produces the PDF of mean puncture force across each quadrant for each species. For the project to be complete, the script must include the following:</p>
+<pre><code>+ A &#39;dat` variable containing the scales dataset.
++ A line of code which reports the class of each column in the dataset.
++ A line of code which reports the dimensions of the dataset.
++ Code that produces a summary of the number of scales punctured for each species.
++ Code that produces a summary of the number of specimens sampled for each species.
++ Code that produces a PDF file containing 6 figures, one for each species that includes a boxplot of puncture force verus quadrant. </code></pre>
+<p>Have one representative of each team submit the code and PDF <a href="https://forms.gle/GZotQwqzAFczb8pW9">here</a>. Submissions are due by 11:59 PM on Sunday, September 13th.</p>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+</div>
+<div class="col-sm-9">
+As a reminder, please check out the <a href="phaseI_rubric.html">Phase I projects rubric</a> to get a sense of how this project will be assessed.
+</div>
+</div>
+</div>
+</div>
+<p><br></p>
 </div>
 
 

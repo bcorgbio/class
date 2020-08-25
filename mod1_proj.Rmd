@@ -5,6 +5,8 @@ title: "Module 1 Project"
 <style>
 div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </style>
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
 
 # Introdution
 
@@ -35,6 +37,15 @@ Notice that the  AREF pin is receiving 3.3v from the pin of that name. This chan
 ## Programming
 
 Now program the Arduino by uploading the second sketch from Adafruit's [Using a Temp Sensor](https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor) tutorial. If everything is in order---you've chosen the right port and board in Arduino IDE---you can now click on the serial monitor icon in the upper right of the IDE (or pres "cmd/ctrl+shift+m") to see what data are being printed from the microcontroller to your computer over the serial (USB) port. It should look something like this. If so, CONGRATS! You're recording temperature data!
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">When getting setup with your Arduino, makes sure you've selected the correct board and port from the "Tools" dropdown menu in the IDE!
+</div>
+</div>
+</div>
+<br>
 
 <center>
 ![FigName](tempserial.png)
@@ -291,3 +302,12 @@ void loop(void) {
 # Project Report
 
 No need to write anything up. Please merely run the modified sketch on your temp sensor protype and upload a video of the serial monitor printing comma separated values. You can capture the video by recording the screen on your phone and upload it [here](https://forms.gle/gRHLVdGKh4bsF3Md7). Please upload the video by 11:59 PM on Sunday, September 6th. 
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">As a reminder, please check out the [Phase I projects rubric](phaseI_rubric.html) to get a sense of how this project will be assessed.</div>
+</div>
+</div>
+</div>
+<br>

@@ -12,11 +12,13 @@ Organismal biology is the study of living systems of all scales that shape the s
 <style>
 div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </style>
+
 <div class = "green">
-
-This is a highly technical course and will surely challenge all us. BIOL 3140 is designed for folks with no coding or prototyping experience, so at many times in the course, a student will feel lost and confused. ***This is exactly where we want to be!*** This is where the learning happens. 
-
-
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">This is a highly technical course and will surely challenge all us. BIOL 3140 is designed for folks with no coding or prototyping experience, so at many times in the course, a student will feel lost and confused. ***This is exactly where we want to be!*** This is where the learning happens. 
+</div>
+</div>
 </div>
 <br>
 
@@ -60,9 +62,16 @@ To be an effective organismal biologist, one we must prepare, analyze, visualize
 As a course-based research experience, BIOL 3140 is meant to develop and hone skills related to instrumentation and data science in the context of organismal biology. The thrust of this course will center around the development of simple sensor-data acquisition systems and the analysis of data collected from them. Through hands-on design and fabrication of sensor-based instrument prototypes representing models of more complex instrumentation, students will develop a direct relationship with the source of data in scientific research. 
 
 <div class = "green">
-As was mentioned at the top, students will often feel adrift, unsure of how to proceed. This is by design and a model of how experimental work and data analysis in biology unfolds. Nonetheless, students may worry about their grade in the course and how to do well when challenges emerge at every turn. Fear not! For each assignment in the course (e.g., module project reports) student or team engagement and effort will be assessed just as much as how well objective questions have been answered.  
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">As was mentioned at the top, students will often feel adrift, unsure of how to proceed. This is by design and a model of how experimental work and data analysis in biology unfolds. Nonetheless, students may worry about their grade in the course and how to do well when challenges emerge at every turn. Fear not! For each assignment in the course (e.g., module project reports) student or team engagement and effort will be assessed just as much as how well objective questions have been answered. 
+</div>
+</div>
 </div>
 <br>
+
+ 
+
 
 ## Course goals and objectives
 
@@ -221,7 +230,7 @@ In Phase II, we'll use our new-found instrument- and code-development skills to 
 
   1. **Birds of a Feather Migrate Together . . . Sometimes:** Using EBird data to Explore the Phenology of Passerine Migration (auk package from R) (data driven)
   2. **Beach Muscles:** Exploring Force-Length Relationships in Vertebrate Muscle (instrument and data driven)
-  3. **Hot Flashes I:** Scaling the Diel Temperature Oscillations in Mammals (instrument and data driven)
+  3. **Hot Flashes I:** Scaling of Diel Temperature Oscillations in Mammals (instrument and data driven)
   4. **Hot Flashes II:** Not So Fast! Correcting Scaling Models Withing a Phylogenetic Context (data driven)
   5. **Jumping UGs**: Testing the Limits of Human Lower Body Power (instrument and data driven)
   
@@ -260,12 +269,19 @@ Your grade will be based on five assignment components: Asking and answering que
 The discussion portion of your grade will be calculated by determining the percentage of times your team both asked and answered a question when assigned to (usually once per week) and multiplying this by 100. That is, if you are asked to submit 15 questions and answers over the course of the semester and post and answer 12, your discussion points will equal 80. A discussion assignment will be considered complete if and only if a question is posted AND another answered. 
 
 
-More details about the specific requirements of Phase I, II, and III projects can be found under our [course schedule page](~/schedule.html). 
+More details about the specific requirements of Phase I, II, and III projects can be found under our "Projects" tab at the top of this page. 
+
 
 <div class = "green">
-As a reminder, assessment for project reports will incorporate an evaluation of an individual's or team's effort and engagement in addition to more objective components (i.e., answers, conclusions, etc.). To do well, the formula is simple: students and their teams should remain persistent, ask for guidance, and make clear conclusions using the skills and tools they learn in the course.
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">As a reminder, assessment for project reports will incorporate an evaluation of an individual's or team's effort and engagement in addition to more objective components (i.e., answers, conclusions, etc.). To do well, the formula is simple: students and their teams should remain persistent, ask for guidance, and make clear conclusions using the skills and tools they learn in the course.
+</div>
+</div>
 </div>
 <br>
+
+
 
 
 # Accommodation and Accessibility
@@ -285,7 +301,7 @@ Students in this course, as all others at BC, must produce original work and cit
 
 If you write Professor Kenaley with a question, he’ll try to get back to you within 24 hours. If you don’t receive a response, it’s likely because the answer to your question is available here or on our discussion site. Rather than write Prof. Kenaley with questions related to course mechanics and expectations, please post these in our [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140), It’s probably the case that others have the same questions.
 
-Office hours can be arranged by appointment via email and will take place over Zoom. Please come equipped with poignant questions and expect that other students have questions as urgent as yours.
+Office hours can be arranged by appointment via email and will take place over Zoom. Office hours may involve more more than studen or team, so please come equipped with poignant questions and expect that other students have questions as urgent as yours.
 
 
 

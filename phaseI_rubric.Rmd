@@ -1,0 +1,14 @@
+---
+title: "Phase I Project Report Rubric"
+---
+
+# General Guidelines
+
+Phase I is meant to bring you up to speed on the ins and outs of intrument prototyping and data analysis in the context of organismal biology. The project reports for this initial stage are not meant to be burdonsome, however they will require some diligent work and a consitent effort to seek help. The following reubric represents how the 10 points for each of the 5 reports will be assessed.
+
+# Rubric
+ |Component| **Spot On (5 pts)** |  **Pretty Good (3 pts)** | **Needs Work (1 pt)**  
+|--------|-------- |-------- |--------
+| Tasks and Outputs | Completes all tasks fully; submits all required outputs and materials on time| Completes a majority but not all tasks fully; submission meets the deadline  | Completes few required taks or submits few required matrials; submission misses the deadline
+| Effort and Engagement | Individual or team asks questions or seeks help regularly|  Individual or team asks questions or seek help sometimes, but not regularly  |  Individual or team does not seem help
+||||
