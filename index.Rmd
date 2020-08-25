@@ -102,7 +102,7 @@ To quote Joseph Chamberlain, ". . . We are living in most interesting times." A 
 To facilitate our team approach, I'll be assigning each student to a team of 4 students. This team must establish two things:
 
   1. A unique team name. Puns are welcome and encouraged (e.g., "R-tful Coders") 
-  2. A team discussion on GitHub that includes me on the team (see [discussion section](discussion)). 
+  2. A team discussion on GitHub that includes me on the team (see [Discussion Board]). 
   
 Each week, teams should use their team discussion boards to generate a question to post on the the class-wide discussion board. A team representative must submit this question and include the team handle in the title surrounded by brackets, like you see below for that make-believe team "R-tful codes" with the handle "@bcorgbio/r-tful-coders". The team must also decide which question to answer and then post their feedback or answer addressing the handle for the original team posters (see below)
 
@@ -128,7 +128,7 @@ A flipped course, especially one of this technical nature, will require sublime 
   + I will be available to help and discuss topics during scheduled class time, arranged office hours, and on our class [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) .
 
 
-# Discussion Board {#discussion}
+# Discussion Board 
 
 Most weeks, a representative from your team you will be asked to submit at least one question and answer another on our class [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140). This is hosted on GitHub, just like our course site and will certainly be an important resource as you work through course material. When you post a question, you should:
 

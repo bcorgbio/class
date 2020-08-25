@@ -7,7 +7,7 @@ output:
     highlight: tango
     toc: true # adds a table of contents
     toc_float: true
-    number_sections: TRUE
+    number_sections: FALSE
     css: style.css
 navbar: 
   title: "BIOL 3140"
@@ -15,9 +15,17 @@ navbar:
     - text: "Home"
       href: index.html
     - text: "Schedule"
-      href: schedule.html
+      href: schudle.html
+    - text: "Projects"
+      menu:
+        - text: "Phase I"
+        - text: "Module 1 Project"
+          href: mod1_proj.html
+        - text: "Module 2 Project"
+          href: mod2_proj.html
     - text: "BIOL 3140 Discussion"
       href: https://github.com/orgs/bcorgbio/teams/biol-3140
+      
     
  
     
