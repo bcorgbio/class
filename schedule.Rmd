@@ -12,16 +12,16 @@ In this phase, we'll learn the basics of instrumentation and data analysis by wo
 
 This module is intended to give students the background and skills to begin designing and programing of simple hardware devices using Arduino.
 
-### Dates: 
+### Dates 
 Week 1 (Aug 31—Sep 4):
 
-### Key Concepts:
+### Key Concepts
   + Course workflow
   + Course expectations
   + Arduino IDE basics (the sketch)
   + Digital vs. Analog I/O
   
-### Learning Objectives:
+### Learning Objectives
 
 Upon completion of this week and module, students will be able to:
 
@@ -29,7 +29,7 @@ Upon completion of this week and module, students will be able to:
   + Design and program a blinking Arduino unit
   + Design and program a simple Arduino DAQ
 
-### Read/Watch: 
+### Read/Watch 
 
   + [What is Arduino?](https://www.arduino.cc/en/Guide/Introduction)
   + [Getting started with Arduino](https://www.arduino.cc/en/Guide)
@@ -40,7 +40,7 @@ Upon completion of this week and module, students will be able to:
   + Adafruit's [Using a Temp Sensor](https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor)
 
 
-### Do:
+### Do
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
   + [Install Arduino IDE](https://www.arduino.cc/en/Guide)
@@ -49,7 +49,7 @@ Upon completion of this week and module, students will be able to:
   + [Upload video of temp data](https://forms.gle/gRHLVdGKh4bsF3Md7) passing through serial monitor on Arduino IDE [10 points]
 
 
-### Guiding Questions:
+### Guiding Questions
 
   + Where does one find important course information?
   + What are the major components of an Arduino microcontroller?
@@ -59,18 +59,13 @@ Upon completion of this week and module, students will be able to:
 
 ### Module 1 Schedule
 
+All assignments are due at 11:59 on the specified date.
+
  || Monday <br> 8/31 |  Tuesday <br>9/1    | Wednesday<br>  9/2 | Thursday <br> 9/3 | Friday <br> 9/4 |Saturday<br> 9/5 | Sunday<br> 9/6
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
 **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Upload temp video
 ||||||||
 
-### Module 1 Project
-The project for Module 1 is available through this link
-
-
-#### Project Report
-
-No need to write anything up. Please merely run the modified sketch on your temp sensor protype and upload a video of the serial monitor printing comma separated values. You can capture the video by recording the screen on your phone and upload it [here](https://forms.gle/gRHLVdGKh4bsF3Md7). Please upload the video by 11:59 PM on Sunday, September 6th.  
 
 ## Module 2: Data Pirates Code with. . . . R, Introduction to the Basics
 
@@ -79,7 +74,7 @@ In this module we'll learn the basics of coding in R. This introduction to R ass
 ### Dates: 
 Week 2 (Sep 7—13):
 
-### Key Concepts:
+### Key Concepts
   + R user interface
   + Working directory
   + Objects, functions, arguments, and scripts in R
@@ -87,7 +82,7 @@ Week 2 (Sep 7—13):
   + Basic R notation
   + The `for` loop
   
-### Learning Objectives:
+### Learning Objectives
 
 Upon completion of this week and module, students will be able to:
 
@@ -97,7 +92,7 @@ Upon completion of this week and module, students will be able to:
   + Perform simple data operations and manipulation of data objects in R
   + Contruct and run a `for` loop in R to automate a interatively redundant task.
  
-### Read/Watch: 
+### Read/Watch 
 
 All from [Hands on Programming with R](https://rstudio-education.github.io/hopr) (HOPR)
 
@@ -117,20 +112,20 @@ When reading through HOPR, make sure to have R and R Studio up and running so th
 <div class = "green">
 <div class="row">
   <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
-  <div class="col-sm-9">This is a lot of reading and fiddling with R. Don't worry too much about understanding every detail! The goal here is to just get the hang of things and, just as importantly, know where to find answers to questions about how R works. .</div>
+  <div class="col-sm-9">This is a lot of reading and fiddling with R. Don't worry too much about understanding every detail! The goal here is to just get the hang of things and, just as importantly, know where to find answers to questions about how R works.</div>
 </div>
 </div>
 </div>
 <br>
 
-### Do:
+### Do
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
   + [Install R and RStudio](https://rstudio-education.github.io/hopr/starting.html#starting)
   + Complete and submit a report for Module 2 Project 
 
 
-### Guiding Questions:
+### Guiding Questions
 
   + How do I perform simple operations in R?
   + What are R's basic object classes?
@@ -140,47 +135,48 @@ When reading through HOPR, make sure to have R and R Studio up and running so th
 
 
 ### Module 2 Schedule
+
+All assignments are due at 11:59 on the specified date.
+
  || Monday <br> 9/7 |  Tuesday <br>9/8    | Wednesday<br>  9/9 | Thursday <br> 9/10 | Friday <br> 9/11 |Saturday<br> 9/11 | Sunday<br> 9/13
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module II Project Report
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 2 Project Report
 ||||||||
 
-### Module 2 Project
 
 
 
+<!-- #ddply intro -->
+<!-- https://seananderson.ca/2014/09/13/dplyr-intro/ -->
 
-#ddply intro
-https://seananderson.ca/2014/09/13/dplyr-intro/
+<!-- ### Week 3 (Sep 17—11) -->
 
-### Week 3 (Sep 17—11)
+<!-- ## Week 3 (Sep 14–Sep 18) -->
 
-## Week 3 (Sep 14–Sep 18)
+<!-- ## Week 4 (Sep 21–Sep 25) -->
 
-## Week 4 (Sep 21–Sep 25)
+<!-- ## Week 5 (Sep 28–Oct 2) -->
 
-## Week 5 (Sep 28–Oct 2)
+<!-- ## Week 6 (Oct 5–9) -->
 
-## Week 6 (Oct 5–9)
+<!-- ## Week 7 (Oct 12–16) -->
 
-## Week 7 (Oct 12–16)
+<!-- ## Week 8 (Oct 19–23) -->
 
-## Week 8 (Oct 19–23)
+<!-- ## Week 9 (Oct 26–30) -->
 
-## Week 9 (Oct 26–30)
+<!-- ## Week 10 (Nov 2–6) -->
 
-## Week 10 (Nov 2–6)
+<!-- ## Week 11 (Nov 9–13) -->
 
-## Week 11 (Nov 9–13)
+<!-- ## Week 12 (Nov 16–20) -->
 
-## Week 12 (Nov 16–20)
+<!-- ## Week 12 (Nov 23–27) -->
 
-## Week 12 (Nov 23–27)
-
-## Week 13 (Nov 30–Dec 4)
+<!-- ## Week 13 (Nov 30–Dec 4) -->
 
 
-## Week 14 (Dec 7–Dec 10)
+<!-- ## Week 14 (Dec 7–Dec 10) -->
 
-## Week 15 (Sep 28–Oct 2)
+<!-- ## Week 15 (Sep 28–Oct 2) -->
 
