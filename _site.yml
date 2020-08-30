@@ -23,8 +23,6 @@ navbar:
           href: phaseI_rubric.html
         - text: "Module 1 Project"
           href: mod1_proj.html
-        - text: "Module 2 Project"
-          href: mod2_proj.html
     - text: "BIOL 3140 Discussion"
       href: https://github.com/orgs/bcorgbio/teams/biol-3140
       

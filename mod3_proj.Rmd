@@ -1,0 +1,12 @@
+---
+title: "Module 3 Project"
+
+---
+
+# Tidying data
+
+Use example from walking kinematics: mtrackJ ouput (wide vs. long problem), volations of the tidy rule each variable has one column, each instance (observation) has one row.
+
+# parsing
+
+not generally a problem if files are structure correctly.

@@ -6,75 +6,18 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 # Phase I: The basics
 
-In this phase, we'll learn the basics of instrumentation and data analysis by working through XX learning modules devoted to instrument design and data analysis. This will most likely be the most challenging part of the course in that many, if not most of you will not have ever designed and built instruments and data acquisition systems, let alone analyzed data from them. Rest assured, your experience will be curated, sticking to the bare bones of instrument design and data science. This introductory phase will set the groundwork for Phase II, the independent development of sensors and data analysis.
+In this phase, we'll learn the basics of instrumentation and data analysis by working through 5 learning modules devoted to instrument design and data analysis. This will most likely be the most challenging part of the course in that many, if not most of you will not have ever designed and built instruments and data acquisition systems, let alone analyzed data from them. Rest assured, your experience will be curated, sticking to the bare bones of instrument design and data science. This introductory phase will set the groundwork for Phase II, the independent development of sensors and data analysis.
 
-## Module 1: Introduction and Cheap Tricks
+## Module 1: Data Pirates Code with. . . . R, Introduction to the Basics
 
-This module is intended to give students the background and skills to begin designing and programing of simple hardware devices using Arduino.
+In this module we'll tackle where to find resource you'll need on a week-to-week, module-by-module basis. In addition, we'll work on the first important topic of the course: and introduction to R, an ever more popular languange for data analysis and visualization. We'll focus on the basics of importing and tidying data in R. By importing, we mean loading data collected by scientists and stored in text files, the lingua franca of scientific data. By tidying, we mean preparing data for analysis.
 
 ### Dates 
-Week 1 (Aug 31—Sep 4):
+Week 1 (Aug 31—Sep 13):
 
 ### Key Concepts
   + Course workflow
   + Course expectations
-  + Arduino IDE basics (the sketch)
-  + Digital vs. Analog I/O
-  
-### Learning Objectives
-
-Upon completion of this week and module, students will be able to:
-
-  + Know what is expected during Phase I of the course
-  + Design and program a blinking Arduino unit
-  + Design and program a simple Arduino DAQ
-
-### Read/Watch 
-
-  + [What is Arduino?](https://www.arduino.cc/en/Guide/Introduction)
-  + [Getting started with Arduino](https://www.arduino.cc/en/Guide)
-  + [What is Arduino IDE?](https://www.arduino.cc/en/Guide/Environment)
-  + [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno)
-  + [The Serial Monitor](https://learn.adafruit.com/adafruit-arduino-lesson-5-the-serial-monitor/the-serial-monitor)
-  + [How Does a Breadboard Work](https://www.sciencebuddies.org/science-fair-projects/references/how-to-use-a-breadboard)
-  + Adafruit's [Using a Temp Sensor](https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor)
-
-
-### Do
-
-  + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
-  + [Install Arduino IDE](https://www.arduino.cc/en/Guide)
-  + Work through "Blink" sketch in [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno) (work with the desktop IDE)
-  + Complete [Module 1 Project]
-  + [Upload video of temp data](https://forms.gle/gRHLVdGKh4bsF3Md7) passing through serial monitor on Arduino IDE [10 points]
-
-
-### Guiding Questions
-
-  + Where does one find important course information?
-  + What are the major components of an Arduino microcontroller?
-  + What are the major components of an Arduino-based DAQ? 
-  + How does one program an Arduino microcontroller?
-  + How are data acquired from an Arduino unit?
-
-### Module 1 Schedule
-
-All assignments are due at 11:59 on the specified date.
-
- || Monday <br> 8/31 |  Tuesday <br>9/1    | Wednesday<br>  9/2 | Thursday <br> 9/3 | Friday <br> 9/4 |Saturday<br> 9/5 | Sunday<br> 9/6
-|--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Upload temp video
-||||||||
-
-
-## Module 2: Data Pirates Code with. . . . R, Introduction to the Basics
-
-In this module we'll learn the basics of coding in R. This introduction to R assumes no previous experience with R specifically or programming in general. The focus of this module will be on learning how R works and appreciating some of its potential in performing simple data operations like loading it, evaluating its different types, subsetting data objects, and iterating quickly through repetative tasks. 
-
-### Dates: 
-Week 2 (Sep 7—13):
-
-### Key Concepts
   + R user interface
   + Working directory
   + Objects, functions, arguments, and scripts in R
@@ -86,6 +29,7 @@ Week 2 (Sep 7—13):
 
 Upon completion of this week and module, students will be able to:
 
+  + Know what is expected during Phase I of the course
   + Open R and RStudio
   + Set a working directory and load data in R
   + Recognize the difference between different objects (e.g., vectors, lists, data frames etc.)
@@ -120,31 +64,166 @@ When reading through HOPR, make sure to have R and R Studio up and running so th
 
 ### Do
 
-  + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
+  + Post one and respond to one question each week of Module 1 in our [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) 
   + [Install R and RStudio](https://rstudio-education.github.io/hopr/starting.html#starting)
-  + Complete and submit a report for Module 2 Project 
+  + Complete and submit a report for Module 1 Project 
 
 
 ### Guiding Questions
-
+  
   + How do I perform simple operations in R?
   + What are R's basic object classes?
   + How does external data get loaded into R?
   + How does one subset common data objects in R?
   + How does a `for` loop work and when should it be used?
-
-
-### Module 2 Schedule
+  
+### Module 1 Schedule
 
 All assignments are due at 11:59 on the specified date.
 
- || Monday <br> 9/7 |  Tuesday <br>9/8    | Wednesday<br>  9/9 | Thursday <br> 9/10 | Friday <br> 9/11 |Saturday<br> 9/11 | Sunday<br> 9/13
+ || Monday <br> 8/31 |  Tuesday <br>9/1    | Wednesday<br>  9/2 | Thursday <br> 9/3 | Friday <br> 9/4 |Saturday<br> 9/5 | Sunday<br> 9/6
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 2 Project Report
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | |
+
+ || Monday <br> 9/7 |  Tuesday <br>9/8    | Wednesday<br>  9/9 | Thursday <br> 9/10 | Friday <br> 9/11 |Saturday<br> 9/12 | Sunday<br> 9/13
+|--------|-------- |--------|-------- |--------|--------|--------|--------    
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 1 project report
 ||||||||
 
 
+<!-- ## Module 2: Introduction and Cheap Tricks -->
 
+<!-- In this module we'll learn the basics of coding in R. This introduction to R assumes no previous experience with R specifically or programming in general. The focus of this module will be on learning how R works and appreciating some of its potential in performing simple data operations like loading it, evaluating its different types, subsetting data objects, and iterating quickly through repetative tasks.  -->
+
+<!-- ### Dates:  -->
+
+<!-- Week 2 (Sep 7—13): -->
+
+
+<!-- ### Key Concepts -->
+<!--   + Course workflow -->
+<!--   + Course expectations -->
+<!--   + Arduino IDE basics (the sketch) -->
+<!--   + Digital vs. Analog I/O -->
+
+<!-- ### Learning Objectives -->
+
+<!-- Upon completion of this week and module, students will be able to: -->
+
+
+<!--   + Design and program a blinking Arduino unit -->
+<!--   + Design and program a simple Arduino DAQ -->
+
+<!-- ### Read/Watch  -->
+
+<!--   + [What is Arduino?](https://www.arduino.cc/en/Guide/Introduction) -->
+<!--   + [Getting started with Arduino](https://www.arduino.cc/en/Guide) -->
+<!--   + [What is Arduino IDE?](https://www.arduino.cc/en/Guide/Environment) -->
+<!--   + [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno) -->
+<!--   + [The Serial Monitor](https://learn.adafruit.com/adafruit-arduino-lesson-5-the-serial-monitor/the-serial-monitor) -->
+<!--   + [How Does a Breadboard Work](https://www.sciencebuddies.org/science-fair-projects/references/how-to-use-a-breadboard) -->
+<!--   + Adafruit's [Using a Temp Sensor](https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor) -->
+
+
+<!-- ### Do -->
+
+<!--   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) -->
+<!--   + [Install Arduino IDE](https://www.arduino.cc/en/Guide) -->
+<!--   + Work through "Blink" sketch in [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno) (work with the desktop IDE) -->
+<!--   + Complete [Module 1 Project] -->
+<!--   + [Upload video of temp data](https://forms.gle/gRHLVdGKh4bsF3Md7) passing through serial monitor on Arduino IDE [10 points] -->
+
+
+<!-- ### Guiding Questions -->
+
+<!--   + Where does one find important course information? -->
+<!--   + What are the major components of an Arduino microcontroller? -->
+<!--   + What are the major components of an Arduino-based DAQ?  -->
+<!--   + How does one program an Arduino microcontroller? -->
+<!--   + How are data acquired from an Arduino unit? -->
+
+
+
+
+<!-- ### Module 2 Schedule -->
+
+<!-- All assignments are due at 11:59 on the specified date. -->
+
+<!--  || Monday <br> 9/7 |  Tuesday <br>9/8    | Wednesday<br>  9/9 | Thursday <br> 9/10 | Friday <br> 9/11 |Saturday<br> 9/11 | Sunday<br> 9/13 -->
+<!-- |--------|-------- |--------|-------- |--------|--------|--------|--------     -->
+<!-- **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 2 Project Report -->
+<!-- |||||||| -->
+
+<!-- ## Module 3: Data Wrangling Introduction to Tools of the Trade in Data Analysis -->
+
+<!-- 
+This module is intended to give students the background and skills to begin designing and programing of simple hardware devices using Arduino.  -->
+
+<!-- ### Dates:  -->
+<!-- Week 2 (Sep 14—20): -->
+
+<!-- ### Key Concepts -->
+<!--   + Reading text files in R -->
+<!--   + Tidying data in R -->
+
+<!-- ### Learning Objectives -->
+
+<!-- Upon completion of this week and module, students will be able to: -->
+
+<!--   + Open R and RStudio -->
+<!--   + Set a working directory and load data in R -->
+<!--   + Recognize the difference between different objects (e.g., vectors, lists, data frames etc.) -->
+<!--   + Perform simple data operations and manipulation of data objects in R -->
+<!--   + Contruct and run a `for` loop in R to automate a interatively redundant task. -->
+
+<!-- ### Read/Watch  -->
+
+<!-- All from the [Wrangle Section](https://r4ds.had.co.nz) of [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS) -->
+
+
+<!--   + [Chapter 9: Introduction](https://r4ds.had.co.nz/wrangle-intro.html)  -->
+<!--   + [Chapter 10: Tibbles](https://r4ds.had.co.nz/tibbles.html) -->
+<!--   + [Chapter 11: Data Import](https://r4ds.had.co.nz/data-import.html) [don't worry too much about 11.3 and 11.4 "Parsing Vectors" and "Parsing Files] -->
+<!--   + [Chapter 12: Tidy Data](https://r4ds.had.co.nz/tidy-data.html) -->
+<!--   + [Chapter 13: Relational Data](https://r4ds.had.co.nz/relational-data.html) -->
+
+<!-- When reading through R4DS, make sure to have R and R Studio up and running so that you can copy and paste code from HOPR into an R file and run the specified commands and complete the books exercises. This will help tremendously in getting the hang of things.  -->
+
+<!-- <!-- Add icon library --> -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"> -->
+
+<!-- <div class = "green"> -->
+<!-- <div class="row"> -->
+<!--   <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div> -->
+<!--   <div class="col-sm-9">This is a lot of reading and fiddling with R. Don't worry too much about understanding every detail! The goal here is to just get the hang of things and, just as importantly, know where to find answers to questions about how R works.</div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- <br> -->
+
+<!-- ### Do -->
+
+<!--   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points] -->
+<!--   + Complete and submit a report for Module 3 Project  -->
+
+
+<!-- ### Guiding Questions -->
+
+<!--   + How do I perform simple operations in R? -->
+<!--   + What are R's basic object classes? -->
+<!--   + How does external data get loaded into R? -->
+<!--   + How does one subset common data objects in R? -->
+<!--   + How does a `for` loop work and when should it be used? -->
+
+
+<!-- ### Module 3 Schedule -->
+
+<!-- All assignments are due at 11:59 on the specified date. -->
+
+<!--  || Monday <br> 9/14 |  Tuesday <br>9/15    | Wednesday<br>  9/16 | Thursday <br> 9/17 | Friday <br> 9/18 |Saturday<br> 9/19 | Sunday<br> 9/20 -->
+<!-- |--------|-------- |--------|-------- |--------|--------|--------|--------     -->
+<!-- **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 4 Project Report -->
+<!-- |||||||| -->
 
 <!-- #ddply intro -->
 <!-- https://seananderson.ca/2014/09/13/dplyr-intro/ -->

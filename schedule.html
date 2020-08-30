@@ -346,9 +346,6 @@ div.tocify {
     <li>
       <a href="mod1_proj.html">Module 1 Project</a>
     </li>
-    <li>
-      <a href="mod2_proj.html">Module 2 Project</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -375,21 +372,25 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </style>
 <div id="phase-i-the-basics" class="section level1">
 <h1>Phase I: The basics</h1>
-<p>In this phase, we’ll learn the basics of instrumentation and data analysis by working through XX learning modules devoted to instrument design and data analysis. This will most likely be the most challenging part of the course in that many, if not most of you will not have ever designed and built instruments and data acquisition systems, let alone analyzed data from them. Rest assured, your experience will be curated, sticking to the bare bones of instrument design and data science. This introductory phase will set the groundwork for Phase II, the independent development of sensors and data analysis.</p>
-<div id="module-1-introduction-and-cheap-tricks" class="section level2">
-<h2>Module 1: Introduction and Cheap Tricks</h2>
-<p>This module is intended to give students the background and skills to begin designing and programing of simple hardware devices using Arduino.</p>
+<p>In this phase, we’ll learn the basics of instrumentation and data analysis by working through 5 learning modules devoted to instrument design and data analysis. This will most likely be the most challenging part of the course in that many, if not most of you will not have ever designed and built instruments and data acquisition systems, let alone analyzed data from them. Rest assured, your experience will be curated, sticking to the bare bones of instrument design and data science. This introductory phase will set the groundwork for Phase II, the independent development of sensors and data analysis.</p>
+<div id="module-1-data-pirates-code-with.-.-.-.-r-introduction-to-the-basics" class="section level2">
+<h2>Module 1: Data Pirates Code with. . . . R, Introduction to the Basics</h2>
+<p>In this module we’ll tackle where to find resource you’ll need on a week-to-week, module-by-module basis. In addition, we’ll work on the first important topic of the course: and introduction to R, an ever more popular languange for data analysis and visualization. We’ll focus on the basics of importing and tidying data in R. By importing, we mean loading data collected by scientists and stored in text files, the lingua franca of scientific data. By tidying, we mean preparing data for analysis.</p>
 <div id="dates" class="section level3">
 <h3>Dates</h3>
-<p>Week 1 (Aug 31—Sep 4):</p>
+<p>Week 1 (Aug 31—Sep 13):</p>
 </div>
 <div id="key-concepts" class="section level3">
 <h3>Key Concepts</h3>
 <ul>
 <li>Course workflow</li>
 <li>Course expectations</li>
-<li>Arduino IDE basics (the sketch)</li>
-<li>Digital vs. Analog I/O</li>
+<li>R user interface</li>
+<li>Working directory</li>
+<li>Objects, functions, arguments, and scripts in R</li>
+<li>Lists, data frames, and matrices</li>
+<li>Basic R notation</li>
+<li>The <code>for</code> loop</li>
 </ul>
 </div>
 <div id="learning-objectives" class="section level3">
@@ -397,40 +398,57 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p>Upon completion of this week and module, students will be able to:</p>
 <ul>
 <li>Know what is expected during Phase I of the course</li>
-<li>Design and program a blinking Arduino unit</li>
-<li>Design and program a simple Arduino DAQ</li>
+<li>Open R and RStudio</li>
+<li>Set a working directory and load data in R</li>
+<li>Recognize the difference between different objects (e.g., vectors, lists, data frames etc.)</li>
+<li>Perform simple data operations and manipulation of data objects in R</li>
+<li>Contruct and run a <code>for</code> loop in R to automate a interatively redundant task.</li>
 </ul>
 </div>
 <div id="readwatch" class="section level3">
 <h3>Read/Watch</h3>
+<p>All from <a href="https://rstudio-education.github.io/hopr">Hands on Programming with R</a> (HOPR)</p>
 <ul>
-<li><a href="https://www.arduino.cc/en/Guide/Introduction">What is Arduino?</a></li>
-<li><a href="https://www.arduino.cc/en/Guide">Getting started with Arduino</a></li>
-<li><a href="https://www.arduino.cc/en/Guide/Environment">What is Arduino IDE?</a></li>
-<li><a href="https://www.arduino.cc/en/Guide/ArduinoUno">Getting Started with the Arduino UNO</a></li>
-<li><a href="https://learn.adafruit.com/adafruit-arduino-lesson-5-the-serial-monitor/the-serial-monitor">The Serial Monitor</a></li>
-<li><a href="https://www.sciencebuddies.org/science-fair-projects/references/how-to-use-a-breadboard">How Does a Breadboard Work</a></li>
-<li>Adafruit’s <a href="https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor">Using a Temp Sensor</a></li>
+<li><a href="https://rstudio-education.github.io/hopr/starting.html">Appendices A—D</a></li>
+<li><a href="https://rstudio-education.github.io/hopr/project-1-weighted-dice.html">Part I</a></li>
+<li><a href="https://rstudio-education.github.io/hopr/project-2-playing-cards.html">Part II</a></li>
+<li><a href="https://rstudio-education.github.io/hopr/r-objects.html">Chapter 5: R Objects</a></li>
+<li><a href="https://rstudio-education.github.io/hopr/r-notation.html">Chapter 6: R Notation</a></li>
+<li><a href="https://rstudio-education.github.io/hopr/modify.html">Chapter 7: Modifying Values</a></li>
+<li><a href="https://rstudio-education.github.io/hopr/loops.html#for-loops">Chapter 11.3: For Loops</a></li>
 </ul>
+<p>When reading through HOPR, make sure to have R and R Studio up and running so that you can copy and paste code from HOPR into an R file and run the specified commands and complete the books project tasks. This will help tremendously in getting the hang of things.</p>
+<!-- Add icon library -->
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+</div>
+<div class="col-sm-9">
+This is a lot of reading and fiddling with R. Don’t worry too much about understanding every detail! The goal here is to just get the hang of things and, just as importantly, know where to find answers to questions about how R works.
+</div>
+</div>
+</div>
+</div>
+<p><br></p>
 </div>
 <div id="do" class="section level3">
 <h3>Do</h3>
 <ul>
-<li>Post one and respond to one question in <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a></li>
-<li><a href="https://www.arduino.cc/en/Guide">Install Arduino IDE</a></li>
-<li>Work through “Blink” sketch in <a href="https://www.arduino.cc/en/Guide/ArduinoUno">Getting Started with the Arduino UNO</a> (work with the desktop IDE)</li>
-<li>Complete [Module 1 Project]</li>
-<li><a href="https://forms.gle/gRHLVdGKh4bsF3Md7">Upload video of temp data</a> passing through serial monitor on Arduino IDE [10 points]</li>
+<li>Post one and respond to one question each week of Module 1 in our <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a></li>
+<li><a href="https://rstudio-education.github.io/hopr/starting.html#starting">Install R and RStudio</a></li>
+<li>Complete and submit a report for Module 1 Project</li>
 </ul>
 </div>
 <div id="guiding-questions" class="section level3">
 <h3>Guiding Questions</h3>
 <ul>
-<li>Where does one find important course information?</li>
-<li>What are the major components of an Arduino microcontroller?</li>
-<li>What are the major components of an Arduino-based DAQ?</li>
-<li>How does one program an Arduino microcontroller?</li>
-<li>How are data acquired from an Arduino unit?</li>
+<li>How do I perform simple operations in R?</li>
+<li>What are R’s basic object classes?</li>
+<li>How does external data get loaded into R?</li>
+<li>How does one subset common data objects in R?</li>
+<li>How does a <code>for</code> loop work and when should it be used?</li>
 </ul>
 </div>
 <div id="module-1-schedule" class="section level3">
@@ -468,100 +486,10 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <td>Answer a question on discussion board</td>
 <td></td>
 <td></td>
-<td>Upload temp video</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div id="module-2-data-pirates-code-with.-.-.-.-r-introduction-to-the-basics" class="section level2">
-<h2>Module 2: Data Pirates Code with. . . . R, Introduction to the Basics</h2>
-<p>In this module we’ll learn the basics of coding in R. This introduction to R assumes no previous experience with R specifically or programming in general. The focus of this module will be on learning how R works and appreciating some of its potential in performing simple data operations like loading it, evaluating its different types, subsetting data objects, and iterating quickly through repetative tasks.</p>
-<div id="dates-1" class="section level3">
-<h3>Dates:</h3>
-<p>Week 2 (Sep 7—13):</p>
-</div>
-<div id="key-concepts-1" class="section level3">
-<h3>Key Concepts</h3>
-<ul>
-<li>R user interface</li>
-<li>Working directory</li>
-<li>Objects, functions, arguments, and scripts in R</li>
-<li>Lists, data frames, and matrices</li>
-<li>Basic R notation</li>
-<li>The <code>for</code> loop</li>
-</ul>
-</div>
-<div id="learning-objectives-1" class="section level3">
-<h3>Learning Objectives</h3>
-<p>Upon completion of this week and module, students will be able to:</p>
-<ul>
-<li>Open R and RStudio</li>
-<li>Set a working directory and load data in R</li>
-<li>Recognize the difference between different objects (e.g., vectors, lists, data frames etc.)</li>
-<li>Perform simple data operations and manipulation of data objects in R</li>
-<li>Contruct and run a <code>for</code> loop in R to automate a interatively redundant task.</li>
-</ul>
-</div>
-<div id="readwatch-1" class="section level3">
-<h3>Read/Watch</h3>
-<p>All from <a href="https://rstudio-education.github.io/hopr">Hands on Programming with R</a> (HOPR)</p>
-<ul>
-<li><a href="https://rstudio-education.github.io/hopr/starting.html">Appendices A—D</a></li>
-<li><a href="https://rstudio-education.github.io/hopr/project-1-weighted-dice.html">Part I</a></li>
-<li><a href="https://rstudio-education.github.io/hopr/project-2-playing-cards.html">Part II</a></li>
-<li><a href="https://rstudio-education.github.io/hopr/r-objects.html">Chapter 5: R Objects</a></li>
-<li><a href="https://rstudio-education.github.io/hopr/r-notation.html">Chapter 6: R Notation</a></li>
-<li><a href="https://rstudio-education.github.io/hopr/modify.html">Chapter 7: Modifying Values</a></li>
-<li><a href="https://rstudio-education.github.io/hopr/loops.html#for-loops">Chapter 11.3: For Loops</a></li>
-</ul>
-<p>When reading through HOPR, make sure to have R and R Studio up and running so that you can copy and paste code from HOPR into an R file and run the specified commands and complete the books project tasks. This will help tremendously in getting the hang of things.</p>
-<!-- Add icon library -->
-<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
-<div class="green">
-<div class="row">
-<div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
-</div>
-<div class="col-sm-9">
-This is a lot of reading and fiddling with R. Don’t worry too much about understanding every detail! The goal here is to just get the hang of things and, just as importantly, know where to find answers to questions about how R works.
-</div>
-</div>
-</div>
-</div>
-<p><br></p>
-</div>
-<div id="do-1" class="section level3">
-<h3>Do</h3>
-<ul>
-<li>Post one and respond to one question in <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a> [10 points]</li>
-<li><a href="https://rstudio-education.github.io/hopr/starting.html#starting">Install R and RStudio</a></li>
-<li>Complete and submit a report for Module 2 Project</li>
-</ul>
-</div>
-<div id="guiding-questions-1" class="section level3">
-<h3>Guiding Questions</h3>
-<ul>
-<li>How do I perform simple operations in R?</li>
-<li>What are R’s basic object classes?</li>
-<li>How does external data get loaded into R?</li>
-<li>How does one subset common data objects in R?</li>
-<li>How does a <code>for</code> loop work and when should it be used?</li>
-</ul>
-</div>
-<div id="module-2-schedule" class="section level3">
-<h3>Module 2 Schedule</h3>
-<p>All assignments are due at 11:59 on the specified date.</p>
 <table>
 <colgroup>
 <col width="12%" />
@@ -581,7 +509,7 @@ This is a lot of reading and fiddling with R. Don’t worry too much about under
 <th>Wednesday<br> 9/9</th>
 <th>Thursday <br> 9/10</th>
 <th>Friday <br> 9/11</th>
-<th>Saturday<br> 9/11</th>
+<th>Saturday<br> 9/12</th>
 <th>Sunday<br> 9/13</th>
 </tr>
 </thead>
@@ -594,7 +522,7 @@ This is a lot of reading and fiddling with R. Don’t worry too much about under
 <td>Answer a question on discussion board</td>
 <td></td>
 <td></td>
-<td>Submit Module 2 Project Report</td>
+<td>Submit Module 1 project report</td>
 </tr>
 <tr class="even">
 <td></td>
@@ -608,6 +536,90 @@ This is a lot of reading and fiddling with R. Don’t worry too much about under
 </tr>
 </tbody>
 </table>
+<!-- ## Module 2: Introduction and Cheap Tricks -->
+<!-- In this module we'll learn the basics of coding in R. This introduction to R assumes no previous experience with R specifically or programming in general. The focus of this module will be on learning how R works and appreciating some of its potential in performing simple data operations like loading it, evaluating its different types, subsetting data objects, and iterating quickly through repetative tasks.  -->
+<!-- ### Dates:  -->
+<!-- Week 2 (Sep 7—13): -->
+<!-- ### Key Concepts -->
+<!--   + Course workflow -->
+<!--   + Course expectations -->
+<!--   + Arduino IDE basics (the sketch) -->
+<!--   + Digital vs. Analog I/O -->
+<!-- ### Learning Objectives -->
+<!-- Upon completion of this week and module, students will be able to: -->
+<!--   + Design and program a blinking Arduino unit -->
+<!--   + Design and program a simple Arduino DAQ -->
+<!-- ### Read/Watch  -->
+<!--   + [What is Arduino?](https://www.arduino.cc/en/Guide/Introduction) -->
+<!--   + [Getting started with Arduino](https://www.arduino.cc/en/Guide) -->
+<!--   + [What is Arduino IDE?](https://www.arduino.cc/en/Guide/Environment) -->
+<!--   + [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno) -->
+<!--   + [The Serial Monitor](https://learn.adafruit.com/adafruit-arduino-lesson-5-the-serial-monitor/the-serial-monitor) -->
+<!--   + [How Does a Breadboard Work](https://www.sciencebuddies.org/science-fair-projects/references/how-to-use-a-breadboard) -->
+<!--   + Adafruit's [Using a Temp Sensor](https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor) -->
+<!-- ### Do -->
+<!--   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) -->
+<!--   + [Install Arduino IDE](https://www.arduino.cc/en/Guide) -->
+<!--   + Work through "Blink" sketch in [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno) (work with the desktop IDE) -->
+<!--   + Complete [Module 1 Project] -->
+<!--   + [Upload video of temp data](https://forms.gle/gRHLVdGKh4bsF3Md7) passing through serial monitor on Arduino IDE [10 points] -->
+<!-- ### Guiding Questions -->
+<!--   + Where does one find important course information? -->
+<!--   + What are the major components of an Arduino microcontroller? -->
+<!--   + What are the major components of an Arduino-based DAQ?  -->
+<!--   + How does one program an Arduino microcontroller? -->
+<!--   + How are data acquired from an Arduino unit? -->
+<!-- ### Module 2 Schedule -->
+<!-- All assignments are due at 11:59 on the specified date. -->
+<!--  || Monday <br> 9/7 |  Tuesday <br>9/8    | Wednesday<br>  9/9 | Thursday <br> 9/10 | Friday <br> 9/11 |Saturday<br> 9/11 | Sunday<br> 9/13 -->
+<!-- |--------|-------- |--------|-------- |--------|--------|--------|--------     -->
+<!-- **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 2 Project Report -->
+<!-- |||||||| -->
+<!-- ## Module 3: Data Wrangling Introduction to Tools of the Trade in Data Analysis -->
+<!-- 
+This module is intended to give students the background and skills to begin designing and programing of simple hardware devices using Arduino.  -->
+<!-- ### Dates:  -->
+<!-- Week 2 (Sep 14—20): -->
+<!-- ### Key Concepts -->
+<!--   + Reading text files in R -->
+<!--   + Tidying data in R -->
+<!-- ### Learning Objectives -->
+<!-- Upon completion of this week and module, students will be able to: -->
+<!--   + Open R and RStudio -->
+<!--   + Set a working directory and load data in R -->
+<!--   + Recognize the difference between different objects (e.g., vectors, lists, data frames etc.) -->
+<!--   + Perform simple data operations and manipulation of data objects in R -->
+<!--   + Contruct and run a `for` loop in R to automate a interatively redundant task. -->
+<!-- ### Read/Watch  -->
+<!-- All from the [Wrangle Section](https://r4ds.had.co.nz) of [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS) -->
+<!--   + [Chapter 9: Introduction](https://r4ds.had.co.nz/wrangle-intro.html)  -->
+<!--   + [Chapter 10: Tibbles](https://r4ds.had.co.nz/tibbles.html) -->
+<!--   + [Chapter 11: Data Import](https://r4ds.had.co.nz/data-import.html) [don't worry too much about 11.3 and 11.4 "Parsing Vectors" and "Parsing Files] -->
+<!--   + [Chapter 12: Tidy Data](https://r4ds.had.co.nz/tidy-data.html) -->
+<!--   + [Chapter 13: Relational Data](https://r4ds.had.co.nz/relational-data.html) -->
+<!-- When reading through R4DS, make sure to have R and R Studio up and running so that you can copy and paste code from HOPR into an R file and run the specified commands and complete the books exercises. This will help tremendously in getting the hang of things.  -->
+<!-- <!-- Add icon library -->
+<p>–&gt; <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"> --></p>
+<!-- <div class = "green"> -->
+<!-- <div class="row"> -->
+<!--   <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+</div>
+<p>–&gt; <!--   <div class="col-sm-9">This is a lot of reading and fiddling with R. Don't worry too much about understanding every detail! The goal here is to just get the hang of things and, just as importantly, know where to find answers to questions about how R works.</div> --> <!-- </div> --> <!-- </div> --> <!-- </div> --> <!-- <br> --></p>
+<!-- ### Do -->
+<!--   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points] -->
+<!--   + Complete and submit a report for Module 3 Project  -->
+<!-- ### Guiding Questions -->
+<!--   + How do I perform simple operations in R? -->
+<!--   + What are R's basic object classes? -->
+<!--   + How does external data get loaded into R? -->
+<!--   + How does one subset common data objects in R? -->
+<!--   + How does a `for` loop work and when should it be used? -->
+<!-- ### Module 3 Schedule -->
+<!-- All assignments are due at 11:59 on the specified date. -->
+<!--  || Monday <br> 9/14 |  Tuesday <br>9/15    | Wednesday<br>  9/16 | Thursday <br> 9/17 | Friday <br> 9/18 |Saturday<br> 9/19 | Sunday<br> 9/20 -->
+<!-- |--------|-------- |--------|-------- |--------|--------|--------|--------     -->
+<!-- **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 4 Project Report -->
+<!-- |||||||| -->
 <!-- #ddply intro -->
 <!-- https://seananderson.ca/2014/09/13/dplyr-intro/ -->
 <!-- ### Week 3 (Sep 17—11) -->

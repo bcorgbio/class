@@ -13,3 +13,7 @@ git push
 
 #great advice and tips:
 https://holtzy.github.io/Pimp-my-rmd/
+  
+#dat logger tutotial
+  
+  https://thecavepearlproject.org/2015/12/22/arduino-uno-based-data-logger-with-no-soldering/
