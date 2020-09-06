@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Module X Project</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">BIOL 3140</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="schedule.html">Schedule</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Projects
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Phase I</li>
+    <li>
+      <a href="phaseI_rubric.html">Phase I report rubric</a>
+    </li>
+    <li>
+      <a href="mod1_proj.html">Module 1 Project</a>
+    </li>
+    <li>
+      <a href="mod2_proj.html">Module 2 Project</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">BIOL 3140 Discussion</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Module X Project</h1>
+
+</div>
+
+
+<style>
+div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
+</style>
+<!-- Add icon library -->
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
+<div id="introdution" class="section level1">
+<h1>Introdution</h1>
+<p>Now that we have read and explored the basics of how to program an Arduino unit, we’ll now proceed with prototyping a simple sensor, one that can very accurately record temperature. This project assumes you have worked through the the assigned readings and links and therefore understand how an Arduino Uno (or a clone) is programmed and how serial data are sent and received from an Arduino.</p>
+</div>
+<div id="set-up" class="section level1">
+<h1>Set up</h1>
+<div id="materials" class="section level2">
+<h2>Materials</h2>
+<ul>
+<li>TMP36 precision linear analog temperature sensor</li>
+<li>Elegoo Arduino Uno clone</li>
+<li>variety of jumper or prototyping wires</li>
+</ul>
+</div>
+</div>
+<div id="assembly-and-programming" class="section level1">
+<h1>Assembly and Programming</h1>
+<div id="assembly" class="section level2">
+<h2>Assembly</h2>
+<p>Be sure to read Adafruit’s <a href="https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor">Using a Temp Sensor</a>—it provides a good overview of this temp sensor and explicit intructions for assembling and programming an Arduino-based temperature recording system.</p>
+<p>Let’s start with assembly. Simply wire the three pins of the TMP36 according the this diagram (ignore the photoresistor component):</p>
+<center>
+<img src="https://cdn-learn.adafruit.com/assets/assets/000/000/477/original/temperature_sensorwiring.gif?1447975829" alt="alternatetext">
+</center>
+<p>Notice that the AREF pin is receiving 3.3v from the pin of that name. This changes the reference voltage from 5v, reducing noise and increasing precision. The diagram above doesn’t require a breadboard, but merely three male-female jumper wires for wiring the sensor, and a bit of prototyping wire or a male-male jumper for the AREF-3v connection.</p>
+</div>
+<div id="programming" class="section level2">
+<h2>Programming</h2>
+<p>Now program the Arduino by uploading the second sketch from Adafruit’s <a href="https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor">Using a Temp Sensor</a> tutorial. If everything is in order—you’ve chosen the right port and board in Arduino IDE—you can now click on the serial monitor icon in the upper right of the IDE (or pres “cmd/ctrl+shift+m”) to see what data are being printed from the microcontroller to your computer over the serial (USB) port. It should look something like this. If so, CONGRATS! You’re recording temperature data!</p>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+</div>
+<div class="col-sm-9">
+<p>When getting setup with your Arduino, makes sure you’ve selected the correct board and port from the “Tools” dropdown menu in the IDE!</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<center>
+<img src="tempserial.png" alt="FigName" />
+</center>
+<p><br></p>
+<p>This is great, but as a scientist, you’re probably building this instrument to record temperature over some length of time. Thus, reporting when, relative to the start of the experiment, the temperature was recorded is important. Fortunately, recording and printing time to the serial connection is super easy. We can do this by adding a new variable <code>currentTime</code> and passing a time value in millisecords to this variable in the void loop. First, add <code>int currentTime;</code> to the top of the sketch where the other variables are established. <code>int</code> establishes the variable as an integer, which is just fine because milliseconds is recorded as whole numbers. Second, add this to the <code>void(loop)</code>:</p>
+<pre><code>  //add line to record current time 
+  currentTime=millis(); 
+ 
+  //add line to print current time 
+  Serial.print(&quot;Time = &quot;);
+  Serial.println(currentTime);</code></pre>
+<p>This first line above records the time in milliseconds. The second and third lines print a prefix and the value for the current time. Notice there’s <code>Serial.print()</code> and <code>Serial.println()</code>. The later is identical to the former, however, <code>Serial.println</code> prints the value and then a new line.</p>
+<p>An amended code looks something like this:</p>
+<pre><code>
+/* Sensor test sketch
+  for more information see http://www.ladyada.net/make/logshield/lighttemp.html
+  */
+ 
+#define aref_voltage 3.3         // we tie 3.3V to ARef 
+ 
+ 
+ 
+ 
+//TMP36 Pin Variables
+int tempPin = A1;        //the analog pin the TMP36&#39;s Vout (sense) pin is connected to
+                        //the resolution is 10 mV / degree centigrade with a
+                        //500 mV offset to allow for negative temperatures
+int tempReading;        // the analog reading from the sensor
+
+int currentTime; // the current time when the Arduino is recording temp data
+
+void setup(void) {
+  // We&#39;ll send debugging information via the Serial monitor
+  Serial.begin(9600);   
+ 
+  // If you want to set the aref to something other than 5v
+  analogReference(EXTERNAL);
+  
+  
+  
+}
+ 
+ 
+void loop(void) {
+ //add line to record current time 
+ currentTime=millis(); 
+ 
+  //add line to print current time 
+  Serial.print(&quot;Time = &quot;);
+  Serial.println(currentTime);
+ 
+  tempReading = analogRead(tempPin);  
+ 
+  Serial.println(&quot;Temp reading = &quot;);
+  Serial.print(tempReading);     // the raw analog reading
+ 
+  // converting that reading to voltage, which is based off the reference voltage
+  float voltage = tempReading * aref_voltage;
+  voltage /= 1024.0; 
+ 
+  // print out the voltage
+  Serial.print(&quot; - &quot;);
+  Serial.print(voltage); Serial.println(&quot; volts&quot;);
+ 
+  // now print out the temperature
+  float temperatureC = (voltage - 0.5) * 100 ;  //converting from 10 mv per degree wit 500 mV offset
+                                               //to degrees ((volatge - 500mV) times 100)
+  Serial.print(temperatureC); Serial.println(&quot; degrees C&quot;);
+ 
+  // now convert to Fahrenheight
+  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
+  Serial.print(temperatureF); Serial.println(&quot; degrees F&quot;);
+ 
+  delay(1000);
+}
+
+</code></pre>
+<p>Check in on the serial monitor. Notice that there’s now a new line (outlined below in red) that reports time in milliseconds:</p>
+<img src="tempserial2.png" alt="FigName" />
+</center>
+<p><br></p>
+<p>Notice that the data are being printed about ever second (1000 ms) or so. This is because the the last line of the sketch in the <code>void(loop)</code> is <code>delay(1000)</code>. The <code>delay()</code> function delays or stops the loop for a specified number of milliseconds.</p>
+<p>OK, this much better, but, as we’ll learn in Module 2, data need to be parsed (i.e., arranged) in particular ways for a scientists to read data into a computer and then work with it. One of the standard parsing conventions or formats is comma separated values (.csv). If we can get our data to be printed to the serial monitor separated by commas, then we just have to copy the data from the the serial monitor and paste it into a text file. Later in the course, we’ll learn how to save the data to an SD card, but for now, let’s set up serial printing so that we can copy it.</p>
+<p>To do this, we need to rearrange and add some <code>Serial.print()</code> commands to the <code>void(loop)</code> section. So rather than . . .</p>
+<pre><code> //add line to record current time 
+ currentTime=millis(); 
+ 
+  //add line to print current time 
+  Serial.print(&quot;Time = &quot;);
+  Serial.println(currentTime);
+ 
+  tempReading = analogRead(tempPin);  
+ 
+  Serial.println(&quot;Temp reading = &quot;);
+  Serial.print(tempReading);     // the raw analog reading
+ 
+  // converting that reading to voltage, which is based off the reference voltage
+  float voltage = tempReading * aref_voltage;
+  voltage /= 1024.0; 
+ 
+  // print out the voltage
+  Serial.print(&quot; - &quot;);
+  Serial.print(voltage); Serial.println(&quot; volts&quot;);
+ 
+  // now print out the temperature
+  float temperatureC = (voltage - 0.5) * 100 ;  //converting from 10 mv per degree wit 500 mV offset
+                                               //to degrees ((volatge - 500mV) times 100)
+  Serial.print(temperatureC); Serial.println(&quot; degrees C&quot;);
+ 
+  // now convert to Fahrenheight
+  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
+  Serial.print(temperatureF); Serial.println(&quot; degrees F&quot;);
+  </code></pre>
+<p>. . . let’s ditch the prefixes and print some commas. Notice the last serial print command is <code>Serial.println()</code> to start a new line before the next data are printed.</p>
+<pre><code> //add line to record current time 
+ currentTime=millis(); 
+ 
+  //print current time 
+  Serial.print(currentTime);
+ 
+ //print a comma 
+  Serial.print(&quot;,&quot;);
+  
+  tempReading = analogRead(tempPin);  
+ 
+  Serial.print(tempReading);     // the raw analog reading
+ 
+  // converting that reading to voltage, which is based off the reference voltage
+  float voltage = tempReading * aref_voltage;
+  voltage /= 1024.0; 
+ 
+  // print out the voltage
+  Serial.print(voltage);
+  Serial.print(&quot;,&quot;);
+ 
+  // now print out the temperature
+  float temperatureC = (voltage - 0.5) * 100 ;  //converting from 10 mv per degree wit 500 mV offset
+                                               //to degrees ((volatge - 500mV) times 100)
+  Serial.print(temperatureC);
+    Serial.print(&quot;,&quot;);
+ 
+  // now convert to Fahrenheight
+  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
+  Serial.println(temperatureF); 
+  </code></pre>
+<p>Upload the sketch and have a look at the serial monitor. Notice that we have data for milliseconds, voltage, temp in °C, and °F, all separated by commas. That is, we have comma separated values (.csv)! There’s just one problem with this—unless you knew the inner workings of this sketch, you wouldn’t know which data were which. Is the first value time or voltage? The second voltage or °F? Etc., etc. Printing a header at the beginning of the progrom is the solution. After this, the header and data can be copied and pasted to a text file and any computing operations that follow will logically parse and have a name for each column or position in the series of data.</p>
+<p>Here’s how to proceed. Merely print some header/column names in the <code>setup(void)</code>. The <code>setup(void)</code> is a part of the sketch where you ask the microcontroller to do something once and <em>before</em> <code>void(loop)</code> commences, a perfect place to print the header to the serial port.</p>
+<pre><code>Serial.println(&quot;ms,v,degC,degF&quot;);</code></pre>
+<p>After adding this and uploading the modified sketch, the serial monitor should now print a header (i.e., column names) and then the data like this:</p>
+<img src="tempserial4.png" alt="FigName" />
+</center>
+<p><br></p>
+<p>This new modified Arduino sketch follows here:</p>
+<pre><code>
+/* Sensor test sketch
+  for more information see http://www.ladyada.net/make/logshield/lighttemp.html
+  */
+ 
+#define aref_voltage 3.3         // we tie 3.3V to ARef 
+ 
+ 
+ 
+ 
+//TMP36 Pin Variables
+int tempPin = A1;        //the analog pin the TMP36&#39;s Vout (sense) pin is connected to
+                        //the resolution is 10 mV / degree centigrade with a
+                        //500 mV offset to allow for negative temperatures
+int tempReading;        // the analog reading from the sensor
+
+int currentTime; // the current time when the Arduino is recording temp data
+void setup(void) {
+  // We&#39;ll send debugging information via the Serial monitor
+  Serial.begin(9600);   
+ 
+  // If you want to set the aref to something other than 5v
+  analogReference(EXTERNAL);
+
+  Serial.println(&quot;ms,v,degC,degF&quot;);
+  
+
+  
+}
+ 
+ 
+void loop(void) {
+ //add line to record current time 
+ currentTime=millis(); 
+ 
+  //print current time 
+  Serial.print(currentTime);
+ 
+ //print a comma 
+  Serial.print(&quot;,&quot;);
+  
+  tempReading = analogRead(tempPin);  
+ 
+  Serial.print(tempReading);     // the raw analog reading
+ 
+  // converting that reading to voltage, which is based off the reference voltage
+  float voltage = tempReading * aref_voltage;
+  voltage /= 1024.0; 
+ 
+  // print out the voltage
+  Serial.print(voltage);
+  Serial.print(&quot;,&quot;);
+ 
+  // now print out the temperature
+  float temperatureC = (voltage - 0.5) * 100 ;  //converting from 10 mv per degree wit 500 mV offset
+                                               //to degrees ((volatge - 500mV) times 100)
+  Serial.print(temperatureC);
+    Serial.print(&quot;,&quot;);
+ 
+  // now convert to Fahrenheight
+  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
+  Serial.println(temperatureF); 
+
+  delay(1000);
+}</code></pre>
+</div>
+</div>
+<div id="project-report" class="section level1">
+<h1>Project Report</h1>
+<p>No need to write anything up. Please merely run the modified sketch on your temp sensor protype and upload a video of the serial monitor printing comma separated values. You can capture the video by recording the screen on your phone and upload it <a href="https://forms.gle/gRHLVdGKh4bsF3Md7">here</a>. Please upload the video by 11:59 PM on Sunday, September 6th.</p>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+</div>
+<div class="col-sm-9">
+As a reminder, please check out the <a href="phaseI_rubric.html">Phase I projects rubric</a> to get a sense of how this project will be assessed.
+</div>
+</div>
+</div>
+</div>
+<p><br></p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -13,7 +13,7 @@ In this phase, we'll learn the basics of instrumentation and data analysis by wo
 In this module we'll tackle where to find resource you'll need on a week-to-week, module-by-module basis. In addition, we'll work on the first important topic of the course: and introduction to R, an ever more popular languange for data analysis and visualization. We'll focus on the basics of importing and tidying data in R. By importing, we mean loading data collected by scientists and stored in text files, the lingua franca of scientific data. By tidying, we mean preparing data for analysis.
 
 ### Dates 
-Week 1 (Aug 31—Sep 13):
+Weeks 1 & 2 (Aug 31—Sep 13):
 
 ### Key Concepts
   + Course workflow
@@ -91,6 +91,89 @@ All assignments are due at 11:59 on the specified date.
 ||||||||
 
 
+## Module 2: Data Wrangling: Introduction to Tools of the Trade in Data Analysis
+
+This module is intended to give students the background and skills to begin simple data tidying and transformation operations. We need our data to be tidy before we can analyze it that, that is, structured in a way that makes anaylysis possible. In addition, often the data we have aren't exactly what we want to analyze. For example, say you had data on the f  
+
+### Dates: 
+Week 3 (Sep 14—20): 
+
+### Key Concepts
+  + Reading text files in R
+  + Adding data based on data (i.e., data transformation)
+  + Summarize data according to variables
+  + Tidying data in R
+  + Relational data and merging data sets
+
+### Learning Objectives
+
+Upon completion of this week and module, students will be able to:
+
+  + Read text data into R.
+  + Pivot data from wide to longer formats and vice versa.
+  + Add columns of data to a data set based on values in other columns.
+  + Write and use a simple function in R.
+  + Tidy a data set to beging analysis with a particular goal in mind.
+  + Join data sets based on similar data (i.e., key) attributes
+  
+<!--   + Set a working directory and load data in R -->
+<!--   + Recognize the difference between different objects (e.g., vectors, lists, data frames etc.) -->
+<!--   + Perform simple data operations and manipulation of data objects in R -->
+<!--   + Contruct and run a `for` loop in R to automate a interatively redundant task. -->
+
+### Read/Watch
+All form [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS):
+
+  + [Chapter 5: Transformations](https://r4ds.had.co.nz/transform.html)
+
+  + All from the [Wrangle Section](https://r4ds.had.co.nz) of R4DS:
+    + [Chapter 9: Introduction](https://r4ds.had.co.nz/wrangle-intro.html)
+    + [Chapter 10: Tibbles](https://r4ds.had.co.nz/tibbles.html)
+    + [Chapter 11: Data Import](https://r4ds.had.co.nz/data-import.html) [don't worry too much about 11.3 and 11.4 "Parsing Vectors" and "Parsing Files] 
+    + [Chapter 12: Tidy Data](https://r4ds.had.co.nz/tidy-data.html)
+    + [Chapter 13: Relational Data](https://r4ds.had.co.nz/relational-data.html) 
+
+  + [Chapter 19.1: Functions](https://r4ds.had.co.nz/functions.html)    
+    
+<br>
+
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"> 
+
+<div class = "green">
+<div class="row">
+<div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+<div class="col-sm-9"> As with HOPR, make sure to have R and R Studio up and running so that you can copy and paste code from R4DS into an R file and run the specified commands and complete the book's exercises.</div>
+</div>
+</div> 
+</div>
+<br>
+
+### Do 
+
+  + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
+  + Complete and submit a report for Module 2 Project 
+
+
+### Guiding Questions
+
++ How does one read data into R? 
++ What is tidy data? 
++ What's the difference between long and wide data tables? 
++ How does one added and summarize data in R?
++ How does one merge data in join operations? 
+<br>
+
+### Module 2 Schedule
+
+All assignments are due at 11:59 on the specified date. 
+
+  || Monday <br> 9/14 |  Tuesday <br>9/15    | Wednesday<br>  9/16 | Thursday <br> 9/17 | Friday <br> 9/18 |Saturday<br> 9/19 | Sunday<br> 9/20
+  |--------|-------- |--------|-------- |--------|--------|--------|--------
+  **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 2 Project Report
+  ||||||||
+
 <!-- ## Module 2: Introduction and Cheap Tricks -->
 
 <!-- In this module we'll learn the basics of coding in R. This introduction to R assumes no previous experience with R specifically or programming in general. The focus of this module will be on learning how R works and appreciating some of its potential in performing simple data operations like loading it, evaluating its different types, subsetting data objects, and iterating quickly through repetative tasks.  -->
@@ -154,78 +237,10 @@ All assignments are due at 11:59 on the specified date.
 <!-- **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 2 Project Report -->
 <!-- |||||||| -->
 
-<!-- ## Module 3: Data Wrangling Introduction to Tools of the Trade in Data Analysis -->
 
-<!-- 
-This module is intended to give students the background and skills to begin designing and programing of simple hardware devices using Arduino.  -->
-
-<!-- ### Dates:  -->
-<!-- Week 2 (Sep 14—20): -->
-
-<!-- ### Key Concepts -->
-<!--   + Reading text files in R -->
-<!--   + Tidying data in R -->
-
-<!-- ### Learning Objectives -->
-
-<!-- Upon completion of this week and module, students will be able to: -->
-
-<!--   + Open R and RStudio -->
-<!--   + Set a working directory and load data in R -->
-<!--   + Recognize the difference between different objects (e.g., vectors, lists, data frames etc.) -->
-<!--   + Perform simple data operations and manipulation of data objects in R -->
-<!--   + Contruct and run a `for` loop in R to automate a interatively redundant task. -->
-
-<!-- ### Read/Watch  -->
-
-<!-- All from the [Wrangle Section](https://r4ds.had.co.nz) of [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS) -->
-
-
-<!--   + [Chapter 9: Introduction](https://r4ds.had.co.nz/wrangle-intro.html)  -->
-<!--   + [Chapter 10: Tibbles](https://r4ds.had.co.nz/tibbles.html) -->
-<!--   + [Chapter 11: Data Import](https://r4ds.had.co.nz/data-import.html) [don't worry too much about 11.3 and 11.4 "Parsing Vectors" and "Parsing Files] -->
-<!--   + [Chapter 12: Tidy Data](https://r4ds.had.co.nz/tidy-data.html) -->
-<!--   + [Chapter 13: Relational Data](https://r4ds.had.co.nz/relational-data.html) -->
-
-<!-- When reading through R4DS, make sure to have R and R Studio up and running so that you can copy and paste code from HOPR into an R file and run the specified commands and complete the books exercises. This will help tremendously in getting the hang of things.  -->
-
-<!-- <!-- Add icon library --> -->
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"> -->
-
-<!-- <div class = "green"> -->
-<!-- <div class="row"> -->
-<!--   <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div> -->
-<!--   <div class="col-sm-9">This is a lot of reading and fiddling with R. Don't worry too much about understanding every detail! The goal here is to just get the hang of things and, just as importantly, know where to find answers to questions about how R works.</div> -->
-<!-- </div> -->
-<!-- </div> -->
-<!-- </div> -->
-<!-- <br> -->
-
-<!-- ### Do -->
-
-<!--   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points] -->
-<!--   + Complete and submit a report for Module 3 Project  -->
-
-
-<!-- ### Guiding Questions -->
-
-<!--   + How do I perform simple operations in R? -->
-<!--   + What are R's basic object classes? -->
-<!--   + How does external data get loaded into R? -->
-<!--   + How does one subset common data objects in R? -->
-<!--   + How does a `for` loop work and when should it be used? -->
-
-
-<!-- ### Module 3 Schedule -->
-
-<!-- All assignments are due at 11:59 on the specified date. -->
-
-<!--  || Monday <br> 9/14 |  Tuesday <br>9/15    | Wednesday<br>  9/16 | Thursday <br> 9/17 | Friday <br> 9/18 |Saturday<br> 9/19 | Sunday<br> 9/20 -->
-<!-- |--------|-------- |--------|-------- |--------|--------|--------|--------     -->
-<!-- **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 4 Project Report -->
-<!-- |||||||| -->
 
 <!-- #ddply intro -->
+<!--Module 3 Epxloratory data + Modelling analysis in R4DS -->
 <!-- https://seananderson.ca/2014/09/13/dplyr-intro/ -->
 
 <!-- ### Week 3 (Sep 17—11) -->

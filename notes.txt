@@ -7,7 +7,7 @@
 #to commit and push
 
 git add -A
-git commit -m "some comment"
+git commit -m "new index"
 git push
 
 

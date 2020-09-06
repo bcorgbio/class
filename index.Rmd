@@ -57,7 +57,7 @@ This is pre-packaged assembly of hardware required for all the course instrument
 
 # Course scope, goals, and objectives
 
-To be an effective organismal biologist, one we must prepare, analyze, visualize, and communicate data as we formulate answers to the questions we're asking. Despite the importance of these technological skills to our discipline, students often see the acquisition and analysis of data as technological black boxes. Countless times in previous course, instructors have no doubt demonstrated foundational principles and concepts through the presentation of data, usually through figures in papers or lecture slides. However, where these data come from and how they have answered a question remain often remain a mystery. In turn, students must to rely on the authority of their instructors rather than their own grasp of the quantitative skills and data collection to make meaningful connections.
+To be an effective organismal biologist, one we must prepare, analyze, visualize, and communicate data as we formulate answers to the questions we're asking. Despite the importance of these technological skills to our discipline, students often see the acquisition and analysis of data as technological black boxes. Countless times in previous courses, instructors have no doubt demonstrated foundational principles and concepts through the presentation of data, usually through figures in papers or lecture slides. However, where these data come from and how they have answered a question often remain a mystery. In turn, students must rely on the authority of their instructors rather than their own grasp of quantitative skills and data collection to make meaningful connections.
 
 As a course-based research experience, BIOL 3140 is meant to develop and hone skills related to instrumentation and data science in the context of organismal biology. The thrust of this course will center around the development of simple sensor-data acquisition systems and the analysis of data collected from them. Through hands-on design and fabrication of sensor-based instrument prototypes representing models of more complex instrumentation, students will develop a direct relationship with the source of data in scientific research. 
 
@@ -77,7 +77,7 @@ As a course-based research experience, BIOL 3140 is meant to develop and hone sk
 
 With respect to instrumentation, the learning goals of this program include:
 
-1.	Understanding of how common sensors convert physical phenomena into electrical signals.
+1.	Understanding how common sensors convert physical phenomena into electrical signals.
 2.	Familiarity with the basics of signal conditioning, amplification, and the conversion of sensor signals into a form that can be converted into digital values.
 3.	Understanding the basics of analog-to-digital conversion and digital signal acquisition.
 4.	Development of basic programming skills that permit flexible repurposing of a common data-acquisition system.
@@ -158,7 +158,7 @@ Each team is required to make their own discussion board. Please add me to the t
 
 
 
-# Course outline
+# Course Outline
 <br>
 
 <!-- Add icon library -->

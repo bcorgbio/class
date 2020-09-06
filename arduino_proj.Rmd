@@ -1,0 +1,313 @@
+---
+title: "Module X Project"
+
+---
+<style>
+div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
+</style>
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+# Introdution
+
+Now that we have read and explored the basics of how to program an Arduino unit, we'll now proceed with prototyping a simple sensor, one that can very accurately record temperature. This project assumes you have worked through the the assigned readings and links and therefore understand how an Arduino Uno (or a clone) is programmed and how serial data are sent and received from an Arduino.
+
+# Set up
+
+## Materials
+
+  + TMP36 precision linear analog temperature sensor
+  + Elegoo Arduino Uno clone
+  + variety of jumper or prototyping wires
+  
+# Assembly and Programming
+
+## Assembly
+Be sure to read Adafruit's [Using a Temp Sensor](https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor)---it provides a good overview of this temp sensor and explicit intructions for assembling and programming an Arduino-based temperature recording system.
+
+Let's start with assembly. Simply wire the three pins of the TMP36 according the this diagram (ignore the photoresistor component):
+
+
+<center>
+<img src="https://cdn-learn.adafruit.com/assets/assets/000/000/477/original/temperature_sensorwiring.gif?1447975829" alt="alternatetext">
+</center>
+
+Notice that the  AREF pin is receiving 3.3v from the pin of that name. This changes the reference voltage from 5v, reducing noise and increasing precision. The diagram above doesn't require a breadboard, but merely three male-female jumper wires for wiring the sensor, and a bit of prototyping wire or a male-male jumper for the AREF-3v connection.
+
+## Programming
+
+Now program the Arduino by uploading the second sketch from Adafruit's [Using a Temp Sensor](https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor) tutorial. If everything is in order---you've chosen the right port and board in Arduino IDE---you can now click on the serial monitor icon in the upper right of the IDE (or pres "cmd/ctrl+shift+m") to see what data are being printed from the microcontroller to your computer over the serial (USB) port. It should look something like this. If so, CONGRATS! You're recording temperature data!
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">When getting setup with your Arduino, makes sure you've selected the correct board and port from the "Tools" dropdown menu in the IDE!
+</div>
+</div>
+</div>
+<br>
+
+<center>
+![FigName](tempserial.png)
+</center>
+<br>
+
+This is great, but as a scientist, you're probably building this instrument to record temperature over some length of time. Thus, reporting when, relative to the start of the experiment, the temperature was recorded is important. Fortunately, recording and printing time to the serial connection is super easy. We can do this by adding a new variable `currentTime` and passing a time value in millisecords to this variable in the void loop. First, add `int currentTime;` to the top of the sketch where the other variables are established. `int` establishes the variable as an integer, which is just fine because milliseconds is recorded as whole numbers. Second, add this to the `void(loop)`:
+
+```{}  
+  //add line to record current time 
+  currentTime=millis(); 
+ 
+  //add line to print current time 
+  Serial.print("Time = ");
+  Serial.println(currentTime);
+```
+
+This first line above records the time in milliseconds. The second and third lines print a prefix and the value for the current time. Notice there's `Serial.print()` and `Serial.println()`. The later is identical to the former, however, `Serial.println` prints the value and then a new line. 
+
+An amended code looks something like this:
+
+```{}
+
+/* Sensor test sketch
+  for more information see http://www.ladyada.net/make/logshield/lighttemp.html
+  */
+ 
+#define aref_voltage 3.3         // we tie 3.3V to ARef 
+ 
+ 
+ 
+ 
+//TMP36 Pin Variables
+int tempPin = A1;        //the analog pin the TMP36's Vout (sense) pin is connected to
+                        //the resolution is 10 mV / degree centigrade with a
+                        //500 mV offset to allow for negative temperatures
+int tempReading;        // the analog reading from the sensor
+
+int currentTime; // the current time when the Arduino is recording temp data
+
+void setup(void) {
+  // We'll send debugging information via the Serial monitor
+  Serial.begin(9600);   
+ 
+  // If you want to set the aref to something other than 5v
+  analogReference(EXTERNAL);
+  
+  
+  
+}
+ 
+ 
+void loop(void) {
+ //add line to record current time 
+ currentTime=millis(); 
+ 
+  //add line to print current time 
+  Serial.print("Time = ");
+  Serial.println(currentTime);
+ 
+  tempReading = analogRead(tempPin);  
+ 
+  Serial.println("Temp reading = ");
+  Serial.print(tempReading);     // the raw analog reading
+ 
+  // converting that reading to voltage, which is based off the reference voltage
+  float voltage = tempReading * aref_voltage;
+  voltage /= 1024.0; 
+ 
+  // print out the voltage
+  Serial.print(" - ");
+  Serial.print(voltage); Serial.println(" volts");
+ 
+  // now print out the temperature
+  float temperatureC = (voltage - 0.5) * 100 ;  //converting from 10 mv per degree wit 500 mV offset
+                                               //to degrees ((volatge - 500mV) times 100)
+  Serial.print(temperatureC); Serial.println(" degrees C");
+ 
+  // now convert to Fahrenheight
+  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
+  Serial.print(temperatureF); Serial.println(" degrees F");
+ 
+  delay(1000);
+}
+
+
+```
+
+Check in on the serial monitor. Notice that there's now a new line (outlined below in red) that reports time in milliseconds:
+
+![FigName](tempserial2.png)
+</center>
+<br>
+
+Notice that the data are being printed about ever second (1000 ms) or so. This is because the the last line of the sketch in the `void(loop)` is `delay(1000)`. The `delay()` function delays or stops the loop for a specified number of milliseconds.
+
+OK, this much better, but, as we'll learn in Module 2, data need to be parsed (i.e., arranged) in particular ways for a scientists to read data into a computer and then work with it. One of the standard parsing conventions or formats is comma separated values (.csv). If we can get our data to be printed to the serial monitor separated by commas, then we just have to copy the data from the the serial monitor and paste it into a text file. Later in the course, we'll learn how to save the data to an SD card, but for now, let's set up serial printing so that we can copy it. 
+
+To do this, we need to rearrange and add some `Serial.print()` commands to the `void(loop)` section. So rather than . . . 
+
+```{}
+ //add line to record current time 
+ currentTime=millis(); 
+ 
+  //add line to print current time 
+  Serial.print("Time = ");
+  Serial.println(currentTime);
+ 
+  tempReading = analogRead(tempPin);  
+ 
+  Serial.println("Temp reading = ");
+  Serial.print(tempReading);     // the raw analog reading
+ 
+  // converting that reading to voltage, which is based off the reference voltage
+  float voltage = tempReading * aref_voltage;
+  voltage /= 1024.0; 
+ 
+  // print out the voltage
+  Serial.print(" - ");
+  Serial.print(voltage); Serial.println(" volts");
+ 
+  // now print out the temperature
+  float temperatureC = (voltage - 0.5) * 100 ;  //converting from 10 mv per degree wit 500 mV offset
+                                               //to degrees ((volatge - 500mV) times 100)
+  Serial.print(temperatureC); Serial.println(" degrees C");
+ 
+  // now convert to Fahrenheight
+  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
+  Serial.print(temperatureF); Serial.println(" degrees F");
+  
+```
+
+ . . . let's ditch the prefixes and print some commas. Notice the last serial print command is  `Serial.println()` to start a new line before the next data are printed.
+ 
+```{}
+ //add line to record current time 
+ currentTime=millis(); 
+ 
+  //print current time 
+  Serial.print(currentTime);
+ 
+ //print a comma 
+  Serial.print(",");
+  
+  tempReading = analogRead(tempPin);  
+ 
+  Serial.print(tempReading);     // the raw analog reading
+ 
+  // converting that reading to voltage, which is based off the reference voltage
+  float voltage = tempReading * aref_voltage;
+  voltage /= 1024.0; 
+ 
+  // print out the voltage
+  Serial.print(voltage);
+  Serial.print(",");
+ 
+  // now print out the temperature
+  float temperatureC = (voltage - 0.5) * 100 ;  //converting from 10 mv per degree wit 500 mV offset
+                                               //to degrees ((volatge - 500mV) times 100)
+  Serial.print(temperatureC);
+    Serial.print(",");
+ 
+  // now convert to Fahrenheight
+  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
+  Serial.println(temperatureF); 
+  
+```
+
+ 
+Upload the sketch and have a look at the serial monitor. Notice that we have data for milliseconds, voltage, temp in &deg;C, and &deg;F, all separated by commas. That is, we have comma separated values (.csv)! There's just one problem with this---unless you knew the inner workings of this sketch, you wouldn't know which data were which. Is the first value time or voltage? The second voltage or &deg;F? Etc., etc. Printing a header at the beginning of the progrom is the solution. After this, the header and data can be copied and pasted to a text file and any computing operations that follow will logically parse and have a name for each column or position in the series of data. 
+
+Here's how to proceed. Merely print some header/column names in the `setup(void)`. The `setup(void)` is a part of the sketch where you ask the microcontroller to do something once and *before* `void(loop)` commences, a perfect place to print the header to the serial port.
+
+```{}
+Serial.println("ms,v,degC,degF");
+```
+
+After adding this and uploading the modified sketch, the serial monitor should now print a header (i.e., column names) and then the data like this:
+
+![FigName](tempserial4.png)
+</center>
+<br>
+
+This new modified Arduino sketch follows here:
+
+```{}
+
+/* Sensor test sketch
+  for more information see http://www.ladyada.net/make/logshield/lighttemp.html
+  */
+ 
+#define aref_voltage 3.3         // we tie 3.3V to ARef 
+ 
+ 
+ 
+ 
+//TMP36 Pin Variables
+int tempPin = A1;        //the analog pin the TMP36's Vout (sense) pin is connected to
+                        //the resolution is 10 mV / degree centigrade with a
+                        //500 mV offset to allow for negative temperatures
+int tempReading;        // the analog reading from the sensor
+
+int currentTime; // the current time when the Arduino is recording temp data
+void setup(void) {
+  // We'll send debugging information via the Serial monitor
+  Serial.begin(9600);   
+ 
+  // If you want to set the aref to something other than 5v
+  analogReference(EXTERNAL);
+
+  Serial.println("ms,v,degC,degF");
+  
+
+  
+}
+ 
+ 
+void loop(void) {
+ //add line to record current time 
+ currentTime=millis(); 
+ 
+  //print current time 
+  Serial.print(currentTime);
+ 
+ //print a comma 
+  Serial.print(",");
+  
+  tempReading = analogRead(tempPin);  
+ 
+  Serial.print(tempReading);     // the raw analog reading
+ 
+  // converting that reading to voltage, which is based off the reference voltage
+  float voltage = tempReading * aref_voltage;
+  voltage /= 1024.0; 
+ 
+  // print out the voltage
+  Serial.print(voltage);
+  Serial.print(",");
+ 
+  // now print out the temperature
+  float temperatureC = (voltage - 0.5) * 100 ;  //converting from 10 mv per degree wit 500 mV offset
+                                               //to degrees ((volatge - 500mV) times 100)
+  Serial.print(temperatureC);
+    Serial.print(",");
+ 
+  // now convert to Fahrenheight
+  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
+  Serial.println(temperatureF); 
+
+  delay(1000);
+}
+```
+
+# Project Report
+
+No need to write anything up. Please merely run the modified sketch on your temp sensor protype and upload a video of the serial monitor printing comma separated values. You can capture the video by recording the screen on your phone and upload it [here](https://forms.gle/gRHLVdGKh4bsF3Md7). Please upload the video by 11:59 PM on Sunday, September 6th. 
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">As a reminder, please check out the [Phase I projects rubric](phaseI_rubric.html) to get a sense of how this project will be assessed.</div>
+</div>
+</div>
+</div>
+<br>
