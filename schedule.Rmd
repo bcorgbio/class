@@ -162,7 +162,7 @@ All form [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS):
 + What is tidy data? 
 + What's the difference between long and wide data tables? 
 + How does one added and summarize data in R?
-+ How does one merge data in join operations? 
++ How does one merge data in join operations?  
 <br>
 
 ### Module 2 Schedule
