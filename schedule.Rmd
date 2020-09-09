@@ -174,70 +174,82 @@ All assignments are due at 11:59 on the specified date.
   **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 2 Project Report
   ||||||||
 
-<!-- ## Module 2: Introduction and Cheap Tricks -->
+## Module 3: The Whiz and Viz Bang of Data: The Basics of Data Visualization and Modeling
 
-<!-- In this module we'll learn the basics of coding in R. This introduction to R assumes no previous experience with R specifically or programming in general. The focus of this module will be on learning how R works and appreciating some of its potential in performing simple data operations like loading it, evaluating its different types, subsetting data objects, and iterating quickly through repetative tasks.  -->
+In Module 3, we'll cover the basics of visualizing and modeling data and hypothesis testing. We've used some simple visualization techniques in `ggplot` alsready and we'll leverage this introduction to dig deeper into how data can be plotted to explore and ask informed questions about it.
 
-<!-- ### Dates:  -->
+### Dates: 
 
-<!-- Week 2 (Sep 7—13): -->
+Week 2 (Sep 21—27):
 
+### Key Concepts
+  + The grammar of `ggplot`
+  + Adding data based on data (i.e., data transformation)
+  + Summarize data according to variables
+  + Tidying data in R
+  + Relational data and merging data sets
 
-<!-- ### Key Concepts -->
-<!--   + Course workflow -->
-<!--   + Course expectations -->
-<!--   + Arduino IDE basics (the sketch) -->
-<!--   + Digital vs. Analog I/O -->
+### Learning Objectives
 
-<!-- ### Learning Objectives -->
+Upon completion of this week and module, students will be able to:
 
-<!-- Upon completion of this week and module, students will be able to: -->
+  + Read text data into R.
+  + Pivot data from wide to longer formats and vice versa.
+  + Add columns of data to a data set based on values in other columns.
+  + Write and use a simple function in R.
+  + Tidy a data set to beging analysis with a particular goal in mind.
+  + Join data sets based on similar data (i.e., key) attributes
+  
+<!--   + Set a working directory and load data in R -->
+<!--   + Recognize the difference between different objects (e.g., vectors, lists, data frames etc.) -->
+<!--   + Perform simple data operations and manipulation of data objects in R -->
+<!--   + Contruct and run a `for` loop in R to automate a interatively redundant task. -->
 
+### Read/Watch
 
-<!--   + Design and program a blinking Arduino unit -->
-<!--   + Design and program a simple Arduino DAQ -->
+All form [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS):
 
-<!-- ### Read/Watch  -->
-
-<!--   + [What is Arduino?](https://www.arduino.cc/en/Guide/Introduction) -->
-<!--   + [Getting started with Arduino](https://www.arduino.cc/en/Guide) -->
-<!--   + [What is Arduino IDE?](https://www.arduino.cc/en/Guide/Environment) -->
-<!--   + [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno) -->
-<!--   + [The Serial Monitor](https://learn.adafruit.com/adafruit-arduino-lesson-5-the-serial-monitor/the-serial-monitor) -->
-<!--   + [How Does a Breadboard Work](https://www.sciencebuddies.org/science-fair-projects/references/how-to-use-a-breadboard) -->
-<!--   + Adafruit's [Using a Temp Sensor](https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor) -->
-
-
-<!-- ### Do -->
-
-<!--   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) -->
-<!--   + [Install Arduino IDE](https://www.arduino.cc/en/Guide) -->
-<!--   + Work through "Blink" sketch in [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno) (work with the desktop IDE) -->
-<!--   + Complete [Module 1 Project] -->
-<!--   + [Upload video of temp data](https://forms.gle/gRHLVdGKh4bsF3Md7) passing through serial monitor on Arduino IDE [10 points] -->
+  + [Chapter 3: Transformations](https://r4ds.had.co.nz/data-visualisation.html)
 
 
-<!-- ### Guiding Questions -->
-
-<!--   + Where does one find important course information? -->
-<!--   + What are the major components of an Arduino microcontroller? -->
-<!--   + What are the major components of an Arduino-based DAQ?  -->
-<!--   + How does one program an Arduino microcontroller? -->
-<!--   + How are data acquired from an Arduino unit? -->
+<br>
 
 
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"> 
+
+<div class = "green">
+<div class="row">
+<div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+<div class="col-sm-9"> As with HOPR, make sure to have R and R Studio up and running so that you can copy and paste code from R4DS into an R file and run the specified commands and complete the book's exercises.</div>
+</div>
+</div> 
+</div>
+<br>
+
+### Do 
+
+  + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
+  + Complete and submit a report for Module 2 Project 
 
 
-<!-- ### Module 2 Schedule -->
+### Guiding Questions
 
-<!-- All assignments are due at 11:59 on the specified date. -->
++ How does one read data into R? 
++ What is tidy data? 
++ What's the difference between long and wide data tables? 
++ How does one added and summarize data in R?
++ How does one merge data in join operations?  
+<br>
 
-<!--  || Monday <br> 9/7 |  Tuesday <br>9/8    | Wednesday<br>  9/9 | Thursday <br> 9/10 | Friday <br> 9/11 |Saturday<br> 9/11 | Sunday<br> 9/13 -->
-<!-- |--------|-------- |--------|-------- |--------|--------|--------|--------     -->
-<!-- **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 2 Project Report -->
-<!-- |||||||| -->
+### Module 2 Schedule
 
+All assignments are due at 11:59 on the specified date. 
 
+  || Monday <br> 9/14 |  Tuesday <br>9/15    | Wednesday<br>  9/16 | Thursday <br> 9/17 | Friday <br> 9/18 |Saturday<br> 9/19 | Sunday<br> 9/20
+  |--------|-------- |--------|-------- |--------|--------|--------|--------
+  **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 2 Project Report
+  ||||||||
 
 <!-- #ddply intro -->
 <!--Module 3 Epxloratory data + Modelling analysis in R4DS -->
