@@ -215,7 +215,7 @@ print(anole.aicw)
 
 ```
 
-From our `anole.aic`, we see that the second model, `anole.allo` has a lower AIC score, and **lower scores indicate a better fit**. Although the relative fit is three times better for our allometric model, the difference in AIC$_c$ is somewhat small ($\Delta$AIC=2.2). A general rule of thumb is that a $\Delta$AIC of less the 4 indicates roughly equivalent models, 4--8 little support for a lesser fit, and over 10 a poor fit and the model can be ignored. So, because we have  $\Delta$AIC<4, there's little difference between our linear and allometric models of hind-limb growth; thus, we can say that **allometry and isometry are roughly equivalent models**. This should was almost expected given that, after that calling `summary(anole.allo)` we see that the estimate for `b` the scaling exponent, is pretty close to 1 at b  0.92.
+From our `anole.aic`, we see that the second model, `anole.allo` has a lower AIC score, and **lower scores indicate a better fit**. Although the relative fit is three times better for our allometric model, the difference in $AIC_c$ is somewhat small ($\Delta AIC$=2.2). A general rule of thumb is that a $\Delta AIC$ of less the 4 indicates roughly equivalent models, 4--8 little support for a lesser fit, and over 10 a poor fit and the model can be ignored. So, because we have  $\Delta AIC$<4, there's little difference between our linear and allometric models of hind-limb growth; thus, we can say that **allometry and isometry are roughly equivalent models**. This should was almost expected given that, after that calling `summary(anole.allo)` we see that the estimate for `b` the scaling exponent, is pretty close to 1 at b  0.92.
 
 <div class = "green">
 <div class="row">
@@ -237,7 +237,7 @@ Here, the allometric model has the  **highest** likelihood and, because the mode
 
 # More Complex Visualizations and Models 
 
-So now that we understand the basics of visualizing data, applying models, and choosing which fit out data best, let's consider a more complicated relationship among our data. Specifically, we'll consider the effect of ecomorph on the hindlimb-SVL relationships.
+So now that we understand the basics of visualizing data, applying models, and choosing which fit our data best, let's consider a more complicated relationship among our data. Specifically, we'll consider the effect of ecomorph on the hindlimb-SVL relationships.
 
 For this we'll use our log-transformed data for the reasons outlined in the note above. We'll begin by visualizing hindlimb-SVL relationships for each ecomorph in `ggplot`:
 
@@ -300,7 +300,7 @@ anole.log%>%
 
 In this `ggplot()` operation, we established the x variable as `Ecomorph2` and y as the residual (`res`).
 
-From this we see that model deviations (i.e., residuals) are greatest in the twig and trunk-ground ecomorphs. But, this isn't so pleasing. Perhaps we would like a better summarization of the data, including the median residual for each ecomorph. We could do this with more mutations of the data, however, we can let `ggplot` do this with `geom_boxplot()`. This geometry plots summary statistics including the median, hinges that correspond to the first and third quartiles, and whiskers that correspond to 1.5 times the interquartile range.
+From this we see that model deviations (i.e., residuals) are greatest in the twig and trunk-ground ecomorphs. But, this isn't so pleasing. Perhaps we would like a better summarization of the data, including the median residual for each ecomorph. We could do this with more mutations of the data; however, we can let `ggplot` do this with `geom_boxplot()`. This geometry plots summary statistics including the median, hinges that correspond to the first and third quartiles, and whiskers that correspond to 1.5 times the interquartile range.
 
 ```{r}
 p.eco <- anole.log%>%
@@ -366,7 +366,7 @@ sim%>%
 
 Notice, as Harmon pointed out in hist PCM book, this resembles a genetic drift model and indeed BM can be used to model a process of trait evolution under genetic drift. 
 
-In PGLS or any other comparative method, we can implement this model of character evolution over the tree where time corresponds to the branch lengths and each node of the tree represents a new random walk away from the previous value at the previous node. This from Harmon's PCM book explains the process:
+In PGLS, or any number of other comparative methods, we can implement this model of character evolution over the tree where time corresponds to the branch lengths and each node of the tree represents a new random walk away from the previous value at the previous node. This from Harmon's PCM book explains the process:
 
 <enter>
 ![](pcmfigure3-4.png)
@@ -376,7 +376,7 @@ In PGLS or any other comparative method, we can implement this model of characte
 
 In A, we see the evolution in a single lineage over time period $t_1$. At the end of time $t_1$, the trait will have evolved value $\bar{z}(t_1)$, a magnitude that is approximated by $\bar{z}(0)$ plus the amount of change along the branch (roughly described by $\sigma^2t_1$, the product of the rate parameter and time). In panel B,the evolutionary change described by Brownian motion occurs over a total time of $t_41$+$t_2$. Thus, the change at this tip ($\bar{x}_a$) would be equal to the starting value, $\bar{z}(0)$ plus $\sigma^2(t_1+t_2)$. Similarly, the change at tip "b" would be equal to $\bar{z}(0)$ + $\sigma^2(t_1+t_3)$. Note that the mean value for tips "a" and "b" ($\bar{x}_a$) and $\bar{x}_b$) are not independent: the two tips share a branch in common and each tip's trait value is the ancestral value plus the sum of two separate evolutionary changes. In a more complex tree with many taxa, this process is modeled from the root (the ancestor or all species) to every tip. 
  
-Another way to model character evolution over a tree, an Ornstein-Uhlenbeck (OU) model,  is a little more complicated, however, worth mentioning because it remains a popular alternative model to the BM process. We won't go into the same detail  because of its similarity to BM and the mathematics are somewhat involved. In this model, traits evolving over a tree are "pulled" toward an optimum and this is often assumed to model a process of stabilizing selection (although other processes the result in optima can't be ruled out). The process of fitting an OU model is quite similar to BM including a starting value ($\bar{z}(0)$), the evolutionary rate $\sigma^2$, and the additional parameters of the trait optimum ($\theta$) and strength of selection ($\alpha$). The $\alpha$ parameter determines how strongly the trait is pulled back to the optimum and, for this reason, is sometimes referred to as a "rubber band" parameter. It's important to note that when $\alpha$=0, i.e., no selection, the OU is mechanistically identical to the BM process.
+Another way to model character evolution over a tree, an Ornstein-Uhlenbeck (OU) model, is a little more complicated, however, worth mentioning because it remains a popular alternative model to the BM process. We won't go into the same detail  because of its similarity to BM and the mathematics are somewhat involved. In this model, traits evolving over a tree are "pulled" toward an optimum and this is often assumed to model a process of stabilizing selection (although other processes the result in optima can't be ruled out). The process of fitting an OU model is quite similar to BM including a starting value ($\bar{z}(0)$), the evolutionary rate $\sigma^2$, and the additional parameters of the trait optimum ($\theta$) and strength of selection ($\alpha$). The $\alpha$ parameter determines how strongly the trait is pulled back to the optimum and, for this reason, is sometimes referred to as a "rubber band" parameter. It's important to note that when $\alpha$=0, i.e., no selection, the OU is mechanistically identical to the BM process.
 
 Now that we have explained the theory behind a few evolutionary models and we have a tree for our anoles, let's perform some PGLS under these two different models: both with simple regression models that doesn't include ecomorph and then models that do. We'll start with setting up the code using `gls()` from the `nlme` package and then discuss what's in it.
 
@@ -400,7 +400,7 @@ pgls.OU2 <- gls(HTotal ~SVL * Ecomorph2, correlation = corMartins(0,phy = anole.
 
 
 
-What we did here is set up generalized least squares models that establish a correlation matrix based on BM and OU models of evolution. We establish this matrix with `corBrownian()` from the `ape` package for the BM models and `corMartins()`, also from `ape`, for the OU models. The `corMartins()` function for establishing the OU covariation matrix is so name by the `ape` authors as an homage to @martins1997phylogenies, the paper that most precisely defined the OU model in comparative analysis [see not below].. Notice that we don't have to specify what any of the parameters are; they will are estimated under maximum likelihood when `method=ML`.  For the BM model, we used a stating starting value of 1 for $\sigma^2$ and for the OU model we used a starting value of 0 for $\alpha$. In each correlation function, we have to specify the tree (`anole.tree`) and the column names in data that will form covariation matrix, that is, species (`~Species`). 
+What we did here is set up generalized least squares models that establish a correlation matrix based on BM and OU models of evolution. We establish this matrix with `corBrownian()` from the `ape` package for the BM models and `corMartins()`, also from `ape`, for the OU models. The `corMartins()` function for establishing the OU covariation matrix is so name by the `ape` authors as an homage to @martins1997phylogenies, the paper that most precisely defined the OU model in comparative analysis [see note below].. Notice that we don't have to specify what any of the parameters are; they are estimated under maximum likelihood when `method=ML`.  For the BM model, we used a stating starting value of 1 for $\sigma^2$ and for the OU model we used a starting value of 0 for $\alpha$. In each correlation function, we have to specify the tree (`anole.tree`) and the column names in data that will form the covariation matrix, that is, species (`~Species`). 
 
 <div class = "green">
 <div class="row">
@@ -430,7 +430,7 @@ Next, we can now consider whether `Ecomorph` is a significant factor in predicti
 anova(pgls.BM2)
 ```
 
-Like our simple linear model, this variable remains significant: `Ecomorph2` has a significant effect on this relationship at p<0.0001. However, if we dig deeper with some visualization, we see that ecomorph isn't as strong as a factor when we consider phylogeny. Let's come back to the residuals of our hinglimb-SVL relationship, but now when we consider BM evolution of this relationship over the tree. We'll first mutate and redefine our `anole.log` data to include a column for *phylogenetically* corrected residuals and then plot them against ecomorph just as we did in the case of our simple `lm()` model that didn't consider phylogeny:
+Like our simple linear model, this variable remains significant: `Ecomorph2` has a significant effect on this relationship at p<0.0001. However, if we dig deeper with some visualization, we see that ecomorph isn't as strong as a factor when we consider phylogeny. Let's come back to the residuals of our hinglimb-SVL relationship, but now we'll consider BM evolution of this relationship over the tree. We'll first mutate and redefine our `anole.log` data to include a column for *phylogenetically* corrected residuals and then plot them against ecomorph just as we did in the case of our simple `lm()` model that didn't consider phylogeny:
 
 
 ```{r}
@@ -448,7 +448,7 @@ print(p.eco.phylo)
 
 Now that we have phylogentically corrected residuals in addition to the uncorrected residuals, let's now compare them visually. To do this we could use `ggplot()` to plot two separate boxplots of the uncorrected and corrected residuals. But, this wouldn't be very concise. What we'll do instead is make the `anole.log` tibble longer with respect to the two types of residuals. Think back to the [last project where we made a tibble wider](mod2_proj.html#pivoting_to_different_questions). In that case, we had a column of fin amplitudes (both left and right) and another identifying from which fin the amplitude came. With respect to fin amplitude, this is a long table, and we modified it to wide format with separate columns of values, one for each fin amplitude. In our `anole.log` tibble, we now have this wide format, a column for each type of residual. If we can make this tibble longer, with a column of both residual values and another identifying to which type of residual the value belongs, we can you `ggplot()`'s handy faceting tools to include our boxplots of both residual types in one plot. 
 
-In the previous project, we also introduced [the concept of facets](mod2_proj.html#using_customized_functions). If you recall, facets are used to break the plot up into a grid according values in the data. Let's massage the data to a longer format and then use a faceting function from `ggplot` to plot the phlyognetically corrected and uncorrected residuals against ecomorph with a boxplot. This is how it can be done:
+In the previous project, we introduced [the concept of facets](mod2_proj.html#using_customized_functions). If you recall, facets are used to break the plot up into a grid according values in the data. Let's massage the data to a longer format and then use a faceting function from `ggplot` to plot the phlyognetically corrected and uncorrected residuals against ecomorph with a boxplot. This is how it can be done:
 
 ```{r}
 
@@ -466,7 +466,7 @@ Here we selected the three columns of interest (`Ecomorph2`, `res` [the uncorrec
 <div class="row">
   <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
   <div class="col-sm-9">
-Notice that the `select()` function in the code above is prefaced with `dplyr::`. This is R speak for "use the function `select` from the `dplyr` package. We have to do this here because a few of the other packages we loaded also have different functions of the same name. A common lament of folks writing code for other folks to use (i.e., packages) is that the toughest part of the work if naming things. That is, one has to be careful. In this case, not careful enough.
+Notice that the `select()` function in the code above is prefaced with `dplyr::`. This is R speak for "use the function `select` from the `dplyr` package." We have to do this here because a few of the other packages we loaded also have different functions of the same name. A common lament of folks writing code for other folks to use (i.e., packages) is that the toughest part of the work is naming things. That is, one has to be careful. 
 </div>
 </div>
 </div>
@@ -484,7 +484,7 @@ Let's come back to the comparison of the two types of residuals. With our facete
 
 It's likely that your head is spinning: we've covered a ton of topics in the project. What's left to do is merely pick up the high points of what we've explored and apply these in a few relatively straightforward operations. 
 
-Let's have your team explore some ecological data and how it effects hindlimb-SVL patterns. We'll not take the ecomorph designations for granted, but rather assess if important ecological parameters of perch height (how high in the tree the anole resides) and the diameter of the perch predicts discrete patterns in the hindlimb-SVL relationship. The log-transformed values of these variables are contained in the `anole.log` tibble.
+Let's have your team explore some ecological data and how it effects hindlimb-SVL patterns. We'll not take the a priori ecomorph designations for granted, but rather assess if important ecological parameters of perch height (how high in the tree the anole resides) and the diameter of the perch predicts discrete patterns in the hindlimb-SVL relationship. We''l use the log-transformed values of these variables are contained in the `anole.log` tibble.
 
 For this project report, write a script named "groupname_module3.R" and undertake the following operations.
   
@@ -492,9 +492,11 @@ For this project report, write a script named "groupname_module3.R" and undertak
   2. Using the log-transformed data, construct two simple linear models that assess the effect of perch diameter and height by including these as covariates in your models. Be sure to use `+` notation rather than `*`, assuming there is no interaction (there isn't, trust me!).
   3. Explore how both perch diameter and height effect the hindlimb-SVL relationship by plotting the residuals of your simple linear models against these covariates. This will require mutating a data tibble to include residuals from both models. Please produce two separate plots.
   4. Under a BM model of trait evolution and using the tree provided, construct phylogenetic least squares models of the hindlimb-SVL relationships that include the unique combinations of these two covariates, i.e,
+  
     * A PGLS model with the hindlimb-SVL relationship + perch height
     * A PGLS model with the hindlimb-SVL relationship + perch diameter
     * A PGSL model with the hindlimb-SVL relationship + perch height + perch diameter
+    
   5. Assess the fit of each of these three models using AICc and AICw and comment on (with comments in the script) whether one or both of the covariates is a significant predictor of hinglimb length in a phylogenetic context. 
   6. Produce a plot of your own design that concisely visualizes the effect of your covariate(s) on the hindlimb residuals of the best fitting PGLS model. 
   7. Submit your script to [this link](https://forms.gle/5iD9u1ZmL7M3oNRN8).
