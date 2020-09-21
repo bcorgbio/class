@@ -25,6 +25,8 @@ navbar:
           href: mod1_proj.html
         - text: "Module 2 Project"
           href: mod2_proj.html
+        - text: "Module 3 Project"
+          href: mod3_proj.html
     - text: "BIOL 3140 Discussion"
       href: https://github.com/orgs/bcorgbio/teams/biol-3140
       

@@ -1,3 +1,7 @@
+---
+title: "Schedule"
+---
+
 <style>
 div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </style>
@@ -147,7 +151,6 @@ All form [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS):
 <div class="col-sm-9"> As with HOPR, make sure to have R and R Studio up and running so that you can copy and paste code from R4DS into an R file and run the specified commands and complete the book's exercises.</div>
 </div>
 </div> 
-</div>
 <br>
 
 ### Do 
@@ -158,11 +161,11 @@ All form [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS):
 
 ### Guiding Questions
 
-+ How does one read data into R? 
-+ What is tidy data? 
-+ What's the difference between long and wide data tables? 
-+ How does one added and summarize data in R?
-+ How does one merge data in join operations?  
+  + How does one read data into R? 
+  + What is tidy data? 
+  + What's the difference between long and wide data tables? 
+  + How does one added and summarize data in R?
+  + How does one merge data in join operations?  
 <br>
 
 ### Module 2 Schedule
@@ -172,83 +175,76 @@ All assignments are due at 11:59 on the specified date.
   || Monday <br> 9/14 |  Tuesday <br>9/15    | Wednesday<br>  9/16 | Thursday <br> 9/17 | Friday <br> 9/18 |Saturday<br> 9/19 | Sunday<br> 9/20
   |--------|-------- |--------|-------- |--------|--------|--------|--------
   **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 2 Project Report
-  ||||||||
+  |||||||||
+
 
 ## Module 3: The Whiz and Viz Bang of Data: The Basics of Data Visualization and Modeling
 
-In Module 3, we'll cover the basics of visualizing and modeling data and hypothesis testing. We've used some simple visualization techniques in `ggplot` alsready and we'll leverage this introduction to dig deeper into how data can be plotted to explore and ask informed questions about it.
+In Module 3, we'll cover the basics of visualizing and modeling data and hypothesis testing. We've used some simple visualization techniques in `ggplot` already and we'll leverage this introduction to dig deeper into how data can be plotted to explore and ask informed questions about it. In addition, we'll learn how and when to compared the fit of models.
 
 ### Dates: 
 
-Week 2 (Sep 21—27):
+Week 4 (Sep 21—27):
 
 ### Key Concepts
   + The grammar of `ggplot`
-  + Adding data based on data (i.e., data transformation)
-  + Summarize data according to variables
-  + Tidying data in R
-  + Relational data and merging data sets
+  + Linear models and least squares regression
+  + Phylogenetic signal and correction
+  + Brownina motion models of trait evolution
+  + Model fit and the Aikiake Informaion Criterion (AIC)
 
 ### Learning Objectives
 
 Upon completion of this week and module, students will be able to:
 
-  + Read text data into R.
-  + Pivot data from wide to longer formats and vice versa.
-  + Add columns of data to a data set based on values in other columns.
-  + Write and use a simple function in R.
-  + Tidy a data set to beging analysis with a particular goal in mind.
-  + Join data sets based on similar data (i.e., key) attributes
+  + Perform simple modeling operations in R.
+  + Explore patterns to construct these models by visualizing data in R's `ggplot` environment.
+  + Perform phylogenetically corrected regression analysis of comparative data.
+  + Compare model fit using an information theory approach.
   
-<!--   + Set a working directory and load data in R -->
-<!--   + Recognize the difference between different objects (e.g., vectors, lists, data frames etc.) -->
-<!--   + Perform simple data operations and manipulation of data objects in R -->
-<!--   + Contruct and run a `for` loop in R to automate a interatively redundant task. -->
-
 ### Read/Watch
 
 All form [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS):
 
-  + [Chapter 3: Transformations](https://r4ds.had.co.nz/data-visualisation.html)
+  + Chapter 3:[Data Visualiation](https://r4ds.had.co.nz/data-visualisation.html)
+  + Section IV: Models
+  
+    * Chapter 22: [Introduction](https://r4ds.had.co.nz/model-intro.html)
+    * Chapter 23: [Model Basics](https://r4ds.had.co.nz/model-basics.html)
+    * Chapter 24: [Model Building](https://r4ds.had.co.nz/model-building.html)
+    
+From [Phylogenetic Comparative Methods](https://lukejharmon.github.io/pcm) by Luke Harmon [don't worry too much about the mathematics, focus on the definitions and concepts]
+  
+  + Chapter 1.2:[The Roots of Comparative Methods](https://lukejharmon.github.io/pcm/chapter1_introduction/#section-1.2-the-roots-of-comparative-methods)
+  + Chapter 2.1-2.3: [Fitting Statistical Models to Data](https://lukejharmon.github.io/pcm/chapter2_stats/)
+  + Chapter 3.1-3.4:[Introduction to Brownian Motion](https://lukejharmon.github.io/pcm/chapter3_bmintro/#chapter-3-introduction-to-brownian-motion)
+  + Chapter 6.4: [Non-Brownian evolution under stabilizing selection](https://lukejharmon.github.io/pcm/chapter6_beyondbm/#section-6.4-non-brownian-evolution-under-stabilizing-selection)
 
-
-<br>
-
-
-<!-- Add icon library -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"> 
-
-<div class = "green">
-<div class="row">
-<div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
-<div class="col-sm-9"> As with HOPR, make sure to have R and R Studio up and running so that you can copy and paste code from R4DS into an R file and run the specified commands and complete the book's exercises.</div>
-</div>
-</div> 
-</div>
-<br>
 
 ### Do 
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
-  + Complete and submit a report for Module 2 Project 
+  + Complete and submit a report for Module 3 Project 
 
 
 ### Guiding Questions
 
-+ How does one read data into R? 
-+ What is tidy data? 
-+ What's the difference between long and wide data tables? 
-+ How does one added and summarize data in R?
-+ How does one merge data in join operations?  
++ What are the basic components of plotting in `ggplot`?
++ How does one use basic visualization techniques to propose questions in biology?
++ How does one construct simple models in R? 
++ How does one account for phylogeny when contructing models of comparative data?
++ What basic models of trait evolution can one use in comparative research?
++ How does one know if they're asking the right question (i.e., using the right model) in comparative research?
+
 <br>
 
-### Module 2 Schedule
+### Module 3 Schedule
 
 All assignments are due at 11:59 on the specified date. 
 
-  || Monday <br> 9/14 |  Tuesday <br>9/15    | Wednesday<br>  9/16 | Thursday <br> 9/17 | Friday <br> 9/18 |Saturday<br> 9/19 | Sunday<br> 9/20
+  || Monday <br> 9/21 |  Tuesday <br>9/22    | Wednesday<br>  9/23 | Thursday <br> 9/24 | Friday <br> 9/25 |Saturday<br> 9/26 | Sunday<br> 9/27
   |--------|-------- |--------|-------- |--------|--------|--------|--------
-  **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 2 Project Report
+  **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 3 Project Report
   ||||||||
 
 <!-- #ddply intro -->

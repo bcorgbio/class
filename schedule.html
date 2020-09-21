@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
-<title>schedule.utf8.md</title>
+<title>Schedule</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -71,7 +70,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -220,6 +218,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -248,6 +247,12 @@ $(document).ready(function () {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -349,6 +354,9 @@ div.tocify {
     <li>
       <a href="mod2_proj.html">Module 2 Project</a>
     </li>
+    <li>
+      <a href="mod3_proj.html">Module 3 Project</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -366,6 +374,7 @@ div.tocify {
 
 
 
+<h1 class="title toc-ignore">Schedule</h1>
 
 </div>
 
@@ -602,7 +611,6 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 </div>
 </div>
 </div>
-</div>
 <p><br></p>
 </div>
 <div id="do-1" class="section level3">
@@ -672,45 +680,123 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 </tr>
 </tbody>
 </table>
-<!-- ## Module 2: Introduction and Cheap Tricks -->
-<!-- In this module we'll learn the basics of coding in R. This introduction to R assumes no previous experience with R specifically or programming in general. The focus of this module will be on learning how R works and appreciating some of its potential in performing simple data operations like loading it, evaluating its different types, subsetting data objects, and iterating quickly through repetative tasks.  -->
-<!-- ### Dates:  -->
-<!-- Week 2 (Sep 7—13): -->
-<!-- ### Key Concepts -->
-<!--   + Course workflow -->
-<!--   + Course expectations -->
-<!--   + Arduino IDE basics (the sketch) -->
-<!--   + Digital vs. Analog I/O -->
-<!-- ### Learning Objectives -->
-<!-- Upon completion of this week and module, students will be able to: -->
-<!--   + Design and program a blinking Arduino unit -->
-<!--   + Design and program a simple Arduino DAQ -->
-<!-- ### Read/Watch  -->
-<!--   + [What is Arduino?](https://www.arduino.cc/en/Guide/Introduction) -->
-<!--   + [Getting started with Arduino](https://www.arduino.cc/en/Guide) -->
-<!--   + [What is Arduino IDE?](https://www.arduino.cc/en/Guide/Environment) -->
-<!--   + [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno) -->
-<!--   + [The Serial Monitor](https://learn.adafruit.com/adafruit-arduino-lesson-5-the-serial-monitor/the-serial-monitor) -->
-<!--   + [How Does a Breadboard Work](https://www.sciencebuddies.org/science-fair-projects/references/how-to-use-a-breadboard) -->
-<!--   + Adafruit's [Using a Temp Sensor](https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor) -->
-<!-- ### Do -->
-<!--   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) -->
-<!--   + [Install Arduino IDE](https://www.arduino.cc/en/Guide) -->
-<!--   + Work through "Blink" sketch in [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno) (work with the desktop IDE) -->
-<!--   + Complete [Module 1 Project] -->
-<!--   + [Upload video of temp data](https://forms.gle/gRHLVdGKh4bsF3Md7) passing through serial monitor on Arduino IDE [10 points] -->
-<!-- ### Guiding Questions -->
-<!--   + Where does one find important course information? -->
-<!--   + What are the major components of an Arduino microcontroller? -->
-<!--   + What are the major components of an Arduino-based DAQ?  -->
-<!--   + How does one program an Arduino microcontroller? -->
-<!--   + How are data acquired from an Arduino unit? -->
-<!-- ### Module 2 Schedule -->
-<!-- All assignments are due at 11:59 on the specified date. -->
-<!--  || Monday <br> 9/7 |  Tuesday <br>9/8    | Wednesday<br>  9/9 | Thursday <br> 9/10 | Friday <br> 9/11 |Saturday<br> 9/11 | Sunday<br> 9/13 -->
-<!-- |--------|-------- |--------|-------- |--------|--------|--------|--------     -->
-<!-- **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 2 Project Report -->
-<!-- |||||||| -->
+</div>
+</div>
+<div id="module-3-the-whiz-and-viz-bang-of-data-the-basics-of-data-visualization-and-modeling" class="section level2">
+<h2>Module 3: The Whiz and Viz Bang of Data: The Basics of Data Visualization and Modeling</h2>
+<p>In Module 3, we’ll cover the basics of visualizing and modeling data and hypothesis testing. We’ve used some simple visualization techniques in <code>ggplot</code> already and we’ll leverage this introduction to dig deeper into how data can be plotted to explore and ask informed questions about it. In addition, we’ll learn how and when to compared the fit of models.</p>
+<div id="dates-2" class="section level3">
+<h3>Dates:</h3>
+<p>Week 4 (Sep 21—27):</p>
+</div>
+<div id="key-concepts-2" class="section level3">
+<h3>Key Concepts</h3>
+<ul>
+<li>The grammar of <code>ggplot</code></li>
+<li>Linear models and least squares regression</li>
+<li>Phylogenetic signal and correction</li>
+<li>Brownina motion models of trait evolution</li>
+<li>Model fit and the Aikiake Informaion Criterion (AIC)</li>
+</ul>
+</div>
+<div id="learning-objectives-2" class="section level3">
+<h3>Learning Objectives</h3>
+<p>Upon completion of this week and module, students will be able to:</p>
+<ul>
+<li>Perform simple modeling operations in R.</li>
+<li>Explore patterns to construct these models by visualizing data in R’s <code>ggplot</code> environment.</li>
+<li>Perform phylogenetically corrected regression analysis of comparative data.</li>
+<li>Compare model fit using an information theory approach.</li>
+</ul>
+</div>
+<div id="readwatch-2" class="section level3">
+<h3>Read/Watch</h3>
+<p>All form <a href="https://r4ds.had.co.nz/wrangle-intro.html">R for Data Science</a> (R4DS):</p>
+<ul>
+<li>Chapter 3:<a href="https://r4ds.had.co.nz/data-visualisation.html">Data Visualiation</a></li>
+<li><p>Section IV: Models</p>
+<ul>
+<li>Chapter 22: <a href="https://r4ds.had.co.nz/model-intro.html">Introduction</a></li>
+<li>Chapter 23: <a href="https://r4ds.had.co.nz/model-basics.html">Model Basics</a></li>
+<li>Chapter 24: <a href="https://r4ds.had.co.nz/model-building.html">Model Building</a></li>
+</ul></li>
+</ul>
+<p>From <a href="https://lukejharmon.github.io/pcm">Phylogenetic Comparative Methods</a> by Luke Harmon [don’t worry too much about the mathematics, focus on the definitions and concepts]</p>
+<ul>
+<li>Chapter 1.2:<a href="https://lukejharmon.github.io/pcm/chapter1_introduction/#section-1.2-the-roots-of-comparative-methods">The Roots of Comparative Methods</a></li>
+<li>Chapter 2.1-2.3: <a href="https://lukejharmon.github.io/pcm/chapter2_stats/">Fitting Statistical Models to Data</a></li>
+<li>Chapter 3.1-3.4:<a href="https://lukejharmon.github.io/pcm/chapter3_bmintro/#chapter-3-introduction-to-brownian-motion">Introduction to Brownian Motion</a></li>
+<li>Chapter 6.4: <a href="https://lukejharmon.github.io/pcm/chapter6_beyondbm/#section-6.4-non-brownian-evolution-under-stabilizing-selection">Non-Brownian evolution under stabilizing selection</a></li>
+</ul>
+</div>
+<div id="do-2" class="section level3">
+<h3>Do</h3>
+<ul>
+<li>Post one and respond to one question in <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a> [10 points]</li>
+<li>Complete and submit a report for Module 3 Project</li>
+</ul>
+</div>
+<div id="guiding-questions-2" class="section level3">
+<h3>Guiding Questions</h3>
+<ul>
+<li>What are the basic components of plotting in <code>ggplot</code>?</li>
+<li>How does one use basic visualization techniques to propose questions in biology?</li>
+<li>How does one construct simple models in R?</li>
+<li>How does one account for phylogeny when contructing models of comparative data?</li>
+<li>What basic models of trait evolution can one use in comparative research?</li>
+<li>How does one know if they’re asking the right question (i.e., using the right model) in comparative research?</li>
+</ul>
+<p><br></p>
+</div>
+<div id="module-3-schedule" class="section level3">
+<h3>Module 3 Schedule</h3>
+<p>All assignments are due at 11:59 on the specified date.</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Monday <br> 9/21</th>
+<th>Tuesday <br>9/22</th>
+<th>Wednesday<br> 9/23</th>
+<th>Thursday <br> 9/24</th>
+<th>Friday <br> 9/25</th>
+<th>Saturday<br> 9/26</th>
+<th>Sunday<br> 9/27</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Assignment due</strong></td>
+<td></td>
+<td></td>
+<td>Post question to discussion board</td>
+<td>Answer a question on discussion board</td>
+<td></td>
+<td></td>
+<td>Submit Module 3 Project Report</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <!-- #ddply intro -->
 <!--Module 3 Epxloratory data + Modelling analysis in R4DS -->
 <!-- https://seananderson.ca/2014/09/13/dplyr-intro/ -->
@@ -783,7 +869,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
