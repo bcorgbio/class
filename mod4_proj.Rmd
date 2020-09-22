@@ -26,7 +26,7 @@ Our tasks will be to:
   1. Visualize how hind limb length varies with size (i.e., allometry!).
   2. Visualize and asses how hind limb length vs. size relationship covary with ecological niche.
   3. Learn more complex operations in `ggplot` than we've undertaken so far. 
-  2. Evaluate this hindlimb-size relationship using standard frequentist models within and without a phylogenetic context.
+  2. Evaluate the this hindlimb-size relationship using standard frequentist models within and without a phylogenetic context.
   2. Using an information theory approach, assess the fit of phylogenetically corrected models of hind-limb variation under different modes of character evolution.
 
 # Set up
