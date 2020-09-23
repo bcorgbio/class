@@ -808,7 +808,7 @@ The data loaded to <code>anole.co</code> are
 <a class="sourceLine" id="cb37-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb37-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb37-8" data-line-number="8"><span class="co">#PGLS under OU, no ecomorph</span></a>
-<a class="sourceLine" id="cb37-9" data-line-number="9">pgls.OU1 &lt;-<span class="st"> </span><span class="kw">gls</span>(HTotal <span class="op">~</span>SVL <span class="op">*</span><span class="st"> </span>Ecomorph2, <span class="dt">correlation =</span> <span class="kw">corMartins</span>(<span class="dv">0</span>,<span class="dt">phy =</span> anole.tree,<span class="dt">form=</span><span class="op">~</span>Species),<span class="dt">data =</span> anole.log, <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>)</a>
+<a class="sourceLine" id="cb37-9" data-line-number="9">pgls.OU1 &lt;-<span class="st"> </span><span class="kw">gls</span>(HTotal <span class="op">~</span>SVL, <span class="dt">correlation =</span> <span class="kw">corMartins</span>(<span class="dv">0</span>,<span class="dt">phy =</span> anole.tree,<span class="dt">form=</span><span class="op">~</span>Species),<span class="dt">data =</span> anole.log, <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>)</a>
 <a class="sourceLine" id="cb37-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb37-11" data-line-number="11"><span class="co">#PGLS under OU, w, ecomorph</span></a>
 <a class="sourceLine" id="cb37-12" data-line-number="12">pgls.OU2 &lt;-<span class="st"> </span><span class="kw">gls</span>(HTotal <span class="op">~</span>SVL <span class="op">*</span><span class="st"> </span>Ecomorph2, <span class="dt">correlation =</span> <span class="kw">corMartins</span>(<span class="dv">0</span>,<span class="dt">phy =</span> anole.tree,<span class="dt">form=</span><span class="op">~</span>Species),<span class="dt">data =</span> anole.log, <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>)</a></code></pre></div>
@@ -828,10 +828,10 @@ The data loaded to <code>anole.co</code> are
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">anole.phylo.aic &lt;-<span class="st"> </span><span class="kw">AICc</span>(pgls.BM1,pgls.BM2,pgls.OU1,pgls.OU2)</a>
 <a class="sourceLine" id="cb38-2" data-line-number="2"><span class="kw">aicw</span>(anole.phylo.aic<span class="op">$</span>AICc)</a></code></pre></div>
 <pre><code>##         fit     delta            w
-## 1 -63.66118 29.319176 4.153547e-07
-## 2 -92.98036  0.000000 9.660448e-01
-## 3 -84.89770  8.082653 1.697741e-02
-## 4 -84.89770  8.082653 1.697741e-02</code></pre>
+## 1 -63.66118 29.319176 4.225281e-07
+## 2 -92.98036  0.000000 9.827289e-01
+## 3 -57.31864 35.661714 1.772520e-08
+## 4 -84.89770  8.082653 1.727062e-02</code></pre>
 <p>From the AIC results, we con safely say that a phylegnetically corrected regression model that includes <code>Ecomorph2</code> with traits evolving under BM is the best fit. The OU models that specify a pull to some global optimum are rejected. We can interpret this to mean that the traits have evolved randomly, <em>but</em> randomly within each lineage.</p>
 <p>Next, we can now consider whether <code>Ecomorph</code> is a significant factor in predicting the hinglimb-SVL relationship in a phylogenetic context by preforming an ANOVA on our best fitting model, <code>pgsl.BM2</code></p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">anova</span>(pgls.BM2)</a></code></pre></div>

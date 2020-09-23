@@ -404,7 +404,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <div id="set-up" class="section level1">
 <h1>Set up</h1>
 <p>First of all, let’s precisely define what we mean by a markdown, the syntaxt for R Markdown. Markdown is a very simple ``markup&quot; language which creates documents with headers, images, references, pieces of code and so much more from plain text files. Becuase it’s text based, the document can be rendered into many other file formats like HTML or PDF that will contain the organized content.</p>
-<p>To get R Markdown up and running, you don’t need to do much at all if you’re using R Studio. You just need to open a new markdown document. The machinery for formatting the source text file is loaded with R Studio. All you have to do is open a new markdown document in R Studio: ``File &gt; New File &gt; R Markdown“. Notice this opens a tab with a markdown template named”untitled.Rmd“. The”.Rmd&quot; extensions infomrs R Studio that this is a source file for markdown and thus it will treat it as such.</p>
+<p>To get R Markdown up and running, you don’t need to do much at all if you’re using R Studio. You just need to open a new markdown document. The machinery for formatting the source text file is loaded with R Studio. All you have to do is open a new markdown document in R Studio: ``File &gt; New File &gt; R Markdown“. Notice this opens a tab with a markdown template named”untitled.Rmd“. The”.Rmd&quot; extensions informs R Studio that this is a source file for markdown and thus it will treat it as such.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
@@ -433,7 +433,7 @@ output: html_document
 </div>
 <div id="headers" class="section level1">
 <h1>Headers</h1>
-<p>When you start putting together the content of an .Rmd, you should consider adding sections almost immediately. This can serve as an outline for the document. Headers provide a way of heirarchichally organizing the document into sections that refelct an outline. These are indentified in the markdown by using one or several <code>#</code>. The more you you use, the smaller the text and, presumably the less inclusive the header. That is, <code>#</code> is the biggest header and <code>##</code> is typically nested within a <code>#</code> header, and <code>###</code> is nested within a <code>##</code> header. For instance, this</p>
+<p>When you start putting together the content of an .Rmd, you should consider adding sections almost immediately. This can serve as an outline for the document. Headers provide a way of heirarchichally organizing the document into sections that refelct an outline. These are indentified in the markdown by using one or several <code>#</code>. The more you use, the smaller the text and, presumably the less inclusive the header. That is, <code>#</code> is the biggest header and <code>##</code> is typically nested within a <code>#</code> header, and <code>###</code> is nested within a <code>##</code> header. For instance, this</p>
 <pre><code># Header 1
 
 Text under Header 1
@@ -447,10 +447,19 @@ Text under Header 2
 Text under Header 3
 </code></pre>
 <p>will produce this:</p>
-<center>
-<p><img src="headers.png" /></p>
-</center>
-<p>In your future project reports for Phase I and II of the class, you’ll always want to include sections for an introduction, methods, results, conclusions, and bibliography. So add those sections to your .Rmd. with a high-level header <code>#</code>. We’ll add nested subsections and test later.</p>
+</div>
+<div id="header-1" class="section level1">
+<h1>Header 1</h1>
+<p>Text under Header 1</p>
+<div id="header-2" class="section level2">
+<h2>Header 2</h2>
+<p>Text under Header 2</p>
+<div id="header-3" class="section level3">
+<h3>Header 3</h3>
+<p>Text under Header 3</p>
+<p>In your future project reports for Phase II and III of the class, you’ll always want to include sections for an introduction, methods, results, conclusions, and bibliography. We’ll organize the .Rmd accordingly, so please add those sections to your .Rmd. with a high-level header <code>#</code>. We’ll add nested subsections and text later.</p>
+</div>
+</div>
 </div>
 <div id="adding-code-with-chunks" class="section level1">
 <h1>Adding Code with Chunks</h1>
@@ -458,12 +467,78 @@ Text under Header 3
 <pre><code>```{r}
 x<-1:100
 mean(50)
-```</code>```</pre>
-<p>You can insert code chunks with</p>
+```</code></pre>
+<p>You can insert code chunks with by selecting the “insert” icon at the top of the the tab or my keying in “command+option+i”.</p>
 <center>
 <p><img src="insertchunk.png" /></p>
 </center>
-<p>The content inside the curly brackets (<code>{}</code>) controls the behavior of code chunk. In this case, we’ll telling R markdown that the code inside the chunk is to be interpreted with R. This is a handy place to control the output of the code chunk.</p>
+<p>To run the chunk, your can click on “run” tap and selection “Run Current Chunk” or insert your cursor in the chunk and key in “command+shift+return”.</p>
+<center>
+<p><img src="runchunk.png" /></p>
+</center>
+<p>The content inside the curly brackets (<code>{}</code>) controls the behavior of code chunk. In this case, we’re telling R markdown that the code inside the chunk is to be interpreted with R. This is a handy place to control the output of the code chunk. Let’s jump right into how you would include code in chunks from our relavent anole project.</p>
+<p>At first, you’ll want to include a chunk that loads the libraries you intend to use in the .Rmd. This can be added to the very top of the document. Something that looks like this:</p>
+<pre><code>```{r,include=FALSE}
+library(tidyverse)
+library(ape)
+library(nlme)
+library(MuMIn)
+library(geiger)
+```</code></pre>
+<p>Notice here that we included a behavior to the chunk, specifically <code>include=FALSE</code>. This prevents the code, and the results from appearing in the finished file.</p>
+<p>With a few exceptions, the logical place to include the code that produces analyses or figures is in the results sections. This is where the first output of the code will likely be relavent. So, under the results section, insert the following code chunks that establish the data we need and performs the initial analysis for PGLS.</p>
+<pre><code>```{r, "load the data"}
+anole <- read_csv("anole.dat.csv")
+anole.eco <- read_csv("anole.eco.csv")
+anole.tree <- read.tree("anole.tre")
+```</code></pre>
+<pre><code>```{r, "join, filter, mutate to log"}
+anole2 <- anole%>%
+left_join(anole.eco)%>%
+  filter(!Ecomorph%in%c("U","CH"))%>%
+  na.omit()
+
+anole.log <- anole2%>%
+  mutate_at(c("SVL", "HTotal","PH","ArbPD"),log)
+```</code></pre>
+<pre><code>```{r, "PGLS models"}
+### phylogenetic GLS models
+
+#PGLS under BM, no ecomorph
+pgls.BM1 <- gls(HTotal ~SVL, correlation = corBrownian(1,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
+
+#PGLS under BM, w ecomorph
+pgls.BM2 <- gls(HTotal ~SVL * Ecomorph2, correlation = corBrownian(1,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
+
+
+#PGLS under OU, no ecomorph
+pgls.OU1 <- gls(HTotal ~SVL * Ecomorph2, correlation = corMartins(0,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
+
+#PGLS under OU, w, ecomorph
+pgls.OU2 <- gls(HTotal ~SVL * Ecomorph2, correlation = corMartins(0,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
+```</code></pre>
+<pre><code>```{r, "AIC"}
+#AIC operations
+anole.phylo.aic <- AICc(pgls.BM1,pgls.BM2,pgls.OU1,pgls.OU2)
+anole.phylow.aicw <- aicw(anole.phylo.aic$AICc)
+```</code></pre>
+<pre><code>```{r, "add residuals"}
+#add phylo-corrected residuals
+anole.log <- anole.log%>%
+  mutate(phylo.res=residuals(pgls.BM2))
+```</code></pre>
+<pre><code>``{r,"plot residuals", fig.cap="Boxplot of phylogenetically corrected hindlimb residuals versus anole ecomorph"}
+#plot residuals
+p.eco.phylo <- anole.log%>%
+ggplot(aes(x=Ecomorph2,y=phylo.res)) +geom_boxplot() +stat_summary(fun=mean, geom="point", size=3)
+
+print(p.eco.phylo)
+
+```</code></pre>
+<p>Notice that for each chunk, we icluded some text. This identifies the chunk with a name or label, as R Markdown calls it. Each name must be unique. These names are useful especially when we render the document and any errors or warnings emerge. More on that later.</p>
+<p>Also notice that this last chunked named “plot residuals” has another parameter, <code>fig.cap</code>. This specifies a caption to produce under any figures. In communicating result through visualizations, figures or otherwise, it’s <strong>essential that you include a description</strong> caption. The caption should include what going in the figure (e.g., type of plot, the axes, where the data come from).</p>
+<p>#Modifying Text</p>
+<p>The basic syntax of a markdown language is oddly enough, formulated around mark up. This is similar to other mark up languages like HTML or ML in that it uses tags to define elements within a document.</p>
 </div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>

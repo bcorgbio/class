@@ -35,7 +35,7 @@ Our tasks will be to:
 
 First of all, let's precisely define what we mean by a markdown, the syntaxt for R Markdown. Markdown is a very simple ``markup" language which creates documents with headers, images, references, pieces of code and so much more from plain text files. Becuase it's text based, the document can be rendered into many other file formats like HTML or PDF that will contain the organized content.
 
-To get R Markdown up and running, you don't need to do much at all if you're using R Studio. You just need to open a new markdown document. The machinery for formatting the source text file is loaded with R Studio. All you have to do is open a new markdown document in R Studio: ``File > New File > R Markdown". Notice this opens a tab with a markdown template named "untitled.Rmd". The ".Rmd" extensions infomrs R Studio that this is a source file for markdown and thus it will treat it as such. 
+To get R Markdown up and running, you don't need to do much at all if you're using R Studio. You just need to open a new markdown document. The machinery for formatting the source text file is loaded with R Studio. All you have to do is open a new markdown document in R Studio: ``File > New File > R Markdown". Notice this opens a tab with a markdown template named "untitled.Rmd". The ".Rmd" extensions informs R Studio that this is a source file for markdown and thus it will treat it as such. 
 
 
 <div class = "green">
@@ -72,7 +72,7 @@ Below the YAML header is the space where you'll include text, code, etc.
 
 # Headers
 
-When you start putting together the content of an .Rmd, you should consider adding sections almost immediately. This can serve as an outline for the document. Headers provide a way of heirarchichally organizing the document into sections that refelct an outline. These are indentified in the markdown by using one or several `#`. The more you you use, the smaller the text and, presumably the less inclusive the header. That is, `#` is the biggest header and `##` is typically nested within a `#` header, and `###` is nested within a `##` header. For instance, this 
+When you start putting together the content of an .Rmd, you should consider adding sections almost immediately. This can serve as an outline for the document. Headers provide a way of heirarchichally organizing the document into sections that refelct an outline. These are indentified in the markdown by using one or several `#`. The more you use, the smaller the text and, presumably the less inclusive the header. That is, `#` is the biggest header and `##` is typically nested within a `#` header, and `###` is nested within a `##` header. For instance, this 
 
 ```
 # Header 1
@@ -90,15 +90,72 @@ Text under Header 3
 ```
 will produce this:
 
+# Header 1
 
-<center>
+Text under Header 1
 
-![](headers.png)
+## Header 2
 
-</center>
+Text under Header 2
 
-In your future project reports for Phase I and II of the class, you'll always want to include sections for an introduction, methods, results, conclusions, and bibliography. So add those sections to your .Rmd. with a high-level header `#`.  We'll add nested subsections and test later.  
+### Header 3
 
+Text under Header 3
+
+
+In your future project reports for Phase II and III of the class, you'll always want to include sections for an introduction, methods, results, conclusions, and bibliography. We'll organize the .Rmd accordingly, so please add those sections to your .Rmd. with a high-level header `#`.  We'll add nested subsections and text later.  
+
+
+
+```{r "load the data",include=FALSE,echo=FALSE}
+library(tidyverse)
+library(ape)
+library(nlme)
+library(MuMIn)
+library(geiger)
+anole <- read_csv("anole.dat.csv")
+anole.eco <- read_csv("anole.eco.csv")
+anole.tree <- read.tree("anole.tre")
+
+anole2 <- anole%>%
+left_join(anole.eco)%>%
+  filter(!Ecomorph%in%c("U","CH"))%>%
+  na.omit()
+
+anole.log <- anole2%>%
+  mutate_at(c("SVL", "HTotal","PH","ArbPD"),log)
+
+
+### phylogenetic GLS models
+
+#PGLS under BM, no ecomorph
+pgls.BM1 <- gls(HTotal ~SVL, correlation = corBrownian(1,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
+
+#PGLS under BM, w ecomorph
+pgls.BM2 <- gls(HTotal ~SVL * Ecomorph2, correlation = corBrownian(1,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
+
+
+#PGLS under OU, no ecomorph
+pgls.OU1 <- gls(HTotal ~SVL * Ecomorph2, correlation = corMartins(0,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
+
+#PGLS under OU, w, ecomorph
+pgls.OU2 <- gls(HTotal ~SVL * Ecomorph2, correlation = corMartins(0,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
+
+#AIC operations
+anole.phylo.aic <- AICc(pgls.BM1,pgls.BM2,pgls.OU1,pgls.OU2)
+anole.phylow.aicw <- aicw(anole.phylo.aic$AICc)
+
+#add phylo-corrected residuals
+anole.log <- anole.log%>%
+  mutate(phylo.res=residuals(pgls.BM2))
+
+#plot residuals
+p.eco.phylo <- anole.log%>%
+ggplot(aes(x=Ecomorph2,y=phylo.res)) +geom_boxplot() +stat_summary(fun=mean, geom="point", size=3)
+
+print(p.eco.phylo)
+
+```
 
 # Adding Code with Chunks
 
@@ -108,20 +165,108 @@ Code you include in your .Rmd should be written in sections enclosed by three ba
 <pre><code>```{r}
 x<-1:100
 mean(50)
-```</code>```</pre>
+```</code></pre>
 
 
-
-
-
-You can insert code chunks with by selecting the "insert" icon at the top of the 
+You can insert code chunks with by selecting the "insert" icon at the top of the the tab or my keying in "command+option+i". 
 
 <center>
 
 ![](insertchunk.png)
 
 </center>
-The content inside the curly brackets (`{}`) controls the behavior of code chunk. In this case, we'll telling R markdown that the code inside the chunk is to be interpreted with R. This is a handy place to control the output of the code chunk.  
+
+To run the chunk, your can  click on "run" tap and selection "Run Current Chunk" or insert your cursor in the chunk and key in "command+shift+return". 
+
+<center>
+
+![](runchunk.png)
+
+</center>
+
+The content inside the curly brackets (`{}`) controls the behavior of code chunk. In this case, we're telling R markdown that the code inside the chunk is to be interpreted with R. This is a handy place to control the output of the code chunk. Let's jump right into how you would include code in chunks from our relavent anole project. 
+
+At first, you'll want to include a chunk that loads the libraries you intend to use in the .Rmd. This can be added to the very top of the document. Something that looks like this:
+
+<pre><code>```{r,include=FALSE}
+library(tidyverse)
+library(ape)
+library(nlme)
+library(MuMIn)
+library(geiger)
+```</code></pre>
+
+Notice here that we included a behavior to the chunk, specifically  `include=FALSE`. This prevents the code, and the results from appearing in the finished file. 
+
+With a few exceptions, the logical place to include the code that produces analyses or figures is in the results sections. This is where the first output of the code will likely be relavent. So, under the results section, insert the following code chunks that establish the data we need and performs the initial analysis for PGLS.
+
+
+<pre><code>```{r, "load the data"}
+anole <- read_csv("anole.dat.csv")
+anole.eco <- read_csv("anole.eco.csv")
+anole.tree <- read.tree("anole.tre")
+```</code></pre>
+
+<pre><code>```{r, "join, filter, mutate to log"}
+anole2 <- anole%>%
+left_join(anole.eco)%>%
+  filter(!Ecomorph%in%c("U","CH"))%>%
+  na.omit()
+
+anole.log <- anole2%>%
+  mutate_at(c("SVL", "HTotal","PH","ArbPD"),log)
+```</code></pre>
+
+<pre><code>```{r, "PGLS models"}
+### phylogenetic GLS models
+
+#PGLS under BM, no ecomorph
+pgls.BM1 <- gls(HTotal ~SVL, correlation = corBrownian(1,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
+
+#PGLS under BM, w ecomorph
+pgls.BM2 <- gls(HTotal ~SVL * Ecomorph2, correlation = corBrownian(1,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
+
+
+#PGLS under OU, no ecomorph
+pgls.OU1 <- gls(HTotal ~SVL * Ecomorph2, correlation = corMartins(0,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
+
+#PGLS under OU, w, ecomorph
+pgls.OU2 <- gls(HTotal ~SVL * Ecomorph2, correlation = corMartins(0,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
+```</code></pre>
+
+<pre><code>```{r, "AIC"}
+#AIC operations
+anole.phylo.aic <- AICc(pgls.BM1,pgls.BM2,pgls.OU1,pgls.OU2)
+anole.phylow.aicw <- aicw(anole.phylo.aic$AICc)
+```</code></pre>
+
+<pre><code>```{r, "add residuals"}
+#add phylo-corrected residuals
+anole.log <- anole.log%>%
+  mutate(phylo.res=residuals(pgls.BM2))
+```</code></pre>
+
+  
+<pre><code>``{r,"plot residuals", fig.cap="Boxplot of phylogenetically corrected hindlimb residuals versus anole ecomorph"}
+#plot residuals
+p.eco.phylo <- anole.log%>%
+ggplot(aes(x=Ecomorph2,y=phylo.res)) +geom_boxplot() +stat_summary(fun=mean, geom="point", size=3)
+
+print(p.eco.phylo)
+
+```</code></pre>
+
+Notice that for each chunk, we icluded some text. This identifies the chunk with a name or label, as R Markdown calls it. Each name must be unique. These names are useful especially when we render the document and any errors or warnings emerge. More on that later. 
+
+Also notice that this last chunked named "plot residuals" has another parameter, `fig.cap`. This specifies a caption to produce under any figures. In communicating result through visualizations, figures or otherwise, it's **essential that you include a description** caption. The caption should include what going in the figure (e.g., type of plot, the axes, where the data come from). 
+
+
+#Modifying Text
+
+The basic syntax of a markdown language is oddly enough, formulated around mark up. This is similar to other mark up languages like HTML or ML in that it uses tags to define elements within a document. 
+
+
+
 
 
 # Project Report
