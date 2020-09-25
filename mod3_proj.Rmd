@@ -484,7 +484,7 @@ Let's come back to the comparison of the two types of residuals. With our facete
 
 It's likely that your head is spinning: we've covered a ton of topics in the project. What's left to do is merely pick up the high points of what we've explored and apply these in a few relatively straightforward operations. 
 
-Let's have your team explore some ecological data and how it effects hindlimb-SVL patterns. We'll not take the a priori ecomorph designations for granted, but rather assess if important ecological parameters of perch height (how high in the tree the anole resides) and the diameter of the perch predicts discrete patterns in the hindlimb-SVL relationship. We''l use the log-transformed values of these variables are contained in the `anole.log` tibble.
+Let's have your team explore some ecological data and how it effects hindlimb-SVL patterns. We'll not take the a priori ecomorph designations for granted, but rather assess if important ecological parameters of perch height (how high in the tree the anole resides) and the diameter of the perch predicts discrete patterns in the hindlimb-SVL relationship. We'll use the log-transformed values of these variables that are contained in the `anole.log` tibble.
 
 For this project report, write a script named "groupname_module3.R" and undertake the following operations.
   

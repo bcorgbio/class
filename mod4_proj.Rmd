@@ -260,8 +260,13 @@ Notice that for each chunk, we icluded some text in quotes. This identifies the 
 
 Also notice that this last chunked named "plot residuals" has another parameter, `fig.cap`. This specifies a caption to produce under a figure produced from the chunk. In communicating result through visualizations, figures or otherwise, it's **essential that you include a description** caption. The caption should include what's going in the figure (e.g., type of plot, the axes, where the data come from). 
 
+# Set the Working Directory No More
+
+You may have noticed that we haven't yet set a working directory. 
 
 # Modifying Text
+
+
 
 The basic syntax of a markdown language, so oddly named, is formulated around mark up. This is similar to other mark up languages like HTML or XML in that it uses tags to define elements within a document. There are many often used tags that you should be familiar with and most can be found in this [R Markdown cheatsheet](https://rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf). Let's consider the text in first paragraph of the introduction to the [Module 3 Project](mod3_proj.html#Introduction) description in block quotes below.
 
@@ -270,7 +275,7 @@ The basic syntax of a markdown language, so oddly named, is formulated around ma
 
 <center>
 
->[![Alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)
+>![An anolis lizard](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)
 
 </center>
 
@@ -282,19 +287,88 @@ The basic syntax of a markdown language, so oddly named, is formulated around ma
  >  4. Evaluate this hindlimb-size relationship using standard frequentist models within and without a phylogenetic context.
  >  5. Using an information theory approach, assess the fit of phylogenetically corrected models of hind-limb variation under different modes of character evolution.
 
-
+## Basic Formatting
 
 Notice that there are several pieces of text that have unique formats.  For instance the genus *Anolis* is italicized. This is accompblished by wrapping the text with `*` or `*Anolis*`. You could, just as easily, bold text with `**`, `**Anolis**` to produce **Anolis**. 
 
-As you've probably noticed in reading markdowns so far, where any code and names of code are written in the text (i.e., not in a chunk), the convention is to specify code-bearing text as such by wrapping it in 
+As you've probably noticed in reading markdowns so far, where any code and names of code are written inline  (i.e., not in a chunk), the convention is to outline it with a distinctive backgroud (ussualy gray). To do this, code-bearing text is wrapped in <code>&grave;&grave;</code>. So <code>&grave;ggplot&grave;</code> becomes `ggplot`.
 
-<code>`</code>, e.g., <code>`ggplot`</code>. 
+## Links
+While no links are included in the example above, they abound in this and many other .Rmd documents. Inserting them couldn't be easier. One just has to wrap the text in brackets followed by the link path in parenthes. For example,  `[class site](https://bcorgbio.github.io/class/)` gives us [class site](https://bcorgbio.github.io/class/), text linking us to our class site.
+
+## Images
+We also have an image inserted above. Inserting images can be useful for all sorts of reasons, especially when you'd like to include a graphic that is not produced by R and resides elsewhere, like say online. The image above is inserted with:
+
+```
+![An anolis lizard](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)
+```
+
+Notice this is much like inserting a link, but we have to tell R markdown to stop interpreting text by including `!` before a set of brackets, then we include the file path (in this case, a URL). This is the simplest way to insert an image. But, say you want to include an image that is a live link as well. All you have to to is include the link tags around the image tags, like this: 
+
+```
+[![An anolis lizard](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)
+```
+<br> 
+
+And this is what you'll get:
+
+[![An anolis lizard](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)
+<br>
+
+This image isn't centered on the page. The easy way to modify the position of an image (or any element, really) is to use standard HTML tags. So wrapping `<center>` and `</center>` around our image code like so . . . 
+
+```
+<center>
+[![An anolis lizard](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)
+</center>
+```
+
+. . . gives us: 
+
+<center>
+[![An anolis lizard](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)
+</center>
+
+<br>
+
+Keep in mind that R markdown prefers .jpg or .png images.
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">
+Although it may appear as a coding free-for-all, the ability to include HTML markup in addition to R mardown language injects enormous flexibility. One can use all the standard methods of HTML formatting and wizardry to expand R Mardowns capabilities and charm. These note boxes, for example are a container class written in HTML.
+</div>
+</div>
+</div>
+<br>
+
+Of course, one can aslo add local images, i.e., those stored on your computer. For instance, say we wanted to include a small version of the radogrpah image from the [Module 3 project Description](mod3_proj#Introduction), a .png stored in the same directory as this .Rmd file, we simply write
+
+```
+<center>
+![](svl_small.png)
+</center>
+```
+
+<center>
+![](svl_small.png)
+</center>
+<br>
+
+
+
+
+
 
 # Tables
 
 ## Tables from code.
 
 
+# Fancy Bits
+
+Add menue at side. 
 # Project Report
 
 It's likely that your head is spinning: we've covered a ton of topics in the project. What's left to do is merely pick up the high points of what we've explored and apply these in a few relatively straightforward operations. 

@@ -538,15 +538,22 @@ print(p.eco.phylo)
 <p>Notice that for each chunk, we icluded some text in quotes. This identifies the chunk with a name or label, as R Markdown calls it. Each name must be unique. These names are useful especially when we render the document and any errors or warnings emerge. More on that later.</p>
 <p>Also notice that this last chunked named “plot residuals” has another parameter, <code>fig.cap</code>. This specifies a caption to produce under a figure produced from the chunk. In communicating result through visualizations, figures or otherwise, it’s <strong>essential that you include a description</strong> caption. The caption should include what’s going in the figure (e.g., type of plot, the axes, where the data come from).</p>
 </div>
+<div id="set-the-working-directory-no-more" class="section level1">
+<h1>Set the Working Directory No More</h1>
+<p>You may have noticed that we haven’t yet set a working directory.</p>
+</div>
 <div id="modifying-text" class="section level1">
 <h1>Modifying Text</h1>
-<p>The basic syntax of a markdown language, so oddly named, is formulated around mark up. This is similar to other mark up languages like HTML or XML in that it uses tags to define elements within a document. There are many often used tags that you should be familiar with and most can be found in this <a href="https://www.rstudio.org/links/r_markdown_cheat_sheet">R Markdown cheatsheet</a>. Let’s consider the text in first paragraph of the introduction to the <a href="mod3_proj.html#Introduction">Module 3 Project</a> description in block quotes below.</p>
+<p>The basic syntax of a markdown language, so oddly named, is formulated around mark up. This is similar to other mark up languages like HTML or XML in that it uses tags to define elements within a document. There are many often used tags that you should be familiar with and most can be found in this <a href="https://rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R Markdown cheatsheet</a>. Let’s consider the text in first paragraph of the introduction to the <a href="mod3_proj.html#Introduction">Module 3 Project</a> description in block quotes below.</p>
 <blockquote>
 <p>The central theme of this project will be to assess the morphological and allometric differences between ecomorphs within the genus <em>Anolis</em>. First coined by the famous evolutionary biologist and herpetologist Ernest Williams, the term ecomorph describes a group of species, perhaps not sharing a most recent common ancestor, with a similar ecological niche and behavior within the context of this niche. His model for this concept was the genus <em>Anolis</em>, although the ecomorph construct has been widely applied to many other species (think reef fish and Darwin’s Finches).</p>
 </blockquote>
 <center>
 <blockquote>
-<p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg" alt="Alt text" /></a></p>
+<div class="figure">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg" alt="An anolis lizard" />
+<p class="caption">An anolis lizard</p>
+</div>
 </blockquote>
 </center>
 <blockquote>
@@ -561,12 +568,64 @@ print(p.eco.phylo)
 <li>Using an information theory approach, assess the fit of phylogenetically corrected models of hind-limb variation under different modes of character evolution.</li>
 </ol>
 </blockquote>
+<div id="basic-formatting" class="section level2">
+<h2>Basic Formatting</h2>
 <p>Notice that there are several pieces of text that have unique formats. For instance the genus <em>Anolis</em> is italicized. This is accompblished by wrapping the text with <code>*</code> or <code>*Anolis*</code>. You could, just as easily, bold text with <code>**</code>, <code>**Anolis**</code> to produce <strong>Anolis</strong>.</p>
-<p>As you’ve probably noticed in reading markdowns so far, where any code and names of code are written in the text (i.e., not in a chunk), the convention is to specify code-bearing text as such by wrapping it in</p>
-<p><code><code>&lt;/code&gt;, e.g., &lt;code&gt;</code>ggplot`</code>.</p>
+<p>As you’ve probably noticed in reading markdowns so far, where any code and names of code are written inline (i.e., not in a chunk), the convention is to outline it with a distinctive backgroud (ussualy gray). To do this, code-bearing text is wrapped in <code>``</code>. So <code>`ggplot`</code> becomes <code>ggplot</code>.</p>
 </div>
-<div id="project-report" class="section level1">
-<h1>Project Report</h1>
+<div id="links" class="section level2">
+<h2>Links</h2>
+<p>While no links are included in the example above, they abound in this and many other .Rmd documents. Inserting them couldn’t be easier. One just has to wrap the text in brackets followed by the link path in parenthes. For example, <code>[class site](https://bcorgbio.github.io/class/)</code> gives us <a href="https://bcorgbio.github.io/class/">class site</a>, text linking us to our class site.</p>
+</div>
+<div id="images" class="section level2">
+<h2>Images</h2>
+<p>We also have an image inserted above. Inserting images can be useful for all sorts of reasons, especially when you’d like to include a graphic that is not produced by R and resides elsewhere, like say online. The image above is inserted with:</p>
+<pre><code>![An anolis lizard](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)</code></pre>
+<p>Notice this is much like inserting a link, but we have to tell R markdown to stop interpreting text by including <code>!</code> before a set of brackets, then we include the file path (in this case, a URL). This is the simplest way to insert an image. But, say you want to include an image that is a live link as well. All you have to to is include the link tags around the image tags, like this:</p>
+<pre><code>[![An anolis lizard](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)</code></pre>
+<p><br></p>
+<p>And this is what you’ll get:</p>
+<p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg" alt="An anolis lizard" /></a> <br></p>
+<p>This image isn’t centered on the page. The easy way to modify the position of an image (or any element, really) is to use standard HTML tags. So wrapping <code>&lt;center&gt;</code> and <code>&lt;/center&gt;</code> around our image code like so . . .</p>
+<pre><code>&lt;center&gt;
+[![An anolis lizard](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)
+&lt;/center&gt;</code></pre>
+<p>. . . gives us:</p>
+<center>
+<a href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg" alt="An anolis lizard" /></a>
+</center>
+<p><br></p>
+<p>Keep in mind that R markdown prefers .jpg or .png images.</p>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+</div>
+<div class="col-sm-9">
+<p>Although it may appear as a coding free-for-all, the ability to include HTML markup in addition to R mardown language injects enormous flexibility. One can use all the standard methods of HTML formatting and wizardry to expand R Mardowns capabilities and charm. These note boxes, for example are a container class written in HTML.</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Of course, one can aslo add local images, i.e., those stored on your computer. For instance, say we wanted to include a small version of the radogrpah image from the <a href="mod3_proj#Introduction">Module 3 project Description</a>, a .png stored in the same directory as this .Rmd file, we simply write</p>
+<pre><code>&lt;center&gt;
+![](svl_small.png)
+&lt;/center&gt;</code></pre>
+<center>
+<img src="svl_small.png" />
+</center>
+<p><br></p>
+</div>
+</div>
+<div id="tables" class="section level1">
+<h1>Tables</h1>
+<div id="tables-from-code." class="section level2">
+<h2>Tables from code.</h2>
+</div>
+</div>
+<div id="fancy-bits" class="section level1">
+<h1>Fancy Bits</h1>
+<p>Add menue at side. # Project Report</p>
 <p>It’s likely that your head is spinning: we’ve covered a ton of topics in the project. What’s left to do is merely pick up the high points of what we’ve explored and apply these in a few relatively straightforward operations.</p>
 <p>Let’s have your team explore some ecological data and how it effects hindlimb-SVL patterns. We’ll not take the a priori ecomorph designations for granted, but rather assess if important ecological parameters of perch height (how high in the tree the anole resides) and the diameter of the perch predicts discrete patterns in the hindlimb-SVL relationship. We’’l use the log-transformed values of these variables are contained in the <code>anole.log</code> tibble.</p>
 <p>For this project report, write a script named “groupname_module3.R” and undertake the following operations.</p>
