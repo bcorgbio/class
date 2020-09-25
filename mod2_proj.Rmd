@@ -375,7 +375,7 @@ In this project report, you'll use the principles and tools outlined above to an
 For this project report, perform the following tasks. 
   
   1. In a script named "groupname_module2.R", combine the code above so that you can establish the `pseed.wide` data tibble. 
-  2. Compute the mean **maximum*** of `amp.sum` for each specific swimming speed for each fish just like we did for mean maximum amplitude of each fin. Make sure this is contained in a new tibble named `pseed.sum.max`. Call this column `amp.sum.mean`.
+  2. Compute the mean **maximum*** of all the `amp.sum`s for each specific swimming speed for each fish just like we did for mean maximum amplitude of each fin (i.e., the mean of all the max amplitudes across each ezperiemnt for each fish). Make sure this is contained in a new tibble named `pseed.sum.max`. Call this column `amp.sum.mean`.
   3. Create a custom function that computes the standard error of the mean (SE). [see below] and add a column in your summary table `pseed.sum.max` for SE and call it `amp.sum.se`.
   4. Using `ggplot`, plot the mean `amp.sum` vs. specific swimming speed and [add error bars](http://www.sthda.com/english/wiki/ggplot2-error-bars-quick-start-guide-r-software-and-data-visualization) that correspond to the SE of `amp.sum`. Be sure to colour your points and error bars by specimen (fish). 
   5. Downlaod [this file](pseed.met.rate.csv), read it as a tibble and merge it with the your new `pseed.sum.max` tibble. [see below].
@@ -397,23 +397,23 @@ For this project report, perform the following tasks.
 pseed.met <- read_csv("pseed.met.rate.csv")
 
 pseed.sum.max <- pseed.wide%>%
-  group_by(date)%>%
+  group_by(date,fish)%>%
   mutate(peak=frame %in% find.peaks(frame,amp.sum))%>%
   filter(peak==T) #new filter
   
 pseed.met.kin <- pseed.sum.max%>%
-   group_by(speed,fish,bl.s)%>%
+   group_by(fish,bl.s)%>%
    summarize(
      amp.sum.mean=mean(amp.sum),
      amp.sum.se=sd(amp.sum)/sqrt(length(amp.sum))
      ) %>%
-   left_join(pseed.met%>%select(fish,bl.s,met.rate),by=c("fish","bl.s"),)
+   left_join(pseed.met%>%select(fish,bl.s,met.rate),by=c("fish","bl.s"))
 
-#pseed.met.kin%>%
-#  ggplot(aes(x=bl.s,y=amp.sum.mean,col=fish))+geom_point()+geom_smooth(method="lm")+geom_errorbar(aes(ymin=amp.sum.mean-amp.sum.se,ymax=amp.sum.mean+amp.sum.se))
+pseed.met.kin%>%
+ ggplot(aes(x=bl.s,y=amp.sum.mean,col=fish))+geom_point()+geom_smooth(method="lm")+geom_errorbar(aes(ymin=amp.sum.mean-amp.sum.se,ymax=amp.sum.mean+amp.sum.se))
 
-#pseed.met.kin%>%
- #  ggplot(aes(x=amp.sum.mean,y=met.rate,col=fish))+geom_point()+geom_smooth(method="lm")
+pseed.met.kin%>%
+   ggplot(aes(x=amp.sum.mean,y=met.rate,col=fish))+geom_point()+geom_smooth(method="lm")
 
   
 ```

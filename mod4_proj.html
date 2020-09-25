@@ -535,10 +535,35 @@ ggplot(aes(x=Ecomorph2,y=phylo.res)) +geom_boxplot() +stat_summary(fun=mean, geo
 print(p.eco.phylo)
 
 ```</code></pre>
-<p>Notice that for each chunk, we icluded some text. This identifies the chunk with a name or label, as R Markdown calls it. Each name must be unique. These names are useful especially when we render the document and any errors or warnings emerge. More on that later.</p>
-<p>Also notice that this last chunked named “plot residuals” has another parameter, <code>fig.cap</code>. This specifies a caption to produce under any figures. In communicating result through visualizations, figures or otherwise, it’s <strong>essential that you include a description</strong> caption. The caption should include what going in the figure (e.g., type of plot, the axes, where the data come from).</p>
-<p>#Modifying Text</p>
-<p>The basic syntax of a markdown language is oddly enough, formulated around mark up. This is similar to other mark up languages like HTML or ML in that it uses tags to define elements within a document.</p>
+<p>Notice that for each chunk, we icluded some text in quotes. This identifies the chunk with a name or label, as R Markdown calls it. Each name must be unique. These names are useful especially when we render the document and any errors or warnings emerge. More on that later.</p>
+<p>Also notice that this last chunked named “plot residuals” has another parameter, <code>fig.cap</code>. This specifies a caption to produce under a figure produced from the chunk. In communicating result through visualizations, figures or otherwise, it’s <strong>essential that you include a description</strong> caption. The caption should include what’s going in the figure (e.g., type of plot, the axes, where the data come from).</p>
+</div>
+<div id="modifying-text" class="section level1">
+<h1>Modifying Text</h1>
+<p>The basic syntax of a markdown language, so oddly named, is formulated around mark up. This is similar to other mark up languages like HTML or XML in that it uses tags to define elements within a document. There are many often used tags that you should be familiar with and most can be found in this <a href="https://www.rstudio.org/links/r_markdown_cheat_sheet">R Markdown cheatsheet</a>. Let’s consider the text in first paragraph of the introduction to the <a href="mod3_proj.html#Introduction">Module 3 Project</a> description in block quotes below.</p>
+<blockquote>
+<p>The central theme of this project will be to assess the morphological and allometric differences between ecomorphs within the genus <em>Anolis</em>. First coined by the famous evolutionary biologist and herpetologist Ernest Williams, the term ecomorph describes a group of species, perhaps not sharing a most recent common ancestor, with a similar ecological niche and behavior within the context of this niche. His model for this concept was the genus <em>Anolis</em>, although the ecomorph construct has been widely applied to many other species (think reef fish and Darwin’s Finches).</p>
+</blockquote>
+<center>
+<blockquote>
+<p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg" alt="Alt text" /></a></p>
+</blockquote>
+</center>
+<blockquote>
+<p>Our tasks will be to:</p>
+</blockquote>
+<blockquote>
+<ol style="list-style-type: decimal">
+<li>Visualize how hind limb length varies with size (i.e., allometry!).</li>
+<li>Visualize and asses how hind limb length vs. size relationship covary with ecological niche.</li>
+<li>Learn more complex operations in <code>ggplot</code> than we’ve undertaken so far.</li>
+<li>Evaluate this hindlimb-size relationship using standard frequentist models within and without a phylogenetic context.</li>
+<li>Using an information theory approach, assess the fit of phylogenetically corrected models of hind-limb variation under different modes of character evolution.</li>
+</ol>
+</blockquote>
+<p>Notice that there are several pieces of text that have unique formats. For instance the genus <em>Anolis</em> is italicized. This is accompblished by wrapping the text with <code>*</code> or <code>*Anolis*</code>. You could, just as easily, bold text with <code>**</code>, <code>**Anolis**</code> to produce <strong>Anolis</strong>.</p>
+<p>As you’ve probably noticed in reading markdowns so far, where any code and names of code are written in the text (i.e., not in a chunk), the convention is to specify code-bearing text as such by wrapping it in</p>
+<p><code><code>&lt;/code&gt;, e.g., &lt;code&gt;</code>ggplot`</code>.</p>
 </div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
