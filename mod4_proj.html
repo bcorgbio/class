@@ -717,7 +717,7 @@ print(p.eco.phylo)
 </div>
 <div id="equations" class="section level2">
 <h2>Equations</h2>
-<p>As scientists, we often need to express our ideas in equation form (e.g., linear model of hindlimb vs. snout-vent length in case of our last project). Fortunately, this is made easy by R Markdown’s inclusion of another markup language, <span class="math inline">\(\LaTeX\)</span>. This is a favorite of those writing really technical documents and the equations markup capabilities are rather extensive but eminently approachable. For instance, if we need to write out an equation that expresses a linear model (e.g. <code>lm(y~x)</code>) we can write <code>$$y=\alpha+\beta x$$</code> to produce:</p>
+<p>As scientists, we often need to express our ideas in equation form (e.g., linear model of hindlimb vs. snout-vent length in case of our last project). Fortunately, this is made easy by R Markdown’s inclusion of another markup language, <span class="math inline">\(\LaTeX\)</span>. This is a favorite of those writing really technical documents and the equation markup capabilities are rather extensive but eminently approachable. For instance, if we need to write out an equation that expresses a linear model (e.g. <code>lm(y~x)</code>) we can write <code>$$y=\alpha+\beta x$$</code> to produce:</p>
 <p><span class="math display">\[y=\alpha+\beta x\]</span></p>
 <p>Notice the equation is wrapped by two <code>$$</code>. A single <code>$</code> indicates the use of <span class="math inline">\(\LaTeX\)</span> markup and two indicates the equation should stand alone on a separate section. If we just wanted to include the aforementioned equation inline with the rest of the text, we’d use just one <code>$</code>, or `<code>$y=\alpha+\beta x$</code> to get <span class="math inline">\(y=\alpha+\beta x\)</span>.</p>
 <div class="green">
@@ -896,7 +896,7 @@ twig
 | trunk           | Lives on the trunk                         |
 | trunk-crown     | Lives in the trunk-crown interface         |
 | trunk-ground    | Lives in the trunk-ground interface        |
-| twig            | Lives out on the tigs of trees             |</code></pre>
+| twig            | Lives out on the twigs of trees             |</code></pre>
 <p>becomes this:</p>
 <table>
 <thead>
@@ -937,8 +937,8 @@ twig
 <div id="references" class="section level1">
 <h1>References</h1>
 <p>As we prosecute out projects in Phase I and II, we’ll be reading scientific papers, some assigned, some asked to find so that we can place our results in context. In addition, as scientists, we always want to support our statements of fact with references. For this, we’ll need to cite and include these papers in a bibliography.</p>
-<p><a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html">Adding reference to an .Rmd</a> is pretty straight forward. First we’ll need to establish a .bib file that will reside in the same directory as your .Rmd file. To do this, select “File-&gt;New File-&gt;Text File.” A new tab will appear with the name “Untitled1.txt”. Save this file as “BIOL2140.bib” (not the “.bib” extension) in the same directory as your .Rmd file. This .bib file will be referenced by your .Rmd when inserting citations.</p>
-<p>The framework for citations and references in .Rmd can be formulated around <a href="https://en.wikipedia.org/wiki/BibTeX">BibTex</a>. BibTex is handy because you can find BibTex formatted citations in all your typical outlets (see note below). This system of citation uses a .bib file that contains text describing published works. Each work or potential reference in the .bib file is identified with a unique tag at the top of it’s entry and this entry contains the important bibliographic information. For instance, a .bib file containing a reference to the following paper</p>
+<p><a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html">Adding reference to an .Rmd</a> is pretty straight forward. First we’ll need to establish a .bib file that will reside in the same directory as your .Rmd file. To do this, select “File-&gt;New File-&gt;Text File.” A new tab will appear with the name “Untitled1.txt”. Save this file as “BIOL2140.bib” (note the “.bib” extension) in the same directory as your .Rmd file. This .bib file will be referenced by your .Rmd when inserting citations.</p>
+<p>The framework for citations and references in .Rmd can be formulated around <a href="https://en.wikipedia.org/wiki/BibTeX">BibTex</a>. BibTex is handy because you can find BibTex formatted citations in all your typical outlets (see note below). This system of citation uses a .bib file that contains text describing published works. Each work or potential reference in the .bib file is identified with a unique tag at the top of its entry and this entry contains the important bibliographic information. For instance, a .bib file containing a reference to the following paper</p>
 <p>Hagey, T.J., Harte, S., Vickers, M., Harmon, L.J. and Schwarzkopf, L., 2017. There’s more than one way to climb a tree: Limb length and microhabitat use in lizards with toe pads. <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0184641">PloS one, 12(9), p.e0184641</a>.</p>
 <p>would have the following text:</p>
 <pre><code>@article{hagey2017there,
@@ -965,6 +965,7 @@ bibliography: BIOL3140.bib
 <pre><code>@hagey2017there studied the hindlimb-ecomorph relationship in anoles.</code></pre>
 <p>However, Harvard-like convention follows that if we aren’t explicit about the study, we include the entire reference in parentheses. For instance, if we wanted to write, “A recent study considered the hindlimb-ecomorph relationship in anoles <span class="citation">(Hagey et al. 2017)</span>.” we would include the following:</p>
 <pre><code>A recent study considered the hindlimb-ecomorph relationship in anoles [@hagey2017there].</code></pre>
+<p>Note that <code>@hagey2017there</code> is wrapped in <code>[]</code>.</p>
 <p>In R Markdown, bibliographies will be placed at the end of the document. Normally, this means you want to end your document with the header “References”. This will anchor the bibliography in this section.</p>
 <p>Note that this .bib file can be used in all your .Rmd documents, not just this one. As long as all the BibTex entries have unique keys, this .bib file can serve as a reference database for all your .Rmd citations.</p>
 <div class="green">

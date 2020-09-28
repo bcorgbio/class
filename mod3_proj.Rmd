@@ -265,6 +265,7 @@ anova(anole.log.lm)
 anole.log.aic <- AICc(anole.log.lm,anole.log.eco.lm)
 aicw(anole.log.aic$AICc)
 
+
 ```
 
 <div class = "green">
