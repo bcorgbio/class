@@ -12,14 +12,14 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 In this phase, we'll learn the basics of instrumentation and data analysis by working through 5 learning modules devoted to instrument design and data analysis. This will most likely be the most challenging part of the course in that many, if not most of you will not have ever designed and built instruments and data acquisition systems, let alone analyzed data from them. Rest assured, your experience will be curated, sticking to the bare bones of instrument design and data science. This introductory phase will set the groundwork for Phase II, the independent development of sensors and data analysis.
 
-## Module 1: Data Pirates Code with. . . . R, Introduction to the Basics
+# Module 1: Data Pirates Code with. . . . R, Introduction to the Basics
 
-In this module we'll tackle where to find resource you'll need on a week-to-week, module-by-module basis. In addition, we'll work on the first important topic of the course: and introduction to R, an ever more popular languange for data analysis and visualization. We'll focus on the basics of importing and tidying data in R. By importing, we mean loading data collected by scientists and stored in text files, the lingua franca of scientific data. By tidying, we mean preparing data for analysis.
+In this module we'll tackle where to find resource you'll need on a week-to-week, module-by-module basis. In addition, we'll work on the first important topic of the course: an introduction to R, an ever more popular language for data analysis and visualization. We'll focus on the basics of importing and tidying data in R. By importing, we mean loading data collected by scientists and stored in text files, the lingua franca of scientific data. By tidying, we mean preparing data for analysis.
 
-### Dates 
+## Dates 
 Weeks 1 & 2 (Aug 31—Sep 13):
 
-### Key Concepts
+## Key Concepts
   + Course workflow
   + Course expectations
   + R user interface
@@ -29,7 +29,7 @@ Weeks 1 & 2 (Aug 31—Sep 13):
   + Basic R notation
   + The `for` loop
   
-### Learning Objectives
+## Learning Objectives
 
 Upon completion of this week and module, students will be able to:
 
@@ -38,9 +38,9 @@ Upon completion of this week and module, students will be able to:
   + Set a working directory and load data in R
   + Recognize the difference between different objects (e.g., vectors, lists, data frames etc.)
   + Perform simple data operations and manipulation of data objects in R
-  + Contruct and run a `for` loop in R to automate a interatively redundant task.
+  + Construct and run a `for` loop in R to automate a interatively redundant task.
  
-### Read/Watch 
+## Read/Watch 
 
 All from [Hands on Programming with R](https://rstudio-education.github.io/hopr) (HOPR)
 
@@ -63,17 +63,17 @@ When reading through HOPR, make sure to have R and R Studio up and running so th
   <div class="col-sm-9">This is a lot of reading and fiddling with R. Don't worry too much about understanding every detail! The goal here is to just get the hang of things and, just as importantly, know where to find answers to questions about how R works.</div>
 </div>
 </div>
-</div>
+
 <br>
 
-### Do
+## Do
 
   + Post one and respond to one question each week of Module 1 in our [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) 
   + [Install R and RStudio](https://rstudio-education.github.io/hopr/starting.html#starting)
   + Complete and submit a report for Module 1 Project 
 
 
-### Guiding Questions
+## Guiding Questions
   
   + How do I perform simple operations in R?
   + What are R's basic object classes?
@@ -81,7 +81,7 @@ When reading through HOPR, make sure to have R and R Studio up and running so th
   + How does one subset common data objects in R?
   + How does a `for` loop work and when should it be used?
   
-### Module 1 Schedule
+## Module 1 Schedule
 
 All assignments are due at 11:59 on the specified date.
 
@@ -92,24 +92,24 @@ All assignments are due at 11:59 on the specified date.
  || Monday <br> 9/7 |  Tuesday <br>9/8    | Wednesday<br>  9/9 | Thursday <br> 9/10 | Friday <br> 9/11 |Saturday<br> 9/12 | Sunday<br> 9/13
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
 **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 1 project report
-||||||||
+ |||||||
+<br>
 
+# Module 2: Data Wrangling: Introduction to Tools of the Trade in Data Analysis
 
-## Module 2: Data Wrangling: Introduction to Tools of the Trade in Data Analysis
+This module is intended to give students the background and skills to begin simple data tidying and transformation operations. We need our data to be tidy before we can analyze it that, that is, structured in a way that makes analysis possible. In addition, often the data we have aren't exactly what we want to analyze. For example, say you had data on the f  
 
-This module is intended to give students the background and skills to begin simple data tidying and transformation operations. We need our data to be tidy before we can analyze it that, that is, structured in a way that makes anaylysis possible. In addition, often the data we have aren't exactly what we want to analyze. For example, say you had data on the f  
-
-### Dates: 
+## Dates: 
 Week 3 (Sep 14—20): 
 
-### Key Concepts
+## Key Concepts
   + Reading text files in R
   + Adding data based on data (i.e., data transformation)
   + Summarize data according to variables
   + Tidying data in R
   + Relational data and merging data sets
 
-### Learning Objectives
+## Learning Objectives
 
 Upon completion of this week and module, students will be able to:
 
@@ -117,13 +117,9 @@ Upon completion of this week and module, students will be able to:
   + Pivot data from wide to longer formats and vice versa.
   + Add columns of data to a data set based on values in other columns.
   + Write and use a simple function in R.
-  + Tidy a data set to beging analysis with a particular goal in mind.
+  + Tidy a data set to begin analysis with a particular goal in mind.
   + Join data sets based on similar data (i.e., key) attributes
   
-<!--   + Set a working directory and load data in R -->
-<!--   + Recognize the difference between different objects (e.g., vectors, lists, data frames etc.) -->
-<!--   + Perform simple data operations and manipulation of data objects in R -->
-<!--   + Contruct and run a `for` loop in R to automate a interatively redundant task. -->
 
 ### Read/Watch
 All form [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS):
@@ -175,25 +171,25 @@ All assignments are due at 11:59 on the specified date.
   || Monday <br> 9/14 |  Tuesday <br>9/15    | Wednesday<br>  9/16 | Thursday <br> 9/17 | Friday <br> 9/18 |Saturday<br> 9/19 | Sunday<br> 9/20
   |--------|-------- |--------|-------- |--------|--------|--------|--------
   **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 2 Project Report
-  |||||||||
+  ||||||||
 
 
-## Module 3: The Whiz and Viz Bang of Data: The Basics of Data Visualization and Modeling
+# Module 3: The Whiz and Viz Bang of Data: The Basics of Data Visualization and Modeling
 
 In Module 3, we'll cover the basics of visualizing and modeling data and hypothesis testing. We've used some simple visualization techniques in `ggplot` already and we'll leverage this introduction to dig deeper into how data can be plotted to explore and ask informed questions about it. In addition, we'll learn how and when to compared the fit of models.
 
-### Dates: 
+## Dates: 
 
 Week 4 (Sep 21—27):
 
-### Key Concepts
+## Key Concepts
   + The grammar of `ggplot`
   + Linear models and least squares regression
   + Phylogenetic signal and correction
-  + Brownina motion models of trait evolution
-  + Model fit and the Aikiake Informaion Criterion (AIC)
+  + Brownian motion models of trait evolution
+  + Model fit and the Aikiake Information Criterion (AIC)
 
-### Learning Objectives
+## Learning Objectives
 
 Upon completion of this week and module, students will be able to:
 
@@ -202,7 +198,7 @@ Upon completion of this week and module, students will be able to:
   + Perform phylogenetically corrected regression analysis of comparative data.
   + Compare model fit using an information theory approach.
   
-### Read/Watch
+## Read/Watch
 
 All form [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS):
 
@@ -221,24 +217,24 @@ From [Phylogenetic Comparative Methods](https://lukejharmon.github.io/pcm) by Lu
   + Chapter 6.4: [Non-Brownian evolution under stabilizing selection](https://lukejharmon.github.io/pcm/chapter6_beyondbm/#section-6.4-non-brownian-evolution-under-stabilizing-selection)
 
 
-### Do 
+## Do 
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
   + Complete and submit a report for Module 3 Project 
 
 
-### Guiding Questions
+## Guiding Questions
 
 + What are the basic components of plotting in `ggplot`?
 + How does one use basic visualization techniques to propose questions in biology?
 + How does one construct simple models in R? 
-+ How does one account for phylogeny when contructing models of comparative data?
++ How does one account for phylogeny when constructing models of comparative data?
 + What basic models of trait evolution can one use in comparative research?
 + How does one know if they're asking the right question (i.e., using the right model) in comparative research?
 
 <br>
 
-### Module 3 Schedule
+## Module 3 Schedule
 
 All assignments are due at 11:59 on the specified date. 
 
@@ -246,39 +242,70 @@ All assignments are due at 11:59 on the specified date.
   |--------|-------- |--------|-------- |--------|--------|--------|--------
   **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 3 Project Report
   ||||||||
+  
+  
+# Module 4: Making Messes Pretty: Leveraging Markdown to Produce Pleasing Reports
 
-<!-- #ddply intro -->
-<!--Module 3 Epxloratory data + Modelling analysis in R4DS -->
-<!-- https://seananderson.ca/2014/09/13/dplyr-intro/ -->
+In Module 4, we'll cover the basics of authoring reports in R Markdown, a markup language used to communicate the results of analysis in R. With R Markdown, you'll develop a framework for compiling ideas, code, and graphics in one reproducible document.
 
-<!-- ### Week 3 (Sep 17—11) -->
+## Dates: 
 
-<!-- ## Week 3 (Sep 14–Sep 18) -->
+Week 5 (Sep 28—Oct 4):
 
-<!-- ## Week 4 (Sep 21–Sep 25) -->
+## Key Concepts
+  + The R Markdown framework
+  + Text markup
+  + Code chunks
+  + Graphics and tables in R Markdown 
+  + Knitting documents in R Markdown
 
-<!-- ## Week 5 (Sep 28–Oct 2) -->
+## Learning Objectives
 
-<!-- ## Week 6 (Oct 5–9) -->
+Upon completion of this week and module, students will be able to:
 
-<!-- ## Week 7 (Oct 12–16) -->
+  + Author a simple R Markdown.
+  + Run code within an R Markdown document.
+  + Add graphics (i.e., figures), images, tables and references to and R Markdown document. 
+  + Render (i.e., knit) this R Markdown into HTML and PDF documents.
+  
+## Read/Watch
 
-<!-- ## Week 8 (Oct 19–23) -->
+  + Chapter 27 in R4DS:[R Markdown](https://r4ds.had.co.nz/r-markdown.html)
+  + [R Studio's markdown tutorial](https://rmarkdown.rstudio.com/)
+    
 
-<!-- ## Week 9 (Oct 26–30) -->
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"> 
 
-<!-- ## Week 10 (Nov 2–6) -->
+<div class = "green">
+<div class="row">
+<div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+<div class="col-sm-9"> 
+This module is very much learn as you go. Please dive right into the project and come back to the readings when clarifications are needed. 
+</div>
+</div>
+</div> 
+<br>
 
-<!-- ## Week 11 (Nov 9–13) -->
+## Do 
 
-<!-- ## Week 12 (Nov 16–20) -->
-
-<!-- ## Week 12 (Nov 23–27) -->
-
-<!-- ## Week 13 (Nov 30–Dec 4) -->
+  + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
+  + Complete and submit a report for Module 3 Project 
 
 
-<!-- ## Week 14 (Dec 7–Dec 10) -->
+## Guiding Questions
 
-<!-- ## Week 15 (Sep 28–Oct 2) -->
++ What are the basic components of an .Rmd?
++ How does one included headers, marked up text, graphics, tables, and references in an .Rmd?
++ How does one render and .Rmd into an HTML document? 
 
+<br>
+
+## Module 4 Schedule
+
+All assignments are due at 11:59 on the specified date. 
+
+  || Monday <br> 9/28 |  Tuesday <br>9/29    | Wednesday<br>  9/30 | Thursday <br> 9/31 | Friday <br> 10/1 |Saturday<br> 10/2 | Sunday<br> 10/3
+  |--------|-------- |--------|-------- |--------|--------|--------|--------
+  **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 4 Project Report
+  ||||||||
