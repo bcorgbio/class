@@ -9,6 +9,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <!-- Add icon library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
 
+
 # Introduction
 
 Now that we've learned (at breakneck speed!) some ins and outs of data analysis, visualization, and modeling, we'll turn to how a scientist can easily organize, share, and communicate results and ideas. Communication of the results of any research in science is, at its final stage, usually done through publishing scientific papers. However, before this final product, scientists must catalog the maturation of their work and often seek to repeatedly share it with collaborators. Cataloging the progress and sharing preliminary results can take many forms: exchanging scripts that analyze data, giving presentations to colleagues, and passing manuscripts back and forth between team members, just to name a few activities. 
@@ -52,6 +53,14 @@ Keep this document open and ready to edit. But, before was start, let's establis
 
 To assemble such a report, we should include sections that reflect the the progression of the analysis, each containing text, figures, captions, and references. Our sections should include an introduction, methods, results, discussion, author contributions, and a bibliography. Our tasks for this project will be taken on in this context: producing a succinct and reproducible report on the analysis of anole hindlimb evolution. Let's get started.
 
+# Resources
+
+As you learn more about R Markdown, you may want to reference the following online resources:
+
+  * A rather [complete guide to R Markdown by Yikui Xie](https://github.com/rstudio/bookdown)
+  * R Markdown [Cheatsheets](https://rmarkdown.rstudio.com/lesson-15.html)
+  * R Studio's [markdown tutorial](https://rmarkdown.rstudio.com/)
+  
 # The YAML Header
 
 You'll see at the top of your new ".Rmd" file a header contained between two lines (`---`). This is the YAML header that specifies the the attributes of the markdown, all of which are inherited from the dialog your answered when opening the new .Rmd. By default it includes a title, author, date, and type of file for your output. These are but a few of the formatting options and settings that could apply to the whole document. For now, let's leave it as is. So it should look like this:
@@ -422,7 +431,6 @@ n.spec <- anole.log%>%
 n.spec%>%
   kable()
 ```
-
 <br>
 
 One nice attribute about `kable()` is that we can easily specify a table caption. Something like:
@@ -431,7 +439,6 @@ One nice attribute about `kable()` is that we can easily specify a table caption
 n.spec%>%
   kable(caption = "Number of species within each anole ecormorph included in this study")
 ```
-
 <br>
 
 For large tables, say data sets with a large number rows, you may want to consider using the `paged_table()` function from `rmarkdown` to create a table that has pagination of rows and columns. For example:
@@ -467,10 +474,10 @@ becomes this:
 | trunk           | Lives on the trunk                         |
 | trunk-crown     | Lives in the trunk-crown interface         |
 | trunk-ground    | Lives in the trunk-ground interface        |
-| twig            | Lives out on the twigs of trees             |
+| twig            | Lives out on the twigs of trees           |
 
 
-# References
+# Inserting References
 
 As we prosecute out projects in Phase I and II, we'll be reading scientific papers, some assigned, some asked to find so that we can place our results in context. In addition, as scientists, we always want to support our statements of fact with references. For this,  we'll need to cite and include these papers in a bibliography. 
 
@@ -554,17 +561,6 @@ Now click on the "BibTex" link at the bottom of the window. This will lead you t
 </div>
 <br>
 
-
-
-
-# Resources
-
-As you learn more about R Markdown, you may want to reference the following online resources:
-
-  + [R Studio's markdown tutorial](https://rmarkdown.rstudio.com/)
-  + [A rather complete guide to R Markdown by Yikui Xie](https://github.com/rstudio/bookdown)
-  + [R Markdown Cheatsheets](https://rmarkdown.rstudio.com/lesson-15.html)
-  
 
 # Project Report
 

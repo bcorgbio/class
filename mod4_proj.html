@@ -513,6 +513,15 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p>Keep this document open and ready to edit. But, before was start, let’s establish the context for authoring an R Markdown. Say, thinking back to the <a href="mod3_proj.html">Module 3 Project</a>, we wanted to report on some of our results, how we came to them, and what they mean. In that project, we found that ecomorph was an important predictor of the hindlimb-SVL relationship in anoles. Specifically, we used phylogenetic least squares analysis to assess this relationship under Brownian motion and OU models of trait evolution.</p>
 <p>To assemble such a report, we should include sections that reflect the the progression of the analysis, each containing text, figures, captions, and references. Our sections should include an introduction, methods, results, discussion, author contributions, and a bibliography. Our tasks for this project will be taken on in this context: producing a succinct and reproducible report on the analysis of anole hindlimb evolution. Let’s get started.</p>
 </div>
+<div id="resources" class="section level1">
+<h1>Resources</h1>
+<p>As you learn more about R Markdown, you may want to reference the following online resources:</p>
+<ul>
+<li>A rather <a href="https://github.com/rstudio/bookdown">complete guide to R Markdown by Yikui Xie</a></li>
+<li>R Markdown <a href="https://rmarkdown.rstudio.com/lesson-15.html">Cheatsheets</a></li>
+<li>R Studio’s <a href="https://rmarkdown.rstudio.com/">markdown tutorial</a></li>
+</ul>
+</div>
 <div id="the-yaml-header" class="section level1">
 <h1>The YAML Header</h1>
 <p>You’ll see at the top of your new “.Rmd” file a header contained between two lines (<code>---</code>). This is the YAML header that specifies the the attributes of the markdown, all of which are inherited from the dialog your answered when opening the new .Rmd. By default it includes a title, author, date, and type of file for your output. These are but a few of the formatting options and settings that could apply to the whole document. For now, let’s leave it as is. So it should look like this:</p>
@@ -934,8 +943,8 @@ twig
 </table>
 </div>
 </div>
-<div id="references" class="section level1">
-<h1>References</h1>
+<div id="inserting-references" class="section level1">
+<h1>Inserting References</h1>
 <p>As we prosecute out projects in Phase I and II, we’ll be reading scientific papers, some assigned, some asked to find so that we can place our results in context. In addition, as scientists, we always want to support our statements of fact with references. For this, we’ll need to cite and include these papers in a bibliography.</p>
 <p><a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html">Adding reference to an .Rmd</a> is pretty straight forward. First we’ll need to establish a .bib file that will reside in the same directory as your .Rmd file. To do this, select “File-&gt;New File-&gt;Text File.” A new tab will appear with the name “Untitled1.txt”. Save this file as “BIOL2140.bib” (note the “.bib” extension) in the same directory as your .Rmd file. This .bib file will be referenced by your .Rmd when inserting citations.</p>
 <p>The framework for citations and references in .Rmd can be formulated around <a href="https://en.wikipedia.org/wiki/BibTeX">BibTex</a>. BibTex is handy because you can find BibTex formatted citations in all your typical outlets (see note below). This system of citation uses a .bib file that contains text describing published works. Each work or potential reference in the .bib file is identified with a unique tag at the top of its entry and this entry contains the important bibliographic information. For instance, a .bib file containing a reference to the following paper</p>
@@ -984,17 +993,6 @@ bibliography: BIOL3140.bib
 </div>
 <p><br></p>
 </div>
-<div id="resources" class="section level1">
-<h1>Resources</h1>
-<p>As you learn more about R Markdown, you may want to reference the following online resources:</p>
-<ul>
-<li><a href="https://rmarkdown.rstudio.com/">R Studio’s markdown tutorial</a>
-<ul>
-<li><a href="https://github.com/rstudio/bookdown">A rather complete guide to R Markdown by Yikui Xie</a></li>
-<li><a href="https://rmarkdown.rstudio.com/lesson-15.html">R Markdown Cheatsheets</a></li>
-</ul></li>
-</ul>
-</div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
 <p>The goal of this project report is to produce an R Markdown in HTML that includes all the important components of the project reports you’ll produce in Phases I and II of the course. You can think of this as a template that can be used when writing writing up your reports in all the subsequent modules.</p>
@@ -1019,7 +1017,7 @@ bibliography: BIOL3140.bib
 </ol>
 <p>Submissions are due by 11:59 PM on Sunday, October 4th. Submission can be uploaded <a href="https://forms.gle/jaSZs4NPxr8Bf8yq9">here</a>.</p>
 </div>
-<div id="references-1" class="section level1 unnumbered">
+<div id="references" class="section level1 unnumbered">
 <h1>References</h1>
 <div id="refs" class="references">
 <div id="ref-hagey2017there">
