@@ -587,4 +587,13 @@ For this project report, write an .Rmd document named "TEAMNAME_Module4.R" that 
 
 Submissions are due by 11:59 PM on Sunday, October 4th. Submission can be uploaded [here](https://forms.gle/jaSZs4NPxr8Bf8yq9).
 
+```{r,include=FALSE}
+anole.phylo.aic <- AICc(pgls.BM1,pgls.BM2,pgls.OU1,pgls.OU2)
+anole.phylo.aicw <- aicw(anole.phylo.aic$AICc)
+rownames(anole.phylo.aicw) <- c("pgls.BM1","pgls.BM2","pgls.OU1","pgls.OU2")
+
+anole.phylo.aicw%>%
+  kable()
+```
+
 # References

@@ -29,6 +29,9 @@ navbar:
           href: mod3_proj.html
         - text: "Module 4 Project"
           href: mod4_proj.html
+        - text: "DaqPacks"
+        - text: "DaqPack Item List"
+          href: daqack.html
     - text: "BIOL 3140 Discussion"
       href: https://github.com/orgs/bcorgbio/teams/biol-3140
       

@@ -447,6 +447,13 @@ div.tocify {
     <li>
       <a href="mod3_proj.html">Module 3 Project</a>
     </li>
+    <li>
+      <a href="mod4_proj.html">Module 4 Project</a>
+    </li>
+    <li class="dropdown-header">DaqPacks</li>
+    <li>
+      <a href="daqack.html">DaqPack Item List</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -487,19 +494,12 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <li>A file of the speeds at which specimens swam in the study at <a href="pseed.calibration.csv">this link</a>.</li>
 </ul>
 <p>Let’s do so and then comment on the origin and importance of the data.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tidyverse) <span class="co"># Rember to load your libraries!</span></a></code></pre></div>
-<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
-<pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
-## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
-## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
-## ✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
-<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co">#Remember to set your working directory, too!</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#load data</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">pseed &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;pseed.fin.amps.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tidyverse) <span class="co"># Rember to load your libraries!</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#Remember to set your working directory, too!</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#load data</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">pseed &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;pseed.fin.amps.csv&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   fish = col_character(),
@@ -510,13 +510,13 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ##   fin = col_character(),
 ##   amp.bl = col_double()
 ## )</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">pseed.bl &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;pseed.lengths.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">pseed.bl &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;pseed.lengths.csv&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   fish = col_character(),
 ##   bl = col_double()
 ## )</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">speeds &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;pseed.calibration.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">speeds &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;pseed.calibration.csv&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   vol = col_double(),
@@ -566,9 +566,9 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p><br></p>
 <p>In the figure above, we see the two tables and their columns represented. The key columns are outlined in gray. The arrow indicates the direction and manner of the join: the smaller <code>speeds</code> table that, based on the key values will add the remaining <code>m.s</code> and <code>cm.s</code> columns to the <code>pseed</code> table on its left.</p>
 <p>Fortunately, the powerful data analysis package <code>dplyr</code> in the <code>tidyverse</code> has a join function for just such an operation: <code>join_left()</code>, joining new data to left data. Here’s how this works:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">pseed2 &lt;-<span class="st"> </span>pseed<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(speeds,<span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;speed&quot;</span>=<span class="st">&quot;vol&quot;</span>))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">pseed2 &lt;-<span class="st"> </span>pseed<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(speeds,<span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;speed&quot;</span>=<span class="st">&quot;vol&quot;</span>))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 73,352 x 9
 ##    fish   speed frame date                amp fin   amp.bl   m.s  cm.s
 ##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -588,8 +588,8 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <div id="mutation-adding-data-to-data-from-its-own-data" class="section level1">
 <h1>Mutation: Adding Data to Data from its Own Data</h1>
 <p>Great, we have speed in cm and m<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span> added to our results table, however, it is common practice in physiology to report locomotor speeds as specific speeds, that is, as a proportion of body lengths per second (BL<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span>). This means we need to add BL to our results table <code>pseed</code> and compute the specific speed, that is divide BL (in cm) by cm<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span> to get BL<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span>. Fortunately, we have BL information contained in our <code>pseed.bl</code> tibble.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">pseed.bl<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">pseed.bl<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##   fish      bl
 ##   &lt;chr&gt;  &lt;dbl&gt;
@@ -597,9 +597,9 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 2 Pseed5  12.7
 ## 3 Pseed6  12.6</code></pre>
 <p>Notice that this tibble contains three values for <code>fish</code> and we only have two fish in our new results table, “Pseed5” and “Pseed6”:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(fish)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw">unique</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(fish)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">unique</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 1
 ##   fish  
 ##   &lt;chr&gt; 
@@ -607,9 +607,9 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 2 Pseed6</code></pre>
 <p>To join <code>pseed.bl</code> to <code>pseed2</code>, the logical key value would be the column <code>fish</code>, a column common to both tibbles. You might at first think that a join operation would be complicated because the key values of each table aren’t identical (i.e., “Pseed5” and “Pseed6” in <code>pseed</code> but “Pseed1”, “Pseed5”, and “Pseed6” in <code>pseed.bl</code>. Because the table we’re joining to <code>pseed</code> has one additional value (“Pseed1”), all the values in the <code>pseed2</code> <code>fish</code> column are present in the <code>pseed.bl</code> <code>fish</code> column. So, we won’t have a problem. By default, an outer join operation in <code>dplyr</code> like <code>left_join()</code> will only add values to the leftward table if the key value is present in both tables. However, if the opposite was the case and the key column in the leftward table contained more values than the right table to join, we’d have a problem. Say, there was a value of “Pseed2” in the key column <code>fish</code> of the <code>pseed2</code> table. There’d be no matching value in the key column <code>fish</code> in <code>pseed.bl</code> and a value of “NA” would be added to the new joined table.</p>
 <p>Let’s go ahead and join the body length table <code>pseed.bl</code> with the results tibble <code>pseed2</code> using <code>left_join()</code> again. Notice we’ll redefine <code>pseed2</code> as this new merged tibble:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">pseed2 &lt;-<span class="st"> </span>pseed2<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(pseed.bl,<span class="dt">by=</span><span class="st">&quot;fish&quot;</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">pseed2 &lt;-<span class="st"> </span>pseed2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(pseed.bl,<span class="dt">by=</span><span class="st">&quot;fish&quot;</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 73,352 x 10
 ##    fish   speed frame date                amp fin   amp.bl   m.s  cm.s    bl
 ##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -625,9 +625,9 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 10 Pseed5    43     4 2019-06-17-151149  88.8 R      0.168  0.11    11  12.7
 ## # … with 73,342 more rows</code></pre>
 <p>We now have BL in cm stored in a <code>bl</code> column. Now we need to compute specific speed in BL<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span>. Because <code>pseed2</code> now contains <code>cm.s</code> (cm<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span>) and <code>bl</code> (in cm), all that’s left to do is compute a new <code>bl.s</code> column based on dividing <code>cm.s</code> by <code>bl.s</code>. For this, we’ll mutate the tibble, that is, add a new column with this calculation.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">pseed2 &lt;-<span class="st"> </span>pseed2<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bl.s=</span>cm.s<span class="op">/</span>bl)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">pseed2 &lt;-<span class="st"> </span>pseed2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bl.s=</span>cm.s<span class="op">/</span>bl)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 73,352 x 11
 ##    fish   speed frame date              amp fin   amp.bl   m.s  cm.s    bl  bl.s
 ##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -644,8 +644,8 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## # … with 73,342 more rows</code></pre>
 <p>Here we passed <code>pseed2</code> to a <code>mutate()</code> operation to add the new column, <code>bl.s</code>, based on the division of <code>cm.s</code> by <code>bl.s</code>. Note that we redifined <code>pseed2</code> as this new mutated tibble containing the specific swimming speed in the <code>bl.s</code> column.</p>
 <p>Let’s now use <code>ggplot</code>, our fantstic plotting package included in <code>tidyverse</code> to plot specific fin amplitude (<code>amp.bl</code>) against specific swimming speed (<code>bl.s</code>).</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>bl.s,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>bl.s,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-7-1.png" width="672" /> First of all, this is some sort of a mess: just a bunch of points for each speed. But, let’s briefly breakdown what we did with <code>ggplot</code> (in our next module, we’ll go into more specifics). We passed <code>pseed2</code> to a new plot with <code>ggplot()</code> and specified what it should look like with the <code>aes()</code> parameter. This is the aesthetic of the plot. Specifically, we want the x axis to reflect <code>bl.s</code> values in <code>pseed2</code> and the y axis to reflect <code>amp.bl</code>. To this we added a geometry layer, a specific type of plot, in this case, a scatter or point plot with <code>geom_point()</code>.</p>
 <div class="green">
 <div class="row">
@@ -659,13 +659,13 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </div>
 <p><br></p>
 <p>This plot is indeed a mess. We have so many plotted y values (over 74,000!) that we can’t say much about the pattern in question <code>amp.bl</code> vs. <code>bl.s</code>. In this case it, it may be that we have a lot of overlapping points, obscuring any patterns. To confirm this suspicsion, we can simply adjust the transparancy of the points with the <code>alpha</code> parameter in <code>ggplot</code>. The lower the value for <code>alpha</code> (from 0-1), the more transparent the geometry being plotted. Let’s try a really low <code>alpha</code> of 0.01, something like:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>bl.s,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.01</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>bl.s,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.01</span>)</a></code></pre></div>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>One thing should be apparent here: there are a lot of low values for each speed and many fewer high values. Duh! This is a flapping fin! That is, it moves through a range of motion from a low amplitude to high and back again. Let’s look at the left pelvic fin for only one experiment identified by the first value of the <code>date</code> column by using the <code>filter()</code> function. Let’s look at the amplitude over each frame by plotting these values.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(date<span class="op">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="op">==</span><span class="st">&quot;L&quot;</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>frame,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(date<span class="op">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="op">==</span><span class="st">&quot;L&quot;</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>frame,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Yep, the fin amplitude is oscillating for sure, just like you would predict a flapping fin would. Maybe it’s not simply amplitude we should be looking at.</p>
 </div>
@@ -673,16 +673,16 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <h1>Using Customized Functions</h1>
 <p>Maybe it’s not simply amplitude we care about. In the the plot above, we see that the pectoral fin is oscillating like a sine wave. Perhaps we should look at the <em>max</em> amplitude across speeds. The max amplitude corresponds to the peak of each wave. But how do we find this value? One part of the power of scripting in R is that someone has probably written a package to do just what you want to do. Another powerful aspect of R is that you can write customized functions from these packages to suit your needs.</p>
 <p>The R package <code>features</code> is super handy here. It’s main function <code>features()</code>, so cleverly named, can find local minima and maxima (i.e., peaks and troughs) of curvy data. Install and then load the <code>features</code> library:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co">#make sure features is installed first</span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="kw">library</span>(features)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co">#make sure features is installed first</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw">library</span>(features)</a></code></pre></div>
 <pre><code>## Loading required package: lokern</code></pre>
 <p>Let’s first see what the <code>features()</code> function can do for us by running the first experiment through this function:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">exp1 &lt;-<span class="st"> </span>pseed2<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(date<span class="op">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="op">==</span><span class="st">&quot;L&quot;</span>)</a>
-<a class="sourceLine" id="cb26-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb26-4" data-line-number="4"> f1 &lt;-<span class="st">  </span><span class="kw">features</span>(<span class="dt">x =</span> exp1<span class="op">$</span>frame,<span class="dt">y=</span>exp1<span class="op">$</span>amp.bl)-&gt;f1</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">exp1 &lt;-<span class="st"> </span>pseed2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(date<span class="op">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="op">==</span><span class="st">&quot;L&quot;</span>)</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"> f1 &lt;-<span class="st">  </span><span class="kw">features</span>(<span class="dt">x =</span> exp1<span class="op">$</span>frame,<span class="dt">y=</span>exp1<span class="op">$</span>amp.bl)-&gt;f1</a></code></pre></div>
 <p><code>features()</code> will only accept a vector for the x and y data of a curvy relationship. So we have to break up our filtered <code>pseed2</code> table so that it can be used by the function. Here we made an <code>epx1</code> <code>data.frame</code> and passed the <code>frame</code> column to the x parameter and <code>amp.bl</code> to the y parameter. We saved the results of the <code>features()</code> operation to <code>f1</code>. Let’s see what <code>features()</code> gave us with the <code>fget()</code> function in <code>features</code> (it simply extracts the important stuff from the results):</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">fget</span>(f1)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">fget</span>(f1)</a></code></pre></div>
 <pre><code>## $f
 ##   fmean    fmin    fmax     fsd   noise     snr   d1min   d1max fwiggle   ncpts 
 ##    0.08    0.00    0.18    0.06    0.00   18.47   -0.02    0.02    0.00   24.00 
@@ -698,13 +698,13 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## $outlier
 ##  [1]   3  45  92 118 137 138 174 175 177 218 304</code></pre>
 <p><code>fget()</code> tells us that there are 24 critical points (where the curvature (i.e., second derivative) of the curve is 0) in the &quot;crit.pts<code>output. Let's plot  vertical lines that correspond to the critical points over our original plot of the first experimnet's</code>amp.bl<code>vs.</code>frame`:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(date<span class="op">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="op">==</span><span class="st">&quot;L&quot;</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>frame,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">fget</span>(f1)<span class="op">$</span>crit.pts)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(date<span class="op">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="op">==</span><span class="st">&quot;L&quot;</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>frame,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">fget</span>(f1)<span class="op">$</span>crit.pts)</a></code></pre></div>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>This is pretty good. We get all the peaks (the maxima of amplitude we’re after). We’re missing some troughs and have a few lines close to one another, likely due to noise. But, this isn’t a problem bacuse we’re after the peaks only. How to isolate the peaks? That’s a matter of looking at the cuvarature form the <code>fget()</code> output: by convention, negative curvature indicates a convex line, positive curvature a concave line. Peaks, in other words, will have a negative curvature. There’s a problem here. We see that from the <code>fget()</code> output above that the curvature for each critical point comes back as 0 in all cases. We’re getting 0 for the curvature values because the second derivative of our low specific amplitudes is really small and <code>features()</code> defaults to outputs of two decimal points, i.e., it rounds. If we merely multiply our amplitude values by 100, we’ll see that some curvatures are negative (the peaks), while some are positive (the troughs). Let’s rerun <code>features()</code>with this change and see what we get.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"> f2 &lt;-<span class="st">  </span><span class="kw">features</span>(<span class="dt">x =</span> exp1<span class="op">$</span>frame,<span class="dt">y=</span>exp1<span class="op">$</span>amp.bl<span class="op">*</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb30-2" data-line-number="2"> <span class="kw">fget</span>(f2)</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"> f2 &lt;-<span class="st">  </span><span class="kw">features</span>(<span class="dt">x =</span> exp1<span class="op">$</span>frame,<span class="dt">y=</span>exp1<span class="op">$</span>amp.bl<span class="op">*</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"> <span class="kw">fget</span>(f2)</a></code></pre></div>
 <pre><code>## $f
 ##   fmean    fmin    fmax     fsd   noise     snr   d1min   d1max fwiggle   ncpts 
 ##    8.02    0.08   18.46    6.26    0.34   18.51   -2.20    1.60    0.15   24.00 
@@ -721,11 +721,11 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## $outlier
 ##  [1]   3  45  92 118 137 138 174 175 177 218 304</code></pre>
 <p>Very good, we now get postive and negative curvatures for the critical points. Now let’s pull out the peaks, choosing those critical points that are negative. Let’s make a tibble so we can use our <code>tidyverse</code> skillzzzz.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">f.tib &lt;-<span class="st"> </span><span class="kw">fget</span>(f2)[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="st">  </span><span class="kw">as_tibble</span>()<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(curvature<span class="op">&lt;</span><span class="dv">0</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peaks=</span><span class="kw">round</span>(crit.pts,<span class="dv">0</span>))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb32-5" data-line-number="5"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">f.tib &lt;-<span class="st"> </span><span class="kw">fget</span>(f2)[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="st">  </span><span class="kw">as_tibble</span>()<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(curvature<span class="op">&lt;</span><span class="dv">0</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peaks=</span><span class="kw">round</span>(crit.pts,<span class="dv">0</span>))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb28-5" data-line-number="5"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
 <pre><code>## # A tibble: 11 x 3
 ##    crit.pts curvature peaks
 ##       &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
@@ -741,34 +741,34 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 10    430.     -0.31    430
 ## 11    472.     -0.27    472</code></pre>
 <p>Here we took the second and third elements—the critical points and curvatures, repsectively—of the <code>f2</code> output from <code>features()</code> and passed it to a new tibble. Then <code>filter()</code> is applied so that we output only the peaks to <code>f.tib</code>. Finally, the estimated critical points in terms of frame that were calculated by <code>freatures()</code> is not an integer value like frame should be. So we create a new column, <code>peaks</code> that has this discrete value based on a rounding operation of <code>crit.pts</code>.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(date<span class="op">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="op">==</span><span class="st">&quot;L&quot;</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peak=</span>frame <span class="op">%in%</span><span class="st"> </span>f.tib<span class="op">$</span>peaks)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb34-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>frame,<span class="dt">y=</span>amp.bl,<span class="dt">col=</span>peak))<span class="op">+</span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(date<span class="op">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="op">==</span><span class="st">&quot;L&quot;</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peak=</span>frame <span class="op">%in%</span><span class="st"> </span>f.tib<span class="op">$</span>peaks)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>frame,<span class="dt">y=</span>amp.bl,<span class="dt">col=</span>peak))<span class="op">+</span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>Looks like we have a rather sophisticated and reliable way to find peaks in the amplitude data that we can then use to calculate the max amplitude across a set of frames while the fin is oscillating. However, we’ve just done this for one experiment and there are how many experiments?</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n=</span><span class="kw">length</span>(<span class="kw">unique</span>(date)))</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n=</span><span class="kw">length</span>(<span class="kw">unique</span>(date)))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##       n
 ##   &lt;int&gt;
 ## 1    50</code></pre>
 <p>That’s right, 50. And remember, there are two fins to consider! To find the max amplitude for each fin during each oscillation, we could write a <code>for</code> loop and use the code above to find the peaks over the frames of each experiment for each fin. However, this would be a lot of code and, as it turns out, rather slow. Let’s consider antoher way: passing a custom function to the defined groups in our data set (<code>date</code> for experiment and <code>fin</code>).</p>
 <p>To accomplish this, we can construct this custom function from the code we wrote to find the max amplitudes for the left fin in the first experiment. Let’s define this function <code>find.peaks()</code> thusly and break down its components with some comments:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">find.peaks &lt;-<span class="st"> </span><span class="cf">function</span>(x,y,<span class="dt">mult=</span><span class="dv">100</span>){ <span class="co">#define the functions parameter/inputs:x,y, and how much we won&#39;t to multiple y by (rember the rounding issue)</span></a>
-<a class="sourceLine" id="cb37-2" data-line-number="2">f &lt;-<span class="st"> </span><span class="kw">fget</span>(<span class="kw">features</span>(<span class="dt">x =</span> x,<span class="dt">y=</span>y<span class="op">*</span>mult))[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#store resutls in `f` and compute the features for the x-y relationship, wrep in in fget to retrieve the important features, subset the results to take the 2nd and 3rd and  items, the critical points and curvature, then pass it to a tibble</span></a>
-<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="st">  </span><span class="kw">as_tibble</span>()<span class="op">%&gt;%</span><span class="st"> </span><span class="co"># pass in through a filter that rturns curvatures &lt;0</span></a>
-<a class="sourceLine" id="cb37-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(curvature<span class="op">&lt;</span><span class="dv">0</span>)<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#add a column that rounds the critical point to an integer that represents the frame</span></a>
-<a class="sourceLine" id="cb37-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peaks=</span><span class="kw">round</span>(crit.pts,<span class="dv">0</span>))</a>
-<a class="sourceLine" id="cb37-6" data-line-number="6"> <span class="kw">return</span>(f<span class="op">$</span>peaks) <span class="co"># return the peaks from tibble</span></a>
-<a class="sourceLine" id="cb37-7" data-line-number="7">}</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">find.peaks &lt;-<span class="st"> </span><span class="cf">function</span>(x,y,<span class="dt">mult=</span><span class="dv">100</span>){ <span class="co">#define the functions parameter/inputs:x,y, and how much we won&#39;t to multiple y by (rember the rounding issue)</span></a>
+<a class="sourceLine" id="cb33-2" data-line-number="2">f &lt;-<span class="st"> </span><span class="kw">fget</span>(<span class="kw">features</span>(<span class="dt">x =</span> x,<span class="dt">y=</span>y<span class="op">*</span>mult))[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#store resutls in `f` and compute the features for the x-y relationship, wrep in in fget to retrieve the important features, subset the results to take the 2nd and 3rd and  items, the critical points and curvature, then pass it to a tibble</span></a>
+<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="st">  </span><span class="kw">as_tibble</span>()<span class="op">%&gt;%</span><span class="st"> </span><span class="co"># pass in through a filter that rturns curvatures &lt;0</span></a>
+<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(curvature<span class="op">&lt;</span><span class="dv">0</span>)<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#add a column that rounds the critical point to an integer that represents the frame</span></a>
+<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peaks=</span><span class="kw">round</span>(crit.pts,<span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb33-6" data-line-number="6"> <span class="kw">return</span>(f<span class="op">$</span>peaks) <span class="co"># return the peaks from tibble</span></a>
+<a class="sourceLine" id="cb33-7" data-line-number="7">}</a></code></pre></div>
 <p>Here we define the function’s parameters, and then between <code>{}</code>, ask r to perform some operations on these inputs. Lastly, before the <code>}</code>, we ask R to return some value (the peaks).</p>
 <p>Let’s now see how this function works on our data set <code>pseed2</code>. Remember, we have 50 experiments and two fins and even though passing a function to groups using <code>dplyr</code> is easier and faster than running a loop, it will still take a while. So let’s use a filter to limit the operation at first, using only the first 3 unique values of the date column, i.e., the first 3 experiments. Let’s run the following and break it down.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(date<span class="op">%in%</span><span class="kw">unique</span>(date)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(date,fin)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb38-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peak=</span>frame <span class="op">%in%</span><span class="st"> </span><span class="kw">find.peaks</span>(frame,amp.bl))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb38-5" data-line-number="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>frame,<span class="dt">y=</span>amp.bl,<span class="dt">alpha=</span>peak,<span class="dt">col=</span>peak))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">facet_grid</span>(date<span class="op">~</span>fin)</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">pseed2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(date<span class="op">%in%</span><span class="kw">unique</span>(date)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(date,fin)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb34-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peak=</span>frame <span class="op">%in%</span><span class="st"> </span><span class="kw">find.peaks</span>(frame,amp.bl))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb34-5" data-line-number="5"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>frame,<span class="dt">y=</span>amp.bl,<span class="dt">alpha=</span>peak,<span class="dt">col=</span>peak))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">facet_grid</span>(date<span class="op">~</span>fin)</a></code></pre></div>
 <pre><code>## Warning: Using alpha for a discrete variable is not advised.</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p>After the filter, we:</p>
@@ -779,18 +779,18 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </ol>
 <p>Notice the we added something new, a grid with <code>facet_grid()</code>. This breaks the plot up into a grid according values in the data. This function takes a formula as input which corresponds to “row facets ~ column facets”, that is, what should the rows and columns in the grid represent. Here make a grid of dates/experiments in the plot’s rows and fin in the columns. As a result, we get a 3x2 plot.</p>
 <p>It looks like this new function of ours did a really nice job of finding the peaks in each of the experiments and fins. Let’s do this for ALL the data. Remember, we have 100 indiviual groups to apply this function to and determine if the frame in each corresponds to a peak. So, run this code without the plotting operations and a final filter to only return the frames that correspond to a peak. Check the weather and then come back after 90s or so.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">pseed.max &lt;-<span class="st"> </span>pseed2<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(date,fin)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peak=</span>frame <span class="op">%in%</span><span class="st"> </span><span class="kw">find.peaks</span>(frame,amp.bl))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(peak<span class="op">==</span>T) <span class="co">#new filter</span></a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">pseed.max &lt;-<span class="st"> </span>pseed2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(date,fin)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peak=</span>frame <span class="op">%in%</span><span class="st"> </span><span class="kw">find.peaks</span>(frame,amp.bl))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb36-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(peak<span class="op">==</span>T) <span class="co">#new filter</span></a></code></pre></div>
 <p>This produces a tibble of 3300 amplitudes representing those at the peak of each oscillation. Let’s come back to our original question: <em>How does amplitude change with speed?</em> by plotting specific amplitude against specific swimming speed and adding a smooth line that represents a linear regression model (<code>method=&quot;lm&quot;</code>).</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">pseed.max<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>bl.s,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">pseed.max<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>bl.s,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>There we have it. It’s a little noisy, but it looks like amplitude does ineed <em>decrease</em> with with speed! To confirm, maybe we want to run a simple statistical test on this model, an ANOVA, say:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"> amp.aov &lt;-<span class="st">  </span><span class="kw">aov</span>(amp.bl<span class="op">~</span>bl.s,pseed.max)</a>
-<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="kw">summary</span>(amp.aov)</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"> amp.aov &lt;-<span class="st">  </span><span class="kw">aov</span>(amp.bl<span class="op">~</span>bl.s,pseed.max)</a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="kw">summary</span>(amp.aov)</a></code></pre></div>
 <pre><code>##               Df Sum Sq Mean Sq F value Pr(&gt;F)    
 ## bl.s           1  5.038   5.038    1658 &lt;2e-16 ***
 ## Residuals   3300 10.027   0.003                   
@@ -812,10 +812,10 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <div id="next-steps" class="section level1">
 <h1>Next Steps</h1>
 <p>As newly minted data scientists, you may not like that there are hundreds of observations for each speed. This may bias the results if we have clustered high and low points. In addition, you may wonder if the max amplitude may vary with speed differently between the two fish in our experiment. Let’s compute means for each speed and for each fish. For this we can trot out the <code>summarize()</code> function in <code>dplyr</code>. Let’s also plot our means vs. speed and a linear regression line for each fish. Something like:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">pseed.max <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(fish, bl.s) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean.max=</span><span class="kw">mean</span>(amp.bl)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb45-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>bl.s,<span class="dt">y=</span>mean.max,<span class="dt">col=</span>fish))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">pseed.max <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(fish, bl.s) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean.max=</span><span class="kw">mean</span>(amp.bl)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>bl.s,<span class="dt">y=</span>mean.max,<span class="dt">col=</span>fish))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;fish&#39; (override with `.groups` argument)</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
@@ -825,7 +825,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p>In our readings of R4DS, <a href="https://r4ds.had.co.nz/tidy-data.html">we learned about tidy data</a>. Specifically, tidy data are a data set that meets the following requirements: 1. Each variable must have its own column. 2. Each observation must have its own row. 3. Each value must have its own cell.</p>
 <p>Fortunately the data sets we’ve been working with in this project are tidy. We have observations for a fin, on fish, during an experiment, at certain speed. Each of these variables have their own column. This allows us to compute operations across rows and by groups according to column variables (experiment, fin, fish, etc.). If our data weren’t we could use pivoting operations we learned about to make it tidy. However, sometimes you want to make additional observations, asking a different question even, and we need to do the pivoting operations just the same.</p>
 <p>In asking how each fin’s amplitude varies with each speed across fish, we can do operations on these variables and plot them easily enough as we just have. But, what if the question changes to <em>what is the sum of amplitude of <strong>both fins</strong> over our range of speeds?</em> Because our data are tidy and the amplitude of each fin is in a different row for each frame, this is made difficult. Have a look at <code>pseed2</code> again:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">pseed2</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">pseed2</a></code></pre></div>
 <pre><code>## # A tibble: 73,352 x 11
 ##    fish   speed frame date              amp fin   amp.bl   m.s  cm.s    bl  bl.s
 ##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -841,12 +841,12 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 10 Pseed5    43     4 2019-06-17-151…  88.8 R      0.168  0.11    11  12.7 0.863
 ## # … with 73,342 more rows</code></pre>
 <p>Note each frame has two rows, one for each fin. How would we compute the sum of the amplitude for each frame? You migh at first think we should add column (say <code>amp.sum</code>) to the tibble that represents the sum of the amplitudes, left and right, for each frame across experiments:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">pseed2 &lt;-<span class="st"> </span>pseed2 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(date,frame) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb50-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">amp.sum=</span><span class="kw">sum</span>(amp.bl))</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">pseed2 &lt;-<span class="st"> </span>pseed2 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb46-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(date,frame) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb46-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">amp.sum=</span><span class="kw">sum</span>(amp.bl))</a></code></pre></div>
 <p>When we do this, our data now violates a tidy principle, namely that each data value must have it’s own cell (especially data that are responses to other variables we care about!). Look at our <code>amp.sum</code> column and you see that each value spans two cells, one for each fin. This makes the data appear as if there is an <code>amp.sum</code> for each fin. To fix this, and keep the data tidy, we could delete one of the rows for each frame in each experiment:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">pseed2 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb51-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(fin<span class="op">==</span><span class="st">&quot;R&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">pseed2 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(fin<span class="op">==</span><span class="st">&quot;R&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 36,676 x 12
 ## # Groups:   date, frame [36,676]
 ##    fish   speed frame date      amp fin   amp.bl   m.s  cm.s    bl  bl.s amp.sum
@@ -863,11 +863,11 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 10 Pseed5    43     9 2019-0…  49.7 R     0.0939  0.11    11  12.7 0.863   0.149
 ## # … with 36,666 more rows</code></pre>
 <p>But, I’m sure you see the problem—we’ve lost half our data and <code>amp.sum</code> appears to apply only to the right fin. We can avoid this problem by pivoting our data, making it wider. That is, we can give left and right fins their own amplitude column and sum the values of these to get our sum of amplitude. Here’s how with <code>pivot_wider()</code>:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1">pseed.wide &lt;-<span class="st"> </span>pseed2 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>amp)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> fin,<span class="dt">values_from =</span> amp.bl) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">amp.sum=</span>L<span class="op">+</span>R)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb53-5" data-line-number="5"><span class="st">  </span><span class="kw">print</span>() </a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">pseed.wide &lt;-<span class="st"> </span>pseed2 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb49-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>amp)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb49-3" data-line-number="3"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> fin,<span class="dt">values_from =</span> amp.bl) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb49-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">amp.sum=</span>L<span class="op">+</span>R)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb49-5" data-line-number="5"><span class="st">  </span><span class="kw">print</span>() </a></code></pre></div>
 <pre><code>## # A tibble: 36,676 x 11
 ## # Groups:   date, frame [36,676]
 ##    fish   speed frame date           m.s  cm.s    bl  bl.s amp.sum      L      R

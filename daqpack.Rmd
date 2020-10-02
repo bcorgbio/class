@@ -1,0 +1,27 @@
+---
+title: "DaqPack Materials"
+
+---
+
+Thanks to a generous grant from [BC's Academic Technology Avisory Board](https://www.bc.edu/bc-web/academics/sites/academic-technology-advisory-board.html.html), we are able to provide "DaqPacks" of all the required hardware for the course to every student in BIOL 3140. Please take care of your DaqPacks, keeping them in a safe, dry place. There are lots of bits and pieces and what's below describes each.
+
+Table: Caption of my table
+<!-- Table: (\#tab:myTable-reference) Caption of my table -->
+
+| Item | Description |
+| :-------: | :----------- |
+| ![](supplies/uno.JPG){#id .class height=50%} | Elegoo Arduino Uno R3 clone  |
+| ![](supplies/accel.jpg){#id .class height=50%} | MPU-6050 6-axis accelerometer gyroscope sensor breakout board  |
+| ![](supplies/sdreader.jpg){#id .class height=50%} | MicroSD card module  |
+| ![](supplies/sd.jpg){#id .class height=50%} | 8GB MicroSD card |
+| ![](supplies/straingauge.jpg){#id .class height=50%} | 40-kg Load Cell with HX711 amplifier |
+| ![](supplies/tempsensor.jpg){#id .class height=50%} | DS18B20 temperature sensor |
+| ![](supplies/breadboard.JPG){#id .class height=50%} | Mini solderless breadboard |
+| ![](supplies/jumpers.JPG){#id .class height=50%} | 4-in and 8-in breadboard jumper wires |
+| ![](supplies/protowire_large.JPG){#id .class height=50%} | short solid-core protoyping wire |
+| ![](supplies/protowire_small.JPG){#id .class height=50%} | long solid-core protoyping wire |
+| ![](supplies/tape.JPG){#id .class height=50%} | surgical tape |
+| ![](supplies/batt.jpg){#id .class height=50%} | 9V battery power cable |
+|                  |             |
+
+

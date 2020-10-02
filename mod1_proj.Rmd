@@ -148,9 +148,10 @@ Easy peasy with `sapply()`. Have a look at `?sapply()`, the help entry, which ex
 
 Now that we know what sort of data and how much of it we have, let's do some simple operations that a biologist might perform ahead of any analysis. Consider what additional and important things we want to know about our data. How many species are in our data set? How many specimens per species were included? How many observations (punctures) are there for each species? Yes, Yes, and Yes. These and other questions about the make up of your data can be answered through summarizations.
 
-Let's start with how many species we have. Because we're working with a factor for species, we can inspect the levels, that is, a factor has one or more unique levels to it. To reveal the levels in factor-type data, we simply pass those data through `levels`:
+Let's start with how many species we have. Because we're working with a character class for the species column, we first want to change that to a factor. As we've learned from HOPR, factors have levels,i.e., unqique values. This is exaclty what we want: to find the unique values for species. So let's convert this column to a factor, then we can inspect the levels. To change the column class to a factor and then reveal the levels in factor-type data, we simply redefine the column and then pass those data through `levels`:
 
 ```{r}
+dat$species <- as.factor(dat$species)
 species <- levels(dat$species)
 species
 ```
@@ -171,7 +172,7 @@ dat$species==species[1]
 Have a look at the result in the console (I'm not showing the output here, because . . .). You should see hundreds of logical values, `TRUE` and `FALSE` with many `TRUE`'s at first. This indicates that the first 300 or so values for the "species" column matches "A. rupestris". Now we can nest these logical values within the "species" vector (column) to return only those values that match "A. rupestris", like so:
 
 ```{r,results='hide'}
-dat$specie[dat$species==species[1]]
+dat$species[dat$species==species[1]]
 ```
 
 From here, we can find the length of this subsetted vector, save the results in a new variable name that resembles that particular level of "species", and then iterate through all the levels of "species". After this, let's combine the results in a data frame using our `species` variable and `c()` to combine our new length variables.
