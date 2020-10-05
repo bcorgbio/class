@@ -25,6 +25,96 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 <style type="text/css">
@@ -394,14 +484,16 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </style>
 <!-- Add icon library -->
 <p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
-<div id="introdution" class="section level1">
-<h1>Introdution</h1>
-<p>Now that we have read and explored the basics of how to program an Arduino unit, we’ll now proceed with prototyping a simple sensor, one that can very accurately record temperature. This project assumes you have worked through the the assigned readings and links and therefore understand how an Arduino Uno (or a clone) is programmed and how serial data are sent and received from an Arduino.</p>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Now that we have learned the basics of data analysis, visualization, and modelling. Let’s move on to how we collect data in the first place. So much of experimental work in organismal biology requires specialized equipment. Often, equipment is expensive or devices and instruments needed for the work aren’t commercially available. Because of the expense and unique requirements of instruments, organismal biologist often make their own. Prototyping instruments can be tedious and challenging, often requiring collaboration with engineers or other technical consultants. However, many simple sensor-based instruments that fit the requirements of researches can be built around Arduino, an open source, inexpensive prototyping platform.</p>
+<p>In this project, we’ll proceed with prototyping a simple sensor, one that can very accurately record temperature. This project assumes you have worked through the the assigned readings and links and therefore understand how an Arduino Uno (or a clone) is programmed and how serial data are sent and received from an Arduino.</p>
 </div>
 <div id="set-up" class="section level1">
 <h1>Set up</h1>
 <div id="materials" class="section level2">
 <h2>Materials</h2>
+<p>Assemble the following materials from your DaqPacks</p>
 <ul>
 <li>TMP36 precision linear analog temperature sensor</li>
 <li>Elegoo Arduino Uno clone</li>
@@ -413,7 +505,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <h1>Assembly and Programming</h1>
 <div id="assembly" class="section level2">
 <h2>Assembly</h2>
-<p>Be sure to read Adafruit’s <a href="https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor">Using a Temp Sensor</a>—it provides a good overview of this temp sensor and explicit intructions for assembling and programming an Arduino-based temperature recording system.</p>
+<p>Be sure to read Adafruit’s <a href="https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor">Using a Temp Sensor</a>—it provides a good overview of this temp sensor and explicit instructions for assembling and programming an Arduino-based temperature recording system.</p>
 <p>Let’s start with assembly. Simply wire the three pins of the TMP36 according the this diagram (ignore the photoresistor component):</p>
 <center>
 <img src="https://cdn-learn.adafruit.com/assets/assets/000/000/477/original/temperature_sensorwiring.gif?1447975829" alt="alternatetext">
@@ -438,7 +530,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <img src="tempserial.png" alt="FigName" />
 </center>
 <p><br></p>
-<p>This is great, but as a scientist, you’re probably building this instrument to record temperature over some length of time. Thus, reporting when, relative to the start of the experiment, the temperature was recorded is important. Fortunately, recording and printing time to the serial connection is super easy. We can do this by adding a new variable <code>currentTime</code> and passing a time value in millisecords to this variable in the void loop. First, add <code>int currentTime;</code> to the top of the sketch where the other variables are established. <code>int</code> establishes the variable as an integer, which is just fine because milliseconds is recorded as whole numbers. Second, add this to the <code>void(loop)</code>:</p>
+<p>This is great, but as a scientist, you’re probably building this instrument to record temperature over some length of time. Thus, reporting when, relative to the start of the experiment, the temperature was recorded is important. Fortunately, recording and printing time to the serial connection is super easy. We can do this by adding a new variable <code>currentTime</code> and passing a time value in milliseconds to this variable in the void loop. First, add <code>int currentTime;</code> to the top of the sketch where the other variables are established. <code>int</code> establishes the variable as an integer, which is just fine because milliseconds is recorded as whole numbers. Second, add this to the <code>void(loop)</code>:</p>
 <pre><code>  //add line to record current time 
   currentTime=millis(); 
  
@@ -579,7 +671,7 @@ void loop(void) {
   float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
   Serial.println(temperatureF); 
   </code></pre>
-<p>Upload the sketch and have a look at the serial monitor. Notice that we have data for milliseconds, voltage, temp in °C, and °F, all separated by commas. That is, we have comma separated values (.csv)! There’s just one problem with this—unless you knew the inner workings of this sketch, you wouldn’t know which data were which. Is the first value time or voltage? The second voltage or °F? Etc., etc. Printing a header at the beginning of the progrom is the solution. After this, the header and data can be copied and pasted to a text file and any computing operations that follow will logically parse and have a name for each column or position in the series of data.</p>
+<p>Upload the sketch and have a look at the serial monitor. Notice that we have data for milliseconds, voltage, temp in °C, and °F, all separated by commas. That is, we have comma separated values (.csv)! There’s just one problem with this—unless you knew the inner workings of this sketch, you wouldn’t know which data were which. Is the first value time or voltage? The second voltage or °F? Etc., etc. Printing a header at the beginning of the program is the solution. After this, the header and data can be copied and pasted to a text file and any computing operations that follow will logically parse and have a name for each column or position in the series of data.</p>
 <p>Here’s how to proceed. Merely print some header/column names in the <code>setup(void)</code>. The <code>setup(void)</code> is a part of the sketch where you ask the microcontroller to do something once and <em>before</em> <code>void(loop)</code> commences, a perfect place to print the header to the serial port.</p>
 <pre><code>Serial.println(&quot;ms,v,degC,degF&quot;);</code></pre>
 <p>After adding this and uploading the modified sketch, the serial monitor should now print a header (i.e., column names) and then the data like this:</p>
@@ -654,21 +746,73 @@ void loop(void) {
 }</code></pre>
 </div>
 </div>
-<div id="project-report" class="section level1">
-<h1>Project Report</h1>
-<p>No need to write anything up. Please merely run the modified sketch on your temp sensor protype and upload a video of the serial monitor printing comma separated values. You can capture the video by recording the screen on your phone and upload it <a href="https://forms.gle/gRHLVdGKh4bsF3Md7">here</a>. Please upload the video by 11:59 PM on Sunday, September 6th.</p>
+<div id="saving-data-from-the-serial-monitor." class="section level1">
+<h1>Saving Data from the Serial Monitor.</h1>
+<p>In future projects, we’ll write data to an SD card. But, saving your data for now can be as simple as copying the data printed to the serial monitor and pasting it into a text file. The code we’re working with produces comma-separated values for easy reading into analysis software, like R.</p>
+<p>Be sure to copy your data into a text file, not a Word document or Excel. I suggest using a free test editing like <a href="https://www.barebones.com/products/bbedit/download.html">BBedit (for Mac)</a> or <a href="https://notepad-plus-plus.org/downloads/">Notepadd++ (for Windows)</a>.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
 <a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
 </div>
 <div class="col-sm-9">
-As a reminder, please check out the <a href="phaseI_rubric.html">Phase I projects rubric</a> to get a sense of how this project will be assessed.
-</div>
+<p>When saving data in a research project, be sure to give the data a standard and informative file name. This is <strong>essential for saving data</strong>. For instance, say we were studying the effect of exercise on body temperature in four human subjects: Derek, Hansel, Matilda, and Mugato. Imagine that we measured body temperature over 100 seconds, twice for each subject, once when they were inactive (on the couch) and once after 5 minutes of jumping jacks (active). A logical file-naming convention would be “Name_couch/active.csv”. So, say we have these 4 subjects and two experimental conditions, we’d have the following 8 files:</p>
+<ul>
+<li>“Derek_active.csv”</li>
+<li>“Derek_couch.csv”</li>
+<li>“Hansel_active.csv”</li>
+<li>“Hansel_couch.csv”<br />
+</li>
+<li>“Matilda_active.csv”</li>
+<li>“Matilda_couch.csv”</li>
+<li>“Mugato_active.csv”</li>
+<li>“Mugato_couch.csv”</li>
+</ul>
+<p>Giving files a name describing the experiment (who and condition in this case) is an easy way of storing <strong>metadata</strong> (data about the data). For any subsequent analysis, we can pull the metadata from the file name and store our data with these conditions stored as columns. If we consider loading data with R, the power of a <code>for</code> loop because apparent. Using a <code>for</code> loop, we can iteratively load each data file, strip the metadata, and store both in a table. In this example, such a loop might look like this:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">dat.f &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;couch|active.csv&quot;</span>) <span class="co">#find the files</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">dat.l &lt;-<span class="st"> </span><span class="kw">list</span>() <span class="co">#make an empty list</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="cf">for</span>(i <span class="cf">in</span> dat.f){</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">  met.dat&lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(i,<span class="st">&quot;_&quot;</span>)) <span class="co">#split of the filename string</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">  who &lt;-<span class="st"> </span>met.dat[<span class="dv">1</span>] <span class="co">#store the first element</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">  activity &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;.csv&quot;</span>,<span class="st">&quot;&quot;</span>,met.dat[<span class="dv">2</span>]) <span class="co">#store second element, dropping CSV with gsub()</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">  dat.l[[i]]&lt;-<span class="st"> </span><span class="kw">read_csv</span>(i)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">who=</span>who,<span class="dt">activity=</span>activity) <span class="co">#read, then store data with additional columns of metada in list as position unique to i</span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">  </a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">}</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">dat &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind,dat.l) <span class="co">#combine the list into table</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16">dat<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>activity,<span class="dt">y=</span>degC))<span class="op">+</span><span class="kw">facet_grid</span>(.<span class="op">~</span>who) <span class="co">#plot to see what we get</span></a></code></pre></div>
+<p><img src="mod5_proj_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>A workflow like this, formulated around standardized file names containing metadata, is eminently scalable. Eight or a 1000 files, this approach works well.</p>
 </div>
 </div>
 </div>
 <p><br></p>
+</div>
+<div id="project-report" class="section level1">
+<h1>Project Report</h1>
+<p>In this project report, we’ll mirror the process of future projects and reports in Phase II and III of the course. Specifically, we’ll define a question, get data with a prototyped Arduino-based sensor and data-acquisition system, analyze and visualize it in R, and answer the question in an R Markdown report. For this report, we’ll simply ask <em>Does body temperature vary in human subjects according to activity level?</em>.</p>
+<p>To answer this question, use your new Arduino temp sensor to record your body temperature for a 100 s while sitting on the couch (or during some other calm activity—but make sure each group member does the same thing!) and after 5 minutes of doing jumping jacks. Record axillary temperature axillary by putting the sensor in your armpit.</p>
+<p>Make sure, in your project, you:</p>
+<ul>
+<li>Record data from the active and inactive conditions.</li>
+<li>Save data from the serial monitor via copy and paste operations, giving each text file a descriptive, standardized file name containing metadata.</li>
+<li>Combine all data from your team into one table.</li>
+<li>Plot mean temperature +/- 1 standard deviation, focusing on the comparison of activities between subjects.</li>
+</ul>
+<p>This report will require you to submit an .Rmd with HTML output that includes all the sections required of future project reports. Keep each section short, including only 3-4 sentences. Here are some key components to include:</p>
+<ul>
+<li>Find and cite a study in the introduction that frames the question, i.e., what is known about the effect of activity on body temperature.</li>
+<li>Qualitatively assess the effect of activity on body temperature with a single concise figure in the results section. Be sure to include a short narrative of the findings.</li>
+<li>Find, cite, and comment on a study in the discussion that frames the results, i.e., are your result congruent or not with previous findings and why?</li>
+<li>In the author contributions section, include short, explicit statements of each team member’s role in executing the project.</li>
+</ul>
+<p>Submit your .Rmd to the projects directory established for each team on GitHub. <strong>Submissions are due by 11:59 pm on October 11th.</strong></p>
+<p>Good luck!!</p>
 </div>
 
 

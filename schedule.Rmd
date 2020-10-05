@@ -309,3 +309,58 @@ All assignments are due at 11:59 on the specified date.
   |--------|-------- |--------|-------- |--------|--------|--------|--------
   **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 4 Project Report
   ||||||||
+
+# Module 5: Cheap Tricks in Physiology: Designing and Programming Simple, Low-Cost Data Acquisition Systems
+
+This module is intended to give students the background and skills to begin designing and programing of simple hardware devices using Arduino.
+
+
+## Dates 
+Week 6 (Oct 5—11):
+
+## Key Concepts
+  + Arduino IDE basics (the sketch).
+  + Instrument design basics.
+  + Saving data output from the serial monitor.
+  
+## Learning Objectives
+
+Upon completion of this week and module, students will be able to:
+
+  + Design and program a simple temperature Arduino DAQ.
+  + Output data from a DAQ for subseqent analysis.
+
+## Read/Watch 
+
+  + [What is Arduino?](https://www.arduino.cc/en/Guide/Introduction)
+  + [Getting started with Arduino](https://www.arduino.cc/en/Guide)
+  + [What is Arduino IDE?](https://www.arduino.cc/en/Guide/Environment)
+  + [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno)
+  + [The Serial Monitor](https://learn.adafruit.com/adafruit-arduino-lesson-5-the-serial-monitor/the-serial-monitor)
+  + [How Does a Breadboard Work](https://www.sciencebuddies.org/science-fair-projects/references/how-to-use-a-breadboard)
+  + Adafruit's [Using a Temp Sensor](https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor)
+
+
+## Do
+
+  + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
+  + [Install Arduino IDE](https://www.arduino.cc/en/Guide)
+  + Work through "Blink" sketch in [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno) (work with the desktop IDE)
+  + Complete Module 5 Project
+
+
+## Guiding Questions
+
+  + What are the major components of an Arduino microcontroller?
+  + What are the major components of an Arduino-based DAQ? 
+  + How does one program an Arduino microcontroller?
+  + How are data acquired from an Arduino unit?
+
+## Module 5 Schedule
+
+All assignments are due at 11:59 on the specified date.
+
+ || Monday <br> 10/5 |  Tuesday <br>10/6    | Wednesday<br>  10/7 | Thursday <br> 10/8 | Friday <br> 10/11 |Saturday<br> 10/10 | Sunday<br> 10/11
+|--------|-------- |--------|-------- |--------|--------|--------|--------    
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Upload Module 5Project Report
+||||||||
