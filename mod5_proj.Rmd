@@ -304,7 +304,7 @@ void loop(void) {
 ```
 
 
-# Saving Data from the Serial Monitor.
+# Saving Data from the Serial Monitor
 
 In future projects, we'll write data to an SD card. But, saving your data for now can be as simple as copying the data printed to the serial monitor and pasting it into a text file. The code we're working with produces comma-separated values for easy reading into analysis software, like R. 
 
