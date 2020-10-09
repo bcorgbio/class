@@ -1,0 +1,19 @@
+---
+title: "Phase II Project Report Rubric"
+---
+
+# General Guidelines
+
+Phase II is meant to develop and use the data analysis and prototypings skills we've learned in Phase I and to do so within the context of answering interesting questions in organismal biology. The project reports should resemble a short manuscript that models a scientific paper. By this, we mean that it should contain [appropriate headings or sections](mod4_proj.html#Headers) framing the question, how it was answered, the results, and how these results relate to the question and similar work that has been done. The following rubric represents how the 50 points for each of the 5 Phase II reports will be assessed.
+
+# Rubric
+ |Component| **Spot On** |  **Pretty Good** | **Needs Work**  
+|--------|-------- |-------- |--------
+| Tasks and Outputs | Completes all tasks fully; submits all required outputs and materials on time  <br>**(10 pts)** | Completes a majority but not all tasks fully; submission meets the deadline  <br>**(6 pts)** | Completes few required taks or submits few required matrials; submission misses the deadline <br>**(2 pts)**
+| Effort and Engagement | Individual or team asks questions or seeks help regularly <br>**(10 pts)**|  Individual or team asks questions or seek help sometimes, but not regularly <br>**(6 pts)**  |  Individual or team does not seem help <br>**(2 pts)**
+| Report Format | Report contains all the [appropriate headings and components](mod4_proj.html#Headers) (including a bibliography) <br>**(5 pts)**|  Report contains most of the appropriate headings and components (including a bibliography) <br>**(3 pts)** |  Report contains few of the appropriate headings and components <br>**(1 pt)**
+| Analysis and Code | Report contains concisely written code chunks within the results or methods sections that produce the appropriate analyses, figures, and/or tables <br>**(10 pts)**|  One or a few code chunks are unneeded or produce analyses, figures, and/or tables not directly related to the project goals <br>**(6 pts)**| No code chunks contained in report or all code chunks are unneeded or produce analyses, figures, and/or tables not directly related to the project goals <br>**(2 pts)** 
+| Graphics and Tables | Figures, tables, and images are clear, add much to the results in anlysis, and have concise but descriptive captions <br>**(5 pts)**|   One or a few figures, tables, and images are unneeded or inaapropriate or they lack captions that are concise or descriptive  <br>**(3 pts)**|  All few figures, tables, and images are unneeded or inaapropriated <br>**(1 pt)**
+| Writing and Style | The writing is concise, clear, avoids passive constructions, and is in the past tense; grammar is appropriate <br>**(5 pts)**|   The writing is unclear or rambling in spots or uses passive constructions and future tense; grammar is shaky in spots <br>**(3 pts)** |   The writing is unclear, and/or uses passive constructions or future tense throughout; grammar is shaky for the most part <br>**(1 pt)**
+| Sources and References | Statements of scientific findings and fact are supported by references; references are contained in a [BibTex bibliography and inserted with `@` tags](mod4_proj.html#Inserting_References)  <br>**(5 pts)**| Some statements of scientific findings and fact are not supported by references; some references are not contained in a BibTex bibliography or inserted with `@` tags <br>**(3 pts)** |   Most statements of scientific findings and fact are not supported by references; references are not contained in a BibTex bibliography nor inserted with `@` tags <br>**(1 pt)**
+||||

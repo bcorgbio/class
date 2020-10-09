@@ -364,3 +364,58 @@ All assignments are due at 11:59 on the specified date.
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
 **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Upload Module 5Project Report
 ||||||||
+
+# Phase II: Developing a Toolbox
+
+In Phase II, we'll use our new-found instrument- and code-development skills to address key questions in organismal biology. These will be largely guided explorations of instrument design and use and data analysis meant to challenge you to put these skills to good use in answering how vertebrates muscles work, how size and phylogeny matters in physiological systems, and how a changing climate impacts the distribution of vertebrates. Within this phase we'll break up into our teams to focus on 5 modules, some data driven, the others both data and instrument driven.
+
+# Module 6: Hot Flashes I: Scaling of Diel Temperature Oscillations in Mammals
+
+This module puts our newly formed data analysis, markdown, and prototyping skills to use in answering how oscillations in body temperature scale with body size in mammals.
+
+## Dates 
+Weeks 7 & 8 (Oct 12—25):
+
+## Key Concepts
+  + Saving instrument data to an SD card.
+  + Temporal heterthermy.
+  + Scaling.
+  
+## Learning Objectives
+
+Upon completion of this week and module, students will be able to:
+
+  + Design and program a simple, stand alone temperature Arduino DAQ that writes data to an SD card and runs on a 9v battery.
+  + Comment on the scaling relationship between body-temperature oscillations withing humans and between species of mammals.
+
+## Read/Watch 
+
+  + [Temp sensor with SDcard module tutorial](captureshttp://arduinolearning.com/projects/temperature-logger.php)
+  + [Mortola, Jacopo P, and Clement Lanthier. 2004. “Scaling the Amplitudes of the Circadian Pattern of Resting Oxygen Consumption, Body Temperature and Heart Rate in Mammals.” Comparative Biochemistry and Physiology Part A: Molecular & Integrative Physiology 139 (1): 83–95.](Mortolaetal.pdf)
+  
+
+## Do
+
+  + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
+  + Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing) by Tuesday, October 20th
+  + Complete and submit Module 6 Project report
+
+
+## Guiding Questions
+
+  + How does one program and modify an Arduino unit to write data to an SD card?
+  + How do oscillations in body temperature scale with mass in humans and other mammals?
+  + How does one forumulate a complete .Rmd report of Phase II of the course?
+
+## Module 6 Schedule
+
+All assignments are due at 11:59 on the specified date.
+
+|| Monday <br> 10/12 |  Tuesday <br>10/13    | Wednesday<br>  10/14 | Thursday <br> 10/15 | Friday <br> 10/16 |Saturday<br> 10/17 | Sunday<br> 10/18
+|--------|-------- |--------|-------- |--------|--------|--------|--------    
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |
+
+ || Monday <br> 10/19 |  Tuesday <br>10/20    | Wednesday<br>  10/21 | Thursday <br> 10/22 | Friday <br> 10/23 |Saturday<br> 10/24 | Sunday<br> 10/25
+ |--------|-------- |--------|-------- |--------|--------|--------|-------- 
+**Assignment due** | | Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing)| Post question to discussion board | Answer a question on discussion board  | | | Upload Module 6 Project Report
+||||||||
