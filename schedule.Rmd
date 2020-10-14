@@ -390,7 +390,7 @@ Upon completion of this week and module, students will be able to:
 
 ## Read/Watch 
 
-  + [Temp sensor with SDcard module tutorial](captureshttp://arduinolearning.com/projects/temperature-logger.php)
+  + [Temp sensor with SDcard module tutorial](http://arduinolearning.com/projects/temperature-logger.php)
   + [Mortola, Jacopo P, and Clement Lanthier. 2004. “Scaling the Amplitudes of the Circadian Pattern of Resting Oxygen Consumption, Body Temperature and Heart Rate in Mammals.” Comparative Biochemistry and Physiology Part A: Molecular & Integrative Physiology 139 (1): 83–95.](Mortolaetal.pdf)
   
 
