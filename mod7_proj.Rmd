@@ -1,5 +1,5 @@
 ---
-title: "Module 6 Project"
+title: "Module 7 Project"
 bibliography: class.bib
 ---
 <style>
@@ -11,21 +11,40 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 # Introduction
 
-The ability to maintain a consistent and elevated body temperature ($T_b$) was an 
+As we took on in [the last module](mod6_proj.html) and read in @mortola2004scaling, body temperature ($T_b$) across mammals demsonstrates predictable scaling patterns. In the analysis for the last project and in the analysis performed by @mortola2004scaling, neither accounted for the phylogenetic relationships of the species considered. After the project for [Module 3](mod3_proj.html), you'd be forgiven if you put a giant asterisk next to results of these analyses. That is, species are not statistically indepedent samples due to their shared evolutionary history [@felsenstein1985phylogenies]. 
+
+Organismal biologists---ecologists, physiologists, and behavioral ecologists, to name a few---have a checkered history of including phylogenetic structure in their analyses [@freckleton2002phylogenetic]. Accounting for phylogeny when asking comparative questions (i.e., how do traits vary between species?) isn't always necessary [@westoby1995further], nor is it always appropriate in the way biologist use comparative methods [@uyeda2018rethinking]. However, generally, when a biologists asks if one trait varies with another, especially when those traits are continuous, it's a good idea to at least explore if those traits demonstrate some phylogenetic signal.
+
+
+
+
+
+
+
+
+white2009phylogenetically
+white2009phylogenetically
+
+@freckleton2002phylogenetic
+In this project, let's reconsider these analyses in a phylogenetic context.
+
+In our last project, we focused on ($T_b$) oscillations ($T_{\Delta}$)  using our own data for humans and data from @mortola2004scaling for 52 species of non-human mammals. For our Module 7 project, we'll also consider the scaling relationships of maximum daily $T_b$ ($T_{max}$) and mininum daily $T_b$ ($T_{min}$). 
+
+
+mammal.temp2.csv
+
 important evolutionary step in birds and mammals, permitting these taxa the ability to achieve higher metabolic output, regardless of ambient temperatures. Despite relatively consistent body temperatures, nearly all mammals engage in some form of heterothermy, etheir of the regional type (varying accross the body) or the temporal type (varying across time) [@aschoff1982circadian]. Temporal heterothermy is often used as a strategy to modulate metabolic demands and reduce evaporative water loss [@ostrowski2003heterothermy]. Over seasonal time scales, metabolic rate, and thus temperature, can be reduced when food availability declines in a form of torpor known as hibernation [@mcnab1983energetics]. Reducing the metabolic rate reduces energy requirements and allows a hibernating endotherm to wait out the food-scarce (and often cold) seasons [@angilletta2009thermal]. 
 
 <center>
-![](https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fsrep39640/MediaObjects/41598_2017_Article_BFsrep39640_Fig1_HTML.jpg?as=webp){width=50%}
+![](mammaltree.png){width=50%}
+
 
 <br>
-*Even humans are temperal heterotherms as seen from the variability of $T_b$ over diel cycles (panel C). From @hibi2017effect.* 
+*A time-calibrated molecular phylogeny of 5,911 extant and recently extinct species of mammals from  @upham2019inferring. Colors at the tips indicate speciation rates.* 
 </center>
 <br>
 <br>
 
-On diel time scales, fluxuations in $T_b$ for mammals are nearly universal [@angilletta2009thermal]. These high $T_b$ oscillations have been characterized by physiologists as a mechanism to reduce evaporative water loss, although other explainations have been tendered. By capturing and storing heat during the day and loosing heat at night through convenction, $T_b$ oscillations reduce the need to cool during the day through evaporative processeses [@ostrowski2003heterothermy]. An important prediction is born out of this functional hypothesis: larger mammals, with their higher capacitance (the ability to story energy), should have lower amplitudes associated with thes oscillations. Put simply, larger mammals need to discharge a smaller share of their stored heat energy to achieve this water-loss savings. Thus, we should expect some type of scaling of relationship between the difference between max daily $T_b$ ($T_{max}$) and mininum daily $T_b$ ($T_{min}$, or $T_{\Delta}$) and mass ($W$).
-
-Many inter-specific scaling relationships playout within species as well. The variation of mass-specific metabolic rate ($M_b$ or $\dot V_{O_2}$) with $W$ is one such scaling relationship. Larger species have lower mass-specific $\dot V_{O_2}$ values than smaller species AND larger individuals within a particular species have lower mass-specific $\dot V_{O_2}$ than small individuals [@aschoff1982circadian;@mortola2004scaling]. The goals of this project follow this same inference: evaluate whether humans demonstrate a scaling relationship with respect to $T_{\Delta}$ and $W$ and whether mean $T_{\Delta}$ values for humans and other mammals scale according to mass.
 
 # Methods
 
@@ -42,10 +61,10 @@ Sampling times should correspond to predictably high $T_b$ (i.e., 30 minutes whe
 
 ## DAQ Assembly and Programming
 
-Assembly for this temperature logger is almost entirely captured in ~~[this tutorial](http://arduinolearning.com/projects/temperature-logger.php)~~[this tutorial](https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data). To this prototype, we must add battery power. That's easy enough: merely connect the battery power cable in the battery barrel connector on the Arduino (see pic below). 
+Assembly for this temperature logger is almost entirely captured in [this tutorial](http://arduinolearning.com/projects/temperature-logger.php). To this prototype, we must add battery power. That's easy enough: merely connect the battery power cable in the battery barrel connector on the Arduino (see pic below). 
 
 <center>
-![](https://i2.wp.com/technobyte.org/wp-content/uploads/2016/06/Arduino-Uno-power-jack-or-barrel-connector-e1466952229868.jpg?ssl=1){width=50%}
+![](mammaltree.png){width=50%}
 
 <br>
 *The barrel connector for a battery pack on an Arduino Uno.* 
@@ -74,11 +93,16 @@ Rememember from the [Module 5 project description](mod5_proj.html#Saving_Data_fr
 
 From the class-wide values, compute the mean mass and mean $T_{\Delta}$ for our human subjects and add these values to a dataset that includes the same data from 51 species of non-human mammals from [@mortola2004scaling]. From here you can commence with modeling and analysis. These data can be dowloaded [here](mammal.temp.csv).
 
+
+### Pagel's lambda
+
+In this article, we use a quantitative measure of phylogenetic dependence introduced by Pagel (1999) to assess in a range of real and simulated data sets the issue of whether there is evidence of a significant phylogenetic component to character variation. In addition to providing an index of phylogenetic association, this index may also be used to adjust the phylogeny to match the degree of phylogenetic correlation in hypothesis tests, and we illustrate how this may be done.
+
 # Project Report
 
 Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following:
 
-  * What is the relationship between $T_{\Delta}$ and body mass in humans? I.e., is there a relationship and if so, is it allometric rather than isometric? Be sure to estimate important model parameters including scaling coefficients and slopes. 
+  * What is the relationship between $T_{\Delta}$ and body mass in mammals ? I.e., is there a relationship and if so, is it allometric rather than isometric? Be sure to estimate important model parameters including scaling coefficients and slopes. 
   * What is the relationship between $T_{\Delta}$ and body mass across mammals, including humans? 
   * Does taxonomic group with respect to order effectively predict differences in this relationship across mammals?
 
