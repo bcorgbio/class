@@ -35,7 +35,9 @@ navbar:
         - text: "Phase II report rubric"
           href: phaseII_rubric.html
         - text: "Module 6 Project"
-          href: mod6_proj.html 
+          href: mod6_proj.html
+        - text: "Module 7 Project"
+          href: mody_proj.html
         - text: "DaqPacks"
         - text: "DaqPack Item List"
           href: daqpack.html

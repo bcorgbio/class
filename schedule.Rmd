@@ -383,7 +383,7 @@ Weeks 7 & 8 (Oct 12—25):
   
 ## Learning Objectives
 
-Upon completion of this week and module, students will be able to:
+Upon completion of this module, students will be able to:
 
   + Design and program a simple, stand alone temperature Arduino DAQ that writes data to an SD card and runs on a 9v battery.
   + Comment on the scaling relationship between body-temperature oscillations withing humans and between species of mammals.
@@ -420,3 +420,50 @@ All assignments are due at 11:59 on the specified date.
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 
 **Assignment due** | | Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing)| Post question to discussion board | Answer a question on discussion board  | | | Upload Module 6 Project Report
 ||||||||
+
+# Module 7: Hot Flashes II: Not So Fast! Correcting Scaling Models Within a Phylogenetic Context (data driven)
+
+This module asks you to hone your data analysis and markdown skills to evaluate body temperature scaling patterns in mammals within a phylogentic context. Specifically, we'll reanalyze the temperature scaling patterns of Mortola & Lanthier (2004) using phylogentically informed models to assess the importance of considering evolutionary history in comparative studies.
+
+## Dates 
+Week9 (Oct 26—Nov 1):
+
+## Key Concepts
+  + Allometric scaling.
+  + Pagel's $\lambda$ and phylogenetic signal.
+  + Phylognetically informed regression.
+  
+## Learning Objectives
+
+Upon completion of this week and module, students will be able to:
+
+  + Assess the phylogenetic signal of trait values using Pagels' $\lambda$
+  + Use phylogenetically corrected regression models to comment on the the importance of considering evolutionary relationships in comparative analyses.
+
+## Read/Watch 
+
+  + Reread [Mortola, Jacopo P, and Clement Lanthier. 2004. “Scaling the Amplitudes of the Circadian Pattern of Resting Oxygen Consumption, Body Temperature and Heart Rate in Mammals.” Comparative Biochemistry and Physiology Part A: Molecular & Integrative Physiology 139 (1): 83–95.](Mortolaetal.pdf).
+    * Pay specific attention to the conclusions concerning the significance of scaling relationships with regards to body temperature values.
+  
+
+## Do
+
+  + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
+  + Complete and submit Module 7 Project report
+  + Read our [Phase II report rubric](phaseII_rubric.html) to get a sense of how this and other Phase II reports will be grade.
+
+
+## Guiding Questions
+
+  + How does one assess phylogenetic signal of a trait in a group of species using Pagel's $\lambda$ in R?
+  + How much can ignoring evolutionary relationships bias comparative analyses?
+  
+## Module 7 Schedule
+
+All assignments are due at 11:59 on the specified date.
+
+|| Monday <br> 10/26 |  Tuesday <br>10/27    | Wednesday<br>  10/28 | Thursday <br> 10/29 | Friday <br> 10/30 |Saturday<br> 10/31 | Sunday<br> 11/11
+|--------|-------- |--------|-------- |--------|--------|--------|--------    
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |Submit Project 7 report
+
+

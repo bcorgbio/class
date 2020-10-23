@@ -230,7 +230,7 @@ Modules for Phase I include:
 In Phase II, we'll use our new-found instrument- and code-development skills to address key questions in organismal biology. These will be largely guided explorations of instrument design and use and data analysis meant to challenge you to put these skills to good use in answering how vertebrates muscles work, how size and phylogeny matters in physiological systems, and how a changing climate impacts the distribution of vertebrates. Within this phase we'll break up into teams of 3-4 students to focus on 5 modules, some data driven, the others both data and instrument driven, including:
 
   1. **Hot Flashes I:** Scaling of Diel Temperature Oscillations in Mammals (instrument and data driven)
-  2. **Hot Flashes II:** Not So Fast! Correcting Scaling Models Withing a Phylogenetic Context (data driven)
+  2. **Hot Flashes II:** Not So Fast! Correcting Scaling Models Within a Phylogenetic Context (data driven)
   3. **Beach Muscles:** Exploring Force-Length Relationships in Vertebrate Muscle (instrument and data driven)
   4. **Birds of a Feather Migrate Together . . . Sometimes:** Using EBird data to Explore the Phenology of Passerine Migration (auk package from R) (data driven)
   5. **Jumping UGs**: Testing the Limits of Human Lower Body Power (instrument and data driven)
