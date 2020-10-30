@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Module 7 Project</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">BIOL 3140</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="schedule.html">Schedule</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Projects
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Phase I</li>
+    <li>
+      <a href="phaseI_rubric.html">Phase I report rubric</a>
+    </li>
+    <li>
+      <a href="mod1_proj.html">Module 1 Project</a>
+    </li>
+    <li>
+      <a href="mod2_proj.html">Module 2 Project</a>
+    </li>
+    <li>
+      <a href="mod3_proj.html">Module 3 Project</a>
+    </li>
+    <li>
+      <a href="mod4_proj.html">Module 4 Project</a>
+    </li>
+    <li>
+      <a href="mod5_proj.html">Module 5 Project</a>
+    </li>
+    <li class="dropdown-header">Phase II</li>
+    <li>
+      <a href="phaseII_rubric.html">Phase II report rubric</a>
+    </li>
+    <li>
+      <a href="mod6_proj.html">Module 6 Project</a>
+    </li>
+    <li>
+      <a href="mod7_proj.html">Module 7 Project</a>
+    </li>
+    <li class="dropdown-header">DaqPacks</li>
+    <li>
+      <a href="daqpack.html">DaqPack Item List</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">BIOL 3140 Discussion</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Module 7 Project</h1>
+
+</div>
+
+
+<style>
+div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
+</style>
+<!-- Add icon library -->
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>As we took on in <a href="mod6_proj.html">the last module</a> and read in <span class="citation">Mortola and Lanthier (2004)</span>, body temperature (<span class="math inline">\(T_b\)</span>) across mammals demsonstrates predictable scaling patterns. In the analysis for the last project and in the analysis performed by <span class="citation">Mortola and Lanthier (2004)</span>, neither accounted for the phylogenetic relationships of the species considered. After the project for <a href="mod3_proj.html">Module 3</a>, you’d be forgiven if you put a giant asterisk next to results of these analyses. That is, species are not statistically indepedent samples due to their shared evolutionary history <span class="citation">(Felsenstein 1985)</span>.</p>
+<p>Organismal biologists—ecologists, physiologists, and behavioral ecologists, to name a few—have a checkered history of including phylogenetic structure in their analyses <span class="citation">(Freckleton, Harvey, and Pagel 2002)</span>. Accounting for phylogeny when asking comparative questions (i.e., how do traits vary between species?) isn’t always necessary <span class="citation">(Westoby, Leishman, and Lord 1995)</span>, nor is it always appropriate in the way biologist use comparative methods <span class="citation">(Uyeda, Zenil-Ferguson, and Pennell 2018)</span>. However, generally, when a biologists asks if one trait varies with another, especially when those traits are continuous, it’s a good idea to at least explore if those traits demonstrate some phylogenetic signal.</p>
+<p>In this project, let’s reconsider the <span class="math inline">\(T_b\)</span> analyses of <span class="citation">Mortola and Lanthier (2004)</span> in a phylogenetic context. In our last project, we focused on <span class="math inline">\(T_b\)</span> oscillations (<span class="math inline">\(T_{\Delta}\)</span>) using our own data for humans and data from <span class="citation">Mortola and Lanthier (2004)</span> for 52 species of non-human mammals. For our Module 7 project, we’ll also consider the scaling relationships of maximum daily <span class="math inline">\(T_b\)</span> (<span class="math inline">\(T_{max}\)</span>) and mininum daily <span class="math inline">\(T_b\)</span> (<span class="math inline">\(T_{min}\)</span>). We’ll focus only on their data so as to directly compare results. That is, we’ll use their data for humans, not ours from Module 6.</p>
+<p>The specific goals of this porject are to:</p>
+<ol style="list-style-type: decimal">
+<li>Reproduce the scaling relationships (i.e. log-log regression models) of <span class="citation">Mortola and Lanthier (2004)</span> for <span class="math inline">\(T_{min}\)</span>,<span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>.</li>
+<li>Assess the phylogentic signal of the four variables in question (i.e., mass, <span class="math inline">\(T_{min}\)</span>, <span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>) using Pagel’s lamba.</li>
+<li>Reanalyze these models in a phylogenetic context using phylogenetic least squares (PGLS) under Brownian Motion (BM) and Ornstein-Uhlenbeck (OU) models of trait evolution.</li>
+<li>Using an information theory approach, assess the best fitting PGLS scaling models for each of the three <span class="math inline">\(T_b\)</span> variables</li>
+<li>Compare the significance of the results of <span class="citation">Mortola and Lanthier (2004)</span> with respect to the scaling of <span class="math inline">\(T_b\)</span> variables to your results that include phylogenetic correction.</li>
+</ol>
+<center>
+<p><img src="mammaltree.png" style="width:50.0%" /></p>
+<br> <em>A time-calibrated molecular phylogeny of 5,911 extant and recently extinct species of mammals from <span class="citation">Upham, Esselstyn, and Jetz (2019)</span>. Colors at the tips indicate speciation rates.</em>
+</center>
+<p><br> <br></p>
+</div>
+<div id="methods" class="section level1">
+<h1>Methods</h1>
+<p>To capture <span class="math inline">\(T_b\)</span> data, you must design and construct a portable Arduino-based temperature data aqusition system (DAQ). Your device should record body axial temperature data over the course of 1 hour for each of your team members.</p>
+<p>Sampling times should correspond to predictably high <span class="math inline">\(T_b\)</span> (i.e., 30 minutes when the subject is active, say in the middle of the day) and <a href="https://www.nature.com/articles/srep39640/figures/1">predictably low <span class="math inline">\(T_b\)</span></a> (i.e., 30 minutes early in the morning, say 4 AM, before you typically get up—sorry! Set those alarms). This won’t capture the full diurnal cycle, but will reduce the DAQ’s running time while recording the important points.</p>
+<div id="daq-design-components" class="section level2">
+<h2>DAQ Design Components</h2>
+<ol style="list-style-type: decimal">
+<li>DS18B20 temperature sensor</li>
+<li>Arduion Uno microcontroller</li>
+<li>SD storage module</li>
+<li>9V battery power cable</li>
+</ol>
+</div>
+<div id="daq-assembly-and-programming" class="section level2">
+<h2>DAQ Assembly and Programming</h2>
+<p>Assembly for this temperature logger is almost entirely captured in <del><a href="http://arduinolearning.com/projects/temperature-logger.php">this tutorial</a></del><a href="https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data">this tutorial</a>.</p>
+<p><a href="https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/" class="uri">https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/</a></p>
+<p>To this prototype, we must add battery power. That’s easy enough: merely connect the battery power cable in the battery barrel connector on the Arduino (see pic below).</p>
+<center>
+<p><img src="https://i2.wp.com/technobyte.org/wp-content/uploads/2016/06/Arduino-Uno-power-jack-or-barrel-connector-e1466952229868.jpg?ssl=1" style="width:50.0%" /></p>
+<br> <em>The barrel connector for a battery pack on an Arduino Uno.</em>
+</center>
+<p><br> <br></p>
+<p>With the battery pack and SDcard module installed and writing data, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking temperature data. Be sure to modify your sketch to take data for 30 minutues (1.8 million ms)</p>
+</div>
+<div id="data-collection" class="section level2">
+<h2>Data Collection</h2>
+<p>You’ll first need to <a href="mammal.temp2.csv">download the full dataset</a> from <span class="citation">Mortola and Lanthier (2004)</span> that includes humans and 52 other species of mammals. In addition, please <a href="mammal.tree.pruned.txt">download the phylogeny</a> for the taxa included in <span class="citation">Mortola and Lanthier (2004)</span>. This is the same phylogenetic tree represented in the figure above taken from <span class="citation">Upham, Esselstyn, and Jetz (2019)</span>, but pruned to include only those species represented in the study by <span class="citation">Mortola and Lanthier (2004)</span>.</p>
+</div>
+<div id="reproducing-the-analyses-of-mortola2004scaling" class="section level2">
+<h2>Reproducing the Analyses of <span class="citation">Mortola and Lanthier (2004)</span></h2>
+<p>Your first task is to reproduce the scaling models constucted by <span class="citation">Mortola and Lanthier (2004)</span> and assess their signficance. For this you’ll need to construct log-log regression models of the three <span class="math inline">\(T_b\)</span> variables as a function of mass (<span class="math inline">\(W\)</span>). This is identical to the work you did in assessing the scaling relationships of <span class="math inline">\(T_{\Delta}\)</span> in the last project and only needs to be repeated with the <span class="citation">Mortola and Lanthier (2004)</span> dataset and the two other <span class="math inline">\(T_b\)</span> variables, <span class="math inline">\(T_{min}\)</span> and <span class="math inline">\(T_{max}\)</span>.</p>
+</div>
+<div id="pagels-lambda" class="section level2">
+<h2>Pagel’s Lambda</h2>
+<p>The second task is to assess the phylogenetic signal of each of the four variables in the study: <span class="math inline">\(W\)</span>, the independent variable (i.e., our one covariate) and the three <span class="math inline">\(T_b\)</span> variables. For this, we’ll have to complete new analyses we haven’t taken on before: Pagel’s <span class="math inline">\(\lambda\)</span>. This method transforms the tree, by decreasing <span class="math inline">\(\lambda\)</span> (the phylogenetic signal) which lengthens the tip branches relative to internal branches, eventually decomposing the tree so that it begins to look like a complete polytomy, i.e., no phylogenetic relatedness or covariance between species. This can be seen as a way of muting phylogentic signal until the covariation of the error structure can no longer be explained by phylogenetic relatedness. If our estimated <span class="math inline">\(\lambda\)</span> = 0, the tree has no effect on the traits and they are assumed to have no phylogenetic signal. When <span class="math inline">\(\lambda\)</span> = 1, the traits conform to a Brownian motion model. Betweewn 0 and 1, there is some phylogenetic signal.</p>
+<p>Let’s explore how this works. First we’ll have to load our mammal tree. Notice that there’s a <code>gsub()</code> operation here to remove pesky &quot;_&quot; from the species names in the tree. <strong>This will be important later when the tree is used in the PGLS analysis and the species names must match those in the tree and the dataset.</strong> We’ll also have to load the package <code>geiger</code> which carries the <code>rescale()</code> function we’ll use to demonstrate what Pagel’s <span class="math inline">\(\lambda\)</span> does. [You won’t necessarily need <code>geiger</code> loaded for your project, this is just to demonstrate how Pagel’s <span class="math inline">\(\lambda\)</span> works.]</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(data.table)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(gganimate)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">library</span>(emojifont)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"> <span class="co">#return coord for a point r away at angle=ang</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  point.ang.r &lt;-<span class="st"> </span><span class="cf">function</span>(p,r,theta){x<span class="fl">.2</span> &lt;-p[<span class="dv">1</span>]<span class="op">+</span>r<span class="op">*</span><span class="kw">cos</span>(theta); y<span class="fl">.2</span> &lt;-<span class="st"> </span>p[<span class="dv">2</span>]<span class="op">+</span>r<span class="op">*</span><span class="kw">sin</span>(theta);<span class="kw">return</span>(<span class="kw">list</span>(x<span class="fl">.2</span>,y<span class="fl">.2</span>))}</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">  <span class="co">#set up angle and arm data</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">  pos &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="fl">157.5</span>,<span class="dv">0</span>,<span class="op">-</span><span class="fl">22.5</span>)<span class="op">-</span><span class="dv">90</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">  pos.rad &lt;-<span class="st"> </span>pos <span class="op">*</span><span class="st"> </span>pi<span class="op">/</span><span class="dv">180</span> </a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">  humerus &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">  distal.arm &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">  elb.x &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">  elb.y &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">  hum.x &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">  hum.y &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">  </a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">  <span class="co">#make a data.table for easy calculation for new columns</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">  arm &lt;-<span class="st"> </span><span class="kw">data.table</span>(pos,pos.rad,elb.x,elb.y,hum.x,hum.y)</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">  </a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">  <span class="co">#columns for hand and inlever position</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">  arm[,<span class="kw">c</span>(<span class="st">&quot;hand.x&quot;</span>,<span class="st">&quot;hand.y&quot;</span>)<span class="op">:</span><span class="er">=</span><span class="kw">point.ang.r</span>(<span class="kw">c</span>(elb.x,elb.y),<span class="dt">r=</span>humerus,<span class="dt">theta=</span>pos.rad),by=pos]</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">  arm[,<span class="kw">c</span>(<span class="st">&quot;inlever.x&quot;</span>,<span class="st">&quot;inlever.y&quot;</span>)<span class="op">:</span><span class="er">=</span><span class="kw">point.ang.r</span>(<span class="kw">c</span>(elb.x,elb.y),<span class="dt">r=</span>humerus<span class="op">*</span><span class="fl">0.2</span>,<span class="dt">theta=</span>pos.rad),by=pos]</a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">  </a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"> arm.m &lt;-<span class="st">  </span>arm<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="st">   </span><span class="kw">pivot_longer</span>(<span class="dt">col=</span><span class="op">-</span><span class="kw">c</span>(pos,pos.rad))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">part=</span><span class="kw">gsub</span>(<span class="st">&quot;(.+)</span><span class="ch">\\</span><span class="st">..&quot;</span>,<span class="st">&quot;</span><span class="ch">\\</span><span class="st">1&quot;</span>,name),<span class="dt">x.y=</span><span class="kw">gsub</span>(<span class="st">&quot;(.+)</span><span class="ch">\\</span><span class="st">.(.)&quot;</span>,<span class="st">&quot;</span><span class="ch">\\</span><span class="st">2&quot;</span>,name))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="st">   </span><span class="kw">pivot_wider</span>(<span class="op">-</span>name,<span class="dt">names_from =</span> <span class="kw">c</span>(x.y),<span class="dt">values_from=</span>value)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29"><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">pos2 =</span><span class="dv">90</span><span class="op">-</span>pos) <span class="co">#rotate angle 90 </span></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30"> </a>
+<a class="sourceLine" id="cb1-31" data-line-number="31"></a>
+<a class="sourceLine" id="cb1-32" data-line-number="32"><span class="co">#add bones</span></a>
+<a class="sourceLine" id="cb1-33" data-line-number="33"> p &lt;-<span class="st"> </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_segment</span>(<span class="dt">data=</span>arm.m<span class="op">%&gt;%</span><span class="kw">filter</span>(part<span class="op">!=</span><span class="st">&quot;hum&quot;</span>),<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">xend =</span> x, <span class="dt">yend =</span> y),<span class="dt">size=</span><span class="dv">3</span>,<span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)<span class="op">+</span><span class="kw">geom_segment</span>(<span class="dt">data=</span>arm.m<span class="op">%&gt;%</span><span class="kw">filter</span>(part<span class="op">==</span><span class="st">&quot;hum&quot;</span>),<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">xend =</span> <span class="dv">0</span>, <span class="dt">yend =</span> <span class="dv">1</span>), <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>,<span class="dt">size=</span><span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb1-34" data-line-number="34"> </a>
+<a class="sourceLine" id="cb1-35" data-line-number="35"> <span class="co">#add points</span></a>
+<a class="sourceLine" id="cb1-36" data-line-number="36"> p &lt;-<span class="st"> </span>p<span class="op">+</span><span class="kw">geom_point</span>(<span class="dt">dat=</span>arm.m<span class="op">%&gt;%</span><span class="kw">filter</span>(part<span class="op">!=</span><span class="st">&quot;hand&quot;</span>),<span class="kw">aes</span>(x,y,<span class="dt">col=</span>part),<span class="dt">size=</span><span class="dv">4</span>)<span class="op">+</span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="op">-</span>.<span class="dv">5</span>,<span class="fl">1.5</span>))<span class="op">+</span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="op">-</span><span class="fl">1.2</span>,<span class="fl">1.2</span>)) </a>
+<a class="sourceLine" id="cb1-37" data-line-number="37"> </a>
+<a class="sourceLine" id="cb1-38" data-line-number="38"> <span class="co">#add muscle lines</span></a>
+<a class="sourceLine" id="cb1-39" data-line-number="39"> p &lt;-<span class="st"> </span>p<span class="op">+</span><span class="kw">geom_curve</span>(<span class="dt">data=</span>arm.m<span class="op">%&gt;%</span><span class="kw">filter</span>(part<span class="op">==</span><span class="st">&quot;inlever&quot;</span>),<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="dv">1</span>, <span class="dt">xend =</span> x, <span class="dt">yend =</span> y),<span class="dt">curvature =</span> <span class="fl">-0.3</span>,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span><span class="kw">geom_curve</span>(<span class="dt">data=</span>arm.m<span class="op">%&gt;%</span><span class="kw">filter</span>(part<span class="op">==</span><span class="st">&quot;inlever&quot;</span>),<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="dv">1</span>, <span class="dt">xend =</span> x, <span class="dt">yend =</span> y),<span class="dt">curvature =</span> <span class="fl">0.0</span>,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a>
+<a class="sourceLine" id="cb1-40" data-line-number="40"> </a>
+<a class="sourceLine" id="cb1-41" data-line-number="41"> <span class="co">#add emoji hand</span></a>
+<a class="sourceLine" id="cb1-42" data-line-number="42"> p &lt;-<span class="st"> </span>p<span class="op">+</span><span class="kw">geom_text</span>(<span class="dt">data=</span>arm.m<span class="op">%&gt;%</span><span class="kw">filter</span>(part<span class="op">==</span><span class="st">&quot;hand&quot;</span>),<span class="kw">aes</span>(x,y,<span class="dt">label=</span><span class="kw">emoji</span>(<span class="st">&quot;hand&quot;</span>),<span class="dt">angle=</span>pos2<span class="op">*-</span><span class="dv">1</span>),<span class="dt">family=</span><span class="st">&quot;EmojiOne&quot;</span>, <span class="dt">size=</span><span class="dv">20</span>,<span class="dt">vjust=</span><span class="dv">0</span>,<span class="dt">hjust=</span>.<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb1-43" data-line-number="43"> </a>
+<a class="sourceLine" id="cb1-44" data-line-number="44"> <span class="kw">print</span>(p)</a>
+<a class="sourceLine" id="cb1-45" data-line-number="45"> </a>
+<a class="sourceLine" id="cb1-46" data-line-number="46"> <span class="co">#get rid of axes and background</span></a>
+<a class="sourceLine" id="cb1-47" data-line-number="47">p&lt;-<span class="st"> </span>p<span class="op">+</span><span class="kw">theme_void</span>()</a>
+<a class="sourceLine" id="cb1-48" data-line-number="48"> </a>
+<a class="sourceLine" id="cb1-49" data-line-number="49"></a>
+<a class="sourceLine" id="cb1-50" data-line-number="50"><span class="co">#transition according to arm position and make pretty</span></a>
+<a class="sourceLine" id="cb1-51" data-line-number="51"> anim &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">transition_states</span>(pos,<span class="dt">transition_length =</span> <span class="dv">10</span>,<span class="dt">state_length =</span> <span class="dv">70</span>)<span class="op">+</span><span class="kw">shadow_wake</span>(.<span class="dv">01</span>)<span class="op">+</span><span class="kw">enter_fade</span>()<span class="op">+</span><span class="kw">exit_fade</span>()</a>
+<a class="sourceLine" id="cb1-52" data-line-number="52">  </a>
+<a class="sourceLine" id="cb1-53" data-line-number="53"><span class="kw">anim_save</span>(<span class="st">&quot;arm.gif&quot;</span>, anim)</a></code></pre></div>
+<p><img src="arm.gif" /></p>
+<p>The tree on the left is the unscaled phylogeny, the tree we’ll use in our analyses. The tree in the middle, with <span class="math inline">\(\lambda\)</span>=0.5, rescales the tip branches, making the tips branch longer, allowing more phylogenetic independence between species. As you can see, the tree on the right, with a <span class="math inline">\(\lambda\)</span>=0 removes the phylogenetic information form the tree, i.e., all species don’t covary according to their phylogenetic position. When we use Pagel’s <span class="math inline">\(\lambda\)</span> to assess phylogenetic signal of a character, we interate through values to 0 to 1 to find rescaled branch lengths that optimize the covariance of the character according to Brownian motion. As a reminder, values near 1 indicate strong phylogenetic signal, while values close to 0 indicate none.</p>
+<p>Now let’s assess phylogenetic signal for some simulated trait data over the mammal tree. We’ll use <code>phytools</code>’s <code>phylosig()</code> function to do this after simulating some random trait.</p>
+<p>Here we simulated some random data (values from 0–1) for the number of tips on the tree using <code>runif()</code> to generate the values and <code>Ntip()</code> from the <code>ape</code> package to retrieve the number of tips (i.e., species) in the tree. We named these values with the tip labels from the tree, an important step. The <code>phylosig()</code> function in <code>phytools</code> requires that a vector of trait values must have names that match the tips in the tree. In your analyses <strong>make sure you name your variable values with the species from your dataset</strong>, not the tip labels. The order for these will certainly be different and, if not correct, will make any analysis rubbish.</p>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+</div>
+<div class="col-sm-9">
+<p>Note: You won’t need to include thes specific chunks, only to reproduce the Pagels’ <span class="math inline">\(\lambda\)</span> analysis for <span class="math inline">\(T_b\)</span> variables with the <code>phylosig()</code>function from <code>phytools</code>.</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>For the <code>phylogsig()</code> operation, we set the <code>method</code> to “lambda” for Pagels’ <span class="math inline">\(\lambda\)</span> and <code>test=T</code> so that the function performs a likelihood ratio test (LRT). If you remember from reading the appropriate <a href="https://lukejharmon.github.io/pcm/chapter2_stats/#section-2.3b-the-likelihood-ratio-test">section in Luke Harmon’s PCM book</a>, a likelihood ratio test assesses the goodness of fit of two related statistical models based on the ratio of their likelihoods. In this context, we’re comparing the likelihoods of a model that includes an optimization of the <span class="math inline">\(\lambda\)</span> value versus on one that has a <span class="math inline">\(\lambda\)</span> value of 0, that is, no phylogenetic signal. As you can see from the results, the phylogenetic signal is extremely low at 6.6107e-05 and the result of the LRT, with a likelihood ratio of -0.0008, is nonsignifcant at p=1. That is, the phylogenetic signal is essentially 0 for these simulated data and, not suprisingly, there’s a probability of 1 that the value is not different than 0.</p>
+<p>Now that you’ve been introduced to Pagel’s <span class="math inline">\(\lambda\)</span>, undertake such an analysis of all four variables in the data. In your analyses, be sure to include a table of these results that indicates the estimated <span class="math inline">\(\lambda\)</span> value and p values from the LHTs.</p>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+</div>
+<div class="col-sm-9">
+<p>You’ll notice that we’re doing many of these phylogenetic comparative analyses without the principles of the tidyverse, i.e., no pipe, etc. Most of the functions written in R packages for comparative methods don’t play well with tidy workflows. Be sure to pay attention to the pieces of advice given in this and other project descriptions to reduce headaches when performing comparative analyses.</p>
+</div>
+</div>
+</div>
+<p><br></p>
+</div>
+<div id="pgls-analysis-of-t_b-variables" class="section level2">
+<h2>PGLS Analysis of <span class="math inline">\(T_b\)</span> Variables</h2>
+<p>Now that we have assessed phylogenetic signals for our four variables, procede with PGLS analyses of log-log regression models that include the three <span class="math inline">\(T_b\)</span> variables versus mass. For each regression, construct a PGLS model that includes both a BM and OU model of trait evolution using the tree provide for the species in <span class="citation">Mortola and Lanthier (2004)</span>. Be sure to assess which of these models fits the data best. From each of your best-fitting models, extract the slope (i.e, the scaling coefficient) and intercept and then perform an ANOVA test to evaluate the significance of these parameters. Report these values in table with an appropriate caption.</p>
+</div>
+<div id="reassessing-the-results-of-mortola2004scaling" class="section level2">
+<h2>Reassessing the Results of <span class="citation">Mortola and Lanthier (2004)</span></h2>
+<p>After reconstructing the models for <span class="math inline">\(T_b\)</span> scaling in <span class="citation">Mortola and Lanthier (2004)</span>, assessing phylogenetic signal, and constructing phylogenetically corrected models of your own, compare and contrast these findings. Should important findings in <span class="citation">Mortola and Lanthier (2004)</span> with regards to <span class="math inline">\(T_b\)</span> variables be challenged? Did any of the signficant findings in <span class="citation">Mortola and Lanthier (2004)</span> become insignifcant or significant when they weren’t before?</p>
+</div>
+</div>
+<div id="project-report" class="section level1">
+<h1>Project Report</h1>
+<p>Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following questions:</p>
+<ul>
+<li>Could you and your team reproduce the scaling relationships (i.e. log-log regression models) of <span class="citation">Mortola and Lanthier (2004)</span> for <span class="math inline">\(T_{min}\)</span>,<span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>&gt;k?</li>
+<li>Was there any signficant phylogentic signal in the four variables in question (i.e., mass, <span class="math inline">\(T_{min}\)</span>, <span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>)?</li>
+<li>After reanalyzing these models that included any variables with significant phylogentic signal in a PCM context under BM and OU models of trait evolution, which phylogentically corrected models fit best?</li>
+<li>Are new phylogenetically informed parameter estimates (i.e, intercept and slope coefficients) different than those in <span class="citation">Mortola and Lanthier (2004)</span> and has their significance changed?</li>
+<li>If any of the results concerning <span class="math inline">\(T_b\)</span> scaling patterns should be reinterpreted due to your phylogenetically informed analysis, how should the conclusions of <span class="citation">Mortola and Lanthier (2004)</span> be reframed?</li>
+</ul>
+<p>In answering these questions, be sure to use the visualization, modeling, and model-assessments tools we’ve used in the course so far.</p>
+<p>In answering your question, your .Rmd should include the following components:</p>
+<ul>
+<li>A YAML header that specifies HTML output, the authors, and a bibliograph named “BIOL3140.bib”. <strong>Submit this bibliography as well!</strong></li>
+<li>Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially:
+<ul>
+<li>Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. <strong>Please include at least one reference to support the summary of previous work.</strong> Note: this can be done easily by refiguring the introduction to this project report.</li>
+<li>Methods: Explicitly state how you answered the questions, including a narrative of all the anlyses both qualitative and quantitative.</li>
+<li>Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.</li>
+<li>Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. <strong>Please include at least one reference to another relevant study.</strong> Note: circling back to the introductions, both to this project description and yours, will be helpful here.</li>
+<li>Author contributions: Breifly outline what each team member contributed to the project.</li>
+</ul></li>
+</ul>
+<p>Project reports should be uploaded by 11:59 PM on Sunday, November 1st.</p>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+</div>
+<div class="col-sm-9">
+<p>Please have a look at out <a href="phaseII_rubric.html">Phase II report rubric</a> to get a sense of how this and other Phase II reports will be grade.</p>
+</div>
+</div>
+</div>
+<p><br></p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references">
+<div id="ref-felsenstein1985phylogenies">
+<p>Felsenstein, Joseph. 1985. “Phylogenies and the Comparative Method.” <em>The American Naturalist</em> 125 (1): 1–15.</p>
+</div>
+<div id="ref-freckleton2002phylogenetic">
+<p>Freckleton, Rob P, Paul H Harvey, and Mark Pagel. 2002. “Phylogenetic Analysis and Comparative Data: A Test and Review of Evidence.” <em>The American Naturalist</em> 160 (6): 712–26.</p>
+</div>
+<div id="ref-mortola2004scaling">
+<p>Mortola, Jacopo P, and Clement Lanthier. 2004. “Scaling the Amplitudes of the Circadian Pattern of Resting Oxygen Consumption, Body Temperature and Heart Rate in Mammals.” <em>Comparative Biochemistry and Physiology Part A: Molecular &amp; Integrative Physiology</em> 139 (1): 83–95.</p>
+</div>
+<div id="ref-upham2019inferring">
+<p>Upham, Nathan S, Jacob A Esselstyn, and Walter Jetz. 2019. “Inferring the Mammal Tree: Species-Level Sets of Phylogenies for Questions in Ecology, Evolution, and Conservation.” <em>PLoS Biology</em> 17 (12): e3000494.</p>
+</div>
+<div id="ref-uyeda2018rethinking">
+<p>Uyeda, Josef C, Rosana Zenil-Ferguson, and Matthew W Pennell. 2018. “Rethinking Phylogenetic Comparative Methods.” <em>Systematic Biology</em> 67 (6): 1091–1109.</p>
+</div>
+<div id="ref-westoby1995further">
+<p>Westoby, Mark, Michelle Leishman, and Janice Lord. 1995. “Further Remarks on Phylogenetic Correction.” <em>Journal of Ecology</em> 83 (4): 727–29.</p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

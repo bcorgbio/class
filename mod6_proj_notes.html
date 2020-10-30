@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Module 6 Project Notes</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">BIOL 3140</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="schedule.html">Schedule</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Projects
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Phase I</li>
+    <li>
+      <a href="phaseI_rubric.html">Phase I report rubric</a>
+    </li>
+    <li>
+      <a href="mod1_proj.html">Module 1 Project</a>
+    </li>
+    <li>
+      <a href="mod2_proj.html">Module 2 Project</a>
+    </li>
+    <li>
+      <a href="mod3_proj.html">Module 3 Project</a>
+    </li>
+    <li>
+      <a href="mod4_proj.html">Module 4 Project</a>
+    </li>
+    <li>
+      <a href="mod5_proj.html">Module 5 Project</a>
+    </li>
+    <li class="dropdown-header">Phase II</li>
+    <li>
+      <a href="phaseII_rubric.html">Phase II report rubric</a>
+    </li>
+    <li>
+      <a href="mod6_proj.html">Module 6 Project</a>
+    </li>
+    <li>
+      <a href="mod7_proj.html">Module 7 Project</a>
+    </li>
+    <li class="dropdown-header">DaqPacks</li>
+    <li>
+      <a href="daqpack.html">DaqPack Item List</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">BIOL 3140 Discussion</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Module 6 Project Notes</h1>
+
+</div>
+
+
+<style>
+div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
+</style>
+<!-- Add icon library -->
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
+<div id="what-i-wouldve-done" class="section level1">
+<h1>What I would’ve done</h1>
+<p>Load the data using our convention for many files. That is:</p>
+<ul>
+<li>find files with <code>list.files()</code></li>
+<li>establish and empty list.</li>
+<li>run a <code>for</code> loop to iterate through file names and read in data</li>
+<li>strip metadata from file name and store it in columns of temporary tibble</li>
+<li>store temporary tibble in the list</li>
+</ul>
+<p>Notice I pull the files from a folder within the directory that contains the .Rmd.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(MuMIn)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">f &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="kw">paste0</span>(<span class="kw">getwd</span>(),<span class="st">&quot;/proj6data&quot;</span>),<span class="dt">pattern=</span><span class="st">&quot;.csv&quot;</span>,<span class="dt">full.names =</span> T)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">d.l &lt;-<span class="st"> </span><span class="kw">list</span>() <span class="co">#emply list</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="cf">for</span>(i <span class="cf">in</span> f){</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">  met &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">basename</span>(i),<span class="st">&quot;_&quot;</span>))</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">  time &lt;-<span class="st"> </span>met[<span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">  mass &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">gsub</span>(<span class="st">&quot;.csv&quot;</span>,<span class="st">&quot;&quot;</span>,met[<span class="dv">4</span>]))</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">  </a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">  d.l[[<span class="kw">basename</span>(i)]] &lt;-<span class="st"> </span><span class="kw">read_csv</span>(i)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">team=</span>met[<span class="dv">1</span>],<span class="dt">subject=</span>met[<span class="dv">2</span>],<span class="dt">time=</span>time,<span class="dt">mass=</span>mass<span class="op">*</span><span class="dv">1000</span>) <span class="co">#note mass converted to grams, same for M&amp;L04</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">}</a></code></pre></div>
+<p>Now we can combine all the data in the list, group by subject, time, and mass, then summarize with <code>mean()</code>. Then, pivot the table wider (with names from time and values from the mean temp calculation) so that we can later find the difference between day and night temperatures.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">dat &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind,d.l)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(subject,time,mass)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">m.temp=</span><span class="kw">mean</span>(Temp))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from=</span>time,<span class="dt">values_from=</span>m.temp)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">t.diff=</span><span class="kw">abs</span>(day<span class="op">-</span>night))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">  </span>print</a></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;subject&#39;, &#39;time&#39; (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 30 x 5
+## # Groups:   subject [30]
+##    subject    mass   day night t.diff
+##    &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1 subject01 52000  38.0  37.2 0.794 
+##  2 subject02 73000  37.3  36.9 0.342 
+##  3 subject03 59000  36.7  36.5 0.189 
+##  4 subject04 72000  38.1  37.6 0.433 
+##  5 subject05 64000  29.7  29.6 0.0759
+##  6 subject06 61000  36.2  34.7 1.41  
+##  7 subject07 52000  35.2  33.7 1.51  
+##  8 subject08 93000  29.6  29.1 0.525 
+##  9 subject09 52000  38.1  37.7 0.325 
+## 10 subject10 63500  30.0  29.8 0.184 
+## # … with 20 more rows</code></pre>
+</div>
+<div id="answering-the-first-question" class="section level1">
+<h1>Answering the First Question</h1>
+<ul>
+<li>What is the relationship between <span class="math inline">\(T_{\Delta}\)</span> and body mass in humans? I.e., is there a relationship and if so, is it allometric rather than isometric? Be sure to estimate important model parameters including scaling coefficients and slopes.</li>
+</ul>
+<p>First, let’s log transform the data and set it aside in a new tibble</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">dat.log &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(subject,mass,t.diff)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">c</span>(<span class="st">&quot;mass&quot;</span>,<span class="st">&quot;t.diff&quot;</span>),log)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 30 x 3
+## # Groups:   subject [30]
+##    subject    mass t.diff
+##    &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;
+##  1 subject01  10.9 -0.231
+##  2 subject02  11.2 -1.07 
+##  3 subject03  11.0 -1.66 
+##  4 subject04  11.2 -0.836
+##  5 subject05  11.1 -2.58 
+##  6 subject06  11.0  0.342
+##  7 subject07  10.9  0.410
+##  8 subject08  11.4 -0.644
+##  9 subject09  10.9 -1.13 
+## 10 subject10  11.1 -1.69 
+## # … with 20 more rows</code></pre>
+<p>Now let’s plot both unstransformed data and log transformed:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">dat<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(mass,t.diff))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 1 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="mod6_proj_notes_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<center>
+<strong>Fig. 1.</strong> Plot of <span class="math inline">\(T_{\Delta}\)</span> vs mass in 30 human subjects.
+</center>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">dat.log<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(mass,t.diff))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 1 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="mod6_proj_notes_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<center>
+<strong>Fig. 2.</strong> Plot of log-transformed <span class="math inline">\(T_{\Delta}\)</span> vs mass in 30 human subjects.
+</center>
+<p>Doesn’t look like we have much of a relationship. But let’s run models and check it out.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">diff.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(t.diff<span class="op">~</span>mass,dat)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">diff.loglm &lt;-<span class="st"> </span><span class="kw">lm</span>(t.diff<span class="op">~</span>mass,dat.log)</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="kw">lapply</span>( <span class="kw">list</span>(diff.lm,diff.loglm),anova)</a></code></pre></div>
+<pre><code>## [[1]]
+## Analysis of Variance Table
+## 
+## Response: t.diff
+##           Df Sum Sq  Mean Sq F value Pr(&gt;F)
+## mass       1 0.0192 0.019213  0.0887 0.7681
+## Residuals 27 5.8474 0.216571               
+## 
+## [[2]]
+## Analysis of Variance Table
+## 
+## Response: t.diff
+##           Df  Sum Sq Mean Sq F value Pr(&gt;F)
+## mass       1  0.0214 0.02140  0.0327 0.8579
+## Residuals 27 17.6746 0.65461</code></pre>
+<p>These are not significant relationships. But, if you had to, you could find which model fits best. Though, it’d be a pretty bad model nonetheless.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">lapply</span>( <span class="kw">list</span>(diff.lm,diff.loglm),AICc)</a></code></pre></div>
+<pre><code>## [[1]]
+## [1] 42.82088
+## 
+## [[2]]
+## [1] 74.89853</code></pre>
+<p>There’s definitely no clear relationship between <span class="math inline">\(T_{\Delta}\)</span> and mass in our human subjects.</p>
+</div>
+<div id="answering-the-second-question" class="section level1">
+<h1>Answering the Second Question</h1>
+<ul>
+<li>What is the relationship between <span class="math inline">\(T_{\Delta}\)</span> and body mass across mammals, including humans?</li>
+</ul>
+<p>First, let’s read in the mammal data from <span class="citation">Mortola and Lanthier (2004)</span> and do the same operations that we did on our data. Let’s add our data, too, after computing mean mass and <span class="math inline">\(T_{\Delta}\)</span>.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">m.dat &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;mammal.temp.csv&quot;</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">t.diff=</span><span class="kw">abs</span>(T.high<span class="op">-</span>T.low))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Order = col_character(),
+##   species = col_character(),
+##   mass.g = col_double(),
+##   T.high = col_double(),
+##   T.low = col_double()
+## )</code></pre>
+<pre><code>## # A tibble: 51 x 6
+##    Order        species                 mass.g T.high T.low t.diff
+##    &lt;chr&gt;        &lt;chr&gt;                    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Artiodactyla Bos taurus              500250   39.4  38.5  0.900
+##  2 Artiodactyla Capra hircus             30000   39.1  38.6  0.5  
+##  3 Artiodactyla Hippopotamus amphibius 2300000   36.5  35.8  0.7  
+##  4 Artiodactyla Lama glama              142000   38.2  37.7  0.5  
+##  5 Artiodactyla Lama pacos               60250   38.2  37.8  0.4  
+##  6 Artiodactyla Sus scrofa              100500   38.7  38.1  0.6  
+##  7 Carnivora    Canis familiaris         15000   38.4  37.7  0.700
+##  8 Carnivora    Vulpes zerda              1000   38.5  37.3  1.2  
+##  9 Carnivora    Herpestes sanguineus       540   39.2  37.3  1.9  
+## 10 Carnivora    Nasua nasua               3850   38.3  37.4  0.900
+## # … with 41 more rows</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">dat.mean &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Order=</span><span class="st">&quot;Primata&quot;</span>,</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">        <span class="dt">species=</span><span class="st">&quot;Homo sapien&quot;</span></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4">        )<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="st">  </span><span class="kw">group_by</span>(Order,species)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mass.g=</span><span class="kw">mean</span>(mass,<span class="dt">na.rm =</span> T),<span class="dt">t.diff=</span><span class="kw">mean</span>(t.diff,<span class="dt">na.rm=</span>T)) <span class="co">#remove NA in data </span></a></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;Order&#39; (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">m.dat &lt;-<span class="st"> </span>m.dat<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>T.high,<span class="op">-</span>T.low)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="st">  </span><span class="kw">rbind</span>(dat.mean)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 52 x 4
+##    Order        species                 mass.g t.diff
+##    &lt;chr&gt;        &lt;chr&gt;                    &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Artiodactyla Bos taurus              500250  0.900
+##  2 Artiodactyla Capra hircus             30000  0.5  
+##  3 Artiodactyla Hippopotamus amphibius 2300000  0.7  
+##  4 Artiodactyla Lama glama              142000  0.5  
+##  5 Artiodactyla Lama pacos               60250  0.4  
+##  6 Artiodactyla Sus scrofa              100500  0.6  
+##  7 Carnivora    Canis familiaris         15000  0.700
+##  8 Carnivora    Vulpes zerda              1000  1.2  
+##  9 Carnivora    Herpestes sanguineus       540  1.9  
+## 10 Carnivora    Nasua nasua               3850  0.900
+## # … with 42 more rows</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="co">#see if our data made it in.</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="kw">tail</span>(m.dat)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 4
+##   Order       species               mass.g t.diff
+##   &lt;chr&gt;       &lt;chr&gt;                  &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Primata     Microcebus myoxinus       32  3.80 
+## 2 Primata     Papio cynocephalus     10000  1.6  
+## 3 Primata     Saimiri sciureus         971  2.1  
+## 4 Proboscidea Elephas maximus      5000000  0.5  
+## 5 Xenarthra   Dasypus novemcinctus    3400  2    
+## 6 Primata     Homo sapien            69250  0.702</code></pre>
+<p>Now let’s make a log-transformed tibble and, plot the relationships, and then construct linear and log-linear models and compare them.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">m.dat.log &lt;-<span class="st"> </span>m.dat<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">c</span>(<span class="st">&quot;mass.g&quot;</span>,<span class="st">&quot;t.diff&quot;</span>),log)</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">mam.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(t.diff<span class="op">~</span>mass.g,m.dat)</a>
+<a class="sourceLine" id="cb28-5" data-line-number="5">mam.loglm &lt;-<span class="st"> </span><span class="kw">lm</span>(t.diff<span class="op">~</span>mass.g,m.dat.log)</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb28-7" data-line-number="7">m.dat<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb28-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(mass.g,t.diff))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="mod6_proj_notes_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<center>
+<strong>Fig. 3</strong> Regression plot of amplitude of diel body temperature oscillations in mammals.
+</center>
+<p>This totally looks wacky of course, because mammals span 6 orders of magnitude in terms of mass.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">m.dat.log<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(mass.g,t.diff))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<img src="mod6_proj_notes_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<center>
+<strong>Fig. 4</strong> Log-log regression plot of amplitude of diel body temperature oscillations in mammals.
+</center>
+<p>This is much better.</p>
+<p>Let’s now compare the models with AICc.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">aics &lt;-<span class="st"> </span><span class="kw">AICc</span>(mam.lm,mam.loglm)</a></code></pre></div>
+<p>We see that the log-linear model fits much better. Is the relationship significant?</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">m.log.anova &lt;-<span class="st"> </span><span class="kw">anova</span>(mam.loglm)<span class="op">%&gt;%</span><span class="kw">print</span>()</a></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: t.diff
+##           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+## mass.g     1  6.6545  6.6545  20.929 3.169e-05 ***
+## Residuals 50 15.8980  0.3180                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The log relationship is significant. So now let’s extract the coefficients (intercept and slope, i.e. scaling exponent)</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">m.log.coef &lt;-<span class="st"> </span><span class="kw">coef</span>(mam.loglm)<span class="op">%&gt;%</span><span class="kw">print</span>()</a></code></pre></div>
+<pre><code>## (Intercept)      mass.g 
+##   1.0761906  -0.1162042</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">exp</span>(m.log.coef[<span class="dv">1</span>])</a></code></pre></div>
+<pre><code>## (Intercept) 
+##    2.933483</code></pre>
+<p>M&amp;L report a relationship of <span class="math inline">\(T_{\Delta}=3.35C^oW^{0.13}\)</span>. Ours is <span class="math inline">\(T_{\Delta}=2.93C^oW^{0.12}\)</span>, so pretty close.</p>
+</div>
+<div id="answering-the-third-question" class="section level1">
+<h1>Answering the Third Question</h1>
+<ul>
+<li>Does taxonomic group with respect to order effectively predict differences in this relationship across mammals?</li>
+</ul>
+<p>Let’s first replot our log-log data but know coloring points by order. We’ll highlight out data for humans, too.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">m.dat.log<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(mass.g,t.diff,<span class="dt">col=</span>Order))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)<span class="op">+</span><span class="kw">geom_text</span>(<span class="kw">aes</span>(mass.g,t.diff,<span class="dt">label=</span>species),m.dat.log<span class="op">%&gt;%</span><span class="kw">filter</span>(species<span class="op">==</span><span class="st">&quot;Homo sapien&quot;</span>))</a></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning in qt((1 - level)/2, df): NaNs produced
+
+## Warning in qt((1 - level)/2, df): NaNs produced</code></pre>
+<pre><code>## Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning -
+## Inf
+
+## Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning -
+## Inf</code></pre>
+<p><img src="mod6_proj_notes_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Looks like we reproduced a good study for humans according to the primate trend! Nice work!!</p>
+<p>Now let’s assess the significance with an ANOVA.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">mam.order.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(t.diff<span class="op">~</span>mass.g<span class="op">*</span>Order,m.dat.log)</a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="kw">anova</span>(mam.order.lm)</a></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: t.diff
+##              Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## mass.g        1 6.6545  6.6545 42.7542 1.176e-07 ***
+## Order         8 7.6283  0.9535  6.1263 4.977e-05 ***
+## mass.g:Order  5 2.5107  0.5021  3.2262   0.01622 *  
+## Residuals    37 5.7589  0.1556                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>We probably wanted to assume interactions with <code>*</code>. This interaction is significant which means the scaling exponent (slope of the log-log relationship) is affected by taxonomic order.</p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references">
+<div id="ref-mortola2004scaling">
+<p>Mortola, Jacopo P, and Clement Lanthier. 2004. “Scaling the Amplitudes of the Circadian Pattern of Resting Oxygen Consumption, Body Temperature and Heart Rate in Mammals.” <em>Comparative Biochemistry and Physiology Part A: Molecular &amp; Integrative Physiology</em> 139 (1): 83–95.</p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

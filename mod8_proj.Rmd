@@ -1,0 +1,230 @@
+---
+title: "Module 7 Project"
+bibliography: class.bib
+---
+<style>
+div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
+</style>
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+# Introduction
+
+As we took on in [the last module](mod6_proj.html) and read in @mortola2004scaling, body temperature ($T_b$) across mammals demsonstrates predictable scaling patterns. In the analysis for the last project and in the analysis performed by @mortola2004scaling, neither accounted for the phylogenetic relationships of the species considered. After the project for [Module 3](mod3_proj.html), you'd be forgiven if you put a giant asterisk next to results of these analyses. That is, species are not statistically indepedent samples due to their shared evolutionary history [@felsenstein1985phylogenies]. 
+
+Organismal biologists---ecologists, physiologists, and behavioral ecologists, to name a few---have a checkered history of including phylogenetic structure in their analyses [@freckleton2002phylogenetic]. Accounting for phylogeny when asking comparative questions (i.e., how do traits vary between species?) isn't always necessary [@westoby1995further], nor is it always appropriate in the way biologist use comparative methods [@uyeda2018rethinking]. However, generally, when a biologists asks if one trait varies with another, especially when those traits are continuous, it's a good idea to at least explore if those traits demonstrate some phylogenetic signal.
+
+
+In this project, let's reconsider the $T_b$ analyses of @mortola2004scaling in a phylogenetic context. In our last project, we focused on $T_b$ oscillations ($T_{\Delta}$) using our own data for humans and data from @mortola2004scaling for 52 species of non-human mammals. For our Module 7 project, we'll also consider the scaling relationships of maximum daily $T_b$ ($T_{max}$) and mininum daily $T_b$ ($T_{min}$). We'll focus only on their data so as to directly compare results. That is, we'll use their data for humans, not ours from Module 6. 
+
+The specific goals of this porject are to:
+
+  1. Reproduce the scaling relationships (i.e. log-log regression models) of @mortola2004scaling for $T_{min}$,$T_{max}$, and $T_{\Delta}$.
+  2. Assess the phylogentic signal of the four variables in question (i.e., mass, $T_{min}$, $T_{max}$, and $T_{\Delta}$) using Pagel's lamba.
+  3. Reanalyze these models in a phylogenetic context using phylogenetic least squares (PGLS) under Brownian Motion (BM) and Ornstein-Uhlenbeck (OU) models of trait evolution.
+  4. Using an information theory approach, assess the best fitting PGLS scaling models for each of the three $T_b$ variables
+  5. Compare the significance of the results of @mortola2004scaling with respect to the scaling of $T_b$ variables to your results that include phylogenetic correction.
+
+
+
+
+<center>
+![](mammaltree.png){width=50%}
+
+
+<br>
+*A time-calibrated molecular phylogeny of 5,911 extant and recently extinct species of mammals from  @upham2019inferring. Colors at the tips indicate speciation rates.* 
+</center>
+<br>
+<br>
+
+
+# Methods
+
+To capture $T_b$ data, you must design and construct a portable Arduino-based temperature data aqusition system (DAQ). Your device should record body axial temperature data over the course of 1 hour for each of your team members. 
+
+Sampling times should correspond to predictably high $T_b$ (i.e., 30 minutes when the subject is active, say in the middle of the day) and [predictably low $T_b$](https://www.nature.com/articles/srep39640/figures/1) (i.e., 30 minutes early in the morning, say 4 AM, before you typically get up---sorry! Set those alarms). This won't capture the full diurnal cycle, but will reduce the DAQ's running time while recording the important points.
+
+## DAQ Design Components
+
+1. DS18B20 temperature sensor
+2. Arduion Uno microcontroller
+3. SD storage module
+4. 9V battery power cable
+
+## DAQ Assembly and Programming
+
+Assembly for this temperature logger is almost entirely captured in ~~[this tutorial](http://arduinolearning.com/projects/temperature-logger.php)~~[this tutorial](https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data). 
+
+https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/
+
+
+To this prototype, we must add battery power. That's easy enough: merely connect the battery power cable in the battery barrel connector on the Arduino (see pic below). 
+
+<center>
+![](https://i2.wp.com/technobyte.org/wp-content/uploads/2016/06/Arduino-Uno-power-jack-or-barrel-connector-e1466952229868.jpg?ssl=1){width=50%}
+
+<br>
+*The barrel connector for a battery pack on an Arduino Uno.* 
+</center>
+<br>
+<br>
+
+With the battery pack and SDcard module installed and writing data, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking temperature data. Be sure to modify your sketch to take data for 30 minutues (1.8 million ms)
+
+## Data Collection
+
+You'll first need to [download the full dataset](mammal.temp2.csv) from @mortola2004scaling that includes humans and 52 other species of mammals. In addition, please [download the phylogeny](mammal.tree.pruned.txt) for the taxa included in @mortola2004scaling. This is the same phylogenetic tree represented in the figure above taken from @upham2019inferring, but pruned to include only those species represented in the study by  @mortola2004scaling.
+
+## Reproducing the Analyses of @mortola2004scaling
+
+Your first task is to reproduce the scaling models constucted by @mortola2004scaling and assess their signficance. For this you'll need to construct log-log regression models of the three $T_b$ variables as a function of mass ($W$). This is identical to the work you did in assessing the scaling relationships of $T_{\Delta}$ in the last project and only needs to be repeated with the @mortola2004scaling dataset and the two other $T_b$ variables, $T_{min}$ and $T_{max}$.
+
+
+## Pagel's Lambda
+
+The second task is to assess the phylogenetic signal of each of the four variables in the study: $W$, the independent variable (i.e., our one covariate) and the three $T_b$ variables. For this, we'll have to complete new analyses we haven't taken on before: Pagel's $\lambda$. This method transforms the tree, by decreasing $\lambda$ (the phylogenetic signal) which lengthens the tip branches relative to internal branches, eventually decomposing the tree so that it begins to look like a complete polytomy, i.e., no phylogenetic relatedness or covariance between species. This can be seen as a way of muting phylogentic signal until the covariation of the error structure can no longer be explained by phylogenetic relatedness. If our estimated $\lambda$ = 0, the tree has no effect on the traits and they are assumed to have no phylogenetic signal. When $\lambda$ = 1, the traits conform to a Brownian motion model. Betweewn 0 and 1, there is some phylogenetic signal.
+
+Let's explore how this works. First we'll have to load our mammal tree. Notice that there's a `gsub()` operation here to remove pesky "_" from the species names in the tree. **This will be important later when the tree is used in the PGLS analysis and the species names must match those in the tree and the dataset.** We'll also have to load the package `geiger` which carries the `rescale()` function we'll use to demonstrate what Pagel's $\lambda$ does. [You won't necessarily need `geiger` loaded for your project, this is just to demonstrate how Pagel's $\lambda$ works.]
+
+```{r,eval=FALSE}
+library(tidyverse)
+library(data.table)
+library(gganimate)
+library(emojifont)
+ #return coord for a point r away at angle=ang
+  point.ang.r <- function(p,r,theta){x.2 <-p[1]+r*cos(theta); y.2 <- p[2]+r*sin(theta);return(list(x.2,y.2))}
+  
+  #set up angle and arm data
+  pos <- seq(157.5,0,-22.5)-90
+  pos.rad <- pos * pi/180 
+  humerus <- 1
+  distal.arm <- 1
+  elb.x <- 0
+  elb.y <- 0
+  hum.x <- 0
+  hum.y <- 1
+  
+  #make a data.table for easy calculation for new columns
+  arm <- data.table(pos,pos.rad,elb.x,elb.y,hum.x,hum.y)
+  
+  #columns for hand and inlever position
+  arm[,c("hand.x","hand.y"):=point.ang.r(c(elb.x,elb.y),r=humerus,theta=pos.rad),by=pos]
+  arm[,c("inlever.x","inlever.y"):=point.ang.r(c(elb.x,elb.y),r=humerus*0.2,theta=pos.rad),by=pos]
+  
+ arm.m <-  arm%>%
+   pivot_longer(col=-c(pos,pos.rad))%>%
+   mutate(part=gsub("(.+)\\..","\\1",name),x.y=gsub("(.+)\\.(.)","\\2",name))%>%
+   pivot_wider(-name,names_from = c(x.y),values_from=value)%>%
+   mutate(pos2 =90-pos) #rotate angle 90 
+ 
+
+#add bones
+ p <- ggplot()+geom_segment(data=arm.m%>%filter(part!="hum"),aes(x = 0, y = 0, xend = x, yend = y),size=3,col="gray")+geom_segment(data=arm.m%>%filter(part=="hum"),aes(x = 0, y = 0, xend = 0, yend = 1), col = "black",size=4)
+ 
+ #add points
+ p <- p+geom_point(dat=arm.m%>%filter(part!="hand"),aes(x,y,col=part),size=4)+xlim(c(-.5,1.5))+ylim(c(-1.2,1.2)) 
+ 
+ #add muscle lines
+ p <- p+geom_curve(data=arm.m%>%filter(part=="inlever"),aes(x = 0, y = 1, xend = x, yend = y),curvature = -0.3,col="red")+geom_curve(data=arm.m%>%filter(part=="inlever"),aes(x = 0, y = 1, xend = x, yend = y),curvature = 0.0,col="red")
+ 
+ #add emoji hand
+ p <- p+geom_text(data=arm.m%>%filter(part=="hand"),aes(x,y,label=emoji("hand"),angle=pos2*-1),family="EmojiOne", size=20,vjust=0,hjust=.4)
+ 
+ print(p)
+ 
+ #get rid of axes and background
+p<- p+theme_void()
+ 
+
+#transition according to arm position and make pretty
+ anim <- p + transition_states(pos,transition_length = 10,state_length = 70)+shadow_wake(.01)+enter_fade()+exit_fade()
+  
+anim_save("arm.gif", anim)
+
+```
+<center>
+![](arm.gif)
+Roatation of the forearm through its typical range of motion. Notice that the insertion angle of the bicepes changes.
+</center>
+<br>
+
+The tree on the left is the unscaled phylogeny, the tree we'll use in our analyses. The tree in the middle, with $\lambda$=0.5, rescales the tip branches, making the tips branch longer, allowing more phylogenetic independence between species. As you can see, the tree on the right, with a $\lambda$=0 removes the phylogenetic information form the tree, i.e., all species don't covary according to their phylogenetic position. When we use Pagel's $\lambda$ to assess phylogenetic signal of a character, we interate through values to 0 to 1 to find rescaled branch lengths that optimize the covariance of the character according to Brownian motion. As a reminder, values near 1 indicate strong phylogenetic signal, while values close to 0 indicate none. 
+
+Now let's assess phylogenetic signal for some simulated trait data over the mammal tree. We'll use `phytools`'s `phylosig()` function to do this after simulating some random trait.
+
+
+Here we simulated some random data (values from 0--1) for the number of tips on the tree using `runif()` to generate the values and `Ntip()` from the `ape` package to retrieve the number of tips (i.e., species) in the tree. We named these values with the tip labels from the tree, an important step. The `phylosig()` function in `phytools` requires that a vector of trait values must have names that match the tips in the tree. In your analyses **make sure you name your variable values with the species from your dataset**, not the tip labels. The order for these will certainly be different and, if not correct, will make any analysis rubbish.
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">
+Note: You won't need to include thes specific chunks, only to reproduce the Pagels' $\lambda$ analysis for $T_b$ variables with the `phylosig()`function from `phytools`. 
+</div>
+</div>
+</div>
+<br>
+
+For the `phylogsig()` operation, we set the `method` to "lambda" for Pagels' $\lambda$ and `test=T` so that the function performs a likelihood ratio test (LRT). If you remember from reading the appropriate [section in Luke Harmon's PCM book](https://lukejharmon.github.io/pcm/chapter2_stats/#section-2.3b-the-likelihood-ratio-test), a likelihood ratio test assesses the goodness of fit of two related statistical models based on the ratio of their likelihoods. In this context, we're comparing the likelihoods of a model that includes an optimization of the $\lambda$ value versus on one that has a $\lambda$ value of 0, that is, no phylogenetic signal. As you can see from the results, the phylogenetic signal is extremely low at 6.6107e-05 and the result of the LRT, with a likelihood ratio of -0.0008, is nonsignifcant at p=1. That is, the phylogenetic signal is essentially 0 for these simulated data and, not suprisingly, there's a probability of 1 that the value is not different than 0.
+
+
+
+Now that you've been introduced to Pagel's $\lambda$, undertake such an analysis of all four variables in the data. In your analyses, be sure to include a table of these results that indicates the estimated $\lambda$ value and p values from the LHTs. 
+
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">
+You'll notice that we're doing many of these phylogenetic comparative analyses without the principles of the tidyverse, i.e., no pipe, etc. Most of the functions written in R packages for comparative methods don't play well with tidy workflows. Be sure to pay attention to the pieces of advice given in this and other project descriptions to reduce headaches when performing comparative analyses.
+</div>
+</div>
+</div>
+<br>
+
+## PGLS Analysis of $T_b$ Variables
+
+Now that we have assessed phylogenetic signals for our four variables, procede with PGLS analyses of log-log regression models that include the three $T_b$ variables versus mass. For each regression, construct a PGLS model that includes both a BM and OU model of trait evolution using the tree provide for the species in @mortola2004scaling. Be sure to assess which of these models fits the data best. From each of your best-fitting models, extract the slope (i.e, the scaling coefficient) and intercept and then perform an ANOVA test to evaluate the significance of these parameters. Report these values in table with an appropriate caption.
+
+## Reassessing the Results of @mortola2004scaling
+
+After reconstructing the models for $T_b$ scaling in @mortola2004scaling, assessing phylogenetic signal, and constructing phylogenetically corrected models of your own, compare and contrast these findings. Should important findings in @mortola2004scaling with regards to $T_b$ variables be challenged? Did any of the signficant findings in @mortola2004scaling become insignifcant or significant when they weren't before?
+
+
+# Project Report
+
+Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following questions:
+
+  * Could you and your team reproduce the scaling relationships (i.e. log-log regression models) of @mortola2004scaling for $T_{min}$,$T_{max}$, and $T_{\Delta}$>k?
+  * Was there any signficant phylogentic signal in the four variables in question (i.e., mass, $T_{min}$, $T_{max}$, and $T_{\Delta}$)?
+  * After reanalyzing these models that included any variables with significant phylogentic signal in a PCM context under BM and OU models of trait evolution, which phylogentically corrected models fit best? 
+  * Are new phylogenetically informed parameter estimates (i.e, intercept and slope coefficients) different than those in @mortola2004scaling and has their significance changed?
+ * If any of the results concerning $T_b$ scaling patterns should be reinterpreted due to your phylogenetically informed analysis, how should the conclusions of @mortola2004scaling be reframed?
+
+In answering these questions, be sure to use the visualization, modeling, and model-assessments tools we've used in the course so far.
+  
+In answering your question, your .Rmd should include the following components:
+
+   * A YAML header that specifies HTML output, the authors, and a bibliograph named "BIOL3140.bib". **Submit this bibliography as well!**
+   * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially:
+      + Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. **Please include at least one reference to support the summary of previous work.** Note: this can be done easily by refiguring the introduction to this project report.
+      + Methods: Explicitly state how you answered the questions, including a narrative of all the anlyses both qualitative and quantitative.
+      + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.
+      + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here.
+      + Author contributions: Breifly outline what each team member contributed to the project.
+
+Project reports should be uploaded by 11:59 PM on Sunday, November 1st.
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">
+Please have a look at out [Phase II report rubric](phaseII_rubric.html) to get a sense of how this and other Phase II reports will be grade.
+</div>
+</div>
+</div>
+<br>
+
+# References
