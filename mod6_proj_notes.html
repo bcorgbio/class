@@ -610,12 +610,10 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## mass       1  0.0214 0.02140  0.0327 0.8579
 ## Residuals 27 17.6746 0.65461</code></pre>
 <p>These are not significant relationships. But, if you had to, you could find which model fits best. Though, it’d be a pretty bad model nonetheless.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">lapply</span>( <span class="kw">list</span>(diff.lm,diff.loglm),AICc)</a></code></pre></div>
-<pre><code>## [[1]]
-## [1] 42.82088
-## 
-## [[2]]
-## [1] 74.89853</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">AICc</span>(diff.lm,diff.loglm)</a></code></pre></div>
+<pre><code>##            df     AICc
+## diff.lm     3 42.82088
+## diff.loglm  3 74.89853</code></pre>
 <p>There’s definitely no clear relationship between <span class="math inline">\(T_{\Delta}\)</span> and mass in our human subjects.</p>
 </div>
 <div id="answering-the-second-question" class="section level1">
@@ -749,10 +747,14 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## Inf</code></pre>
 <p><img src="mod6_proj_notes_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>Looks like we reproduced a good study for humans according to the primate trend! Nice work!!</p>
-<p>Now let’s assess the significance with an ANOVA.</p>
+<p>Now let’s assess the the model, comparing it to the simpler model.</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">mam.order.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(t.diff<span class="op">~</span>mass.g<span class="op">*</span>Order,m.dat.log)</a>
-<a class="sourceLine" id="cb43-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="kw">anova</span>(mam.order.lm)</a></code></pre></div>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="kw">AICc</span>(mam.loglm,mam.order.lm)</a></code></pre></div>
+<pre><code>##              df     AICc
+## mam.loglm     3 92.44687
+## mam.order.lm 16 80.68673</code></pre>
+<p>The more complex model is a better fit. What about the significance of the effect of taxonomic order?</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">anova</span>(mam.order.lm)</a></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: t.diff

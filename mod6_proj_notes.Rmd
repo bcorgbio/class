@@ -109,10 +109,10 @@ lapply( list(diff.lm,diff.loglm),anova)
 These are not significant relationships. But, if you had to, you could find which model fits best. Though, it'd be a pretty bad model nonetheless.
 
 ```{r}
-lapply( list(diff.lm,diff.loglm),AICc)
+AICc(diff.lm,diff.loglm)
 ```
 
-There's definitely no clear relationship between $T_{\Delta}$  and mass in our human subjects. 
+There's definitely no clear relationship between $T_{\Delta}$ and mass in our human subjects. 
 
 
 # Answering the Second Question
@@ -214,11 +214,15 @@ m.dat.log%>%
 
 Looks like we reproduced a good study for humans according to the primate trend! Nice work!!
 
-Now let's assess the significance with an ANOVA.
+Now let's assess the the model, comparing it to the simpler model.
 
 ```{r}
 mam.order.lm <- lm(t.diff~mass.g*Order,m.dat.log)
+AICc(mam.loglm,mam.order.lm)
+```
 
+The more complex model is a better fit. What about the significance of the effect of taxonomic order?
+```{r}
 anova(mam.order.lm)
 ```
 
