@@ -749,10 +749,14 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## Inf</code></pre>
 <p><img src="mod6_proj_notes_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>Looks like we reproduced a good study for humans according to the primate trend! Nice work!!</p>
-<p>Now let’s assess the significance with an ANOVA.</p>
+<p>Now let’s assess the the model, comparing it to the simpler model.</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">mam.order.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(t.diff<span class="op">~</span>mass.g<span class="op">*</span>Order,m.dat.log)</a>
-<a class="sourceLine" id="cb43-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="kw">anova</span>(mam.order.lm)</a></code></pre></div>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="kw">AICc</span>(mam.loglm,mam.order.lm)</a></code></pre></div>
+<pre><code>##              df     AICc
+## mam.loglm     3 92.44687
+## mam.order.lm 16 80.68673</code></pre>
+<p>The more complex model is a better fit. What about the significance of the effect of taxonomic order?</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">anova</span>(mam.order.lm)</a></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: t.diff

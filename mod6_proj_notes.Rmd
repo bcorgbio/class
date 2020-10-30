@@ -214,11 +214,15 @@ m.dat.log%>%
 
 Looks like we reproduced a good study for humans according to the primate trend! Nice work!!
 
-Now let's assess the significance with an ANOVA.
+Now let's assess the the model, comparing it to the simpler model.
 
 ```{r}
 mam.order.lm <- lm(t.diff~mass.g*Order,m.dat.log)
+AICc(mam.loglm,mam.order.lm)
+```
 
+The more complex model is a better fit. What about the significance of the effect of taxonomic order?
+```{r}
 anova(mam.order.lm)
 ```
 
