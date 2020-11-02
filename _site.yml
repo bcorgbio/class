@@ -38,6 +38,8 @@ navbar:
           href: mod6_proj.html
         - text: "Module 7 Project"
           href: mod7_proj.html
+        - text: "Module 8 Project"
+          href: mod8_proj.html
         - text: "DaqPacks"
         - text: "DaqPack Item List"
           href: daqpack.html

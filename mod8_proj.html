@@ -11,7 +11,7 @@
 
 
 
-<title>Module 7 Project</title>
+<title>Module 8 Project</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -484,7 +484,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Module 7 Project</h1>
+<h1 class="title toc-ignore">Module 8 Project</h1>
 
 </div>
 
@@ -496,175 +496,341 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>As we took on in <a href="mod6_proj.html">the last module</a> and read in <span class="citation">Mortola and Lanthier (2004)</span>, body temperature (<span class="math inline">\(T_b\)</span>) across mammals demsonstrates predictable scaling patterns. In the analysis for the last project and in the analysis performed by <span class="citation">Mortola and Lanthier (2004)</span>, neither accounted for the phylogenetic relationships of the species considered. After the project for <a href="mod3_proj.html">Module 3</a>, you’d be forgiven if you put a giant asterisk next to results of these analyses. That is, species are not statistically indepedent samples due to their shared evolutionary history <span class="citation">(Felsenstein 1985)</span>.</p>
-<p>Organismal biologists—ecologists, physiologists, and behavioral ecologists, to name a few—have a checkered history of including phylogenetic structure in their analyses <span class="citation">(Freckleton, Harvey, and Pagel 2002)</span>. Accounting for phylogeny when asking comparative questions (i.e., how do traits vary between species?) isn’t always necessary <span class="citation">(Westoby, Leishman, and Lord 1995)</span>, nor is it always appropriate in the way biologist use comparative methods <span class="citation">(Uyeda, Zenil-Ferguson, and Pennell 2018)</span>. However, generally, when a biologists asks if one trait varies with another, especially when those traits are continuous, it’s a good idea to at least explore if those traits demonstrate some phylogenetic signal.</p>
-<p>In this project, let’s reconsider the <span class="math inline">\(T_b\)</span> analyses of <span class="citation">Mortola and Lanthier (2004)</span> in a phylogenetic context. In our last project, we focused on <span class="math inline">\(T_b\)</span> oscillations (<span class="math inline">\(T_{\Delta}\)</span>) using our own data for humans and data from <span class="citation">Mortola and Lanthier (2004)</span> for 52 species of non-human mammals. For our Module 7 project, we’ll also consider the scaling relationships of maximum daily <span class="math inline">\(T_b\)</span> (<span class="math inline">\(T_{max}\)</span>) and mininum daily <span class="math inline">\(T_b\)</span> (<span class="math inline">\(T_{min}\)</span>). We’ll focus only on their data so as to directly compare results. That is, we’ll use their data for humans, not ours from Module 6.</p>
-<p>The specific goals of this porject are to:</p>
-<ol style="list-style-type: decimal">
-<li>Reproduce the scaling relationships (i.e. log-log regression models) of <span class="citation">Mortola and Lanthier (2004)</span> for <span class="math inline">\(T_{min}\)</span>,<span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>.</li>
-<li>Assess the phylogentic signal of the four variables in question (i.e., mass, <span class="math inline">\(T_{min}\)</span>, <span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>) using Pagel’s lamba.</li>
-<li>Reanalyze these models in a phylogenetic context using phylogenetic least squares (PGLS) under Brownian Motion (BM) and Ornstein-Uhlenbeck (OU) models of trait evolution.</li>
-<li>Using an information theory approach, assess the best fitting PGLS scaling models for each of the three <span class="math inline">\(T_b\)</span> variables</li>
-<li>Compare the significance of the results of <span class="citation">Mortola and Lanthier (2004)</span> with respect to the scaling of <span class="math inline">\(T_b\)</span> variables to your results that include phylogenetic correction.</li>
-</ol>
+<p>Any student steeped in the mechanics of muscle understands that force produced by this tissue is governed by two important parameters: speed and length. In this project, we’ll explore the effect of length on muscle force generation and evaluate how fatigue affects this force-length (FL) relationship.</p>
+<p>The FL relationship is governed by several important biophysical aspects of muscle architecture. At the fiber level, the force produced is largely mediated by the the number of cross bridges that can be formed. Cross bridges are small and have a limited attachment range. Therefore, cross-bridge attachments only occur in the actin-myosin overlap zone of a sarcomere. Together with the assumptions underlying the cross-bridge theory, this limitation implies that the maximal isometric force of a sarcomere is directly related to the amount of actin-myosin overlap (Fig. 1).</p>
 <center>
-<p><img src="mammaltree.png" style="width:50.0%" /></p>
-<br> <em>A time-calibrated molecular phylogeny of 5,911 extant and recently extinct species of mammals from <span class="citation">Upham, Esselstyn, and Jetz (2019)</span>. Colors at the tips indicate speciation rates.</em>
+<img src="https://journals.physiology.org/cms/10.1152/jappl.1999.86.5.1445/asset/images/medium/japp05516002x.jpeg" /> <br> <strong>Fig. 1.</strong> The force-length relationship of a sarcomere as predicted by cross-bridge theory.
 </center>
-<p><br> <br></p>
+<p>Of course, many muscles transect a lever system composed of a few bones articulating at a joint. For our subject, the human upper limb, the forearm flexors originate on the pectoral girdle above the humerus and insert on the radius and ulna, spanning the elbow joint. Simply put, the arm is a 3rd order lever (Fig 2). If we are to consider the force transmitted to the hand (or any other part along the antebrachium), we must also consider this lever configuration. As a lever, this system has a mechanical advantage that predicts the amount of output force transmitted by the input force. Mechanical advantage is defined by the following:</p>
+<p><span class="math display">\[MA=\frac{L_i}{L_o}\]</span>,</p>
+<p>where <span class="math inline">\(L_i\)</span> is the in-lever and <span class="math inline">\(L_o\)</span> the output leaver. For the human upper limb, the inlever is the distance between the flexor insertion and elbow joint and the out-lever is the length of the antebrachium and hand (or the distance between the elbow and the load). This ratio generally accords to 0.2 in this system. What this predicts is that any force applied to the in-lever results in 20% of that force at the end of the out-lever.</p>
+<p>What makes this more complicated is that the effective in-lever, the input moment arm, changes as the forearm flexes. This is due to the fact that the insertion angle changes as the forearm rotates (Fig. 3). Because the force produced by an input is variable with respect to insertion angle, the output isn’t necessarily predicted by MA alone.</p>
+<center>
+<p><img src="https://openoregon.pressbooks.pub/app/uploads/sites/42/2018/07/Range-300x262.png" /></p>
+<strong>Fig. 2</strong> The 3rd-order level system of the human upper limb.
+</center>
+<p><br></p>
+<p>Fortunately for us, physiologists have found that studying the force (or torque) produced by a biomechanical system can still be useful in uncovering the FL relationships of the input muscles <span class="citation">(Rassier, MacIntosh, and Herzog 1999)</span>. For this project, we take this assumption to mean that the force we measure at the hand as the muscle produces isometric force at various lengths is a reasonable reflection of the FL relationship governing force at the fiber level.</p>
+<center>
+<img src="arm.gif" /> <br> <strong>Fig. 4.</strong> Rotation of the forearm through its typical range of motion. Notice that the insertion angle of the biceps changes. (This was of course produced with R . . . have a look at <a href="https://gist.github.com/ckenaley/924171571a73874384a6aaaef93e372b">this gist on github</a> if you’d like the code.)
+</center>
+<p><br></p>
+<p>Keeping all this mind mind, we’ll study the FL relationship of the human upper limb and how this relationship responds to fatigue. Eccentric fatigue, whereby the muscle has been asked to do a lot of negative work (producing tension while lengthening) has been a particular interested to muscle physiologists <span class="citation">(Yeung and Yeung 2008)</span>. That is, this research has shown that the force/torque-length/angle relationship shifts soon after and long after eccentric fatigue. Specifically, the peak normalized isometric force shifts over the typical range of angles for a biomechanical system.</p>
+<p>The specific goals of this project are to:</p>
+<ol style="list-style-type: decimal">
+<li>Produce isometric force-angle curves for the human forearm flexors undertaking maximum voluntary contractions (MVCs).</li>
+<li>Compare the angle at which maximum isometric force (<span class="math inline">\(F_{max}) occurs (\)</span>_{max}$) between non-fatigued (i.e., control) and eccentrically fatigued forearm flexors.</li>
+<li>Discuss the underlying mechanisms resulting in a shift of <span class="math inline">\(\theta_{max}\)</span> after eccentric fatigue.</li>
+</ol>
 </div>
 <div id="methods" class="section level1">
 <h1>Methods</h1>
-<p>To capture <span class="math inline">\(T_b\)</span> data, you must design and construct a portable Arduino-based temperature data aqusition system (DAQ). Your device should record body axial temperature data over the course of 1 hour for each of your team members.</p>
-<p>Sampling times should correspond to predictably high <span class="math inline">\(T_b\)</span> (i.e., 30 minutes when the subject is active, say in the middle of the day) and <a href="https://www.nature.com/articles/srep39640/figures/1">predictably low <span class="math inline">\(T_b\)</span></a> (i.e., 30 minutes early in the morning, say 4 AM, before you typically get up—sorry! Set those alarms). This won’t capture the full diurnal cycle, but will reduce the DAQ’s running time while recording the important points.</p>
+<div id="experimental-design" class="section level2">
+<h2>Experimental Design</h2>
+<p>To assess the affect of eccentric fatigue of elbow flexor muscles, we’ll be measuring the isometric force over the range of motion of the forearm produced by MVC. To capture MVC data, you must design and construct a portable Arduino-based force-data acquisition system (DAQ). Your device should record force data over the course of 30s.</p>
+</div>
 <div id="daq-design-components" class="section level2">
 <h2>DAQ Design Components</h2>
 <ol style="list-style-type: decimal">
-<li>DS18B20 temperature sensor</li>
-<li>Arduion Uno microcontroller</li>
+<li>40-kg Load Cell with HX711 amplifier</li>
+<li>Arduino Uno microcontroller</li>
 <li>SD storage module</li>
 <li>9V battery power cable</li>
 </ol>
 </div>
 <div id="daq-assembly-and-programming" class="section level2">
 <h2>DAQ Assembly and Programming</h2>
-<p>Assembly for this temperature logger is almost entirely captured in <del><a href="http://arduinolearning.com/projects/temperature-logger.php">this tutorial</a></del><a href="https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data">this tutorial</a>.</p>
-<p><a href="https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/" class="uri">https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/</a></p>
-<p>To this prototype, we must add battery power. That’s easy enough: merely connect the battery power cable in the battery barrel connector on the Arduino (see pic below).</p>
-<center>
-<p><img src="https://i2.wp.com/technobyte.org/wp-content/uploads/2016/06/Arduino-Uno-power-jack-or-barrel-connector-e1466952229868.jpg?ssl=1" style="width:50.0%" /></p>
-<br> <em>The barrel connector for a battery pack on an Arduino Uno.</em>
-</center>
-<p><br> <br></p>
-<p>With the battery pack and SDcard module installed and writing data, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking temperature data. Be sure to modify your sketch to take data for 30 minutues (1.8 million ms)</p>
+<p>Assembly for this force logger is almost entirely captured in <a href="https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/">this tutorial</a>. You only modification is to add SD data storage to your hardware and the appropriate code to your sketch.</p>
+<p>You’ll see that the sketch in the tutorial requires a calibration step to output appropriate force or mass units. <strong>Don’t worry about calibration.</strong> We’ll be looking a normalized force, so units don’t matter.</p>
+<p>As for your SD storage integration, make sure your sketch writes one column data to the SD card with the header “force”.</p>
+<p>For each experiment, you’ll be recording 12 bouts of MVC force, each corresponding to a different elbow angle, for 30 s. For each arm angle, with the battery pack and SDcard module installed and writing data, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking force data. So as not to confuse from where your data came, it’s a good idea to change the name of the text file being written to for each experiment, i.e., “control.csv” and “fatigue.csv”.</p>
 </div>
 <div id="data-collection" class="section level2">
 <h2>Data Collection</h2>
-<p>You’ll first need to <a href="mammal.temp2.csv">download the full dataset</a> from <span class="citation">Mortola and Lanthier (2004)</span> that includes humans and 52 other species of mammals. In addition, please <a href="mammal.tree.pruned.txt">download the phylogeny</a> for the taxa included in <span class="citation">Mortola and Lanthier (2004)</span>. This is the same phylogenetic tree represented in the figure above taken from <span class="citation">Upham, Esselstyn, and Jetz (2019)</span>, but pruned to include only those species represented in the study by <span class="citation">Mortola and Lanthier (2004)</span>.</p>
-</div>
-<div id="reproducing-the-analyses-of-mortola2004scaling" class="section level2">
-<h2>Reproducing the Analyses of <span class="citation">Mortola and Lanthier (2004)</span></h2>
-<p>Your first task is to reproduce the scaling models constucted by <span class="citation">Mortola and Lanthier (2004)</span> and assess their signficance. For this you’ll need to construct log-log regression models of the three <span class="math inline">\(T_b\)</span> variables as a function of mass (<span class="math inline">\(W\)</span>). This is identical to the work you did in assessing the scaling relationships of <span class="math inline">\(T_{\Delta}\)</span> in the last project and only needs to be repeated with the <span class="citation">Mortola and Lanthier (2004)</span> dataset and the two other <span class="math inline">\(T_b\)</span> variables, <span class="math inline">\(T_{min}\)</span> and <span class="math inline">\(T_{max}\)</span>.</p>
-</div>
-<div id="pagels-lambda" class="section level2">
-<h2>Pagel’s Lambda</h2>
-<p>The second task is to assess the phylogenetic signal of each of the four variables in the study: <span class="math inline">\(W\)</span>, the independent variable (i.e., our one covariate) and the three <span class="math inline">\(T_b\)</span> variables. For this, we’ll have to complete new analyses we haven’t taken on before: Pagel’s <span class="math inline">\(\lambda\)</span>. This method transforms the tree, by decreasing <span class="math inline">\(\lambda\)</span> (the phylogenetic signal) which lengthens the tip branches relative to internal branches, eventually decomposing the tree so that it begins to look like a complete polytomy, i.e., no phylogenetic relatedness or covariance between species. This can be seen as a way of muting phylogentic signal until the covariation of the error structure can no longer be explained by phylogenetic relatedness. If our estimated <span class="math inline">\(\lambda\)</span> = 0, the tree has no effect on the traits and they are assumed to have no phylogenetic signal. When <span class="math inline">\(\lambda\)</span> = 1, the traits conform to a Brownian motion model. Betweewn 0 and 1, there is some phylogenetic signal.</p>
-<p>Let’s explore how this works. First we’ll have to load our mammal tree. Notice that there’s a <code>gsub()</code> operation here to remove pesky &quot;_&quot; from the species names in the tree. <strong>This will be important later when the tree is used in the PGLS analysis and the species names must match those in the tree and the dataset.</strong> We’ll also have to load the package <code>geiger</code> which carries the <code>rescale()</code> function we’ll use to demonstrate what Pagel’s <span class="math inline">\(\lambda\)</span> does. [You won’t necessarily need <code>geiger</code> loaded for your project, this is just to demonstrate how Pagel’s <span class="math inline">\(\lambda\)</span> works.]</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(data.table)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(gganimate)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">library</span>(emojifont)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"> <span class="co">#return coord for a point r away at angle=ang</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">  point.ang.r &lt;-<span class="st"> </span><span class="cf">function</span>(p,r,theta){x<span class="fl">.2</span> &lt;-p[<span class="dv">1</span>]<span class="op">+</span>r<span class="op">*</span><span class="kw">cos</span>(theta); y<span class="fl">.2</span> &lt;-<span class="st"> </span>p[<span class="dv">2</span>]<span class="op">+</span>r<span class="op">*</span><span class="kw">sin</span>(theta);<span class="kw">return</span>(<span class="kw">list</span>(x<span class="fl">.2</span>,y<span class="fl">.2</span>))}</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">  </a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">  <span class="co">#set up angle and arm data</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">  pos &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="fl">157.5</span>,<span class="dv">0</span>,<span class="op">-</span><span class="fl">22.5</span>)<span class="op">-</span><span class="dv">90</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">  pos.rad &lt;-<span class="st"> </span>pos <span class="op">*</span><span class="st"> </span>pi<span class="op">/</span><span class="dv">180</span> </a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">  humerus &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">  distal.arm &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">  elb.x &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">  elb.y &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">  hum.x &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">  hum.y &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">  </a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">  <span class="co">#make a data.table for easy calculation for new columns</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">  arm &lt;-<span class="st"> </span><span class="kw">data.table</span>(pos,pos.rad,elb.x,elb.y,hum.x,hum.y)</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">  </a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">  <span class="co">#columns for hand and inlever position</span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">  arm[,<span class="kw">c</span>(<span class="st">&quot;hand.x&quot;</span>,<span class="st">&quot;hand.y&quot;</span>)<span class="op">:</span><span class="er">=</span><span class="kw">point.ang.r</span>(<span class="kw">c</span>(elb.x,elb.y),<span class="dt">r=</span>humerus,<span class="dt">theta=</span>pos.rad),by=pos]</a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">  arm[,<span class="kw">c</span>(<span class="st">&quot;inlever.x&quot;</span>,<span class="st">&quot;inlever.y&quot;</span>)<span class="op">:</span><span class="er">=</span><span class="kw">point.ang.r</span>(<span class="kw">c</span>(elb.x,elb.y),<span class="dt">r=</span>humerus<span class="op">*</span><span class="fl">0.2</span>,<span class="dt">theta=</span>pos.rad),by=pos]</a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">  </a>
-<a class="sourceLine" id="cb1-25" data-line-number="25"> arm.m &lt;-<span class="st">  </span>arm<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="st">   </span><span class="kw">pivot_longer</span>(<span class="dt">col=</span><span class="op">-</span><span class="kw">c</span>(pos,pos.rad))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">part=</span><span class="kw">gsub</span>(<span class="st">&quot;(.+)</span><span class="ch">\\</span><span class="st">..&quot;</span>,<span class="st">&quot;</span><span class="ch">\\</span><span class="st">1&quot;</span>,name),<span class="dt">x.y=</span><span class="kw">gsub</span>(<span class="st">&quot;(.+)</span><span class="ch">\\</span><span class="st">.(.)&quot;</span>,<span class="st">&quot;</span><span class="ch">\\</span><span class="st">2&quot;</span>,name))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="st">   </span><span class="kw">pivot_wider</span>(<span class="op">-</span>name,<span class="dt">names_from =</span> <span class="kw">c</span>(x.y),<span class="dt">values_from=</span>value)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-29" data-line-number="29"><span class="st">   </span><span class="kw">mutate</span>(<span class="dt">pos2 =</span><span class="dv">90</span><span class="op">-</span>pos) <span class="co">#rotate angle 90 </span></a>
-<a class="sourceLine" id="cb1-30" data-line-number="30"> </a>
-<a class="sourceLine" id="cb1-31" data-line-number="31"></a>
-<a class="sourceLine" id="cb1-32" data-line-number="32"><span class="co">#add bones</span></a>
-<a class="sourceLine" id="cb1-33" data-line-number="33"> p &lt;-<span class="st"> </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_segment</span>(<span class="dt">data=</span>arm.m<span class="op">%&gt;%</span><span class="kw">filter</span>(part<span class="op">!=</span><span class="st">&quot;hum&quot;</span>),<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">xend =</span> x, <span class="dt">yend =</span> y),<span class="dt">size=</span><span class="dv">3</span>,<span class="dt">col=</span><span class="st">&quot;gray&quot;</span>)<span class="op">+</span><span class="kw">geom_segment</span>(<span class="dt">data=</span>arm.m<span class="op">%&gt;%</span><span class="kw">filter</span>(part<span class="op">==</span><span class="st">&quot;hum&quot;</span>),<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="dv">0</span>, <span class="dt">xend =</span> <span class="dv">0</span>, <span class="dt">yend =</span> <span class="dv">1</span>), <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>,<span class="dt">size=</span><span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb1-34" data-line-number="34"> </a>
-<a class="sourceLine" id="cb1-35" data-line-number="35"> <span class="co">#add points</span></a>
-<a class="sourceLine" id="cb1-36" data-line-number="36"> p &lt;-<span class="st"> </span>p<span class="op">+</span><span class="kw">geom_point</span>(<span class="dt">dat=</span>arm.m<span class="op">%&gt;%</span><span class="kw">filter</span>(part<span class="op">!=</span><span class="st">&quot;hand&quot;</span>),<span class="kw">aes</span>(x,y,<span class="dt">col=</span>part),<span class="dt">size=</span><span class="dv">4</span>)<span class="op">+</span><span class="kw">xlim</span>(<span class="kw">c</span>(<span class="op">-</span>.<span class="dv">5</span>,<span class="fl">1.5</span>))<span class="op">+</span><span class="kw">ylim</span>(<span class="kw">c</span>(<span class="op">-</span><span class="fl">1.2</span>,<span class="fl">1.2</span>)) </a>
-<a class="sourceLine" id="cb1-37" data-line-number="37"> </a>
-<a class="sourceLine" id="cb1-38" data-line-number="38"> <span class="co">#add muscle lines</span></a>
-<a class="sourceLine" id="cb1-39" data-line-number="39"> p &lt;-<span class="st"> </span>p<span class="op">+</span><span class="kw">geom_curve</span>(<span class="dt">data=</span>arm.m<span class="op">%&gt;%</span><span class="kw">filter</span>(part<span class="op">==</span><span class="st">&quot;inlever&quot;</span>),<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="dv">1</span>, <span class="dt">xend =</span> x, <span class="dt">yend =</span> y),<span class="dt">curvature =</span> <span class="fl">-0.3</span>,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span><span class="kw">geom_curve</span>(<span class="dt">data=</span>arm.m<span class="op">%&gt;%</span><span class="kw">filter</span>(part<span class="op">==</span><span class="st">&quot;inlever&quot;</span>),<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="dv">1</span>, <span class="dt">xend =</span> x, <span class="dt">yend =</span> y),<span class="dt">curvature =</span> <span class="fl">0.0</span>,<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a>
-<a class="sourceLine" id="cb1-40" data-line-number="40"> </a>
-<a class="sourceLine" id="cb1-41" data-line-number="41"> <span class="co">#add emoji hand</span></a>
-<a class="sourceLine" id="cb1-42" data-line-number="42"> p &lt;-<span class="st"> </span>p<span class="op">+</span><span class="kw">geom_text</span>(<span class="dt">data=</span>arm.m<span class="op">%&gt;%</span><span class="kw">filter</span>(part<span class="op">==</span><span class="st">&quot;hand&quot;</span>),<span class="kw">aes</span>(x,y,<span class="dt">label=</span><span class="kw">emoji</span>(<span class="st">&quot;hand&quot;</span>),<span class="dt">angle=</span>pos2<span class="op">*-</span><span class="dv">1</span>),<span class="dt">family=</span><span class="st">&quot;EmojiOne&quot;</span>, <span class="dt">size=</span><span class="dv">20</span>,<span class="dt">vjust=</span><span class="dv">0</span>,<span class="dt">hjust=</span>.<span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb1-43" data-line-number="43"> </a>
-<a class="sourceLine" id="cb1-44" data-line-number="44"> <span class="kw">print</span>(p)</a>
-<a class="sourceLine" id="cb1-45" data-line-number="45"> </a>
-<a class="sourceLine" id="cb1-46" data-line-number="46"> <span class="co">#get rid of axes and background</span></a>
-<a class="sourceLine" id="cb1-47" data-line-number="47">p&lt;-<span class="st"> </span>p<span class="op">+</span><span class="kw">theme_void</span>()</a>
-<a class="sourceLine" id="cb1-48" data-line-number="48"> </a>
-<a class="sourceLine" id="cb1-49" data-line-number="49"></a>
-<a class="sourceLine" id="cb1-50" data-line-number="50"><span class="co">#transition according to arm position and make pretty</span></a>
-<a class="sourceLine" id="cb1-51" data-line-number="51"> anim &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">transition_states</span>(pos,<span class="dt">transition_length =</span> <span class="dv">10</span>,<span class="dt">state_length =</span> <span class="dv">70</span>)<span class="op">+</span><span class="kw">shadow_wake</span>(.<span class="dv">01</span>)<span class="op">+</span><span class="kw">enter_fade</span>()<span class="op">+</span><span class="kw">exit_fade</span>()</a>
-<a class="sourceLine" id="cb1-52" data-line-number="52">  </a>
-<a class="sourceLine" id="cb1-53" data-line-number="53"><span class="kw">anim_save</span>(<span class="st">&quot;arm.gif&quot;</span>, anim)</a></code></pre></div>
-<p><img src="arm.gif" /></p>
-<p>The tree on the left is the unscaled phylogeny, the tree we’ll use in our analyses. The tree in the middle, with <span class="math inline">\(\lambda\)</span>=0.5, rescales the tip branches, making the tips branch longer, allowing more phylogenetic independence between species. As you can see, the tree on the right, with a <span class="math inline">\(\lambda\)</span>=0 removes the phylogenetic information form the tree, i.e., all species don’t covary according to their phylogenetic position. When we use Pagel’s <span class="math inline">\(\lambda\)</span> to assess phylogenetic signal of a character, we interate through values to 0 to 1 to find rescaled branch lengths that optimize the covariance of the character according to Brownian motion. As a reminder, values near 1 indicate strong phylogenetic signal, while values close to 0 indicate none.</p>
-<p>Now let’s assess phylogenetic signal for some simulated trait data over the mammal tree. We’ll use <code>phytools</code>’s <code>phylosig()</code> function to do this after simulating some random trait.</p>
-<p>Here we simulated some random data (values from 0–1) for the number of tips on the tree using <code>runif()</code> to generate the values and <code>Ntip()</code> from the <code>ape</code> package to retrieve the number of tips (i.e., species) in the tree. We named these values with the tip labels from the tree, an important step. The <code>phylosig()</code> function in <code>phytools</code> requires that a vector of trait values must have names that match the tips in the tree. In your analyses <strong>make sure you name your variable values with the species from your dataset</strong>, not the tip labels. The order for these will certainly be different and, if not correct, will make any analysis rubbish.</p>
-<div class="green">
-<div class="row">
-<div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
-</div>
-<div class="col-sm-9">
-<p>Note: You won’t need to include thes specific chunks, only to reproduce the Pagels’ <span class="math inline">\(\lambda\)</span> analysis for <span class="math inline">\(T_b\)</span> variables with the <code>phylosig()</code>function from <code>phytools</code>.</p>
-</div>
-</div>
-</div>
+<div id="elbow-angle" class="section level3">
+<h3>Elbow Angle</h3>
+<p>You’ll first need to construct a ganiometer, a simple device that measures the angle between the upper and lower arm (i.e., the elbow angle). One approach is to use the outline of a small plate to cut a disc out of cardboard and then bisect the diameter and then continue to bisect this semicircle into equal segments (Fig. 4.)</p>
+<center>
+<img src="gan.jpg" style="width:50.0%" /> <br> <strong>Fig. 4</strong> A simple ganiometer made of cardboard.
+</center>
 <p><br></p>
-<p>For the <code>phylogsig()</code> operation, we set the <code>method</code> to “lambda” for Pagels’ <span class="math inline">\(\lambda\)</span> and <code>test=T</code> so that the function performs a likelihood ratio test (LRT). If you remember from reading the appropriate <a href="https://lukejharmon.github.io/pcm/chapter2_stats/#section-2.3b-the-likelihood-ratio-test">section in Luke Harmon’s PCM book</a>, a likelihood ratio test assesses the goodness of fit of two related statistical models based on the ratio of their likelihoods. In this context, we’re comparing the likelihoods of a model that includes an optimization of the <span class="math inline">\(\lambda\)</span> value versus on one that has a <span class="math inline">\(\lambda\)</span> value of 0, that is, no phylogenetic signal. As you can see from the results, the phylogenetic signal is extremely low at 6.6107e-05 and the result of the LRT, with a likelihood ratio of -0.0008, is nonsignifcant at p=1. That is, the phylogenetic signal is essentially 0 for these simulated data and, not suprisingly, there’s a probability of 1 that the value is not different than 0.</p>
-<p>Now that you’ve been introduced to Pagel’s <span class="math inline">\(\lambda\)</span>, undertake such an analysis of all four variables in the data. In your analyses, be sure to include a table of these results that indicates the estimated <span class="math inline">\(\lambda\)</span> value and p values from the LHTs.</p>
-<div class="green">
-<div class="row">
-<div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
-</div>
-<div class="col-sm-9">
-<p>You’ll notice that we’re doing many of these phylogenetic comparative analyses without the principles of the tidyverse, i.e., no pipe, etc. Most of the functions written in R packages for comparative methods don’t play well with tidy workflows. Be sure to pay attention to the pieces of advice given in this and other project descriptions to reduce headaches when performing comparative analyses.</p>
-</div>
-</div>
-</div>
+<p>To use the ganiometer, find the center of the elbow joint in lateral view and mark this position with a marker. From this point, mark a line along the lateral margin of the radius. (Fig. 5). Then, poke a hole through the center of the ganiometer and affix it to the upper arm so its center aligns with your mark at the elbow joint and the 0-180<span class="math inline">\(^o\)</span> axis aligns with the long axis of the humerus (Fig. 6).You can affix the ganiometer to the upper arm by passing a strip of surgical tape through two tabs cut out on either side of the 0-180<span class="math inline">\(^o\)</span> axis (Fig. 6).</p>
+<center>
+<img src="joint.jpg" style="width:50.0%" /> <br> <strong>Fig. 4</strong> The elbow joint on a tiny human and the lateral margin of the radius marked with a dark line. Thanks, Zo!
+</center>
 <p><br></p>
+<center>
+<img src="90deg.jpg" style="width:50.0%" /> <br> <strong>Fig. 5</strong> The ganiometer affixed to the upper arm with surgical tape with its center placed over the elbow joint. Note how the marked line on the radius indicates an elbow angle of about 90<span class="math inline">\(^o\)</span>.
+</center>
+<p><br></p>
+<p>As the elbow flexes or extends, you should be able to peak at the ganiometer to assess elbow angle.</p>
 </div>
-<div id="pgls-analysis-of-t_b-variables" class="section level2">
-<h2>PGLS Analysis of <span class="math inline">\(T_b\)</span> Variables</h2>
-<p>Now that we have assessed phylogenetic signals for our four variables, procede with PGLS analyses of log-log regression models that include the three <span class="math inline">\(T_b\)</span> variables versus mass. For each regression, construct a PGLS model that includes both a BM and OU model of trait evolution using the tree provide for the species in <span class="citation">Mortola and Lanthier (2004)</span>. Be sure to assess which of these models fits the data best. From each of your best-fitting models, extract the slope (i.e, the scaling coefficient) and intercept and then perform an ANOVA test to evaluate the significance of these parameters. Report these values in table with an appropriate caption.</p>
+<div id="isometric-mvcs" class="section level3">
+<h3>Isometric MVCs</h3>
+<p>We will collect isometric force data from MVCs over 12 arm angles, 45-157.5<span class="math inline">\(^o\)</span> at 11.25<span class="math inline">\(^o\)</span> (call it 11<span class="math inline">\(^o\)</span>) intervals. Your load-cell is affixed to two hooks. Attach one hook to the dowel in your DAQ pack and the other to something that won’t move under the torque of your for arm. This could be a table, chair, bench, etc. Hold the dowel in your hand as shown in Fig. 6. Make sure your elbow is supported by something rigid (i.e. the top of a chair back, etc.).</p>
+<center>
+<img src="grip.jpg" style="width:50.0%" /> <br> <strong>Fig. 6</strong> How to grip the the load-cell.
+</center>
+<p><br></p>
+<p>First collect your control (i.e., non-fatigued) data by starting at the largest arm angle, 157.5<span class="math inline">\(^o\)</span>. You can move through the 12 arm angles by rotating your body about your hips. That is, at the high elbow angles, you’ll be more upright, at lower angles, more bent over. At each angle, flex your elbow as hard as you can to produce a MVC, resetting your DAQ system each time. Make sure the load-cell forms a right angle with reference to your hand (Fig. 6). You might want to practice a few times to get a sense of how this will proceed.</p>
 </div>
-<div id="reassessing-the-results-of-mortola2004scaling" class="section level2">
-<h2>Reassessing the Results of <span class="citation">Mortola and Lanthier (2004)</span></h2>
-<p>After reconstructing the models for <span class="math inline">\(T_b\)</span> scaling in <span class="citation">Mortola and Lanthier (2004)</span>, assessing phylogenetic signal, and constructing phylogenetically corrected models of your own, compare and contrast these findings. Should important findings in <span class="citation">Mortola and Lanthier (2004)</span> with regards to <span class="math inline">\(T_b\)</span> variables be challenged? Did any of the signficant findings in <span class="citation">Mortola and Lanthier (2004)</span> become insignifcant or significant when they weren’t before?</p>
+<div id="mvcs-after-eccentric-fatigue" class="section level3">
+<h3>MVCs after Eccentric Fatigue</h3>
+<p>To eccentrically fatigue your forearm flexors, you’ll perform isokinetic controlled drops of a heavy object weighing 1/3 your maximum isometric force recorded in the control experiments. A book bag or back pack full of heavy items (ahhh. . . books) should do just fine.</p>
+<p>To perform your isokinetic eccentric drops, grab the book bag with the hand not involved in the experiment and pass it to the other as its forearm is fully flexed. With the bag now in your study hand, lower the bag slowly and at a constant speed. When the arm is fully extended, grab the book bag with the free hand and then flex the study forearm. Repeat by passing the bag to your study hand. Continue repeating this exercise for 3 min. Keep the cycles uniformly frequent by monitoring the duration (probably 3-4 s each cycle). At the end of the 3 mins, your forearm flexors should feel tired.</p>
+<p>After you fatigue your flexors, wait 2 min. Then repeat the experiment exactly as you did for the control data.</p>
+<p>Once you complete your experiments, upload your 24 data files to <a href="https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing">this Google directory</a>. Be sure to name your files according to the following convention: “team_subject_angle_control/fatigue.csv”. Please stick to all lower case.</p>
+</div>
+</div>
+<div id="summary-of-experimental-protocol" class="section level2">
+<h2>Summary of Experimental Protocol</h2>
+<ul>
+<li>Fabricate and program a load-cell data acquisition system.</li>
+<li>Make a ganiometer.</li>
+<li>Record isometric MVCs at 12 distinct elbow angles.</li>
+<li>Eccentrically fatigue your flexors.</li>
+<li>Wait 2 minutes.</li>
+<li>Repeat recording isometric MVCs at the same 12 distinct elbow angles.</li>
+<li>Upload data to <a href="https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing">this directory</a>.</li>
+</ul>
+</div>
+<div id="data-analysis" class="section level2">
+<h2>Data Analysis</h2>
+<p>For each experiment, we’ll stick to a convention within the muscle physiology world by considering maximum normalized force. That is:</p>
+<ol style="list-style-type: decimal">
+<li>Find maximum force for each recording (don’t worry about the specific values or units because you’ll. . .).</li>
+<li>Find maximum force (<span class="math inline">\(F_{max}\)</span>) among all angles for each experiment (control or fatigued) for each individual and then divide all maximum values for that experiment by <span class="math inline">\(F_{max}\)</span>. You values will now be normalize, i.e., scaled 0-1 with a value of 1 representing the highest force recorded during an experiment.</li>
+</ol>
+<p>Using the normalized force data from the control and fatigued experiments, we’ll consider shifts the at which angle <span class="math inline">\(F_{max}\)</span> occurred, the difference in <span class="math inline">\(\theta_{max}\)</span>. To assess any shift in <span class="math inline">\(\theta_{max}\)</span> with our limited elbow angle samples, we could simply look at the angle at which the flexors produce the most force. For instance, for the these data:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">ang &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">45</span>,<span class="fl">168.75</span>,<span class="dt">length.out =</span> <span class="dv">12</span>) <span class="co">#elbow angle</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">normF &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.71</span>, <span class="fl">0.77</span>, <span class="fl">0.83</span>, <span class="fl">0.91</span>, <span class="fl">0.97</span>, <span class="fl">1.00</span>, <span class="fl">0.96</span>, <span class="fl">0.94</span>, <span class="fl">0.89</span>, <span class="fl">0.84</span>, <span class="fl">0.77</span>, <span class="fl">0.74</span>) <span class="co">#you&#39;ll get this by reading in data and calculating normalized values</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">qplot</span>(ang,normF)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ang[<span class="kw">which.max</span>(normF)],<span class="dt">y=</span>normF[<span class="kw">which.max</span>(normF)]),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">size=</span><span class="dv">4</span>)</a></code></pre></div>
+<p><img src="mod8_proj_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">ang[<span class="kw">which.max</span>(normF)] <span class="co">#Find angle for Fmax, theta_max</span></a></code></pre></div>
+<pre><code>## [1] 101.25</code></pre>
+<p>So, of the 12 angles that we sampled (45–157.5<span class="math inline">\(^o\)</span>), the maximum isometric force occurred at angle (<span class="math inline">\(\theta_{max}\)</span>=) 101.25<span class="math inline">\(^o\)</span>. Simply doing this overlooks the fact that the maximum force could have occurred between any two of the sampled angles. Given the trend in the figure above, <span class="math inline">\(\theta_{max}\)</span> could have been an angle either greater and less than 101.25<span class="math inline">\(^o\)</span>. To estimate the trend and find a perhaps more refined estimation of <span class="math inline">\(F_{max}\)</span> we’ll resort to (wait for it) . . . modeling. In this case, a series of <a href="https://en.wikipedia.org/wiki/Polynomial_regression">polynomial models</a> should work. Polynomial models are great for fitting parabolic data like those we have here, but are tricky in that one can keep adding monomial terms very quickly to achieve a better fit. This requires the practitioner to make sure that they are not overfitting the model. Fortunately, we have the tools to prevent such a thing using AIC, as we have learned.</p>
+<p>Therefore, let’s fit some polynomial models to our example data with a different number of monomial terms (i.e., orders) and tease apart the fit and penalty for including more terms using AICc. Fortunately, we can use the <code>lm()</code> and <code>poly()</code> functions from the base package to fit the models and use <code>AICc()</code> from the <code>MuMIn</code> package for AICc fitting.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(MuMIn)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">poly.m2 &lt;-<span class="st"> </span><span class="kw">lm</span>(normF<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">2</span>)) <span class="co">#second order</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">poly.m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(normF<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">3</span>)) <span class="co">#third order</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">poly.m4 &lt;-<span class="st"> </span><span class="kw">lm</span>(normF<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">4</span>)) <span class="co">#fourth order</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw">AICc</span>(poly.m2,poly.m3,poly.m4) <span class="co">#the second order model fits best</span></a></code></pre></div>
+<pre><code>##         df      AICc
+## poly.m2  4 -43.90316
+## poly.m3  5 -39.60496
+## poly.m4  6 -49.47748</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">x.pred &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">45</span>,<span class="fl">157.5</span>,<span class="dt">length.out =</span> <span class="dv">1000</span>) <span class="co">#define 1000 angles from our range</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">normF.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(poly.m4,<span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)) <span class="co">#predict the force using 1000 angles</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw">qplot</span>(ang,normF)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x.pred,<span class="dt">y=</span>normF.pred),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x.pred[<span class="kw">which.max</span>(normF.pred)],<span class="dt">y=</span>normF.pred[<span class="kw">which.max</span>(normF.pred)]),<span class="dt">size=</span><span class="dv">5</span>,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<p><img src="mod8_proj_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">x.pred[<span class="kw">which.max</span>(normF.pred)] <span class="co">#theta_max</span></a></code></pre></div>
+<pre><code>## [1] 104.9099</code></pre>
+<p>In this example we constructed 3 polynomial models of the 2nd, 3rd, 4th variety and then used AICc to find the lowest AICc score. The 4th order model fits best, so we then produced 1000 discrete values within our range with <code>seq()</code> to pass to<code>predict()</code> to predict force over this range using our best fitting model (producing <code>normF.pred</code>). We then found the max of <code>normF.pred</code> (the <span class="math inline">\(F_{max}\)</span>) and plotted that, along with our predictions. Lastly, we found <span class="math inline">\(\theta_{max}\)</span>, a value of 104.9.</p>
+<p>A goal of this project is to detect shifts in <span class="math inline">\(F_{max}\)</span> with respect to angle. If we had two data sets, one control and one produced after fatigue, we merely need to compare the two <span class="math inline">\(\theta_{max}\)</span>, that is, the shift in angle for <span class="math inline">\(F_{max}\)</span> predicted by two polynomial models. This would look something like this:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">normF.fat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.65</span>, <span class="fl">0.71</span>, <span class="fl">0.81</span>, <span class="fl">0.89</span>,<span class="fl">0.92</span>, <span class="fl">0.96</span>, <span class="fl">0.99</span>, <span class="dv">1</span>, <span class="fl">0.96</span>, <span class="fl">0.92</span>, <span class="fl">0.84</span>, <span class="fl">0.77</span>) <span class="co">#fatigue data, you&#39;ll get this by reading in data and calculating normalized values</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="kw">qplot</span>(ang,normF.fat)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ang[<span class="kw">which.max</span>(normF.fat)],<span class="dt">y=</span>normF.fat[<span class="kw">which.max</span>(normF.fat)]),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">size=</span><span class="dv">4</span>)</a></code></pre></div>
+<p><img src="mod8_proj_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">ang[<span class="kw">which.max</span>(normF.fat)] <span class="co">#Find angle for Fmax for fatigue data</span></a></code></pre></div>
+<pre><code>## [1] 123.75</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">poly.m2.fat &lt;-<span class="st"> </span><span class="kw">lm</span>(normF.fat<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">2</span>)) <span class="co">#second order</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">poly.m3.fat &lt;-<span class="st"> </span><span class="kw">lm</span>(normF.fat<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">3</span>)) <span class="co">#third order</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">poly.m4.fat &lt;-<span class="st"> </span><span class="kw">lm</span>(normF.fat<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">4</span>)) <span class="co">#fourth order</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="kw">AICc</span>(poly.m2.fat,poly.m3.fat,poly.m4.fat) <span class="co">#the second order model fits best</span></a></code></pre></div>
+<pre><code>##             df      AICc
+## poly.m2.fat  4 -54.91075
+## poly.m3.fat  5 -55.05750
+## poly.m4.fat  6 -49.10034</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">normF.pred.fat &lt;-<span class="st"> </span><span class="kw">predict</span>(poly.m2.fat,<span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)) <span class="co">#predict the force using 1000 angles</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="kw">qplot</span>(ang,normF)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x.pred,<span class="dt">y=</span>normF.pred.fat),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x.pred[<span class="kw">which.max</span>(normF.pred.fat)],<span class="dt">y=</span>normF.pred.fat[<span class="kw">which.max</span>(normF.pred.fat)]),<span class="dt">size=</span><span class="dv">5</span>,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<p><img src="mod8_proj_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">x.pred[<span class="kw">which.max</span>(normF.pred.fat)]<span class="op">-</span>x.pred[<span class="kw">which.max</span>(normF.pred)] <span class="co">#shift in angle for Fmax, theta_max</span></a></code></pre></div>
+<pre><code>## [1] 10.24775</code></pre>
+<p>Looks as if there’s a 10.3<span class="math inline">\(^o\)</span> shift in <span class="math inline">\(\theta_{max}\)</span>.</p>
+<p>Say we had a bunch of data (from only 10 subjects) and you wanted to compare the control against fatigued data graphically, you could do the following. First we’ll simulate some control and fatigue data, adding random noise drawn form a normal distribution and plot the data with a color according to experiment to quickly assess the pattern.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
+## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.5.0
+## ✓ purrr   0.3.4</code></pre>
+<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1234</span>) <span class="co">#to keep random noise the same</span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">sub &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span> <span class="co">#ten subjects</span></a>
+<a class="sourceLine" id="cb21-5" data-line-number="5">dat.l &lt;-<span class="st"> </span><span class="kw">list</span>() <span class="co">#empty list</span></a>
+<a class="sourceLine" id="cb21-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="co">#loop to run through subjects and simulate data based on noise added to data above</span></a>
+<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="cf">for</span>(i <span class="cf">in</span> sub){</a>
+<a class="sourceLine" id="cb21-9" data-line-number="9">  noise &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(ang),<span class="dt">mean =</span> <span class="fl">0.02</span>,<span class="dt">sd =</span> <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb21-10" data-line-number="10">  noise2 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(ang),<span class="dt">mean =</span> <span class="fl">0.02</span>,<span class="dt">sd =</span> <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb21-11" data-line-number="11">  dat.l[[i]] &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb21-12" data-line-number="12">    <span class="kw">rbind</span>(</a>
+<a class="sourceLine" id="cb21-13" data-line-number="13">      <span class="kw">data.frame</span>(ang,<span class="dt">force=</span>normF<span class="op">+</span>noise,<span class="dt">subject=</span>i,<span class="dt">exp=</span><span class="st">&quot;control&quot;</span>),</a>
+<a class="sourceLine" id="cb21-14" data-line-number="14">      <span class="kw">data.frame</span>(ang,<span class="dt">force=</span>normF.fat<span class="op">+</span>noise2,<span class="dt">subject=</span>i,<span class="dt">exp=</span><span class="st">&quot;fatigue&quot;</span>)</a>
+<a class="sourceLine" id="cb21-15" data-line-number="15">  )  </a>
+<a class="sourceLine" id="cb21-16" data-line-number="16">  )<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-17" data-line-number="17"><span class="st">    </span><span class="kw">group_by</span>(subject,exp)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-18" data-line-number="18"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">force=</span>force<span class="op">/</span><span class="kw">max</span>(force))</a>
+<a class="sourceLine" id="cb21-19" data-line-number="19">  </a>
+<a class="sourceLine" id="cb21-20" data-line-number="20">}</a>
+<a class="sourceLine" id="cb21-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb21-22" data-line-number="22">dat &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind,dat.l) <span class="co">#get data into one tibble</span></a>
+<a class="sourceLine" id="cb21-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb21-24" data-line-number="24">dat<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb21-25" data-line-number="25"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(ang,force,<span class="dt">col=</span>exp))<span class="op">+</span><span class="kw">geom_point</span>()</a></code></pre></div>
+<p><img src="mod8_proj_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Now let’s take our data and get AICc scores for our three polynomial models. We’ll group the data by subject and experiment and retrieve AICc from each model (<code>m2</code>, <code>m3</code>, and <code>m4</code>). Then, we’ll pivot the tibble to a longer format so that we have a single column for AICc values.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">AICs &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(subject,exp)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(</a>
+<a class="sourceLine" id="cb22-4" data-line-number="4">    <span class="dt">m2=</span><span class="kw">AICc</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">2</span>))), <span class="co">#second order</span></a>
+<a class="sourceLine" id="cb22-5" data-line-number="5">    <span class="dt">m3=</span><span class="kw">AICc</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">3</span>))), <span class="co">#third order</span></a>
+<a class="sourceLine" id="cb22-6" data-line-number="6">    <span class="dt">m4=</span><span class="kw">AICc</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">4</span>))) <span class="co">#fourth order</span></a>
+<a class="sourceLine" id="cb22-7" data-line-number="7">  )<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-8" data-line-number="8"><span class="st">  </span><span class="kw">pivot_longer</span>(m2<span class="op">:</span>m4,<span class="dt">names_to=</span><span class="st">&quot;model&quot;</span>,<span class="dt">values_to=</span><span class="st">&quot;AICc&quot;</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 60 x 4
+## # Groups:   subject [10]
+##    subject exp     model  AICc
+##      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;
+##  1       1 control m2    -43.2
+##  2       1 control m3    -39.3
+##  3       1 control m4    -42.5
+##  4       1 fatigue m2    -49.3
+##  5       1 fatigue m3    -46.0
+##  6       1 fatigue m4    -37.7
+##  7       2 control m2    -43.8
+##  8       2 control m3    -39.4
+##  9       2 control m4    -55.2
+## 10       2 fatigue m2    -57.6
+## # … with 50 more rows</code></pre>
+<p>Now we’ll do something very similar, predicting values for 1000 discrete angles across our range of elbow positions. Notice that we’ve summarized the data by subject, experiment and model to find the angle (<code>x.pred</code>) which matches the max force value.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">fits &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(subject,exp)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(</a>
+<a class="sourceLine" id="cb24-4" data-line-number="4">    <span class="dt">m2=</span><span class="kw">predict</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">2</span>)),<span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)), <span class="co">#second order</span></a>
+<a class="sourceLine" id="cb24-5" data-line-number="5">    <span class="dt">m3=</span><span class="kw">predict</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">3</span>)),<span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)), <span class="co">#third order</span></a>
+<a class="sourceLine" id="cb24-6" data-line-number="6">    <span class="dt">m4=</span><span class="kw">predict</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">4</span>)),<span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)) <span class="co">#fourth order</span></a>
+<a class="sourceLine" id="cb24-7" data-line-number="7">  )<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-8" data-line-number="8"><span class="st">   </span><span class="kw">pivot_longer</span>(m2<span class="op">:</span>m4,<span class="dt">names_to=</span><span class="st">&quot;model&quot;</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-9" data-line-number="9"><span class="st">   </span><span class="kw">group_by</span>(subject,exp,model)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-10" data-line-number="10"><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">theta_max=</span>x.pred[<span class="kw">which.max</span>(value)])<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-11" data-line-number="11"><span class="st">   </span><span class="kw">print</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 60 x 4
+## # Groups:   subject, exp [20]
+##    subject exp     model theta_max
+##      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;
+##  1       1 control m2         107.
+##  2       1 control m3         103.
+##  3       1 control m4         104.
+##  4       1 fatigue m2         115.
+##  5       1 fatigue m3         118.
+##  6       1 fatigue m4         117.
+##  7       2 control m2         107.
+##  8       2 control m3         103.
+##  9       2 control m4         105.
+## 10       2 fatigue m2         115.
+## # … with 50 more rows</code></pre>
+<p>Now let’s join these the <code>AICs</code> and <code>fits</code> tables so that we can filter the model predictions by which model fits best. Note <code>filter(best==TRUE)</code> after constructing a <code>best</code> column according to the minimum AICc score using <code>mutate()</code>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">best.models &lt;-<span class="st"> </span>fits<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(AICs)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(subject,exp)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">best=</span>AICc<span class="op">==</span><span class="kw">min</span>(AICc))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-5" data-line-number="5"><span class="st">  </span><span class="kw">filter</span>(best<span class="op">==</span><span class="ot">TRUE</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>best)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb26-7" data-line-number="7"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<pre><code>## Joining, by = c(&quot;subject&quot;, &quot;exp&quot;, &quot;model&quot;)</code></pre>
+<pre><code>## # A tibble: 20 x 5
+## # Groups:   subject, exp [20]
+##    subject exp     model theta_max  AICc
+##      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
+##  1       1 control m2         107. -43.2
+##  2       1 fatigue m2         115. -49.3
+##  3       2 control m4         105. -55.2
+##  4       2 fatigue m2         115. -57.6
+##  5       3 control m4         107. -47.7
+##  6       3 fatigue m3         119. -57.2
+##  7       4 control m4         104. -55.4
+##  8       4 fatigue m3         120. -51.9
+##  9       5 control m4         103. -48.9
+## 10       5 fatigue m2         115. -51.3
+## 11       6 control m4         103. -41.7
+## 12       6 fatigue m3         120. -53.7
+## 13       7 control m4         104. -48.0
+## 14       7 fatigue m3         120. -55.9
+## 15       8 control m2         107. -48.5
+## 16       8 fatigue m3         116. -65.9
+## 17       9 control m4         103. -48.3
+## 18       9 fatigue m2         115. -52.3
+## 19      10 control m4         105. -49.3
+## 20      10 fatigue m2         115. -55.0</code></pre>
+<p>To investigate whether a shift if <span class="math inline">\(\theta_{max}\)</span> is different between the control and fatigue experiments, we can run the following ANOVA.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">anova</span>(<span class="kw">lm</span>(theta_max<span class="op">~</span>exp,best.models))</a></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: theta_max
+##           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## exp        1 749.21  749.21  180.18 8.144e-11 ***
+## Residuals 18  74.85    4.16                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Lastly, we should calculate the mean shift with SEM. To find the shift, we can pivot the <code>best.models</code> tibble to a wider format so we can have <span class="math inline">\(\theta_{max}\)</span> for each experiment in separate columns and find the difference with <code>mutate()</code>. Then, <code>summarise()</code> can be used to find the mean and SEM.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">best.models<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">id_cols=</span>subject,<span class="dt">names_from =</span> exp,<span class="dt">values_from=</span>theta_max)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">shift=</span>fatigue<span class="op">-</span>control)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean.shift=</span><span class="kw">mean</span>(shift),<span class="dt">se.shift=</span><span class="kw">sd</span>(shift)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">length</span>(shift)))</a></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 10 x 3
+##    subject mean.shift se.shift
+##      &lt;int&gt;      &lt;dbl&gt;    &lt;dbl&gt;
+##  1       1       8.33       NA
+##  2       2       9.91       NA
+##  3       3      12.3        NA
+##  4       4      15.8        NA
+##  5       5      12.6        NA
+##  6       6      16.8        NA
+##  7       7      16.0        NA
+##  8       8       9.12       NA
+##  9       9      11.6        NA
+## 10      10      10.0        NA</code></pre>
 </div>
 </div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
 <p>Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following questions:</p>
 <ul>
-<li>Could you and your team reproduce the scaling relationships (i.e. log-log regression models) of <span class="citation">Mortola and Lanthier (2004)</span> for <span class="math inline">\(T_{min}\)</span>,<span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>&gt;k?</li>
-<li>Was there any signficant phylogentic signal in the four variables in question (i.e., mass, <span class="math inline">\(T_{min}\)</span>, <span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>)?</li>
-<li>After reanalyzing these models that included any variables with significant phylogentic signal in a PCM context under BM and OU models of trait evolution, which phylogentically corrected models fit best?</li>
-<li>Are new phylogenetically informed parameter estimates (i.e, intercept and slope coefficients) different than those in <span class="citation">Mortola and Lanthier (2004)</span> and has their significance changed?</li>
-<li>If any of the results concerning <span class="math inline">\(T_b\)</span> scaling patterns should be reinterpreted due to your phylogenetically informed analysis, how should the conclusions of <span class="citation">Mortola and Lanthier (2004)</span> be reframed?</li>
+<li>Do class-wide force-angle data for isometric MVC accord to a typical FL relationship both under control and fatigued conditions?</li>
+<li>Is there a significant shift between <span class="math inline">\(\theta_{max}\)</span> between the control and fatigue FL relationships?</li>
 </ul>
 <p>In answering these questions, be sure to use the visualization, modeling, and model-assessments tools we’ve used in the course so far.</p>
-<p>In answering your question, your .Rmd should include the following components:</p>
+<p>The answers and narrative in your .Rmd should include the following components:</p>
 <ul>
-<li>A YAML header that specifies HTML output, the authors, and a bibliograph named “BIOL3140.bib”. <strong>Submit this bibliography as well!</strong></li>
-<li>Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially:
+<li>A YAML header that specifies HTML output, the authors, and a bibliography named “BIOL3140.bib”. <strong>Submit this bibliography as well!</strong></li>
+<li>Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifically:
 <ul>
 <li>Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. <strong>Please include at least one reference to support the summary of previous work.</strong> Note: this can be done easily by refiguring the introduction to this project report.</li>
-<li>Methods: Explicitly state how you answered the questions, including a narrative of all the anlyses both qualitative and quantitative.</li>
+<li>Methods: Explicitly state how you answered the questions, including a narrative of all the analyses both qualitative and quantitative.</li>
 <li>Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.</li>
 <li>Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. <strong>Please include at least one reference to another relevant study.</strong> Note: circling back to the introductions, both to this project description and yours, will be helpful here.</li>
-<li>Author contributions: Breifly outline what each team member contributed to the project.</li>
+<li>Author contributions: Briefly outline what each team member contributed to the project.</li>
 </ul></li>
 </ul>
-<p>Project reports should be uploaded by 11:59 PM on Sunday, November 1st.</p>
+<p>Project reports should be uploaded by 11:59 PM on Sunday, November 15th.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
@@ -680,23 +846,11 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
 <div id="refs" class="references">
-<div id="ref-felsenstein1985phylogenies">
-<p>Felsenstein, Joseph. 1985. “Phylogenies and the Comparative Method.” <em>The American Naturalist</em> 125 (1): 1–15.</p>
+<div id="ref-rassier1999length">
+<p>Rassier, DE, BR MacIntosh, and W Herzog. 1999. “Length Dependence of Active Force Production in Skeletal Muscle.” <em>Journal of Applied Physiology</em> 86 (5). American Physiological Society Bethesda, MD: 1445–57.</p>
 </div>
-<div id="ref-freckleton2002phylogenetic">
-<p>Freckleton, Rob P, Paul H Harvey, and Mark Pagel. 2002. “Phylogenetic Analysis and Comparative Data: A Test and Review of Evidence.” <em>The American Naturalist</em> 160 (6): 712–26.</p>
-</div>
-<div id="ref-mortola2004scaling">
-<p>Mortola, Jacopo P, and Clement Lanthier. 2004. “Scaling the Amplitudes of the Circadian Pattern of Resting Oxygen Consumption, Body Temperature and Heart Rate in Mammals.” <em>Comparative Biochemistry and Physiology Part A: Molecular &amp; Integrative Physiology</em> 139 (1): 83–95.</p>
-</div>
-<div id="ref-upham2019inferring">
-<p>Upham, Nathan S, Jacob A Esselstyn, and Walter Jetz. 2019. “Inferring the Mammal Tree: Species-Level Sets of Phylogenies for Questions in Ecology, Evolution, and Conservation.” <em>PLoS Biology</em> 17 (12): e3000494.</p>
-</div>
-<div id="ref-uyeda2018rethinking">
-<p>Uyeda, Josef C, Rosana Zenil-Ferguson, and Matthew W Pennell. 2018. “Rethinking Phylogenetic Comparative Methods.” <em>Systematic Biology</em> 67 (6): 1091–1109.</p>
-</div>
-<div id="ref-westoby1995further">
-<p>Westoby, Mark, Michelle Leishman, and Janice Lord. 1995. “Further Remarks on Phylogenetic Correction.” <em>Journal of Ecology</em> 83 (4): 727–29.</p>
+<div id="ref-yeung2008shift">
+<p>Yeung, SS, and EW Yeung. 2008. “Shift of Peak Torque Angle After Eccentric Exercise.” <em>International Journal of Sports Medicine</em> 29 (03): 251–56.</p>
 </div>
 </div>
 </div>

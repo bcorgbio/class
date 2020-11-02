@@ -312,7 +312,7 @@ All assignments are due at 11:59 on the specified date.
 
 # Module 5: Cheap Tricks in Physiology: Designing and Programming Simple, Low-Cost Data Acquisition Systems
 
-This module is intended to give students the background and skills to begin designing and programing of simple hardware devices using Arduino.
+This module is intended to give students the background and skills to begin designing and programming of simple hardware devices using Arduino.
 
 
 ## Dates 
@@ -328,7 +328,7 @@ Week 6 (Oct 5—11):
 Upon completion of this week and module, students will be able to:
 
   + Design and program a simple temperature Arduino DAQ.
-  + Output data from a DAQ for subseqent analysis.
+  + Output data from a DAQ for subsequent analysis.
 
 ## Read/Watch 
 
@@ -378,7 +378,7 @@ Weeks 7 & 8 (Oct 12—25):
 
 ## Key Concepts
   + Saving instrument data to an SD card.
-  + Temporal heterthermy.
+  + Temporal heterothermy.
   + Scaling.
   
 ## Learning Objectives
@@ -406,7 +406,7 @@ Upon completion of this module, students will be able to:
 
   + How does one program and modify an Arduino unit to write data to an SD card?
   + How do oscillations in body temperature scale with mass in humans and other mammals?
-  + How does one forumulate a complete .Rmd report of Phase II of the course?
+  + How does one formulate a complete .Rmd report of Phase II of the course?
 
 ## Module 6 Schedule
 
@@ -465,5 +465,62 @@ All assignments are due at 11:59 on the specified date.
 || Monday <br> 10/26 |  Tuesday <br>10/27    | Wednesday<br>  10/28 | Thursday <br> 10/29 | Friday <br> 10/30 |Saturday<br> 10/31 | Sunday<br> 11/11
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
 **Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |Submit Project 7 report
+
+
+# Module 8:  Beach Muscles: Exploring Force-Length Relationships in Vertebrate Muscle 
+
+In this module, we'll explore how the force produced by vertebrate muscles is constrained by its length. To do this, we'll design an Arduino-based load sensing data-acquisition system to record force produced by upper-arm muscles over a series of different resting length. From our data, we'll establish models of forearm force-length properties and investigate how fatigure changes this imporant property of vertebrate muscle.
+
+## Dates 
+Weeks 10 & 11 (Nov 2—Nov 15):
+
+## Key Concepts
+  + Cross-bridge theory
+  + Isometric force
+  + Maximum voluntary contractions (MVCc)
+  + Force-length relationships
+  + Mechanical advantage
+  
+## Learning Objectives
+
+Upon completion of this week and module, students will be able to:
+
+  + Construct and program a low-cost load-cell DAQ system.
+  + Comment on the FL relationship in human skeletal muscles and the effect of fatigue on the shape of this relationship.
+
+## Read/Watch 
+
+  + Read [Rassier, D.E., MacIntosh, B.R. and Herzog, W., 1999. Length dependence of active force production in skeletal muscle. Journal of applied physiology, 86(5), pp.1445-1457. 83–95.](https://journals.physiology.org/doi/full/10.1152/jappl.1999.86.5.1445)
+  + Read [Oregon State's Body Physics page](https://openoregon.pressbooks.pub/bodyphysics/chapter/body-levers/)
+  + Read [The Wheastone Bridge from Omega](https://www.omega.com/en-us/resources/wheatstone-bridge)
+  
+
+## Do
+  + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
+  + Complete and submit Module 8 Project report
+  + Upload force-angle data to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing) by Monday, November 9th
+
+
+
+## Guiding Questions
+
+  + How does one construct a low-cost load-cell force DAQ system?
+  + Can angle-force measurements predict force-length (FL) relationships in the flexors of the human upper arm?
+  + Does eccentric fatigue shift the FL relationship of human forearm flexors?
+  
+## Module 8 Schedule
+
+All assignments are due at 11:59 on the specified date.
+
+|| Monday <br> 11/2 |  Tuesday <br>11/3    | Wednesday<br>  11/4 | Thursday <br> 11/15 | Friday <br> 11/16 |Saturday<br> 11/17 | Sunday<br> 11/8
+|--------|-------- |--------|-------- |--------|--------|--------|--------    
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |
+
+ || Monday <br> 11/9 |  Tuesday <br>11/10    | Wednesday<br>  11/11 | Thursday <br> 11/12 | Friday <br> 11/13 |Saturday<br> 11/14 | Sunday<br> 11/15
+ |--------|-------- |--------|-------- |--------|--------|--------|-------- 
+**Assignment due** | Upload team data files to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing)| | Post question to discussion board | Answer a question on discussion board  | | | Commit Module 8 Project Report
+||||||||
+
+
 
 
