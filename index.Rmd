@@ -232,8 +232,8 @@ In Phase II, we'll use our new-found instrument- and code-development skills to 
   1. **Hot Flashes I:** Scaling of Diel Temperature Oscillations in Mammals (instrument and data driven)
   2. **Hot Flashes II:** Not So Fast! Correcting Scaling Models Within a Phylogenetic Context (data driven)
   3. **Beach Muscles:** Exploring Force-Length Relationships in Vertebrate Muscle (instrument and data driven)
-  4. **Birds of a Feather Migrate Together . . . Sometimes:** Using EBird data to Explore the Phenology of Passerine Migration (auk package from R) (data driven)
-  5. **Jumping UGs**: Testing the Limits of Human Lower Body Power (instrument and data driven)
+  4. **Birds of a Feather Migrate Together . . . Sometimes:** Using EBird data to Explore the Phenology of Passerine Migration  (data driven)
+  5.  ~~**Jumping UGs:** Testing the Limits of Human Lower Body Power (instrument and data driven)~~
   
 For each module of Phase II, you'll be asked to read one or two important topic papers to set the stage and provide crucial context and then move on to data acquisition, analysis, and synthesis. The end product of each module will be a short, 3-4 page markdown that includes some background, description of methods, results, and discussion within the context of the topic papers and other relevant research. 
 

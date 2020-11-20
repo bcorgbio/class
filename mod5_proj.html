@@ -23,13 +23,14 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -39,14 +40,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -55,9 +58,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -466,6 +469,16 @@ div.tocify {
     <li>
       <a href="mod8_proj.html">Module 8 Project</a>
     </li>
+    <li>
+      <a href="mod9_proj.html">Module 9 Project</a>
+    </li>
+    <li class="dropdown-header">Phase III</li>
+    <li>
+      <a href="phaseIII_rubric.html">Phase III report rubric</a>
+    </li>
+    <li>
+      <a href="final_proj.html">Final Project</a>
+    </li>
     <li class="dropdown-header">DaqPacks</li>
     <li>
       <a href="daqpack.html">DaqPack Item List</a>
@@ -540,7 +553,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </div>
 <p><br></p>
 <center>
-<img src="tempserial.png" alt="FigName" />
+<img src="tempserial.png" title="fig:" alt="FigName" />
 </center>
 <p><br></p>
 <p>This is great, but as a scientist, you’re probably building this instrument to record temperature over some length of time. Thus, reporting when, relative to the start of the experiment, the temperature was recorded is important. Fortunately, recording and printing time to the serial connection is super easy. We can do this by adding a new variable <code>currentTime</code> and passing a time value in milliseconds to this variable in the void loop. First, add <code>int currentTime;</code> to the top of the sketch where the other variables are established. <code>int</code> establishes the variable as an integer, which is just fine because milliseconds is recorded as whole numbers. Second, add this to the <code>void(loop)</code>:</p>
@@ -617,7 +630,7 @@ void loop(void) {
 
 </code></pre>
 <p>Check in on the serial monitor. Notice that there’s now a new line (outlined below in red) that reports time in milliseconds:</p>
-<img src="tempserial2.png" alt="FigName" />
+<img src="tempserial2.png" title="fig:" alt="FigName" />
 </center>
 <p><br></p>
 <p>Notice that the data are being printed about ever second (1000 ms) or so. This is because the the last line of the sketch in the <code>void(loop)</code> is <code>delay(1000)</code>. The <code>delay()</code> function delays or stops the loop for a specified number of milliseconds.</p>
@@ -688,7 +701,7 @@ void loop(void) {
 <p>Here’s how to proceed. Merely print some header/column names in the <code>setup(void)</code>. The <code>setup(void)</code> is a part of the sketch where you ask the microcontroller to do something once and <em>before</em> <code>void(loop)</code> commences, a perfect place to print the header to the serial port.</p>
 <pre><code>Serial.println(&quot;ms,v,degC,degF&quot;);</code></pre>
 <p>After adding this and uploading the modified sketch, the serial monitor should now print a header (i.e., column names) and then the data like this:</p>
-<img src="tempserial4.png" alt="FigName" />
+<img src="tempserial4.png" title="fig:" alt="FigName" />
 </center>
 <p><br></p>
 <p>This new modified Arduino sketch follows here:</p>
@@ -782,23 +795,23 @@ void loop(void) {
 <li>“Mugato_couch.csv”</li>
 </ul>
 <p>Giving files a name describing the experiment (who and condition in this case) is an easy way of storing <strong>metadata</strong> (data about the data). For any subsequent analysis, we can pull the metadata from the file name and store our data with these conditions stored as columns. If we consider loading data with R, the power of a <code>for</code> loop because apparent. Using a <code>for</code> loop, we can iteratively load each data file, strip the metadata, and store both in a table. In this example, such a loop might look like this:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">dat.f &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;couch|active.csv&quot;</span>) <span class="co">#find the files</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">dat.l &lt;-<span class="st"> </span><span class="kw">list</span>() <span class="co">#make an empty list</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="cf">for</span>(i <span class="cf">in</span> dat.f){</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">  met.dat&lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(i,<span class="st">&quot;_&quot;</span>)) <span class="co">#split of the filename string</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">  who &lt;-<span class="st"> </span>met.dat[<span class="dv">1</span>] <span class="co">#store the first element</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">  activity &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;.csv&quot;</span>,<span class="st">&quot;&quot;</span>,met.dat[<span class="dv">2</span>]) <span class="co">#store second element, dropping CSV with gsub()</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">  dat.l[[i]]&lt;-<span class="st"> </span><span class="kw">read_csv</span>(i)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">who=</span>who,<span class="dt">activity=</span>activity) <span class="co">#read, then store data with additional columns of metada in list as position unique to i</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">  </a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">}</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">dat &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind,dat.l) <span class="co">#combine the list into table</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">dat<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>activity,<span class="dt">y=</span>degC))<span class="op">+</span><span class="kw">facet_grid</span>(.<span class="op">~</span>who) <span class="co">#plot to see what we get</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>dat.f &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;couch|active.csv&quot;</span>) <span class="co">#find the files</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a>dat.l &lt;-<span class="st"> </span><span class="kw">list</span>() <span class="co">#make an empty list</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="cf">for</span>(i <span class="cf">in</span> dat.f){</span>
+<span id="cb7-7"><a href="#cb7-7"></a>  met.dat&lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(i,<span class="st">&quot;_&quot;</span>)) <span class="co">#split of the filename string</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>  who &lt;-<span class="st"> </span>met.dat[<span class="dv">1</span>] <span class="co">#store the first element</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>  activity &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;.csv&quot;</span>,<span class="st">&quot;&quot;</span>,met.dat[<span class="dv">2</span>]) <span class="co">#store second element, dropping CSV with gsub()</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>  dat.l[[i]]&lt;-<span class="st"> </span><span class="kw">read_csv</span>(i)<span class="op">%&gt;%</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">who=</span>who,<span class="dt">activity=</span>activity) <span class="co">#read, then store data with additional columns of metada in list as position unique to i</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>  </span>
+<span id="cb7-13"><a href="#cb7-13"></a>}</span>
+<span id="cb7-14"><a href="#cb7-14"></a>dat &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind,dat.l) <span class="co">#combine the list into table</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a>dat<span class="op">%&gt;%</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>activity,<span class="dt">y=</span>degC))<span class="op">+</span><span class="kw">facet_grid</span>(.<span class="op">~</span>who) <span class="co">#plot to see what we get</span></span></code></pre></div>
 <p><img src="mod5_proj_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>A workflow like this, formulated around standardized file names containing metadata, is eminently scalable. Eight or a 1000 files, this approach works well.</p>
 </div>

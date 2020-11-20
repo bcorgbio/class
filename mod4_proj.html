@@ -23,15 +23,16 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -41,14 +42,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -57,9 +60,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -468,6 +471,16 @@ div.tocify {
     <li>
       <a href="mod8_proj.html">Module 8 Project</a>
     </li>
+    <li>
+      <a href="mod9_proj.html">Module 9 Project</a>
+    </li>
+    <li class="dropdown-header">Phase III</li>
+    <li>
+      <a href="phaseIII_rubric.html">Phase III report rubric</a>
+    </li>
+    <li>
+      <a href="final_proj.html">Final Project</a>
+    </li>
     <li class="dropdown-header">DaqPacks</li>
     <li>
       <a href="daqpack.html">DaqPack Item List</a>
@@ -515,7 +528,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </div>
 <div id="set-up" class="section level1">
 <h1>Set up</h1>
-<p>First of all, let’s precisely define what we mean by a markdown, the syntax for R Markdown. Markdown is a very simple ``markup&quot; language which creates documents with headers, images, references, pieces of code and so much more from plain text files. Because it’s text based, the document can be rendered into many other file formats like HTML or PDF that will contain the organized content.</p>
+<p>First of all, let’s precisely define what we mean by a markdown, the syntax for R Markdown. Markdown is a very simple ``markup" language which creates documents with headers, images, references, pieces of code and so much more from plain text files. Because it’s text based, the document can be rendered into many other file formats like HTML or PDF that will contain the organized content.</p>
 <p>To get R Markdown up and running, you don’t need to do much at all if you’re using R Studio. You just need to open a new markdown document: “File-&gt;New File-&gt;R Markdown”. This will open a dialog where you are asked to include important pieces that will specify the document type, and author and title of the document.</p>
 <p><img src="newRmd.png" /> <br></p>
 <p>Enter in a title (“Project 4”, is just fine) and the author (your team name is great, e.g., “aRtful coders”). Select “OK”. Now, this doesn’t save the new .Rmd, but rather establishes the author and title in the YAML header (more below). You should see that the document is now open in a tab with the name “Untitled1.Rmd”. Go ahead and save this with the name “TEAMNAME_Module4” in an appropriate directory. The “.Rmd” extension informs R Studio that this is a source file for markdown and thus it will treat it as such.</p>
@@ -666,7 +679,7 @@ print(p.eco.phylo)
 <center>
 <blockquote>
 <div class="figure">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg" alt="An anolis lizard" />
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg" alt="" />
 <p class="caption">An anolis lizard</p>
 </div>
 </blockquote>
@@ -746,7 +759,7 @@ print(p.eco.phylo)
 </div>
 <div id="equations" class="section level2">
 <h2>Equations</h2>
-<p>As scientists, we often need to express our ideas in equation form (e.g., linear model of hindlimb vs. snout-vent length in case of our last project). Fortunately, this is made easy by R Markdown’s inclusion of another markup language, <span class="math inline">\(\LaTeX\)</span>. This is a favorite of those writing really technical documents and the equation markup capabilities are rather extensive but eminently approachable. For instance, if we need to write out an equation that expresses a linear model (e.g. <code>lm(y~x)</code>) we can write <code>$$y=\alpha+\beta x$$</code> to produce:</p>
+<p>As scientists, we often need to express our ideas in equation form (e.g., linear model of hindlimb vs. snout-vent length in case of our last project). Fortunately, this is made easy by R Markdown’s inclusion of another markup language, <span class="math inline">\(\LaTeX\)</span>. This is a favorite of those writing really technical documents and the equation markup capabilities are rather extensive but eminently approachable. For instance, if we need to write out an equation that expresses a linear model (e.g. <code>lm(y~x)</code>) we can write <code>$$y=\alpha+\beta x$$</code> to produce:</p>
 <p><span class="math display">\[y=\alpha+\beta x\]</span></p>
 <p>Notice the equation is wrapped by two <code>$$</code>. A single <code>$</code> indicates the use of <span class="math inline">\(\LaTeX\)</span> markup and two indicates the equation should stand alone on a separate section. If we just wanted to include the aforementioned equation inline with the rest of the text, we’d use just one <code>$</code>, or `<code>$y=\alpha+\beta x$</code> to get <span class="math inline">\(y=\alpha+\beta x\)</span>.</p>
 <div class="green">
@@ -768,12 +781,12 @@ print(p.eco.phylo)
 <div id="tables-from-code" class="section level2">
 <h2>Tables From Code</h2>
 <p>For smallish tables generated from your code, I suggest the <code>kable()</code> function from the <code>knitr</code> package which is included with R Studio. It’s simple and rather intuitive to use. For instance, let’s say we wanted to know how many species were include in each ecomorph for our anole study. We’d first write the code to do so and then with the pipe, finally pass it to the <code>kable</code> function:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">n.spec &lt;-<span class="st"> </span>anole.log<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(Ecomorph2)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n.species=</span><span class="kw">n</span>())</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">n.spec<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw">kable</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>n.spec &lt;-<span class="st"> </span>anole.log<span class="op">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="st">  </span><span class="kw">group_by</span>(Ecomorph2)<span class="op">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n.species=</span><span class="kw">n</span>())</span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a>n.spec<span class="op">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="st">  </span><span class="kw">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -838,8 +851,8 @@ twig
 </table>
 <p><br></p>
 <p>One nice attribute about <code>kable()</code> is that we can easily specify a table caption. Something like:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">n.spec<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">caption =</span> <span class="st">&quot;Number of species within each anole ecormorph included in this study&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>n.spec<span class="op">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">caption =</span> <span class="st">&quot;Number of species within each anole ecormorph included in this study&quot;</span>)</span></code></pre></div>
 <table>
 <caption>
 Number of species within each anole ecormorph included in this study
@@ -907,7 +920,7 @@ twig
 </table>
 <p><br></p>
 <p>For large tables, say data sets with a large number rows, you may want to consider using the <code>paged_table()</code> function from <code>rmarkdown</code> to create a table that has pagination of rows and columns. For example:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">paged_table</span>(anole.log, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">rows.print =</span> <span class="dv">15</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">paged_table</span>(anole.log, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">rows.print =</span> <span class="dv">15</span>))</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["Species"],"name":[1],"type":["chr"],"align":["left"]},{"label":["SVL"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["HTotal"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["PH"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["ArbPD"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Ecomorph"],"name":[6],"type":["chr"],"align":["left"]},{"label":["Ecomorph2"],"name":[7],"type":["chr"],"align":["left"]},{"label":["phylo.res"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"Anolis_ahli","2":"4.054269","3":"3.845670","4":"4.642466","5":"2.1400662","6":"TG","7":"trunk-ground","8":"-0.007474892"},{"1":"Anolis_aliniger","2":"4.023564","3":"3.549617","4":"6.137511","5":"2.9231616","6":"TC","7":"trunk-crown","8":"-0.080102807"},{"1":"Anolis_allisoni","2":"4.347694","3":"3.813307","4":"5.737540","5":"2.4932055","6":"TC","7":"trunk-crown","8":"-0.203436345"},{"1":"Anolis_allogus","2":"4.002777","3":"3.789855","4":"4.855150","5":"2.0918641","6":"TG","7":"trunk-ground","8":"-0.003565769"},{"1":"Anolis_alutaceus","2":"3.564817","3":"3.298795","4":"4.530447","5":"1.1314021","6":"GB","7":"grass-bush","8":"0.086806436"},{"1":"Anolis_angusticeps","2":"3.725693","3":"3.038792","4":"5.734635","5":"-0.1053605","6":"TW","7":"twig","8":"-0.067267329"},{"1":"Anolis_bahorucoensis","2":"3.782666","3":"3.589059","4":"5.010635","5":"0.9932518","6":"GB","7":"grass-bush","8":"0.105518473"},{"1":"Anolis_barahonae","2":"5.051988","3":"4.657098","4":"6.715383","5":"3.4965076","6":"CG","7":"crown-giant","8":"0.030878505"},{"1":"Anolis_brevirostris","2":"3.850148","3":"3.555348","4":"4.629863","5":"3.0492730","6":"T","7":"trunk","8":"0.037254607"},{"1":"Anolis_chlorocyanus","2":"4.229269","3":"3.781687","4":"5.878856","5":"2.3608540","6":"TC","7":"trunk-crown","8":"-0.093652604"},{"1":"Anolis_coelestinus","2":"4.272030","3":"3.864302","4":"5.531411","5":"3.0397492","6":"TC","7":"trunk-crown","8":"-0.062095901"},{"1":"Anolis_cooki","2":"4.092000","3":"3.846951","4":"5.007965","5":"2.0541237","6":"TG","7":"trunk-ground","8":"-0.049956560"},{"1":"Anolis_cristatellus","2":"4.155753","3":"3.984716","4":"4.778283","5":"2.5877640","6":"TG","7":"trunk-ground","8":"0.013862871"},{"1":"Anolis_cuvieri","2":"4.894101","3":"4.611152","4":"5.783825","5":"2.1400662","6":"CG","7":"crown-giant","8":"0.109016842"},{"1":"Anolis_cybotes","2":"4.203692","3":"4.003690","4":"4.960044","5":"3.1986731","6":"TG","7":"trunk-ground","8":"-0.022765430"},{"1":"Anolis_distichus","2":"3.937047","3":"3.646233","4":"5.550631","5":"2.9069011","6":"T","7":"trunk","8":"0.019515277"},{"1":"Anolis_equestris","2":"5.049856","3":"4.590057","4":"5.998688","5":"2.7278528","6":"CG","7":"crown-giant","8":"-0.034487405"},{"1":"Anolis_evermanni","2":"4.131737","3":"3.868907","4":"5.814727","5":"3.5638830","6":"TC","7":"trunk-crown","8":"0.110024631"},{"1":"Anolis_garmani","2":"4.681205","3":"4.366913","4":"5.858219","5":"3.5025499","6":"CG","7":"crown-giant","8":"0.032094463"},{"1":"Anolis_grahami","2":"4.112037","3":"3.816173","4":"5.513025","5":"2.8735646","6":"TC","7":"trunk-crown","8":"0.080812628"},{"1":"Anolis_guazuma","2":"3.654987","3":"2.871868","4":"5.438079","5":"-0.1053605","6":"TW","7":"twig","8":"-0.167205206"},{"1":"Anolis_gundlachi","2":"4.176140","3":"4.054390","4":"4.897093","5":"3.5115454","6":"TG","7":"trunk-ground","8":"0.059891917"},{"1":"Anolis_homolechis","2":"4.039536","3":"3.730501","4":"4.872905","5":"3.1135153","6":"TG","7":"trunk-ground","8":"-0.105555530"},{"1":"Anolis_insolitus","2":"3.732896","3":"3.152736","4":"5.818004","5":"-0.9162907","6":"TW","7":"twig","8":"0.039853107"},{"1":"Anolis_isolepis","2":"3.663562","3":"2.970414","4":"6.569481","5":"-1.2039728","6":"TC","7":"trunk-crown","8":"-0.229448613"},{"1":"Anolis_jubar","2":"4.018956","3":"3.690628","4":"4.595120","5":"2.3321439","6":"TG","7":"trunk-ground","8":"-0.121558613"},{"1":"Anolis_krugi","2":"3.883624","3":"3.660480","4":"4.163560","5":"1.7404662","6":"GB","7":"grass-bush","8":"0.051093770"},{"1":"Anolis_lineatopus","2":"4.035037","3":"3.829728","4":"4.606170","5":"3.2580965","6":"TG","7":"trunk-ground","8":"-0.001110021"},{"1":"Anolis_longitibialis","2":"4.245634","3":"4.110874","4":"4.890349","5":"2.1972246","6":"TG","7":"trunk-ground","8":"0.035771205"},{"1":"Anolis_loysianus","2":"3.688879","3":"3.208825","4":"4.363099","5":"3.1986731","6":"T","7":"trunk","8":"-0.107683592"},{"1":"Anolis_luteogularis","2":"5.209486","3":"4.718499","4":"6.334345","5":"2.4248027","6":"CG","7":"crown-giant","8":"-0.031499493"},{"1":"Anolis_marcanoi","2":"4.017518","3":"3.832763","4":"4.605170","5":"2.4510051","6":"TG","7":"trunk-ground","8":"0.022245571"},{"1":"Anolis_mestrei","2":"3.944355","3":"3.715278","4":"5.161352","5":"2.4336134","6":"TG","7":"trunk-ground","8":"-0.010380612"},{"1":"Anolis_noblei","2":"5.108971","3":"4.672829","4":"6.396930","5":"2.2300144","6":"CG","7":"crown-giant","8":"0.001825856"},{"1":"Anolis_olssoni","2":"3.838635","3":"3.577110","4":"3.830813","5":"0.4054651","6":"GB","7":"grass-bush","8":"0.023802580"},{"1":"Anolis_opalinus","2":"3.866733","3":"3.528417","4":"4.923624","5":"3.1863526","6":"TC","7":"trunk-crown","8":"0.085960086"},{"1":"Anolis_ophiolepis","2":"3.637586","3":"3.182627","4":"3.218876","5":"-0.2231436","6":"GB","7":"grass-bush","8":"-0.120069829"},{"1":"Anolis_poncensis","2":"3.781345","3":"3.440098","4":"4.496471","5":"1.2809338","6":"GB","7":"grass-bush","8":"-0.041796387"},{"1":"Anolis_porcatus","2":"4.248495","3":"3.724488","4":"5.438079","5":"3.8628328","6":"TC","7":"trunk-crown","8":"-0.173808416"},{"1":"Anolis_pulchellus","2":"3.774300","3":"3.482163","4":"3.387774","5":"0.3364722","6":"GB","7":"grass-bush","8":"0.009050158"},{"1":"Anolis_rejectus","2":"3.522146","3":"3.165897","4":"3.988984","5":"-0.9162907","6":"GB","7":"grass-bush","8":"0.007098747"},{"1":"Anolis_sagrei","2":"3.891820","3":"3.589059","4":"3.732896","5":"2.7343675","6":"TG","7":"trunk-ground","8":"-0.075666525"},{"1":"Anolis_singularis","2":"3.828641","3":"3.295837","4":"5.703782","5":"2.0794415","6":"TC","7":"trunk-crown","8":"-0.101137786"},{"1":"Anolis_stratulus","2":"3.794365","3":"3.488903","4":"6.552936","5":"2.2617631","6":"TC","7":"trunk-crown","8":"0.132855692"},{"1":"Anolis_valencienni","2":"4.286341","3":"3.655840","4":"5.443283","5":"1.7917595","6":"TW","7":"twig","8":"0.018639453"},{"1":"Anolis_vanidicus","2":"3.630985","3":"3.243764","4":"3.701302","5":"-1.6094379","6":"GB","7":"grass-bush","8":"-0.050705118"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[15],"max":[15]},"pages":{}}}
@@ -980,8 +993,8 @@ twig
   year={2017}
 }
 </code></pre>
-<p>Notice we have a tag `@article{hagey2017there,&quot;. This identifies the entry as a journal article (as apposed to a book or manual, etc.) and contains a key that is unique among all the other references in the .bib file. After this, the entry then goes on to identify the important bibliographic pieces: title, author, journal, etc.). Go ahead and add this BibTex reference to your BIOL3140.bib file and save it.</p>
-<p>For .Rmd to reference this .bib file, we need to specify a bibliography file in the YAML header. So now alter your YAML header at the top of the .Rmd so that it contains `bibliography: BIOL3140.bib&quot;. The YAML header should now look like this:</p>
+<p>Notice we have a tag `@article{hagey2017there,". This identifies the entry as a journal article (as apposed to a book or manual, etc.) and contains a key that is unique among all the other references in the .bib file. After this, the entry then goes on to identify the important bibliographic pieces: title, author, journal, etc.). Go ahead and add this BibTex reference to your BIOL3140.bib file and save it.</p>
+<p>For .Rmd to reference this .bib file, we need to specify a bibliography file in the YAML header. So now alter your YAML header at the top of the .Rmd so that it contains `bibliography: BIOL3140.bib". The YAML header should now look like this:</p>
 <pre><code>---
 title: &quot;Project 4&quot;
 author: aRtful coders
@@ -1005,7 +1018,7 @@ bibliography: BIOL3140.bib
 <div class="col-sm-9">
 <p>You may be wondering where you can find BibTex citations. Like so much of our lives, the answer points to Google, specifically Google Scholar. As an example, go to <a href="http://scholar.google.com/">Google Scholar</a> and search for the <span class="citation">Hagey et al. (2017)</span> paper. The entry under scholar will look like the following:</p>
 <p><img src="scholar1.png" /> <br></p>
-<p>Click on the big <code>&quot;</code> at the bottom of the entry. This will bring you to a pop-up window that contains different citation formats for the entry.</p>
+<p>Click on the big <code>"</code> at the bottom of the entry. This will bring you to a pop-up window that contains different citation formats for the entry.</p>
 <p><img src="scholar2.png" /> <br></p>
 <p>Now click on the “BibTex” link at the bottom of the window. This will lead you to a text file of the BibTex format. Simply copy and paste this to your .bib file. Voila.</p>
 </div>

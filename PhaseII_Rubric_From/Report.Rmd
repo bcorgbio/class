@@ -1,0 +1,447 @@
+---
+title: "Module `r params$module` Project Report Feedback for `r params$team`"
+output:  
+  html_document:  
+    theme: sandstone
+    highlight: tango
+    toc: true # adds a table of contents
+    toc_float: true
+    number_sections: FALSE
+params:
+  tasks_gr: NA
+  effort_gr: NA
+  format_gr: NA
+  analysis_gr: NA
+  graphics_gr: NA
+  writing_gr: NA
+  sources_gr: NA
+  tasks_fb: NA
+  effort_fb: NA
+  format_fb: NA
+  analysis_fb: NA
+  graphics_fb: NA
+  writing_fb: NA
+  sources_fb: NA
+  tasks_rub: NA
+  effort_rub: NA
+  format_rub: NA
+  analysis_rub: NA
+  graphics_rub: NA
+  writing_rub: NA
+  sources_rub: NA
+  module: NA
+  team: NA
+  general_fb: NA
+          
+---
+
+
+```{r,echo=FALSE}
+library(fontawesome)
+```
+
+<style>
+div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
+</style>
+
+
+
+------
+## Tasks and Output 
+<!-- Rubric -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Rubric Benchmark</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$tasks_rub)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+<!-- Feedback -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Feedback</b></br>`r fa("sticky-note", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$tasks_fb)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+<!-- Grade -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Grade</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$tasks_gr)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+------
+
+## Effort and Engagement 
+<!-- Rubric -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Rubric Benchmark</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$effort_rub)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+<!-- Feedback -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Feedback</b></br>`r fa("sticky-note", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$effort_fb)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+<!-- Grade -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Grade</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$effort_gr)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+------
+
+## Report Format 
+<!-- Rubric -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Rubric Benchmark</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$format_rub)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+<!-- Feedback -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Feedback</b></br>`r fa("sticky-note", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$format_fb)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+<!-- Grade -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Grade</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$format_gr)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+------
+
+## Analysis and Code
+<!-- Rubric -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Rubric Benchmark</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$analysis_rub)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+<!-- Feedback -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Feedback</b></br>`r fa("sticky-note", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$analysis_fb)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+<!-- Grade -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Grade</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$analysis_gr)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+------
+
+## Graphics and Tables
+<!-- Rubric -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Rubric Benchmark</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$graphics_rub)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+<!-- Feedback -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Feedback</b></br>`r fa("sticky-note", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$graphics_fb)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+<!-- Grade -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Grade</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$graphics_gr)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+------
+
+## Writing and Style
+<!-- Rubric -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Rubric Benchmark</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$writing_rub)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+<!-- Feedback -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Feedback</b></br>`r fa("sticky-note", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$writing_fb)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+<!-- Grade -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Grade</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$writing_gr)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+------
+
+## Sources and References
+<!-- Rubric -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Rubric Benchmark</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$sources_rub)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+<!-- Feedback -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Feedback</b></br>`r fa("sticky-note", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$sources_fb)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+<!-- Grade -->
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Grade</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$sources_gr)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+------
+
+## Overall Feedback and Grade
+
+### General Feedback
+
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Feedback</b></br>`r fa("sticky-note", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+cat(params$general_fb)
+```
+
+</div>
+</div>
+</div>
+<br>
+
+
+
+### Overall Grade
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><b>Grade</b></br>`r fa("check-square", fill = "black",height="50")`</a> <!-- regular style --></div>
+  <div class="col-sm-9">
+  
+```{r, results='asis', echo=FALSE}
+grade <- sum(params$tasks_gr,params$effort_gr,params$format_gr,params$analysis_gr,params$graphics_gr,params$writing_gr,params$sources_gr)
+
+
+cat(grade)
+
+```
+</div>
+</div>
+</div>
+<br>
+
+

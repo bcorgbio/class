@@ -23,13 +23,14 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -39,14 +40,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -55,9 +58,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -463,6 +466,19 @@ div.tocify {
     <li>
       <a href="mod7_proj.html">Module 7 Project</a>
     </li>
+    <li>
+      <a href="mod8_proj.html">Module 8 Project</a>
+    </li>
+    <li>
+      <a href="mod9_proj.html">Module 9 Project</a>
+    </li>
+    <li class="dropdown-header">Phase III</li>
+    <li>
+      <a href="phaseIII_rubric.html">Phase III report rubric</a>
+    </li>
+    <li>
+      <a href="final_proj.html">Final Project</a>
+    </li>
     <li class="dropdown-header">DaqPacks</li>
     <li>
       <a href="daqpack.html">DaqPack Item List</a>
@@ -501,6 +517,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <center>
 <img src="https://journals.physiology.org/cms/10.1152/jappl.1999.86.5.1445/asset/images/medium/japp05516002x.jpeg" /> <br> <strong>Fig. 1.</strong> The force-length relationship of a sarcomere as predicted by cross-bridge theory.
 </center>
+<p><br></p>
 <p>Of course, many muscles transect a lever system composed of a few bones articulating at a joint. For our subject, the human upper limb, the forearm flexors originate on the pectoral girdle above the humerus and insert on the radius and ulna, spanning the elbow joint. Simply put, the arm is a 3rd order lever (Fig 2). If we are to consider the force transmitted to the hand (or any other part along the antebrachium), we must also consider this lever configuration. As a lever, this system has a mechanical advantage that predicts the amount of output force transmitted by the input force. Mechanical advantage is defined by the following:</p>
 <p><span class="math display">\[MA=\frac{L_i}{L_o}\]</span>,</p>
 <p>where <span class="math inline">\(L_i\)</span> is the in-lever and <span class="math inline">\(L_o\)</span> the output leaver. For the human upper limb, the inlever is the distance between the flexor insertion and elbow joint and the out-lever is the length of the antebrachium and hand (or the distance between the elbow and the load). This ratio generally accords to 0.2 in this system. What this predicts is that any force applied to the in-lever results in 20% of that force at the end of the out-lever.</p>
@@ -519,7 +536,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p>The specific goals of this project are to:</p>
 <ol style="list-style-type: decimal">
 <li>Produce isometric force-angle curves for the human forearm flexors undertaking maximum voluntary contractions (MVCs).</li>
-<li>Compare the angle at which maximum isometric force (<span class="math inline">\(F_{max}) occurs (\)</span>_{max}$) between non-fatigued (i.e., control) and eccentrically fatigued forearm flexors.</li>
+<li>Compare the angle at which maximum isometric force (<span class="math inline">\(F_{max}\)</span>) occurs (<span class="math inline">\(\theta_{max}\)</span>) between non-fatigued (i.e., control) and eccentrically fatigued forearm flexors.</li>
 <li>Discuss the underlying mechanisms resulting in a shift of <span class="math inline">\(\theta_{max}\)</span> after eccentric fatigue.</li>
 </ol>
 </div>
@@ -602,64 +619,64 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <li>Find maximum force (<span class="math inline">\(F_{max}\)</span>) among all angles for each experiment (control or fatigued) for each individual and then divide all maximum values for that experiment by <span class="math inline">\(F_{max}\)</span>. You values will now be normalize, i.e., scaled 0-1 with a value of 1 representing the highest force recorded during an experiment.</li>
 </ol>
 <p>Using the normalized force data from the control and fatigued experiments, we’ll consider shifts the at which angle <span class="math inline">\(F_{max}\)</span> occurred, the difference in <span class="math inline">\(\theta_{max}\)</span>. To assess any shift in <span class="math inline">\(\theta_{max}\)</span> with our limited elbow angle samples, we could simply look at the angle at which the flexors produce the most force. For instance, for the these data:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">ang &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">45</span>,<span class="fl">168.75</span>,<span class="dt">length.out =</span> <span class="dv">12</span>) <span class="co">#elbow angle</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">normF &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.71</span>, <span class="fl">0.77</span>, <span class="fl">0.83</span>, <span class="fl">0.91</span>, <span class="fl">0.97</span>, <span class="fl">1.00</span>, <span class="fl">0.96</span>, <span class="fl">0.94</span>, <span class="fl">0.89</span>, <span class="fl">0.84</span>, <span class="fl">0.77</span>, <span class="fl">0.74</span>) <span class="co">#you&#39;ll get this by reading in data and calculating normalized values</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">qplot</span>(ang,normF)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ang[<span class="kw">which.max</span>(normF)],<span class="dt">y=</span>normF[<span class="kw">which.max</span>(normF)]),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">size=</span><span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>ang &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">45</span>,<span class="fl">168.75</span>,<span class="dt">length.out =</span> <span class="dv">12</span>) <span class="co">#elbow angle</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a>normF &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.71</span>, <span class="fl">0.77</span>, <span class="fl">0.83</span>, <span class="fl">0.91</span>, <span class="fl">0.97</span>, <span class="fl">1.00</span>, <span class="fl">0.96</span>, <span class="fl">0.94</span>, <span class="fl">0.89</span>, <span class="fl">0.84</span>, <span class="fl">0.77</span>, <span class="fl">0.74</span>) <span class="co">#you&#39;ll get this by reading in data and calculating normalized values</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="kw">qplot</span>(ang,normF)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ang[<span class="kw">which.max</span>(normF)],<span class="dt">y=</span>normF[<span class="kw">which.max</span>(normF)]),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">size=</span><span class="dv">4</span>)</span></code></pre></div>
 <p><img src="mod8_proj_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">ang[<span class="kw">which.max</span>(normF)] <span class="co">#Find angle for Fmax, theta_max</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>ang[<span class="kw">which.max</span>(normF)] <span class="co">#Find angle for Fmax, theta_max</span></span></code></pre></div>
 <pre><code>## [1] 101.25</code></pre>
 <p>So, of the 12 angles that we sampled (45–157.5<span class="math inline">\(^o\)</span>), the maximum isometric force occurred at angle (<span class="math inline">\(\theta_{max}\)</span>=) 101.25<span class="math inline">\(^o\)</span>. Simply doing this overlooks the fact that the maximum force could have occurred between any two of the sampled angles. Given the trend in the figure above, <span class="math inline">\(\theta_{max}\)</span> could have been an angle either greater and less than 101.25<span class="math inline">\(^o\)</span>. To estimate the trend and find a perhaps more refined estimation of <span class="math inline">\(F_{max}\)</span> we’ll resort to (wait for it) . . . modeling. In this case, a series of <a href="https://en.wikipedia.org/wiki/Polynomial_regression">polynomial models</a> should work. Polynomial models are great for fitting parabolic data like those we have here, but are tricky in that one can keep adding monomial terms very quickly to achieve a better fit. This requires the practitioner to make sure that they are not overfitting the model. Fortunately, we have the tools to prevent such a thing using AIC, as we have learned.</p>
 <p>Therefore, let’s fit some polynomial models to our example data with a different number of monomial terms (i.e., orders) and tease apart the fit and penalty for including more terms using AICc. Fortunately, we can use the <code>lm()</code> and <code>poly()</code> functions from the base package to fit the models and use <code>AICc()</code> from the <code>MuMIn</code> package for AICc fitting.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(MuMIn)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">poly.m2 &lt;-<span class="st"> </span><span class="kw">lm</span>(normF<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">2</span>)) <span class="co">#second order</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">poly.m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(normF<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">3</span>)) <span class="co">#third order</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">poly.m4 &lt;-<span class="st"> </span><span class="kw">lm</span>(normF<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">4</span>)) <span class="co">#fourth order</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw">AICc</span>(poly.m2,poly.m3,poly.m4) <span class="co">#the second order model fits best</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">library</span>(MuMIn)</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>poly.m2 &lt;-<span class="st"> </span><span class="kw">lm</span>(normF<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">2</span>)) <span class="co">#second order</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>poly.m3 &lt;-<span class="st"> </span><span class="kw">lm</span>(normF<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">3</span>)) <span class="co">#third order</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>poly.m4 &lt;-<span class="st"> </span><span class="kw">lm</span>(normF<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">4</span>)) <span class="co">#fourth order</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="kw">AICc</span>(poly.m2,poly.m3,poly.m4) <span class="co">#the second order model fits best</span></span></code></pre></div>
 <pre><code>##         df      AICc
 ## poly.m2  4 -43.90316
 ## poly.m3  5 -39.60496
 ## poly.m4  6 -49.47748</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">x.pred &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">45</span>,<span class="fl">157.5</span>,<span class="dt">length.out =</span> <span class="dv">1000</span>) <span class="co">#define 1000 angles from our range</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">normF.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(poly.m4,<span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)) <span class="co">#predict the force using 1000 angles</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw">qplot</span>(ang,normF)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x.pred,<span class="dt">y=</span>normF.pred),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x.pred[<span class="kw">which.max</span>(normF.pred)],<span class="dt">y=</span>normF.pred[<span class="kw">which.max</span>(normF.pred)]),<span class="dt">size=</span><span class="dv">5</span>,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>x.pred &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">45</span>,<span class="fl">157.5</span>,<span class="dt">length.out =</span> <span class="dv">1000</span>) <span class="co">#define 1000 angles from our range</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>normF.pred &lt;-<span class="st"> </span><span class="kw">predict</span>(poly.m4,<span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)) <span class="co">#predict the force using 1000 angles</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="kw">qplot</span>(ang,normF)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x.pred,<span class="dt">y=</span>normF.pred),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x.pred[<span class="kw">which.max</span>(normF.pred)],<span class="dt">y=</span>normF.pred[<span class="kw">which.max</span>(normF.pred)]),<span class="dt">size=</span><span class="dv">5</span>,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <p><img src="mod8_proj_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">x.pred[<span class="kw">which.max</span>(normF.pred)] <span class="co">#theta_max</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>x.pred[<span class="kw">which.max</span>(normF.pred)] <span class="co">#theta_max</span></span></code></pre></div>
 <pre><code>## [1] 104.9099</code></pre>
 <p>In this example we constructed 3 polynomial models of the 2nd, 3rd, 4th variety and then used AICc to find the lowest AICc score. The 4th order model fits best, so we then produced 1000 discrete values within our range with <code>seq()</code> to pass to<code>predict()</code> to predict force over this range using our best fitting model (producing <code>normF.pred</code>). We then found the max of <code>normF.pred</code> (the <span class="math inline">\(F_{max}\)</span>) and plotted that, along with our predictions. Lastly, we found <span class="math inline">\(\theta_{max}\)</span>, a value of 104.9.</p>
 <p>A goal of this project is to detect shifts in <span class="math inline">\(F_{max}\)</span> with respect to angle. If we had two data sets, one control and one produced after fatigue, we merely need to compare the two <span class="math inline">\(\theta_{max}\)</span>, that is, the shift in angle for <span class="math inline">\(F_{max}\)</span> predicted by two polynomial models. This would look something like this:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">normF.fat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.65</span>, <span class="fl">0.71</span>, <span class="fl">0.81</span>, <span class="fl">0.89</span>,<span class="fl">0.92</span>, <span class="fl">0.96</span>, <span class="fl">0.99</span>, <span class="dv">1</span>, <span class="fl">0.96</span>, <span class="fl">0.92</span>, <span class="fl">0.84</span>, <span class="fl">0.77</span>) <span class="co">#fatigue data, you&#39;ll get this by reading in data and calculating normalized values</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="kw">qplot</span>(ang,normF.fat)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ang[<span class="kw">which.max</span>(normF.fat)],<span class="dt">y=</span>normF.fat[<span class="kw">which.max</span>(normF.fat)]),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">size=</span><span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>normF.fat &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.65</span>, <span class="fl">0.71</span>, <span class="fl">0.81</span>, <span class="fl">0.89</span>,<span class="fl">0.92</span>, <span class="fl">0.96</span>, <span class="fl">0.99</span>, <span class="dv">1</span>, <span class="fl">0.96</span>, <span class="fl">0.92</span>, <span class="fl">0.84</span>, <span class="fl">0.77</span>) <span class="co">#fatigue data, you&#39;ll get this by reading in data and calculating normalized values</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="kw">qplot</span>(ang,normF.fat)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ang[<span class="kw">which.max</span>(normF.fat)],<span class="dt">y=</span>normF.fat[<span class="kw">which.max</span>(normF.fat)]),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>,<span class="dt">size=</span><span class="dv">4</span>)</span></code></pre></div>
 <p><img src="mod8_proj_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">ang[<span class="kw">which.max</span>(normF.fat)] <span class="co">#Find angle for Fmax for fatigue data</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>ang[<span class="kw">which.max</span>(normF.fat)] <span class="co">#Find angle for Fmax for fatigue data</span></span></code></pre></div>
 <pre><code>## [1] 123.75</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">poly.m2.fat &lt;-<span class="st"> </span><span class="kw">lm</span>(normF.fat<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">2</span>)) <span class="co">#second order</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">poly.m3.fat &lt;-<span class="st"> </span><span class="kw">lm</span>(normF.fat<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">3</span>)) <span class="co">#third order</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">poly.m4.fat &lt;-<span class="st"> </span><span class="kw">lm</span>(normF.fat<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">4</span>)) <span class="co">#fourth order</span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="kw">AICc</span>(poly.m2.fat,poly.m3.fat,poly.m4.fat) <span class="co">#the second order model fits best</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>poly.m2.fat &lt;-<span class="st"> </span><span class="kw">lm</span>(normF.fat<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">2</span>)) <span class="co">#second order</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>poly.m3.fat &lt;-<span class="st"> </span><span class="kw">lm</span>(normF.fat<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">3</span>)) <span class="co">#third order</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>poly.m4.fat &lt;-<span class="st"> </span><span class="kw">lm</span>(normF.fat<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">4</span>)) <span class="co">#fourth order</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="kw">AICc</span>(poly.m2.fat,poly.m3.fat,poly.m4.fat) <span class="co">#the second order model fits best</span></span></code></pre></div>
 <pre><code>##             df      AICc
 ## poly.m2.fat  4 -54.91075
 ## poly.m3.fat  5 -55.05750
 ## poly.m4.fat  6 -49.10034</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">normF.pred.fat &lt;-<span class="st"> </span><span class="kw">predict</span>(poly.m2.fat,<span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)) <span class="co">#predict the force using 1000 angles</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="kw">qplot</span>(ang,normF)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x.pred,<span class="dt">y=</span>normF.pred.fat),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x.pred[<span class="kw">which.max</span>(normF.pred.fat)],<span class="dt">y=</span>normF.pred.fat[<span class="kw">which.max</span>(normF.pred.fat)]),<span class="dt">size=</span><span class="dv">5</span>,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>normF.pred.fat &lt;-<span class="st"> </span><span class="kw">predict</span>(poly.m2.fat,<span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)) <span class="co">#predict the force using 1000 angles</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="kw">qplot</span>(ang,normF)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x.pred,<span class="dt">y=</span>normF.pred.fat),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)<span class="op">+</span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x.pred[<span class="kw">which.max</span>(normF.pred.fat)],<span class="dt">y=</span>normF.pred.fat[<span class="kw">which.max</span>(normF.pred.fat)]),<span class="dt">size=</span><span class="dv">5</span>,<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <p><img src="mod8_proj_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">x.pred[<span class="kw">which.max</span>(normF.pred.fat)]<span class="op">-</span>x.pred[<span class="kw">which.max</span>(normF.pred)] <span class="co">#shift in angle for Fmax, theta_max</span></a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>x.pred[<span class="kw">which.max</span>(normF.pred.fat)]<span class="op">-</span>x.pred[<span class="kw">which.max</span>(normF.pred)] <span class="co">#shift in angle for Fmax, theta_max</span></span></code></pre></div>
 <pre><code>## [1] 10.24775</code></pre>
 <p>Looks as if there’s a 10.3<span class="math inline">\(^o\)</span> shift in <span class="math inline">\(\theta_{max}\)</span>.</p>
 <p>Say we had a bunch of data (from only 10 subjects) and you wanted to compare the control against fatigued data graphically, you could do the following. First we’ll simulate some control and fatigue data, adding random noise drawn form a normal distribution and plot the data with a color according to experiment to quickly assess the pattern.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
 ## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
@@ -668,42 +685,42 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1234</span>) <span class="co">#to keep random noise the same</span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb21-4" data-line-number="4">sub &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span> <span class="co">#ten subjects</span></a>
-<a class="sourceLine" id="cb21-5" data-line-number="5">dat.l &lt;-<span class="st"> </span><span class="kw">list</span>() <span class="co">#empty list</span></a>
-<a class="sourceLine" id="cb21-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="co">#loop to run through subjects and simulate data based on noise added to data above</span></a>
-<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="cf">for</span>(i <span class="cf">in</span> sub){</a>
-<a class="sourceLine" id="cb21-9" data-line-number="9">  noise &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(ang),<span class="dt">mean =</span> <span class="fl">0.02</span>,<span class="dt">sd =</span> <span class="fl">0.01</span>)</a>
-<a class="sourceLine" id="cb21-10" data-line-number="10">  noise2 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(ang),<span class="dt">mean =</span> <span class="fl">0.02</span>,<span class="dt">sd =</span> <span class="fl">0.01</span>)</a>
-<a class="sourceLine" id="cb21-11" data-line-number="11">  dat.l[[i]] &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb21-12" data-line-number="12">    <span class="kw">rbind</span>(</a>
-<a class="sourceLine" id="cb21-13" data-line-number="13">      <span class="kw">data.frame</span>(ang,<span class="dt">force=</span>normF<span class="op">+</span>noise,<span class="dt">subject=</span>i,<span class="dt">exp=</span><span class="st">&quot;control&quot;</span>),</a>
-<a class="sourceLine" id="cb21-14" data-line-number="14">      <span class="kw">data.frame</span>(ang,<span class="dt">force=</span>normF.fat<span class="op">+</span>noise2,<span class="dt">subject=</span>i,<span class="dt">exp=</span><span class="st">&quot;fatigue&quot;</span>)</a>
-<a class="sourceLine" id="cb21-15" data-line-number="15">  )  </a>
-<a class="sourceLine" id="cb21-16" data-line-number="16">  )<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-17" data-line-number="17"><span class="st">    </span><span class="kw">group_by</span>(subject,exp)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-18" data-line-number="18"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">force=</span>force<span class="op">/</span><span class="kw">max</span>(force))</a>
-<a class="sourceLine" id="cb21-19" data-line-number="19">  </a>
-<a class="sourceLine" id="cb21-20" data-line-number="20">}</a>
-<a class="sourceLine" id="cb21-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb21-22" data-line-number="22">dat &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind,dat.l) <span class="co">#get data into one tibble</span></a>
-<a class="sourceLine" id="cb21-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb21-24" data-line-number="24">dat<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-25" data-line-number="25"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(ang,force,<span class="dt">col=</span>exp))<span class="op">+</span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>) <span class="co">#to keep random noise the same</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a></span>
+<span id="cb21-3"><a href="#cb21-3"></a></span>
+<span id="cb21-4"><a href="#cb21-4"></a>sub &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span> <span class="co">#ten subjects</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a>dat.l &lt;-<span class="st"> </span><span class="kw">list</span>() <span class="co">#empty list</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a></span>
+<span id="cb21-7"><a href="#cb21-7"></a><span class="co">#loop to run through subjects and simulate data based on noise added to data above</span></span>
+<span id="cb21-8"><a href="#cb21-8"></a><span class="cf">for</span>(i <span class="cf">in</span> sub){</span>
+<span id="cb21-9"><a href="#cb21-9"></a>  noise &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(ang),<span class="dt">mean =</span> <span class="fl">0.02</span>,<span class="dt">sd =</span> <span class="fl">0.01</span>)</span>
+<span id="cb21-10"><a href="#cb21-10"></a>  noise2 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(ang),<span class="dt">mean =</span> <span class="fl">0.02</span>,<span class="dt">sd =</span> <span class="fl">0.01</span>)</span>
+<span id="cb21-11"><a href="#cb21-11"></a>  dat.l[[i]] &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb21-12"><a href="#cb21-12"></a>    <span class="kw">rbind</span>(</span>
+<span id="cb21-13"><a href="#cb21-13"></a>      <span class="kw">data.frame</span>(ang,<span class="dt">force=</span>normF<span class="op">+</span>noise,<span class="dt">subject=</span>i,<span class="dt">exp=</span><span class="st">&quot;control&quot;</span>),</span>
+<span id="cb21-14"><a href="#cb21-14"></a>      <span class="kw">data.frame</span>(ang,<span class="dt">force=</span>normF.fat<span class="op">+</span>noise2,<span class="dt">subject=</span>i,<span class="dt">exp=</span><span class="st">&quot;fatigue&quot;</span>)</span>
+<span id="cb21-15"><a href="#cb21-15"></a>  )  </span>
+<span id="cb21-16"><a href="#cb21-16"></a>  )<span class="op">%&gt;%</span></span>
+<span id="cb21-17"><a href="#cb21-17"></a><span class="st">    </span><span class="kw">group_by</span>(subject,exp)<span class="op">%&gt;%</span></span>
+<span id="cb21-18"><a href="#cb21-18"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">force=</span>force<span class="op">/</span><span class="kw">max</span>(force))</span>
+<span id="cb21-19"><a href="#cb21-19"></a>  </span>
+<span id="cb21-20"><a href="#cb21-20"></a>}</span>
+<span id="cb21-21"><a href="#cb21-21"></a></span>
+<span id="cb21-22"><a href="#cb21-22"></a>dat &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind,dat.l) <span class="co">#get data into one tibble</span></span>
+<span id="cb21-23"><a href="#cb21-23"></a></span>
+<span id="cb21-24"><a href="#cb21-24"></a>dat<span class="op">%&gt;%</span></span>
+<span id="cb21-25"><a href="#cb21-25"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(ang,force,<span class="dt">col=</span>exp))<span class="op">+</span><span class="kw">geom_point</span>()</span></code></pre></div>
 <p><img src="mod8_proj_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Now let’s take our data and get AICc scores for our three polynomial models. We’ll group the data by subject and experiment and retrieve AICc from each model (<code>m2</code>, <code>m3</code>, and <code>m4</code>). Then, we’ll pivot the tibble to a longer format so that we have a single column for AICc values.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">AICs &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(subject,exp)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(</a>
-<a class="sourceLine" id="cb22-4" data-line-number="4">    <span class="dt">m2=</span><span class="kw">AICc</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">2</span>))), <span class="co">#second order</span></a>
-<a class="sourceLine" id="cb22-5" data-line-number="5">    <span class="dt">m3=</span><span class="kw">AICc</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">3</span>))), <span class="co">#third order</span></a>
-<a class="sourceLine" id="cb22-6" data-line-number="6">    <span class="dt">m4=</span><span class="kw">AICc</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">4</span>))) <span class="co">#fourth order</span></a>
-<a class="sourceLine" id="cb22-7" data-line-number="7">  )<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-8" data-line-number="8"><span class="st">  </span><span class="kw">pivot_longer</span>(m2<span class="op">:</span>m4,<span class="dt">names_to=</span><span class="st">&quot;model&quot;</span>,<span class="dt">values_to=</span><span class="st">&quot;AICc&quot;</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>AICs &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="st">  </span><span class="kw">group_by</span>(subject,exp)<span class="op">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="st">  </span><span class="kw">summarize</span>(</span>
+<span id="cb22-4"><a href="#cb22-4"></a>    <span class="dt">m2=</span><span class="kw">AICc</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">2</span>))), <span class="co">#second order</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a>    <span class="dt">m3=</span><span class="kw">AICc</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">3</span>))), <span class="co">#third order</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a>    <span class="dt">m4=</span><span class="kw">AICc</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">4</span>))) <span class="co">#fourth order</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a>  )<span class="op">%&gt;%</span></span>
+<span id="cb22-8"><a href="#cb22-8"></a><span class="st">  </span><span class="kw">pivot_longer</span>(m2<span class="op">:</span>m4,<span class="dt">names_to=</span><span class="st">&quot;model&quot;</span>,<span class="dt">values_to=</span><span class="st">&quot;AICc&quot;</span>)<span class="op">%&gt;%</span></span>
+<span id="cb22-9"><a href="#cb22-9"></a><span class="st">  </span><span class="kw">print</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 60 x 4
 ## # Groups:   subject [10]
 ##    subject exp     model  AICc
@@ -720,17 +737,17 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 10       2 fatigue m2    -57.6
 ## # … with 50 more rows</code></pre>
 <p>Now we’ll do something very similar, predicting values for 1000 discrete angles across our range of elbow positions. Notice that we’ve summarized the data by subject, experiment and model to find the angle (<code>x.pred</code>) which matches the max force value.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">fits &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(subject,exp)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(</a>
-<a class="sourceLine" id="cb24-4" data-line-number="4">    <span class="dt">m2=</span><span class="kw">predict</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">2</span>)),<span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)), <span class="co">#second order</span></a>
-<a class="sourceLine" id="cb24-5" data-line-number="5">    <span class="dt">m3=</span><span class="kw">predict</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">3</span>)),<span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)), <span class="co">#third order</span></a>
-<a class="sourceLine" id="cb24-6" data-line-number="6">    <span class="dt">m4=</span><span class="kw">predict</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">4</span>)),<span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)) <span class="co">#fourth order</span></a>
-<a class="sourceLine" id="cb24-7" data-line-number="7">  )<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-8" data-line-number="8"><span class="st">   </span><span class="kw">pivot_longer</span>(m2<span class="op">:</span>m4,<span class="dt">names_to=</span><span class="st">&quot;model&quot;</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-9" data-line-number="9"><span class="st">   </span><span class="kw">group_by</span>(subject,exp,model)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-10" data-line-number="10"><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">theta_max=</span>x.pred[<span class="kw">which.max</span>(value)])<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-11" data-line-number="11"><span class="st">   </span><span class="kw">print</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>fits &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="st">  </span><span class="kw">group_by</span>(subject,exp)<span class="op">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="st">  </span><span class="kw">summarize</span>(</span>
+<span id="cb24-4"><a href="#cb24-4"></a>    <span class="dt">m2=</span><span class="kw">predict</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">2</span>)),<span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)), <span class="co">#second order</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a>    <span class="dt">m3=</span><span class="kw">predict</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">3</span>)),<span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)), <span class="co">#third order</span></span>
+<span id="cb24-6"><a href="#cb24-6"></a>    <span class="dt">m4=</span><span class="kw">predict</span>(<span class="kw">lm</span>(force<span class="op">~</span><span class="kw">poly</span>(ang,<span class="dv">4</span>)),<span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">ang=</span>x.pred)) <span class="co">#fourth order</span></span>
+<span id="cb24-7"><a href="#cb24-7"></a>  )<span class="op">%&gt;%</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a><span class="st">   </span><span class="kw">pivot_longer</span>(m2<span class="op">:</span>m4,<span class="dt">names_to=</span><span class="st">&quot;model&quot;</span>)<span class="op">%&gt;%</span></span>
+<span id="cb24-9"><a href="#cb24-9"></a><span class="st">   </span><span class="kw">group_by</span>(subject,exp,model)<span class="op">%&gt;%</span></span>
+<span id="cb24-10"><a href="#cb24-10"></a><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">theta_max=</span>x.pred[<span class="kw">which.max</span>(value)])<span class="op">%&gt;%</span></span>
+<span id="cb24-11"><a href="#cb24-11"></a><span class="st">   </span><span class="kw">print</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 60 x 4
 ## # Groups:   subject, exp [20]
 ##    subject exp     model theta_max
@@ -747,13 +764,13 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 10       2 fatigue m2         115.
 ## # … with 50 more rows</code></pre>
 <p>Now let’s join these the <code>AICs</code> and <code>fits</code> tables so that we can filter the model predictions by which model fits best. Note <code>filter(best==TRUE)</code> after constructing a <code>best</code> column according to the minimum AICc score using <code>mutate()</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">best.models &lt;-<span class="st"> </span>fits<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">  </span><span class="kw">left_join</span>(AICs)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(subject,exp)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">best=</span>AICc<span class="op">==</span><span class="kw">min</span>(AICc))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-5" data-line-number="5"><span class="st">  </span><span class="kw">filter</span>(best<span class="op">==</span><span class="ot">TRUE</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>best)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-7" data-line-number="7"><span class="st">  </span><span class="kw">print</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>best.models &lt;-<span class="st"> </span>fits<span class="op">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="st">  </span><span class="kw">left_join</span>(AICs)<span class="op">%&gt;%</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="st">  </span><span class="kw">group_by</span>(subject,exp)<span class="op">%&gt;%</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">best=</span>AICc<span class="op">==</span><span class="kw">min</span>(AICc))<span class="op">%&gt;%</span></span>
+<span id="cb26-5"><a href="#cb26-5"></a><span class="st">  </span><span class="kw">filter</span>(best<span class="op">==</span><span class="ot">TRUE</span>)<span class="op">%&gt;%</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>best)<span class="op">%&gt;%</span></span>
+<span id="cb26-7"><a href="#cb26-7"></a><span class="st">  </span><span class="kw">print</span>()</span></code></pre></div>
 <pre><code>## Joining, by = c(&quot;subject&quot;, &quot;exp&quot;, &quot;model&quot;)</code></pre>
 <pre><code>## # A tibble: 20 x 5
 ## # Groups:   subject, exp [20]
@@ -780,7 +797,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 19      10 control m4         105. -49.3
 ## 20      10 fatigue m2         115. -55.0</code></pre>
 <p>To investigate whether a shift if <span class="math inline">\(\theta_{max}\)</span> is different between the control and fatigue experiments, we can run the following ANOVA.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">anova</span>(<span class="kw">lm</span>(theta_max<span class="op">~</span>exp,best.models))</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(theta_max<span class="op">~</span>exp,best.models))</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: theta_max
@@ -790,24 +807,15 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Lastly, we should calculate the mean shift with SEM. To find the shift, we can pivot the <code>best.models</code> tibble to a wider format so we can have <span class="math inline">\(\theta_{max}\)</span> for each experiment in separate columns and find the difference with <code>mutate()</code>. Then, <code>summarise()</code> can be used to find the mean and SEM.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">best.models<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">id_cols=</span>subject,<span class="dt">names_from =</span> exp,<span class="dt">values_from=</span>theta_max)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">shift=</span>fatigue<span class="op">-</span>control)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean.shift=</span><span class="kw">mean</span>(shift),<span class="dt">se.shift=</span><span class="kw">sd</span>(shift)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">length</span>(shift)))</a></code></pre></div>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<pre><code>## # A tibble: 10 x 3
-##    subject mean.shift se.shift
-##      &lt;int&gt;      &lt;dbl&gt;    &lt;dbl&gt;
-##  1       1       8.33       NA
-##  2       2       9.91       NA
-##  3       3      12.3        NA
-##  4       4      15.8        NA
-##  5       5      12.6        NA
-##  6       6      16.8        NA
-##  7       7      16.0        NA
-##  8       8       9.12       NA
-##  9       9      11.6        NA
-## 10      10      10.0        NA</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>best.models<span class="op">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">id_cols=</span>subject,<span class="dt">names_from =</span> exp,<span class="dt">values_from=</span>theta_max)<span class="op">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">shift=</span>fatigue<span class="op">-</span>control)<span class="op">%&gt;%</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="st">  </span><span class="kw">ungroup</span>()<span class="op">%&gt;%</span></span>
+<span id="cb31-5"><a href="#cb31-5"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean.shift=</span><span class="kw">mean</span>(shift),<span class="dt">se.shift=</span><span class="kw">sd</span>(shift)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">length</span>(shift)))</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   mean.shift se.shift
+##        &lt;dbl&gt;    &lt;dbl&gt;
+## 1       12.2    0.960</code></pre>
 </div>
 </div>
 <div id="project-report" class="section level1">
@@ -847,7 +855,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <h1>References</h1>
 <div id="refs" class="references">
 <div id="ref-rassier1999length">
-<p>Rassier, DE, BR MacIntosh, and W Herzog. 1999. “Length Dependence of Active Force Production in Skeletal Muscle.” <em>Journal of Applied Physiology</em> 86 (5). American Physiological Society Bethesda, MD: 1445–57.</p>
+<p>Rassier, DE, BR MacIntosh, and W Herzog. 1999. “Length Dependence of Active Force Production in Skeletal Muscle.” <em>Journal of Applied Physiology</em> 86 (5): 1445–57.</p>
 </div>
 <div id="ref-yeung2008shift">
 <p>Yeung, SS, and EW Yeung. 2008. “Shift of Peak Torque Angle After Eccentric Exercise.” <em>International Journal of Sports Medicine</em> 29 (03): 251–56.</p>

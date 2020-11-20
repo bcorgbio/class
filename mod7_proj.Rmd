@@ -135,7 +135,7 @@ After reconstructing the models for $T_b$ scaling in @mortola2004scaling, assess
 
 Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following questions:
 
-  * Could you and your team reproduce the scaling relationships (i.e. log-log regression models) of @mortola2004scaling for $T_{min}$,$T_{max}$, and $T_{\Delta}$>k?
+  * Could you and your team reproduce the scaling relationships (i.e. log-log regression models) of @mortola2004scaling for $T_{min}$,$T_{max}$, and $T_{\Delta}$?
   * Was there any signficant phylogentic signal in the four variables in question (i.e., mass, $T_{min}$, $T_{max}$, and $T_{\Delta}$)?
   * After reanalyzing these models that included any variables with significant phylogentic signal in a PCM context under BM and OU models of trait evolution, which phylogentically corrected models fit best? 
   * Are new phylogenetically informed parameter estimates (i.e, intercept and slope coefficients) different than those in @mortola2004scaling and has their significance changed?

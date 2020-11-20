@@ -1,0 +1,48 @@
+---
+title: "Module 9 Project"
+bibliography: class.bib
+---
+<style>
+div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
+</style>
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+# Introduction
+
+Ebird
+
+# Methods
+
+# `rNOAA` API Token
+
+https://www.ncdc.noaa.gov/cdo-web/webservices/v2
+
+
+## Data Collection
+
+
+ 
+## Data Analysis
+
+# Project Report
+
+Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following questions:
+
+  * Do class-wide force-angle data for isometric MVC accord to a typical FL relationship both under control and fatigued conditions?
+  * Is there a significant shift between $\theta_{max}$ between the control and fatigue FL relationships?
+  
+In answering these questions, be sure to use the visualization, modeling, and model-assessments tools we've used in the course so far.
+  
+The answers and narrative in your .Rmd should include the following components:
+
+   * A YAML header that specifies HTML output, the authors, and a bibliography named "BIOL3140.bib". **Submit this bibliography as well!**
+   * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifically:
+      + Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. **Please include at least one reference to support the summary of previous work.** Note: this can be done easily by refiguring the introduction to this project report.
+      + Methods: Explicitly state how you answered the questions, including a narrative of all the analyses both qualitative and quantitative.
+      + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.
+      + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here.
+      + Author contributions: Briefly outline what each team member contributed to the project.
+
+# References

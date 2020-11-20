@@ -23,6 +23,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 
@@ -376,6 +377,16 @@ div.tocify {
     <li>
       <a href="mod8_proj.html">Module 8 Project</a>
     </li>
+    <li>
+      <a href="mod9_proj.html">Module 9 Project</a>
+    </li>
+    <li class="dropdown-header">Phase III</li>
+    <li>
+      <a href="phaseIII_rubric.html">Phase III report rubric</a>
+    </li>
+    <li>
+      <a href="final_proj.html">Final Project</a>
+    </li>
     <li class="dropdown-header">DaqPacks</li>
     <li>
       <a href="daqpack.html">DaqPack Item List</a>
@@ -448,7 +459,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </div>
 <p><br></p>
 <center>
-<img src="tempserial.png" alt="FigName" />
+<img src="tempserial.png" title="fig:" alt="FigName" />
 </center>
 <p><br></p>
 <p>This is great, but as a scientist, you’re probably building this instrument to record temperature over some length of time. Thus, reporting when, relative to the start of the experiment, the temperature was recorded is important. Fortunately, recording and printing time to the serial connection is super easy. We can do this by adding a new variable <code>currentTime</code> and passing a time value in millisecords to this variable in the void loop. First, add <code>int currentTime;</code> to the top of the sketch where the other variables are established. <code>int</code> establishes the variable as an integer, which is just fine because milliseconds is recorded as whole numbers. Second, add this to the <code>void(loop)</code>:</p>
@@ -525,7 +536,7 @@ void loop(void) {
 
 </code></pre>
 <p>Check in on the serial monitor. Notice that there’s now a new line (outlined below in red) that reports time in milliseconds:</p>
-<img src="tempserial2.png" alt="FigName" />
+<img src="tempserial2.png" title="fig:" alt="FigName" />
 </center>
 <p><br></p>
 <p>Notice that the data are being printed about ever second (1000 ms) or so. This is because the the last line of the sketch in the <code>void(loop)</code> is <code>delay(1000)</code>. The <code>delay()</code> function delays or stops the loop for a specified number of milliseconds.</p>
@@ -596,7 +607,7 @@ void loop(void) {
 <p>Here’s how to proceed. Merely print some header/column names in the <code>setup(void)</code>. The <code>setup(void)</code> is a part of the sketch where you ask the microcontroller to do something once and <em>before</em> <code>void(loop)</code> commences, a perfect place to print the header to the serial port.</p>
 <pre><code>Serial.println(&quot;ms,v,degC,degF&quot;);</code></pre>
 <p>After adding this and uploading the modified sketch, the serial monitor should now print a header (i.e., column names) and then the data like this:</p>
-<img src="tempserial4.png" alt="FigName" />
+<img src="tempserial4.png" title="fig:" alt="FigName" />
 </center>
 <p><br></p>
 <p>This new modified Arduino sketch follows here:</p>

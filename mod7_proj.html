@@ -23,13 +23,14 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -39,14 +40,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -55,9 +58,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -466,6 +469,16 @@ div.tocify {
     <li>
       <a href="mod8_proj.html">Module 8 Project</a>
     </li>
+    <li>
+      <a href="mod9_proj.html">Module 9 Project</a>
+    </li>
+    <li class="dropdown-header">Phase III</li>
+    <li>
+      <a href="phaseIII_rubric.html">Phase III report rubric</a>
+    </li>
+    <li>
+      <a href="final_proj.html">Final Project</a>
+    </li>
     <li class="dropdown-header">DaqPacks</li>
     <li>
       <a href="daqpack.html">DaqPack Item List</a>
@@ -529,74 +542,74 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <div id="pagels-lambda" class="section level2">
 <h2>Pagel’s Lambda</h2>
 <p>The second task is to assess the phylogenetic signal of each of the four variables in the study: <span class="math inline">\(W\)</span>, the independent variable (i.e., our one covariate) and the three <span class="math inline">\(T_b\)</span> variables. For this, we’ll have to complete new analyses we haven’t taken on before: Pagel’s <span class="math inline">\(\lambda\)</span>. This method transforms the tree, by decreasing <span class="math inline">\(\lambda\)</span> (the phylogenetic signal) which lengthens the tip branches relative to internal branches, eventually decomposing the tree so that it begins to look like a complete polytomy, i.e., no phylogenetic relatedness or covariance between species. This can be seen as a way of muting phylogentic signal until the covariation of the error structure can no longer be explained by phylogenetic relatedness. If our estimated <span class="math inline">\(\lambda\)</span> = 0, the tree has no effect on the traits and they are assumed to have no phylogenetic signal. When <span class="math inline">\(\lambda\)</span> = 1, the traits conform to a Brownian motion model. Betweewn 0 and 1, there is some phylogenetic signal.</p>
-<p>Let’s explore how this works. First we’ll have to load our mammal tree. Notice that there’s a <code>gsub()</code> operation here to remove pesky &quot;_&quot; from the species names in the tree. <strong>This will be important later when the tree is used in the PGLS analysis and the species names must match those in the tree and the dataset.</strong> We’ll also have to load the package <code>geiger</code> which carries the <code>rescale()</code> function we’ll use to demonstrate what Pagel’s <span class="math inline">\(\lambda\)</span> does. [You won’t necessarily need <code>geiger</code> loaded for your project, this is just to demonstrate how Pagel’s <span class="math inline">\(\lambda\)</span> works.]</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(geiger)</a></code></pre></div>
-<pre><code>## Loading required package: ape</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">m.phy &lt;-<span class="st"> </span><span class="kw">read.tree</span>(<span class="st">&quot;mammal.tree.pruned.txt&quot;</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">m.phy<span class="op">$</span>tip.label &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;(</span><span class="ch">\\</span><span class="st">w+)_(</span><span class="ch">\\</span><span class="st">w+)&quot;</span>,<span class="st">&quot;</span><span class="ch">\\</span><span class="st">1 </span><span class="ch">\\</span><span class="st">2&quot;</span>,m.phy<span class="op">$</span>tip.label)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">m.phy0&lt;-<span class="st"> </span><span class="kw">rescale</span>(m.phy, <span class="dt">model =</span> <span class="st">&quot;lambda&quot;</span>, <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">m.phy5 &lt;-<span class="st"> </span><span class="kw">rescale</span>(m.phy, <span class="dt">model =</span> <span class="st">&quot;lambda&quot;</span>, <span class="fl">0.5</span>)</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw">plot</span>(m.phy)</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="kw">plot</span>(m.phy5)</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="kw">plot</span>(m.phy0)</a></code></pre></div>
+<p>Let’s explore how this works. First we’ll have to load our mammal tree. Notice that there’s a <code>gsub()</code> operation here to remove pesky "_" from the species names in the tree. <strong>This will be important later when the tree is used in the PGLS analysis and the species names must match those in the tree and the dataset.</strong> We’ll also have to load the package <code>geiger</code> which carries the <code>rescale()</code> function we’ll use to demonstrate what Pagel’s <span class="math inline">\(\lambda\)</span> does. [You won’t necessarily need <code>geiger</code> loaded for your project, this is just to demonstrate how Pagel’s <span class="math inline">\(\lambda\)</span> works.]</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(geiger)</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>m.phy &lt;-<span class="st"> </span><span class="kw">read.tree</span>(<span class="st">&quot;mammal.tree.pruned.txt&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4"></a>m.phy<span class="op">$</span>tip.label &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;(</span><span class="ch">\\</span><span class="st">w+)_(</span><span class="ch">\\</span><span class="st">w+)&quot;</span>,<span class="st">&quot;</span><span class="ch">\\</span><span class="st">1 </span><span class="ch">\\</span><span class="st">2&quot;</span>,m.phy<span class="op">$</span>tip.label)</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a>m.phy0&lt;-<span class="st"> </span><span class="kw">rescale</span>(m.phy, <span class="dt">model =</span> <span class="st">&quot;lambda&quot;</span>, <span class="dv">0</span>)</span>
+<span id="cb1-8"><a href="#cb1-8"></a>m.phy5 &lt;-<span class="st"> </span><span class="kw">rescale</span>(m.phy, <span class="dt">model =</span> <span class="st">&quot;lambda&quot;</span>, <span class="fl">0.5</span>)</span>
+<span id="cb1-9"><a href="#cb1-9"></a></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="kw">plot</span>(m.phy)</span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="kw">plot</span>(m.phy5)</span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="kw">plot</span>(m.phy0)</span></code></pre></div>
 <p><img src="mod7_proj_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>The tree on the left is the unscaled phylogeny, the tree we’ll use in our analyses. The tree in the middle, with <span class="math inline">\(\lambda\)</span>=0.5, rescales the tip branches, making the tips branch longer, allowing more phylogenetic independence between species. As you can see, the tree on the right, with a <span class="math inline">\(\lambda\)</span>=0 removes the phylogenetic information form the tree, i.e., all species don’t covary according to their phylogenetic position. When we use Pagel’s <span class="math inline">\(\lambda\)</span> to assess phylogenetic signal of a character, we interate through values to 0 to 1 to find rescaled branch lengths that optimize the covariance of the character according to Brownian motion. As a reminder, values near 1 indicate strong phylogenetic signal, while values close to 0 indicate none.</p>
 <p>Now let’s assess phylogenetic signal for some simulated trait data over the mammal tree. We’ll use <code>phytools</code>’s <code>phylosig()</code> function to do this after simulating some random trait.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">library</span>(ape)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">library</span>(phytools)</a></code></pre></div>
-<pre><code>## Loading required package: maps</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">sim.trait &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="kw">Ntip</span>(m.phy))</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw">names</span>(sim.trait) &lt;-<span class="st"> </span>m.phy<span class="op">$</span>tip.label</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw">print</span>(sim.trait)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">library</span>(ape)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">library</span>(phytools)</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a>sim.trait &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="kw">Ntip</span>(m.phy))</span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="kw">names</span>(sim.trait) &lt;-<span class="st"> </span>m.phy<span class="op">$</span>tip.label</span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="kw">print</span>(sim.trait)</span></code></pre></div>
 <pre><code>##              Vulpes zerda          Canis familiaris               Nasua nasua 
-##               0.445437616               0.271599774               0.838247564 
+##               0.537597992               0.484206845               0.469174698 
 ##      Herpestes sanguineus           Equus africanus            Equus caballus 
-##               0.893213473               0.057495227               0.685390501 
+##               0.878662545               0.171854439               0.407441196 
 ##                Lama pacos                Lama glama                Sus scrofa 
-##               0.094995575               0.816856001               0.105135559 
+##               0.974590600               0.008381446               0.471802400 
 ##    Hippopotamus amphibius                Bos taurus              Capra hircus 
-##               0.786165292               0.107964492               0.740369835 
+##               0.900804009               0.321841989               0.291203819 
 ##          Tupaia belangeri       Microcebus myoxinus         Aotus trivirgatus 
-##               0.657618263               0.729984537               0.982117197 
+##               0.901759592               0.219729713               0.813885442 
 ##        Callithrix jacchus          Cebuella pygmaea          Saimiri sciureus 
-##               0.627476943               0.521620445               0.444742657 
+##               0.173081986               0.824116257               0.865170106 
 ##           Cebus albifrons              Homo sapiens         Macaca nemestrina 
-##               0.607224427               0.696435272               0.139184563 
+##               0.891696787               0.856337741               0.025089691 
 ##       Macaca fascicularis            Macaca mulatta            Macaca radiata 
-##               0.219533825               0.855903993               0.034758931 
+##               0.740456566               0.710843872               0.486139406 
 ##        Papio cynocephalus     Oryctolagus cuniculus        Ochotona rufescens 
-##               0.796115221               0.126736637               0.561816857 
+##               0.013111359               0.719931546               0.855239384 
 ##             Marmota monax Spermophilus richardsonii      Cynomys ludovicianus 
-##               0.011256659               0.518450113               0.546324167 
+##               0.717091195               0.104431809               0.599031712 
 ##          Sciurus vulgaris          Glaucomys volans        Georychus capensis 
-##               0.633407818               0.282339798               0.637567848 
+##               0.147550351               0.197810728               0.471194391 
 ##           Cavia porcellus             Octodon degus         Spalax ehrenbergi 
-##               0.268645231               0.009367757               0.628522326 
+##               0.803833003               0.268148470               0.461382392 
 ##              Mus musculus       Apodemus mystacinus     Arvicanthis niloticus 
-##               0.369868767               0.341446507               0.852491979 
+##               0.366414196               0.761192932               0.964341757 
 ##         Rattus norvegicus       Pachyuromys duprasi     Meriones unguiculatus 
-##               0.266185152               0.740474893               0.188012549 
+##               0.370151770               0.644293241               0.881399563 
 ##          Acomys cahirinus           Acomys russatus     Peromyscus polionotus 
-##               0.020578458               0.782906130               0.198815903 
+##               0.480815766               0.412017927               0.036365834 
 ##       Peromyscus leucopus        Ondatra zibethicus      Mesocricetus auratus 
-##               0.209865769               0.555301497               0.800987072 
+##               0.675340445               0.075463491               0.736080359 
 ##         Cricetus cricetus    Saccostomus campestris           Elephas maximus 
-##               0.461308585               0.124200919               0.754292212 
+##               0.593933136               0.594229965               0.983766107 
 ##      Dasypus novemcinctus 
-##               0.452019875</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">sim.sig &lt;-<span class="st"> </span><span class="kw">phylosig</span>(m.phy,sim.trait,<span class="dt">method=</span><span class="st">&quot;lambda&quot;</span>,<span class="dt">test=</span>T)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">  </a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">print</span>(sim.sig)</a></code></pre></div>
+##               0.296532733</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>sim.sig &lt;-<span class="st"> </span><span class="kw">phylosig</span>(m.phy,sim.trait,<span class="dt">method=</span><span class="st">&quot;lambda&quot;</span>,<span class="dt">test=</span>T)</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  </span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="kw">print</span>(sim.sig)</span></code></pre></div>
 <pre><code>## 
 ## Phylogenetic signal lambda : 6.6107e-05 
-## logL(lambda) : -8.29119 
-## LR(lambda=0) : -0.00148566 
+## logL(lambda) : -9.93876 
+## LR(lambda=0) : -0.00135082 
 ## P-value (based on LR test) : 1</code></pre>
 <p>Here we simulated some random data (values from 0–1) for the number of tips on the tree using <code>runif()</code> to generate the values and <code>Ntip()</code> from the <code>ape</code> package to retrieve the number of tips (i.e., species) in the tree. We named these values with the tip labels from the tree, an important step. The <code>phylosig()</code> function in <code>phytools</code> requires that a vector of trait values must have names that match the tips in the tree. In your analyses <strong>make sure you name your variable values with the species from your dataset</strong>, not the tip labels. The order for these will certainly be different and, if not correct, will make any analysis rubbish.</p>
 <div class="green">
@@ -637,7 +650,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <h1>Project Report</h1>
 <p>Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following questions:</p>
 <ul>
-<li>Could you and your team reproduce the scaling relationships (i.e. log-log regression models) of <span class="citation">Mortola and Lanthier (2004)</span> for <span class="math inline">\(T_{min}\)</span>,<span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>&gt;k?</li>
+<li>Could you and your team reproduce the scaling relationships (i.e. log-log regression models) of <span class="citation">Mortola and Lanthier (2004)</span> for <span class="math inline">\(T_{min}\)</span>,<span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>?</li>
 <li>Was there any signficant phylogentic signal in the four variables in question (i.e., mass, <span class="math inline">\(T_{min}\)</span>, <span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>)?</li>
 <li>After reanalyzing these models that included any variables with significant phylogentic signal in a PCM context under BM and OU models of trait evolution, which phylogentically corrected models fit best?</li>
 <li>Are new phylogenetically informed parameter estimates (i.e, intercept and slope coefficients) different than those in <span class="citation">Mortola and Lanthier (2004)</span> and has their significance changed?</li>

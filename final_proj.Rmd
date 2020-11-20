@@ -1,0 +1,45 @@
+---
+title: "Final Project"
+bibliography: class.bib
+---
+<style>
+div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
+</style>
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+# Introduction
+
+In this one and only project for Phase III, you are tasked with quickly developing a project of your own design. In developing your project, you and your team must take either one of these approaches. 
+
+  1. The project seeks to answer a question formulated around the fabrication of a new or modified data acquisition system.
+  2. The project seeks an answer a question using existing data from previously published research or an established and vetted database. 
+
+In either case, the project should address an important topic in organismal biology and has a scope that permits experimentation/data collection, analysis, and write up within the time frame of just a few short weeks. Furthermore, the project will require you to first delve into the the scientific literature to set the stage and then leverage your new data-analysis and report-writing skills in the synthesis of a markdown report. This final project report should follow the same format and requirements of the reports produced in Phase II, but with expanded content.
+
+**NOTE**: Teams may pursue (Module 9)[mod9_proj.html] as their final project. All the following parameters apply.
+
+Prof. Kenaley will work with each team to develop a timeline for preliminary deliverable that include defining an initial question, a framework for analysis, and a final-project draft that includes an abstract and potential figures and other representations of your date. Early in the project and after consulting with Prof. Kenaley, each team should fill out [this form](https://forms.gle/CCc5hjNz5sqVcSjJ8) that establishes this timeline. 
+
+
+# Methods
+
+You a free to pursue any methods introduced in the course. This may include, but need not be limited to, using a temperature, force, or acceleration prototype or purely data-driven analysis. All projects should include **visualization** and **modeling** approaches that mirror those used in the course so far. 
+
+# Project Report
+
+The following components of the project report should be included in a markdown document pushed to your github repos before the end of the finals period:
+
+   * A YAML header that specifies HTML output, the authors, and a bibliography named "BIOL3140.bib". **Submit this bibliography as well!**
+   * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifically:
+      + Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. **Please include at least one reference to support the summary of previous work.** Note: this can be done easily by refiguring the introduction to this project report.
+      + Methods: Explicitly state how you answered the questions, including a narrative of all the analyses both qualitative and quantitative.
+      + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.
+      + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. 
+      + Author contributions: Briefly outline what each team member contributed to the project.
+  * The Introduction and Discussion sections should include no fewer than three references to primary literature sources (i.e., scientific papers) between them. These references should be integrated using `@` BibTex tags that automatically place the references in the document using the associated .bib file.
+  
+The length of the report is expected to be longer than Phase II reports, however still concise. The focus here is on analysis and modeling. 
+
+

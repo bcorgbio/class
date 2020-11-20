@@ -20,6 +20,7 @@ The FL relationship is governed by several important biophysical aspects of musc
 <br>
 **Fig. 1.** The force-length relationship of a sarcomere as predicted by cross-bridge theory.
 </center>
+<br>
 
 Of course, many muscles transect a lever system composed of a few bones articulating at a joint. For our subject, the human upper limb, the forearm flexors originate on the pectoral girdle above the humerus and insert on the radius and ulna, spanning the elbow joint. Simply put, the arm is a 3rd order lever (Fig 2). If we are to consider the force transmitted to the hand (or any other part along the antebrachium), we must also consider this lever configuration. As a lever, this system has a mechanical advantage that predicts the amount of output force transmitted by the input force. Mechanical advantage is defined by the following:
 
@@ -116,7 +117,7 @@ Keeping all this mind mind, we'll study the FL relationship of the human upper l
 The specific goals of this project are to:
 
   1. Produce isometric force-angle curves for the human forearm flexors undertaking maximum voluntary contractions (MVCs).
-  2. Compare the angle at which maximum isometric force ($F_{max}) occurs ($\theta_{max}$) between non-fatigued (i.e., control) and eccentrically fatigued forearm flexors.
+  2. Compare the angle at which maximum isometric force ($F_{max}$) occurs ($\theta_{max}$) between non-fatigued (i.e., control) and eccentrically fatigued forearm flexors.
   3. Discuss the underlying mechanisms resulting in a shift of $\theta_{max}$ after eccentric fatigue.
 
 
@@ -380,6 +381,7 @@ Lastly, we should calculate the mean shift with SEM. To find the shift, we can p
 best.models%>%
   pivot_wider(id_cols=subject,names_from = exp,values_from=theta_max)%>%
   mutate(shift=fatigue-control)%>%
+  ungroup()%>%
   summarise(mean.shift=mean(shift),se.shift=sd(shift)/sqrt(length(shift)))
 
 ```
