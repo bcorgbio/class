@@ -526,58 +526,56 @@ All assignments are due at 11:59 on the specified date.
 
 In this module, we'll explore the phenology of spring arrival timing for neotropical passerines as it relates to historical weather conditions. To do so, we'll download species occurrence data from the Global Biodiversity Information Facility (GBIF), an international network and data infrastructure whose goal is to provide users open access to data about all types of life on Earth. We'll access GBIF data using [`rgif`](https://www.gbif.org/tool/81747/rgbif), an R package that permits access to GBIF's application programming interface (API). An API permits a user to interact with multiple software pieces (databases, code sources for processing and analysis, etc.). To assemble historical weather data, we'll also use another R package, `rnoa`. This package contains functions that interact with [NOAA's National Climatic Data Center's API](https://www.ncdc.noaa.gov/cdo-web/webservices/v2).
 
-We'll also explore how to add animation to our 
-
 
 
 ## Dates 
 Weeks 12 & 13 (Nov 19—Dec 1):
 
 ## Key Concepts
+
+  + API
   + Phenology
-  + Isometric force
-  + Maximum voluntary contractions (MVCc)
-  + Force-length relationships
-  + Mechanical advantage
-  
+  + Migrations
+  + Linear Mixed-effects Modeling
+
 ## Learning Objectives
 
 Upon completion of this week and module, students will be able to:
 
-  + Construct and program a low-cost load-cell DAQ system.
-  + Comment on the FL relationship in human skeletal muscles and the effect of fatigue on the shape of this relationship.
-
+  + Download data using R's interface to one of several APIs.
+  + Apply linear mixed-effect models to biological data.
+  + Comment on how climatic and meteorological conditions may effect bird poulaiton.
+  
 ## Read/Watch 
 
-  + Read [Rassier, D.E., MacIntosh, B.R. and Herzog, W., 1999. Length dependence of active force production in skeletal muscle. Journal of applied physiology, 86(5), pp.1445-1457. 83–95.](https://journals.physiology.org/doi/full/10.1152/jappl.1999.86.5.1445)
-  + Read [Oregon State's Body Physics page](https://openoregon.pressbooks.pub/bodyphysics/chapter/body-levers/)
-  + Read [The Wheastone Bridge from Omega](https://www.omega.com/en-us/resources/wheatstone-bridge)
+  + Watch [Matthew E. Clapham from UCSC on Linear Mixed-Effect Modles](https://www.youtube.com/watch?v=QCqF-2E86r0)
+  + Read [Knudsen, Endre, Andreas Lindén, Christiaan Both, Niclas Jonzén, Francisco Pulido, Nicola Saino, William J Sutherland, et al. 2011. “Challenging Claims in the Study of Migratory Birds and Climate Change.” Biological Reviews 86 (4): 928–46](https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1469-185X.2011.00179.x?casa_token=K1xQ3N19mywAAAAA:QURRP-NVNPk8V6W444cY6C3BUe5Py0WppwbsHnzPQLLChgJMZCE-95YxVDxZHVzQH9rDUCjqk9ovmyJB)
   
 
 ## Do
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
-  + Complete and submit Module 8 Project report
-  + Upload force-angle data to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing) by Monday, November 9th
+  + Complete and submit Module 9 Project report
+
 
 
 
 ## Guiding Questions
 
-  + How does one construct a low-cost load-cell force DAQ system?
-  + Can angle-force measurements predict force-length (FL) relationships in the flexors of the human upper arm?
-  + Does eccentric fatigue shift the FL relationship of human forearm flexors?
+  + How does one download data using interfaces developed for R?
+  + Is something other the temperature important in explaining the arrival time of neotropical migrants in MA?
+
   
-## Module 8 Schedule
+## Module 9 Schedule
 
 All assignments are due at 11:59 on the specified date.
 
-|| Monday <br> 11/2 |  Tuesday <br>11/3    | Wednesday<br>  11/4 | Thursday <br> 11/15 | Friday <br> 11/16 |Saturday<br> 11/17 | Sunday<br> 11/8
+|| Monday <br> 11/23 |  Tuesday <br>11/34    | Wednesday<br>  11/35 | Thursday <br> 11/26 | Friday <br> 11/27 |Saturday<br> 11/28 | Sunday<br> 11/8
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
 **Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |
 
- || Monday <br> 11/9 |  Tuesday <br>11/10    | Wednesday<br>  11/11 | Thursday <br> 11/12 | Friday <br> 11/13 |Saturday<br> 11/14 | Sunday<br> 11/15
+ || Monday <br> 11/30 |  Tuesday <br>12/1    | Wednesday<br>  12/2 | Thursday <br> 12/3 | Friday <br> 12/4 |Saturday<br> 12/5 | Sunday<br> 12/6
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 
-**Assignment due** | Upload team data files to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing)| | Post question to discussion board | Answer a question on discussion board  | | | Commit Module 8 Project Report
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Commit Module 9 Project Report
 ||||||||
 
 

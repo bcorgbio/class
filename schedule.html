@@ -23,6 +23,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 
@@ -376,6 +377,16 @@ div.tocify {
     <li>
       <a href="mod8_proj.html">Module 8 Project</a>
     </li>
+    <li>
+      <a href="mod9_proj.html">Module 9 Project</a>
+    </li>
+    <li class="dropdown-header">Phase III</li>
+    <li>
+      <a href="phaseIII_rubric.html">Phase III report rubric</a>
+    </li>
+    <li>
+      <a href="final_proj.html">Final Project</a>
+    </li>
     <li class="dropdown-header">DaqPacks</li>
     <li>
       <a href="daqpack.html">DaqPack Item List</a>
@@ -607,11 +618,11 @@ This is a lot of reading and fiddling with R. Don’t worry too much about under
 <p>All form <a href="https://r4ds.had.co.nz/wrangle-intro.html">R for Data Science</a> (R4DS):</p>
 <ul>
 <li><p><a href="https://r4ds.had.co.nz/transform.html">Chapter 5: Transformations</a></p></li>
-<li>All from the <a href="https://r4ds.had.co.nz">Wrangle Section</a> of R4DS:
+<li><p>All from the <a href="https://r4ds.had.co.nz">Wrangle Section</a> of R4DS:</p>
 <ul>
 <li><a href="https://r4ds.had.co.nz/wrangle-intro.html">Chapter 9: Introduction</a></li>
 <li><a href="https://r4ds.had.co.nz/tibbles.html">Chapter 10: Tibbles</a></li>
-<li><a href="https://r4ds.had.co.nz/data-import.html">Chapter 11: Data Import</a> [don’t worry too much about 11.3 and 11.4 “Parsing Vectors” and &quot;Parsing Files]</li>
+<li><a href="https://r4ds.had.co.nz/data-import.html">Chapter 11: Data Import</a> [don’t worry too much about 11.3 and 11.4 “Parsing Vectors” and "Parsing Files]</li>
 <li><a href="https://r4ds.had.co.nz/tidy-data.html">Chapter 12: Tidy Data</a></li>
 <li><a href="https://r4ds.had.co.nz/relational-data.html">Chapter 13: Relational Data</a></li>
 </ul></li>
@@ -733,7 +744,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <h2>Read/Watch</h2>
 <p>All form <a href="https://r4ds.had.co.nz/wrangle-intro.html">R for Data Science</a> (R4DS):</p>
 <ul>
-<li>Chapter 3:<a href="https://r4ds.had.co.nz/data-visualisation.html">Data Visualiation</a></li>
+<li><p>Chapter 3:<a href="https://r4ds.had.co.nz/data-visualisation.html">Data Visualiation</a></p></li>
 <li><p>Section IV: Models</p>
 <ul>
 <li>Chapter 22: <a href="https://r4ds.had.co.nz/model-intro.html">Introduction</a></li>
@@ -1384,6 +1395,139 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <td></td>
 <td></td>
 <td>Commit Module 8 Project Report</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="module-9-birds-of-a-feather-migrate-together-.-.-.-sometimes-using-ebird-data-to-explore-the-phenology-of-passerine-migration-data-driven" class="section level1">
+<h1>Module 9: Birds of a Feather Migrate Together . . . Sometimes: Using EBird data to Explore the Phenology of Passerine Migration (data driven)</h1>
+<p>In this module, we’ll explore the phenology of spring arrival timing for neotropical passerines as it relates to historical weather conditions. To do so, we’ll download species occurrence data from the Global Biodiversity Information Facility (GBIF), an international network and data infrastructure whose goal is to provide users open access to data about all types of life on Earth. We’ll access GBIF data using <a href="https://www.gbif.org/tool/81747/rgbif"><code>rgif</code></a>, an R package that permits access to GBIF’s application programming interface (API). An API permits a user to interact with multiple software pieces (databases, code sources for processing and analysis, etc.). To assemble historical weather data, we’ll also use another R package, <code>rnoa</code>. This package contains functions that interact with <a href="https://www.ncdc.noaa.gov/cdo-web/webservices/v2">NOAA’s National Climatic Data Center’s API</a>.</p>
+<div id="dates-8" class="section level2">
+<h2>Dates</h2>
+<p>Weeks 12 &amp; 13 (Nov 19—Dec 1):</p>
+</div>
+<div id="key-concepts-8" class="section level2">
+<h2>Key Concepts</h2>
+<ul>
+<li>API</li>
+<li>Phenology</li>
+<li>Migrations</li>
+<li>Linear Mixed-effects Modeling</li>
+</ul>
+</div>
+<div id="learning-objectives-8" class="section level2">
+<h2>Learning Objectives</h2>
+<p>Upon completion of this week and module, students will be able to:</p>
+<ul>
+<li>Download data using R’s interface to one of several APIs.</li>
+<li>Apply linear mixed-effect models to biological data.</li>
+<li>Comment on how climatic and meteorological conditions may effect bird poulaiton.</li>
+</ul>
+</div>
+<div id="readwatch-8" class="section level2">
+<h2>Read/Watch</h2>
+<ul>
+<li>Watch <a href="https://www.youtube.com/watch?v=QCqF-2E86r0">Matthew E. Clapham from UCSC on Linear Mixed-Effect Modles</a></li>
+<li>Read <a href="https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1469-185X.2011.00179.x?casa_token=K1xQ3N19mywAAAAA:QURRP-NVNPk8V6W444cY6C3BUe5Py0WppwbsHnzPQLLChgJMZCE-95YxVDxZHVzQH9rDUCjqk9ovmyJB">Knudsen, Endre, Andreas Lindén, Christiaan Both, Niclas Jonzén, Francisco Pulido, Nicola Saino, William J Sutherland, et al. 2011. “Challenging Claims in the Study of Migratory Birds and Climate Change.” Biological Reviews 86 (4): 928–46</a></li>
+</ul>
+</div>
+<div id="do-8" class="section level2">
+<h2>Do</h2>
+<ul>
+<li>Post one and respond to one question in <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a></li>
+<li>Complete and submit Module 9 Project report</li>
+</ul>
+</div>
+<div id="guiding-questions-8" class="section level2">
+<h2>Guiding Questions</h2>
+<ul>
+<li>How does one download data using interfaces developed for R?</li>
+<li>Is something other the temperature important in explaining the arrival time of neotropical migrants in MA?</li>
+</ul>
+</div>
+<div id="module-9-schedule" class="section level2">
+<h2>Module 9 Schedule</h2>
+<p>All assignments are due at 11:59 on the specified date.</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Monday <br> 11/23</th>
+<th>Tuesday <br>11/34</th>
+<th>Wednesday<br> 11/35</th>
+<th>Thursday <br> 11/26</th>
+<th>Friday <br> 11/27</th>
+<th>Saturday<br> 11/28</th>
+<th>Sunday<br> 11/8</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Assignment due</strong></td>
+<td></td>
+<td></td>
+<td>Post question to discussion board</td>
+<td>Answer a question on discussion board</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Monday <br> 11/30</th>
+<th>Tuesday <br>12/1</th>
+<th>Wednesday<br> 12/2</th>
+<th>Thursday <br> 12/3</th>
+<th>Friday <br> 12/4</th>
+<th>Saturday<br> 12/5</th>
+<th>Sunday<br> 12/6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Assignment due</strong></td>
+<td></td>
+<td></td>
+<td>Post question to discussion board</td>
+<td>Answer a question on discussion board</td>
+<td></td>
+<td></td>
+<td>Commit Module 9 Project Report</td>
 </tr>
 <tr class="even">
 <td></td>
