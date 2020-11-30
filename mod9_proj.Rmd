@@ -100,8 +100,9 @@ Constrain the `occ_data()` search by:
   
 This will be a rather labored search in that it might take 20 minutes to run through all five species, depending on the number of records. But, this is nothing like the hours one would spend working with `auk`. So run this and grab a sandwich and refresh your twitter feed. After that, we should have a many thousands of MA eBird records loaded to the list.
 
+To get get you started, here's what could be done . . .
 
-```{r,eval=FALSE,echo=FALSE}
+```{r,eval=FALSE}
 dat.l <-list()
 
 for(s in species){
@@ -125,6 +126,7 @@ dat <- rbindlist(dat.l,fill=T)
 head(dat)
 ```
 
+Note that we store the number of observations for each species, ripped from the meta data using `occ_data()` with `limit=0`. This won't return records, but will return the meta data. We can then pass this number to `limit` in the subsequent use of `occ_data` to bypass the limit of 500, which is the default.
 
 <div class = "green">
 <div class="row">
@@ -247,7 +249,7 @@ So let's explore an example of the arrival as modeled logistically of one specie
 ```{r,mc}
 
 mc<- dat%>%
-  filter(species=="Myiarchus crinitus")%>%
+  filter(species=="Setophaga caerulescens")%>%
   group_by(year)%>%
   mutate(date=as.Date(paste0(year,"-",month,"-",day)),
          j.day=julian(date,origin=as.Date(paste0(unique(year),"-01-01")))
@@ -414,18 +416,32 @@ Anova(mc.lmer2)
 
 ```
 
+```{r,eval=FALSE,echo=FALSE}
+#another way with mean across all locals
+mc.arr.weath3 <- mc.arr.weath2%>%
+  group_by(year)%>%
+  dplyr::mutate_at(.vars = c("wk.tmin","wk.tmax","wk.wvec"),mean)
+
+# lmer with 1|species
+mc.lmer3 <- lm(j.day~wk.tmin*wk.tmax*wk.wvec,mc.arr.weath3,na.action = "na.fail")
+anova(mc.lmer3)
+
+dredge(mc.lmer3,fixed = c("wk.tmin","wk.tmax","wk.wvec"),)
+
+```
+
 Notice that we specified the random effect of location using `(1|name)`, allowing each location to have a separate effect on the slope of the relationship between `j.day` and the weather variable, `tmin`, `tmax`, and `wvec`. Specifying a random effect on slope is usually sufficient, especially for more complicated data sets. Notice also that we included interactions between all the fixed effects with `*`. As we've explored before, this is a good place to start, assuming interactions. To assesses the significance of the fixed effects we've used the `Anova()` function from the `car` package that suits mixed-effect models. As you can see from running `Anova()` over our two models, including only one day of data at each location doesn't reveal any significant relationships between weather and arrival day; however, an analysis including a two-week average at each location (offset to reflect the soonest a bird would leave) does reveal significant fixed effects of weather.   
 
 Also have a look at the interactions at the end of the anova tables. For analysis including two-weak averages of weather values, there is an important interactions between the averages for `tmin`, `tmax` and `mvec`, that is, the degree (i.e., slope) of response varies according all three weather values.
 
-In keeping with one thrust of the course, any one model is just one way to explain data and, thus, we should consider other models using our model-choice framework. So let's do that, dropping weather variables from the two-week average analysis. With three variables, we have at least 6 possible combinations when we include all the possible interactions, if we so choose. Fortunately, the `dredge()` from the `MuMIn` package allows one to decompose a model to all the combinations of the terms, including interactions, and report important model fit values (e.g., AICc, $\Delta$AIC, and AIC$_w$).
+In keeping with one thrust of the course, any one model is just one way to explain data and, thus, we should consider other models using our model-choice framework. So let's do that, dropping weather variables from the two-week average analysis. With three variables, we have at least 6 possible combinations when we include all the possible interactions, if we so choose. Fortunately, the `dredge()` from the `MuMIn` package allows one to decompose a model to all the combinations of the terms, including interactions, and report important model fit values (e.g., AICc, $\Delta$AIC, and AIC$_w$). We'll ask `dredge()` to consider the our weather variables only with `fixed= c("wk.tmin","wk.tmax","wk.wvec")`.
 
 ```{r,warning=FALSE, message=FALSE}
 
 
-mc.arr.aic <- dredge(mc.lmer2,fixed = c("wk.tmin","wk.tmax","wk.wvec"))
+mc.arr.aic <- dredge(mc.lmer2,fixed = c("wk.tmin","wk.tmax","wk.wvec"),)
 
-mc.kb <- kable(mc.arr.aic,caption = "Fit values for nested models of the most complicated lme model")
+mc.kb <- kable(mc.arr.aic[1:4,],caption = "Fit values for nested models of the most complicated lme model")
 
 kable_styling(mc.kb)
 
@@ -439,7 +455,7 @@ Notice how `dredge()` return the ranks of the nested models according to AIC met
 To sum up this quick exploration of linear-mixed effects modeling for this one species, a model that includes minimum and maximum temperature and wind vector explains the data best and minimum temperature and wind vector are significant predictors.
 
 
-## Additional Operationas and Analyses
+## Additional Operations and Analyses
 
 Your task is to repeat data compilation and analysis for five species of your choosing from this [list of TGMs](tgms.csv). The analysis should include the following components:
   
@@ -449,6 +465,7 @@ Your task is to repeat data compilation and analysis for five species of your ch
   4. Linear mixed-effect modeling of arrival day as it varies with these weather variables for both weather data sets (single-day and two-week average)
   5. Model-testing operations of both data sets using `dredge()`.
   6. Anova testing of the best-fit models from both data sets. 
+  
 
 # Project Report
 
@@ -470,4 +487,138 @@ The answers and narrative in your .Rmd should include the following components:
       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least two references to other relevant studies.** Note: circling back to the introduction will be helpful here.
       + Author contributions: Briefly outline what each team member contributed to the project.
 
+```{r,eval=FALSE,echo=FALSE}
+dat<- dat%>%
+  group_by(species,year)%>%
+  mutate(date=as.Date(paste0(year,"-",month,"-",day)),
+         j.day=julian(date,origin=as.Date(paste0(unique(year),"-01-01")))
+  )%>%
+  group_by(species,year,j.day,date)%>%
+  summarise(day.tot=sum(individualCount,na.rm=T))%>%
+  group_by(species,year)%>%
+  mutate(prop=cumsum(day.tot/sum(day.tot,na.rm = T)))%>%
+  filter(year>1999)
+
+dat%>%
+  ggplot(aes(j.day,prop,col=species))+geom_point()+facet_wrap(year~.)
+
+
+dat.pred <- dat%>%
+  group_by(species,year)%>%
+ summarize(
+   pred=predict(nls(prop~SSlogis(j.day,Asym, xmid, scal)),newdata=data.frame(j.day=min(j.day):max(j.day))),#predict the logistic curve for each species
+   j.day=min(j.day):max(j.day),
+  )%>%
+  left_join(mc%>%select(species,year,j.day,date)) ## add date back to tibble
+
+
+dat%>%
+  ggplot(aes(j.day,prop,col=species))+geom_point(alpha=0.3)+geom_line(data=dat.pred,aes(x=j.day,y=pred,col=species),size=2)+facet_wrap(year~.)
+
+
+arrive.date <-dat.pred%>%
+  group_by(species,year)%>%
+  filter(j.day==j.day[which.min(abs(pred-0.25))])
+
+arrive.date%>%
+  ggplot(aes(year,j.day,col=species))+geom_point()
+
+arr.weath <- arrive.date%>%
+  left_join(weather.d)%>%
+  left_join(dat%>%select(species,year,date,j.day))
+
+head(arr.weath)
+
+#weekly
+weather.wk <-weather.d %>% 
+  group_by(year,name) %>% 
+  mutate(wk.tmin = frollmean(tmin, n=14,align="right"),
+         wk.tmax = frollmean(tmax, n=14,align="right"),
+         wk.wvec = frollmean(wvec, n=14,align="right")
+         )%>%
+  select(j.day,date2,name,wk.tmin,wk.tmax,wk.wvec)
+
+arr.weath2 <- arrive.date%>%
+  left_join(weather.wk)%>%
+  select(-date)%>%
+  na.omit()
+
+head(arr.weath2)
+
+#another way with mean across all locals
+arr.weath3 <- arr.weath2%>%
+  ungroup()%>%
+  group_by(species,year,j.day)%>%
+  dplyr::summarize_at(.vars = c("wk.tmin","wk.tmax","wk.wvec"),mean)%>%
+  na.omit()
+
+#weather at 0, 5, and 10 days away from arrival
+lmer <- lmer(j.day~tmin*tmax*wvec+(1|name)+(1|species),arr.weath)
+Anova(mc.lmer) #Anova from the car package
+
+#0Mean two week weather preceding arrival
+lmer2 <- lmer(j.day~wk.tmin*wk.tmax*wk.wvec+(1|name)+(1|species),arr.weath2,na.action = "na.fail")
+Anova(lmer2) 
+
+# lmer with 1|species
+lmer3 <- lmer(j.day~wk.tmin*wk.tmax*wk.wvec+(1|species),arr.weath3,na.action = "na.fail")
+Anova(lmer3)
+
+dredge(lmer3,fixed = c("wk.tmin","wk.tmax","wk.wvec"),)
+
+lmer.best <- lmer(j.day~wk.tmin+wk.tmax+wk.wvec+(1|species),arr.weath3,na.action = "na.fail")
+Anova(lmer.best)
+
+
+#prsim data
+
+#install.packages("prism")
+
+library(prism)
+
+get_prism_dailys(
+  type = "tmean", 
+  minDate = "2013-05-01", 
+  maxDate = "2013-05-1", 
+  keepZip = FALSE
+)
+
+
+
+prism_set_dl_dir("~/prismtmp")
+
+
+mnlon <- min(sta.d$longitude)
+mnlat <- min(sta.d$latitude)
+mxlon <- max(sta.d$longitude)
+mxlat <- max(sta.d$latitude)
+
+library(trackter)
+
+al2bos <- dist.2d(mnlon,mxlon,mnlat,mxlat)
+
+ew.d <- dist.2d(mxlon,mnlon,mnlat,mnlat)
+
+ns.d <-  dist.2d(mxlon,mxlon,mnlat,mxlat)
+
+ang.ne <- cosine.ang(al2bos,ew.d,ns.d)
+deg(ang.ne)
+
+point.ang.r <- function(p,r,theta){x.2 <-p[1]+r*cos(theta); y.2 <- p[2]+r*sin(theta);return(data.frame(x=x.2,y=y.2))}
+
+trans <- lapply(seq(0,1,.01),function(x) point.ang.r(c(mnlon,mnlat),r=x*al2bos,theta=ang.ne))
+trans <-as_tibble(do.call(rbind,trans))
+
+trans <- trans%>%
+  mutate(
+    longitude=round(x,1),
+    latitude=round(y,1))%>%
+   left_join(usmap_transform(.[,c("longitude","latitude")]))
+
+plot_usmap(
+  include = c(.northeast_region,.south_region,.east_north_central)
+)+geom_point(data=trans,aes(x=longitude.1,y=latitude.1),size=1)
+
+#https://github.com/mikejohnson51/climateR
+```
 # References

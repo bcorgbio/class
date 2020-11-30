@@ -610,13 +610,13 @@ Fig. 1. Records for common raven in Maine, 2018.
 ## #   lastInterpreted &lt;chr&gt;, references &lt;chr&gt;, license &lt;chr&gt;,
 ## #   geodeticDatum &lt;chr&gt;, class &lt;chr&gt;, countryCode &lt;chr&gt;, country &lt;chr&gt;,
 ## #   rightsHolder &lt;chr&gt;, identifier &lt;chr&gt;, `http://unknown.org/nick` &lt;chr&gt;,
-## #   verbatimEventDate &lt;chr&gt;, datasetName &lt;chr&gt;, collectionCode &lt;chr&gt;,
-## #   verbatimLocality &lt;chr&gt;, gbifID &lt;chr&gt;, occurrenceID &lt;chr&gt;, taxonID &lt;chr&gt;,
+## #   verbatimEventDate &lt;chr&gt;, datasetName &lt;chr&gt;, verbatimLocality &lt;chr&gt;,
+## #   gbifID &lt;chr&gt;, collectionCode &lt;chr&gt;, occurrenceID &lt;chr&gt;, taxonID &lt;chr&gt;,
 ## #   recordedBy &lt;chr&gt;, catalogNumber &lt;chr&gt;,
 ## #   `http://unknown.org/occurrenceDetails` &lt;chr&gt;, institutionCode &lt;chr&gt;,
 ## #   rights &lt;chr&gt;, eventTime &lt;chr&gt;, occurrenceRemarks &lt;chr&gt;, identifiedBy &lt;chr&gt;,
 ## #   identificationID &lt;chr&gt;, individualCount &lt;int&gt;, vernacularName &lt;chr&gt;,
-## #   county &lt;chr&gt;, locality &lt;chr&gt;, name &lt;chr&gt;</code></pre>
+## #   locality &lt;chr&gt;, county &lt;chr&gt;, name &lt;chr&gt;</code></pre>
 <p>This includes the meta data (<code>$meta</code>), data about the data and the data themselves, (<code>$data</code>), a tibble. The <code>$data</code> tibble includes the information we need for this project, including date, lat, long, count, etc. Thus, to access the lat/lon data in our records, we refer to the second element in the list, that is <code>raven[[2]]</code>.</p>
 <p>Before we get a GBIF search for TGMs started, I suggest first storing your species names in a vector (so please choose them and store them). Say, for instance, you chose great-crested flycatcher, Baltimore oriole, rose-breasted grossbeak, yellow-billed cuckoo, and black-throated blue warbler. We also want to restrict the search to spring arrival time in years of interest (i.e., those with decent eBird data . . . &gt;1990 or so). Let’s store those values, too.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>species &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Myiarchus crinitus&quot;</span>,<span class="st">&quot;Icterus galbula&quot;</span>,<span class="st">&quot;Pheucticus ludovicianus&quot;</span>,<span class="st">&quot;Coccyzus americanus&quot;</span>,<span class="st">&quot;Setophaga caerulescens&quot;</span>)</span>
@@ -633,6 +633,29 @@ Fig. 1. Records for common raven in Maine, 2018.
 <li>occurrence record should be based on a human observation, that is, someone saw this in the wild (i.e., an eBird record, <code>basisOfRecord = "HUMAN_OBSERVATION"</code>).</li>
 </ul>
 <p>This will be a rather labored search in that it might take 20 minutes to run through all five species, depending on the number of records. But, this is nothing like the hours one would spend working with <code>auk</code>. So run this and grab a sandwich and refresh your twitter feed. After that, we should have a many thousands of MA eBird records loaded to the list.</p>
+<p>To get get you started, here’s what could be done . . .</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>dat.l &lt;-<span class="kw">list</span>()</span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="cf">for</span>(s <span class="cf">in</span> species){</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  </span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="co">## setting the limit=0 returns no records but can give you the number of observations if you access the meta data</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>n.obs &lt;-<span class="st">  </span><span class="kw">occ_data</span>(<span class="dt">scientificName =</span> s,<span class="dt">year=</span>y,<span class="dt">month=</span>m,<span class="dt">limit=</span><span class="dv">0</span>,<span class="dt">country=</span><span class="st">&quot;US&quot;</span>,<span class="dt">basisOfRecord =</span> <span class="st">&quot;HUMAN_OBSERVATION&quot;</span>,<span class="dt">stateProvince=</span><span class="st">&quot;Massachusetts&quot;</span>)<span class="op">$</span>meta<span class="op">$</span>count </span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="kw">print</span>(n.obs)</span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a>dat.l[[<span class="kw">paste0</span>(s)]] &lt;-<span class="st"> </span><span class="kw">occ_data</span>(<span class="dt">scientificName =</span> s,<span class="dt">year=</span>y,<span class="dt">month=</span>m,</span>
+<span id="cb7-12"><a href="#cb7-12"></a>                               <span class="dt">limit=</span>n.obs,<span class="dt">country=</span><span class="st">&quot;US&quot;</span>,</span>
+<span id="cb7-13"><a href="#cb7-13"></a>                               <span class="dt">basisOfRecord =</span> <span class="st">&quot;HUMAN_OBSERVATION&quot;</span>,</span>
+<span id="cb7-14"><a href="#cb7-14"></a>                               <span class="dt">stateProvince=</span><span class="st">&quot;Massachusetts&quot;</span>)[[<span class="dv">2</span>]]</span>
+<span id="cb7-15"><a href="#cb7-15"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a></span>
+<span id="cb7-17"><a href="#cb7-17"></a>}</span>
+<span id="cb7-18"><a href="#cb7-18"></a></span>
+<span id="cb7-19"><a href="#cb7-19"></a>dat &lt;-<span class="st"> </span><span class="kw">rbindlist</span>(dat.l,<span class="dt">fill=</span>T)</span>
+<span id="cb7-20"><a href="#cb7-20"></a></span>
+<span id="cb7-21"><a href="#cb7-21"></a><span class="kw">head</span>(dat)</span></code></pre></div>
+<p>Note that we store the number of observations for each species, ripped from the meta data using <code>occ_data()</code> with <code>limit=0</code>. This won’t return records, but will return the meta data. We can then pass this number to <code>limit</code> in the subsequent use of <code>occ_data</code> to bypass the limit of 500, which is the default.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
@@ -645,15 +668,15 @@ Fig. 1. Records for common raven in Maine, 2018.
 </div>
 <p><br></p>
 <p>After a large operation like this, it’s best to save the data. Many in the R world prefer that large data objects be stored as serialized files. The <code>saveRDS()</code> function is exactly what we need for this. The following will save data as an R serialized file with the name “mass.bird.data.RDS”.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">saveRDS</span>(data,<span class="st">&quot;massbird.data.RDS&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">saveRDS</span>(data,<span class="st">&quot;massbird.data.RDS&quot;</span>)</span></code></pre></div>
 <p>Now, if your script or markdown should be interrupted (e.g., a crash, freeze, etc.), you can access your data with <code>readRDS()</code>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb8-2"><a href="#cb8-2"></a>dat &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;massbird.data.RDS&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>dat &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;massbird.data.RDS&quot;</span>)</span></code></pre></div>
 <p>With a sense of how the bird data will be downloaded, let’s see what sort of numbers we’ll be dealing with. These are year-by-year totals from <code>occ_data()</code> searches for the 5 species above . . .</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>dat<span class="op">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="st">  </span><span class="kw">group_by</span>(year,species)<span class="op">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">count=</span><span class="kw">sum</span>(individualCount,<span class="dt">na.rm =</span> T))<span class="op">%&gt;%</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>year,<span class="dt">y=</span>count,<span class="dt">col=</span>species))<span class="op">+</span><span class="kw">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>dat<span class="op">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="st">  </span><span class="kw">group_by</span>(year,species)<span class="op">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">count=</span><span class="kw">sum</span>(individualCount,<span class="dt">na.rm =</span> T))<span class="op">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>year,<span class="dt">y=</span>count,<span class="dt">col=</span>species))<span class="op">+</span><span class="kw">geom_point</span>()</span></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;year&#39; (override with `.groups` argument)</code></pre>
 <p><img src="mod9_proj_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>It looks like there’s not much data before 2000 for all species. We’ll keep this in mind as we move forward. Now let’s move on to compiling weather data.</p>
@@ -664,17 +687,17 @@ Fig. 1. Records for common raven in Maine, 2018.
 <p>Because nocturnal long-distance migrators fly about 200 km<span class="math inline">\(^{-d}\)</span> <span class="citation">(Hall-Karlsson and Fransson 2008)</span>, we can estimate that a bird that was 1000 km away from Massachusetts 5 days before arrival and 2000 km away 10 days before arrive. With this in mind, we can establish an assumed migration path from the Gulf of Mexico and sample weather from locations that are close to these distances from Massachusetts. If one draws a line from Mobile, AL on the Gulf Coast (about 2000 km from MA) to Boston, MA, Charlotte, NC sits along that line and half way along an assumed flight path (1000 km from MA). Thus, these locations represent logical sampling locations for our weather data.</p>
 <p>NOAA’s NCDC identifies weather stations by unique ID codes. The following vector, <code>sts</code>, represents the codes for stations in Mobile, Charlotte, and Boston that have relatively complete data sets for wind and temperature over our time frame (&gt;1990 or so).</p>
 <p>Before we start using <code>rnoaa</code> to access NOAA’s NCDC API, we have to establish a key, a token of sorts that identifies the user and establishes a connection to the NCDC servers. Head on over to <a href="https://www.ncdc.noaa.gov/cdo-web/token">this page on NOAA’s NCDC site</a> to retrieve a token. It will require entering an email address, to which the token will be sent. Copy the token (a string of random letters and numbers) and paste it into the following where “token” is indicated.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">options</span>(<span class="dt">noaakey =</span> <span class="st">&quot;token&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">options</span>(<span class="dt">noaakey =</span> <span class="st">&quot;token&quot;</span>)</span></code></pre></div>
 <p>The R function <code>options()</code> sets global parameter values for your R session. With <code>noaakey="token"</code>, you’re telling R to pass this token string to any function that asks for <code>noaakey</code>, that is, all the <code>rnoaa</code> query functions.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>sts &lt;-<span class="st"> </span><span class="kw">c</span>(</span>
-<span id="cb12-2"><a href="#cb12-2"></a>  <span class="st">&quot;GHCND:USW00013894&quot;</span>, <span class="co">#Mobible, AL 2k away about 10 days away @200 km/day</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a>  <span class="st">&quot;GHCND:USW00013881&quot;</span>, <span class="co">#Charlotte, NC 1000 km away about 6 days away @200 km/day</span></span>
-<span id="cb12-4"><a href="#cb12-4"></a>  <span class="st">&quot;GHCND:USW00014739&quot;</span> <span class="co">#Boston</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>sts &lt;-<span class="st"> </span><span class="kw">c</span>(</span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="st">&quot;GHCND:USW00013894&quot;</span>, <span class="co">#Mobible, AL 2k away about 10 days away @200 km/day</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="st">&quot;GHCND:USW00013881&quot;</span>, <span class="co">#Charlotte, NC 1000 km away about 6 days away @200 km/day</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="st">&quot;GHCND:USW00014739&quot;</span> <span class="co">#Boston</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>)</span></code></pre></div>
 <p>Now that we have the station codes identified and a token key established, let’s query the the NCDC API with <code>ncdc_stations()</code> to retrieve their exact location. Let’s first see what this function returns using our Boston station ID.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>bos &lt;-<span class="st"> </span><span class="kw">ncdc_stations</span>(<span class="dt">stationid =</span> <span class="st">&quot;GHCND:USW00014739&quot;</span>)</span>
-<span id="cb13-2"><a href="#cb13-2"></a></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="kw">print</span>(bos)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>bos &lt;-<span class="st"> </span><span class="kw">ncdc_stations</span>(<span class="dt">stationid =</span> <span class="st">&quot;GHCND:USW00014739&quot;</span>)</span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="kw">print</span>(bos)</span></code></pre></div>
 <pre><code>## $meta
 ## NULL
 ## 
@@ -687,14 +710,14 @@ Fig. 1. Records for common raven in Maine, 2018.
 ## attr(,&quot;class&quot;)
 ## [1] &quot;ncdc_stations&quot;</code></pre>
 <p>Notice that the data about this station is stored in the <code>$data</code> table returned by <code>ncdc_stations()</code> This means we can run all three of out stations through this function and combine the rows to give us a table with all the station data. We’ll use these data to map the station locations to visualize our weather sampling locations. Let’s do that using <code>lapply()</code> and a few other tricks to prepare the station data for mapping and use with other <code>ncdc</code> functions.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>sta.d &lt;-<span class="st"> </span><span class="kw">bind_rows</span>( <span class="co">#bind the rows</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="kw">lapply</span>(sts,<span class="cf">function</span>(x) <span class="kw">ncdc_stations</span>(<span class="dt">stationid =</span> x)<span class="op">$</span>data ) <span class="co">#use lapply to run through stations</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a>  )<span class="op">%&gt;%</span></span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="st">  </span><span class="kw">left_join</span>(<span class="kw">usmap_transform</span>(.[,<span class="kw">c</span>(<span class="st">&quot;longitude&quot;</span>,<span class="st">&quot;latitude&quot;</span>)]))<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#join transformation of lat/long for projection with usmap</span></span>
-<span id="cb15-5"><a href="#cb15-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">name=</span><span class="kw">str_sub</span>(name, <span class="dv">-5</span>,<span class="op">-</span><span class="dv">4</span>))<span class="op">%&gt;%</span><span class="co">#simplify the name column, grab just the state</span></span>
-<span id="cb15-6"><a href="#cb15-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">migr.day=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">0</span>))<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#so we can look at wind speed 0, 5 or 10 days before arrive in boston</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a><span class="st">  </span><span class="kw">separate</span>(id,<span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;station.type&quot;</span>,<span class="st">&quot;id&quot;</span>))<span class="op">%&gt;%</span><span class="co">#need to cut station type out from station id number</span></span>
-<span id="cb15-8"><a href="#cb15-8"></a><span class="st">        </span><span class="kw">print</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>sta.d &lt;-<span class="st"> </span><span class="kw">bind_rows</span>( <span class="co">#bind the rows</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="kw">lapply</span>(sts,<span class="cf">function</span>(x) <span class="kw">ncdc_stations</span>(<span class="dt">stationid =</span> x)<span class="op">$</span>data ) <span class="co">#use lapply to run through stations</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  )<span class="op">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="st">  </span><span class="kw">left_join</span>(<span class="kw">usmap_transform</span>(.[,<span class="kw">c</span>(<span class="st">&quot;longitude&quot;</span>,<span class="st">&quot;latitude&quot;</span>)]))<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#join transformation of lat/long for projection with usmap</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">name=</span><span class="kw">str_sub</span>(name, <span class="dv">-5</span>,<span class="op">-</span><span class="dv">4</span>))<span class="op">%&gt;%</span><span class="co">#simplify the name column, grab just the state</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">migr.day=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">0</span>))<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#so we can look at wind speed 0, 5 or 10 days before arrive in boston</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="st">  </span><span class="kw">separate</span>(id,<span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;station.type&quot;</span>,<span class="st">&quot;id&quot;</span>))<span class="op">%&gt;%</span><span class="co">#need to cut station type out from station id number</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="st">        </span><span class="kw">print</span>()</span></code></pre></div>
 <pre><code>##   elevation    mindate    maxdate latitude name datacoverage station.type
 ## 1      65.5 1948-01-01 2020-11-21 30.68833   AL            1        GHCND
 ## 2     221.9 1939-01-01 2020-11-21 35.22360   NC            1        GHCND
@@ -706,9 +729,9 @@ Fig. 1. Records for common raven in Maine, 2018.
 <p>First, we surround <code>lapply()</code> with <code>dplyr</code>’s <code>bind_rows()</code> so that the results of the <code>lapply()</code> operation will be collapsed into a single table. Within <code>lapply()</code>, we have that function work on our stations vector, <code>sts</code>, using a short customized function that queries NCDC station data with <code>ncdc_stations()</code> and returns the data with <code>$data</code>.</p>
 <p>Next, we join transformed lat/lon data from this table using <code>usmap_tranform()</code> from the <code>usmap</code> package. We’ll use this package to map the eastern US with our sampling locations and this package uses a funky lat/long projection We then mutate the <code>name</code> column in the table to contain just the state using <code>str_sub()</code> from the <code>stringr</code> package loaded with <code>tidyverse</code>. With <code>str_sub(name, -5,-4)</code>, we’re mutating the name to contain the characters that are the 5th through 4th from the end of the string, that is, the state. Then, we add a column that reflects the assumed migration day away from Boston (10, 5, and 0 for AL, NC, and MA, respectively). This will be important later. Lastly, we use <code>dplyr</code>’s <code>separate()</code> function to split the station ID column into two separate columns, <code>station.type</code> and <code>id</code>, essentially replacing the <code>id</code> column with the station code minus the prefix that represents station type. We’ll need station ID without this prefix for later <code>ncdc</code> operations.</p>
 <p>Now let’s plot these locations on a map of the eastern US. We’ll use <code>usmap</code>’s <code>plot_usmap()</code> function for this as it plays nice with <code>ggplot</code>. <code>plot_usmap()</code> allows one to include regions of the US. For our purposes, we need the northeast, south, and east north central regions, so we pass <code>c(.northeast_region,.south_region,.east_north_central)</code> to the <code>include</code> parameter. On top of this map, we add points using our transform lat/long data in the <code>sta.d</code> tibble. Let’s make the points big and color them by name (i.e., state). Then, let’s add a label using the same color scheme and nudge the position of the lable closer to the points. Lastly, we removed the legend because, duh, the points are labeled</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">plot_usmap</span>(</span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="dt">include =</span> <span class="kw">c</span>(.northeast_region,.south_region,.east_north_central)</span>
-<span id="cb17-3"><a href="#cb17-3"></a>)<span class="op">+</span><span class="kw">geom_point</span>(<span class="dt">data=</span>sta.d,<span class="kw">aes</span>(<span class="dt">x=</span>longitude<span class="fl">.1</span>,<span class="dt">y=</span>latitude<span class="fl">.1</span>,<span class="dt">col=</span>name),<span class="dt">size=</span><span class="dv">5</span>)<span class="op">+</span><span class="kw">geom_label</span>(<span class="dt">data=</span>sta.d,<span class="kw">aes</span>(<span class="dt">x=</span>longitude<span class="fl">.1</span>,<span class="dt">y=</span>latitude<span class="fl">.1</span>,<span class="dt">col=</span>name,<span class="dt">label=</span>name),<span class="dt">size=</span><span class="dv">5</span>,<span class="dt">nudge_x =</span> <span class="fl">1e6</span><span class="op">*</span><span class="fl">0.25</span>)<span class="op">+</span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">plot_usmap</span>(</span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="dt">include =</span> <span class="kw">c</span>(.northeast_region,.south_region,.east_north_central)</span>
+<span id="cb18-3"><a href="#cb18-3"></a>)<span class="op">+</span><span class="kw">geom_point</span>(<span class="dt">data=</span>sta.d,<span class="kw">aes</span>(<span class="dt">x=</span>longitude<span class="fl">.1</span>,<span class="dt">y=</span>latitude<span class="fl">.1</span>,<span class="dt">col=</span>name),<span class="dt">size=</span><span class="dv">5</span>)<span class="op">+</span><span class="kw">geom_label</span>(<span class="dt">data=</span>sta.d,<span class="kw">aes</span>(<span class="dt">x=</span>longitude<span class="fl">.1</span>,<span class="dt">y=</span>latitude<span class="fl">.1</span>,<span class="dt">col=</span>name,<span class="dt">label=</span>name),<span class="dt">size=</span><span class="dv">5</span>,<span class="dt">nudge_x =</span> <span class="fl">1e6</span><span class="op">*</span><span class="fl">0.25</span>)<span class="op">+</span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <div class="figure">
 <img src="mod9_proj_files/figure-html/unnamed-chunk-13-1.png" alt="Fig. 2. Weather sampling locations for this project." width="672" />
 <p class="caption">
@@ -716,7 +739,7 @@ Fig. 2. Weather sampling locations for this project.
 </p>
 </div>
 <p>Voila! Looks like our sampling locations align with a decent NE migration path. Now let’s get the weather data from these stations during the spring of the years we have decent eBird data for, since 2000 when we see an uptick in eBird data. For this we’ll use <code>meteo_pull_monitors()</code> which returns a tidy tibble. Notice we pass the <code>sta.d$id</code> column to this function and it contains the station ID without the prefix.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>weather.d &lt;-<span class="st"> </span><span class="kw">meteo_pull_monitors</span>(sta.d<span class="op">$</span>id,<span class="dt">date_min =</span> <span class="st">&quot;2000-01-01&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>weather.d &lt;-<span class="st"> </span><span class="kw">meteo_pull_monitors</span>(sta.d<span class="op">$</span>id,<span class="dt">date_min =</span> <span class="st">&quot;2000-01-01&quot;</span>)</span></code></pre></div>
 <pre><code>## using cached file: /Users/biology/Library/Caches/R/noaa_ghcnd/USW00013894.dly</code></pre>
 <pre><code>## date created (size, mb): 2020-11-19 12:53:52 (6.951)</code></pre>
 <pre><code>## file min/max dates: 1948-01-01 / 2020-11-30</code></pre>
@@ -726,7 +749,7 @@ Fig. 2. Weather sampling locations for this project.
 <pre><code>## using cached file: /Users/biology/Library/Caches/R/noaa_ghcnd/USW00014739.dly</code></pre>
 <pre><code>## date created (size, mb): 2020-11-17 16:40:05 (8.386)</code></pre>
 <pre><code>## file min/max dates: 1936-01-01 / 2020-11-30</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="kw">head</span>(weather.d)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">head</span>(weather.d)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 39
 ##   id    date        awnd  fmtm  pgtm  prcp  snow  snwd  tavg  tmax  tmin  tsun
 ##   &lt;chr&gt; &lt;date&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
@@ -750,43 +773,43 @@ Fig. 2. Weather sampling locations for this project.
 <h3>Preparing eBird Data</h3>
 <p>For our analysis, we’ll compute arrival time for each species by finding the day that corresponds to when 25% of all the individuals have arrived in a given year. This means that we’ll have to find the total number of individuals that arrived over our spring time frame for each year for each species. Once we have this in place, we can model the arrival as a process that resembles are logistic curve. Logistic curves are used to describe many processes in biology that take on an S-shaped response: population and tumor growth, infectious pathogen spread in a pandemic (!), and enzyme substrate binding (e.g., Hb-O<span class="math inline">\(_2\)</span> association).</p>
 <p>So let’s explore an example of the arrival as modeled logistically of one species, <em>"Myiarchus crinitus</em>, in previously a developed data set. For this and all our species we’ll use Julian day as the time variable, simply the day of the year. Let’s compute that and then . . . .</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>mc&lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="st">  </span><span class="kw">filter</span>(species<span class="op">==</span><span class="st">&quot;Myiarchus crinitus&quot;</span>)<span class="op">%&gt;%</span></span>
-<span id="cb30-3"><a href="#cb30-3"></a><span class="st">  </span><span class="kw">group_by</span>(year)<span class="op">%&gt;%</span></span>
-<span id="cb30-4"><a href="#cb30-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">date=</span><span class="kw">as.Date</span>(<span class="kw">paste0</span>(year,<span class="st">&quot;-&quot;</span>,month,<span class="st">&quot;-&quot;</span>,day)),</span>
-<span id="cb30-5"><a href="#cb30-5"></a>         <span class="dt">j.day=</span><span class="kw">julian</span>(date,<span class="dt">origin=</span><span class="kw">as.Date</span>(<span class="kw">paste0</span>(<span class="kw">unique</span>(year),<span class="st">&quot;-01-01&quot;</span>)))</span>
-<span id="cb30-6"><a href="#cb30-6"></a>  )<span class="op">%&gt;%</span></span>
-<span id="cb30-7"><a href="#cb30-7"></a><span class="st">  </span><span class="kw">group_by</span>(species,year,j.day,date)<span class="op">%&gt;%</span></span>
-<span id="cb30-8"><a href="#cb30-8"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">day.tot=</span><span class="kw">sum</span>(individualCount,<span class="dt">na.rm=</span>T))<span class="op">%&gt;%</span></span>
-<span id="cb30-9"><a href="#cb30-9"></a><span class="st">  </span><span class="kw">group_by</span>(species,year)<span class="op">%&gt;%</span></span>
-<span id="cb30-10"><a href="#cb30-10"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prop=</span><span class="kw">cumsum</span>(day.tot<span class="op">/</span><span class="kw">sum</span>(day.tot,<span class="dt">na.rm =</span> T)))<span class="op">%&gt;%</span></span>
-<span id="cb30-11"><a href="#cb30-11"></a><span class="st">  </span><span class="kw">filter</span>(year<span class="op">&gt;</span><span class="dv">1999</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>mc&lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="st">  </span><span class="kw">filter</span>(species<span class="op">==</span><span class="st">&quot;Setophaga caerulescens&quot;</span>)<span class="op">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="st">  </span><span class="kw">group_by</span>(year)<span class="op">%&gt;%</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">date=</span><span class="kw">as.Date</span>(<span class="kw">paste0</span>(year,<span class="st">&quot;-&quot;</span>,month,<span class="st">&quot;-&quot;</span>,day)),</span>
+<span id="cb31-5"><a href="#cb31-5"></a>         <span class="dt">j.day=</span><span class="kw">julian</span>(date,<span class="dt">origin=</span><span class="kw">as.Date</span>(<span class="kw">paste0</span>(<span class="kw">unique</span>(year),<span class="st">&quot;-01-01&quot;</span>)))</span>
+<span id="cb31-6"><a href="#cb31-6"></a>  )<span class="op">%&gt;%</span></span>
+<span id="cb31-7"><a href="#cb31-7"></a><span class="st">  </span><span class="kw">group_by</span>(species,year,j.day,date)<span class="op">%&gt;%</span></span>
+<span id="cb31-8"><a href="#cb31-8"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">day.tot=</span><span class="kw">sum</span>(individualCount,<span class="dt">na.rm=</span>T))<span class="op">%&gt;%</span></span>
+<span id="cb31-9"><a href="#cb31-9"></a><span class="st">  </span><span class="kw">group_by</span>(species,year)<span class="op">%&gt;%</span></span>
+<span id="cb31-10"><a href="#cb31-10"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prop=</span><span class="kw">cumsum</span>(day.tot<span class="op">/</span><span class="kw">sum</span>(day.tot,<span class="dt">na.rm =</span> T)))<span class="op">%&gt;%</span></span>
+<span id="cb31-11"><a href="#cb31-11"></a><span class="st">  </span><span class="kw">filter</span>(year<span class="op">&gt;</span><span class="dv">1999</span>)</span></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;species&#39;, &#39;year&#39;, &#39;j.day&#39; (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>mc<span class="op">%&gt;%</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(j.day,prop))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">facet_wrap</span>(year<span class="op">~</span>.)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>mc<span class="op">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(j.day,prop))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">facet_wrap</span>(year<span class="op">~</span>.)</span></code></pre></div>
 <p><img src="mod9_proj_files/figure-html/mc-1.png" width="672" /></p>
 <p>So as we can see, arrival of these migrants follows a logistic process when we consider the proportion of the population that has arrived. Now we can model this with a logistic model in R. We’ll add predictions based on <code>nls()</code> and <code>SSlogis()</code> functions from the <code>stats</code> package. This is similar to something we did in the project for <a href="https://bcorgbio.github.io/class/mod3_proj.html#More_Complex_Visualizations_and_Models">Module 3</a>. A logistic model requires a few parameter: the asymptote (<code>Asym</code>), the x value (<code>j.day</code> in our case) at the inflection point of the curve (<code>xmid</code>), and the scale (<code>scale</code>). We’ll use <code>SSlogis()</code>, a self-starting model that creates initial estimates of the parameters. After modeling the logistic curves, let’s add the date back to the tibble (it’ll be important later) and then plot the predictions along with the original data.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>mc.pred &lt;-<span class="st"> </span>mc<span class="op">%&gt;%</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a><span class="st">  </span><span class="kw">group_by</span>(year)<span class="op">%&gt;%</span></span>
-<span id="cb33-3"><a href="#cb33-3"></a><span class="st"> </span><span class="kw">summarize</span>(</span>
-<span id="cb33-4"><a href="#cb33-4"></a>   <span class="dt">pred=</span><span class="kw">predict</span>(<span class="kw">nls</span>(prop<span class="op">~</span><span class="kw">SSlogis</span>(j.day,Asym, xmid, scal)),<span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">j.day=</span><span class="kw">min</span>(j.day)<span class="op">:</span><span class="kw">max</span>(j.day))),<span class="co">#predict the logistic curve for each species</span></span>
-<span id="cb33-5"><a href="#cb33-5"></a>   <span class="dt">j.day=</span><span class="kw">min</span>(j.day)<span class="op">:</span><span class="kw">max</span>(j.day),</span>
-<span id="cb33-6"><a href="#cb33-6"></a>  )<span class="op">%&gt;%</span></span>
-<span id="cb33-7"><a href="#cb33-7"></a><span class="st">  </span><span class="kw">left_join</span>(mc<span class="op">%&gt;%</span><span class="kw">select</span>(j.day,date)) <span class="co">## add date back to tibble</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>mc.pred &lt;-<span class="st"> </span>mc<span class="op">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="st">  </span><span class="kw">group_by</span>(year)<span class="op">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a><span class="st"> </span><span class="kw">summarize</span>(</span>
+<span id="cb34-4"><a href="#cb34-4"></a>   <span class="dt">pred=</span><span class="kw">predict</span>(<span class="kw">nls</span>(prop<span class="op">~</span><span class="kw">SSlogis</span>(j.day,Asym, xmid, scal)),<span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">j.day=</span><span class="kw">min</span>(j.day)<span class="op">:</span><span class="kw">max</span>(j.day))),<span class="co">#predict the logistic curve for each species</span></span>
+<span id="cb34-5"><a href="#cb34-5"></a>   <span class="dt">j.day=</span><span class="kw">min</span>(j.day)<span class="op">:</span><span class="kw">max</span>(j.day),</span>
+<span id="cb34-6"><a href="#cb34-6"></a>  )<span class="op">%&gt;%</span></span>
+<span id="cb34-7"><a href="#cb34-7"></a><span class="st">  </span><span class="kw">left_join</span>(mc<span class="op">%&gt;%</span><span class="kw">select</span>(j.day,date)) <span class="co">## add date back to tibble</span></span></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;year&#39; (override with `.groups` argument)</code></pre>
 <pre><code>## Adding missing grouping variables: `species`, `year`</code></pre>
 <pre><code>## Joining, by = c(&quot;year&quot;, &quot;j.day&quot;)</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>mc<span class="op">%&gt;%</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(j.day,prop))<span class="op">+</span><span class="kw">geom_point</span>(<span class="dt">aes=</span><span class="fl">0.3</span>)<span class="op">+</span><span class="kw">geom_line</span>(<span class="dt">data=</span>mc.pred,<span class="kw">aes</span>(<span class="dt">x=</span>j.day,<span class="dt">y=</span>pred),<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">size=</span><span class="dv">2</span>)<span class="op">+</span><span class="kw">facet_wrap</span>(year<span class="op">~</span>.)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>mc<span class="op">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(j.day,prop))<span class="op">+</span><span class="kw">geom_point</span>(<span class="dt">aes=</span><span class="fl">0.3</span>)<span class="op">+</span><span class="kw">geom_line</span>(<span class="dt">data=</span>mc.pred,<span class="kw">aes</span>(<span class="dt">x=</span>j.day,<span class="dt">y=</span>pred),<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>,<span class="dt">size=</span><span class="dv">2</span>)<span class="op">+</span><span class="kw">facet_wrap</span>(year<span class="op">~</span>.)</span></code></pre></div>
 <pre><code>## Warning: Ignoring unknown parameters: aes</code></pre>
 <p><img src="mod9_proj_files/figure-html/logistic%20model-1.png" width="672" /></p>
 <p>Seems our logistic models for arrival of this species estimate the arrival function really well. Now we’ll find the Julian day each year that is closest to 0.25 of the population arriving. Let’s also plot how this arrival day varies with year.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>mc.arrive.date &lt;-mc.pred<span class="op">%&gt;%</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a><span class="st">  </span><span class="kw">group_by</span>(year)<span class="op">%&gt;%</span></span>
-<span id="cb39-3"><a href="#cb39-3"></a><span class="st">  </span><span class="kw">filter</span>(j.day<span class="op">==</span>j.day[<span class="kw">which.min</span>(<span class="kw">abs</span>(pred<span class="fl">-0.25</span>))])</span>
-<span id="cb39-4"><a href="#cb39-4"></a></span>
-<span id="cb39-5"><a href="#cb39-5"></a>mc.arrive.date<span class="op">%&gt;%</span></span>
-<span id="cb39-6"><a href="#cb39-6"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(year,j.day))<span class="op">+</span><span class="kw">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>mc.arrive.date &lt;-mc.pred<span class="op">%&gt;%</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="st">  </span><span class="kw">group_by</span>(year)<span class="op">%&gt;%</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="st">  </span><span class="kw">filter</span>(j.day<span class="op">==</span>j.day[<span class="kw">which.min</span>(<span class="kw">abs</span>(pred<span class="fl">-0.25</span>))])</span>
+<span id="cb40-4"><a href="#cb40-4"></a></span>
+<span id="cb40-5"><a href="#cb40-5"></a>mc.arrive.date<span class="op">%&gt;%</span></span>
+<span id="cb40-6"><a href="#cb40-6"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(year,j.day))<span class="op">+</span><span class="kw">geom_point</span>()</span></code></pre></div>
 <p><img src="mod9_proj_files/figure-html/mc%20arrive-1.png" width="672" /></p>
 <p>Pretty variable, so maybe weather can explain this. This is but just one of five species. We’ll come back to running a similar analysis for all five at once.</p>
 </div>
@@ -797,18 +820,18 @@ Fig. 2. Weather sampling locations for this project.
 <p>The <code>wdir.rad</code> column computes the wind direction in radians based on <code>wdf2</code>, the wind direction for two minutes. For this, we want to scale the direction to 180<span class="math inline">\(^o\)</span>, so we take the absolute of the difference from 180 and subtract that value from 180. Then we multiply this value by <span class="math inline">\(\pi/180\)</span> to get radians. Why are we doing this? See the note below.</p>
 <p>With this same mutate function, we’ll compute the wind vector by finding the <span class="math inline">\(cos\)</span> of the angle (in radians), multiplying it by wind velocity (<code>awnd</code>), and finally multiplying this value by -1. We flip the sign of the vector because wind is recorded as <em>out of</em> a direction in degrees. See the note below.</p>
 <p>After this, we’ll select the weather columns we want to work with, and then join the station tibble to this weather tibble. This will add the migration timing data, that is, the <code>migr.day</code> column that specifies how far back in time to look at weather in AL and NC. Notice, using this value in another mutate, we change <code>j.day</code> to reflect this shift. That is, <code>j.day</code> for AL and NC weather will be 10 and 5 days behind the original <code>j.day</code> (the Julian day of bird arrival, too.).</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>weather.d &lt;-<span class="st"> </span>weather.d<span class="op">%&gt;%</span></span>
-<span id="cb40-2"><a href="#cb40-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">year=</span><span class="kw">as.integer</span>(<span class="kw">str_sub</span>(date,<span class="dv">1</span>,<span class="dv">4</span>)), <span class="co">#add year</span></span>
-<span id="cb40-3"><a href="#cb40-3"></a>         <span class="dt">date=</span><span class="kw">as.Date</span>(date))<span class="op">%&gt;%</span></span>
-<span id="cb40-4"><a href="#cb40-4"></a><span class="st">  </span><span class="kw">group_by</span>(year)<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#group by year so we can compute julian day</span></span>
-<span id="cb40-5"><a href="#cb40-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">j.day=</span><span class="kw">julian</span>(date,<span class="dt">origin=</span><span class="kw">as.Date</span>(<span class="kw">paste0</span>(<span class="kw">unique</span>(year),<span class="st">&quot;-01-01&quot;</span>))), <span class="co">#add julian day</span></span>
-<span id="cb40-6"><a href="#cb40-6"></a>  <span class="dt">date2=</span>date,</span>
-<span id="cb40-7"><a href="#cb40-7"></a>  <span class="dt">wdir.rad=</span>(<span class="dv">180</span><span class="op">-</span><span class="kw">abs</span>(wdf2<span class="dv">-180</span>))<span class="op">*</span>pi<span class="op">/</span><span class="dv">180</span>, <span class="co">#radians so we can use a trig function to compute wind vector, scale degrees first to 180 scale to 2x pi and subtract from 180 (wind comes out of a direction)</span></span>
-<span id="cb40-8"><a href="#cb40-8"></a>  <span class="dt">wvec=</span><span class="kw">cos</span>(wdir.rad)<span class="op">*-</span><span class="dv">1</span><span class="op">*</span>awnd <span class="co"># we want a negative value for positive value for 2x pi</span></span>
-<span id="cb40-9"><a href="#cb40-9"></a>  )<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#store day in new column</span></span>
-<span id="cb40-10"><a href="#cb40-10"></a><span class="st">  </span><span class="kw">select</span>(id,year,date2,j.day,tmin,tmax,wvec)<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#select the rows we need</span></span>
-<span id="cb40-11"><a href="#cb40-11"></a><span class="st">  </span><span class="kw">left_join</span>(sta.d<span class="op">%&gt;%</span><span class="kw">select</span>(id,name,migr.day))<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#add the station id info (ie. name)</span></span>
-<span id="cb40-12"><a href="#cb40-12"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">j.day=</span>j.day<span class="op">+</span>migr.day)<span class="co">#make j.day ahead of BOS according to the migration days away so we can join weather along path</span></span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>weather.d &lt;-<span class="st"> </span>weather.d<span class="op">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">year=</span><span class="kw">as.integer</span>(<span class="kw">str_sub</span>(date,<span class="dv">1</span>,<span class="dv">4</span>)), <span class="co">#add year</span></span>
+<span id="cb41-3"><a href="#cb41-3"></a>         <span class="dt">date=</span><span class="kw">as.Date</span>(date))<span class="op">%&gt;%</span></span>
+<span id="cb41-4"><a href="#cb41-4"></a><span class="st">  </span><span class="kw">group_by</span>(year)<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#group by year so we can compute julian day</span></span>
+<span id="cb41-5"><a href="#cb41-5"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">j.day=</span><span class="kw">julian</span>(date,<span class="dt">origin=</span><span class="kw">as.Date</span>(<span class="kw">paste0</span>(<span class="kw">unique</span>(year),<span class="st">&quot;-01-01&quot;</span>))), <span class="co">#add julian day</span></span>
+<span id="cb41-6"><a href="#cb41-6"></a>  <span class="dt">date2=</span>date,</span>
+<span id="cb41-7"><a href="#cb41-7"></a>  <span class="dt">wdir.rad=</span>(<span class="dv">180</span><span class="op">-</span><span class="kw">abs</span>(wdf2<span class="dv">-180</span>))<span class="op">*</span>pi<span class="op">/</span><span class="dv">180</span>, <span class="co">#radians so we can use a trig function to compute wind vector, scale degrees first to 180 scale to 2x pi and subtract from 180 (wind comes out of a direction)</span></span>
+<span id="cb41-8"><a href="#cb41-8"></a>  <span class="dt">wvec=</span><span class="kw">cos</span>(wdir.rad)<span class="op">*-</span><span class="dv">1</span><span class="op">*</span>awnd <span class="co"># we want a negative value for positive value for 2x pi</span></span>
+<span id="cb41-9"><a href="#cb41-9"></a>  )<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#store day in new column</span></span>
+<span id="cb41-10"><a href="#cb41-10"></a><span class="st">  </span><span class="kw">select</span>(id,year,date2,j.day,tmin,tmax,wvec)<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#select the rows we need</span></span>
+<span id="cb41-11"><a href="#cb41-11"></a><span class="st">  </span><span class="kw">left_join</span>(sta.d<span class="op">%&gt;%</span><span class="kw">select</span>(id,name,migr.day))<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#add the station id info (ie. name)</span></span>
+<span id="cb41-12"><a href="#cb41-12"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">j.day=</span>j.day<span class="op">+</span>migr.day)<span class="co">#make j.day ahead of BOS according to the migration days away so we can join weather along path</span></span></code></pre></div>
 <pre><code>## Joining, by = &quot;id&quot;</code></pre>
 <div class = "green">
 <div class="row">
@@ -930,48 +953,48 @@ wvec
 </div>
 <p><br></p>
 <p>Now, with the variables we want (arrival day on the bird side, <code>tmin</code>, <code>tmax</code>, and <code>wvec</code> on the weather side), we’re ready to join eBird and weather data for analysis. To get you started, let’s join the the arrival data for <em>Myiarchus crinitis</em> with our weather data. To this tibble, we’ll also join the <code>date</code> column from the original bird data so we can see if the weather data is the right number of days behind the bird arrive date.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>mc.arr.weath &lt;-<span class="st"> </span>mc.arrive.date<span class="op">%&gt;%</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a><span class="st">  </span><span class="kw">left_join</span>(weather.d)<span class="op">%&gt;%</span></span>
-<span id="cb42-3"><a href="#cb42-3"></a><span class="st">  </span><span class="kw">left_join</span>(mc<span class="op">%&gt;%</span><span class="kw">select</span>(year,date,j.day))</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>mc.arr.weath &lt;-<span class="st"> </span>mc.arrive.date<span class="op">%&gt;%</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="st">  </span><span class="kw">left_join</span>(weather.d)<span class="op">%&gt;%</span></span>
+<span id="cb43-3"><a href="#cb43-3"></a><span class="st">  </span><span class="kw">left_join</span>(mc<span class="op">%&gt;%</span><span class="kw">select</span>(year,date,j.day))</span></code></pre></div>
 <pre><code>## Joining, by = c(&quot;year&quot;, &quot;j.day&quot;)</code></pre>
 <pre><code>## Adding missing grouping variables: `species`</code></pre>
 <pre><code>## Joining, by = c(&quot;year&quot;, &quot;j.day&quot;, &quot;species&quot;, &quot;date&quot;)</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="kw">head</span>(mc.arr.weath)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="kw">head</span>(mc.arr.weath)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 12
 ## # Groups:   year [2]
-##    year  pred j.day species date       id    date2       tmin  tmax   wvec name 
-##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;date&gt;     &lt;chr&gt; &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;
-## 1  2000 0.245   132 Myiarc… 2000-05-12 USW0… 2000-05-02   183   289  28.6  AL   
-## 2  2000 0.245   132 Myiarc… 2000-05-12 USW0… 2000-05-07   128   294  21.7  NC   
-## 3  2000 0.245   132 Myiarc… 2000-05-12 USW0… 2000-05-12   100   194  14.4  MA   
-## 4  2001 0.248   133 Myiarc… 2001-05-14 USW0… 2001-05-04   156   294  12.0  AL   
-## 5  2001 0.248   133 Myiarc… 2001-05-14 USW0… 2001-05-09   139   261   7.71 NC   
-## 6  2001 0.248   133 Myiarc… 2001-05-14 USW0… 2001-05-14    89   200 -47.5  MA   
-## # … with 1 more variable: migr.day &lt;dbl&gt;</code></pre>
+##    year  pred j.day species date       id    date2       tmin  tmax      wvec
+##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;date&gt;     &lt;chr&gt; &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+## 1  2000 0.240   129 Setoph… 2000-05-09 USW0… 2000-04-29    89   272  1.79e+ 1
+## 2  2000 0.240   129 Setoph… 2000-05-09 USW0… 2000-05-04   117   250  2.10e+ 1
+## 3  2000 0.240   129 Setoph… 2000-05-09 USW0… 2000-05-09    83   183 -2.45e+ 1
+## 4  2001 0.260   131 Setoph… 2001-05-12 USW0… 2001-05-02   139   278  2.07e+ 1
+## 5  2001 0.260   131 Setoph… 2001-05-12 USW0… 2001-05-07   122   222 -1.30e+ 1
+## 6  2001 0.260   131 Setoph… 2001-05-12 USW0… 2001-05-12   167   311 -3.12e-15
+## # … with 2 more variables: name &lt;chr&gt;, migr.day &lt;dbl&gt;</code></pre>
 <p>Sure enough, it is: <code>date2</code> from the weather data is 10 and 5 days behind for AL and NC locations, respectively. Here we have the weather along the migration route with each of our stations and their data identified by name. But, how are we to analyze the data? Let’s think about the question (<strong>Does weather along the migration route predict arrival time?</strong>). Do we want just one day of weather at each location to predict arrival time (which the table above gives)? Let’s dive deeper into the weather data and compute the mean over two week (14 days) before a bird gets to each location. That is, at 200 km<span class="math inline">\(^d\)</span>, the table above assumes that birds don’t stop. And, they certainly do to eat and rest <span class="citation">(Moore and Kerlinger 1987)</span>.</p>
 <p>So let’s assume that 5 and 10 days is the earliest they would arrive at these weather locations, but it could be two weeks earlier. If that’s the case, let’s calculate the mean of our weather variables over that time period. For this, we’ll use a group and mutate using <code>dplyr</code> and the <code>frollmean()</code> function from <code>data.table</code> package. <code>frollmean()</code> computes a rolling mean across the rows of a table, perfect for our application. We’ll use it to compute the rolling mean for our weather variables for two weeks preceding each Julian day. then join this weekly data tibble to our arrival data for subsequent analysis. When we use <code>left_join()</code>, only the Julian days in the weekly average tibble matching those in the arrival data will be kept.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>weather.wk &lt;-weather.d <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb48-2"><a href="#cb48-2"></a><span class="st">  </span><span class="kw">group_by</span>(year,name) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb48-3"><a href="#cb48-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">wk.tmin =</span> <span class="kw">frollmean</span>(tmin, <span class="dt">n=</span><span class="dv">14</span>,<span class="dt">align=</span><span class="st">&quot;right&quot;</span>),</span>
-<span id="cb48-4"><a href="#cb48-4"></a>         <span class="dt">wk.tmax =</span> <span class="kw">frollmean</span>(tmax, <span class="dt">n=</span><span class="dv">14</span>,<span class="dt">align=</span><span class="st">&quot;right&quot;</span>),</span>
-<span id="cb48-5"><a href="#cb48-5"></a>         <span class="dt">wk.wvec =</span> <span class="kw">frollmean</span>(wvec, <span class="dt">n=</span><span class="dv">14</span>,<span class="dt">align=</span><span class="st">&quot;right&quot;</span>)</span>
-<span id="cb48-6"><a href="#cb48-6"></a>         )<span class="op">%&gt;%</span></span>
-<span id="cb48-7"><a href="#cb48-7"></a><span class="st">  </span><span class="kw">select</span>(j.day,date2,name,wk.tmin,wk.tmax,wk.wvec)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>weather.wk &lt;-weather.d <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb49-2"><a href="#cb49-2"></a><span class="st">  </span><span class="kw">group_by</span>(year,name) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb49-3"><a href="#cb49-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">wk.tmin =</span> <span class="kw">frollmean</span>(tmin, <span class="dt">n=</span><span class="dv">14</span>,<span class="dt">align=</span><span class="st">&quot;right&quot;</span>),</span>
+<span id="cb49-4"><a href="#cb49-4"></a>         <span class="dt">wk.tmax =</span> <span class="kw">frollmean</span>(tmax, <span class="dt">n=</span><span class="dv">14</span>,<span class="dt">align=</span><span class="st">&quot;right&quot;</span>),</span>
+<span id="cb49-5"><a href="#cb49-5"></a>         <span class="dt">wk.wvec =</span> <span class="kw">frollmean</span>(wvec, <span class="dt">n=</span><span class="dv">14</span>,<span class="dt">align=</span><span class="st">&quot;right&quot;</span>)</span>
+<span id="cb49-6"><a href="#cb49-6"></a>         )<span class="op">%&gt;%</span></span>
+<span id="cb49-7"><a href="#cb49-7"></a><span class="st">  </span><span class="kw">select</span>(j.day,date2,name,wk.tmin,wk.tmax,wk.wvec)</span></code></pre></div>
 <pre><code>## Adding missing grouping variables: `year`</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>mc.arr.weath2 &lt;-<span class="st"> </span>mc.arrive.date<span class="op">%&gt;%</span></span>
-<span id="cb50-2"><a href="#cb50-2"></a><span class="st">  </span><span class="kw">left_join</span>(weather.wk)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>mc.arr.weath2 &lt;-<span class="st"> </span>mc.arrive.date<span class="op">%&gt;%</span></span>
+<span id="cb51-2"><a href="#cb51-2"></a><span class="st">  </span><span class="kw">left_join</span>(weather.wk)</span></code></pre></div>
 <pre><code>## Joining, by = c(&quot;year&quot;, &quot;j.day&quot;)</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="kw">head</span>(mc.arr.weath2)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="kw">head</span>(mc.arr.weath2)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 10
 ## # Groups:   year [2]
 ##    year  pred j.day species  date       date2      name  wk.tmin wk.tmax wk.wvec
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-## 1  2000 0.245   132 Myiarch… 2000-05-12 2000-05-02 AL      121      267.    4.66
-## 2  2000 0.245   132 Myiarch… 2000-05-12 2000-05-07 NC       93.6    229     4.41
-## 3  2000 0.245   132 Myiarch… 2000-05-12 2000-05-12 MA       83.8    197.    3.29
-## 4  2001 0.248   133 Myiarch… 2001-05-14 2001-05-04 AL      137.     273     7.91
-## 5  2001 0.248   133 Myiarch… 2001-05-14 2001-05-09 NC      107.     252.    5.68
-## 6  2001 0.248   133 Myiarch… 2001-05-14 2001-05-14 MA      113.     242    -3.46</code></pre>
+## 1  2000 0.240   129 Setopha… 2000-05-09 2000-04-29 AL      119      267.  -0.141
+## 2  2000 0.240   129 Setopha… 2000-05-09 2000-05-04 NC       80.9    213.  -4.96 
+## 3  2000 0.240   129 Setopha… 2000-05-09 2000-05-09 MA       73.1    181.   6.16 
+## 4  2001 0.260   131 Setopha… 2001-05-12 2001-05-02 AL      127.     265.   9.50 
+## 5  2001 0.260   131 Setopha… 2001-05-12 2001-05-07 NC      105.     251.   1.49 
+## 6  2001 0.260   131 Setopha… 2001-05-12 2001-05-12 MA      108.     244.   0.662</code></pre>
 <p>Notice that <code>frollmean()</code> needs <code>n</code> specified, the number of values in adjacent rows (actually, n-1 rows) to compute the mean. We’ll also specify that the function look to the right when computing the mean, that is, each individual row and the preceding 13 rows in this case. Lastly, we chopped down the weekly average tibble to relevant columns before joining it to the arrival data.</p>
 <p>With two joined tibbles each containing eBird and weather data, we’re finally ready for some analysis.</p>
 </div>
@@ -980,49 +1003,52 @@ wvec
 <h2>Linear Mixed-effect Modeling</h2>
 <p>To evaluate the effect of weather parameters on arrival time, one could undertake analysis using simple linear models. But, we have a rather complicated data set, including parameters (i.e., covariates) we see as important and explanatory that may contribute to a slope and intercept of the model and others that may be the reason that some groups within the data set have different slopes and intercepts. The variables that contribute to the slope and intercept are termed fixed effects, while those that contribute to distinct slopes and intercepts are termed random effects, and thus an analysis that accounts for both fixed and random effects is called a mixed effect model. In our case, we are interested in how the fixed effects of temperature and wind vector explains arrival and are OK with the fact that the location of these weather variables (a random effect) may contribute differently to the relationship. <strong>In subsequent analysis, you’ll also consider species as a random effect, allowing the response of arrival time may vary according to species.</strong></p>
 <p>Undertaking linear mixed-effect analysis in R is rather straightforward using the <code>lme4</code> package, specifically the <code>lme()</code> function. Any formula for <code>lme()</code> is similar to other model choices in R, except that we must specify a random effect. This takes the form of <code>+(1|variable)</code> or <code>+(y|variable)</code> where <code>variable</code> is a random effect and <code>y</code> is the response. The first of these constructions stipulates that the slope may vary according to the random effect, while the second stipulates that the slope <em>and</em> intercept may vary according to the random effect. With this in mind, let’s kick the tires on linear mixed-effects models using <code>lme()</code> with our two data tibbles, one with a single weather-day sample and another with a two week-average of the weather.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="co">#weather at 0, 5, and 10 days away from arrival</span></span>
-<span id="cb54-2"><a href="#cb54-2"></a>mc.lmer &lt;-<span class="st"> </span><span class="kw">lmer</span>(j.day<span class="op">~</span>tmin<span class="op">*</span>tmax<span class="op">*</span>wvec<span class="op">+</span>(<span class="dv">1</span><span class="op">|</span>name),mc.arr.weath,<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="co">#weather at 0, 5, and 10 days away from arrival</span></span>
+<span id="cb55-2"><a href="#cb55-2"></a>mc.lmer &lt;-<span class="st"> </span><span class="kw">lmer</span>(j.day<span class="op">~</span>tmin<span class="op">*</span>tmax<span class="op">*</span>wvec<span class="op">+</span>(<span class="dv">1</span><span class="op">|</span>name),mc.arr.weath,<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: Some predictor variables are on very different scales: consider
 ## rescaling</code></pre>
 <pre><code>## boundary (singular) fit: see ?isSingular</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="kw">Anova</span>(mc.lmer) <span class="co">#Anova from the car package</span></span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="kw">Anova</span>(mc.lmer) <span class="co">#Anova from the car package</span></span></code></pre></div>
 <pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
 ## 
 ## Response: j.day
-##                 Chisq Df Pr(&gt;Chisq)
-## tmin           0.0133  1     0.9082
-## tmax           0.0056  1     0.9405
-## wvec           1.5838  1     0.2082
-## tmin:tmax      0.1013  1     0.7503
-## tmin:wvec      0.1076  1     0.7429
-## tmax:wvec      0.0046  1     0.9461
-## tmin:tmax:wvec 0.3128  1     0.5759</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="co">#0Mean two week weather preceding arrival</span></span>
-<span id="cb59-2"><a href="#cb59-2"></a>mc.lmer2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(j.day<span class="op">~</span>wk.tmin<span class="op">*</span>wk.tmax<span class="op">*</span>wk.wvec<span class="op">+</span>(<span class="dv">1</span><span class="op">|</span>name),mc.arr.weath2,<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</span></code></pre></div>
+##                 Chisq Df Pr(&gt;Chisq)  
+## tmin           0.5729  1    0.44909  
+## tmax           0.0290  1    0.86468  
+## wvec           2.2213  1    0.13612  
+## tmin:tmax      3.7878  1    0.05163 .
+## tmin:wvec      0.1495  1    0.69898  
+## tmax:wvec      0.0038  1    0.95054  
+## tmin:tmax:wvec 0.3171  1    0.57334  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="co">#0Mean two week weather preceding arrival</span></span>
+<span id="cb60-2"><a href="#cb60-2"></a>mc.lmer2 &lt;-<span class="st"> </span><span class="kw">lmer</span>(j.day<span class="op">~</span>wk.tmin<span class="op">*</span>wk.tmax<span class="op">*</span>wk.wvec<span class="op">+</span>(<span class="dv">1</span><span class="op">|</span>name),mc.arr.weath2,<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: Some predictor variables are on very different scales: consider
 ## rescaling</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="kw">Anova</span>(mc.lmer2) </span></code></pre></div>
+<pre><code>## boundary (singular) fit: see ?isSingular</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="kw">Anova</span>(mc.lmer2) </span></code></pre></div>
 <pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
 ## 
 ## Response: j.day
-##                           Chisq Df Pr(&gt;Chisq)    
-## wk.tmin                  8.9820  1   0.002726 ** 
-## wk.tmax                  2.6722  1   0.102113    
-## wk.wvec                 17.3937  1  3.038e-05 ***
-## wk.tmin:wk.tmax          6.0799  1   0.013673 *  
-## wk.tmin:wk.wvec          0.2723  1   0.601774    
-## wk.tmax:wk.wvec          0.5452  1   0.460276    
-## wk.tmin:wk.tmax:wk.wvec  4.8541  1   0.027580 *  
+##                          Chisq Df Pr(&gt;Chisq)  
+## wk.tmin                 0.8262  1    0.36338  
+## wk.tmax                 0.0000  1    0.99794  
+## wk.wvec                 6.0800  1    0.01367 *
+## wk.tmin:wk.tmax         4.1536  1    0.04154 *
+## wk.tmin:wk.wvec         0.3236  1    0.56947  
+## wk.tmax:wk.wvec         0.7507  1    0.38627  
+## wk.tmin:wk.tmax:wk.wvec 1.2220  1    0.26896  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Notice that we specified the random effect of location using <code>(1|name)</code>, allowing each location to have a separate effect on the slope of the relationship between <code>j.day</code> and the weather variable, <code>tmin</code>, <code>tmax</code>, and <code>wvec</code>. Specifying a random effect on slope is usually sufficient, especially for more complicated data sets. Notice also that we included interactions between all the fixed effects with <code>*</code>. As we’ve explored before, this is a good place to start, assuming interactions. To assesses the significance of the fixed effects we’ve used the <code>Anova()</code> function from the <code>car</code> package that suits mixed-effect models. As you can see from running <code>Anova()</code> over our two models, including only one day of data at each location doesn’t reveal any significant relationships between weather and arrival day; however, an analysis including a two-week average at each location (offset to reflect the soonest a bird would leave) does reveal significant fixed effects of weather.</p>
 <p>Also have a look at the interactions at the end of the anova tables. For analysis including two-weak averages of weather values, there is an important interactions between the averages for <code>tmin</code>, <code>tmax</code> and <code>mvec</code>, that is, the degree (i.e., slope) of response varies according all three weather values.</p>
-<p>In keeping with one thrust of the course, any one model is just one way to explain data and, thus, we should consider other models using our model-choice framework. So let’s do that, dropping weather variables from the two-week average analysis. With three variables, we have at least 6 possible combinations when we include all the possible interactions, if we so choose. Fortunately, the <code>dredge()</code> from the <code>MuMIn</code> package allows one to decompose a model to all the combinations of the terms, including interactions, and report important model fit values (e.g., AICc, <span class="math inline">\(\Delta\)</span>AIC, and AIC<span class="math inline">\(_w\)</span>).</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a>mc.arr.aic &lt;-<span class="st"> </span><span class="kw">dredge</span>(mc.lmer2,<span class="dt">fixed =</span> <span class="kw">c</span>(<span class="st">&quot;wk.tmin&quot;</span>,<span class="st">&quot;wk.tmax&quot;</span>,<span class="st">&quot;wk.wvec&quot;</span>))</span>
-<span id="cb63-2"><a href="#cb63-2"></a></span>
-<span id="cb63-3"><a href="#cb63-3"></a>mc.kb &lt;-<span class="st"> </span><span class="kw">kable</span>(mc.arr.aic,<span class="dt">caption =</span> <span class="st">&quot;Fit values for nested models of the most complicated lme model&quot;</span>)</span>
-<span id="cb63-4"><a href="#cb63-4"></a></span>
-<span id="cb63-5"><a href="#cb63-5"></a><span class="kw">kable_styling</span>(mc.kb)</span></code></pre></div>
+<p>In keeping with one thrust of the course, any one model is just one way to explain data and, thus, we should consider other models using our model-choice framework. So let’s do that, dropping weather variables from the two-week average analysis. With three variables, we have at least 6 possible combinations when we include all the possible interactions, if we so choose. Fortunately, the <code>dredge()</code> from the <code>MuMIn</code> package allows one to decompose a model to all the combinations of the terms, including interactions, and report important model fit values (e.g., AICc, <span class="math inline">\(\Delta\)</span>AIC, and AIC<span class="math inline">\(_w\)</span>). We’ll ask <code>dredge()</code> to consider the our weather variables only with <code>fixed= c("wk.tmin","wk.tmax","wk.wvec")</code>.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a>mc.arr.aic &lt;-<span class="st"> </span><span class="kw">dredge</span>(mc.lmer2,<span class="dt">fixed =</span> <span class="kw">c</span>(<span class="st">&quot;wk.tmin&quot;</span>,<span class="st">&quot;wk.tmax&quot;</span>,<span class="st">&quot;wk.wvec&quot;</span>),)</span>
+<span id="cb65-2"><a href="#cb65-2"></a></span>
+<span id="cb65-3"><a href="#cb65-3"></a>mc.kb &lt;-<span class="st"> </span><span class="kw">kable</span>(mc.arr.aic[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>,],<span class="dt">caption =</span> <span class="st">&quot;Fit values for nested models of the most complicated lme model&quot;</span>)</span>
+<span id="cb65-4"><a href="#cb65-4"></a></span>
+<span id="cb65-5"><a href="#cb65-5"></a><span class="kw">kable_styling</span>(mc.kb)</span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 Fit values for nested models of the most complicated lme model
@@ -1078,16 +1104,16 @@ weight
 1
 </td>
 <td style="text-align:right;">
-131.9147
+129.1317
 </td>
 <td style="text-align:right;">
--0.0149901
+-0.0040220
 </td>
 <td style="text-align:right;">
-0.0476194
+0.0168047
 </td>
 <td style="text-align:right;">
--0.1070306
+-0.0503748
 </td>
 <td style="text-align:right;">
 NA
@@ -1105,16 +1131,16 @@ NA
 6
 </td>
 <td style="text-align:right;">
--136.0616
+-121.3847
 </td>
 <td style="text-align:right;">
-285.7080
+256.3543
 </td>
 <td style="text-align:right;">
 0.00000
 </td>
 <td style="text-align:right;">
-9.980067e-01
+0.9960437880
 </td>
 </tr>
 <tr>
@@ -1122,19 +1148,19 @@ NA
 2
 </td>
 <td style="text-align:right;">
-145.9237
+142.8859
 </td>
 <td style="text-align:right;">
--0.0626651
+-0.0495030
 </td>
 <td style="text-align:right;">
--0.1123773
+-0.1604163
 </td>
 <td style="text-align:right;">
--0.1089815
+-0.0560965
 </td>
 <td style="text-align:right;">
-0.0005620
+0.0006223
 </td>
 <td style="text-align:right;">
 NA
@@ -1149,16 +1175,16 @@ NA
 7
 </td>
 <td style="text-align:right;">
--141.7758
+-125.9679
 </td>
 <td style="text-align:right;">
-299.7055
+268.0897
 </td>
 <td style="text-align:right;">
-13.99751
+11.73545
 </td>
 <td style="text-align:right;">
-9.111973e-04
+0.0028181084
 </td>
 </tr>
 <tr>
@@ -1166,25 +1192,25 @@ NA
 5
 </td>
 <td style="text-align:right;">
-131.8226
+129.4436
 </td>
 <td style="text-align:right;">
--0.0171782
+0.0000252
 </td>
 <td style="text-align:right;">
-0.0532449
+0.0046528
 </td>
 <td style="text-align:right;">
--0.0739786
-</td>
-<td style="text-align:right;">
-NA
+-0.1293820
 </td>
 <td style="text-align:right;">
 NA
 </td>
 <td style="text-align:right;">
--0.0002878
+NA
+</td>
+<td style="text-align:right;">
+0.0007193
 </td>
 <td style="text-align:right;">
 NA
@@ -1193,16 +1219,16 @@ NA
 7
 </td>
 <td style="text-align:right;">
--142.1669
+-127.2022
 </td>
 <td style="text-align:right;">
-300.4876
+270.5582
 </td>
 <td style="text-align:right;">
-14.77956
+14.20393
 </td>
 <td style="text-align:right;">
-6.163003e-04
+0.0008202269
 </td>
 </tr>
 <tr>
@@ -1210,22 +1236,22 @@ NA
 3
 </td>
 <td style="text-align:right;">
-132.0123
+129.1845
 </td>
 <td style="text-align:right;">
--0.0194865
+-0.0033466
 </td>
 <td style="text-align:right;">
-0.0568971
+0.0146545
 </td>
 <td style="text-align:right;">
--0.0204481
+-0.0773914
 </td>
 <td style="text-align:right;">
 NA
 </td>
 <td style="text-align:right;">
--0.0003971
+0.0001241
 </td>
 <td style="text-align:right;">
 NA
@@ -1237,257 +1263,37 @@ NA
 7
 </td>
 <td style="text-align:right;">
--142.4596
+-128.1501
 </td>
 <td style="text-align:right;">
-301.0731
+272.4540
 </td>
 <td style="text-align:right;">
-15.36503
+16.09977
 </td>
 <td style="text-align:right;">
-4.598967e-04
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-6
-</td>
-<td style="text-align:right;">
-157.6201
-</td>
-<td style="text-align:right;">
--0.1191798
-</td>
-<td style="text-align:right;">
--0.2151856
-</td>
-<td style="text-align:right;">
-0.1103270
-</td>
-<td style="text-align:right;">
-0.0010550
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
--0.0019241
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
--146.0239
-</td>
-<td style="text-align:right;">
-310.8713
-</td>
-<td style="text-align:right;">
-25.16331
-</td>
-<td style="text-align:right;">
-3.427603e-06
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-4
-</td>
-<td style="text-align:right;">
-154.3955
-</td>
-<td style="text-align:right;">
--0.1010346
-</td>
-<td style="text-align:right;">
--0.1853753
-</td>
-<td style="text-align:right;">
-0.1007052
-</td>
-<td style="text-align:right;">
-0.0008939
-</td>
-<td style="text-align:right;">
--0.0009660
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
--146.6182
-</td>
-<td style="text-align:right;">
-312.0600
-</td>
-<td style="text-align:right;">
-26.35196
-</td>
-<td style="text-align:right;">
-1.891817e-06
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-7
-</td>
-<td style="text-align:right;">
-132.4414
-</td>
-<td style="text-align:right;">
--0.0161434
-</td>
-<td style="text-align:right;">
-0.0462372
-</td>
-<td style="text-align:right;">
--0.0350720
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
--0.0009474
-</td>
-<td style="text-align:right;">
-0.0011724
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
--147.7150
-</td>
-<td style="text-align:right;">
-314.2536
-</td>
-<td style="text-align:right;">
-28.54553
-</td>
-<td style="text-align:right;">
-6.317578e-07
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-8
-</td>
-<td style="text-align:right;">
-156.6957
-</td>
-<td style="text-align:right;">
--0.1130812
-</td>
-<td style="text-align:right;">
--0.2063678
-</td>
-<td style="text-align:right;">
-0.1260705
-</td>
-<td style="text-align:right;">
-0.0010010
-</td>
-<td style="text-align:right;">
--0.0006134
-</td>
-<td style="text-align:right;">
--0.0008942
-</td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
--151.9174
-</td>
-<td style="text-align:right;">
-325.4349
-</td>
-<td style="text-align:right;">
-39.72685
-</td>
-<td style="text-align:right;">
-2.358078e-09
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-16
-</td>
-<td style="text-align:right;">
-158.8872
-</td>
-<td style="text-align:right;">
--0.1238736
-</td>
-<td style="text-align:right;">
--0.2406720
-</td>
-<td style="text-align:right;">
--0.9450911
-</td>
-<td style="text-align:right;">
-0.0011557
-</td>
-<td style="text-align:right;">
-0.0028755
-</td>
-<td style="text-align:right;">
-0.0122122
-</td>
-<td style="text-align:right;">
--4.54e-05
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
--159.4374
-</td>
-<td style="text-align:right;">
-343.3646
-</td>
-<td style="text-align:right;">
-57.65653
-</td>
-<td style="text-align:right;">
-3.014235e-13
+0.0003178767
 </td>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>best.lmer &lt;-<span class="st">  </span><span class="kw">lmer</span>(j.day<span class="op">~</span>wk.tmin<span class="op">+</span>wk.tmax<span class="op">+</span>wk.wvec<span class="op">+</span>(<span class="dv">1</span><span class="op">|</span>name),mc.arr.weath2,<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</span>
-<span id="cb64-2"><a href="#cb64-2"></a></span>
-<span id="cb64-3"><a href="#cb64-3"></a><span class="kw">Anova</span>(best.lmer)</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>best.lmer &lt;-<span class="st">  </span><span class="kw">lmer</span>(j.day<span class="op">~</span>wk.tmin<span class="op">+</span>wk.tmax<span class="op">+</span>wk.wvec<span class="op">+</span>(<span class="dv">1</span><span class="op">|</span>name),mc.arr.weath2,<span class="dt">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</span>
+<span id="cb66-2"><a href="#cb66-2"></a></span>
+<span id="cb66-3"><a href="#cb66-3"></a><span class="kw">Anova</span>(best.lmer)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
 ## 
 ## Response: j.day
-##          Chisq Df Pr(&gt;Chisq)    
-## wk.tmin  6.765  1  0.0092962 ** 
-## wk.tmax  1.520  1  0.2176191    
-## wk.wvec 14.697  1  0.0001262 ***
+##          Chisq Df Pr(&gt;Chisq)  
+## wk.tmin 1.2920  1    0.25568  
+## wk.tmax 0.1932  1    0.66023  
+## wk.wvec 4.6570  1    0.03093 *
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Notice how <code>dredge()</code> return the ranks of the nested models according to AIC metrics and that the interactions columns (all with “:” between the terms) return <code>NA</code>, meaning they are not included in the best-fit model. So our best-fit model was <code>j.day~wk.tmin+wk.tmax+wk.wvec+(1|name)</code>. The last few lines of this run that model and report the anova results.</p>
 <p>To sum up this quick exploration of linear-mixed effects modeling for this one species, a model that includes minimum and maximum temperature and wind vector explains the data best and minimum temperature and wind vector are significant predictors.</p>
 </div>
-<div id="additional-operationas-and-analyses" class="section level2">
-<h2>Additional Operationas and Analyses</h2>
+<div id="additional-operations-and-analyses" class="section level2">
+<h2>Additional Operations and Analyses</h2>
 <p>Your task is to repeat data compilation and analysis for five species of your choosing from this <a href="tgms.csv">list of TGMs</a>. The analysis should include the following components:</p>
 <ol style="list-style-type: decimal">
 <li>A <code>for</code> loop that passes your five species through <code>occ_data()</code> to retrieve occurrence data in MA during April and May in the years 2000-2019.</li>
