@@ -13,47 +13,40 @@
 
 <title>Schedule</title>
 
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-
-
-
 
 <style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -64,10 +57,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -84,40 +73,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 61px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h2 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h3 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h4 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h5 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h6 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -145,7 +107,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -157,7 +119,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -168,10 +130,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -183,7 +158,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -309,7 +283,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -404,7 +378,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -425,7 +399,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p>In this module we’ll tackle where to find resource you’ll need on a week-to-week, module-by-module basis. In addition, we’ll work on the first important topic of the course: an introduction to R, an ever more popular language for data analysis and visualization. We’ll focus on the basics of importing and tidying data in R. By importing, we mean loading data collected by scientists and stored in text files, the lingua franca of scientific data. By tidying, we mean preparing data for analysis.</p>
 <div id="dates" class="section level2">
 <h2>Dates</h2>
-<p>Weeks 1 &amp; 2 (Aug 31—Sep 13):</p>
+<p>Weeks 1 &amp; 2 (Aug 30—Sep 12):</p>
 </div>
 <div id="key-concepts" class="section level2">
 <h2>Key Concepts</h2>
@@ -484,7 +458,7 @@ This is a lot of reading and fiddling with R. Don’t worry too much about under
 <ul>
 <li>Post one and respond to one question each week of Module 1 in our <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a></li>
 <li><a href="https://rstudio-education.github.io/hopr/starting.html#starting">Install R and RStudio</a></li>
-<li>Complete and submit a report for Module 1 Project</li>
+<li>Complete and commit a report for Module 1 Project</li>
 </ul>
 </div>
 <div id="guiding-questions" class="section level2">
@@ -514,13 +488,13 @@ This is a lot of reading and fiddling with R. Don’t worry too much about under
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 8/31</th>
-<th>Tuesday <br>9/1</th>
-<th>Wednesday<br> 9/2</th>
-<th>Thursday <br> 9/3</th>
-<th>Friday <br> 9/4</th>
-<th>Saturday<br> 9/5</th>
-<th>Sunday<br> 9/6</th>
+<th>Monday <br> 8/30</th>
+<th>Tuesday <br>8/31</th>
+<th>Wednesday<br> 9/1</th>
+<th>Thursday <br> 9/2</th>
+<th>Friday <br> 9/3</th>
+<th>Saturday<br> 9/4</th>
+<th>Sunday<br> 9/5</th>
 </tr>
 </thead>
 <tbody>
@@ -550,13 +524,13 @@ This is a lot of reading and fiddling with R. Don’t worry too much about under
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 9/7</th>
-<th>Tuesday <br>9/8</th>
-<th>Wednesday<br> 9/9</th>
-<th>Thursday <br> 9/10</th>
-<th>Friday <br> 9/11</th>
-<th>Saturday<br> 9/12</th>
-<th>Sunday<br> 9/13</th>
+<th>Monday <br> 9/6</th>
+<th>Tuesday <br>9/7</th>
+<th>Wednesday<br> 9/8</th>
+<th>Thursday <br> 9/9</th>
+<th>Friday <br> 9/10</th>
+<th>Saturday<br> 9/11</th>
+<th>Sunday<br> 9/12</th>
 </tr>
 </thead>
 <tbody>
@@ -568,7 +542,7 @@ This is a lot of reading and fiddling with R. Don’t worry too much about under
 <td>Answer a question on discussion board</td>
 <td></td>
 <td></td>
-<td>Submit Module 1 project report</td>
+<td>commit Module 1 project report</td>
 </tr>
 <tr class="even">
 <td></td>
@@ -590,7 +564,7 @@ This is a lot of reading and fiddling with R. Don’t worry too much about under
 <p>This module is intended to give students the background and skills to begin simple data tidying and transformation operations. We need our data to be tidy before we can analyze it that, that is, structured in a way that makes analysis possible. In addition, often the data we have aren’t exactly what we want to analyze. For example, say you had data on the f</p>
 <div id="dates-1" class="section level2">
 <h2>Dates:</h2>
-<p>Week 3 (Sep 14—20):</p>
+<p>Week 3 (Sep 13—19):</p>
 </div>
 <div id="key-concepts-1" class="section level2">
 <h2>Key Concepts</h2>
@@ -647,7 +621,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <h3>Do</h3>
 <ul>
 <li>Post one and respond to one question in <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a> [10 points]</li>
-<li>Complete and submit a report for Module 2 Project</li>
+<li>Complete and commit a report for Module 2 Project</li>
 </ul>
 </div>
 <div id="guiding-questions-1" class="section level3">
@@ -678,13 +652,13 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 9/14</th>
-<th>Tuesday <br>9/15</th>
-<th>Wednesday<br> 9/16</th>
-<th>Thursday <br> 9/17</th>
-<th>Friday <br> 9/18</th>
-<th>Saturday<br> 9/19</th>
-<th>Sunday<br> 9/20</th>
+<th>Monday <br> 9/13</th>
+<th>Tuesday <br>9/14</th>
+<th>Wednesday<br> 9/15</th>
+<th>Thursday <br> 9/16</th>
+<th>Friday <br> 9/17</th>
+<th>Saturday<br> 9/18</th>
+<th>Sunday<br> 9/19</th>
 </tr>
 </thead>
 <tbody>
@@ -696,7 +670,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <td>Answer a question on discussion board</td>
 <td></td>
 <td></td>
-<td>Submit Module 2 Project Report</td>
+<td>commit Module 2 Project Report</td>
 </tr>
 <tr class="even">
 <td></td>
@@ -718,7 +692,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <p>In Module 3, we’ll cover the basics of visualizing and modeling data and hypothesis testing. We’ve used some simple visualization techniques in <code>ggplot</code> already and we’ll leverage this introduction to dig deeper into how data can be plotted to explore and ask informed questions about it. In addition, we’ll learn how and when to compared the fit of models.</p>
 <div id="dates-2" class="section level2">
 <h2>Dates:</h2>
-<p>Week 4 (Sep 21—27):</p>
+<p>Week 4 (Sep 20—26):</p>
 </div>
 <div id="key-concepts-2" class="section level2">
 <h2>Key Concepts</h2>
@@ -764,7 +738,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <h2>Do</h2>
 <ul>
 <li>Post one and respond to one question in <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a> [10 points]</li>
-<li>Complete and submit a report for Module 3 Project</li>
+<li>Complete and commit a report for Module 3 Project</li>
 </ul>
 </div>
 <div id="guiding-questions-2" class="section level2">
@@ -796,13 +770,13 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 9/21</th>
-<th>Tuesday <br>9/22</th>
-<th>Wednesday<br> 9/23</th>
-<th>Thursday <br> 9/24</th>
-<th>Friday <br> 9/25</th>
-<th>Saturday<br> 9/26</th>
-<th>Sunday<br> 9/27</th>
+<th>Monday <br> 9/20</th>
+<th>Tuesday <br>9/21</th>
+<th>Wednesday<br> 9/22</th>
+<th>Thursday <br> 9/23</th>
+<th>Friday <br> 9/24</th>
+<th>Saturday<br> 9/25</th>
+<th>Sunday<br> 9/26</th>
 </tr>
 </thead>
 <tbody>
@@ -814,7 +788,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <td>Answer a question on discussion board</td>
 <td></td>
 <td></td>
-<td>Submit Module 3 Project Report</td>
+<td>commit Module 3 Project Report</td>
 </tr>
 <tr class="even">
 <td></td>
@@ -835,7 +809,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <p>In Module 4, we’ll cover the basics of authoring reports in R Markdown, a markup language used to communicate the results of analysis in R. With R Markdown, you’ll develop a framework for compiling ideas, code, and graphics in one reproducible document.</p>
 <div id="dates-3" class="section level2">
 <h2>Dates:</h2>
-<p>Week 5 (Sep 28—Oct 4):</p>
+<p>Week 5 (Sep 27—Oct 3):</p>
 </div>
 <div id="key-concepts-3" class="section level2">
 <h2>Key Concepts</h2>
@@ -881,7 +855,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <h2>Do</h2>
 <ul>
 <li>Post one and respond to one question in <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a> [10 points]</li>
-<li>Complete and submit a report for Module 3 Project</li>
+<li>Complete and commit a report for Module 3 Project</li>
 </ul>
 </div>
 <div id="guiding-questions-3" class="section level2">
@@ -910,13 +884,13 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 9/28</th>
-<th>Tuesday <br>9/29</th>
-<th>Wednesday<br> 9/30</th>
-<th>Thursday <br> 9/31</th>
-<th>Friday <br> 10/1</th>
-<th>Saturday<br> 10/2</th>
-<th>Sunday<br> 10/3</th>
+<th>Monday <br> 9/27</th>
+<th>Tuesday <br>9/28</th>
+<th>Wednesday<br> 9/29</th>
+<th>Thursday <br> 9/30</th>
+<th>Friday <br> 9/31</th>
+<th>Saturday<br> 10/1</th>
+<th>Sunday<br> 10/2</th>
 </tr>
 </thead>
 <tbody>
@@ -928,7 +902,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <td>Answer a question on discussion board</td>
 <td></td>
 <td></td>
-<td>Submit Module 4 Project Report</td>
+<td>commit Module 4 Project Report</td>
 </tr>
 <tr class="even">
 <td></td>
@@ -949,7 +923,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <p>This module is intended to give students the background and skills to begin designing and programming of simple hardware devices using Arduino.</p>
 <div id="dates-4" class="section level2">
 <h2>Dates</h2>
-<p>Week 6 (Oct 5—11):</p>
+<p>Week 6 (Oct 4—10):</p>
 </div>
 <div id="key-concepts-4" class="section level2">
 <h2>Key Concepts</h2>
@@ -1014,13 +988,13 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 10/5</th>
-<th>Tuesday <br>10/6</th>
-<th>Wednesday<br> 10/7</th>
-<th>Thursday <br> 10/8</th>
-<th>Friday <br> 10/11</th>
-<th>Saturday<br> 10/10</th>
-<th>Sunday<br> 10/11</th>
+<th>Monday <br> 10/4</th>
+<th>Tuesday <br>10/5</th>
+<th>Wednesday<br> 10/6</th>
+<th>Thursday <br> 10/7</th>
+<th>Friday <br> 10/8</th>
+<th>Saturday<br> 10/9</th>
+<th>Sunday<br> 10/10</th>
 </tr>
 </thead>
 <tbody>
@@ -1057,7 +1031,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <p>This module puts our newly formed data analysis, markdown, and prototyping skills to use in answering how oscillations in body temperature scale with body size in mammals.</p>
 <div id="dates-5" class="section level2">
 <h2>Dates</h2>
-<p>Weeks 7 &amp; 8 (Oct 12—25):</p>
+<p>Weeks 7 &amp; 8 (Oct 11—24):</p>
 </div>
 <div id="key-concepts-5" class="section level2">
 <h2>Key Concepts</h2>
@@ -1088,7 +1062,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <ul>
 <li>Post one and respond to one question in <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a></li>
 <li>Upload team data files to <a href="https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing">this directory</a> by Tuesday, October 20th</li>
-<li>Complete and submit Module 6 Project report</li>
+<li>Complete and commit Module 6 Project report</li>
 </ul>
 </div>
 <div id="guiding-questions-5" class="section level2">
@@ -1116,13 +1090,13 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 10/12</th>
-<th>Tuesday <br>10/13</th>
-<th>Wednesday<br> 10/14</th>
-<th>Thursday <br> 10/15</th>
-<th>Friday <br> 10/16</th>
-<th>Saturday<br> 10/17</th>
-<th>Sunday<br> 10/18</th>
+<th>Monday <br> 10/11</th>
+<th>Tuesday <br>10/12</th>
+<th>Wednesday<br> 10/13</th>
+<th>Thursday <br> 10/14</th>
+<th>Friday <br> 10/15</th>
+<th>Saturday<br> 10/16</th>
+<th>Sunday<br> 10/17</th>
 </tr>
 </thead>
 <tbody>
@@ -1152,13 +1126,13 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 10/19</th>
-<th>Tuesday <br>10/20</th>
-<th>Wednesday<br> 10/21</th>
-<th>Thursday <br> 10/22</th>
+<th>Monday <br> 10/18</th>
+<th>Tuesday <br>10/19</th>
+<th>Wednesday<br> 10/20</th>
+<th>Thursday <br> 10/21</th>
 <th>Friday <br> 10/23</th>
-<th>Saturday<br> 10/24</th>
-<th>Sunday<br> 10/25</th>
+<th>Saturday<br> 10/23</th>
+<th>Sunday<br> 10/24</th>
 </tr>
 </thead>
 <tbody>
@@ -1191,7 +1165,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <p>This module asks you to hone your data analysis and markdown skills to evaluate body temperature scaling patterns in mammals within a phylogentic context. Specifically, we’ll reanalyze the temperature scaling patterns of Mortola &amp; Lanthier (2004) using phylogentically informed models to assess the importance of considering evolutionary history in comparative studies.</p>
 <div id="dates-6" class="section level2">
 <h2>Dates</h2>
-<p>Week9 (Oct 26—Nov 1):</p>
+<p>Week9 (Oct 25—Oct 31):</p>
 </div>
 <div id="key-concepts-6" class="section level2">
 <h2>Key Concepts</h2>
@@ -1222,7 +1196,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <h2>Do</h2>
 <ul>
 <li>Post one and respond to one question in <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a></li>
-<li>Complete and submit Module 7 Project report</li>
+<li>Complete and commit Module 7 Project report</li>
 <li>Read our <a href="phaseII_rubric.html">Phase II report rubric</a> to get a sense of how this and other Phase II reports will be grade.</li>
 </ul>
 </div>
@@ -1250,13 +1224,13 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 10/26</th>
-<th>Tuesday <br>10/27</th>
-<th>Wednesday<br> 10/28</th>
-<th>Thursday <br> 10/29</th>
-<th>Friday <br> 10/30</th>
-<th>Saturday<br> 10/31</th>
-<th>Sunday<br> 11/11</th>
+<th>Monday <br> 10/25</th>
+<th>Tuesday <br>10/26</th>
+<th>Wednesday<br> 10/27</th>
+<th>Thursday <br> 10/28</th>
+<th>Friday <br> 10/29</th>
+<th>Saturday<br> 10/30</th>
+<th>Sunday<br> 10/31</th>
 </tr>
 </thead>
 <tbody>
@@ -1268,7 +1242,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <td>Answer a question on discussion board</td>
 <td></td>
 <td></td>
-<td>Submit Project 7 report</td>
+<td>commit Project 7 report</td>
 </tr>
 </tbody>
 </table>
@@ -1279,7 +1253,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <p>In this module, we’ll explore how the force produced by vertebrate muscles is constrained by its length. To do this, we’ll design an Arduino-based load sensing data-acquisition system to record force produced by upper-arm muscles over a series of different resting length. From our data, we’ll establish models of forearm force-length properties and investigate how fatigure changes this imporant property of vertebrate muscle.</p>
 <div id="dates-7" class="section level2">
 <h2>Dates</h2>
-<p>Weeks 10 &amp; 11 (Nov 2—Nov 15):</p>
+<p>Weeks 10 &amp; 11 (Nov 1—Nov 14):</p>
 </div>
 <div id="key-concepts-7" class="section level2">
 <h2>Key Concepts</h2>
@@ -1311,7 +1285,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <h2>Do</h2>
 <ul>
 <li>Post one and respond to one question in <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a></li>
-<li>Complete and submit Module 8 Project report</li>
+<li>Complete and commit Module 8 Project report</li>
 <li>Upload force-angle data to <a href="https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing">this directory</a> by Monday, November 9th</li>
 </ul>
 </div>
@@ -1340,13 +1314,13 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 11/2</th>
-<th>Tuesday <br>11/3</th>
-<th>Wednesday<br> 11/4</th>
-<th>Thursday <br> 11/15</th>
-<th>Friday <br> 11/16</th>
-<th>Saturday<br> 11/17</th>
-<th>Sunday<br> 11/8</th>
+<th>Monday <br> 11/1</th>
+<th>Tuesday <br>11/2</th>
+<th>Wednesday<br> 11/3</th>
+<th>Thursday <br> 11/4</th>
+<th>Friday <br> 11/4</th>
+<th>Saturday<br> 11/6</th>
+<th>Sunday<br> 11/7</th>
 </tr>
 </thead>
 <tbody>
@@ -1376,13 +1350,13 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 11/9</th>
-<th>Tuesday <br>11/10</th>
-<th>Wednesday<br> 11/11</th>
-<th>Thursday <br> 11/12</th>
-<th>Friday <br> 11/13</th>
-<th>Saturday<br> 11/14</th>
-<th>Sunday<br> 11/15</th>
+<th>Monday <br> 11/8</th>
+<th>Tuesday <br>11/9</th>
+<th>Wednesday<br> 11/10</th>
+<th>Thursday <br> 11/11</th>
+<th>Friday <br> 11/12</th>
+<th>Saturday<br> 11/13</th>
+<th>Sunday<br> 11/14</th>
 </tr>
 </thead>
 <tbody>
@@ -1415,7 +1389,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <p>In this module, we’ll explore the phenology of spring arrival timing for neotropical passerines as it relates to historical weather conditions. To do so, we’ll download species occurrence data from the Global Biodiversity Information Facility (GBIF), an international network and data infrastructure whose goal is to provide users open access to data about all types of life on Earth. We’ll access GBIF data using <a href="https://www.gbif.org/tool/81747/rgbif"><code>rgif</code></a>, an R package that permits access to GBIF’s application programming interface (API). An API permits a user to interact with multiple software pieces (databases, code sources for processing and analysis, etc.). To assemble historical weather data, we’ll also use another R package, <code>rnoa</code>. This package contains functions that interact with <a href="https://www.ncdc.noaa.gov/cdo-web/webservices/v2">NOAA’s National Climatic Data Center’s API</a>.</p>
 <div id="dates-8" class="section level2">
 <h2>Dates</h2>
-<p>Weeks 12 &amp; 13 (Nov 19—Dec 1):</p>
+<p>Weeks 12 &amp; 13 (Nov 15—Nov 23):</p>
 </div>
 <div id="key-concepts-8" class="section level2">
 <h2>Key Concepts</h2>
@@ -1446,7 +1420,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <h2>Do</h2>
 <ul>
 <li>Post one and respond to one question in <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a></li>
-<li>Complete and submit Module 9 Project report</li>
+<li>Complete and commit Module 9 Project report</li>
 </ul>
 </div>
 <div id="guiding-questions-8" class="section level2">
@@ -1473,13 +1447,13 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 11/23</th>
-<th>Tuesday <br>11/34</th>
-<th>Wednesday<br> 11/35</th>
-<th>Thursday <br> 11/26</th>
-<th>Friday <br> 11/27</th>
-<th>Saturday<br> 11/28</th>
-<th>Sunday<br> 11/8</th>
+<th>Monday <br> 11/15</th>
+<th>Tuesday <br>11/16</th>
+<th>Wednesday<br> 11/17</th>
+<th>Thursday <br> 11/18</th>
+<th>Friday <br> 11/19</th>
+<th>Saturday<br> 11/20</th>
+<th>Sunday<br> 11/21</th>
 </tr>
 </thead>
 <tbody>
@@ -1509,13 +1483,13 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 11/30</th>
-<th>Tuesday <br>12/1</th>
-<th>Wednesday<br> 12/2</th>
-<th>Thursday <br> 12/3</th>
-<th>Friday <br> 12/4</th>
-<th>Saturday<br> 12/5</th>
-<th>Sunday<br> 12/6</th>
+<th>Monday <br> 11/22</th>
+<th>Tuesday <br>11/23</th>
+<th>Wednesday<br> 11/24</th>
+<th>Thursday <br> 11/25</th>
+<th>Friday <br> 11/26</th>
+<th>Saturday<br> 11/27</th>
+<th>Sunday<br> 11/28</th>
 </tr>
 </thead>
 <tbody>
@@ -1543,6 +1517,128 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 </table>
 </div>
 </div>
+<div id="module-10-jumping-ugs" class="section level1">
+<h1>Module 10: Jumping UGs</h1>
+<p>TBD</p>
+<div id="dates-9" class="section level2">
+<h2>Dates</h2>
+<p>Weeks 14 &amp; 15 (Nov 29—Dec 8):</p>
+</div>
+<div id="key-concepts-9" class="section level2">
+<h2>Key Concepts</h2>
+<ul>
+<li>?</li>
+<li>?</li>
+<li>?</li>
+<li>?</li>
+</ul>
+</div>
+<div id="learning-objectives-9" class="section level2">
+<h2>Learning Objectives</h2>
+<p>TBD</p>
+</div>
+<div id="readwatch-9" class="section level2">
+<h2>Read/Watch</h2>
+<p>TBD</p>
+</div>
+<div id="do-9" class="section level2">
+<h2>Do</h2>
+<ul>
+<li>Post one and respond to one question in <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a></li>
+<li>Complete and commit Module 10 Project report</li>
+</ul>
+</div>
+<div id="guiding-questions-9" class="section level2">
+<h2>Guiding Questions</h2>
+<p>+TBD</p>
+</div>
+<div id="module-10-schedule" class="section level2">
+<h2>Module 10 Schedule</h2>
+<p>All assignments are due at 11:59 on the specified date.</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Monday <br> 11/29</th>
+<th>Tuesday <br>11/30</th>
+<th>Wednesday<br> 12/1</th>
+<th>Thursday <br> 12/2</th>
+<th>Friday <br> 112/3</th>
+<th>Saturday<br> 12/4</th>
+<th>Sunday<br> 12/5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Assignment due</strong></td>
+<td></td>
+<td></td>
+<td>Post question to discussion board</td>
+<td>Answer a question on discussion board</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Monday <br> 12/6</th>
+<th>Tuesday <br>12/7</th>
+<th>Wednesday<br> 12/8</th>
+<th>Thursday <br> 12/9</th>
+<th>Friday <br> 12/10</th>
+<th>Saturday<br> 12/10</th>
+<th>Sunday<br> 12/11</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Assignment due</strong></td>
+<td></td>
+<td></td>
+<td>Commit Module 10 Project Report</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 
 
 
@@ -1555,7 +1651,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -1573,7 +1669,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -1582,6 +1678,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

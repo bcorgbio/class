@@ -13,47 +13,40 @@
 
 <title>Welcome</title>
 
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-
-
-
 
 <style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -64,10 +57,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -84,40 +73,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 61px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h2 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h3 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h4 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h5 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h6 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -145,7 +107,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -157,7 +119,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -168,10 +130,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -183,7 +158,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -309,7 +283,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -404,7 +378,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -431,7 +405,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p><br></p>
 <div id="course-and-instructor-deets" class="section level1">
 <h1>Course and Instructor Deets</h1>
-<p><strong>Delivery:</strong> Flipped and <em>synchronous online meetings</em> M,W,F at 2:00 over Zoom accessible through <a href="https://bccte.zoom.us/j/98903480269?pwd=MVBFUlhqTTE1LzFFRUVpTzZ2S1Vsdz09">this link</a>.</p>
+<p><strong>Delivery:</strong> Flipped and <em>in-person meetings</em> M,W,F at 10:00 in Higgins 310.</p>
 <p><strong>Instructor:</strong> Christopher P. Kenaley (Prof. K)</p>
 <p><strong>email:</strong> kenaley [ahhhht] bc.edu</p>
 <p><strong>office hours:</strong> By appointment</p>
@@ -440,7 +414,6 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <h1>Course materials</h1>
 <ul>
 <li>Personal computer (with USB2/3 ports, or see below) [Required]</li>
-<li>Inexpensive webcam (&gt;$40 on <a href="https://www.amazon.com/dp/B088FPBNQF/ref=cm_sw_r_tw_dp_x_D1spFbCD9BK0R">Amazon</a>) [Required]</li>
 <li>A USB/USBc adapter for reading microSD cards <a href="https://www.amazon.com/dp/B07RL5L8ZL/ref=cm_sw_r_tw_dp_x_EE-oFbWCT79QA">e.g.,for newer macs</a> [optional]</li>
 <li>A USBc adapter for USB2 connection <a href="https://www.amazon.com/dp/B07RL5L8ZL/ref=cm_sw_r_tw_dp_x_EE-oFbWCT79QA">e.g.,for newer macs</a> [optional]</li>
 <li><a href="https://github.com/join">GitHub account</a> [Required]</li>
@@ -448,8 +421,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </ul>
 <div id="course-hardware" class="section level2">
 <h2>Course hardware</h2>
-<p>Why require a webcam? This will be essential for remotely trouble shooting our Arduino based instruments (e.g., over Zoom). Set up your webcam in an overhead position so that it records a part of a desk or table from above. I’ll do the sames so that we both have a clear view of our hardware systems and thus can compare and demonstrate. You may find that a purchasing <a href="https://www.amazon.com/dp/B086MLVDG4/ref=cm_sw_r_tw_dp_x_R-spFb2F4TM3Z">an inexpensive overhead stand</a> will help, although this may be unnecessary with a little luck and ingenuity.</p>
-<p>What about those optional adapters? Our Arduino units require connections to a standard USB (i.e., USB2 or 3) port on your computer. For more recent Mac and PC laptops that have only USBc, this will require an adapter. Similarly, to read data from a microSD card (required for a Phase II project), you may need an adapter. Fortunately, many adapter models—like the one linked above—include both USB2/3 and microSD interfaces.</p>
+<p>Our Arduino units require connections to a standard USB (i.e., USB2 or 3) port on your computer. For more recent Mac and PC laptops that have only USBc, this will require an adapter. Similarly, to read data from a microSD card (required for a Phase II project), you may need an adapter. Fortunately, many adapter models—like the one linked above—include both USB2/3 and microSD interfaces.</p>
 </div>
 <div id="github-account" class="section level2">
 <h2>GitHub account</h2>
@@ -457,7 +429,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </div>
 <div id="course-daqpack" class="section level2">
 <h2>Course DAQPack</h2>
-<p>This is pre-packaged assembly of hardware required for all the course instrumentation projects. Every student in the class will be issued a DAQPack on the first week of class. <strong>Take care of these components!!!</strong> Put these items in a safe, dry place until you need to use them. All materials must be returned at the end of the class.</p>
+<p>This is pre-packaged assembly of hardware required for all the course instrumentation projects. Every student in the class will be issued a DAQPack on early in the course. <strong>Take care of these components!!!</strong> Put these items in a safe, dry place until you need to use them. All materials must be returned at the end of the class.</p>
 </div>
 </div>
 <div id="course-scope-goals-and-objectives" class="section level1">
@@ -508,7 +480,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </div>
 <div id="course-format-and-expectations" class="section level1">
 <h1>Course format and expectations</h1>
-<p>To quote Joseph Chamberlain, “. . . We are living in most interesting times.” A course of this scope, focusing on so much that is technical, would be administered best in small groups, meeting mostly face-to-face. However, in the context of a global pandemic that seems primed to surge again in our corner of the world, I can’t in good conscience summon us all to meet in cramped quarters. Thus, it seems prudent to ``flip" our 3140 experience and make most of it virtual. This will require students to read and explore outside of class and meet in pre-assigned smaller groups (i.e., teams) on their own to work through the material. I will be available during our set meeting times for discussion and problem solving over Zoom and face-to-face during arranged office hours.</p>
+<p>Our course will be a flipped experience. This will require students to read and explore outside of class and meet in pre-assigned smaller groups (i.e., teams) on their own to work through the material. We will use class time to tackle sticky problems and answer specific quesitons. In addition, I will be available during arranged face-to-face and online office hours.</p>
 <div id="teams-and-team-responsibilities" class="section level2">
 <h2>Teams and team responsibilities</h2>
 <p>To facilitate our team approach, I’ll be assigning each student to a team of 4 students. This team must establish two things:</p>
@@ -528,7 +500,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <ul>
 <li>You, the student, are responsible for reading and adhering to all aspects of the course syllabus as outlined here on this site.</li>
 <li>You are responsible for organizing and completing all readings, discussions, exercises, and projects.</li>
-<li>You are responsible for becoming familiar with course-related software (R, RStudio, Arduino, Zoom).</li>
+<li>You are responsible for becoming familiar with course-related software (R, RStudio, Arduino, etc.).</li>
 <li>You must be aware of your own progress in the course.</li>
 <li>It is up to you to pursue help and guidance when you feel you need it.</li>
 </ul>
@@ -741,7 +713,7 @@ Cobbled together by <a href="https://kenaleylab.com">Chris Kenaley</a>
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -759,7 +731,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -768,6 +740,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

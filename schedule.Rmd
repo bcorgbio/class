@@ -17,7 +17,7 @@ In this phase, we'll learn the basics of instrumentation and data analysis by wo
 In this module we'll tackle where to find resource you'll need on a week-to-week, module-by-module basis. In addition, we'll work on the first important topic of the course: an introduction to R, an ever more popular language for data analysis and visualization. We'll focus on the basics of importing and tidying data in R. By importing, we mean loading data collected by scientists and stored in text files, the lingua franca of scientific data. By tidying, we mean preparing data for analysis.
 
 ## Dates 
-Weeks 1 & 2 (Aug 31—Sep 13):
+Weeks 1 & 2 (Aug 30—Sep 12):
 
 ## Key Concepts
   + Course workflow
@@ -70,7 +70,7 @@ When reading through HOPR, make sure to have R and R Studio up and running so th
 
   + Post one and respond to one question each week of Module 1 in our [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) 
   + [Install R and RStudio](https://rstudio-education.github.io/hopr/starting.html#starting)
-  + Complete and submit a report for Module 1 Project 
+  + Complete and commit a report for Module 1 Project 
 
 
 ## Guiding Questions
@@ -85,13 +85,13 @@ When reading through HOPR, make sure to have R and R Studio up and running so th
 
 All assignments are due at 11:59 on the specified date.
 
- || Monday <br> 8/31 |  Tuesday <br>9/1    | Wednesday<br>  9/2 | Thursday <br> 9/3 | Friday <br> 9/4 |Saturday<br> 9/5 | Sunday<br> 9/6
+ || Monday <br> 8/30 |  Tuesday <br>8/31    | Wednesday<br>  9/1 | Thursday <br> 9/2 | Friday <br> 9/3 |Saturday<br> 9/4 | Sunday<br> 9/5
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
 **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | |
 
- || Monday <br> 9/7 |  Tuesday <br>9/8    | Wednesday<br>  9/9 | Thursday <br> 9/10 | Friday <br> 9/11 |Saturday<br> 9/12 | Sunday<br> 9/13
+ || Monday <br> 9/6 |  Tuesday <br>9/7    | Wednesday<br>  9/8 | Thursday <br> 9/9 | Friday <br> 9/10 |Saturday<br> 9/11 | Sunday<br> 9/12
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 1 project report
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | commit Module 1 project report
  |||||||
 <br>
 
@@ -100,7 +100,7 @@ All assignments are due at 11:59 on the specified date.
 This module is intended to give students the background and skills to begin simple data tidying and transformation operations. We need our data to be tidy before we can analyze it that, that is, structured in a way that makes analysis possible. In addition, often the data we have aren't exactly what we want to analyze. For example, say you had data on the f  
 
 ## Dates: 
-Week 3 (Sep 14—20): 
+Week 3 (Sep 13—19): 
 
 ## Key Concepts
   + Reading text files in R
@@ -152,7 +152,7 @@ All form [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS):
 ### Do 
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
-  + Complete and submit a report for Module 2 Project 
+  + Complete and commit a report for Module 2 Project 
 
 
 ### Guiding Questions
@@ -168,9 +168,9 @@ All form [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS):
 
 All assignments are due at 11:59 on the specified date. 
 
-  || Monday <br> 9/14 |  Tuesday <br>9/15    | Wednesday<br>  9/16 | Thursday <br> 9/17 | Friday <br> 9/18 |Saturday<br> 9/19 | Sunday<br> 9/20
+  || Monday <br> 9/13 |  Tuesday <br>9/14    | Wednesday<br>  9/15 | Thursday <br> 9/16 | Friday <br> 9/17 |Saturday<br> 9/18 | Sunday<br> 9/19
   |--------|-------- |--------|-------- |--------|--------|--------|--------
-  **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 2 Project Report
+  **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | commit Module 2 Project Report
   ||||||||
 
 
@@ -180,7 +180,7 @@ In Module 3, we'll cover the basics of visualizing and modeling data and hypothe
 
 ## Dates: 
 
-Week 4 (Sep 21—27):
+Week 4 (Sep 20—26):
 
 ## Key Concepts
   + The grammar of `ggplot`
@@ -220,7 +220,7 @@ From [Phylogenetic Comparative Methods](https://lukejharmon.github.io/pcm) by Lu
 ## Do 
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
-  + Complete and submit a report for Module 3 Project 
+  + Complete and commit a report for Module 3 Project 
 
 
 ## Guiding Questions
@@ -238,9 +238,9 @@ From [Phylogenetic Comparative Methods](https://lukejharmon.github.io/pcm) by Lu
 
 All assignments are due at 11:59 on the specified date. 
 
-  || Monday <br> 9/21 |  Tuesday <br>9/22    | Wednesday<br>  9/23 | Thursday <br> 9/24 | Friday <br> 9/25 |Saturday<br> 9/26 | Sunday<br> 9/27
+  || Monday <br> 9/20 |  Tuesday <br>9/21    | Wednesday<br>  9/22 | Thursday <br> 9/23 | Friday <br> 9/24 |Saturday<br> 9/25 | Sunday<br> 9/26
   |--------|-------- |--------|-------- |--------|--------|--------|--------
-  **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 3 Project Report
+  **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | commit Module 3 Project Report
   ||||||||
   
   
@@ -250,7 +250,7 @@ In Module 4, we'll cover the basics of authoring reports in R Markdown, a markup
 
 ## Dates: 
 
-Week 5 (Sep 28—Oct 4):
+Week 5 (Sep 27—Oct 3):
 
 ## Key Concepts
   + The R Markdown framework
@@ -290,7 +290,7 @@ This module is very much learn as you go. Please dive right into the project and
 ## Do 
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
-  + Complete and submit a report for Module 3 Project 
+  + Complete and commit a report for Module 3 Project 
 
 
 ## Guiding Questions
@@ -305,9 +305,9 @@ This module is very much learn as you go. Please dive right into the project and
 
 All assignments are due at 11:59 on the specified date. 
 
-  || Monday <br> 9/28 |  Tuesday <br>9/29    | Wednesday<br>  9/30 | Thursday <br> 9/31 | Friday <br> 10/1 |Saturday<br> 10/2 | Sunday<br> 10/3
+  || Monday <br> 9/27 |  Tuesday <br>9/28    | Wednesday<br>  9/29 | Thursday <br> 9/30 | Friday <br> 9/31 |Saturday<br> 10/1 | Sunday<br> 10/2
   |--------|-------- |--------|-------- |--------|--------|--------|--------
-  **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Submit Module 4 Project Report
+  **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | commit Module 4 Project Report
   ||||||||
 
 # Module 5: Cheap Tricks in Physiology: Designing and Programming Simple, Low-Cost Data Acquisition Systems
@@ -316,7 +316,7 @@ This module is intended to give students the background and skills to begin desi
 
 
 ## Dates 
-Week 6 (Oct 5—11):
+Week 6 (Oct 4—10):
 
 ## Key Concepts
   + Arduino IDE basics (the sketch).
@@ -360,7 +360,7 @@ Upon completion of this week and module, students will be able to:
 
 All assignments are due at 11:59 on the specified date.
 
- || Monday <br> 10/5 |  Tuesday <br>10/6    | Wednesday<br>  10/7 | Thursday <br> 10/8 | Friday <br> 10/11 |Saturday<br> 10/10 | Sunday<br> 10/11
+ || Monday <br> 10/4 |  Tuesday <br>10/5    | Wednesday<br>  10/6 | Thursday <br> 10/7 | Friday <br> 10/8 |Saturday<br> 10/9 | Sunday<br> 10/10
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
 **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Upload Module 5Project Report
 ||||||||
@@ -374,7 +374,7 @@ In Phase II, we'll use our new-found instrument- and code-development skills to 
 This module puts our newly formed data analysis, markdown, and prototyping skills to use in answering how oscillations in body temperature scale with body size in mammals.
 
 ## Dates 
-Weeks 7 & 8 (Oct 12—25):
+Weeks 7 & 8 (Oct 11—24):
 
 ## Key Concepts
   + Saving instrument data to an SD card.
@@ -399,7 +399,7 @@ Upon completion of this module, students will be able to:
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
   + Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing) by Tuesday, October 20th
-  + Complete and submit Module 6 Project report
+  + Complete and commit Module 6 Project report
 
 
 ## Guiding Questions
@@ -412,11 +412,11 @@ Upon completion of this module, students will be able to:
 
 All assignments are due at 11:59 on the specified date.
 
-|| Monday <br> 10/12 |  Tuesday <br>10/13    | Wednesday<br>  10/14 | Thursday <br> 10/15 | Friday <br> 10/16 |Saturday<br> 10/17 | Sunday<br> 10/18
+|| Monday <br> 10/11 |  Tuesday <br>10/12    | Wednesday<br>  10/13 | Thursday <br> 10/14 | Friday <br> 10/15 |Saturday<br> 10/16 | Sunday<br> 10/17
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
 **Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |
 
- || Monday <br> 10/19 |  Tuesday <br>10/20    | Wednesday<br>  10/21 | Thursday <br> 10/22 | Friday <br> 10/23 |Saturday<br> 10/24 | Sunday<br> 10/25
+ || Monday <br> 10/18 |  Tuesday <br>10/19    | Wednesday<br>  10/20 | Thursday <br> 10/21 | Friday <br> 10/23 |Saturday<br> 10/23 | Sunday<br> 10/24
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 
 **Assignment due** | | Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing)| Post question to discussion board | Answer a question on discussion board  | | | Upload Module 6 Project Report
 ||||||||
@@ -426,7 +426,7 @@ All assignments are due at 11:59 on the specified date.
 This module asks you to hone your data analysis and markdown skills to evaluate body temperature scaling patterns in mammals within a phylogentic context. Specifically, we'll reanalyze the temperature scaling patterns of Mortola & Lanthier (2004) using phylogentically informed models to assess the importance of considering evolutionary history in comparative studies.
 
 ## Dates 
-Week9 (Oct 26—Nov 1):
+Week9 (Oct 25—Oct 31):
 
 ## Key Concepts
   + Allometric scaling.
@@ -449,7 +449,7 @@ Upon completion of this week and module, students will be able to:
 ## Do
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
-  + Complete and submit Module 7 Project report
+  + Complete and commit Module 7 Project report
   + Read our [Phase II report rubric](phaseII_rubric.html) to get a sense of how this and other Phase II reports will be grade.
 
 
@@ -462,9 +462,9 @@ Upon completion of this week and module, students will be able to:
 
 All assignments are due at 11:59 on the specified date.
 
-|| Monday <br> 10/26 |  Tuesday <br>10/27    | Wednesday<br>  10/28 | Thursday <br> 10/29 | Friday <br> 10/30 |Saturday<br> 10/31 | Sunday<br> 11/11
+|| Monday <br> 10/25 |  Tuesday <br>10/26    | Wednesday<br>  10/27 | Thursday <br> 10/28 | Friday <br> 10/29 |Saturday<br> 10/30 | Sunday<br> 10/31
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |Submit Project 7 report
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |commit Project 7 report
 
 
 # Module 8:  Beach Muscles: Exploring Force-Length Relationships in Vertebrate Muscle 
@@ -472,7 +472,7 @@ All assignments are due at 11:59 on the specified date.
 In this module, we'll explore how the force produced by vertebrate muscles is constrained by its length. To do this, we'll design an Arduino-based load sensing data-acquisition system to record force produced by upper-arm muscles over a series of different resting length. From our data, we'll establish models of forearm force-length properties and investigate how fatigure changes this imporant property of vertebrate muscle.
 
 ## Dates 
-Weeks 10 & 11 (Nov 2—Nov 15):
+Weeks 10 & 11 (Nov 1—Nov 14):
 
 ## Key Concepts
   + Cross-bridge theory
@@ -497,7 +497,7 @@ Upon completion of this week and module, students will be able to:
 
 ## Do
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
-  + Complete and submit Module 8 Project report
+  + Complete and commit Module 8 Project report
   + Upload force-angle data to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing) by Monday, November 9th
 
 
@@ -512,11 +512,11 @@ Upon completion of this week and module, students will be able to:
 
 All assignments are due at 11:59 on the specified date.
 
-|| Monday <br> 11/2 |  Tuesday <br>11/3    | Wednesday<br>  11/4 | Thursday <br> 11/15 | Friday <br> 11/16 |Saturday<br> 11/17 | Sunday<br> 11/8
+|| Monday <br> 11/1 |  Tuesday <br>11/2    | Wednesday<br>  11/3 | Thursday <br> 11/4 | Friday <br> 11/4 |Saturday<br> 11/6 | Sunday<br> 11/7
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
 **Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |
 
- || Monday <br> 11/9 |  Tuesday <br>11/10    | Wednesday<br>  11/11 | Thursday <br> 11/12 | Friday <br> 11/13 |Saturday<br> 11/14 | Sunday<br> 11/15
+ || Monday <br> 11/8 |  Tuesday <br>11/9    | Wednesday<br>  11/10 | Thursday <br> 11/11 | Friday <br> 11/12 |Saturday<br> 11/13 | Sunday<br> 11/14
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 
 **Assignment due** | Upload team data files to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing)| | Post question to discussion board | Answer a question on discussion board  | | | Commit Module 8 Project Report
 ||||||||
@@ -529,7 +529,7 @@ In this module, we'll explore the phenology of spring arrival timing for neotrop
 
 
 ## Dates 
-Weeks 12 & 13 (Nov 19—Dec 1):
+Weeks 12 & 13 (Nov 15—Nov 23):
 
 ## Key Concepts
 
@@ -554,7 +554,7 @@ Upon completion of this week and module, students will be able to:
 
 ## Do
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
-  + Complete and submit Module 9 Project report
+  + Complete and commit Module 9 Project report
 
 
 
@@ -569,14 +569,62 @@ Upon completion of this week and module, students will be able to:
 
 All assignments are due at 11:59 on the specified date.
 
-|| Monday <br> 11/23 |  Tuesday <br>11/34    | Wednesday<br>  11/35 | Thursday <br> 11/26 | Friday <br> 11/27 |Saturday<br> 11/28 | Sunday<br> 11/8
+|| Monday <br> 11/15 |  Tuesday <br>11/16    | Wednesday<br>  11/17 | Thursday <br> 11/18 | Friday <br> 11/19 |Saturday<br> 11/20 | Sunday<br> 11/21
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
 **Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |
 
- || Monday <br> 11/30 |  Tuesday <br>12/1    | Wednesday<br>  12/2 | Thursday <br> 12/3 | Friday <br> 12/4 |Saturday<br> 12/5 | Sunday<br> 12/6
+ || Monday <br> 11/22 |  Tuesday <br>11/23    | Wednesday<br>  11/24 | Thursday <br> 11/25 | Friday <br> 11/26 |Saturday<br> 11/27 | Sunday<br> 11/28
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 
 **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Commit Module 9 Project Report
 ||||||||
 
+# Module 10:   Jumping UGs
+
+TBD
+
+
+## Dates 
+Weeks 14 & 15 (Nov 29—Dec 8):
+
+## Key Concepts
+
+  + ?
+  + ?
+  + ?
+  + ?
+
+## Learning Objectives
+
+TBD
+  
+## Read/Watch 
+
+TBD
+  
+
+## Do
+  + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
+  + Complete and commit Module 10 Project report
+
+
+
+
+## Guiding Questions
+
+  +TBD
+
+  
+## Module 10 Schedule
+
+All assignments are due at 11:59 on the specified date.
+
+|| Monday <br> 11/29 |  Tuesday <br>11/30    | Wednesday<br>  12/1 | Thursday <br> 12/2 | Friday <br> 112/3 |Saturday<br> 12/4 | Sunday<br> 12/5
+|--------|-------- |--------|-------- |--------|--------|--------|--------    
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |
+
+ || Monday <br> 12/6 |  Tuesday <br>12/7    | Wednesday<br>  12/8 | Thursday <br> 12/9 | Friday <br> 12/10 |Saturday<br> 12/10 | Sunday<br> 12/11
+ |--------|-------- |--------|-------- |--------|--------|--------|-------- 
+**Assignment due** | | | Commit Module 10 Project Report | | | | 
+||||||||
 
 
