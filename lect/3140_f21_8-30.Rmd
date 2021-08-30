@@ -3,7 +3,7 @@ title: "Welcome and Introduction"
 subtitle: "Setting the Stage"
 author: "Dr. Christopher Kenaley"
 institute: "Boston College"
-date: "2021/2/1"
+date: "2021/8/30"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -31,9 +31,6 @@ Today we'll ....
 
 - See how the course organized
 
-- Talk about the basic physical principles to review	
-
-- Work through an illustrative example
 ]
 
 .pull-right[
@@ -48,7 +45,7 @@ class: inverse, top
 
 ![](site.png?w=300)
 
-bcbiomech.github.io/class/
+https://bcorgbio.github.io/class
 
 Monday, Wednesday, Friday 10:00-10:50 for in-person problem solving
 
@@ -121,6 +118,7 @@ Soft stuff:
 ]
 
 ---
+class:  top
 # Class structure
 
 .pull-left[
@@ -137,11 +135,13 @@ Soft stuff:
 ![](https://memegenerator.net/img/instances/81812046.jpg)
 ]
 
---- 
 
+
+---
+class:  top
 # Teams and team responsibilities
 
-- Take this survey: 
+- Take this survey: https://forms.gle/Z7PekUE3wB6FQQoa8
 
 - Teams of 4 students assigned in the first few days of class. 
 
@@ -152,9 +152,11 @@ This team must establish two things:
   
   2. A team discussion on GitHub that includes me (@ckenaley) on the team (see [Discussion Board]). 
   
-- Each week, teams use their team discussion board to generate a question
+ Each week, teams use their team discussion board to generate a question
 
-- This gets posted on the the class-wide discussion board. include the team handle ("@bcorgbio/r-tful-coders"). 
+ This gets posted on the the class-wide discussion board. include the team handle ("@bcorgbio/r-tful-coders"). 
+
+
 
 
 ---
@@ -163,13 +165,13 @@ class:  top
 .center[
 ![](courseout.png)
 ]
+
 .pull-left[
 
 ## Phase I
 
-- Huddle and scatter model
-- Scatter with team over 2-3 weeks to complete Mini-Project
-- Check out material from Higgins 535
+- Learning the basics
+- Small projects
 
 ]
 

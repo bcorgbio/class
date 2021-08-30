@@ -28,6 +28,7 @@ Weeks 1 & 2 (Aug 30—Sep 12):
   + Lists, data frames, and matrices
   + Basic R notation
   + The `for` loop
+  + git, github, and version control
   
 ## Learning Objectives
 
@@ -39,10 +40,11 @@ Upon completion of this week and module, students will be able to:
   + Recognize the difference between different objects (e.g., vectors, lists, data frames etc.)
   + Perform simple data operations and manipulation of data objects in R
   + Construct and run a `for` loop in R to automate a interatively redundant task.
+  + clone a local directory and version controlteam-based work on common script and report files
  
 ## Read/Watch 
 
-All from [Hands on Programming with R](https://rstudio-education.github.io/hopr) (HOPR)
+From [Hands on Programming with R](https://rstudio-education.github.io/hopr) (HOPR)
 
   + [Appendices A—D](https://rstudio-education.github.io/hopr/starting.html) 
   + [Part I](https://rstudio-education.github.io/hopr/project-1-weighted-dice.html)
@@ -52,7 +54,13 @@ All from [Hands on Programming with R](https://rstudio-education.github.io/hopr)
   + [Chapter 7: Modifying Values](https://rstudio-education.github.io/hopr/modify.html)
   + [Chapter 11.3: For Loops](https://rstudio-education.github.io/hopr/loops.html#for-loops)
  
-When reading through HOPR, make sure to have R and R Studio up and running so that you can copy and paste code from HOPR into an R file and run the specified commands and complete the books project tasks. This will help tremendously in getting the hang of things. 
+When reading through HOPR, make sure to have R and R Studio up and running so that you can copy and paste code from HOPR into an R file and run the specified commands and complete the books project tasks. This will help tremendously in getting the hang of things.
+
+From [Happy Git with R](https://happygitwithr.com)
+  + [Chapter 12](https://happygitwithr.com/rstudio-git-github.html)
+
+Be sure you're familiar with the [prerequsites](https://happygitwithr.com/rstudio-git-github.html#prerequisites) outlined in Chapter 12. We'll cover git and github in class on Sept 1. Just introduce yourself to the concepts.
+ 
 
 <!-- Add icon library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
@@ -70,7 +78,9 @@ When reading through HOPR, make sure to have R and R Studio up and running so th
 
   + Post one and respond to one question each week of Module 1 in our [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) 
   + [Install R and RStudio](https://rstudio-education.github.io/hopr/starting.html#starting)
+  + Clone a github team repository to a local directory (done in class with Prof. K's help on Wednesday, Sept 1)
   + Complete and commit a report for Module 1 Project 
+
 
 
 ## Guiding Questions
@@ -80,6 +90,7 @@ When reading through HOPR, make sure to have R and R Studio up and running so th
   + How does external data get loaded into R?
   + How does one subset common data objects in R?
   + How does a `for` loop work and when should it be used?
+  + What are the basic git opertations and their value in sharing code.
   
 ## Module 1 Schedule
 
