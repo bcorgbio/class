@@ -57,9 +57,14 @@ From [Hands on Programming with R](https://rstudio-education.github.io/hopr) (HO
 When reading through HOPR, make sure to have R and R Studio up and running so that you can copy and paste code from HOPR into an R file and run the specified commands and complete the books project tasks. This will help tremendously in getting the hang of things.
 
 From [Happy Git with R](https://happygitwithr.com)
+
   + [Chapter 12](https://happygitwithr.com/rstudio-git-github.html)
 
+
 Be sure you're familiar with the [prerequsites](https://happygitwithr.com/rstudio-git-github.html#prerequisites) outlined in Chapter 12. We'll cover git and github in class on Sept 1. Just introduce yourself to the concepts.
+
+Check out the new [github access token requirements](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+
  
 
 <!-- Add icon library -->
