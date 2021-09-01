@@ -286,7 +286,7 @@ The goal of this project report is to submit an R script that runs the code pres
   5. Code that produces a summary of the number of specimens sampled for each species.
   6. Code that produces a PDF file containing 6 figures, one for each species that includes a boxplot of puncture force verus quadrant. 
     
-Have one representative of each team submit the code and PDF [here](https://forms.gle/GZotQwqzAFczb8pW9). Submissions are due by 11:59 PM on Sunday, September 13th.
+Have one representative of each team commit the code and PDFs to your team's repo. Submissions are due by 11:59 PM on Sunday, September 12th.
 
 <div class = "green">
 <div class="row">
