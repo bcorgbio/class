@@ -30,7 +30,9 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 **email:** kenaley [ahhhht] bc.edu
 
-**office hours:** By appointment
+**Office hours:** By appointment
+
+**Class Zoom Link:** https://bccte.zoom.us/j/9533582156
 
 # Course materials
   + Personal computer (with USB2/3 ports, or see below) [Required]
