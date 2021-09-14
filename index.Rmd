@@ -28,7 +28,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 **Instructor:** Christopher P. Kenaley (Prof. K)
 
-**email:** kenaley [ahhht] bc.edu
+**email:** kenaley [ahht] bc.edu
 
 **Office hours:** By appointment
 

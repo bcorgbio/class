@@ -17,13 +17,13 @@ Now that we have read and explored the basics of how to tidy, transform, and sum
 There are several data sets that need to be loaded:
 
   + A file of pectoral fin amplitude from two [pumpkinseed sunfish](https://www.newyorkupstate.com/life-and-culture/g66l-2019/08/b2a354a76c7e4/sunfish-101-how-to-id-a-bluegill-pumpkinseed-or-redbreast.html) at [this link](pseed.fin.amps.csv).
-  + A file contaning the body length of pumpkingseed sunfish included in the study at [this link](pseed.lengths.csv).
+  + A file containing the body length of pumpkinseed sunfish included in the study at [this link](pseed.lengths.csv).
   + A file of the speeds at which specimens swam in the study at [this link](pseed.calibration.csv).
 
   Let's do so and then comment on the origin and importance of the data.
   
 ```{r,results='hide',warning=F}
-library(tidyverse) # Rember to load your libraries!
+library(tidyverse) # Remember to load your libraries!
 
 #Remember to set your working directory, too!
 
@@ -33,7 +33,7 @@ pseed.bl <- read_csv("pseed.lengths.csv")
 speeds <- read_csv("pseed.calibration.csv")
 ```
 
-First, notice that we used `read_csv()` to load our .csv data files rather than `read.csv()`. `read_csv()` from the `tidyverse` package `readr` is identical to `read.csv()`.  However, it loads data as a tibble, an object like a data.frame but one that works seemlessly with the other functions contained in `tidyverse`. 
+First, notice that we used `read_csv()` to load our .csv data files rather than `read.csv()`. `read_csv()` from the `tidyverse` package `readr` is identical to `read.csv()`.  However, it loads data as a tibble, an object like a data.frame but one that works seamlessly with the other functions contained in `tidyverse`. 
 
 <center>
 <iframe width="460" height="315" src="https://www.youtube.com/embed/xYEJThBVoXM" frameborder="0" allowfullscreen></iframe>
@@ -48,20 +48,20 @@ The data loaded to `pseed` are amplitudes of pectoral fin oscillations (i.e., fi
   + `date`: A date in the format "year-month-day-hourminutesecond" that identifies when the experiment started. This is unique for each experiment.
   + `amp`: Fin amplitude in pixels.
   + `fin`: From which fin, left or right, the amplitude was recorded.
-  + `amp.bl`: The specific finamplitude as a proportion of body length (BL$^{-1}$).
+  + `amp.bl`: The specific fin amplitude as a proportion of body length (BL$^{-1}$).
   
-This data set doesn't include important information about the data, including the size of each specimen and what water speeds the motor speeds resulted in. These are critical data. For instance, data for locomotor speed are often reported as *specific speeds*, i.e., body lengths per second (BL$\cdot$s$^{-1}$) by physiologists to control for the difference in size between organisms. Using motor voltage wouldn't be so helpful in this regard. To do something like compute the specific swimming speed, we need both the length of the specimen (in cm, say) and the speed of the water (in cm$\cdot$s$^{-1}$). Fortunately, we measured the BL of each fish and conducted calibration experiments to assess water speeed for each motor voltage. 
+This data set doesn't include important information about the data, including the size of each specimen and what water speeds the motor speeds resulted in. These are critical data. For instance, data for locomotor speed are often reported as *specific speeds*, i.e., body lengths per second (BL$\cdot$s$^{-1}$) by physiologists to control for the difference in size between organisms. Using motor voltage wouldn't be so helpful in this regard. To do something like compute the specific swimming speed, we need both the length of the specimen (in cm, say) and the speed of the water (in cm$\cdot$s$^{-1}$). Fortunately, we measured the BL of each fish and conducted calibration experiments to assess water speed for each motor voltage. 
 
-The size of each fish is contained in the "pseed.lengths.csv" file that we passed to the `pseed.bl` variable. It contains the columns `fish`, the specimen number, and `bl`, the body length in cm. The calibrated speed in cm$\cdot$s$^{-1}$ of the flow tank according to motor RPM is contained in the "pseed.calibration.csv" file that we passed to the `speeds` variable. The columns in `speeds` include `vol`, the motor voltage, `m.s` and `cm.s` the water speed inside the flow tank resulting from that voltage in in m$\cdot$s$^{-1}$ and in cm$\cdot$s$^{-1}$, respectively.
+The size of each fish is contained in the "peed.lengths.csv" file that we passed to the `pseed.bl` variable. It contains the columns `fish`, the specimen number, and `bl`, the body length in cm. The calibrated speed in cm$\cdot$s$^{-1}$ of the flow tank according to motor RPM is contained in the "pseed.calibration.csv" file that we passed to the `speeds` variable. The columns in `speeds` include `vol`, the motor voltage, `m.s` and `cm.s` the water speed inside the flow tank resulting from that voltage in in m$\cdot$s$^{-1}$ and in cm$\cdot$s$^{-1}$, respectively.
 
-Our goal in this project is to qualitatively assess if pectoral-fin amplitude changes over the range of speeds swam by our two pumpkin seeds. To do this, we'll plot these data (in convential dimension units of BL$^{-1}$ for amplitude and BL$\cdot$s$^{-1}$ for speed). This will require that we combine our data sets and perform some transformations on the data, adding new columns of data for plotting along the way.
+Our goal in this project is to qualitatively assess if pectoral-fin amplitude changes over the range of speeds swam by our two pumpkin seeds. To do this, we'll plot these data (in convention dimension units of BL$^{-1}$ for amplitude and BL$\cdot$s$^{-1}$ for speed). This will require that we combine our data sets and perform some transformations on the data, adding new columns of data for plotting along the way.
 
 
 # More Complicated Operations: Joining Relational Data
 
-As we learned in [R4DS](https://r4ds.had.co.nz/relational-data.html), separate but related data can exist in different places (i.e., different data frames or tibbles), yet have similar properties, specifically common attributes such as columns that contain the same data. By usings these common attributes, known as keys, we can combine data to ask and answer a more expansive array of questions. In the context of analysis of data from scientific experiments, we often have many data files, including one that contains the results of the experiments and others that contain important data not recorded in the course of the experiments but that are essential to analysis. 
+As we learned in [R4DS](https://r4ds.had.co.nz/relational-data.html), separate but related data can exist in different places (i.e., different data frames or tibbles), yet have similar properties, specifically common attributes such as columns that contain the same data. By using these common attributes, known as keys, we can combine data to ask and answer a more expansive array of questions. In the context of analysis of data from scientific experiments, we often have many data files, including one that contains the results of the experiments and others that contain important data not recorded in the course of the experiments but that are essential to analysis. 
 
-Consider the pectoral-fin data we loaded and the goals we have. Our main results table in `pseed` contains the the amplitude of left and right pectoral fins recorded over many experiemnts for two fish over many speeds. Our goal is to assess how amplitude varies with speed. The speed in the main data table isn't reported as a conventional unit, like cm$\cdot$s$^{-1}$, but rather as the motor voltage that spun the prop. Higher voltages resulted in higher water speeds, but we don't know the exact relationship based on this alone and, thus, if we worked with this table for analysis, we are left in the awkward position of reporting our results for various speeds in voltage. Not good. 
+Consider the pectoral-fin data we loaded and the goals we have. Our main results table in `pseed` contains the the amplitude of left and right pectoral fins recorded over many experiments for two fish over many speeds. Our goal is to assess how amplitude varies with speed. The speed in the main data table isn't reported as a conventional unit, like cm$\cdot$s$^{-1}$, but rather as the motor voltage that spun the prop. Higher voltages resulted in higher water speeds, but we don't know the exact relationship based on this alone and, thus, if we worked with this table for analysis, we are left in the awkward position of reporting our results for various speeds in voltage. Not good. 
 
 <div class = "green">
 <div class="row">
@@ -72,7 +72,7 @@ Consider the pectoral-fin data we loaded and the goals we have. Our main results
 </div>
 <br>
 
-To easily plot data and undertake our qualitative analysis, we need amplitude and swim/water speed in the same table. Fornunately, we have loaded the tunnel's water speed as it varies with motor voltage. To combine the data, we must perform a merge or join operation. In this case, we need to perform an [outer join](https://r4ds.had.co.nz/relational-data.html#mutating-joins) whereby we add observations that appear in at least one of the tables. By this I mean that we have many observations (over 74,000!) of amplitude, each with an associated speed value in voltage in the main data table and fewer observations of voltages and associated water speeds in another (i.e., one voltage and water speed in each row). We want to add these water speeds to the many observations in our main `pseed` table.
+To easily plot data and undertake our qualitative analysis, we need amplitude and swim/water speed in the same table. Fortunately, we have loaded the tunnel's water speed as it varies with motor voltage. To combine the data, we must perform a merge or join operation. In this case, we need to perform an [outer join](https://r4ds.had.co.nz/relational-data.html#mutating-joins) whereby we add observations that appear in at least one of the tables. By this I mean that we have many observations (over 74,000!) of amplitude, each with an associated speed value in voltage in the main data table and fewer observations of voltages and associated water speeds in another (i.e., one voltage and water speed in each row). We want to add these water speeds to the many observations in our main `pseed` table.
 
 Joining data tables in this way requires that we identify a key, a common attribute to both tables whose values will be used to add the new data to the table. What is this key? It's voltage, represented in the `pseed` table as `speed` and the `speeds` table as `vol`. 
 
@@ -91,7 +91,7 @@ pseed2 <- pseed%>%
   print()
 ```
 
-Here we create a new tibble by passing `pseed` with the pipe `%>%` to a `left_join()` function. The `left_join()` operation takes the `speeds` table and joins it leftward to the `pseed` table. The `by` parameter specifiies by what columns to join the tables, i.e., the key values for each. Notice that the names of the key values are different because the key columns have different names in `pseed` and `speeds`. With `print()`, we printed the new table, complete with `m.s` and `cm.s` columns. Notice that there's no `vol` column added from the `speeds` table. Voila, almost there.
+Here we create a new tibble by passing `pseed` with the pipe `%>%` to a `left_join()` function. The `left_join()` operation takes the `speeds` table and joins it leftward to the `pseed` table. The `by` parameter specifies by what columns to join the tables, i.e., the key values for each. Notice that the names of the key values are different because the key columns have different names in `pseed` and `speeds`. With `print()`, we printed the new table, complete with `m.s` and `cm.s` columns. Notice that there's no `vol` column added from the `speeds` table. Voila, almost there.
 
 # Mutation: Adding Data to Data from its Own Data
 
@@ -126,9 +126,9 @@ pseed2 <- pseed2%>%
   mutate(bl.s=cm.s/bl)%>%
   print()
 ```
-Here we passed `pseed2` to a `mutate()` operation to add the new column, `bl.s`, based on the division of `cm.s` by `bl.s`. Note that we redifined `pseed2` as this new mutated tibble containing the specific swimming speed in the `bl.s` column.
+Here we passed `pseed2` to a `mutate()` operation to add the new column, `bl.s`, based on the division of `cm.s` by `bl.s`. Note that we redefined `pseed2` as this new mutated tibble containing the specific swimming speed in the `bl.s` column.
 
-Let's now use `ggplot`, our fantstic plotting package included in `tidyverse` to plot specific fin amplitude (`amp.bl`) against specific swimming speed (`bl.s`).
+Let's now use `ggplot`, our fantastic plotting package included in `tidyverse` to plot specific fin amplitude (`amp.bl`) against specific swimming speed (`bl.s`).
 
 ```{r}
 pseed2%>%
@@ -145,7 +145,7 @@ First of all, this is some sort of a mess: just a bunch of points for each speed
 </div>
 <br>
 
-This plot is indeed a mess. We have so many plotted y values (over 74,000!) that we can't say much about the pattern in question `amp.bl` vs. `bl.s`. In this case it, it may be that we have a lot of overlapping points, obscuring any patterns. To confirm this suspicsion, we can simply adjust the transparancy of the points with the `alpha` parameter in `ggplot`. The lower the value for `alpha` (from 0-1), the more transparent the geometry being plotted. Let's try a really low `alpha` of 0.01, something like:
+This plot is indeed a mess. We have so many plotted y values (over 74,000!) that we can't say much about the pattern in question `amp.bl` vs. `bl.s`. In this case it, it may be that we have a lot of overlapping points, obscuring any patterns. To confirm this suspicion, we can simply adjust the transparency of the points with the `alpha` parameter in `ggplot`. The lower the value for `alpha` (from 0-1), the more transparent the geometry being plotted. Let's try a really low `alpha` of 0.01, something like:
 
 ```{r}
 pseed2%>%
@@ -196,7 +196,7 @@ pseed2%>%
   ggplot(aes(x=frame,y=amp.bl))+geom_point()+geom_vline(xintercept = fget(f1)$crit.pts)
 ```
 
-This is pretty good. We get all the peaks (the maxima of amplitude we're after). We're missing some troughs and have a few lines close to one another, likely due to noise. But, this isn't a problem bacuse we're after the peaks only. How to isolate the peaks? That's a matter of looking at the cuvarature form the `fget()` output: by convention, negative curvature indicates a convex line, positive curvature a concave line. Peaks, in other words, will have a negative curvature. There's a problem here. We see that from the `fget()` output above that the curvature for each critical point comes back as 0 in all cases. We're getting 0 for the curvature values because the second derivative of our low specific amplitudes is really small and `features()` defaults to outputs of two decimal points, i.e., it rounds. If we merely multiply our amplitude values by 100, we'll see that some curvatures are negative (the peaks), while some are positive (the troughs). Let's rerun `features()`with this change and see what we get.
+This is pretty good. We get all the peaks (the maxima of amplitude we're after). We're missing some troughs and have a few lines close to one another, likely due to noise. But, this isn't a problem because we're after the peaks only. How to isolate the peaks? That's a matter of looking at the curvature form the `fget()` output: by convention, negative curvature indicates a convex line, positive curvature a concave line. Peaks, in other words, will have a negative curvature. There's a problem here. We see that from the `fget()` output above that the curvature for each critical point comes back as 0 in all cases. We're getting 0 for the curvature values because the second derivative of our low specific amplitudes is really small and `features()` defaults to outputs of two decimal points, i.e., it rounds. If we merely multiply our amplitude values by 100, we'll see that some curvatures are negative (the peaks), while some are positive (the troughs). Let's rerun `features()`with this change and see what we get.
 
 ```{r}
 
@@ -205,7 +205,7 @@ This is pretty good. We get all the peaks (the maxima of amplitude we're after).
  
 ```
 
-Very good, we now get postive and negative curvatures for the critical points. Now let's pull out the peaks, choosing those critical points that are negative. Let's make a tibble so we can use our `tidyverse` skillzzzz.
+Very good, we now get postie and negative curvatures for the critical points. Now let's pull out the peaks, choosing those critical points that are negative. Let's make a tibble so we can use our `tidyverse` skillzzzz.
 
 
 
@@ -219,7 +219,7 @@ f.tib <- fget(f2)[2:3]%>%
   
 ```
 
-Here we took the second and third elements---the critical points and curvatures, repsectively---of the `f2` output from `features()` and passed it to a new tibble. Then `filter()` is applied so  that we output only the peaks to `f.tib`. Finally, the estimated critical points in terms of frame that were calculated by `freatures()` is not an integer value like frame should be. So we create a new column, `peaks` that has this discrete value based on a rounding operation of `crit.pts`.
+Here we took the second and third elements---the critical points and curvatures, respectively---of the `f2` output from `features()` and passed it to a new tibble. Then `filter()` is applied so  that we output only the peaks to `f.tib`. Finally, the estimated critical points in terms of frame that were calculated by `freatures()` is not an integer value like frame should be. So we create a new column, `peaks` that has this discrete value based on a rounding operation of `crit.pts`.
 
 ```{r}
 pseed2%>%
@@ -235,15 +235,15 @@ pseed2%>%
   summarize(n=length(unique(date)))
 ```
 
-That's right, 50. And remember, there are two fins to consider! To find the max amplitude for each fin during each oscillation, we could write a `for` loop and use the code above to find the peaks over the frames of each experiment for each fin. However, this would be a lot of code and, as it turns out, rather slow. Let's consider antoher way: passing a custom function to the defined groups in our data set (`date` for experiment and `fin`).
+That's right, 50. And remember, there are two fins to consider! To find the max amplitude for each fin during each oscillation, we could write a `for` loop and use the code above to find the peaks over the frames of each experiment for each fin. However, this would be a lot of code and, as it turns out, rather slow. Let's consider another way: passing a custom function to the defined groups in our data set (`date` for experiment and `fin`).
 
 To accomplish this, we can construct this custom function from the code we wrote to find the max amplitudes for the left fin in the first experiment. Let's define this function `find.peaks()` thusly and break down its components with some comments:
 
 
 ```{r}
-find.peaks <- function(x,y,mult=100){ #define the functions parameter/inputs:x,y, and how much we won't to multiple y by (rember the rounding issue)
-f <- fget(features(x = x,y=y*mult))[2:3]%>% #store resutls in `f` and compute the features for the x-y relationship, wrep in in fget to retrieve the important features, subset the results to take the 2nd and 3rd and  items, the critical points and curvature, then pass it to a tibble
-  as_tibble()%>% # pass in through a filter that rturns curvatures <0
+find.peaks <- function(x,y,mult=100){ #define the functions parameter/inputs:x,y, and how much we won't to multiple y by (remember the rounding issue)
+f <- fget(features(x = x,y=y*mult))[2:3]%>% #store results in `f` and compute the features for the x-y relationship, wrap in in fget to retrieve the important features, subset the results to take the 2nd and 3rd and  items, the critical points and curvature, then pass it to a tibble
+  as_tibble()%>% # pass in through a filter that returns curvatures <0
   filter(curvature<0)%>% #add a column that rounds the critical point to an integer that represents the frame
   mutate(peaks=round(crit.pts,0))
  return(f$peaks) # return the peaks from tibble
@@ -272,7 +272,7 @@ After the filter, we:
   
 Notice the we added something new, a grid with `facet_grid()`. This breaks the plot up into a grid according  values in the data. This function takes a formula as input which corresponds to "row facets ~ column facets", that is, what should the rows and columns in the grid represent. Here make a grid of dates/experiments in the plot's rows and fin in the columns. As a result, we get a 3x2 plot.
 
-It looks like this new function of ours did a really nice job of finding the peaks in each of the experiments and fins. Let's do this for ALL the data. Remember, we have 100 indiviual groups to apply this function to and determine if the frame in each corresponds to a peak. So, run this code without the plotting operations and a final filter to only return the frames that correspond to a peak. Check the weather and then come back after 90s or so.
+It looks like this new function of ours did a really nice job of finding the peaks in each of the experiments and fins. Let's do this for ALL the data. Remember, we have 100 individual groups to apply this function to and determine if the frame in each corresponds to a peak. So, run this code without the plotting operations and a final filter to only return the frames that correspond to a peak. Check the weather and then come back after 90s or so.
 
 
 ```{r,cache=TRUE}
@@ -289,19 +289,19 @@ pseed.max%>%
   ggplot(aes(x=bl.s,y=amp.bl))+geom_point()+geom_smooth(method="lm")
 ```
 
-There we have it. It's a little noisy, but it looks like amplitude does ineed *decrease* with with speed! To confirm, maybe we want to run a simple statistical test on this model, an ANOVA, say:
+There we have it. It's a little noisy, but it looks like amplitude does indeed *decrease* with with speed! To confirm, maybe we want to run a simple statistical test on this model, an ANOVA, say:
 
 ```{r}
  amp.aov <-  aov(amp.bl~bl.s,pseed.max)
 summary(amp.aov)
 ```
 
-We see in `Pr(>F)` that the p value is much lower than 0.05, indicating a signifant relationship.
+We see in `Pr(>F)` that the p value is much lower than 0.05, indicating a significant relationship.
 
 <div class = "green">
 <div class="row">
   <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
-  <div class="col-sm-9">For what it's worth, this was an unexpected result for us, one we found consistent after adding more specimess to the data set. In your spare time (hahahaha!), can you hypothesize why amplitude would decrease with speed?
+  <div class="col-sm-9">For what it's worth, this was an unexpected result for us, one we found consistent after adding more specimens to the data set. In your spare time (hahahaha!), can you hypothesize why amplitude would decrease with speed?
 </div>
 </div>
 </div>
@@ -334,7 +334,7 @@ In asking how each fin's amplitude varies with each speed across fish, we can do
 ```{r}
 pseed2
 ```
-Note each frame has two rows, one for each fin. How would we compute the sum of the amplitude for each frame? You migh at first think we should add column (say `amp.sum`) to the tibble that represents the sum of the amplitudes, left and right, for each frame across experiments:
+Note each frame has two rows, one for each fin. How would we compute the sum of the amplitude for each frame? You might at first think we should add column (say `amp.sum`) to the tibble that represents the sum of the amplitudes, left and right, for each frame across experiments:
 
 ```{r}
 pseed2 <- pseed2 %>%
@@ -361,7 +361,7 @@ pseed.wide <- pseed2 %>%
 
 What we did is create a wider tibble (i.e., one with more columns) by:
 
-  1. Passing `pseed2` through a `select()` operation to remove the undeeded `amp` column (we'll concentrate as we have on the specific amplitude, `amp.bl`).
+  1. Passing `pseed2` through a `select()` operation to remove the unneeded `amp` column (we'll concentrate as we have on the specific amplitude, `amp.bl`).
   2. Passing the new tibble to a `pivot_wider()`operation the pulls the names from the `fin` column and the data from the `amp.bl` column. Notice how there's now new columns with amplitude data, `L` and `R`.
   3. Lastly, we add our new column `amp.sum` using `mutate()`.
   
@@ -375,23 +375,23 @@ In this project report, you'll use the principles and tools outlined above to an
 For this project report, perform the following tasks. 
   
   1. In a script named "groupname_module2.R", combine the code above so that you can establish the `pseed.wide` data tibble. 
-  2. Compute the mean **maximum*** of all the `amp.sum`s for each specific swimming speed for each fish just like we did for mean maximum amplitude of each fin (i.e., the mean of all the max amplitudes across each ezperiemnt for each fish). Make sure this is contained in a new tibble named `pseed.sum.max`. Call this column `amp.sum.mean`.
+  2. Compute the mean **maximum*** of all the `amp.sum`s for each specific swimming speed for each fish just like we did for mean maximum amplitude of each fin (i.e., the mean of all the max amplitudes across each experiment for each fish). Make sure this is contained in a new tibble named `pseed.sum.max`. Call this column `amp.sum.mean`.
   3. Create a custom function that computes the standard error of the mean (SE). [see below] and add a column in your summary table `pseed.sum.max` for SE and call it `amp.sum.se`.
-  4. Using `ggplot`, plot the mean `amp.sum` vs. specific swimming speed and [add error bars](http://www.sthda.com/english/wiki/ggplot2-error-bars-quick-start-guide-r-software-and-data-visualization) that correspond to the SE of `amp.sum`. Be sure to colour your points and error bars by specimen (fish). 
-  5. Downlaod [this file](pseed.met.rate.csv), read it as a tibble and merge it with the your new `pseed.sum.max` tibble. [see below].
+  4. Using `ggplot`, plot the mean `amp.sum` vs. specific swimming speed and [add error bars](http://www.cookbook-r.com/Graphs/Plotting_means_and_error_bars_(ggplot2)/) that correspond to the SE of `amp.sum`. Be sure to color your points and error bars by specimen (fish). 
+  5. Download [this file](pseed.met.rate.csv), read it as a tibble and merge it with the your new `pseed.sum.max` tibble. [see below].
   6. Use `ggplot` to plot the metabolic power output of each fish vs. mean maximum of `amp.sum`.
   7. Include the code for all the tasks listed above in the "groupname_module2.R" script and upload it to [this link](https://forms.gle/ZRvFUySA5bP19tmQ9).
 
 <div class = "green">
 <div class="row">
   <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
-  <div class="col-sm-9">**Why compute the standard error of the mean?** Often, scientists like to report standard deviation, the degree to which individuals within the sample differ from the sample mean. But, when repoting sample means, it's nice to report how well that mean is likely to reflect the population mean. This is where SE comes in. It represents an estimate of how far the sample mean is likely to be from the population mean. 
+  <div class="col-sm-9">**Why compute the standard error of the mean?** Often, scientists like to report standard deviation, the degree to which individuals within the sample differ from the sample mean. But, when reporting sample means, it's nice to report how well that mean is likely to reflect the population mean. This is where SE comes in. It represents an estimate of how far the sample mean is likely to be from the population mean. 
 </div>
 </div>
 </div>
 <br>
 
-**What's in the "pseed.met.rate.csv" file?** This file reperesents the active metabolic rate while swimming (the swimm tunnel is both a treadmill for fishes and a closed metabolic chamber). You'll notice many of the same columns as our kinematic data and one new one: `met.rate`, the metabolic power output in W$\cdot$kg$^{-1}$.
+**What's in the "pseed.met.rate.csv" file?** This file represents the active metabolic rate while swimming (the swim tunnel is both a treadmill for fishes and a closed metabolic chamber). You'll notice many of the same columns as our kinematic data and one new one: `met.rate`, the metabolic power output in W$\cdot$kg$^{-1}$.
 
 ```{r,include=FALSE}
 pseed.met <- read_csv("pseed.met.rate.csv")
@@ -418,4 +418,4 @@ pseed.met.kin%>%
   
 ```
 
-Submissions are due by 11:59 PM on Sunday, September 20th.
+Submissions are due by 11:59 PM on Sunday, September 19th.

@@ -1,0 +1,109 @@
+---
+title: "Module 2: Data Wrangling"
+subtitle: "Introduction to Tools of the Trade in Data Analysis"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2021/9/13"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE}
+library(tidyverse)
+library(kableExtra)
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Review/Learn about the pipe: `%>%`
+
+- Load some data
+
+- Perform some tidy operations
+
+- Peak under the hood of Module Project 2
+
+]
+
+.pull-right[
+![](http://www.alaskapublic.org/wp-content/uploads/2013/09/trans-alaska-pipeline-dnr.jpg)
+]
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## What is the pipe (`%>%`)?
+
+- comes from the `magrittr` package
+
+- loaded automatically with `tidyverse`
+
+- makes code concise:
+  * streamlining many operations into fewer LOC
+  
+  * reduces repetitive tasks
+
+
+```{r}
+iris <- group_by(iris,Species)
+summarise(iris,mean_length=mean(Sepal.Length))
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## What is the pipe (`%>%`)?
+
+```{r,eval=FALSE}
+iris <- group_by(iris,Species)
+summarise(iris,mean_length=mean(Sepal.Length))
+```
+
+
+```{r}
+iris%>%
+  group_by(Species)%>%
+  summarize(mean_length=mean(Sepal.Length))
+  
+```
+
+
+---
+
+## What is the pipe (`%>%`)?
+
+- more apparent when plotting (major piece of data science)
+
+```{r,fig.height=3,eval=FALSE}
+iris <- group_by(iris,Species)
+iris_mean <- summarise(iris,mean_length=mean(Sepal.Length))
+
+ggplot(data=iris_mean,aes(x=Species,y=mean_length))+geom_bar(stat="identity")
+
+```
+
+
+
+```{r,fig.height=3}
+iris%>%
+  group_by(Species)%>%
+  summarize(mean_length=mean(Sepal.Length))%>%
+  ggplot(aes(x=Species,y=mean_length))+geom_bar(stat="identity")
+  
+```
+
+
