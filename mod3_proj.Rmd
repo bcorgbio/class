@@ -11,7 +11,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 # Introduction
 
-After having learned the basics of working in R and using the `tidyverse` to perform operations on data, we'll now move on to visualizing data and assessing assumptions (i.e., models) and hypotheses (based on models) concerning our data. We'll do so in the context of the ecomorphology of [anoles](https://en.wikipedia.org/wiki/Anolis), an exceptionally diverse genus of iguanian reptiles the comprises well over 400 species.
+After having learned the basics of working in R and using the `tidyverse` to perform operations on data, we'll now move on to visualizing data and assessing assumptions (i.e., models) and hypotheses (based on models) concerning our data. We'll do so in the context of the ecomorphology of [anoles](https://en.wikipedia.org/wiki/Anolis), an exceptionally diverse genus of iguanian reptiles that comprises well over 400 species.
 
 The central theme of this project will be to assess the morphological and allometric differences between ecomorphs within the genus *Anolis*. First coined by the famous evolutionary biologist and herpetologist Ernest Williams, the term ecomorph describes a group of species, perhaps not sharing a most recent common  ancestor, with a similar ecological niche and behavior within the context of this niche. His model for this concept was the genus *Anolis*, although the ecomorph construct has been widely applied to many other species (think reef fish and Darwin's Finches). 
 
@@ -51,13 +51,9 @@ library(phytools)
 library(viridis)
 library(MuMIn)
 
-
-#Remember to set your working directory, too!
-
 #load data
 anole <- read_csv("anole.dat.csv")
 anole.eco <- read_csv("anole.eco.csv")
-
 
 ```
 
@@ -70,7 +66,7 @@ The data loaded to `anole.co` are
 
 </center>
 
-As with the main data set from the last project, this `anole` data set doesn't include important information about the data, specifically from which ecomorph the data were taken. Thus, we must merge the `anole` data tibble with the `anole.eco` tibble and, simultaneously, do a few things required for working with data in the biological context:
+As with the main data set from the last project, this `anole` data set doesn't include important information about the data, specifically from which ecomorph the data were taken. Thus, we must merge the `anole` data tibble with the `anole.eco` tibble and, simultaneously, do a few things required for working with data in this context:
 
 ```{r}
 
@@ -85,18 +81,18 @@ anole.log <- anole2%>%
   
 ```
 
-Notice that, before the mutate operation, we filtered the data, removing any rows is the tibble for which the `Ecomoroph` value was "U" or "CH". These are species for which the ecomorphological designation was unique ("U", i.e., unique to that species) or *Chamaeleolis*, a subgenus of the genus *Anolis* that had a very few observations in the study. We use the `filter()` function, asking it to keep any values in the `Ecomorph` column that **are not in** `c("U","CH")` using `!`. 
+Notice that, before the mutate operation, we filtered the data, removing any rows is the tibble for which the `Ecomoroph` value was "U" or "CH". These are species for which the ecomorphological designation was unique ("U", i.e., unique to that species) or *Chamaeleolis*, a subgenus of the genus *Anolis* that had very few observations in the study. We use the `filter()` function, asking it to keep any values in the `Ecomorph` column that **are not in** `c("U","CH")` using `!`. 
 
 Notice that we also omitted any rows of the tibble that had missing values (i.e., `NA`) in any of the columns with `na.omit`. That is, we only want to work with a complete data set. We've saved this filtered tibble to a new name, `anole2`
 
-In the last operation, we have mutated our collective tibble containing morphological and ecological data so that we changed our columns containing size and ecological data to log transformations of their values, each for `SVL`, `HTotal`, `PH` and `ArbPD`. These are continuous data, i.e., they are not discrete and log transformation converts these data to proportional representations. This will be important for both our analysis of allometry and use in a phylogenetic comparative framework. We did this with `mutate_at`, a function that allows us to mutate columns in place, replacing each that we identify with the names wrapped in `c()`. The second parameter in `mutate_at` specifies what we'll do to the columns, in this case `log`, the natural log (*ln*). 
-
+In the last operation, we have mutated our collective tibble containing morphological and ecological data so that we changed our columns containing size and ecological data to log transformations of their values, each for `SVL`, `HTotal`, `PH` and `ArbPD`. These are continuous data, i.e., they are not discrete and log transformation converts these data to proportional representations. This will be important for both our analysis of allometry and use in a phylogenetic comparative framework. We did this with `mutate_at`, a function that allows us to mutate columns in place, replacing each that we identify with the names wrapped in `c()`. The second argument in `mutate_at` specifies what we'll do to the columns, in this case `log`, the natural log (*ln*). 
 
 
 <div class = "green">
 <div class="row">
   <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
   <div class="col-sm-9">
+
 Why have we log-transformed our size and ecological data? This, from Luke Harmon's -@harmon2018phylogenetic excellent book on phylogenetic comparative methods, explains why.
 
 >One general rule for continuous traits in biology is to carry out a log-transformation (usually natural log, base e, denoted ln) of your data before undertaking any analysis. This also applies to comparative data. There are two main reasons for this, one statistical and the other biological. The statistical reason is that many methods assume that variables follow normal distributions. One can observe that, in general, measurements of species' traits have a distribution that is skewed to the right. A log-transformation will often result in trait distributions that are closer to normal. But why is this the case? The answer is related to the biological reason for log-transformation. When you log transform a variable, the new scale for that variable is a ratio scale, so that a certain differences between points reflects a constant ratio of the two numbers represented by the points. So, for example, if any two numbers are separated by 0.693 units on a natural log scale, one will be exactly two times the other. Ratio scales make sense for living things because it is usually percentage changes rather than absolute changes that matter. For example, a change in body size of 1 mm might matter a lot for a termite, but be irrelevant for an elephant; whereas a change in body size of 50% might be expected to matter for them both.
@@ -117,11 +113,11 @@ anole2%>%
 ```
 
 
-Remember from R4DS that we have to establish the aesthetic of the plot and then add geometries with `+` to plot. Here we established the aesthetic in `aes()` for our `ggplot` as `SVL` for the x values and `HTotal` for the y then added two geometries, points and a smooth line built on a linear model using `method="lm"`. For two continuous variables, a linear model is a good place to start. And, as you see from the plot, the data look to have a linear relationship, that is `HTotal` can be modeled as a linear response to `SVL` or 
+Remember from R4DS that we have to establish the aesthetic of the plot and then add geometries with `+` to plot. Here we established the aesthetic in `aes()` for our `ggplot` as `SVL` for the x values and `HTotal` for the y, then added two geometries, points and a smooth line built on a linear model using `method="lm"`. For two continuous variables, a linear model is a good place to start. And, as you see from the plot, the data look to have a linear relationship, that is `HTotal` can be modeled as a linear response to `SVL` or 
 
 $$Htotal=\alpha{\cdot}SVL+\beta$$,
 
-where, $\alpha$ is the slope and $\beta$ the y intercepts.
+where, $\alpha$ is the slope and $\beta$ the y intercept.
 
 Although the `geom_smooth` geometry adds predictions based on this simple linear model and it looks to be a good fit, let's evaluate just how good this fit is with establishing a simple linear model using the `lm()` function from the `stats` package which loads automatically with R. 
 
@@ -157,7 +153,7 @@ summary(anole.lm)
 
 From calling `summary(anole.lm)` we retrieved important information about the model, including that the estimated response of `HTotal` to `SVL` (i.e., the slope, a value of 0.63972) is a significant term at p<2e-16. With `summary()`, we also retrieve the r squared value, the percentage of the response variable variation that is explained by our linear model. At 0.93, this model performs pretty well. However, maybe data would fit another model at least as well. 
 
-Because we're assessing how a variable relates to size, we should consider another model, a non-linear allometric one. Perhaps the increase in hind-limb length decreases or increase with SVL, that is, the slope of this relationship is not stable with respect to SVL. Recall that an allometric model is a simple case of an exponential equation that, in this case, can be expressed thusly:
+Because we're assessing how a variable relates to size, we should consider another model, a non-linear allometric one. Perhaps the icremental increase in hind-limb length decreases or increase with SVL, that is, the slope of this relationship is not stable with respect to SVL. Recall that an allometric model is a simple case of an exponential equation that, in this case, can be expressed thusly:
 
 $$Htotal={\alpha\cdot}SVL^{\beta}$$,
 
@@ -178,7 +174,7 @@ summary(anole.allo)
 <div class="row">
   <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
   <div class="col-sm-9">
-What is a residual you ask? A residual is a measure of how well a prediction or line (i.e., a model) fits an individual data point. In the plot above, this is the distance in terms of the y value that any point differs from the model prediction, the line in the plot.
+What is a residual you ask? A residual is a measure of how well a prediction or line (i.e., a model) fits an individual data point. In the plot above, this is the distance in terms of the y value that any point differs from the model prediction, i.e., the line in the plot.
 </div>
 </div>
 </div>
@@ -189,13 +185,13 @@ Notice that, unlike in the use of `lm()`, we must specify starting values for pa
 
 When we call the summary of our allometric model, we see that the parameters `a` and `b`, $\alpha$ and $\beta$, respectively, are significant, so both are likely explanatory parameters. But, how well do the data fit our model? Is it a better fit than the `lm()` model? Well this is tough to say. Notice that `summary()` doesn't produce an r squared value like it did for our simple linear model. This, for tortuous reasons, is because it's [not applicable to non-linear regression](https://statisticsbyjim.com/regression/r-squared-invalid-nonlinear-regression/). So what to do?
 
-Let's go back to our readings in PCM, specifically, where the author, Luke Harmon, points out that standard frequentist approaches to comparative data are often limiting. The standard approach places a premium on evaluating null hypotheses and finding p values that, if low, reject the null, or if high, don't reject it. In the context of what we've covered so far, we've assessed the null hypothesis that `SVL` has no effect on `HTotal` and rejected it based on two statistical tests under different models, one linear, the other allometric. This shouldn't be a surprise: limbs get longer as individual lizards grow longer . . . duh. But, this this is only part of our question: more than asking whether hind-limb length varies with size, we also want to know whether it varies linearly or allometrically.
+Let's go back to our readings in PCM, specifically, where the author, Luke Harmon, points out that standard frequentist approaches to comparative data are often limiting. The standard approach places a premium on evaluating null hypotheses and finding p values that, if low, reject the null, or if high, don't reject it. In the context of what we've covered so far, we've assessed the null hypothesis that `SVL` has no effect on `HTotal` and rejected it based on two statistical tests under different models, one linear, the other allometric. This shouldn't be a surprise: limbs get longer as individual lizards grow longer . . . duh. But, this is only part of our question: more than asking whether hind-limb length varies with size, we also want to know whether it varies linearly or allometrically.
 
-To answer this second part of the question, we must switch approaches and ask the question in a different way. Let's first tackle this different way of asking our question. At first, we applied linear and non-linear models to the data and asked: "How well do my data fit the model? That is, specifically in the context of least-squares regression, how much do our points vary from the predictions of our models, i.e, what is the magnitude of the residuals? In both cases, the points in our data fit pretty well. However, this isn't the question we really want to be asking. We're asking *which model fits out data best?* 
+To answer this second part of the question, we must switch approaches and ask the question in a different way. Let's first tackle this different way of asking our question. At first, we applied linear and non-linear models to the data and asked: "How well do my data fit the model? That is, specifically in the context of least-squares regression, how much do our points vary from the predictions of our models, i.e, what is the magnitude of the residuals? In both cases, the points in our data fit pretty well. However, this isn't the question we really want to be asking. We're asking *which model fits out data best?* See the difference?
 
-To ask this question, we must take a different approach. As outlined in PCM, we could perform likelihood ratio tests. This approach, we compare the likelihood of two **nested** models. The statistical property of likelihood is defined as the probability, given a model and a set of parameter values, of obtaining a particular set of data. Or, as Harmon put it,  . . . "given a mathematical description of the world, what is the probability that we would see the actual data that we have collected?" This is the right approach for us---the model, linear or allometric, with a higher likelihood describes our morphological data better and therefore is a better mathematical approximation of the hindlimb-size relationship. 
+To ask this question, we must take a different approach. As outlined in PCM, we could perform likelihood ratio tests. In this approach, we compare the likelihood of two **nested** models. The statistical property of likelihood is defined as the probability, given a model and a set of parameter values, of obtaining a particular set of data. Or, as Harmon put it,  . . . "given a mathematical description of the world, what is the probability that we would see the actual data that we have collected?" This is the right approach for us---find the model, linear or allometric, with a higher likelihood of describing our morphological data better and therefore is a better mathematical approximation of the hindlimb-size relationship. 
 
-However, as we learned in PCM, likelihood ratio tests can only be used in limited cases, specifically to compare two models, one of which is a special case of the other. In other words, one model is exactly the same as the other, except that it is more complex, adding one or more parameters , which, in most cases means other independent variables. In our case, we don't have nested models, but different model families all together---one linear, one allometric. 
+However, as we learned in PCM, likelihood ratio tests can only be used in limited cases, specifically to compare two models, one of which is a special case of the other. In other words, one model is exactly the same as the other, except that it is more complex, adding one or more parameters, which, in most cases means other independent variables. In our case, we don't have nested models, but different model families all together---one linear, one allometric. 
 
 To compare models of most any type, nested or not, we have an alternative, the information theory approach. Specifically, we can use the Akaike Information Criterion (AIC). This description of the model fit compares the likelihood of the model against the number of parameters estimated. The AIC can be described as favoring the model that provides the best fit to the data with as few parameters as possible. 
 
@@ -215,7 +211,7 @@ print(anole.aicw)
 
 ```
 
-From our `anole.aic`, we see that the second model, `anole.allo` has a lower AIC score, and **lower scores indicate a better fit**. Although the relative fit is three times better for our allometric model, the difference in $AIC_c$ is somewhat small ($\Delta AIC$=2.2). A general rule of thumb is that a $\Delta AIC$ of less the 4 indicates roughly equivalent models, 4--8 little support for a lesser fit, and over 10 a poor fit and the model can be ignored. So, because we have  $\Delta AIC$<4, there's little difference between our linear and allometric models of hind-limb growth; thus, we can say that **allometry and isometry are roughly equivalent models**. This should was almost expected given that, after that calling `summary(anole.allo)` we see that the estimate for `b` the scaling exponent, is pretty close to 1 at b  0.92.
+From our `anole.aic`, we see that the second model, `anole.allo` has a lower AIC score, and **lower scores indicate a better fit**. Although the relative fit is three times better for our allometric model, the difference in $AIC_c$ is somewhat small ($\Delta AIC$=2.2). A general rule of thumb is that a $\Delta AIC$ of less the 4 indicates roughly equivalent models, 4--8 little support for a lesser fit, and over 10 a poor fit and the model can be ignored. So, because we have  $\Delta AIC$<4, there's little difference between our linear and allometric models of hind-limb growth; thus, we can say that **allometry and isometry are roughly equivalent models**. This  was almost expected given that, after that calling `summary(anole.allo)` we see that the estimate for `b` the scaling exponent, is pretty close to 1 at b  0.92.
 
 <div class = "green">
 <div class="row">
@@ -245,7 +241,8 @@ For this we'll use our log-transformed data for the reasons outlined in the note
 anole.log%>%
   ggplot(aes(HTotal,SVL,col=Ecomorph2))+geom_point()+geom_smooth(method="lm")
 ```
-Most of what we did here should be rather familiar by now. We passed our log-transformed data with the pipe to a `ggplot` call, specifying `SVL` for the x values and `HTotal` for the y, then added point and line (of type `"lm"`) geometries to the plot. Notice that we added another parameter to the `aes` of the `ggplot`, specifically `col=Ecomorph2`. This colors all the added geometries according to the column values in `Ecomorph2`, a longer description of ecomorph than the abbreviations one `Ecomorph`. In addition, this establishes groups of data to compute multiple regression lines for `geom_smooth()'.
+
+Most of what we did here should be rather familiar by now. We passed our log-transformed data with the pipe to a `ggplot` call, specifying `SVL` for the x values and `HTotal` for the y, then added point and line (of type `"lm"`) geometries to the plot. Notice that we added another argument to the `aes` of the `ggplot`, specifically `col=Ecomorph2`. This colors all the added geometries according to the column values in `Ecomorph2`, a longer description of ecomorph than the abbreviations one `Ecomorph`. In addition, this establishes groups of data to compute multiple regression lines for `geom_smooth()'.
 
 By plotting out data in this way, it's clear we should consider ecomorph as an important variable explaining the hindlimb-SVL relationship. So let's now construct a model that includes this new variable:
 
@@ -264,8 +261,6 @@ anole.log.lm  <- lm(HTotal~SVL,anole.log)
 anova(anole.log.lm)
 anole.log.aic <- AICc(anole.log.lm,anole.log.eco.lm)
 aicw(anole.log.aic$AICc)
-
-
 ```
 
 <div class = "green">
@@ -273,7 +268,7 @@ aicw(anole.log.aic$AICc)
   <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
   <div class="col-sm-9">
 
-Notice that we added our `Ecomorph2` variable to the model with `*` in our model formula: `HTotal~SVL*Ecomorph2`. This could have been done with `+`, but the difference between `*` and `+` is huge. The symbol `+` adds this variable to model and asks the regression to consider if only the intercepts of the groups within `Ecomorph2` will vary, that is , if the mean response of `HTotal` vs. `SVL` is different according to the groups in `Ecomorph2`. The `*` adds an interaction between terms in the model. This asks the regression to consider if the **slopes** of `HTotal` vs. `SVL` is different according to the groups in `Ecomorph2`. Put another way, `SVL*Ecomorph2` considers if `HTotal` responds differently to `SVL` according to `Ecomorph2` This is a good place to start, assuming that different ecological groups have different relationship between the response and the covariate.
+Notice that we added our `Ecomorph2` variable to the model with `*` in our model formula: `HTotal~SVL*Ecomorph2`. This could have been done with `+`, but the difference between `*` and `+` is huge. The symbol `+` adds this variable to model and asks the regression to consider if only the intercepts of the groups within `Ecomorph2` will vary, that is, if the mean response of `HTotal` vs. `SVL` is different according to the groups in `Ecomorph2`. The `*` adds an interaction between terms in the model. This asks the regression to consider if the **slopes** of `HTotal` vs. `SVL` is different according to the groups in `Ecomorph2`. Put another way, `SVL*Ecomorph2` considers if `HTotal` responds differently to `SVL` according to `Ecomorph2` This is a good place to start, assuming that different ecological groups have different relationship between the response and the covariate.
 
 </div>
 </div>
@@ -284,7 +279,7 @@ OK, yes! A model with the added `Ecomorph2` parameter results in a much better f
 
 Now that we've found a better fitting model, let's explore just how much each ecomorph varies among anoles in their hindlimb-SVL relationship. Think for a second or two how we might go about this. Our problem is a multivariate one: we have the covariaton of `HTotal` vs. `SVL` to consider in the context of ecomorph. As we've learned, visualization is the most important first step of data analysis. But, how should we represent these data in a plot? 
 
-Let's come back to the residual. The residual represents how much any one data point varies from the prediction. If we have a global model that predicts the  hindlimb length  based on SVL for all our anole species, we can determine how much each species deviates from the prediction. We can then take the residuals for each species and look for patterns by plotting the residuals versus ecomorph. That is, we need to go beyond plotting points and regressions and plot data based on a categorical values (in this case, `Ecomorph2`). This is easily implemented in `ggplot`.
+Let's come back to the residual. The residual represents how much any one data point varies from the prediction. If we have a global model that predicts thehindlimb length  based on SVL for all our anole species, we can determine how much each species deviates from the prediction. We can then take the residuals for each species and look for patterns by plotting the residuals versus ecomorph. That is, we need to go beyond plotting points and regressions and plot data based on a categorical values (in this case, `Ecomorph2`). This is easily implemented in `ggplot`.
 
 First we need to compute the residuals based on our global `anole.log.lm` model:
 
@@ -292,7 +287,7 @@ First we need to compute the residuals based on our global `anole.log.lm` model:
 anole.log <- anole.log %>%
   mutate(res=residuals(anole.log.lm))
 ```
-For this, we use the `residuals()` function from the `stats` package, computing residuals for the `anole.log.lm` model. Notice that we used a `mutate()` operation to estiblish a new `res` column that contains the residuals. Notice that we also redefined `anole.log` as a tibble containing this new column. Now, let's plot the residuals against `Ecomorph2`.
+For this, we use the `residuals()` function from the `stats` package, computing residuals for the `anole.log.lm` model. Notice that we used a `mutate()` operation to establish a new `res` column that contains the residuals. Notice that we also redefined `anole.log` as a tibble containing this new column. Now, let's plot the residuals against `Ecomorph2`.
 
 ```{r}
 anole.log%>%
@@ -315,12 +310,12 @@ This is a great summary of our hindlimb-SVL residual data according to ecomorph.
 p.eco+ geom_boxplot() +stat_summary(fun=mean, geom="point", size=3)
 ```
 
-Here we added a point with the `stat_summary()` geometry. This applies a summarizing function to the already established group (established by `x=Ecomorph2`) and plot the value of the summary with a specified geometry. The function we applied to the y data is the mean (`fun=mean`) and we specified a point with size 3 for the geometry to add (`geom=point` and `size=3`, respectively). Lovely.
+Here we added a point with the `stat_summary()` geometry. This applies a summarizing function to the already established group (established by `x=Ecomorph2`) and plots the value of the summary with a specified geometry. The function we applied to the y data is the mean (`fun=mean`) and we specified a point with size 3 for the geometry to add (`geom=point` and `size=3`, respectively). Lovely.
 
 
 # Not So Fast: Phylogeny Matters
 
-So far we've concluded that ecomorph is an important explanatory variable when it comes to anole hinglimb-SVL relationships. But (and this is the biggest of buts), we've ignored an important and potentially confounding fact. These lizards, like every group of organisms, have an evolutionary history. Because of this, some species are more closely related than others and thus, they cannot be seen as independent samples in the statistical sense. In other words, any trait we seek to study likely covaries with phylogetic position. For example, in the context of anole hindlimb-SVL data, it is entirely possible, perhaps probable, that more closely related species share a similar pattern. Thus, it may be that any patterns we've uncovered thus far are the result of phylogeny, not merely ecomorph alone.
+So far we've concluded that ecomorph is an important explanatory variable when it comes to anole hinglimb-SVL relationships. But (and this is the biggest of buts), we've ignored an important and potentially confounding fact. These lizards, like every group of organisms, have an evolutionary history. Because of this, some species are more closely related than others and thus, they cannot be seen as independent samples in the statistical sense. In other words, any trait we seek to study likely covaries with phylogenetic position. For example, in the context of anole hindlimb-SVL data, it is entirely possible, perhaps probable, that more closely related species share a similar pattern. Thus, it may be that any patterns we've uncovered thus far are the result of phylogeny, not merely ecomorph alone.
 
 To account for phylogeny in statistical analysis, we must turn to an important toolbox used by organismal biologists, phylogenetic comparative methods (PCMs). PCMs have a long history and today they are defined as any statistical operations that include the use of phylogenies, that is, information from phylogenetic trees. For regression analysis, the modeling approach we've taken on in this project, there exist several PCM procedures that account for phylogeny. Phylogenetic generalized least squares (PGLS) is perhaps the most flexible and widely used among them. 
 
@@ -338,7 +333,6 @@ Here we read in the tree using `read.tree` from the `ape` package. This stores t
 Now that we have a tree that we'll use in our PGLS regression analysis, let's consider what we mean by an evolutionary model. By this we mean under what process or mode does a trait (or several) evolve over a tree, from the root to the tips.  Many PCMs assume a Brownian motion model of character evolution. You can think of this as a "random-walk" process. At each point in time, the value of the character walks higher or lower from the previous value. Over time, the sum of these changes describes the change in the value. How much the value can change over time is described by the rate parameter $\sigma^2$---the higher the value, the greater the changes at each point in time. To illustrate the random-walk nature of this process and the effect of $\sigma^2$ on the magnitude of change over time, consider the following 4 simulations each with a 100 simulations with different value of $\sigma^2$ ranging from 1 to 20:
 
 ```{r,echo=F}
-
 sig2 <- 0.1
 nsim <- 100
 t <- 1:100
@@ -400,8 +394,7 @@ pgls.OU2 <- gls(HTotal ~SVL * Ecomorph2, correlation = corMartins(0,phy = anole.
 ```
 
 
-
-What we did here is set up generalized least squares models that establish a correlation matrix based on BM and OU models of evolution. We establish this matrix with `corBrownian()` from the `ape` package for the BM models and `corMartins()`, also from `ape`, for the OU models. The `corMartins()` function for establishing the OU covariation matrix is so name by the `ape` authors as an homage to @martins1997phylogenies, the paper that most precisely defined the OU model in comparative analysis [see note below].. Notice that we don't have to specify what any of the parameters are; they are estimated under maximum likelihood when `method=ML`.  For the BM model, we used a stating starting value of 1 for $\sigma^2$ and for the OU model we used a starting value of 0 for $\alpha$. In each correlation function, we have to specify the tree (`anole.tree`) and the column names in data that will form the covariation matrix, that is, species (`~Species`). 
+What we did here is set up generalized least squares models that establish a correlation matrix based on BM and OU models of evolution. We establish this matrix with `corBrownian()` from the `ape` package for the BM models and `corMartins()`, also from `ape`, for the OU models. The `corMartins()` function for establishing the OU covariation matrix is so name by the `ape` authors as an homage to @martins1997phylogenies, the paper that most precisely defined the OU model in comparative analysis [see note below]. Notice that we don't have to specify what any of the parameters are; they are estimated under maximum likelihood when `method=ML`.  For the BM model, we used a stating starting value of 1 for $\sigma^2$ and for the OU model we used a starting value of 0 for $\alpha$. In each correlation function, we have to specify the tree (`anole.tree`) and the column names in data that will form the covariation matrix, that is, species (`~Species`). 
 
 <div class = "green">
 <div class="row">
@@ -423,7 +416,7 @@ aicw(anole.phylo.aic$AICc)
 
 ```
 
-From the AIC results, we con safely say that a phylegnetically corrected regression model that includes `Ecomorph2` with traits evolving under BM is the best fit. The OU models that specify a pull to some global optimum are rejected. We can interpret this to mean that the traits have evolved randomly, *but* randomly within each lineage.
+From the AIC results, we con safely say that a phyloggnetically corrected regression model that includes `Ecomorph2` with traits evolving under BM is the best fit. The OU models that specify a pull to some global optimum are rejected. We can interpret this to mean that the traits have evolved randomly, *but* randomly within each lineage.
 
 Next, we can now consider whether `Ecomorph` is a significant factor in predicting the hinglimb-SVL relationship in a phylogenetic context by preforming an ANOVA on our best fitting model, `pgsl.BM2`
 
@@ -500,7 +493,7 @@ For this project report, write a script named "groupname_module3.R" and undertak
     
   5. Assess the fit of each of these three models using AICc and AICw and comment on (with comments in the script) whether one or both of the covariates is a significant predictor of hinglimb length in a phylogenetic context. 
   6. Produce a plot of your own design that concisely visualizes the effect of your covariate(s) on the hindlimb residuals of the best fitting PGLS model. 
-  7. Submit your script to [this link](https://forms.gle/5iD9u1ZmL7M3oNRN8).
+  7. Commit your script to your group repository.
 
 ```{r,include=FALSE}
 
@@ -533,11 +526,8 @@ anole.log <- anole.log%>%
  anole.log%>%
 ggplot(aes(x=ArbPD,y=phylo.res2,col=Ecomorph2)) +geom_point() 
  
-
-
-  
 ```
 
-Submissions are due by 11:59 PM on Sunday, September 27th.
+Submissions are due by 11:59 PM on Sunday, September 26th.
 
 # References
