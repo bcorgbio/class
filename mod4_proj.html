@@ -27,6 +27,15 @@
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
@@ -148,6 +157,7 @@ h6 {
   text-align: left;
 }
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -488,7 +498,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">BIOL 3140 Discussion</a>
+  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f21">BIOL 3140 Discussion</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -644,7 +654,7 @@ pgls.BM1 <- gls(HTotal ~SVL, correlation = corBrownian(1,phy = anole.tree,form=~
 pgls.BM2 <- gls(HTotal ~SVL * Ecomorph2, correlation = corBrownian(1,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
 
 #PGLS under OU, no ecomorph
-pgls.OU1 <- gls(HTotal ~SVL * Ecomorph2, correlation = corMartins(0,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
+pgls.OU1 <- gls(HTotal ~SVL, correlation = corMartins(0,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
 
 #PGLS under OU, w, ecomorph
 pgls.OU2 <- gls(HTotal ~SVL * Ecomorph2, correlation = corMartins(0,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
@@ -1048,7 +1058,7 @@ bibliography: BIOL3140.bib
 <li>A citation to the <span class="citation">Hagey et al. (2017)</span> paper in the introduction (include in the References section, too)</li>
 <li>A citation in the methods sections that identifies the source of the phylogenetic tree used in PGLS analysis (include in the References section as well).</li>
 </ol>
-<p>Submissions are due by 11:59 PM on Sunday, October 4th. Submission can be uploaded <a href="https://forms.gle/jaSZs4NPxr8Bf8yq9">here</a>.</p>
+<p>Submissions are due by 11:59 PM on Sunday, October 3th. Submission should be pushed to your team repo.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
@@ -1070,7 +1080,7 @@ bibliography: BIOL3140.bib
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();

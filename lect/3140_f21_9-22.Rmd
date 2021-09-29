@@ -1,0 +1,235 @@
+---
+title: "The Whiz and Viz Bang of Data"
+subtitle: "The Basics of Visualizaiton and Modeling (part deux)"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2021/9/22"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(ape)
+library(phytools)
+library(broom)
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- A little history
+
+- Consider the effect of phylogeny
+
+]
+
+.pull-right[
+![](https://evolution.genetics.washington.edu/phylip/joe.gif)
+]
+
+---
+class: inverse, top
+# First, some history
+
+
+.pull-left[
+The comparative methods:
+
+- Documenting diversity of traits 
+
+- Quantifying their intercorrelations 
+
+- Speculating on their evolution
+
+Before Felsenstein (1985), no theoretical method to account for phylogeny and this effect was largely ignored of explained away.
+]
+
+.pull-right[
+Cited >10000 times!!!
+![](fel85.png)
+]
+
+
+---
+class: inverse, top
+## Before Felsenstein (1985)
+
+.pull-left[
+- Sample a breadth of species
+
+- Document the phenotype (e.g., Met. rate vs. size)
+
+- Quantifying the contrast or trend between them (ANOVA, T-test, etc.)
+
+
+```{r, echo=FALSE,fig.height=5}
+spec <- letters[1:20]
+set.seed(123) 
+phy <- rcoal(n=20)
+phy$tip.label <- spec
+plot(phy)
+met <- c(runif(1,))
+theta <- rep(1, Nedge(phy))
+theta[c(1:8)] <- 2
+## sensitive to 'alpha' and 'sigma':
+met <- rTraitCont(phy, "OU", theta = theta, alpha=.02, sigma=.01)*1000
+mass <- c(rnorm(7,n=8,sd=1),rnorm(5,n = 12,sd=1))
+```
+]
+
+.pull-right[
+```{r,fig.height=3,echo=FALSE,results='hide'}
+d <- tibble(spec,mass,met)
+d%>%
+  ggplot(aes(x=mass,y=met))+geom_point()+geom_smooth(method="lm")+theme_classic(20)
+```
+
+
+
+```{r,echo=FALSE}
+d.lm <- lm(log(met)~log(mass),d)
+tidy(anova(d.lm))[,c(1,5,6)]
+```
+]
+
+
+---
+class: inverse, top
+## After Felsenstein (1985)
+
+.pull-left[
+```{r,fig.height=4}
+mass.pic <- pic(log(mass),phy)
+met.pic <- pic(log(met),phy)
+
+qplot(mass.pic,met.pic)+geom_smooth(method = "lm")+theme_classic(20)
+```
+]
+
+.pull-right[
+```{r}
+d.lm.pic <- lm(met.pic~mass.pic)
+tidy(anova(d.lm.pic))[,c(1,5,6)]
+```
+]
+
+
+---
+class: inverse, top
+## After Felsenstein (1985)
+
+
+.pull-left[
+
+Metabolic Rate
+
+```{r,echo=FALSE}
+plotBranchbyTrait(phy,met)
+```
+]
+
+
+.pull-right[
+
+Mass
+
+```{r,echo=FALSE}
+plotBranchbyTrait(phy,mass)
+```
+]
+
+
+
+
+]
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## What is a model?
+
+> This paper addresses a complex and important issue, and provides a solution to part of the problem—a very unsatisfactory solution, as the author is well aware, given the degree to which our data will usually fall short of the quality required by the method he proposes. … Nevertheless, as far as I can tell the method does what is claimed, and it is probably worth publishing.
+              
+              -Anonymous reviewer of Felsenstein (1985)
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## What is a model?
+
+```{r,fig.height=3}
+set.seed(123)
+x.A=1:50
+y.A=x.A*2+runif(50,1,200)
+x.B=1:50
+y.B=x.B*3.5+runif(50,1,200)
+
+d <- tibble(x=c(x.A,x.B),y=c(y.A,y.B),species=c(rep("A",50),rep("B",50)))
+
+d%>%
+  ggplot(aes(x,y,col=species))+geom_point()+geom_smooth(method="lm")
+
+
+
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## Are models accurate descriptions of the process/system?
+
+```{r}
+spec.lm1 <- lm(y~x+species,data=d)
+
+anova(spec.lm1)
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## Are models accurate descriptions of the process/system?
+
+
+```{r,fig.height=3}
+summary(spec.lm1)
+
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## Are models accurate descriptions of the process/system?
+
+## Information theory
+
+.pull-left[
+```{r}
+spec.lm2 <- lm(y~x,d)
+AIC(spec.lm1,spec.lm2)
+```
+]
+
+.pull-right[
+![](https://timeseriesreasoning.files.wordpress.com/2021/06/a6352-1nurn_wtjfpwin0mc6t7myq.png)
+]
+
+
+
+
