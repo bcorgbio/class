@@ -25,6 +25,15 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
@@ -146,6 +155,7 @@ h6 {
   text-align: left;
 }
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -486,7 +496,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">BIOL 3140 Discussion</a>
+  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f21">BIOL 3140 Discussion</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -512,7 +522,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Now that we have learned the basics of data analysis, visualization, and modelling. Let’s move on to how we collect data in the first place. So much of experimental work in organismal biology requires specialized equipment. Often, equipment is expensive or devices and instruments needed for the work aren’t commercially available. Because of the expense and unique requirements of instruments, organismal biologist often make their own. Prototyping instruments can be tedious and challenging, often requiring collaboration with engineers or other technical consultants. However, many simple sensor-based instruments that fit the requirements of researches can be built around Arduino, an open source, inexpensive prototyping platform.</p>
+<p>Now that we have learned the basics of data analysis, visualization, and modeling. Let’s move on to how we collect data in the first place. So much of experimental work in organismal biology requires specialized equipment. Often, equipment is expensive or devices and instruments needed for the work aren’t commercially available. Because of the expense and unique requirements of instruments, organismal biologist often make their own. Prototyping instruments can be tedious and challenging, often requiring collaboration with engineers or other technical consultants. However, many simple sensor-based instruments that fit the requirements of researches can be built around Arduino, an open source, inexpensive prototyping platform.</p>
 <p>In this project, we’ll proceed with prototyping a simple sensor, one that can very accurately record temperature. This project assumes you have worked through the the assigned readings and links and therefore understand how an Arduino Uno (or a clone) is programmed and how serial data are sent and received from an Arduino.</p>
 </div>
 <div id="set-up" class="section level1">
@@ -837,7 +847,7 @@ void loop(void) {
 <li>Find, cite, and comment on a study in the discussion that frames the results, i.e., are your result congruent or not with previous findings and why?</li>
 <li>In the author contributions section, include short, explicit statements of each team member’s role in executing the project.</li>
 </ul>
-<p>Submit your .Rmd to the projects directory established for each team on GitHub. <strong>Submissions are due by 11:59 pm on October 11th.</strong></p>
+<p>Submit your .Rmd to the projects directory established for each team on GitHub. <strong>Submissions are due by 11:59 pm on October 17th.</strong></p>
 <p>Good luck!!</p>
 </div>
 
@@ -852,7 +862,7 @@ void loop(void) {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
