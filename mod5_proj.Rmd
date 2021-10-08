@@ -35,8 +35,9 @@ Let's start with assembly. First, we'll wire the three pins of the DHT11 accordi
 <center>
 <img src="https://arduinogetstarted.com/images/tutorial/arduino-dht11-temperature-humudity-module-wiring-diagram.jpg" alt="alternatetext">
 </center>
+<br>
 
-**NOTE** Be very careful wiring this sensor. Be sure that:
+**NOTE** Be very careful wiring this sensor. Be sure of the following, otherwise you may fry the sensor:
 
   + The "+" or "VCC" pin on the sensor module is wired to the 5V pin on the Arduino and 
   + The "GND" or "-" pin on the sensor is wired to the GND pin on the Arduino
@@ -44,7 +45,7 @@ Let's start with assembly. First, we'll wire the three pins of the DHT11 accordi
 
 ## Programming
 
-Begin by reading Adafruit's [programming guide for this sensor](https://learn.adafruit.com/dht/using-a-dhtxx-sensor). You'll have to add the DHT library to your Arduino IDE following the directions in the guide. While adding the library, you may see a prompt asking if you'd like to also install missing dependencies (things the DHT library also need to run). Go ahead and click "install all". 
+Begin by reading Adafruit's [programming guide for this sensor](https://learn.adafruit.com/dht/using-a-dhtxx-sensor). You'll have to add the DHT library to your Arduino IDE following the directions in the guide. While adding the library, you may see a prompt asking if you'd like to also install missing dependencies (things the DHT library also needs to run). Go ahead and click "install all". 
 
 Once the library is installed, click on **File &#8594; Examples &#8594; DHT &#8594; DHTtester** to open an sketch. You may have to close and restart the IDE for the DHT example sketch to appear. Follow the directions in the guide to modify the sketch for use with the DHT11 sensor, namely that you'll have to comment out the line defines the sensor as a DHT2222 and uncomment the line that defines it as a DHT11. It should look like this:
 
@@ -329,7 +330,7 @@ void loop() {
 
 In future projects, we'll write data to an SD card. But, saving your data for now can be as simple as copying the data printed to the serial monitor and pasting it into a text file. The code we're working with produces comma-separated values for easy reading into analysis software, like R. 
 
-Be sure to copy your data into a text file, not a Word document or Excel. I suggest using a free test editing like [BBedit (for Mac)](https://www.barebones.com/products/bbedit/download.html) or [Notepadd++ (for Windows)](https://notepad-plus-plus.org/downloads/). 
+Be sure to copy your data into a text file, not a Word document or Excel. I suggest using a free text editing like [BBedit (for Mac)](https://www.barebones.com/products/bbedit/download.html) or [Notepadd++ (for Windows)](https://notepad-plus-plus.org/downloads/). 
 
 ## Working with metadata
 

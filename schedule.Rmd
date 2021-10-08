@@ -354,7 +354,7 @@ Upon completion of this week and module, students will be able to:
   + [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno)
   + [The Serial Monitor](https://learn.adafruit.com/adafruit-arduino-lesson-5-the-serial-monitor/the-serial-monitor)
   + [How Does a Breadboard Work](https://www.sciencebuddies.org/science-fair-projects/references/how-to-use-a-breadboard)
-  + Adafruit's [Using a Temp Sensor](https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor)
+  + [Using a DHT11 Sensor](https://learn.adafruit.com/dht/using-a-dhtxx-sensor)
 
 
 ## Do
@@ -378,7 +378,11 @@ All assignments are due at 11:59 on the specified date.
 
  || Monday <br> 10/4 |  Tuesday <br>10/5    | Wednesday<br>  10/6 | Thursday <br> 10/7 | Friday <br> 10/8 |Saturday<br> 10/9 | Sunday<br> 10/10
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Upload Module 5Project Report
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |
+
+ || Monday <br> 10/11 |  Tuesday <br>10/11    | Wednesday<br>  10/13 | Thursday <br> 10/14 | Friday <br> 10/15 |Saturday<br> 10/16 | Sunday<br> 10/17
+ |--------|-------- |--------|-------- |--------|--------|--------|-------- 
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Push/commit Module 5Project Report
 ||||||||
 
 # Phase II: Developing a Toolbox

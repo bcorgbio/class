@@ -546,7 +546,8 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <center>
 <img src="https://arduinogetstarted.com/images/tutorial/arduino-dht11-temperature-humudity-module-wiring-diagram.jpg" alt="alternatetext">
 </center>
-<p><strong>NOTE</strong> Be very careful wiring this sensor. Be sure that:</p>
+<p><br></p>
+<p><strong>NOTE</strong> Be very careful wiring this sensor. Be sure of the following, otherwise you may fry the sensor:</p>
 <ul>
 <li>The “+” or “VCC” pin on the sensor module is wired to the 5V pin on the Arduino and</li>
 <li>The “GND” or “-” pin on the sensor is wired to the GND pin on the Arduino</li>
@@ -555,7 +556,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </div>
 <div id="programming" class="section level2">
 <h2>Programming</h2>
-<p>Begin by reading Adafruit’s <a href="https://learn.adafruit.com/dht/using-a-dhtxx-sensor">programming guide for this sensor</a>. You’ll have to add the DHT library to your Arduino IDE following the directions in the guide. While adding the library, you may see a prompt asking if you’d like to also install missing dependencies (things the DHT library also need to run). Go ahead and click “install all”.</p>
+<p>Begin by reading Adafruit’s <a href="https://learn.adafruit.com/dht/using-a-dhtxx-sensor">programming guide for this sensor</a>. You’ll have to add the DHT library to your Arduino IDE following the directions in the guide. While adding the library, you may see a prompt asking if you’d like to also install missing dependencies (things the DHT library also needs to run). Go ahead and click “install all”.</p>
 <p>Once the library is installed, click on <strong>File → Examples → DHT → DHTtester</strong> to open an sketch. You may have to close and restart the IDE for the DHT example sketch to appear. Follow the directions in the guide to modify the sketch for use with the DHT11 sensor, namely that you’ll have to comment out the line defines the sensor as a DHT2222 and uncomment the line that defines it as a DHT11. It should look like this:</p>
 <pre><code>/ Uncomment whatever type you&#39;re using!
 #define DHTTYPE DHT11   // DHT 11
@@ -798,7 +799,7 @@ void loop() {
 <div id="saving-data-from-the-serial-monitor" class="section level1">
 <h1>Saving Data from the Serial Monitor</h1>
 <p>In future projects, we’ll write data to an SD card. But, saving your data for now can be as simple as copying the data printed to the serial monitor and pasting it into a text file. The code we’re working with produces comma-separated values for easy reading into analysis software, like R.</p>
-<p>Be sure to copy your data into a text file, not a Word document or Excel. I suggest using a free test editing like <a href="https://www.barebones.com/products/bbedit/download.html">BBedit (for Mac)</a> or <a href="https://notepad-plus-plus.org/downloads/">Notepadd++ (for Windows)</a>.</p>
+<p>Be sure to copy your data into a text file, not a Word document or Excel. I suggest using a free text editing like <a href="https://www.barebones.com/products/bbedit/download.html">BBedit (for Mac)</a> or <a href="https://notepad-plus-plus.org/downloads/">Notepadd++ (for Windows)</a>.</p>
 <div id="working-with-metadata" class="section level2">
 <h2>Working with metadata</h2>
 <p>When saving data in a research project, be sure to give the data a standard and informative file name. This is <strong>essential for saving data</strong>. For instance, say we were studying the effect of exercise on body temperature in four human subjects: Derek, Hansel, Matilda, and Mugato. Imagine that we measured body temperature over 100 seconds, twice for each subject, once when they were inactive (on the couch) and once after 5 minutes of jumping jacks (active). A logical file-naming convention would be “Name_couch/active.csv”. So, say we have these 4 subjects and two experimental conditions, we’d have the following 8 files:</p>
