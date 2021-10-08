@@ -359,7 +359,7 @@ list.files(pattern = "couch|active.csv")
   
 ```
 
-When saving data in a research project, be sure to give the data a standard and informative file name. This is **essential for saving data**. For instance, say we were studying the effect of exercise on body temperature in four human subjects: Derek, Hansel, Matilda, and Mugato. Imagine that we measured body temperature over 100 seconds, twice for each subject, once when they were inactive (on the couch) and once after 5 minutes of jumping jacks (active). A logical file-naming convention would be "Name_couch/active.csv". 
+When saving data in a research project, be sure to give the data a standard and informative file name. This is **essential for saving data**. For instance, say we were studying the effect of exercise on body temperature in four human subjects: [Derek, Hansel, Matilda, and Mugato](https://www.youtube.com/watch?v=NQ-8IuUkJJc). Imagine that we measured body temperature over 100 seconds, twice for each subject, once when they were inactive (on the couch) and once after 5 minutes of jumping jacks (active). A logical file-naming convention would be "Name_couch/active.csv". 
 So, say we have these 4 subjects and two experimental conditions, we'd have the following 8 files:
 
  + "Derek_active.csv"
