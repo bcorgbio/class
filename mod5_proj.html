@@ -531,7 +531,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <h2>Materials</h2>
 <p>Assemble the following materials from your DaqPacks</p>
 <ul>
-<li>TMP36 precision linear analog temperature sensor</li>
+<li>DHT11 precision linear analog temperature sensor</li>
 <li>Elegoo Arduino Uno clone</li>
 <li>variety of jumper or prototyping wires</li>
 </ul>
@@ -541,23 +541,34 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <h1>Assembly and Programming</h1>
 <div id="assembly" class="section level2">
 <h2>Assembly</h2>
-<p>Be sure to read Adafruit’s <a href="https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor">Using a Temp Sensor</a>—it provides a good overview of this temp sensor and explicit instructions for assembling and programming an Arduino-based temperature recording system.</p>
-<p>Let’s start with assembly. Simply wire the three pins of the TMP36 according the this diagram (ignore the photoresistor component):</p>
+<p>Be sure to read this post about <a href="https://learn.adafruit.com/dht/using-a-dhtxx-sensor">Using a DHT11 Sensor</a>—it provides a good overview of this temp sensor and explicit instructions for assembling and programming an Arduino-based temperature recording system.</p>
+<p>Let’s start with assembly. First, we’ll wire the three pins of the DHT11 according the this diagram (ignore the resistor component):</p>
 <center>
-<img src="https://cdn-learn.adafruit.com/assets/assets/000/000/477/original/temperature_sensorwiring.gif?1447975829" alt="alternatetext">
+<img src="https://arduinogetstarted.com/images/tutorial/arduino-dht11-temperature-humudity-module-wiring-diagram.jpg" alt="alternatetext">
 </center>
-<p>Notice that the AREF pin is receiving 3.3v from the pin of that name. This changes the reference voltage from 5v, reducing noise and increasing precision. The diagram above doesn’t require a breadboard, but merely three male-female jumper wires for wiring the sensor, and a bit of prototyping wire or a male-male jumper for the AREF-3v connection.</p>
+<p><strong>NOTE</strong> Be very careful wiring this sensor. Be sure that:</p>
+<ul>
+<li>The “+” or “VCC” pin on the sensor module is wired to the 5V pin on the Arduino and</li>
+<li>The “GND” or “-” pin on the sensor is wired to the GND pin on the Arduino</li>
+<li>The “S” pin on the sensor is wired to a digital pin on the Arduino (D2 will do).</li>
+</ul>
 </div>
 <div id="programming" class="section level2">
 <h2>Programming</h2>
-<p>Now program the Arduino by uploading the second sketch from Adafruit’s <a href="https://learn.adafruit.com/tmp36-temperature-sensor/using-a-temp-sensor">Using a Temp Sensor</a> tutorial. If everything is in order—you’ve chosen the right port and board in Arduino IDE—you can now click on the serial monitor icon in the upper right of the IDE (or pres “cmd/ctrl+shift+m”) to see what data are being printed from the microcontroller to your computer over the serial (USB) port. It should look something like this. If so, CONGRATS! You’re recording temperature data!</p>
+<p>Begin by reading Adafruit’s <a href="https://learn.adafruit.com/dht/using-a-dhtxx-sensor">programming guide for this sensor</a>. You’ll have to add the DHT library to your Arduino IDE following the directions in the guide. While adding the library, you may see a prompt asking if you’d like to also install missing dependencies (things the DHT library also need to run). Go ahead and click “install all”.</p>
+<p>Once the library is installed, click on <strong>File → Examples → DHT → DHTtester</strong> to open an sketch. You may have to close and restart the IDE for the DHT example sketch to appear. Follow the directions in the guide to modify the sketch for use with the DHT11 sensor, namely that you’ll have to comment out the line defines the sensor as a DHT2222 and uncomment the line that defines it as a DHT11. It should look like this:</p>
+<pre><code>/ Uncomment whatever type you&#39;re using!
+#define DHTTYPE DHT11   // DHT 11
+//#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
+//#define DHTTYPE DHT21   // DHT 21 (AM2301)</code></pre>
+<p>If everything is in order—you’ve chosen the right port and board in Arduino IDE—you can now click on the serial monitor icon in the upper right of the IDE (or pres “cmd/ctrl+shift+m”) to see what data are being printed from the microcontroller to your computer over the serial (USB) port. It should look something like this. If so, CONGRATS! You’re recording temperature data!</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
 <a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>When getting setup with your Arduino, makes sure you’ve selected the correct board and port from the “Tools” dropdown menu in the IDE!</p>
+<p>When getting setup with your Arduino, make sure you’ve selected the correct board and port from the “Tools” dropdown menu in the IDE!</p>
 </div>
 </div>
 </div>
@@ -566,7 +577,8 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <img src="tempserial.png" title="fig:" alt="FigName" />
 </center>
 <p><br></p>
-<p>This is great, but as a scientist, you’re probably building this instrument to record temperature over some length of time. Thus, reporting when, relative to the start of the experiment, the temperature was recorded is important. Fortunately, recording and printing time to the serial connection is super easy. We can do this by adding a new variable <code>currentTime</code> and passing a time value in milliseconds to this variable in the void loop. First, add <code>int currentTime;</code> to the top of the sketch where the other variables are established. <code>int</code> establishes the variable as an integer, which is just fine because milliseconds is recorded as whole numbers. Second, add this to the <code>void(loop)</code>:</p>
+<p>Notice the serial monitor is ouputting data from the Arduino that include humidity, temperature (in °C and °F) and heat index (in °C and °F). This is great, but as a scientist, you’re probably building this instrument to record temperature over some length of time. Thus, reporting when, relative to the start of the experiment, the temperature was recorded is important. In addition, we’re using this sensor to give us temperature in readings in °C and we don’t much care about all the other stuff. Fortunately, modifying the output is a piece of cake.</p>
+<p>First, recording and printing time to the serial connection is super easy. We can do this by adding a new variable <code>currentTime</code> and passing a time value in milliseconds to this variable in the void loop. First, add <code>int currentTime;</code> to the top of the sketch where the other variables are established. <code>int</code> establishes the variable as an integer, which is just fine because milliseconds is recorded as whole numbers. Second, add this to the <code>void(loop)</code>:</p>
 <pre><code>  //add line to record current time 
   currentTime=millis(); 
  
@@ -575,67 +587,88 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
   Serial.println(currentTime);</code></pre>
 <p>This first line above records the time in milliseconds. The second and third lines print a prefix and the value for the current time. Notice there’s <code>Serial.print()</code> and <code>Serial.println()</code>. The later is identical to the former, however, <code>Serial.println</code> prints the value and then a new line.</p>
 <p>An amended code looks something like this:</p>
-<pre><code>
-/* Sensor test sketch
-  for more information see http://www.ladyada.net/make/logshield/lighttemp.html
-  */
- 
-#define aref_voltage 3.3         // we tie 3.3V to ARef 
- 
- 
- 
- 
-//TMP36 Pin Variables
-int tempPin = A1;        //the analog pin the TMP36&#39;s Vout (sense) pin is connected to
-                        //the resolution is 10 mV / degree centigrade with a
-                        //500 mV offset to allow for negative temperatures
-int tempReading;        // the analog reading from the sensor
+<pre><code>// Example testing sketch for various DHT humidity/temperature sensors
+// Written by ladyada, public domain
 
-int currentTime; // the current time when the Arduino is recording temp data
+// REQUIRES the following Arduino libraries:
+// - DHT Sensor Library: https://github.com/adafruit/DHT-sensor-library
+// - Adafruit Unified Sensor Lib: https://github.com/adafruit/Adafruit_Sensor
 
-void setup(void) {
-  // We&#39;ll send debugging information via the Serial monitor
-  Serial.begin(9600);   
- 
-  // If you want to set the aref to something other than 5v
-  analogReference(EXTERNAL);
+#include &quot;DHT.h&quot;
+
+#define DHTPIN 2     // Digital pin connected to the DHT sensor
+// Feather HUZZAH ESP8266 note: use pins 3, 4, 5, 12, 13 or 14 --
+// Pin 15 can work but DHT must be disconnected during program upload.
+
+// Uncomment whatever type you&#39;re using!
+//#define DHTTYPE DHT11   // DHT 11
+#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
+//#define DHTTYPE DHT21   // DHT 21 (AM2301)
+
+// Connect pin 1 (on the left) of the sensor to +5V
+// NOTE: If using a board with 3.3V logic like an Arduino Due connect pin 1
+// to 3.3V instead of 5V!
+// Connect pin 2 of the sensor to whatever your DHTPIN is
+// Connect pin 3 (on the right) of the sensor to GROUND (if your sensor has 3 pins)
+// Connect pin 4 (on the right) of the sensor to GROUND and leave the pin 3 EMPTY (if your sensor has 4 pins)
+// Connect a 10K resistor from pin 2 (data) to pin 1 (power) of the sensor
+
+// Initialize DHT sensor.
+// Note that older versions of this library took an optional third parameter to
+// tweak the timings for faster processors.  This parameter is no longer needed
+// as the current DHT reading algorithm adjusts itself to work on faster procs.
+DHT dht(DHTPIN, DHTTYPE);
+
+//adding time variable
+int currentTime
   
-  
-  
+void setup() {
+  Serial.begin(9600);
+  Serial.println(F(&quot;DHTxx test!&quot;));
+
+  dht.begin();
 }
- 
- 
-void loop(void) {
+
+void loop() {
+  // Wait a few seconds between measurements.
+  delay(2000);
+
+  // Reading temperature or humidity takes about 250 milliseconds!
+  // Sensor readings may also be up to 2 seconds &#39;old&#39; (its a very slow sensor)
+  float h = dht.readHumidity();
+  // Read temperature as Celsius (the default)
+  float t = dht.readTemperature();
+  // Read temperature as Fahrenheit (isFahrenheit = true)
+  float f = dht.readTemperature(true);
+
+  // Check if any reads failed and exit early (to try again).
+  if (isnan(h) || isnan(t) || isnan(f)) {
+    Serial.println(F(&quot;Failed to read from DHT sensor!&quot;));
+    return;
+  }
+
+  // Compute heat index in Fahrenheit (the default)
+  float hif = dht.computeHeatIndex(f, h);
+  // Compute heat index in Celsius (isFahreheit = false)
+  float hic = dht.computeHeatIndex(t, h, false);
+
  //add line to record current time 
- currentTime=millis(); 
+  currentTime=millis(); 
  
   //add line to print current time 
   Serial.print(&quot;Time = &quot;);
   Serial.println(currentTime);
- 
-  tempReading = analogRead(tempPin);  
- 
-  Serial.println(&quot;Temp reading = &quot;);
-  Serial.print(tempReading);     // the raw analog reading
- 
-  // converting that reading to voltage, which is based off the reference voltage
-  float voltage = tempReading * aref_voltage;
-  voltage /= 1024.0; 
- 
-  // print out the voltage
-  Serial.print(&quot; - &quot;);
-  Serial.print(voltage); Serial.println(&quot; volts&quot;);
- 
-  // now print out the temperature
-  float temperatureC = (voltage - 0.5) * 100 ;  //converting from 10 mv per degree wit 500 mV offset
-                                               //to degrees ((volatge - 500mV) times 100)
-  Serial.print(temperatureC); Serial.println(&quot; degrees C&quot;);
- 
-  // now convert to Fahrenheight
-  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
-  Serial.print(temperatureF); Serial.println(&quot; degrees F&quot;);
- 
-  delay(1000);
+  Serial.print(F(&quot;Humidity: &quot;));
+  Serial.print(h);
+  Serial.print(F(&quot;%  Temperature: &quot;));
+  Serial.print(t);
+  Serial.print(F(&quot;°C &quot;));
+  Serial.print(f);
+  Serial.print(F(&quot;°F  Heat index: &quot;));
+  Serial.print(hic);
+  Serial.print(F(&quot;°C &quot;));
+  Serial.print(hif);
+  Serial.println(F(&quot;°F&quot;));
 }
 
 </code></pre>
@@ -643,142 +676,122 @@ void loop(void) {
 <img src="tempserial2.png" title="fig:" alt="FigName" />
 </center>
 <p><br></p>
-<p>Notice that the data are being printed about ever second (1000 ms) or so. This is because the the last line of the sketch in the <code>void(loop)</code> is <code>delay(1000)</code>. The <code>delay()</code> function delays or stops the loop for a specified number of milliseconds.</p>
-<p>OK, this much better, but, as we’ll learn in Module 2, data need to be parsed (i.e., arranged) in particular ways for a scientists to read data into a computer and then work with it. One of the standard parsing conventions or formats is comma separated values (.csv). If we can get our data to be printed to the serial monitor separated by commas, then we just have to copy the data from the the serial monitor and paste it into a text file. Later in the course, we’ll learn how to save the data to an SD card, but for now, let’s set up serial printing so that we can copy it.</p>
-<p>To do this, we need to rearrange and add some <code>Serial.print()</code> commands to the <code>void(loop)</code> section. So rather than . . .</p>
-<pre><code> //add line to record current time 
- currentTime=millis(); 
- 
+<p>Notice that the data are being printed about ever second (2000 ms) or so. This is because the first line of the <code>void(loop)</code> is <code>delay(2000)</code>. The <code>delay()</code> function delays or stops the loop for a specified number of milliseconds.</p>
+<p>OK, this much better, but, as we learned in Module 2, data need to be parsed (i.e., arranged) in particular ways for a scientists to read data into a computer and then work with it. One of the standard parsing conventions or formats is comma separated values (.csv). If we can get our data to be printed to the serial monitor separated by commas, then we just have to copy the data from the the serial monitor and paste it into a text file. Later in the course, we’ll learn how to save the data to an SD card, but for now, let’s set up serial printing so that we can copy it.</p>
+<p>To do this, we need to rearrange and add some <code>Serial.print()</code> commands to the <code>void(loop)</code> section that controls printing. So rather than . . .</p>
+<pre><code>  //add line to record current time 
+  currentTime=millis(); 
+  
   //add line to print current time 
   Serial.print(&quot;Time = &quot;);
   Serial.println(currentTime);
- 
-  tempReading = analogRead(tempPin);  
- 
-  Serial.println(&quot;Temp reading = &quot;);
-  Serial.print(tempReading);     // the raw analog reading
- 
-  // converting that reading to voltage, which is based off the reference voltage
-  float voltage = tempReading * aref_voltage;
-  voltage /= 1024.0; 
- 
-  // print out the voltage
-  Serial.print(&quot; - &quot;);
-  Serial.print(voltage); Serial.println(&quot; volts&quot;);
- 
-  // now print out the temperature
-  float temperatureC = (voltage - 0.5) * 100 ;  //converting from 10 mv per degree wit 500 mV offset
-                                               //to degrees ((volatge - 500mV) times 100)
-  Serial.print(temperatureC); Serial.println(&quot; degrees C&quot;);
- 
-  // now convert to Fahrenheight
-  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
-  Serial.print(temperatureF); Serial.println(&quot; degrees F&quot;);
+  Serial.print(F(&quot;Humidity: &quot;));
+  Serial.print(50);
+  Serial.print(F(&quot;%  Temperature: &quot;));
+  Serial.print(22);
+  Serial.print(F(&quot;°C &quot;));
+  Serial.print(74);
+  Serial.print(F(&quot;°F  Heat index: &quot;));
+  Serial.print(22);
+  Serial.print(F(&quot;°C &quot;));
+  Serial.print(74);
+  Serial.println(F(&quot;°F&quot;));
   </code></pre>
-<p>. . . let’s ditch the prefixes and print some commas. Notice the last serial print command is <code>Serial.println()</code> to start a new line before the next data are printed.</p>
-<pre><code> //add line to record current time 
- currentTime=millis(); 
- 
-  //print current time 
+<p>. . . let’s ditch the prefixes and unneeded data and print some commas. Notice the last serial print command is <code>Serial.println()</code> to start a new line before the next data are printed.</p>
+<pre><code> //print current time 
   Serial.print(currentTime);
- 
  //print a comma 
   Serial.print(&quot;,&quot;);
-  
-  tempReading = analogRead(tempPin);  
- 
-  Serial.print(tempReading);     // the raw analog reading
- 
-  // converting that reading to voltage, which is based off the reference voltage
-  float voltage = tempReading * aref_voltage;
-  voltage /= 1024.0; 
- 
-  // print out the voltage
-  Serial.print(voltage);
-  Serial.print(&quot;,&quot;);
- 
-  // now print out the temperature
-  float temperatureC = (voltage - 0.5) * 100 ;  //converting from 10 mv per degree wit 500 mV offset
-                                               //to degrees ((volatge - 500mV) times 100)
-  Serial.print(temperatureC);
-    Serial.print(&quot;,&quot;);
- 
-  // now convert to Fahrenheight
-  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
-  Serial.println(temperatureF); 
+  Serial.println(t);
   </code></pre>
-<p>Upload the sketch and have a look at the serial monitor. Notice that we have data for milliseconds, voltage, temp in °C, and °F, all separated by commas. That is, we have comma separated values (.csv)! There’s just one problem with this—unless you knew the inner workings of this sketch, you wouldn’t know which data were which. Is the first value time or voltage? The second voltage or °F? Etc., etc. Printing a header at the beginning of the program is the solution. After this, the header and data can be copied and pasted to a text file and any computing operations that follow will logically parse and have a name for each column or position in the series of data.</p>
+<p>Now we’re only printing time (in ms) and temperature (in °C). If your wondering where the <code>t</code> variable comes from, it’s this line in the loop that reads temperature from the module and stores it.</p>
+<pre><code>// Read temperature as Celsius (the default)
+ float t = dht.readTemperature();</code></pre>
+<p>Upload the sketch and have a look at the serial monitor. Notice that we have data for milliseconds and temp in °C separated by commas. That is, we have comma separated values (.csv)! There’s just one problem with this—unless you knew the inner workings of this sketch, you wouldn’t know which data were which. Is the first value time or temperature? Printing a header at the beginning of the program is the solution. After this, the header and data can be copied and pasted to a text file and any computing operations that follow will logically parse and have a name for each column or position in the series of data.</p>
 <p>Here’s how to proceed. Merely print some header/column names in the <code>setup(void)</code>. The <code>setup(void)</code> is a part of the sketch where you ask the microcontroller to do something once and <em>before</em> <code>void(loop)</code> commences, a perfect place to print the header to the serial port.</p>
-<pre><code>Serial.println(&quot;ms,v,degC,degF&quot;);</code></pre>
+<pre><code>//add header
+Serial.println(&quot;ms,degC&quot;);</code></pre>
 <p>After adding this and uploading the modified sketch, the serial monitor should now print a header (i.e., column names) and then the data like this:</p>
 <img src="tempserial4.png" title="fig:" alt="FigName" />
 </center>
 <p><br></p>
 <p>This new modified Arduino sketch follows here:</p>
-<pre><code>
-/* Sensor test sketch
-  for more information see http://www.ladyada.net/make/logshield/lighttemp.html
-  */
- 
-#define aref_voltage 3.3         // we tie 3.3V to ARef 
- 
- 
- 
- 
-//TMP36 Pin Variables
-int tempPin = A1;        //the analog pin the TMP36&#39;s Vout (sense) pin is connected to
-                        //the resolution is 10 mV / degree centigrade with a
-                        //500 mV offset to allow for negative temperatures
-int tempReading;        // the analog reading from the sensor
+<pre><code>// Example testing sketch for various DHT humidity/temperature sensors
+// Written by ladyada, public domain
 
-int currentTime; // the current time when the Arduino is recording temp data
-void setup(void) {
-  // We&#39;ll send debugging information via the Serial monitor
-  Serial.begin(9600);   
- 
-  // If you want to set the aref to something other than 5v
-  analogReference(EXTERNAL);
+// REQUIRES the following Arduino libraries:
+// - DHT Sensor Library: https://github.com/adafruit/DHT-sensor-library
+// - Adafruit Unified Sensor Lib: https://github.com/adafruit/Adafruit_Sensor
 
-  Serial.println(&quot;ms,v,degC,degF&quot;);
-  
+#include &quot;DHT.h&quot;
 
-  
+#define DHTPIN 2     // Digital pin connected to the DHT sensor
+// Feather HUZZAH ESP8266 note: use pins 3, 4, 5, 12, 13 or 14 --
+// Pin 15 can work but DHT must be disconnected during program upload.
+
+// Uncomment whatever type you&#39;re using!
+//#define DHTTYPE DHT11   // DHT 11
+#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
+//#define DHTTYPE DHT21   // DHT 21 (AM2301)
+
+// Connect pin 1 (on the left) of the sensor to +5V
+// NOTE: If using a board with 3.3V logic like an Arduino Due connect pin 1
+// to 3.3V instead of 5V!
+// Connect pin 2 of the sensor to whatever your DHTPIN is
+// Connect pin 3 (on the right) of the sensor to GROUND (if your sensor has 3 pins)
+// Connect pin 4 (on the right) of the sensor to GROUND and leave the pin 3 EMPTY (if your sensor has 4 pins)
+// Connect a 10K resistor from pin 2 (data) to pin 1 (power) of the sensor
+
+// Initialize DHT sensor.
+// Note that older versions of this library took an optional third parameter to
+// tweak the timings for faster processors.  This parameter is no longer needed
+// as the current DHT reading algorithm adjusts itself to work on faster procs.
+DHT dht(DHTPIN, DHTTYPE);
+
+//adding time variable
+int currentTime;
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println(F(&quot;DHTxx test!&quot;));
+
+  dht.begin();
+
+  //add header
+  Serial.println(&quot;ms,degC&quot;);
 }
- 
- 
-void loop(void) {
- //add line to record current time 
- currentTime=millis(); 
- 
-  //print current time 
-  Serial.print(currentTime);
- 
- //print a comma 
-  Serial.print(&quot;,&quot;);
-  
-  tempReading = analogRead(tempPin);  
- 
-  Serial.print(tempReading);     // the raw analog reading
- 
-  // converting that reading to voltage, which is based off the reference voltage
-  float voltage = tempReading * aref_voltage;
-  voltage /= 1024.0; 
- 
-  // print out the voltage
-  Serial.print(voltage);
-  Serial.print(&quot;,&quot;);
- 
-  // now print out the temperature
-  float temperatureC = (voltage - 0.5) * 100 ;  //converting from 10 mv per degree wit 500 mV offset
-                                               //to degrees ((volatge - 500mV) times 100)
-  Serial.print(temperatureC);
-    Serial.print(&quot;,&quot;);
- 
-  // now convert to Fahrenheight
-  float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
-  Serial.println(temperatureF); 
 
-  delay(1000);
+void loop() {
+  // Wait a few seconds between measurements.
+  delay(2000);
+
+  // Reading temperature or humidity takes about 250 milliseconds!
+  // Sensor readings may also be up to 2 seconds &#39;old&#39; (its a very slow sensor)
+  float h = dht.readHumidity();
+  // Read temperature as Celsius (the default)
+  float t = dht.readTemperature();
+  // Read temperature as Fahrenheit (isFahrenheit = true)
+  float f = dht.readTemperature(true);
+
+  // Check if any reads failed and exit early (to try again).
+  if (isnan(h) || isnan(t) || isnan(f)) {
+    Serial.println(F(&quot;Failed to read from DHT sensor!&quot;));
+    return;
+  }
+
+  // Compute heat index in Fahrenheit (the default)
+  float hif = dht.computeHeatIndex(f, h);
+  // Compute heat index in Celsius (isFahreheit = false)
+  float hic = dht.computeHeatIndex(t, h, false);
+
+  //add line to record current time
+  currentTime = millis();
+
+  //print current time
+  Serial.print(currentTime);
+  //print a comma
+  Serial.print(&quot;,&quot;);
+  Serial.println(t);
 }</code></pre>
 </div>
 </div>
@@ -786,12 +799,8 @@ void loop(void) {
 <h1>Saving Data from the Serial Monitor</h1>
 <p>In future projects, we’ll write data to an SD card. But, saving your data for now can be as simple as copying the data printed to the serial monitor and pasting it into a text file. The code we’re working with produces comma-separated values for easy reading into analysis software, like R.</p>
 <p>Be sure to copy your data into a text file, not a Word document or Excel. I suggest using a free test editing like <a href="https://www.barebones.com/products/bbedit/download.html">BBedit (for Mac)</a> or <a href="https://notepad-plus-plus.org/downloads/">Notepadd++ (for Windows)</a>.</p>
-<div class="green">
-<div class="row">
-<div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
-</div>
-<div class="col-sm-9">
+<div id="working-with-metadata" class="section level2">
+<h2>Working with metadata</h2>
 <p>When saving data in a research project, be sure to give the data a standard and informative file name. This is <strong>essential for saving data</strong>. For instance, say we were studying the effect of exercise on body temperature in four human subjects: Derek, Hansel, Matilda, and Mugato. Imagine that we measured body temperature over 100 seconds, twice for each subject, once when they were inactive (on the couch) and once after 5 minutes of jumping jacks (active). A logical file-naming convention would be “Name_couch/active.csv”. So, say we have these 4 subjects and two experimental conditions, we’d have the following 8 files:</p>
 <ul>
 <li>“Derek_active.csv”</li>
@@ -805,37 +814,34 @@ void loop(void) {
 <li>“Mugato_couch.csv”</li>
 </ul>
 <p>Giving files a name describing the experiment (who and condition in this case) is an easy way of storing <strong>metadata</strong> (data about the data). For any subsequent analysis, we can pull the metadata from the file name and store our data with these conditions stored as columns. If we consider loading data with R, the power of a <code>for</code> loop because apparent. Using a <code>for</code> loop, we can iteratively load each data file, strip the metadata, and store both in a table. In this example, such a loop might look like this:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb7-2"><a href="#cb7-2"></a>dat.f &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;couch|active.csv&quot;</span>) <span class="co">#find the files</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a>dat.l &lt;-<span class="st"> </span><span class="kw">list</span>() <span class="co">#make an empty list</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="cf">for</span>(i <span class="cf">in</span> dat.f){</span>
-<span id="cb7-7"><a href="#cb7-7"></a>  met.dat&lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(i,<span class="st">&quot;_&quot;</span>)) <span class="co">#split of the filename string</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>  who &lt;-<span class="st"> </span>met.dat[<span class="dv">1</span>] <span class="co">#store the first element</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a>  activity &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;.csv&quot;</span>,<span class="st">&quot;&quot;</span>,met.dat[<span class="dv">2</span>]) <span class="co">#store second element, dropping CSV with gsub()</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a>  dat.l[[i]]&lt;-<span class="st"> </span><span class="kw">read_csv</span>(i)<span class="op">%&gt;%</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">who=</span>who,<span class="dt">activity=</span>activity) <span class="co">#read, then store data with additional columns of metada in list as position unique to i</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a>  </span>
-<span id="cb7-13"><a href="#cb7-13"></a>}</span>
-<span id="cb7-14"><a href="#cb7-14"></a>dat &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind,dat.l) <span class="co">#combine the list into table</span></span>
-<span id="cb7-15"><a href="#cb7-15"></a></span>
-<span id="cb7-16"><a href="#cb7-16"></a>dat<span class="op">%&gt;%</span></span>
-<span id="cb7-17"><a href="#cb7-17"></a><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>activity,<span class="dt">y=</span>degC))<span class="op">+</span><span class="kw">facet_grid</span>(.<span class="op">~</span>who) <span class="co">#plot to see what we get</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>dat.f &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;couch|active.csv&quot;</span>) <span class="co">#find the files</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a>dat.l &lt;-<span class="st"> </span><span class="kw">list</span>() <span class="co">#make an empty list</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="cf">for</span>(i <span class="cf">in</span> dat.f){</span>
+<span id="cb9-7"><a href="#cb9-7"></a>  met.dat&lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">strsplit</span>(i,<span class="st">&quot;_&quot;</span>)) <span class="co">#split of the filename string</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>  who &lt;-<span class="st"> </span>met.dat[<span class="dv">1</span>] <span class="co">#store the first element</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a>  activity &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;.csv&quot;</span>,<span class="st">&quot;&quot;</span>,met.dat[<span class="dv">2</span>]) <span class="co">#store second element, dropping CSV with gsub()</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a>  dat.l[[i]]&lt;-<span class="st"> </span><span class="kw">read_csv</span>(i)<span class="op">%&gt;%</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">who=</span>who,<span class="dt">activity=</span>activity) <span class="co">#read, then store data with additional columns of metada in list as position unique to i</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a>  </span>
+<span id="cb9-13"><a href="#cb9-13"></a>}</span>
+<span id="cb9-14"><a href="#cb9-14"></a>dat &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind,dat.l) <span class="co">#combine the list into table</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a></span>
+<span id="cb9-16"><a href="#cb9-16"></a>dat<span class="op">%&gt;%</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>activity,<span class="dt">y=</span>degC))<span class="op">+</span><span class="kw">facet_grid</span>(.<span class="op">~</span>who) <span class="co">#plot to see what we get</span></span></code></pre></div>
 <p><img src="mod5_proj_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>A workflow like this, formulated around standardized file names containing metadata, is eminently scalable. Eight or a 1000 files, this approach works well.</p>
 </div>
 </div>
-</div>
-<p><br></p>
-</div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
 <p>In this project report, we’ll mirror the process of future projects and reports in Phase II and III of the course. Specifically, we’ll define a question, get data with a prototyped Arduino-based sensor and data-acquisition system, analyze and visualize it in R, and answer the question in an R Markdown report. For this report, we’ll simply ask <em>Does body temperature vary in human subjects according to activity level?</em>.</p>
-<p>To answer this question, use your new Arduino temp sensor to record your body temperature for a 100 s while sitting on the couch (or during some other calm activity—but make sure each group member does the same thing!) and after 5 minutes of doing jumping jacks. Record axillary temperature axillary by putting the sensor in your armpit.</p>
+<p>To answer this question, use your new Arduino temp sensor to record the body temperature of each group member for a 100 s while sitting on the couch (or during some other calm activity—but make sure each group member does the same thing!) and after 5 minutes of doing jumping jacks. Record axillary temperature by putting the sensor in your armpit.</p>
 <p>Make sure, in your project, you:</p>
 <ul>
-<li>Record data from the active and inactive conditions.</li>
+<li>Record data from the active and inactive conditions for all group members.</li>
 <li>Save data from the serial monitor via copy and paste operations, giving each text file a descriptive, standardized file name containing metadata.</li>
 <li>Combine all data from your team into one table.</li>
 <li>Plot mean temperature +/- 1 standard deviation, focusing on the comparison of activities between subjects.</li>
