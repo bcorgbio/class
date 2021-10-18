@@ -25,7 +25,108 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 <style type="text/css">
@@ -54,6 +155,7 @@ h6 {
   text-align: left;
 }
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -394,7 +496,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">BIOL 3140 Discussion</a>
+  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f21">BIOL 3140 Discussion</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -431,36 +533,39 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </div>
 <div id="methods" class="section level1">
 <h1>Methods</h1>
-<p>To capture <span class="math inline">\(T_b\)</span> data, you must design and construct a portable Arduino-based temperature data aqusition system (DAQ). Your device should record body axial temperature data over the course of 1 hour for each of your team members.</p>
-<p>Sampling times should correspond to predictably high <span class="math inline">\(T_b\)</span> (i.e., 30 minutes when the subject is active, say in the middle of the day) and <a href="https://www.nature.com/articles/srep39640/figures/1">predictably low <span class="math inline">\(T_b\)</span></a> (i.e., 30 minutes early in the morning, say 4 AM, before you typically get up—sorry! Set those alarms). This won’t capture the full diurnal cycle, but will reduce the DAQ’s running time while recording the important points.</p>
+<p>To capture <span class="math inline">\(T_b\)</span> data, you must redesign and construct a portable Arduino-based temperature data aqusition system (DAQ). Your device should record body axial temperature data over the course of 15 minutes for <strong>ONE</strong> of your team members.</p>
+<p>Sampling times should correspond to predictably high <span class="math inline">\(T_b\)</span> (i.e., 15 minutes when the subject is active, say in the middle of the day) and <a href="https://www.nature.com/articles/srep39640/figures/1">predictably low <span class="math inline">\(T_b\)</span></a> (i.e., 15 minutes early in the morning, say 4 AM, before you typically get up—sorry! Set those alarms). This won’t capture the full diurnal cycle, but will reduce the DAQ’s running time while recording the important points.</p>
 <div id="daq-design-components" class="section level2">
 <h2>DAQ Design Components</h2>
-<ol style="list-style-type: decimal">
-<li>DS18B20 temperature sensor</li>
-<li>Arduion Uno microcontroller</li>
-<li>SD storage module</li>
-<li>9V battery power cable</li>
-</ol>
+<ul>
+<li>DHT11 precision linear analog temperature sensor</li>
+<li>Elegoo Arduino Uno clone</li>
+<li>variety of jumper or prototyping wires</li>
+</ul>
 </div>
 <div id="daq-assembly-and-programming" class="section level2">
 <h2>DAQ Assembly and Programming</h2>
-<p>Assembly for this temperature logger is almost entirely captured in <del><a href="http://arduinolearning.com/projects/temperature-logger.php">this tutorial</a></del><a href="https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data">this tutorial</a>. To this prototype, we must add battery power. That’s easy enough: merely connect the battery power cable in the battery barrel connector on the Arduino (see pic below).</p>
-<center>
-<p><img src="https://i2.wp.com/technobyte.org/wp-content/uploads/2016/06/Arduino-Uno-power-jack-or-barrel-connector-e1466952229868.jpg?ssl=1" style="width:50.0%" /></p>
-<br> <em>The barrel connector for a battery pack on an Arduino Uno.</em>
-</center>
-<p><br> <br></p>
-<p>With the battery pack and SDcard module installed and writing data, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking temperature data. Be sure to modify your sketch to take data for 30 minutues (1.8 million ms).</p>
+<p>Assembly for this temperature logger is identical to the process you completed in <a href="mod5_proj.html">Module 5</a>.</p>
+<!-- Assembly for this temperature logger is almost entirely captured in ~~[this tutorial](http://arduinolearning.com/projects/temperature-logger.php)~~[this tutorial](https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data). To this prototype, we must add battery power. That's easy enough: merely connect the battery power cable in the battery barrel connector on the Arduino (see pic below).  -->
+<!-- <center> -->
+<!-- ![](https://i2.wp.com/technobyte.org/wp-content/uploads/2016/06/Arduino-Uno-power-jack-or-barrel-connector-e1466952229868.jpg?ssl=1){width=50%} -->
+<!-- <br> -->
+<!-- *The barrel connector for a battery pack on an Arduino Uno.*  -->
+<!-- </center> -->
+<!-- <br> -->
+<!-- <br> -->
+<!-- With the battery pack and SDcard module installed and writing data, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking temperature data.  -->
+<p>Be sure to modify your sketch to take data for 15 minutues.</p>
 </div>
 <div id="data-collection-and-analysis" class="section level2">
 <h2>Data Collection and Analysis</h2>
 <div id="intra-specific-scaling" class="section level3">
 <h3>Intra-specific Scaling</h3>
-<p>To evaluate the scaling relationship between <span class="math inline">\(T_{\Delta}\)</span> and mass, construct a various models that describe the relationship between mass (<span class="math inline">\(W\)</span>) and the differnce between mean <span class="math inline">\(T_{high}\)</span> and <span class="math inline">\(T_{low}\)</span> for all participants in the study (all the students in the class). Yes, we’ll be relying on the rest of your class for these data. After completing data collection, each group should submit their data as .csv text files to <a href="https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing">this google directory</a> <strong>by Tuesday, October 20th</strong>.</p>
-<p>Rememember from the <a href="mod5_proj.html#Saving_Data_from_the_Serial_Monitor">Module 5 project description</a>, that saving data files with a predictable format containing metadata is essential to a clean and easy workflow in R. The metadata needed for this project include your team name, subject, and mass. Therefore, please contruct the file names thusly: "TeamName_Subject#_Time_Mass.csv".</p>
+<p>To evaluate the scaling relationship between <span class="math inline">\(T_{\Delta}\)</span> and mass, construct various models that describe the relationship between mass (<span class="math inline">\(W\)</span>) and the difference between mean <span class="math inline">\(T_{high}\)</span> and <span class="math inline">\(T_{low}\)</span> for all participants in the study. By all participants, I mean the 10 or so from this year’s class and the 30+ who participated in last year’s class. After completing data collection, each group should submit their data as .csv text files to <a href="https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing">this google directory</a> <strong>by Thursday, October 21st</strong>.</p>
+<p>Rememember from the <a href="mod5_proj.html#Saving_Data_from_the_Serial_Monitor">Module 5 project description</a>, that saving data files with a predictable format containing metadata is essential to a clean and easy workflow in R. The metadata needed for this project include your team name, subject, and mass. Therefore, please contruct the file names thusly: "BIOL3140_Subject#_Time_Mass.csv".</p>
 <ul>
-<li>TeamName: your team name, the same for each file your team submits.</li>
-<li>Subject#: a subject number that uniquely identifies the participant anonymously (e.g., “Subject1”)</li>
+<li>BIOL314021: The class and year of the data.</li>
+<li>Subject#: a subject number that uniquely identifies the participant anonymously (e.g., “Subject1”). Because we’re only using last year’s data and there we 30 subjects in that study, add your teams original team number to 30. Eg., If your team was originally named “team 2” this field would be “Subject32”</li>
 <li>Time: Time of day, i.e., “day” or “night”.</li>
 <li>Mass: The subject’s mass <strong>in kilograms</strong> (an estimate is fine).</li>
 <li>Make sure each of the metadata are separated by and underscore, "_".</li>
@@ -469,7 +574,8 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </div>
 <div id="inter-specific-scaling" class="section level3">
 <h3>Inter-specific scaling</h3>
-<p>From the class-wide values, compute the mean mass and mean <span class="math inline">\(T_{\Delta}\)</span> for our human subjects and add these values to a dataset that includes the same data from 51 species of non-human mammals from <span class="citation">(Mortola and Lanthier 2004)</span>. From here you can commence with modeling and analysis. These data can be dowloaded <a href="mammal.temp.csv">here</a>.</p>
+<p>From the study-wide values, compute the mean mass and mean <span class="math inline">\(T_{\Delta}\)</span> for our human subjects and add these values to a dataset that includes the same data from 51 species of non-human mammals from <span class="citation">(Mortola and Lanthier 2004)</span>. From here you can commence with modeling and analysis. These data can be dowloaded <a href="mammal.temp.csv">here</a>.</p>
+<p><strong>NOTE</strong>: To get a leg up on the analyses, I recommend downloading last year’s data to begin modeling. Once you have the models established, your team can simply rerun them with the full data set after the 10 participants submit their data.</p>
 </div>
 </div>
 </div>
@@ -494,7 +600,14 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <li>Author contributions: Breifly outline what each team member contributed to the project.</li>
 </ul></li>
 </ul>
-<p>Project reports should be uploaded by 11:59 PM on Sunday, October 25th.</p>
+<p>Project reports should be uploaded by 11:59 PM on Sunday, October 24th.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>f &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="st">&quot;./proj6data&quot;</span>,<span class="dt">full.names =</span> T)</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">gsub</span>(<span class="st">&quot;BIOL3140(.+)&quot;</span>,<span class="st">&quot;BIOL314020</span><span class="ch">\\</span><span class="st">1&quot;</span>,<span class="st">&quot;BIOL3140_subject21&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="cf">for</span>(i <span class="cf">in</span> f ){</span>
+<span id="cb1-5"><a href="#cb1-5"></a> i2 &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;(.+)BIOL3140(.+)&quot;</span>,<span class="st">&quot;</span><span class="ch">\\</span><span class="st">1BIOL314020</span><span class="ch">\\</span><span class="st">2&quot;</span>,i)</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="kw">file.copy</span>(i,i2)</span>
+<span id="cb1-7"><a href="#cb1-7"></a>}</span></code></pre></div>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
@@ -531,7 +644,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();

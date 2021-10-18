@@ -29,50 +29,57 @@ Many inter-specific scaling relationships playout within species as well. The va
 
 # Methods
 
-To capture $T_b$ data, you must design and construct a portable Arduino-based temperature data aqusition system (DAQ). Your device should record body axial temperature data over the course of 1 hour for each of your team members. 
+To capture $T_b$ data, you must redesign and construct a portable Arduino-based temperature data aqusition system (DAQ). Your device should record body axial temperature data over the course of 15 minutes for **ONE** of your team members. 
 
-Sampling times should correspond to predictably high $T_b$ (i.e., 30 minutes when the subject is active, say in the middle of the day) and [predictably low $T_b$](https://www.nature.com/articles/srep39640/figures/1) (i.e., 30 minutes early in the morning, say 4 AM, before you typically get up---sorry! Set those alarms). This won't capture the full diurnal cycle, but will reduce the DAQ's running time while recording the important points.
+Sampling times should correspond to predictably high $T_b$ (i.e., 15 minutes when the subject is active, say in the middle of the day) and [predictably low $T_b$](https://www.nature.com/articles/srep39640/figures/1) (i.e., 15 minutes early in the morning, say 4 AM, before you typically get up---sorry! Set those alarms). This won't capture the full diurnal cycle, but will reduce the DAQ's running time while recording the important points.
 
 ## DAQ Design Components
 
-1. DS18B20 temperature sensor
-2. Arduion Uno microcontroller
-3. SD storage module
-4. 9V battery power cable
+  + DHT11 precision linear analog temperature sensor
+  + Elegoo Arduino Uno clone
+  + variety of jumper or prototyping wires
 
 ## DAQ Assembly and Programming
 
-Assembly for this temperature logger is almost entirely captured in ~~[this tutorial](http://arduinolearning.com/projects/temperature-logger.php)~~[this tutorial](https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data). To this prototype, we must add battery power. That's easy enough: merely connect the battery power cable in the battery barrel connector on the Arduino (see pic below). 
+Assembly for this temperature logger is identical to the process you completed in [Module 5](mod5_proj.html).
 
-<center>
-![](https://i2.wp.com/technobyte.org/wp-content/uploads/2016/06/Arduino-Uno-power-jack-or-barrel-connector-e1466952229868.jpg?ssl=1){width=50%}
+<!-- Assembly for this temperature logger is almost entirely captured in ~~[this tutorial](http://arduinolearning.com/projects/temperature-logger.php)~~[this tutorial](https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data). To this prototype, we must add battery power. That's easy enough: merely connect the battery power cable in the battery barrel connector on the Arduino (see pic below).  -->
 
-<br>
-*The barrel connector for a battery pack on an Arduino Uno.* 
-</center>
-<br>
-<br>
+<!-- <center> -->
+<!-- ![](https://i2.wp.com/technobyte.org/wp-content/uploads/2016/06/Arduino-Uno-power-jack-or-barrel-connector-e1466952229868.jpg?ssl=1){width=50%} -->
 
-With the battery pack and SDcard module installed and writing data, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking temperature data. Be sure to modify your sketch to take data for 30 minutues (1.8 million ms).
+<!-- <br> -->
+<!-- *The barrel connector for a battery pack on an Arduino Uno.*  -->
+<!-- </center> -->
+<!-- <br> -->
+<!-- <br> -->
+
+<!-- With the battery pack and SDcard module installed and writing data, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking temperature data.  -->
+
+Be sure to modify your sketch to take data for 15 minutues.
 
 ## Data Collection and Analysis
 
 ### Intra-specific Scaling
-To evaluate the scaling relationship between $T_{\Delta}$ and mass, construct a various models that describe the relationship between mass ($W$) and the differnce between mean $T_{high}$ and $T_{low}$ for all participants in the study (all the students in the class). Yes, we'll be relying on the rest of your class for these data. After completing data collection, each group should submit their data as .csv text files to [this google directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing) **by Tuesday, October 20th**. 
+To evaluate the scaling relationship between $T_{\Delta}$ and mass, construct various models that describe the relationship between mass ($W$) and the difference between mean $T_{high}$ and $T_{low}$ for all participants in the study. By all participants, I mean the 10 or so from this year's class and the 30+ who participated in last year's class. After completing data collection, each group should submit their data as .csv text files to [this google directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing) **by Thursday, October 21st**. 
 
-Rememember from the [Module 5 project description](mod5_proj.html#Saving_Data_from_the_Serial_Monitor), that saving data files with a predictable format containing metadata is essential to a clean and easy workflow in R. The metadata needed for this project include your team name, subject, and mass. Therefore, please contruct the file names thusly: "TeamName_Subject#_Time_Mass.csv". 
+Rememember from the [Module 5 project description](mod5_proj.html#Saving_Data_from_the_Serial_Monitor), that saving data files with a predictable format containing metadata is essential to a clean and easy workflow in R. The metadata needed for this project include your team name, subject, and mass. Therefore, please contruct the file names thusly: "BIOL3140_Subject#_Time_Mass.csv". 
 
-  * TeamName: your team name, the same for each file your team submits.
-  * Subject#: a subject number that uniquely identifies the participant anonymously (e.g., "Subject1")
+
+  * BIOL314021: The class and year of the data.
+  * Subject#: a subject number that uniquely identifies the participant anonymously (e.g., "Subject1"). Because we're only using last year's data and there we 30 subjects in that study, add your teams original team number to 30. Eg., If your team was originally named "team 2" this field would be "Subject32"
   * Time: Time of day, i.e., "day" or "night".
   * Mass: The subject's mass **in kilograms** (an estimate is fine).
   * Make sure each of the metadata are separated by and underscore, "_".
   
-  Once all files of these data can be downloaded and from this directory, analysis can commence. (- 5 pts for not submitting on time).
+  Once all files of these data can be downloaded and from this directory, analysis can commence. (- 5 pts for not submitting on time). 
+  
 
 ### Inter-specific scaling
 
-From the class-wide values, compute the mean mass and mean $T_{\Delta}$ for our human subjects and add these values to a dataset that includes the same data from 51 species of non-human mammals from [@mortola2004scaling]. From here you can commence with modeling and analysis. These data can be dowloaded [here](mammal.temp.csv).
+From the study-wide values, compute the mean mass and mean $T_{\Delta}$ for our human subjects and add these values to a dataset that includes the same data from 51 species of non-human mammals from [@mortola2004scaling]. From here you can commence with modeling and analysis. These data can be dowloaded [here](mammal.temp.csv).
+
+**NOTE**: To get a leg up on the analyses, I recommend downloading last year's data to begin modeling. Once you have the models established, your team can simply rerun them with the full data set after the 10 participants submit their data.
 
 # Project Report
 
@@ -94,6 +101,16 @@ In answering your question, your .Rmd should include the following components:
       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here.
       + Author contributions: Breifly outline what each team member contributed to the project.
 
-Project reports should be uploaded by 11:59 PM on Sunday, October 25th.
+Project reports should be uploaded by 11:59 PM on Sunday, October 24th.
 
+```{r eval=FALSE}
+
+f <- list.files("./proj6data",full.names = T)
+
+gsub("BIOL3140(.+)","BIOL314020\\1","BIOL3140_subject21")
+for(i in f ){
+ i2 <- gsub("(.+)BIOL3140(.+)","\\1BIOL314020\\2",i)
+  file.copy(i,i2)
+}
+```
 # References

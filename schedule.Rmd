@@ -387,17 +387,17 @@ All assignments are due at 11:59 on the specified date.
 
 # Phase II: Developing a Toolbox
 
-In Phase II, we'll use our new-found instrument- and code-development skills to address key questions in organismal biology. These will be largely guided explorations of instrument design and use and data analysis meant to challenge you to put these skills to good use in answering how vertebrates muscles work, how size and phylogeny matters in physiological systems, and how a changing climate impacts the distribution of vertebrates. Within this phase we'll break up into our teams to focus on 5 modules, some data driven, the others both data and instrument driven.
+In Phase II, we'll use our new-found instrument- and code-development skills to address key questions in organismal biology. These will be self-guided explorations of instrument design and use and data analysis meant to challenge you to put these skills to good use in answering how vertebrates muscles work, how size and phylogeny matters in physiological systems, and how a changing climate impacts the distribution of vertebrates. Within this phase we'll break up into our teams to focus on 5 modules, some data driven, the others both data and instrument driven.
 
 # Module 6: Hot Flashes I: Scaling of Diel Temperature Oscillations in Mammals
 
 This module puts our newly formed data analysis, markdown, and prototyping skills to use in answering how oscillations in body temperature scale with body size in mammals.
 
 ## Dates 
-Weeks 7 & 8 (Oct 11—24):
+Weeks 7 & 8 (Oct 18—23):
 
 ## Key Concepts
-  + Saving instrument data to an SD card.
+  <!-- + Saving instrument data to an SD card. -->
   + Temporal heterothermy.
   + Scaling.
   
@@ -405,26 +405,26 @@ Weeks 7 & 8 (Oct 11—24):
 
 Upon completion of this module, students will be able to:
 
-  + Design and program a simple, stand alone temperature Arduino DAQ that writes data to an SD card and runs on a 9v battery.
+  + Redesign and program a simple temperature recording data-acquisition system (DAQ)
   + Comment on the scaling relationship between body-temperature oscillations withing humans and between species of mammals.
 
 ## Read/Watch 
 
-  + ~~[Temp sensor with SDcard module tutorial](http://arduinolearning.com/projects/temperature-logger.php)~~
-  + [Temp sensor with SDcard module tutorial](https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data)
+  <!-- + ~~[Temp sensor with SDcard module tutorial](http://arduinolearning.com/projects/temperature-logger.php)~~ -->
+  <!-- + [Temp sensor with SDcard module tutorial](https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data) -->
   + [Mortola, Jacopo P, and Clement Lanthier. 2004. “Scaling the Amplitudes of the Circadian Pattern of Resting Oxygen Consumption, Body Temperature and Heart Rate in Mammals.” Comparative Biochemistry and Physiology Part A: Molecular & Integrative Physiology 139 (1): 83–95.](Mortolaetal.pdf)
   
 
 ## Do
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
-  + Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing) by Tuesday, October 20th
+  + Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing) by Tuesday, October 21th
   + Complete and commit Module 6 Project report
 
 
 ## Guiding Questions
 
-  + How does one program and modify an Arduino unit to write data to an SD card?
+  + How does one program and modify an Arduino unit to record body temperature?
   + How do oscillations in body temperature scale with mass in humans and other mammals?
   + How does one formulate a complete .Rmd report of Phase II of the course?
 
@@ -432,13 +432,9 @@ Upon completion of this module, students will be able to:
 
 All assignments are due at 11:59 on the specified date.
 
-|| Monday <br> 10/11 |  Tuesday <br>10/12    | Wednesday<br>  10/13 | Thursday <br> 10/14 | Friday <br> 10/15 |Saturday<br> 10/16 | Sunday<br> 10/17
-|--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |
-
  || Monday <br> 10/18 |  Tuesday <br>10/19    | Wednesday<br>  10/20 | Thursday <br> 10/21 | Friday <br> 10/23 |Saturday<br> 10/23 | Sunday<br> 10/24
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 
-**Assignment due** | | Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing)| Post question to discussion board | Answer a question on discussion board  | | | Upload Module 6 Project Report
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board <br> Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing) | | | Upload Module 6 Project Report
 ||||||||
 
 # Module 7: Hot Flashes II: Not So Fast! Correcting Scaling Models Within a Phylogenetic Context (data driven)
