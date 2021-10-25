@@ -11,7 +11,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 # Introduction
 
-As we took on in [the last module](mod6_proj.html) and read in @mortola2004scaling, body temperature ($T_b$) across mammals demsonstrates predictable scaling patterns. In the analysis for the last project and in the analysis performed by @mortola2004scaling, neither accounted for the phylogenetic relationships of the species considered. After the project for [Module 3](mod3_proj.html), you'd be forgiven if you put a giant asterisk next to results of these analyses. That is, species are not statistically indepedent samples due to their shared evolutionary history [@felsenstein1985phylogenies]. 
+As we took on in [the last module](mod6_proj.html) and read in @mortola2004scaling, body temperature ($T_b$) across mammals demonstrates predictable scaling patterns. In the analysis for the last project and in the analysis performed by @mortola2004scaling, neither accounted for the phylogenetic relationships of the species considered. After the project for [Module 3](mod3_proj.html), you'd be forgiven if you put a giant asterisk next to results of these analyses. That is, species are not statistically indepedent samples due to their shared evolutionary history [@felsenstein1985phylogenies]. 
 
 Organismal biologists---ecologists, physiologists, and behavioral ecologists, to name a few---have a checkered history of including phylogenetic structure in their analyses [@freckleton2002phylogenetic]. Accounting for phylogeny when asking comparative questions (i.e., how do traits vary between species?) isn't always necessary [@westoby1995further], nor is it always appropriate in the way biologist use comparative methods [@uyeda2018rethinking]. However, generally, when a biologists asks if one trait varies with another, especially when those traits are continuous, it's a good idea to at least explore if those traits demonstrate some phylogenetic signal.
 
@@ -75,7 +75,7 @@ plot(m.phy0)
 
 ```
 
-The tree on the left is the unscaled phylogeny, the tree we'll use in our analyses. The tree in the middle, with $\lambda$=0.5, rescales the tip branches, making the tips branch longer, allowing more phylogenetic independence between species. As you can see, the tree on the right, with a $\lambda$=0 removes the phylogenetic information form the tree, i.e., all species don't covary according to their phylogenetic position. When we use Pagel's $\lambda$ to assess phylogenetic signal of a character, we interate through values to 0 to 1 to find rescaled branch lengths that optimize the covariance of the character according to Brownian motion. As a reminder, values near 1 indicate strong phylogenetic signal, while values close to 0 indicate none. 
+The tree on the left is the unscaled phylogeny, the tree we'll use in our analyses. The tree in the middle, with $\lambda$=0.5, rescales the tip branches, making the tips branch longer, allowing more phylogenetic independence between species. As you can see, the tree on the right, with a $\lambda$=0 removes the phylogenetic information form the tree, i.e., all species don't covary according to their phylogenetic position. When we use Pagel's $\lambda$ to assess phylogenetic signal of a character, we iterate through values to 0 to 1 to find rescaled branch lengths that optimize the covariance of the character according to Brownian motion. As a reminder, values near 1 indicate strong phylogenetic signal, while values close to 0 indicate none. 
 
 Now let's assess phylogenetic signal for some simulated trait data over the mammal tree. We'll use `phytools`'s `phylosig()` function to do this after simulating some random trait.
 
@@ -153,7 +153,7 @@ In answering your question, your .Rmd should include the following components:
       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here.
       + Author contributions: Breifly outline what each team member contributed to the project.
 
-Project reports should be uploaded by 11:59 PM on Sunday, November 1st.
+Project reports should be pushed by 11:59 PM on Sunday, October 31st.
 
 <div class = "green">
 <div class="row">
