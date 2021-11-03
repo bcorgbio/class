@@ -25,6 +25,15 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
@@ -146,6 +155,7 @@ h6 {
   text-align: left;
 }
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -486,7 +496,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">BIOL 3140 Discussion</a>
+  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f21">BIOL 3140 Discussion</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -513,14 +523,14 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <p>Any student steeped in the mechanics of muscle understands that force produced by this tissue is governed by two important parameters: speed and length. In this project, we’ll explore the effect of length on muscle force generation and evaluate how fatigue affects this force-length (FL) relationship.</p>
-<p>The FL relationship is governed by several important biophysical aspects of muscle architecture. At the fiber level, the force produced is largely mediated by the the number of cross bridges that can be formed. Cross bridges are small and have a limited attachment range. Therefore, cross-bridge attachments only occur in the actin-myosin overlap zone of a sarcomere. Together with the assumptions underlying the cross-bridge theory, this limitation implies that the maximal isometric force of a sarcomere is directly related to the amount of actin-myosin overlap (Fig. 1).</p>
+<p>The FL relationship is governed by several important biophysical aspects of muscle architecture. At the fiber level, the force produced is largely mediated by the number of crossbridges that can be formed. Crossbridges are small and have a limited attachment range. Therefore, crossbridge attachments only occur in the actin-myosin overlap zone of a sarcomere. Together with the assumptions underlying the crossbridge theory, this limitation implies that the maximal isometric force of a sarcomere is directly related to the amount of actin-myosin overlap (Fig. 1).</p>
 <center>
 <img src="https://journals.physiology.org/cms/10.1152/jappl.1999.86.5.1445/asset/images/medium/japp05516002x.jpeg" /> <br> <strong>Fig. 1.</strong> The force-length relationship of a sarcomere as predicted by cross-bridge theory.
 </center>
 <p><br></p>
 <p>Of course, many muscles transect a lever system composed of a few bones articulating at a joint. For our subject, the human upper limb, the forearm flexors originate on the pectoral girdle above the humerus and insert on the radius and ulna, spanning the elbow joint. Simply put, the arm is a 3rd order lever (Fig 2). If we are to consider the force transmitted to the hand (or any other part along the antebrachium), we must also consider this lever configuration. As a lever, this system has a mechanical advantage that predicts the amount of output force transmitted by the input force. Mechanical advantage is defined by the following:</p>
 <p><span class="math display">\[MA=\frac{L_i}{L_o}\]</span>,</p>
-<p>where <span class="math inline">\(L_i\)</span> is the in-lever and <span class="math inline">\(L_o\)</span> the output leaver. For the human upper limb, the inlever is the distance between the flexor insertion and elbow joint and the out-lever is the length of the antebrachium and hand (or the distance between the elbow and the load). This ratio generally accords to 0.2 in this system. What this predicts is that any force applied to the in-lever results in 20% of that force at the end of the out-lever.</p>
+<p>where <span class="math inline">\(L_i\)</span> is the in-lever and <span class="math inline">\(L_o\)</span> the output leaver. For the human upper limb, the inlever is the distance between the flexor insertion and elbow joint and the out-lever is the length of the antebrachium and hand (or the distance between the elbow and the load). This ratio generally accords to 0.2 in this system. What this predicts is that any force applied to the in-lever results in 20% of that force at the end of the out-lever (i.e., the palm).</p>
 <p>What makes this more complicated is that the effective in-lever, the input moment arm, changes as the forearm flexes. This is due to the fact that the insertion angle changes as the forearm rotates (Fig. 3). Because the force produced by an input is variable with respect to insertion angle, the output isn’t necessarily predicted by MA alone.</p>
 <center>
 <p><img src="https://openoregon.pressbooks.pub/app/uploads/sites/42/2018/07/Range-300x262.png" /></p>
@@ -551,16 +561,14 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <ol style="list-style-type: decimal">
 <li>40-kg Load Cell with HX711 amplifier</li>
 <li>Arduino Uno microcontroller</li>
-<li>SD storage module</li>
-<li>9V battery power cable</li>
 </ol>
 </div>
 <div id="daq-assembly-and-programming" class="section level2">
 <h2>DAQ Assembly and Programming</h2>
-<p>Assembly for this force logger is almost entirely captured in <a href="https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/">this tutorial</a>. You only modification is to add SD data storage to your hardware and the appropriate code to your sketch.</p>
+<p>Assembly for this force logger is almost entirely captured in <a href="https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/">this tutorial</a>.</p>
 <p>You’ll see that the sketch in the tutorial requires a calibration step to output appropriate force or mass units. <strong>Don’t worry about calibration.</strong> We’ll be looking a normalized force, so units don’t matter.</p>
-<p>As for your SD storage integration, make sure your sketch writes one column data to the SD card with the header “force”.</p>
-<p>For each experiment, you’ll be recording 12 bouts of MVC force, each corresponding to a different elbow angle, for 30 s. For each arm angle, with the battery pack and SDcard module installed and writing data, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking force data. So as not to confuse from where your data came, it’s a good idea to change the name of the text file being written to for each experiment, i.e., “control.csv” and “fatigue.csv”.</p>
+<!-- As for your SD storage integration, make sure your sketch writes one column data to the SD card with the header "force". -->
+<p>For each experiment, you’ll be recording 12 bouts of MVC force, each corresponding to a different elbow angle, for 30 s. For each arm angle, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking force data. So as not to confuse from where your data came, it’s a good idea to change the name of the text file being saved to for each experiment, e.g., “Subject1_control.csv” and “Subject1_fatigue.csv”.</p>
 </div>
 <div id="data-collection" class="section level2">
 <h2>Data Collection</h2>
@@ -584,7 +592,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </div>
 <div id="isometric-mvcs" class="section level3">
 <h3>Isometric MVCs</h3>
-<p>We will collect isometric force data from MVCs over 12 arm angles, 45-157.5<span class="math inline">\(^o\)</span> at 11.25<span class="math inline">\(^o\)</span> (call it 11<span class="math inline">\(^o\)</span>) intervals. Your load-cell is affixed to two hooks. Attach one hook to the dowel in your DAQ pack and the other to something that won’t move under the torque of your for arm. This could be a table, chair, bench, etc. Hold the dowel in your hand as shown in Fig. 6. Make sure your elbow is supported by something rigid (i.e. the top of a chair back, etc.).</p>
+<p>We will collect isometric force data from MVCs over 12 arm angles, 45-157.5<span class="math inline">\(^o\)</span> at 11.25<span class="math inline">\(^o\)</span> (call it 11<span class="math inline">\(^o\)</span>) intervals. Your load-cell is affixed to two hooks. Attach one hook to the dowel in your DAQ pack and the other to something that won’t move under the torque of your forearm. This could be a table, chair, bench, etc. Hold the dowel in your hand as shown in Fig. 6. Make sure your elbow is supported by something rigid (i.e. the top of a chair back, etc.).</p>
 <center>
 <img src="grip.jpg" style="width:50.0%" /> <br> <strong>Fig. 6</strong> How to grip the the load-cell.
 </center>
@@ -616,9 +624,9 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p>For each experiment, we’ll stick to a convention within the muscle physiology world by considering maximum normalized force. That is:</p>
 <ol style="list-style-type: decimal">
 <li>Find maximum force for each recording (don’t worry about the specific values or units because you’ll. . .).</li>
-<li>Find maximum force (<span class="math inline">\(F_{max}\)</span>) among all angles for each experiment (control or fatigued) for each individual and then divide all maximum values for that experiment by <span class="math inline">\(F_{max}\)</span>. You values will now be normalize, i.e., scaled 0-1 with a value of 1 representing the highest force recorded during an experiment.</li>
+<li>Find maximum force (<span class="math inline">\(F_{max}\)</span>) across all angles for each experiment (control or fatigued) for each individual and then divide all maximum values for that experiment by <span class="math inline">\(F_{max}\)</span>. Your values will now be normalize, i.e., scaled 0-1 with a value of 1 representing the highest force recorded during an experiment.</li>
 </ol>
-<p>Using the normalized force data from the control and fatigued experiments, we’ll consider shifts the at which angle <span class="math inline">\(F_{max}\)</span> occurred, the difference in <span class="math inline">\(\theta_{max}\)</span>. To assess any shift in <span class="math inline">\(\theta_{max}\)</span> with our limited elbow angle samples, we could simply look at the angle at which the flexors produce the most force. For instance, for the these data:</p>
+<p>Using the normalized force data from the control and fatigued experiments, we’ll consider shifts at which angle <span class="math inline">\(F_{max}\)</span> occurred, the difference in <span class="math inline">\(\theta_{max}\)</span>. To assess any shift in <span class="math inline">\(\theta_{max}\)</span> with our limited elbow angle samples, we could simply look at the angle at which the flexors produce the most force. For instance, for the these data:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(ggplot2)</span>
 <span id="cb1-2"><a href="#cb1-2"></a>ang &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">45</span>,<span class="fl">168.75</span>,<span class="dt">length.out =</span> <span class="dv">12</span>) <span class="co">#elbow angle</span></span>
 <span id="cb1-3"><a href="#cb1-3"></a></span>
@@ -677,39 +685,38 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p>Looks as if there’s a 10.3<span class="math inline">\(^o\)</span> shift in <span class="math inline">\(\theta_{max}\)</span>.</p>
 <p>Say we had a bunch of data (from only 10 subjects) and you wanted to compare the control against fatigued data graphically, you could do the following. First we’ll simulate some control and fatigue data, adding random noise drawn form a normal distribution and plot the data with a color according to experiment to quickly assess the pattern.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ───────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
-<pre><code>## ✓ tibble  3.0.3     ✓ dplyr   1.0.2
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ tibble  3.1.5     ✓ dplyr   1.0.7
 ## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
-## ✓ readr   1.3.1     ✓ forcats 0.5.0
+## ✓ readr   2.0.2     ✓ forcats 0.5.1
 ## ✓ purrr   0.3.4</code></pre>
-<pre><code>## ── Conflicts ──────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">set.seed</span>(<span class="dv">1234</span>) <span class="co">#to keep random noise the same</span></span>
 <span id="cb21-2"><a href="#cb21-2"></a></span>
-<span id="cb21-3"><a href="#cb21-3"></a></span>
-<span id="cb21-4"><a href="#cb21-4"></a>sub &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span> <span class="co">#ten subjects</span></span>
-<span id="cb21-5"><a href="#cb21-5"></a>dat.l &lt;-<span class="st"> </span><span class="kw">list</span>() <span class="co">#empty list</span></span>
-<span id="cb21-6"><a href="#cb21-6"></a></span>
-<span id="cb21-7"><a href="#cb21-7"></a><span class="co">#loop to run through subjects and simulate data based on noise added to data above</span></span>
-<span id="cb21-8"><a href="#cb21-8"></a><span class="cf">for</span>(i <span class="cf">in</span> sub){</span>
-<span id="cb21-9"><a href="#cb21-9"></a>  noise &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(ang),<span class="dt">mean =</span> <span class="fl">0.02</span>,<span class="dt">sd =</span> <span class="fl">0.01</span>)</span>
-<span id="cb21-10"><a href="#cb21-10"></a>  noise2 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(ang),<span class="dt">mean =</span> <span class="fl">0.02</span>,<span class="dt">sd =</span> <span class="fl">0.01</span>)</span>
-<span id="cb21-11"><a href="#cb21-11"></a>  dat.l[[i]] &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
-<span id="cb21-12"><a href="#cb21-12"></a>    <span class="kw">rbind</span>(</span>
-<span id="cb21-13"><a href="#cb21-13"></a>      <span class="kw">data.frame</span>(ang,<span class="dt">force=</span>normF<span class="op">+</span>noise,<span class="dt">subject=</span>i,<span class="dt">exp=</span><span class="st">&quot;control&quot;</span>),</span>
-<span id="cb21-14"><a href="#cb21-14"></a>      <span class="kw">data.frame</span>(ang,<span class="dt">force=</span>normF.fat<span class="op">+</span>noise2,<span class="dt">subject=</span>i,<span class="dt">exp=</span><span class="st">&quot;fatigue&quot;</span>)</span>
-<span id="cb21-15"><a href="#cb21-15"></a>  )  </span>
-<span id="cb21-16"><a href="#cb21-16"></a>  )<span class="op">%&gt;%</span></span>
-<span id="cb21-17"><a href="#cb21-17"></a><span class="st">    </span><span class="kw">group_by</span>(subject,exp)<span class="op">%&gt;%</span></span>
-<span id="cb21-18"><a href="#cb21-18"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">force=</span>force<span class="op">/</span><span class="kw">max</span>(force))</span>
-<span id="cb21-19"><a href="#cb21-19"></a>  </span>
-<span id="cb21-20"><a href="#cb21-20"></a>}</span>
-<span id="cb21-21"><a href="#cb21-21"></a></span>
-<span id="cb21-22"><a href="#cb21-22"></a>dat &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind,dat.l) <span class="co">#get data into one tibble</span></span>
-<span id="cb21-23"><a href="#cb21-23"></a></span>
-<span id="cb21-24"><a href="#cb21-24"></a>dat<span class="op">%&gt;%</span></span>
-<span id="cb21-25"><a href="#cb21-25"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(ang,force,<span class="dt">col=</span>exp))<span class="op">+</span><span class="kw">geom_point</span>()</span></code></pre></div>
+<span id="cb21-3"><a href="#cb21-3"></a>sub &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span> <span class="co">#ten subjects</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a>dat.l &lt;-<span class="st"> </span><span class="kw">list</span>() <span class="co">#empty list</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="co">#loop to run through subjects and simulate data based on noise added to data above</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a><span class="cf">for</span>(i <span class="cf">in</span> sub){</span>
+<span id="cb21-8"><a href="#cb21-8"></a>  noise &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(ang),<span class="dt">mean =</span> <span class="fl">0.02</span>,<span class="dt">sd =</span> <span class="fl">0.01</span>)</span>
+<span id="cb21-9"><a href="#cb21-9"></a>  noise2 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(ang),<span class="dt">mean =</span> <span class="fl">0.02</span>,<span class="dt">sd =</span> <span class="fl">0.01</span>)</span>
+<span id="cb21-10"><a href="#cb21-10"></a>  dat.l[[i]] &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb21-11"><a href="#cb21-11"></a>    <span class="kw">rbind</span>(</span>
+<span id="cb21-12"><a href="#cb21-12"></a>      <span class="kw">data.frame</span>(ang,<span class="dt">force=</span>normF<span class="op">+</span>noise,<span class="dt">subject=</span>i,<span class="dt">exp=</span><span class="st">&quot;control&quot;</span>),</span>
+<span id="cb21-13"><a href="#cb21-13"></a>      <span class="kw">data.frame</span>(ang,<span class="dt">force=</span>normF.fat<span class="op">+</span>noise2,<span class="dt">subject=</span>i,<span class="dt">exp=</span><span class="st">&quot;fatigue&quot;</span>)</span>
+<span id="cb21-14"><a href="#cb21-14"></a>  )  </span>
+<span id="cb21-15"><a href="#cb21-15"></a>  )<span class="op">%&gt;%</span></span>
+<span id="cb21-16"><a href="#cb21-16"></a><span class="st">    </span><span class="kw">group_by</span>(subject,exp)<span class="op">%&gt;%</span></span>
+<span id="cb21-17"><a href="#cb21-17"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">force=</span>force<span class="op">/</span><span class="kw">max</span>(force))</span>
+<span id="cb21-18"><a href="#cb21-18"></a>  </span>
+<span id="cb21-19"><a href="#cb21-19"></a>}</span>
+<span id="cb21-20"><a href="#cb21-20"></a></span>
+<span id="cb21-21"><a href="#cb21-21"></a>dat &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind,dat.l) <span class="co">#get data into one tibble</span></span>
+<span id="cb21-22"><a href="#cb21-22"></a></span>
+<span id="cb21-23"><a href="#cb21-23"></a>dat<span class="op">%&gt;%</span></span>
+<span id="cb21-24"><a href="#cb21-24"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(ang,force,<span class="dt">col=</span>exp))<span class="op">+</span><span class="kw">geom_point</span>()</span></code></pre></div>
 <p><img src="mod8_proj_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Now let’s take our data and get AICc scores for our three polynomial models. We’ll group the data by subject and experiment and retrieve AICc from each model (<code>m2</code>, <code>m3</code>, and <code>m4</code>). Then, we’ll pivot the tibble to a longer format so that we have a single column for AICc values.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>AICs &lt;-<span class="st"> </span>dat<span class="op">%&gt;%</span></span>
@@ -721,7 +728,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <span id="cb22-7"><a href="#cb22-7"></a>  )<span class="op">%&gt;%</span></span>
 <span id="cb22-8"><a href="#cb22-8"></a><span class="st">  </span><span class="kw">pivot_longer</span>(m2<span class="op">:</span>m4,<span class="dt">names_to=</span><span class="st">&quot;model&quot;</span>,<span class="dt">values_to=</span><span class="st">&quot;AICc&quot;</span>)<span class="op">%&gt;%</span></span>
 <span id="cb22-9"><a href="#cb22-9"></a><span class="st">  </span><span class="kw">print</span>()</span></code></pre></div>
-<pre><code>## # A tibble: 60 x 4
+<pre><code>## # A tibble: 60 × 4
 ## # Groups:   subject [10]
 ##    subject exp     model  AICc
 ##      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;
@@ -748,7 +755,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <span id="cb24-9"><a href="#cb24-9"></a><span class="st">   </span><span class="kw">group_by</span>(subject,exp,model)<span class="op">%&gt;%</span></span>
 <span id="cb24-10"><a href="#cb24-10"></a><span class="st">   </span><span class="kw">summarize</span>(<span class="dt">theta_max=</span>x.pred[<span class="kw">which.max</span>(value)])<span class="op">%&gt;%</span></span>
 <span id="cb24-11"><a href="#cb24-11"></a><span class="st">   </span><span class="kw">print</span>()</span></code></pre></div>
-<pre><code>## # A tibble: 60 x 4
+<pre><code>## # A tibble: 60 × 4
 ## # Groups:   subject, exp [20]
 ##    subject exp     model theta_max
 ##      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;
@@ -772,7 +779,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <span id="cb26-6"><a href="#cb26-6"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>best)<span class="op">%&gt;%</span></span>
 <span id="cb26-7"><a href="#cb26-7"></a><span class="st">  </span><span class="kw">print</span>()</span></code></pre></div>
 <pre><code>## Joining, by = c(&quot;subject&quot;, &quot;exp&quot;, &quot;model&quot;)</code></pre>
-<pre><code>## # A tibble: 20 x 5
+<pre><code>## # A tibble: 20 × 5
 ## # Groups:   subject, exp [20]
 ##    subject exp     model theta_max  AICc
 ##      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
@@ -812,7 +819,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <span id="cb31-3"><a href="#cb31-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">shift=</span>fatigue<span class="op">-</span>control)<span class="op">%&gt;%</span></span>
 <span id="cb31-4"><a href="#cb31-4"></a><span class="st">  </span><span class="kw">ungroup</span>()<span class="op">%&gt;%</span></span>
 <span id="cb31-5"><a href="#cb31-5"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean.shift=</span><span class="kw">mean</span>(shift),<span class="dt">se.shift=</span><span class="kw">sd</span>(shift)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">length</span>(shift)))</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 2
+<pre><code>## # A tibble: 1 × 2
 ##   mean.shift se.shift
 ##        &lt;dbl&gt;    &lt;dbl&gt;
 ## 1       12.2    0.960</code></pre>
@@ -838,7 +845,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <li>Author contributions: Briefly outline what each team member contributed to the project.</li>
 </ul></li>
 </ul>
-<p>Project reports should be uploaded by 11:59 PM on Sunday, November 15th.</p>
+<p>Project reports should be uploaded by 11:59 PM on Sunday, November 14th.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
@@ -874,7 +881,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();

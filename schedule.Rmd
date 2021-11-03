@@ -434,7 +434,7 @@ All assignments are due at 11:59 on the specified date.
 
  || Monday <br> 10/18 |  Tuesday <br>10/19    | Wednesday<br>  10/20 | Thursday <br> 10/21 | Friday <br> 10/23 |Saturday<br> 10/23 | Sunday<br> 10/24
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board <br> Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing) | | | Upload Module 6 Project Report
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board <br> Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing) | | | Push 6 Project Report
 ||||||||
 
 # Module 7: Hot Flashes II: Not So Fast! Correcting Scaling Models Within a Phylogenetic Context (data driven)
@@ -506,7 +506,7 @@ Upon completion of this week and module, students will be able to:
 
 ## Read/Watch 
 
-  + Read [Rassier, D.E., MacIntosh, B.R. and Herzog, W., 1999. Length dependence of active force production in skeletal muscle. Journal of applied physiology, 86(5), pp.1445-1457. 83–95.](https://journals.physiology.org/doi/full/10.1152/jappl.1999.86.5.1445)
+  + Read [Rassier, D.E., MacIntosh, B.R. and Herzog, W., 1999. Length dependence of active force production in skeletal muscle. Journal of applied Physiology, 86(5), pp.1445-1457. 83–95.](https://journals.physiology.org/doi/full/10.1152/jappl.1999.86.5.1445)
   + Read [Oregon State's Body Physics page](https://openoregon.pressbooks.pub/bodyphysics/chapter/body-levers/)
   + Read [The Wheastone Bridge from Omega](https://www.omega.com/en-us/resources/wheatstone-bridge)
   

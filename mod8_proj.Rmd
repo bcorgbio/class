@@ -13,7 +13,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 Any student steeped in the mechanics of muscle understands that force produced by this tissue is governed by two important parameters: speed and length. In this project, we'll explore the effect of length on muscle force generation and evaluate how fatigue affects this force-length (FL) relationship. 
 
-The FL relationship is governed by several important biophysical aspects of muscle architecture. At the fiber level, the force produced is largely mediated by the the number of cross bridges that can be formed. Cross bridges are small and have a limited attachment range. Therefore, cross-bridge attachments only occur in the actin-myosin overlap zone of a sarcomere. Together with the assumptions underlying the cross-bridge theory, this limitation implies that the maximal isometric force of a sarcomere is directly related to the amount of actin-myosin overlap (Fig. 1).
+The FL relationship is governed by several important biophysical aspects of muscle architecture. At the fiber level, the force produced is largely mediated by the number of crossbridges that can be formed. Crossbridges are small and have a limited attachment range. Therefore, crossbridge attachments only occur in the actin-myosin overlap zone of a sarcomere. Together with the assumptions underlying the crossbridge theory, this limitation implies that the maximal isometric force of a sarcomere is directly related to the amount of actin-myosin overlap (Fig. 1).
 
 <center>
 ![](https://journals.physiology.org/cms/10.1152/jappl.1999.86.5.1445/asset/images/medium/japp05516002x.jpeg)
@@ -26,7 +26,7 @@ Of course, many muscles transect a lever system composed of a few bones articula
 
 $$MA=\frac{L_i}{L_o}$$,
 
-where $L_i$ is the in-lever and $L_o$ the output leaver. For the human upper limb, the inlever is the distance between the flexor insertion and elbow joint and the out-lever is the length of the antebrachium and hand (or the distance between the elbow and the load). This ratio generally accords to 0.2 in this system. What this predicts is that any force applied to the in-lever results in 20% of that force at the end of the out-lever.
+where $L_i$ is the in-lever and $L_o$ the output leaver. For the human upper limb, the inlever is the distance between the flexor insertion and elbow joint and the out-lever is the length of the antebrachium and hand (or the distance between the elbow and the load). This ratio generally accords to 0.2 in this system. What this predicts is that any force applied to the in-lever results in 20% of that force at the end of the out-lever (i.e., the palm).
 
 What makes this more complicated is that the effective in-lever, the input moment arm, changes as the forearm flexes. This is due to the fact that the insertion angle changes as the forearm rotates (Fig. 3). Because the force produced by an input is variable with respect to insertion angle, the output isn't necessarily predicted by MA alone.
 
@@ -132,18 +132,16 @@ To assess the affect of eccentric fatigue of elbow flexor muscles, we'll be meas
 
 1. 40-kg Load Cell with HX711 amplifier
 2. Arduino Uno microcontroller
-3. SD storage module
-4. 9V battery power cable
 
 ## DAQ Assembly and Programming
 
-Assembly for this force logger is almost entirely captured in [this tutorial](https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/). You only modification is to add SD data storage to your hardware and the appropriate code to your sketch.  
+Assembly for this force logger is almost entirely captured in [this tutorial](https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/). 
 
 You'll see that the sketch in the tutorial requires a calibration step to output appropriate force or mass units. **Don't worry about calibration.** We'll be looking a normalized force, so units don't matter. 
 
-As for your SD storage integration, make sure your sketch writes one column data to the SD card with the header "force".
+<!-- As for your SD storage integration, make sure your sketch writes one column data to the SD card with the header "force". -->
 
-For each experiment, you'll be recording 12 bouts of MVC force, each corresponding to a different elbow angle, for 30 s.  For each arm angle, with the battery pack and SDcard module installed and writing data, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking force data. So as not to confuse from where your data came, it's a good idea to change the name of the text file being written to for each experiment, i.e., "control.csv" and "fatigue.csv".
+For each experiment, you'll be recording 12 bouts of MVC force, each corresponding to a different elbow angle, for 30 s.  For each arm angle, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking force data. So as not to confuse from where your data came, it's a good idea to change the name of the text file being saved to for each experiment, e.g., "Subject1_control.csv" and "Subject1_fatigue.csv".
 
 ## Data Collection
 
@@ -180,7 +178,7 @@ As the elbow flexes or extends, you should be able to peak at the ganiometer to 
 
 ### Isometric MVCs
 
-We will collect isometric force data from MVCs over 12 arm angles, 45-157.5$^o$ at 11.25$^o$ (call it 11$^o$) intervals. Your load-cell is affixed to two hooks. Attach one hook to the dowel in your DAQ pack and the other to something that won't move under the torque of your for arm. This could be a table, chair, bench, etc. Hold the dowel in your hand as shown in Fig. 6. Make sure your elbow is supported by something rigid (i.e. the top of a chair back, etc.). 
+We will collect isometric force data from MVCs over 12 arm angles, 45-157.5$^o$ at 11.25$^o$ (call it 11$^o$) intervals. Your load-cell is affixed to two hooks. Attach one hook to the dowel in your DAQ pack and the other to something that won't move under the torque of your forearm. This could be a table, chair, bench, etc. Hold the dowel in your hand as shown in Fig. 6. Make sure your elbow is supported by something rigid (i.e. the top of a chair back, etc.). 
 
 <center>
 ![](grip.jpg){width=50%}
@@ -219,9 +217,9 @@ Once you complete your experiments, upload your 24 data files to [this Google di
 For each experiment, we'll stick to a convention within the muscle physiology world by considering maximum normalized force. That is:
 
   1. Find maximum force for each recording (don't worry about the specific values or units because you'll. . .).
-  2. Find maximum force ($F_{max}$) among all angles for each experiment (control or fatigued) for each individual and then divide all maximum values for that experiment by $F_{max}$. You values will now be normalize, i.e., scaled 0-1 with a value of 1 representing the highest force recorded during an experiment.
+  2. Find maximum force ($F_{max}$) across all angles for each experiment (control or fatigued) for each individual and then divide all maximum values for that experiment by $F_{max}$. Your values will now be normalize, i.e., scaled 0-1 with a value of 1 representing the highest force recorded during an experiment.
   
-Using the normalized force data from the control and fatigued experiments, we'll consider shifts the at which angle $F_{max}$ occurred, the difference in $\theta_{max}$. To assess any shift in $\theta_{max}$ with our limited elbow angle samples, we could simply look at the angle at which the flexors produce the most force. For instance, for the these data:
+Using the normalized force data from the control and fatigued experiments, we'll consider shifts at which angle $F_{max}$ occurred, the difference in $\theta_{max}$. To assess any shift in $\theta_{max}$ with our limited elbow angle samples, we could simply look at the angle at which the flexors produce the most force. For instance, for the these data:
 
 
 ```{r,message=FALSE}
@@ -289,7 +287,6 @@ qplot(ang,normF)+geom_point(aes(x=x.pred,y=normF.pred.fat),col="red")+geom_point
 
 x.pred[which.max(normF.pred.fat)]-x.pred[which.max(normF.pred)] #shift in angle for Fmax, theta_max
 
-
 ```
 
 Looks as if there's a 10.3$^o$ shift in $\theta_{max}$. 
@@ -300,7 +297,6 @@ Say we had a bunch of data (from only 10 subjects) and you wanted to compare the
 library(tidyverse)
 
 set.seed(1234) #to keep random noise the same
-
 
 sub <- 1:10 #ten subjects
 dat.l <- list() #empty list
@@ -360,7 +356,6 @@ fits <- dat%>%
 Now let's join these the `AICs` and `fits` tables so that we can filter the model predictions by which model fits best. Note `filter(best==TRUE)` after constructing a `best` column according to the minimum AICc score using `mutate()`.
 
 ```{r, message=TRUE}
-
 best.models <- fits%>%
   left_join(AICs)%>%
   group_by(subject,exp)%>%
@@ -406,7 +401,7 @@ The answers and narrative in your .Rmd should include the following components:
       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here.
       + Author contributions: Briefly outline what each team member contributed to the project.
 
-Project reports should be uploaded by 11:59 PM on Sunday, November 15th.
+Project reports should be uploaded by 11:59 PM on Sunday, November 14th.
 
 <div class = "green">
 <div class="row">

@@ -29,15 +29,16 @@ writing <- list("The writing is concise, clear, avoids passive constructions, an
 sources <- list("Statements of scientific findings and fact are supported by references; references are contained in a BibTex bibliography and inserted with `@` tags  (5 pts)", "Some statements of scientific findings and fact are not supported by references; some references are not contained in a BibTex bibliography or inserted with `@` tags (3 pts)",   "Most statements of scientific findings and fact are not supported by references; references are not contained in a BibTex bibliography nor inserted with `@` tags (1 pt)")
 
 
-teams <- list("cod(h)ers",
-      "AlgorithmsAnonymous",
-     "Coders-R-COOL",
-     "Coding R-senal",
-     "Experimental Eagles",
-     "I.M.A.K.",
-     "R-ctic Monkeys",
-     "StringCheese",
-     "Team 2")
+teams <- list("beep-boop-squad",
+      "gitin",
+     "Coders-R-US",
+     "colleg_coders",
+     "CroCODEiles",
+     "Get it done",
+     "Molecool",
+     "Rchitects",
+     "Game of Codes",
+     "Go-Git-ers")
 
 shinyApp(
 fluidPage(
@@ -170,7 +171,7 @@ fluidPage(
   server = function(input, output) {
     output$report <- downloadHandler(
       # For PDF output, change this to "report.pdf"
-      filename = paste0(input$team,"_Module",input$module,"_feedback.html"),
+      filename = function(){paste0(input$team,"_Final_Project_Feedback.html")},
       content = function(file) {
         # Copy the report file to a temporary directory before processing it, in
         # case we don't have write permissions to the current working dir (which

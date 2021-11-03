@@ -578,48 +578,48 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <span id="cb6-4"><a href="#cb6-4"></a></span>
 <span id="cb6-5"><a href="#cb6-5"></a><span class="kw">print</span>(sim.trait)</span></code></pre></div>
 <pre><code>##              Vulpes zerda          Canis familiaris               Nasua nasua 
-##                0.63020785                0.78835590                0.50244546 
+##                0.86432819                0.41130445                0.42838451 
 ##      Herpestes sanguineus           Equus africanus            Equus caballus 
-##                0.68090030                0.55422844                0.67607233 
+##                0.98435547                0.82875092                0.93700497 
 ##                Lama pacos                Lama glama                Sus scrofa 
-##                0.69846181                0.84148989                0.48608853 
+##                0.26059759                0.96681178                0.92242213 
 ##    Hippopotamus amphibius                Bos taurus              Capra hircus 
-##                0.10445055                0.82110105                0.14911144 
+##                0.10218722                0.85883812                0.13196200 
 ##          Tupaia belangeri       Microcebus myoxinus         Aotus trivirgatus 
-##                0.06905346                0.86149781                0.65921013 
+##                0.19928472                0.04435481                0.44874382 
 ##        Callithrix jacchus          Cebuella pygmaea          Saimiri sciureus 
-##                0.20693248                0.47440354                0.03809277 
+##                0.47314019                0.89452704                0.96456804 
 ##           Cebus albifrons              Homo sapiens         Macaca nemestrina 
-##                0.70991135                0.74659400                0.83753586 
+##                0.55057131                0.71728759                0.54796318 
 ##       Macaca fascicularis            Macaca mulatta            Macaca radiata 
-##                0.52411708                0.94873891                0.08981799 
+##                0.89106701                0.58020160                0.76119322 
 ##        Papio cynocephalus     Oryctolagus cuniculus        Ochotona rufescens 
-##                0.64239261                0.71043575                0.57439702 
+##                0.66430741                0.62005421                0.35311177 
 ##             Marmota monax Spermophilus richardsonii      Cynomys ludovicianus 
-##                0.95279272                0.40473109                0.39400353 
+##                0.21999628                0.83834185                0.82007954 
 ##          Sciurus vulgaris          Glaucomys volans        Georychus capensis 
-##                0.49362530                0.32696909                0.04853097 
+##                0.36481673                0.82825703                0.57063085 
 ##           Cavia porcellus             Octodon degus         Spalax ehrenbergi 
-##                0.06088794                0.04999938                0.05908849 
+##                0.29868541                0.13121665                0.54989425 
 ##              Mus musculus       Apodemus mystacinus     Arvicanthis niloticus 
-##                0.60148816                0.29133686                0.13109923 
+##                0.62434976                0.13135402                0.82730468 
 ##         Rattus norvegicus       Pachyuromys duprasi     Meriones unguiculatus 
-##                0.53286931                0.38478712                0.10103676 
+##                0.98622572                0.51741070                0.06689816 
 ##          Acomys cahirinus           Acomys russatus     Peromyscus polionotus 
-##                0.69628161                0.79797178                0.02146254 
+##                0.55635416                0.27123134                0.55049922 
 ##       Peromyscus leucopus        Ondatra zibethicus      Mesocricetus auratus 
-##                0.67547339                0.55718995                0.97068013 
+##                0.94336628                0.06640170                0.83333898 
 ##         Cricetus cricetus    Saccostomus campestris           Elephas maximus 
-##                0.71352373                0.16134164                0.68623960 
+##                0.20638433                0.18147331                0.65838628 
 ##      Dasypus novemcinctus 
-##                0.04315346</code></pre>
+##                0.52242883</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>sim.sig &lt;-<span class="st"> </span><span class="kw">phylosig</span>(m.phy,sim.trait,<span class="dt">method=</span><span class="st">&quot;lambda&quot;</span>,<span class="dt">test=</span>T)</span>
 <span id="cb8-2"><a href="#cb8-2"></a>  </span>
 <span id="cb8-3"><a href="#cb8-3"></a><span class="kw">print</span>(sim.sig)</span></code></pre></div>
 <pre><code>## 
-## Phylogenetic signal lambda : 6.20742e-05 
-## logL(lambda) : -9.70093 
-## LR(lambda=0) : -0.000561435 
+## Phylogenetic signal lambda : 6.6107e-05 
+## logL(lambda) : -9.9048 
+## LR(lambda=0) : -0.000533317 
 ## P-value (based on LR test) : 1</code></pre>
 <p>Here we simulated some random data (values from 0–1) for the number of tips on the tree using <code>runif()</code> to generate the values and <code>Ntip()</code> from the <code>ape</code> package to retrieve the number of tips (i.e., species) in the tree. We named these values with the tip labels from the tree, an important step. The <code>phylosig()</code> function in <code>phytools</code> requires that a vector of trait values must have names that match the tips in the tree. In your analyses <strong>make sure you name your variable values with the species from your dataset</strong>, not the tip labels. The order for these will certainly be different and, if not correct, will make any analysis rubbish.</p>
 <div class="green">
