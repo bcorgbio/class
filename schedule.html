@@ -13,17 +13,26 @@
 
 <title>Schedule</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -37,32 +46,6 @@
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
 
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -74,10 +57,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -94,40 +73,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 61px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h2 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h3 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h4 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h5 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h6 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -155,7 +107,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -167,7 +119,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -178,10 +130,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -193,7 +158,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -319,7 +283,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -414,7 +378,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -642,7 +606,7 @@ This is a lot of reading and fiddling with R. Don’t worry too much about under
 <ul>
 <li><a href="https://r4ds.had.co.nz/wrangle-intro.html">Chapter 9: Introduction</a></li>
 <li><a href="https://r4ds.had.co.nz/tibbles.html">Chapter 10: Tibbles</a></li>
-<li><a href="https://r4ds.had.co.nz/data-import.html">Chapter 11: Data Import</a> [don’t worry too much about 11.3 and 11.4 “Parsing Vectors” and "Parsing Files]</li>
+<li><a href="https://r4ds.had.co.nz/data-import.html">Chapter 11: Data Import</a> [don’t worry too much about 11.3 and 11.4 “Parsing Vectors” and “Parsing Files]</li>
 <li><a href="https://r4ds.had.co.nz/tidy-data.html">Chapter 12: Tidy Data</a></li>
 <li><a href="https://r4ds.had.co.nz/relational-data.html">Chapter 13: Relational Data</a></li>
 </ul></li>
@@ -1182,7 +1146,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <td>Answer a question on discussion board <br> Upload team data files to <a href="https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing">this directory</a></td>
 <td></td>
 <td></td>
-<td>Upload Module 6 Project Report</td>
+<td>Push 6 Project Report</td>
 </tr>
 <tr class="even">
 <td></td>
@@ -1314,7 +1278,7 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <div id="readwatch-7" class="section level2">
 <h2>Read/Watch</h2>
 <ul>
-<li>Read <a href="https://journals.physiology.org/doi/full/10.1152/jappl.1999.86.5.1445">Rassier, D.E., MacIntosh, B.R. and Herzog, W., 1999. Length dependence of active force production in skeletal muscle. Journal of applied physiology, 86(5), pp.1445-1457. 83–95.</a></li>
+<li>Read <a href="https://journals.physiology.org/doi/full/10.1152/jappl.1999.86.5.1445">Rassier, D.E., MacIntosh, B.R. and Herzog, W., 1999. Length dependence of active force production in skeletal muscle. Journal of applied Physiology, 86(5), pp.1445-1457. 83–95.</a></li>
 <li>Read <a href="https://openoregon.pressbooks.pub/bodyphysics/chapter/body-levers/">Oregon State’s Body Physics page</a></li>
 <li>Read <a href="https://www.omega.com/en-us/resources/wheatstone-bridge">The Wheastone Bridge from Omega</a></li>
 </ul>
@@ -1555,43 +1519,12 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 </table>
 </div>
 </div>
-<div id="module-10-jumping-ugs" class="section level1">
-<h1>Module 10: Jumping UGs</h1>
-<p>TBD</p>
-<div id="dates-9" class="section level2">
-<h2>Dates</h2>
-<p>Weeks 14 &amp; 15 (Nov 29—Dec 8):</p>
-</div>
-<div id="key-concepts-9" class="section level2">
-<h2>Key Concepts</h2>
-<ul>
-<li>?</li>
-<li>?</li>
-<li>?</li>
-<li>?</li>
-</ul>
-</div>
-<div id="learning-objectives-9" class="section level2">
-<h2>Learning Objectives</h2>
-<p>TBD</p>
-</div>
-<div id="readwatch-9" class="section level2">
-<h2>Read/Watch</h2>
-<p>TBD</p>
-</div>
-<div id="do-9" class="section level2">
-<h2>Do</h2>
-<ul>
-<li>Post one and respond to one question in <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion board</a></li>
-<li>Complete and commit Module 10 Project report</li>
-</ul>
-</div>
-<div id="guiding-questions-9" class="section level2">
-<h2>Guiding Questions</h2>
-<p>+TBD</p>
-</div>
-<div id="module-10-schedule" class="section level2">
-<h2>Module 10 Schedule</h2>
+<div id="phase-iii-final-projects" class="section level1">
+<h1>Phase III: Final Projects</h1>
+<p>In Phase III, you’ll be tasked with quickly developing a project of your own design that either (1) requires the fabrication of a new or modified data acquisition system or (2) the acquisition of data from a peer-reviewed study or database. The goal of this project is to answer a question personal and interesting to your team. The question should be new within the context of the course and reflect a physiological focus (i.e., not ). This project will require you to first delve into the the scientific literature to set the stage and then leverage your new data-analysis and report-writing skills in the synthesis of 4-5 page markdown. This final project report should follow the same format and requirements of the reports produced in Phase II, but with expanded content.</p>
+<p>More details about the final project and its expectations can be found <a href="final_proj.html">here</a>.</p>
+<div id="final-project-schedule" class="section level2">
+<h2>Final Project Schedule</h2>
 <p>All assignments are due at 11:59 on the specified date.</p>
 <table>
 <colgroup>
@@ -1621,9 +1554,9 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <td><strong>Assignment due</strong></td>
 <td></td>
 <td></td>
-<td>Post question to discussion board</td>
+<td>Post question to discussion board<br>Meet with Prof. K to discuss project ideas (by appt)</td>
 <td>Answer a question on discussion board</td>
-<td></td>
+<td>Meet with Prof. K to discuss project ideas (by appt)</td>
 <td></td>
 <td></td>
 </tr>
@@ -1655,9 +1588,55 @@ As with HOPR, make sure to have R and R Studio up and running so that you can co
 <tbody>
 <tr class="odd">
 <td><strong>Assignment due</strong></td>
+<td>Meet with Prof. K to discuss project ideas (by appt)</td>
+<td></td>
+<td>Meet with Prof. K to discuss project ideas (by appt)</td>
+<td></td>
+<td>Meet with Prof. K to discuss project ideas (by appt)</td>
 <td></td>
 <td></td>
-<td>Commit Module 10 Project Report</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Monday <br> 12/13</th>
+<th>Tuesday <br>12/14</th>
+<th>Wednesday<br> 12/15</th>
+<th>Thursday <br> 12/9</th>
+<th>Friday <br> 12/10</th>
+<th>Saturday<br> 12/10</th>
+<th>Sunday<br> 12/11</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Assignment due</strong></td>
+<td>Meet with Prof. K to discuss project ideas (by appt)</td>
+<td></td>
+<td>Commit Final Project Report</td>
 <td></td>
 <td></td>
 <td></td>
@@ -1707,7 +1686,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -1716,6 +1695,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

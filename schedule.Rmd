@@ -594,53 +594,29 @@ All assignments are due at 11:59 on the specified date.
 **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | Commit Module 9 Project Report
 ||||||||
 
-# Module 10:   Jumping UGs
 
-TBD
+# Phase III: Final Projects
 
+In Phase III, you'll be tasked with quickly developing a project of your own design that  either (1) requires the fabrication of a new or modified data acquisition system or (2) the acquisition of data from a peer-reviewed study or database. The goal of this project is to answer a question personal and interesting to your team. The question should be new within the context of the course and reflect a physiological focus (i.e., not ). This project will require you to first delve into the the scientific literature to set the stage and then leverage your new data-analysis and report-writing skills in the synthesis of 4-5 page markdown. This final project report should follow the same format and requirements of the reports produced in Phase II, but with expanded content. 
 
-## Dates 
-Weeks 14 & 15 (Nov 29—Dec 8):
-
-## Key Concepts
-
-  + ?
-  + ?
-  + ?
-  + ?
-
-## Learning Objectives
-
-TBD
-  
-## Read/Watch 
-
-TBD
-  
-
-## Do
-  + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
-  + Complete and commit Module 10 Project report
-
-
-
-
-## Guiding Questions
-
-  +TBD
+More details about the final project and its expectations can be found [here](final_proj.html).
 
   
-## Module 10 Schedule
+## Final Project Schedule
 
 All assignments are due at 11:59 on the specified date.
 
 || Monday <br> 11/29 |  Tuesday <br>11/30    | Wednesday<br>  12/1 | Thursday <br> 12/2 | Friday <br> 112/3 |Saturday<br> 12/4 | Sunday<br> 12/5
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |
+**Assignment due** |  | | Post question to discussion board<br>Meet with Prof. K to discuss project ideas (by appt) | Answer a question on discussion board | Meet with Prof. K to discuss project ideas (by appt)| |
 
  || Monday <br> 12/6 |  Tuesday <br>12/7    | Wednesday<br>  12/8 | Thursday <br> 12/9 | Friday <br> 12/10 |Saturday<br> 12/10 | Sunday<br> 12/11
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 
-**Assignment due** | | | Commit Module 10 Project Report | | | | 
+**Assignment due** | Meet with Prof. K to discuss project ideas (by appt)| |Meet with Prof. K to discuss project ideas (by appt)  | |Meet with Prof. K to discuss project ideas (by appt) | | 
 ||||||||
 
+ || Monday <br> 12/13 |  Tuesday <br>12/14    | Wednesday<br>  12/15 | Thursday <br> 12/9 | Friday <br> 12/10 |Saturday<br> 12/10 | Sunday<br> 12/11
+ |--------|-------- |--------|-------- |--------|--------|--------|-------- 
+**Assignment due** | Meet with Prof. K to discuss project ideas (by appt)| |Commit Final Project Report  | | | | 
+||||||||
 

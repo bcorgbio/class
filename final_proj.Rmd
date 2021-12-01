@@ -18,9 +18,9 @@ In this one and only project for Phase III, you are tasked with quickly developi
 
 In either case, the project should address an important topic in organismal biology and has a scope that permits experimentation/data collection, analysis, and write up within the time frame of just a few short weeks. Furthermore, the project will require you to first delve into the the scientific literature to set the stage and then leverage your new data-analysis and report-writing skills in the synthesis of a markdown report. This final project report should follow the same format and requirements of the reports produced in Phase II, but with expanded content.
 
-**NOTE**: Teams may pursue (Module 9)[mod9_proj.html] as their final project. All the following parameters apply.
+**NOTE**: Teams may pursue [Module 9](mod9_proj.html) as their final project. All the following parameters apply.
 
-Prof. Kenaley will work with each team to develop a timeline for preliminary deliverable that include defining an initial question, a framework for analysis, and a final-project draft that includes an abstract and potential figures and other representations of your date. Early in the project and after consulting with Prof. Kenaley, each team should fill out [this form](https://forms.gle/CCc5hjNz5sqVcSjJ8) that establishes this timeline. 
+Prof. Kenaley will work with each team to develop a timeline for preliminary deliverable that include defining an initial question, a framework for analysis, and a final-project draft that includes an abstract and potential figures and other representations of your date. Early in the project each team should work with Prof. Kenaley to schedule an initial meeting to work this out. Please email him directly.
 
 
 # Methods
@@ -29,7 +29,7 @@ You a free to pursue any methods introduced in the course. This may include, but
 
 # Project Report
 
-The following components of the project report should be included in a markdown document pushed to your github repos before the end of the finals period:
+The following components of the project report should be included in a markdown document pushed to your github repos on or before **11:59 pm on December 15th**:
 
    * A YAML header that specifies HTML output, the authors, and a bibliography named "BIOL3140.bib". **Submit this bibliography as well!**
    * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifically:
