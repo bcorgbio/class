@@ -103,7 +103,7 @@ All assignments are due at 11:59 on the specified date.
 
  || Monday <br> 8/29 |  Tuesday <br>8/30    | Wednesday<br>  8/321 | Thursday <br> 9/1 | Friday <br> 9/2 |Saturday<br> 9/3 | Sunday<br> 9/4
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | |
+**Assignment due** |[slides](lect\3140_f22_8-29.html) | | Post question to discussion board | Answer a question on discussion board  | | |
 
  || Monday <br> 9/5 |  Tuesday <br>9/6    | Wednesday<br>  9/7 | Thursday <br> 9/8 | Friday <br> 9/9 |Saturday<br> 9/10 | Sunday<br> 9/11
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
@@ -578,7 +578,7 @@ More details about the final project and its expectations can be found [here](fi
 
 All assignments are due at 11:59 on the specified date.
 
-|| Monday <br> 11/278 |  Tuesday <br>11/29    | Wednesday<br>  11/30 | Thursday <br> 12/1 | Friday <br> 12/2 |Saturday<br> 12/3 | Sunday<br> 12/4
+|| Monday <br> 11/27 |  Tuesday <br>11/29    | Wednesday<br>  11/30 | Thursday <br> 12/1 | Friday <br> 12/2 |Saturday<br> 12/3 | Sunday<br> 12/4
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
 **Assignment due** |  | | Post question to discussion board<br>Meet with Prof. K to discuss project ideas (by appt) | Answer a question on discussion board | Meet with Prof. K to discuss project ideas (by appt)| |
 

@@ -3,7 +3,7 @@ title: "Welcome and Introduction"
 subtitle: "Setting the Stage"
 author: "Dr. Christopher Kenaley"
 institute: "Boston College"
-date: "2021/8/30"
+date: "2022/8/29"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -150,7 +150,7 @@ This team must establish two things:
 
   1. A *unique* team name. *Puns are welcome* and encouraged (e.g., "R-tful Coders") 
   
-  2. A team discussion on GitHub that includes me (@ckenaley) on the team (see [Discussion Board]). 
+  2. A team discussion on GitHub that includes me (@ckenaley) on the team (see [Discussion Board](https://bcorgbio.github.io/class/index.html#Discussion_Board)). 
   
  Each week, teams use their team discussion board to generate a question
 
@@ -183,8 +183,6 @@ class:  top
 - Reports due on Sundays
 - Report written in R Markdown
 - Commit to team repo on GitHub
-
-
 ]
 
 
@@ -207,6 +205,94 @@ class:  top
 ## Timeline
 - ~2 weeks to develop, execute
 - Start end of November
+]
+
+
+
+
+---
+class:  top
+# Phase II topics
+
+.pull-left[
+- Evolution of wing shape in butterflies and moths.
+
+- Force-length relationship of fatigued muscles.
+
+- Migration phenology of neotropical migrants in New England
+]
+
+.pull-right[
+![](https://royalsocietypublishing.org/cms/asset/1824fde4-b87b-40bf-97a7-3e9a0f13dfc0/rsfs20160087f02.jpg)
+]
+
+
+
+
+---
+class:  top
+# Phase II topics
+
+.pull-left[
+- Evolution of wing shape in butterflies and moths.
+
+- Force-length relationship of fatigued muscles.
+
+- Migration phenology of neotropical migrants in New England
+]
+
+.pull-right[
+![](https://themusclephd.com/wp-content/uploads/2020/09/Triceps-LT-Relationship.png)
+]
+
+
+---
+class:  top
+# Phase II topics
+
+.pull-left[
+- Evolution of wing shape in butterflies and moths.
+
+- Force-length relationship of fatigued muscles.
+
+- Migration phenology of neotropical migrants in New England
+]
+
+.pull-right[
+![](https://www.nps.gov/articles/images/image_7008_2e-Blackpoll-Warbler-Migration_web.jpg?maxwidth=1200&autorotate=false)
+]
+
+---
+class:  top
+# Phase III topics
+
+.pull-left[
+
+- Tongue Force-length relationship.
+
+- *Phylogenetic signal* in migration phenology of neotropical migrants in New England
+]
+
+.pull-right[
+![](tounge.png)
+
+]
+
+---
+class:  top
+# Phase III topics
+
+.pull-left[
+
+- Tongue Force-length relationship.
+
+- *Phylogenetic signal* in migration phenology of neotropical migrants in New England
+]
+
+.pull-right[
+![](download.png)
+![](arrivedata.png)
+
 ]
 
 

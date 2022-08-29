@@ -9,6 +9,7 @@ Phase I is meant to bring you up to speed on the ins and outs of intrument proto
 # Rubric
  |Component| **Spot On (5 pts)** |  **Pretty Good (3 pts)** | **Needs Work (1 pt)**  
 |--------|-------- |-------- |--------
-| Tasks and Outputs | Completes all tasks fully; submits all required outputs and materials on time| Completes a majority but not all tasks fully; submission meets the deadline  | Completes few required taks or submits few required matrials; submission misses the deadline
+| Tasks | Completes all tasks fully; meets all deadlines | Completes a majority but not all tasks fully; submission meets the deadline  | Completes few required tasks or submits few required matrials; submission missed the deadline
+| Outputs | Project outputs contain all necessary components and none that are unnecessary| Outputs contain most but not all necessary components or some  that are unnecessary  | Few components are submitted
 | Effort and Engagement | Individual or team asks questions or seeks help regularly|  Individual or team asks questions or seek help sometimes, but not regularly  |  Individual or team does not seem help
 ||||
