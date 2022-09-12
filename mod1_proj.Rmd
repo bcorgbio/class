@@ -233,7 +233,7 @@ dat %>%
 
 # Loop When You Can
 
-Phew! You're almost there, the end of the Module 2 Project. Just one last important concept to work through, the loop, specifically, the `for` loop. This is a great device for iterating through operations for which there aren't dedicated functions. Important examples of this in the context of organismal biology include loading data from many files into one data set and producing a bunch of figures all at once from a large data set, among other things. Since we have a large data set loaded, why don't we use a `for()` loop to produce a bunch of figures.
+Phew! You're almost there, the end of the Module 1 Project. Just one last important concept to work through, the loop, specifically, the `for` loop. This is a great device for iterating through operations for which there aren't dedicated functions. Important examples of this in the context of organismal biology include loading data from many files into one data set and producing a bunch of figures all at once from a large data set, among other things. Since we have a large data set loaded, why don't we use a `for()` loop to produce a bunch of figures.
 
 A `for()` loop essentially tells R to do something over a set of things in a vector. For instance, for "i" in 1 to 10, print each  "i":
 
@@ -258,7 +258,7 @@ Here, for each value `i` in `species` we passed `dat` through a filter where `sp
 Let's wrap this up by saving a PDF file containing all the figures.
 
 ```{r}
-pdf("species.quadrant.pdf")
+pdf("species_quadrant.pdf")
 for(i in species){
   p <- dat %>%
   filter(species==i)%>%
@@ -272,7 +272,7 @@ list.files(pattern=".pdf")
 
 
   
-The wrapping function `pdf()` prints graphic output to a file, in this case one named "species.quadrant.pdf". Any plot printed with `p()` after `pdf()` and before `dev.off()` saves the plots in the named file. The `list.files()` command with `pattern=".pdf"`  confirms that a PDF file was saved to our working directory.
+The wrapping function `pdf()` prints graphic output to a file, in this case one named "species_quadrant.pdf". Any plot printed with `p()` after `pdf()` and before `dev.off()` saves the plots in the named file. The `list.files()` command with `pattern=".pdf"`  confirms that a PDF file was saved to our working directory.
 
   
 # Project Report
@@ -286,7 +286,7 @@ The goal of this project report is to submit an R script that runs the code pres
   5. Code that produces a summary of the number of specimens sampled for each species.
   6. Code that produces a PDF file containing 6 figures, one for each species that includes a boxplot of puncture force verus quadrant. 
     
-Have one representative of each team commit the code and PDFs to your team's repo. Submissions are due by 11:59 PM on Sunday, September 12th.
+**Each team member must submit their own report.** Make sure each commits their code and PDF to your team's repo, appropriately named, e.g., "Jane_Doe_script.R", "Jane_Doe_species_quandrant.pdf". Submissions are due by 11:59 PM on Sunday, September 11th.
 
 <div class = "green">
 <div class="row">

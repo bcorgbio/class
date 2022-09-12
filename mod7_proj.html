@@ -13,17 +13,26 @@
 
 <title>Module 7 Project</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -35,21 +44,29 @@
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,7 +86,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -122,40 +139,31 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+
 
 
 <style type="text/css">
-h1 {
-  font-size: 34px;
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
 }
-h1.title {
-  font-size: 38px;
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-h2 {
-  font-size: 30px;
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-h3 {
-  font-size: 24px;
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
 }
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
+div.csl-indent {
+  margin-left: 2em;
 }
 </style>
-
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -166,10 +174,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -186,40 +190,16 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 61px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h2 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h3 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h4 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h5 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h6 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -247,7 +227,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -259,7 +239,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -270,10 +250,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -285,7 +278,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -411,7 +403,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -425,7 +417,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -441,7 +433,7 @@ div.tocify {
   <a href="schedule.html">Schedule</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Projects
      
     <span class="caret"></span>
@@ -496,7 +488,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f21">BIOL 3140 Discussion</a>
+  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f22">BIOL 3140 Discussion</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -506,7 +498,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -522,20 +514,73 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>As we took on in <a href="mod6_proj.html">the last module</a> and read in <span class="citation">Mortola and Lanthier (2004)</span>, body temperature (<span class="math inline">\(T_b\)</span>) across mammals demonstrates predictable scaling patterns. In the analysis for the last project and in the analysis performed by <span class="citation">Mortola and Lanthier (2004)</span>, neither accounted for the phylogenetic relationships of the species considered. After the project for <a href="mod3_proj.html">Module 3</a>, you’d be forgiven if you put a giant asterisk next to results of these analyses. That is, species are not statistically indepedent samples due to their shared evolutionary history <span class="citation">(Felsenstein 1985)</span>.</p>
-<p>Organismal biologists—ecologists, physiologists, and behavioral ecologists, to name a few—have a checkered history of including phylogenetic structure in their analyses <span class="citation">(Freckleton, Harvey, and Pagel 2002)</span>. Accounting for phylogeny when asking comparative questions (i.e., how do traits vary between species?) isn’t always necessary <span class="citation">(Westoby, Leishman, and Lord 1995)</span>, nor is it always appropriate in the way biologist use comparative methods <span class="citation">(Uyeda, Zenil-Ferguson, and Pennell 2018)</span>. However, generally, when a biologists asks if one trait varies with another, especially when those traits are continuous, it’s a good idea to at least explore if those traits demonstrate some phylogenetic signal.</p>
-<p>In this project, let’s reconsider the <span class="math inline">\(T_b\)</span> analyses of <span class="citation">Mortola and Lanthier (2004)</span> in a phylogenetic context. In our last project, we focused on <span class="math inline">\(T_b\)</span> oscillations (<span class="math inline">\(T_{\Delta}\)</span>) using our own data for humans and data from <span class="citation">Mortola and Lanthier (2004)</span> for 52 species of non-human mammals. For our Module 7 project, we’ll also consider the scaling relationships of maximum daily <span class="math inline">\(T_b\)</span> (<span class="math inline">\(T_{max}\)</span>) and mininum daily <span class="math inline">\(T_b\)</span> (<span class="math inline">\(T_{min}\)</span>). We’ll focus only on their data so as to directly compare results. That is, we’ll use their data for humans, not ours from Module 6.</p>
+<p>As we took on in <a href="mod6_proj.html">the last module</a> and
+read in <span class="citation">Mortola and Lanthier (2004)</span>, body
+temperature (<span class="math inline">\(T_b\)</span>) across mammals
+demonstrates predictable scaling patterns. In the analysis for the last
+project and in the analysis performed by <span class="citation">Mortola
+and Lanthier (2004)</span>, neither accounted for the phylogenetic
+relationships of the species considered. After the project for <a
+href="mod3_proj.html">Module 3</a>, you’d be forgiven if you put a giant
+asterisk next to results of these analyses. That is, species are not
+statistically indepedent samples due to their shared evolutionary
+history <span class="citation">(Felsenstein 1985)</span>.</p>
+<p>Organismal biologists—ecologists, physiologists, and behavioral
+ecologists, to name a few—have a checkered history of including
+phylogenetic structure in their analyses <span
+class="citation">(Freckleton, Harvey, and Pagel 2002)</span>. Accounting
+for phylogeny when asking comparative questions (i.e., how do traits
+vary between species?) isn’t always necessary <span
+class="citation">(Westoby, Leishman, and Lord 1995)</span>, nor is it
+always appropriate in the way biologist use comparative methods <span
+class="citation">(Uyeda, Zenil-Ferguson, and Pennell 2018)</span>.
+However, generally, when a biologists asks if one trait varies with
+another, especially when those traits are continuous, it’s a good idea
+to at least explore if those traits demonstrate some phylogenetic
+signal.</p>
+<p>In this project, let’s reconsider the <span
+class="math inline">\(T_b\)</span> analyses of <span
+class="citation">Mortola and Lanthier (2004)</span> in a phylogenetic
+context. In our last project, we focused on <span
+class="math inline">\(T_b\)</span> oscillations (<span
+class="math inline">\(T_{\Delta}\)</span>) using our own data for humans
+and data from <span class="citation">Mortola and Lanthier (2004)</span>
+for 52 species of non-human mammals. For our Module 7 project, we’ll
+also consider the scaling relationships of maximum daily <span
+class="math inline">\(T_b\)</span> (<span
+class="math inline">\(T_{max}\)</span>) and mininum daily <span
+class="math inline">\(T_b\)</span> (<span
+class="math inline">\(T_{min}\)</span>). We’ll focus only on their data
+so as to directly compare results. That is, we’ll use their data for
+humans, not ours from Module 6.</p>
 <p>The specific goals of this porject are to:</p>
 <ol style="list-style-type: decimal">
-<li>Reproduce the scaling relationships (i.e. log-log regression models) of <span class="citation">Mortola and Lanthier (2004)</span> for <span class="math inline">\(T_{min}\)</span>,<span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>.</li>
-<li>Assess the phylogentic signal of the four variables in question (i.e., mass, <span class="math inline">\(T_{min}\)</span>, <span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>) using Pagel’s lamba.</li>
-<li>Reanalyze these models in a phylogenetic context using phylogenetic least squares (PGLS) under Brownian Motion (BM) and Ornstein-Uhlenbeck (OU) models of trait evolution.</li>
-<li>Using an information theory approach, assess the best fitting PGLS scaling models for each of the three <span class="math inline">\(T_b\)</span> variables</li>
-<li>Compare the significance of the results of <span class="citation">Mortola and Lanthier (2004)</span> with respect to the scaling of <span class="math inline">\(T_b\)</span> variables to your results that include phylogenetic correction.</li>
+<li>Reproduce the scaling relationships (i.e. log-log regression models)
+of <span class="citation">Mortola and Lanthier (2004)</span> for <span
+class="math inline">\(T_{min}\)</span>,<span
+class="math inline">\(T_{max}\)</span>, and <span
+class="math inline">\(T_{\Delta}\)</span>.</li>
+<li>Assess the phylogentic signal of the four variables in question
+(i.e., mass, <span class="math inline">\(T_{min}\)</span>, <span
+class="math inline">\(T_{max}\)</span>, and <span
+class="math inline">\(T_{\Delta}\)</span>) using Pagel’s lamba.</li>
+<li>Reanalyze these models in a phylogenetic context using phylogenetic
+least squares (PGLS) under Brownian Motion (BM) and Ornstein-Uhlenbeck
+(OU) models of trait evolution.</li>
+<li>Using an information theory approach, assess the best fitting PGLS
+scaling models for each of the three <span
+class="math inline">\(T_b\)</span> variables</li>
+<li>Compare the significance of the results of <span
+class="citation">Mortola and Lanthier (2004)</span> with respect to the
+scaling of <span class="math inline">\(T_b\)</span> variables to your
+results that include phylogenetic correction.</li>
 </ol>
 <center>
 <p><img src="mammaltree.png" style="width:50.0%" /></p>
-<br> <em>A time-calibrated molecular phylogeny of 5,911 extant and recently extinct species of mammals from <span class="citation">Upham, Esselstyn, and Jetz (2019)</span>. Colors at the tips indicate speciation rates.</em>
+<br> <em>A time-calibrated molecular phylogeny of 5,911 extant and
+recently extinct species of mammals from <span class="citation">Upham,
+Esselstyn, and Jetz (2019)</span>. Colors at the tips indicate
+speciation rates.</em>
 </center>
 <p><br> <br></p>
 </div>
@@ -543,175 +588,360 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <h1>Methods</h1>
 <div id="data-collection" class="section level2">
 <h2>Data Collection</h2>
-<p>You’ll first need to <a href="mammal.temp2.csv">download the full dataset</a> from <span class="citation">Mortola and Lanthier (2004)</span> that includes humans and 52 other species of mammals. In addition, please <a href="mammal.tree.pruned.txt">download the phylogeny</a> for the taxa included in <span class="citation">Mortola and Lanthier (2004)</span>. This is the same phylogenetic tree represented in the figure above taken from <span class="citation">Upham, Esselstyn, and Jetz (2019)</span>, but pruned to include only those species represented in the study by <span class="citation">Mortola and Lanthier (2004)</span>.</p>
+<p>You’ll first need to <a href="mammal.temp2.csv">download the full
+dataset</a> from <span class="citation">Mortola and Lanthier
+(2004)</span> that includes humans and 52 other species of mammals. In
+addition, please <a href="mammal.tree.pruned.txt">download the
+phylogeny</a> for the taxa included in <span class="citation">Mortola
+and Lanthier (2004)</span>. This is the same phylogenetic tree
+represented in the figure above taken from <span class="citation">Upham,
+Esselstyn, and Jetz (2019)</span>, but pruned to include only those
+species represented in the study by <span class="citation">Mortola and
+Lanthier (2004)</span>.</p>
 </div>
-<div id="reproducing-the-analyses-of-mortola2004scaling" class="section level2">
-<h2>Reproducing the Analyses of <span class="citation">Mortola and Lanthier (2004)</span></h2>
-<p>Your first task is to reproduce the scaling models constucted by <span class="citation">Mortola and Lanthier (2004)</span> and assess their signficance. For this you’ll need to construct log-log regression models of the three <span class="math inline">\(T_b\)</span> variables as a function of mass (<span class="math inline">\(W\)</span>). This is identical to the work you did in assessing the scaling relationships of <span class="math inline">\(T_{\Delta}\)</span> in the last project and only needs to be repeated with the <span class="citation">Mortola and Lanthier (2004)</span> dataset and the two other <span class="math inline">\(T_b\)</span> variables, <span class="math inline">\(T_{min}\)</span> and <span class="math inline">\(T_{max}\)</span>.</p>
+<div id="reproducing-the-analyses-of-mortola2004scaling"
+class="section level2">
+<h2>Reproducing the Analyses of <span class="citation">Mortola and
+Lanthier (2004)</span></h2>
+<p>Your first task is to reproduce the scaling models constucted by
+<span class="citation">Mortola and Lanthier (2004)</span> and assess
+their signficance. For this you’ll need to construct log-log regression
+models of the three <span class="math inline">\(T_b\)</span> variables
+as a function of mass (<span class="math inline">\(W\)</span>). This is
+identical to the work you did in assessing the scaling relationships of
+<span class="math inline">\(T_{\Delta}\)</span> in the last project and
+only needs to be repeated with the <span class="citation">Mortola and
+Lanthier (2004)</span> dataset and the two other <span
+class="math inline">\(T_b\)</span> variables, <span
+class="math inline">\(T_{min}\)</span> and <span
+class="math inline">\(T_{max}\)</span>.</p>
 </div>
 <div id="pagels-lambda" class="section level2">
 <h2>Pagel’s Lambda</h2>
-<p>The second task is to assess the phylogenetic signal of each of the four variables in the study: <span class="math inline">\(W\)</span>, the independent variable (i.e., our one covariate) and the three <span class="math inline">\(T_b\)</span> variables. For this, we’ll have to complete new analyses we haven’t taken on before: Pagel’s <span class="math inline">\(\lambda\)</span>. This method transforms the tree, by decreasing <span class="math inline">\(\lambda\)</span> (the phylogenetic signal) which lengthens the tip branches relative to internal branches, eventually decomposing the tree so that it begins to look like a complete polytomy, i.e., no phylogenetic relatedness or covariance between species. This can be seen as a way of muting phylogentic signal until the covariation of the error structure can no longer be explained by phylogenetic relatedness. If our estimated <span class="math inline">\(\lambda\)</span> = 0, the tree has no effect on the traits and they are assumed to have no phylogenetic signal. When <span class="math inline">\(\lambda\)</span> = 1, the traits conform to a Brownian motion model. Betweewn 0 and 1, there is some phylogenetic signal.</p>
-<p>Let’s explore how this works. First we’ll have to load our mammal tree. Notice that there’s a <code>gsub()</code> operation here to remove pesky "_" from the species names in the tree. <strong>This will be important later when the tree is used in the PGLS analysis and the species names must match those in the tree and the dataset.</strong> We’ll also have to load the package <code>geiger</code> which carries the <code>rescale()</code> function we’ll use to demonstrate what Pagel’s <span class="math inline">\(\lambda\)</span> does. [You won’t necessarily need <code>geiger</code> loaded for your project, this is just to demonstrate how Pagel’s <span class="math inline">\(\lambda\)</span> works.]</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(geiger)</span></code></pre></div>
-<pre><code>## Loading required package: ape</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>m.phy &lt;-<span class="st"> </span><span class="kw">read.tree</span>(<span class="st">&quot;mammal.tree.pruned.txt&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2"></a>m.phy<span class="op">$</span>tip.label &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;(</span><span class="ch">\\</span><span class="st">w+)_(</span><span class="ch">\\</span><span class="st">w+)&quot;</span>,<span class="st">&quot;</span><span class="ch">\\</span><span class="st">1 </span><span class="ch">\\</span><span class="st">2&quot;</span>,m.phy<span class="op">$</span>tip.label)</span>
-<span id="cb3-3"><a href="#cb3-3"></a></span>
-<span id="cb3-4"><a href="#cb3-4"></a></span>
-<span id="cb3-5"><a href="#cb3-5"></a>m.phy0&lt;-<span class="st"> </span><span class="kw">rescale</span>(m.phy, <span class="dt">model =</span> <span class="st">&quot;lambda&quot;</span>, <span class="dv">0</span>)</span>
-<span id="cb3-6"><a href="#cb3-6"></a>m.phy5 &lt;-<span class="st"> </span><span class="kw">rescale</span>(m.phy, <span class="dt">model =</span> <span class="st">&quot;lambda&quot;</span>, <span class="fl">0.5</span>)</span>
-<span id="cb3-7"><a href="#cb3-7"></a></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="kw">par</span>(<span class="dt">mfcol =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="kw">plot</span>(m.phy)</span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="kw">plot</span>(m.phy5)</span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="kw">plot</span>(m.phy0)</span></code></pre></div>
+<p>The second task is to assess the phylogenetic signal of each of the
+four variables in the study: <span class="math inline">\(W\)</span>, the
+independent variable (i.e., our one covariate) and the three <span
+class="math inline">\(T_b\)</span> variables. For this, we’ll have to
+complete new analyses we haven’t taken on before: Pagel’s <span
+class="math inline">\(\lambda\)</span>. This method transforms the tree,
+by decreasing <span class="math inline">\(\lambda\)</span> (the
+phylogenetic signal) which lengthens the tip branches relative to
+internal branches, eventually decomposing the tree so that it begins to
+look like a complete polytomy, i.e., no phylogenetic relatedness or
+covariance between species. This can be seen as a way of muting
+phylogentic signal until the covariation of the error structure can no
+longer be explained by phylogenetic relatedness. If our estimated <span
+class="math inline">\(\lambda\)</span> = 0, the tree has no effect on
+the traits and they are assumed to have no phylogenetic signal. When
+<span class="math inline">\(\lambda\)</span> = 1, the traits conform to
+a Brownian motion model. Betweewn 0 and 1, there is some phylogenetic
+signal.</p>
+<p>Let’s explore how this works. First we’ll have to load our mammal
+tree. Notice that there’s a <code>gsub()</code> operation here to remove
+pesky “_” from the species names in the tree. <strong>This will be
+important later when the tree is used in the PGLS analysis and the
+species names must match those in the tree and the dataset.</strong>
+We’ll also have to load the package <code>geiger</code> which carries
+the <code>rescale()</code> function we’ll use to demonstrate what
+Pagel’s <span class="math inline">\(\lambda\)</span> does. [You won’t
+necessarily need <code>geiger</code> loaded for your project, this is
+just to demonstrate how Pagel’s <span
+class="math inline">\(\lambda\)</span> works.]</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geiger)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>m.phy <span class="ot">&lt;-</span> <span class="fu">read.tree</span>(<span class="st">&quot;mammal.tree.pruned.txt&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>m.phy<span class="sc">$</span>tip.label <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;(</span><span class="sc">\\</span><span class="st">w+)_(</span><span class="sc">\\</span><span class="st">w+)&quot;</span>,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">1 </span><span class="sc">\\</span><span class="st">2&quot;</span>,m.phy<span class="sc">$</span>tip.label)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>m.phy0<span class="ot">&lt;-</span> <span class="fu">rescale</span>(m.phy, <span class="at">model =</span> <span class="st">&quot;lambda&quot;</span>, <span class="dv">0</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>m.phy5 <span class="ot">&lt;-</span> <span class="fu">rescale</span>(m.phy, <span class="at">model =</span> <span class="st">&quot;lambda&quot;</span>, <span class="fl">0.5</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m.phy)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m.phy5)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m.phy0)</span></code></pre></div>
 <p><img src="mod7_proj_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<p>The tree on the left is the unscaled phylogeny, the tree we’ll use in our analyses. The tree in the middle, with <span class="math inline">\(\lambda\)</span>=0.5, rescales the tip branches, making the tips branch longer, allowing more phylogenetic independence between species. As you can see, the tree on the right, with a <span class="math inline">\(\lambda\)</span>=0 removes the phylogenetic information form the tree, i.e., all species don’t covary according to their phylogenetic position. When we use Pagel’s <span class="math inline">\(\lambda\)</span> to assess phylogenetic signal of a character, we iterate through values to 0 to 1 to find rescaled branch lengths that optimize the covariance of the character according to Brownian motion. As a reminder, values near 1 indicate strong phylogenetic signal, while values close to 0 indicate none.</p>
-<p>Now let’s assess phylogenetic signal for some simulated trait data over the mammal tree. We’ll use <code>phytools</code>’s <code>phylosig()</code> function to do this after simulating some random trait.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">library</span>(ape)</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">library</span>(phytools)</span></code></pre></div>
-<pre><code>## Loading required package: maps</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>sim.trait &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="kw">Ntip</span>(m.phy))</span>
-<span id="cb6-2"><a href="#cb6-2"></a></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">names</span>(sim.trait) &lt;-<span class="st"> </span>m.phy<span class="op">$</span>tip.label</span>
-<span id="cb6-4"><a href="#cb6-4"></a></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="kw">print</span>(sim.trait)</span></code></pre></div>
+<p>The tree on the left is the unscaled phylogeny, the tree we’ll use in
+our analyses. The tree in the middle, with <span
+class="math inline">\(\lambda\)</span>=0.5, rescales the tip branches,
+making the tips branch longer, allowing more phylogenetic independence
+between species. As you can see, the tree on the right, with a <span
+class="math inline">\(\lambda\)</span>=0 removes the phylogenetic
+information form the tree, i.e., all species don’t covary according to
+their phylogenetic position. When we use Pagel’s <span
+class="math inline">\(\lambda\)</span> to assess phylogenetic signal of
+a character, we iterate through values to 0 to 1 to find rescaled branch
+lengths that optimize the covariance of the character according to
+Brownian motion. As a reminder, values near 1 indicate strong
+phylogenetic signal, while values close to 0 indicate none.</p>
+<p>Now let’s assess phylogenetic signal for some simulated trait data
+over the mammal tree. We’ll use <code>phytools</code>’s
+<code>phylosig()</code> function to do this after simulating some random
+trait.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(phytools)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>sim.trait <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="fu">Ntip</span>(m.phy))</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(sim.trait) <span class="ot">&lt;-</span> m.phy<span class="sc">$</span>tip.label</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sim.trait)</span></code></pre></div>
 <pre><code>##              Vulpes zerda          Canis familiaris               Nasua nasua 
-##                0.86432819                0.41130445                0.42838451 
+##                0.87513029                0.09321605                0.49100657 
 ##      Herpestes sanguineus           Equus africanus            Equus caballus 
-##                0.98435547                0.82875092                0.93700497 
+##                0.30173296                0.62952201                0.31001992 
 ##                Lama pacos                Lama glama                Sus scrofa 
-##                0.26059759                0.96681178                0.92242213 
+##                0.65849844                0.19852786                0.04173555 
 ##    Hippopotamus amphibius                Bos taurus              Capra hircus 
-##                0.10218722                0.85883812                0.13196200 
+##                0.09860073                0.34332978                0.49884845 
 ##          Tupaia belangeri       Microcebus myoxinus         Aotus trivirgatus 
-##                0.19928472                0.04435481                0.44874382 
+##                0.28502552                0.93877359                0.31584863 
 ##        Callithrix jacchus          Cebuella pygmaea          Saimiri sciureus 
-##                0.47314019                0.89452704                0.96456804 
+##                0.51901610                0.23922095                0.56231325 
 ##           Cebus albifrons              Homo sapiens         Macaca nemestrina 
-##                0.55057131                0.71728759                0.54796318 
+##                0.42386259                0.14078515                0.60675241 
 ##       Macaca fascicularis            Macaca mulatta            Macaca radiata 
-##                0.89106701                0.58020160                0.76119322 
+##                0.66031743                0.14130169                0.10306297 
 ##        Papio cynocephalus     Oryctolagus cuniculus        Ochotona rufescens 
-##                0.66430741                0.62005421                0.35311177 
+##                0.77518538                0.31735152                0.51330079 
 ##             Marmota monax Spermophilus richardsonii      Cynomys ludovicianus 
-##                0.21999628                0.83834185                0.82007954 
+##                0.45573204                0.81601858                0.49629289 
 ##          Sciurus vulgaris          Glaucomys volans        Georychus capensis 
-##                0.36481673                0.82825703                0.57063085 
+##                0.97514007                0.22834805                0.75542207 
 ##           Cavia porcellus             Octodon degus         Spalax ehrenbergi 
-##                0.29868541                0.13121665                0.54989425 
+##                0.11142591                0.05715779                0.15936350 
 ##              Mus musculus       Apodemus mystacinus     Arvicanthis niloticus 
-##                0.62434976                0.13135402                0.82730468 
+##                0.23547952                0.93837635                0.98139896 
 ##         Rattus norvegicus       Pachyuromys duprasi     Meriones unguiculatus 
-##                0.98622572                0.51741070                0.06689816 
+##                0.95899825                0.70282802                0.89878584 
 ##          Acomys cahirinus           Acomys russatus     Peromyscus polionotus 
-##                0.55635416                0.27123134                0.55049922 
+##                0.84291408                0.69746115                0.96659665 
 ##       Peromyscus leucopus        Ondatra zibethicus      Mesocricetus auratus 
-##                0.94336628                0.06640170                0.83333898 
+##                0.67216687                0.55955143                0.46788961 
 ##         Cricetus cricetus    Saccostomus campestris           Elephas maximus 
-##                0.20638433                0.18147331                0.65838628 
+##                0.03984823                0.40823957                0.83587356 
 ##      Dasypus novemcinctus 
-##                0.52242883</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>sim.sig &lt;-<span class="st"> </span><span class="kw">phylosig</span>(m.phy,sim.trait,<span class="dt">method=</span><span class="st">&quot;lambda&quot;</span>,<span class="dt">test=</span>T)</span>
-<span id="cb8-2"><a href="#cb8-2"></a>  </span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="kw">print</span>(sim.sig)</span></code></pre></div>
+##                0.98079650</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sim.sig <span class="ot">&lt;-</span> <span class="fu">phylosig</span>(m.phy,sim.trait,<span class="at">method=</span><span class="st">&quot;lambda&quot;</span>,<span class="at">test=</span>T)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sim.sig)</span></code></pre></div>
 <pre><code>## 
-## Phylogenetic signal lambda : 6.6107e-05 
-## logL(lambda) : -9.9048 
-## LR(lambda=0) : -0.000533317 
-## P-value (based on LR test) : 1</code></pre>
-<p>Here we simulated some random data (values from 0–1) for the number of tips on the tree using <code>runif()</code> to generate the values and <code>Ntip()</code> from the <code>ape</code> package to retrieve the number of tips (i.e., species) in the tree. We named these values with the tip labels from the tree, an important step. The <code>phylosig()</code> function in <code>phytools</code> requires that a vector of trait values must have names that match the tips in the tree. In your analyses <strong>make sure you name your variable values with the species from your dataset</strong>, not the tip labels. The order for these will certainly be different and, if not correct, will make any analysis rubbish.</p>
+## Phylogenetic signal lambda : 0.0763235 
+## logL(lambda) : -10.7875 
+## LR(lambda=0) : 0.19574 
+## P-value (based on LR test) : 0.658181</code></pre>
+<p>Here we simulated some random data (values from 0–1) for the number
+of tips on the tree using <code>runif()</code> to generate the values
+and <code>Ntip()</code> from the <code>ape</code> package to retrieve
+the number of tips (i.e., species) in the tree. We named these values
+with the tip labels from the tree, an important step. The
+<code>phylosig()</code> function in <code>phytools</code> requires that
+a vector of trait values must have names that match the tips in the
+tree. In your analyses <strong>make sure you name your variable values
+with the species from your dataset</strong>, not the tip labels. The
+order for these will certainly be different and, if not correct, will
+make any analysis rubbish.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>Note: You won’t need to include thes specific chunks, only to reproduce the Pagels’ <span class="math inline">\(\lambda\)</span> analysis for <span class="math inline">\(T_b\)</span> variables with the <code>phylosig()</code>function from <code>phytools</code>.</p>
+<p>Note: You won’t need to include thes specific chunks, only to
+reproduce the Pagels’ <span class="math inline">\(\lambda\)</span>
+analysis for <span class="math inline">\(T_b\)</span> variables with the
+<code>phylosig()</code>function from <code>phytools</code>.</p>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>For the <code>phylogsig()</code> operation, we set the <code>method</code> to “lambda” for Pagels’ <span class="math inline">\(\lambda\)</span> and <code>test=T</code> so that the function performs a likelihood ratio test (LRT). If you remember from reading the appropriate <a href="https://lukejharmon.github.io/pcm/chapter2_stats/#section-2.3b-the-likelihood-ratio-test">section in Luke Harmon’s PCM book</a>, a likelihood ratio test assesses the goodness of fit of two related statistical models based on the ratio of their likelihoods. In this context, we’re comparing the likelihoods of a model that includes an optimization of the <span class="math inline">\(\lambda\)</span> value versus on one that has a <span class="math inline">\(\lambda\)</span> value of 0, that is, no phylogenetic signal. As you can see from the results, the phylogenetic signal is extremely low at 6.6107e-05 and the result of the LRT, with a likelihood ratio of -0.0008, is nonsignifcant at p=1. That is, the phylogenetic signal is essentially 0 for these simulated data and, not suprisingly, there’s a probability of 1 that the value is not different than 0.</p>
-<p>Now that you’ve been introduced to Pagel’s <span class="math inline">\(\lambda\)</span>, undertake such an analysis of all four variables in the data. In your analyses, be sure to include a table of these results that indicates the estimated <span class="math inline">\(\lambda\)</span> value and p values from the LHTs.</p>
+<p>For the <code>phylogsig()</code> operation, we set the
+<code>method</code> to “lambda” for Pagels’ <span
+class="math inline">\(\lambda\)</span> and <code>test=T</code> so that
+the function performs a likelihood ratio test (LRT). If you remember
+from reading the appropriate <a
+href="https://lukejharmon.github.io/pcm/chapter2_stats/#section-2.3b-the-likelihood-ratio-test">section
+in Luke Harmon’s PCM book</a>, a likelihood ratio test assesses the
+goodness of fit of two related statistical models based on the ratio of
+their likelihoods. In this context, we’re comparing the likelihoods of a
+model that includes an optimization of the <span
+class="math inline">\(\lambda\)</span> value versus on one that has a
+<span class="math inline">\(\lambda\)</span> value of 0, that is, no
+phylogenetic signal. As you can see from the results, the phylogenetic
+signal is extremely low at 6.6107e-05 and the result of the LRT, with a
+likelihood ratio of -0.0008, is nonsignifcant at p=1. That is, the
+phylogenetic signal is essentially 0 for these simulated data and, not
+suprisingly, there’s a probability of 1 that the value is not different
+than 0.</p>
+<p>Now that you’ve been introduced to Pagel’s <span
+class="math inline">\(\lambda\)</span>, undertake such an analysis of
+all four variables in the data. In your analyses, be sure to include a
+table of these results that indicates the estimated <span
+class="math inline">\(\lambda\)</span> value and p values from the
+LHTs.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>You’ll notice that we’re doing many of these phylogenetic comparative analyses without the principles of the tidyverse, i.e., no pipe, etc. Most of the functions written in R packages for comparative methods don’t play well with tidy workflows. Be sure to pay attention to the pieces of advice given in this and other project descriptions to reduce headaches when performing comparative analyses.</p>
+<p>You’ll notice that we’re doing many of these phylogenetic comparative
+analyses without the principles of the tidyverse, i.e., no pipe, etc.
+Most of the functions written in R packages for comparative methods
+don’t play well with tidy workflows. Be sure to pay attention to the
+pieces of advice given in this and other project descriptions to reduce
+headaches when performing comparative analyses.</p>
 </div>
 </div>
 </div>
 <p><br></p>
 </div>
 <div id="pgls-analysis-of-t_b-variables" class="section level2">
-<h2>PGLS Analysis of <span class="math inline">\(T_b\)</span> Variables</h2>
-<p>Now that we have assessed phylogenetic signals for our four variables, procede with PGLS analyses of log-log regression models that include the three <span class="math inline">\(T_b\)</span> variables versus mass. For each regression, construct a PGLS model that includes both a BM and OU model of trait evolution using the tree provide for the species in <span class="citation">Mortola and Lanthier (2004)</span>. Be sure to assess which of these models fits the data best. From each of your best-fitting models, extract the slope (i.e, the scaling coefficient) and intercept and then perform an ANOVA test to evaluate the significance of these parameters. Report these values in table with an appropriate caption.</p>
+<h2>PGLS Analysis of <span class="math inline">\(T_b\)</span>
+Variables</h2>
+<p>Now that we have assessed phylogenetic signals for our four
+variables, procede with PGLS analyses of log-log regression models that
+include the three <span class="math inline">\(T_b\)</span> variables
+versus mass. For each regression, construct a PGLS model that includes
+both a BM and OU model of trait evolution using the tree provide for the
+species in <span class="citation">Mortola and Lanthier (2004)</span>. Be
+sure to assess which of these models fits the data best. From each of
+your best-fitting models, extract the slope (i.e, the scaling
+coefficient) and intercept and then perform an ANOVA test to evaluate
+the significance of these parameters. Report these values in table with
+an appropriate caption.</p>
 </div>
-<div id="reassessing-the-results-of-mortola2004scaling" class="section level2">
-<h2>Reassessing the Results of <span class="citation">Mortola and Lanthier (2004)</span></h2>
-<p>After reconstructing the models for <span class="math inline">\(T_b\)</span> scaling in <span class="citation">Mortola and Lanthier (2004)</span>, assessing phylogenetic signal, and constructing phylogenetically corrected models of your own, compare and contrast these findings. Should important findings in <span class="citation">Mortola and Lanthier (2004)</span> with regards to <span class="math inline">\(T_b\)</span> variables be challenged? Did any of the signficant findings in <span class="citation">Mortola and Lanthier (2004)</span> become insignifcant or significant when they weren’t before?</p>
+<div id="reassessing-the-results-of-mortola2004scaling"
+class="section level2">
+<h2>Reassessing the Results of <span class="citation">Mortola and
+Lanthier (2004)</span></h2>
+<p>After reconstructing the models for <span
+class="math inline">\(T_b\)</span> scaling in <span
+class="citation">Mortola and Lanthier (2004)</span>, assessing
+phylogenetic signal, and constructing phylogenetically corrected models
+of your own, compare and contrast these findings. Should important
+findings in <span class="citation">Mortola and Lanthier (2004)</span>
+with regards to <span class="math inline">\(T_b\)</span> variables be
+challenged? Did any of the signficant findings in <span
+class="citation">Mortola and Lanthier (2004)</span> become insignifcant
+or significant when they weren’t before?</p>
 </div>
 </div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
-<p>Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following questions:</p>
+<p>Please submit your report to your team GitHub repository as an .Rmd
+document with HTML output that addresses the following questions:</p>
 <ul>
-<li>Could you and your team reproduce the scaling relationships (i.e. log-log regression models) of <span class="citation">Mortola and Lanthier (2004)</span> for <span class="math inline">\(T_{min}\)</span>,<span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>?</li>
-<li>Was there any signficant phylogentic signal in the four variables in question (i.e., mass, <span class="math inline">\(T_{min}\)</span>, <span class="math inline">\(T_{max}\)</span>, and <span class="math inline">\(T_{\Delta}\)</span>)?</li>
-<li>After reanalyzing these models that included any variables with significant phylogentic signal in a PCM context under BM and OU models of trait evolution, which phylogentically corrected models fit best?</li>
-<li>Are new phylogenetically informed parameter estimates (i.e, intercept and slope coefficients) different than those in <span class="citation">Mortola and Lanthier (2004)</span> and has their significance changed?</li>
-<li>If any of the results concerning <span class="math inline">\(T_b\)</span> scaling patterns should be reinterpreted due to your phylogenetically informed analysis, how should the conclusions of <span class="citation">Mortola and Lanthier (2004)</span> be reframed?</li>
+<li>Could you and your team reproduce the scaling relationships
+(i.e. log-log regression models) of <span class="citation">Mortola and
+Lanthier (2004)</span> for <span
+class="math inline">\(T_{min}\)</span>,<span
+class="math inline">\(T_{max}\)</span>, and <span
+class="math inline">\(T_{\Delta}\)</span>?</li>
+<li>Was there any signficant phylogentic signal in the four variables in
+question (i.e., mass, <span class="math inline">\(T_{min}\)</span>,
+<span class="math inline">\(T_{max}\)</span>, and <span
+class="math inline">\(T_{\Delta}\)</span>)?</li>
+<li>After reanalyzing these models that included any variables with
+significant phylogentic signal in a PCM context under BM and OU models
+of trait evolution, which phylogentically corrected models fit
+best?</li>
+<li>Are new phylogenetically informed parameter estimates (i.e,
+intercept and slope coefficients) different than those in <span
+class="citation">Mortola and Lanthier (2004)</span> and has their
+significance changed?</li>
+<li>If any of the results concerning <span
+class="math inline">\(T_b\)</span> scaling patterns should be
+reinterpreted due to your phylogenetically informed analysis, how should
+the conclusions of <span class="citation">Mortola and Lanthier
+(2004)</span> be reframed?</li>
 </ul>
-<p>In answering these questions, be sure to use the visualization, modeling, and model-assessments tools we’ve used in the course so far.</p>
-<p>In answering your question, your .Rmd should include the following components:</p>
+<p>In answering these questions, be sure to use the visualization,
+modeling, and model-assessments tools we’ve used in the course so
+far.</p>
+<p>In answering your question, your .Rmd should include the following
+components:</p>
 <ul>
-<li>A YAML header that specifies HTML output, the authors, and a bibliograph named “BIOL3140.bib”. <strong>Submit this bibliography as well!</strong></li>
-<li>Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially:
+<li>A YAML header that specifies HTML output, the authors, and a
+bibliograph named “BIOL3140.bib”. <strong>Submit this bibliography as
+well!</strong></li>
+<li>Sections including an introduction, methods, results, discussion,
+author contributions, and references. Make sure that each, aside from
+the references, includes one to two short paragraphs. Specifially:
 <ul>
-<li>Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. <strong>Please include at least one reference to support the summary of previous work.</strong> Note: this can be done easily by refiguring the introduction to this project report.</li>
-<li>Methods: Explicitly state how you answered the questions, including a narrative of all the anlyses both qualitative and quantitative.</li>
-<li>Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.</li>
-<li>Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. <strong>Please include at least one reference to another relevant study.</strong> Note: circling back to the introductions, both to this project description and yours, will be helpful here.</li>
-<li>Author contributions: Breifly outline what each team member contributed to the project.</li>
+<li>Introduction: Frame the questions, indicating why they are
+important, what background work has been done in this realm, and how you
+will answer them. <strong>Please include at least one reference to
+support the summary of previous work.</strong> Note: this can be done
+easily by refiguring the introduction to this project report.</li>
+<li>Methods: Explicitly state how you answered the questions, including
+a narrative of all the anlyses both qualitative and quantitative.</li>
+<li>Results: Include any appropriate figures or tables and a narrative
+of the main results that are important to answering the questions.</li>
+<li>Discussion: Succinctly declare how the results relate to the
+question and how they compare to previous work devoted to the topic. In
+addition, be sure to comment on the importance of your findings to the
+broader topic at hand. <strong>Please include at least one reference to
+another relevant study.</strong> Note: circling back to the
+introductions, both to this project description and yours, will be
+helpful here.</li>
+<li>Author contributions: Breifly outline what each team member
+contributed to the project.</li>
 </ul></li>
 </ul>
-<p>Project reports should be pushed by 11:59 PM on Sunday, October 31st.</p>
+<p>Project reports should be pushed by 11:59 PM on Sunday, October
+31st.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>Please have a look at out <a href="phaseII_rubric.html">Phase II report rubric</a> to get a sense of how this and other Phase II reports will be grade.</p>
+<p>Please have a look at out <a href="phaseII_rubric.html">Phase II
+report rubric</a> to get a sense of how this and other Phase II reports
+will be grade.</p>
 </div>
 </div>
 </div>
 <p><br></p>
 </div>
 <div id="references" class="section level1 unnumbered">
-<h1>References</h1>
-<div id="refs" class="references">
-<div id="ref-felsenstein1985phylogenies">
-<p>Felsenstein, Joseph. 1985. “Phylogenies and the Comparative Method.” <em>The American Naturalist</em> 125 (1): 1–15.</p>
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-felsenstein1985phylogenies" class="csl-entry">
+Felsenstein, Joseph. 1985. <span>“Phylogenies and the Comparative
+Method.”</span> <em>The American Naturalist</em> 125 (1): 1–15.
 </div>
-<div id="ref-freckleton2002phylogenetic">
-<p>Freckleton, Rob P, Paul H Harvey, and Mark Pagel. 2002. “Phylogenetic Analysis and Comparative Data: A Test and Review of Evidence.” <em>The American Naturalist</em> 160 (6): 712–26.</p>
+<div id="ref-freckleton2002phylogenetic" class="csl-entry">
+Freckleton, Rob P, Paul H Harvey, and Mark Pagel. 2002.
+<span>“Phylogenetic Analysis and Comparative Data: A Test and Review of
+Evidence.”</span> <em>The American Naturalist</em> 160 (6): 712–26.
 </div>
-<div id="ref-mortola2004scaling">
-<p>Mortola, Jacopo P, and Clement Lanthier. 2004. “Scaling the Amplitudes of the Circadian Pattern of Resting Oxygen Consumption, Body Temperature and Heart Rate in Mammals.” <em>Comparative Biochemistry and Physiology Part A: Molecular &amp; Integrative Physiology</em> 139 (1): 83–95.</p>
+<div id="ref-mortola2004scaling" class="csl-entry">
+Mortola, Jacopo P, and Clement Lanthier. 2004. <span>“Scaling the
+Amplitudes of the Circadian Pattern of Resting Oxygen Consumption, Body
+Temperature and Heart Rate in Mammals.”</span> <em>Comparative
+Biochemistry and Physiology Part A: Molecular &amp; Integrative
+Physiology</em> 139 (1): 83–95.
 </div>
-<div id="ref-upham2019inferring">
-<p>Upham, Nathan S, Jacob A Esselstyn, and Walter Jetz. 2019. “Inferring the Mammal Tree: Species-Level Sets of Phylogenies for Questions in Ecology, Evolution, and Conservation.” <em>PLoS Biology</em> 17 (12): e3000494.</p>
+<div id="ref-upham2019inferring" class="csl-entry">
+Upham, Nathan S, Jacob A Esselstyn, and Walter Jetz. 2019.
+<span>“Inferring the Mammal Tree: Species-Level Sets of Phylogenies for
+Questions in Ecology, Evolution, and Conservation.”</span> <em>PLoS
+Biology</em> 17 (12): e3000494.
 </div>
-<div id="ref-uyeda2018rethinking">
-<p>Uyeda, Josef C, Rosana Zenil-Ferguson, and Matthew W Pennell. 2018. “Rethinking Phylogenetic Comparative Methods.” <em>Systematic Biology</em> 67 (6): 1091–1109.</p>
+<div id="ref-uyeda2018rethinking" class="csl-entry">
+Uyeda, Josef C, Rosana Zenil-Ferguson, and Matthew W Pennell. 2018.
+<span>“Rethinking Phylogenetic Comparative Methods.”</span>
+<em>Systematic Biology</em> 67 (6): 1091–1109.
 </div>
-<div id="ref-westoby1995further">
-<p>Westoby, Mark, Michelle Leishman, and Janice Lord. 1995. “Further Remarks on Phylogenetic Correction.” <em>Journal of Ecology</em> 83 (4): 727–29.</p>
+<div id="ref-westoby1995further" class="csl-entry">
+Westoby, Mark, Michelle Leishman, and Janice Lord. 1995. <span>“Further
+Remarks on Phylogenetic Correction.”</span> <em>Journal of Ecology</em>
+83 (4): 727–29.
 </div>
 </div>
 </div>
@@ -745,7 +975,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -754,6 +984,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

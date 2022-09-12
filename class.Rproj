@@ -13,4 +13,4 @@ RnwWeave: Sweave
 LaTeX: pdfLaTeX
 
 BuildType: Website
-WebsitePath: ~/Dropbox/Documents/bc (1)/3140.f20/class
+WebsitePath: ~/Dropbox/Documents/bc (1)/3140.f22/class

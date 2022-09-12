@@ -5,7 +5,7 @@ output:
     self_contained: no  
     theme: sandstone
     highlight: tango
-    toc: true # adds a table of contents
+    toc: true # adds a table of content
     toc_float: true
     number_sections: FALSE
     css: style.css

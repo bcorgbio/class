@@ -361,7 +361,7 @@ best.models <- fits%>%
   group_by(subject,exp)%>%
   mutate(best=AICc==min(AICc))%>%
   filter(best==TRUE)%>%
-  select(-best)%>%
+  dplyr::select(-best)%>%
   print()
 ```
 

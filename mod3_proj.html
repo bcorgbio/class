@@ -13,17 +13,26 @@
 
 <title>Module 3 Project</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -35,21 +44,29 @@
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,7 +86,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -122,40 +139,31 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+
 
 
 <style type="text/css">
-h1 {
-  font-size: 34px;
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
 }
-h1.title {
-  font-size: 38px;
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-h2 {
-  font-size: 30px;
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-h3 {
-  font-size: 24px;
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
 }
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
+div.csl-indent {
+  margin-left: 2em;
 }
 </style>
-
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -166,10 +174,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -186,40 +190,16 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 61px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h2 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h3 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h4 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h5 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h6 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -247,7 +227,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -259,7 +239,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -270,10 +250,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -285,7 +278,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -411,7 +403,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -425,7 +417,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -441,7 +433,7 @@ div.tocify {
   <a href="schedule.html">Schedule</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Projects
      
     <span class="caret"></span>
@@ -496,7 +488,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f21">BIOL 3140 Discussion</a>
+  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f22">BIOL 3140 Discussion</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -506,7 +498,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -522,53 +514,96 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>After having learned the basics of working in R and using the <code>tidyverse</code> to perform operations on data, we’ll now move on to visualizing data and assessing assumptions (i.e., models) and hypotheses (based on models) concerning our data. We’ll do so in the context of the ecomorphology of <a href="https://en.wikipedia.org/wiki/Anolis">anoles</a>, an exceptionally diverse genus of iguanian reptiles that comprises well over 400 species.</p>
-<p>The central theme of this project will be to assess the morphological and allometric differences between ecomorphs within the genus <em>Anolis</em>. First coined by the famous evolutionary biologist and herpetologist Ernest Williams, the term ecomorph describes a group of species, perhaps not sharing a most recent common ancestor, with a similar ecological niche and behavior within the context of this niche. His model for this concept was the genus <em>Anolis</em>, although the ecomorph construct has been widely applied to many other species (think reef fish and Darwin’s Finches).</p>
+<p>After having learned the basics of working in R and using the
+<code>tidyverse</code> to perform operations on data, we’ll now move on
+to visualizing data and assessing assumptions (i.e., models) and
+hypotheses (based on models) concerning our data. We’ll do so in the
+context of the ecomorphology of <a
+href="https://en.wikipedia.org/wiki/Anolis">anoles</a>, an exceptionally
+diverse genus of iguanian reptiles that comprises well over 400
+species.</p>
+<p>The central theme of this project will be to assess the morphological
+and allometric differences between ecomorphs within the genus
+<em>Anolis</em>. First coined by the famous evolutionary biologist and
+herpetologist Ernest Williams, the term ecomorph describes a group of
+species, perhaps not sharing a most recent common ancestor, with a
+similar ecological niche and behavior within the context of this niche.
+His model for this concept was the genus <em>Anolis</em>, although the
+ecomorph construct has been widely applied to many other species (think
+reef fish and Darwin’s Finches).</p>
 <center>
-<p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg" alt="Alt text" /></a></p>
+<p><a
+href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"><img
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"
+alt="Alt text" /></a></p>
 </center>
 <p>Our tasks will be to:</p>
 <ol style="list-style-type: decimal">
-<li>Visualize how hind limb length varies with size (i.e., allometry!).</li>
-<li>Visualize and asses how hind limb length vs. size relationship covary with ecological niche.</li>
-<li>Learn more complex operations in <code>ggplot</code> than we’ve undertaken so far.</li>
-<li>Evaluate this hindlimb-size relationship using standard frequentist models within and without a phylogenetic context.</li>
-<li>Using an information theory approach, assess the fit of phylogenetically corrected models of hind-limb variation under different modes of character evolution.</li>
+<li>Visualize how hind limb length varies with size (i.e.,
+allometry!).</li>
+<li>Visualize and asses how hind limb length vs. size relationship
+covary with ecological niche.</li>
+<li>Learn more complex operations in <code>ggplot</code> than we’ve
+undertaken so far.</li>
+<li>Evaluate this hindlimb-size relationship using standard frequentist
+models within and without a phylogenetic context.</li>
+<li>Using an information theory approach, assess the fit of
+phylogenetically corrected models of hind-limb variation under different
+modes of character evolution.</li>
 </ol>
 </div>
 <div id="set-up" class="section level1">
 <h1>Set up</h1>
 <p>We have a few data sets that need to be downloaded:</p>
 <ul>
-<li>A file of <a href="anole.dat.csv">morphological data from 46 species of anole</a>.</li>
-<li>A file of <a href="anole.eco.csv">ecomorphological data from the same 46 species</a>.</li>
-<li>A tree file containing the <a href="anole.tre">phylogenetic relationships of these species</a>.</li>
+<li>A file of <a href="anole.dat.csv">morphological data from 46 species
+of anole</a>.</li>
+<li>A file of <a href="anole.eco.csv">ecomorphological data from the
+same 46 species</a>.</li>
+<li>A tree file containing the <a href="anole.tre">phylogenetic
+relationships of these species</a>.</li>
 </ul>
-<p>The morphological and ecological data were retrieved from a recent study of allometry and ecomorphology of anoles (geckos, too) by <span class="citation">Hagey et al. (2017)</span>. The tree data come from a study of the phylogenetic relationships of anoles by <span class="citation">Poe et al. (2017)</span>.</p>
-<p>As we have in the previous projects, let’s load the packages we need (make sure they’re downloaded!), then load these data and comment on the importance of it.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(tidyverse) <span class="co"># Rember to load your libraries!</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(ape)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">library</span>(nlme)</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">library</span>(geiger)</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">library</span>(caper)</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">library</span>(phytools)</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="kw">library</span>(viridis)</span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="kw">library</span>(MuMIn)</span>
-<span id="cb1-9"><a href="#cb1-9"></a></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="co">#load data</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a>anole &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;anole.dat.csv&quot;</span>)</span>
-<span id="cb1-12"><a href="#cb1-12"></a>anole.eco &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;anole.eco.csv&quot;</span>)</span></code></pre></div>
-<p>The data loaded to <code>anole</code> are species (<code>Species</code>), mean snout-vent length (<code>SVL</code>, length between the snout and the vent, i.e., anus, a standard for reptiles), and the mean total hind-limb length (<code>HTotal</code>). The figure below from <span class="citation">Lapiedra et al. (2018)</span> indicates how these measurements are taken on specimens of anoles.</p>
+<p>The morphological and ecological data were retrieved from a recent
+study of allometry and ecomorphology of anoles (geckos, too) by <span
+class="citation">Hagey et al. (2017)</span>. The tree data come from a
+study of the phylogenetic relationships of anoles by <span
+class="citation">Poe et al. (2017)</span>.</p>
+<p>As we have in the previous projects, let’s load the packages we need
+(make sure they’re downloaded!), then load these data and comment on the
+importance of it.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># Rember to load your libraries!</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geiger)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caper)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(phytools)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MuMIn)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#load data</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>anole <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;anole.dat.csv&quot;</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>anole.eco <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;anole.eco.csv&quot;</span>)</span></code></pre></div>
+<p>The data loaded to <code>anole</code> are species
+(<code>Species</code>), mean snout-vent length (<code>SVL</code>, length
+between the snout and the vent, i.e., anus, a standard for reptiles),
+and the mean total hind-limb length (<code>HTotal</code>). The figure
+below from <span class="citation">Lapiedra et al. (2018)</span>
+indicates how these measurements are taken on specimens of anoles.</p>
 The data loaded to <code>anole.co</code> are
 <center>
 <p>[<img src="svl.png" alt="Alt text" />]</p>
 </center>
-<p>As with the main data set from the last project, this <code>anole</code> data set doesn’t include important information about the data, specifically from which ecomorph the data were taken. Thus, we must merge the <code>anole</code> data tibble with the <code>anole.eco</code> tibble and, simultaneously, do a few things required for working with data in this context:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>anole2 &lt;-<span class="st"> </span>anole<span class="op">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">left_join</span>(anole.eco)<span class="op">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>Ecomorph<span class="op">%in%</span><span class="kw">c</span>(<span class="st">&quot;U&quot;</span>,<span class="st">&quot;CH&quot;</span>))<span class="op">%&gt;%</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="st">  </span><span class="kw">na.omit</span>()<span class="op">%&gt;%</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="st">  </span><span class="kw">print</span>()</span></code></pre></div>
+<p>As with the main data set from the last project, this
+<code>anole</code> data set doesn’t include important information about
+the data, specifically from which ecomorph the data were taken. Thus, we
+must merge the <code>anole</code> data tibble with the
+<code>anole.eco</code> tibble and, simultaneously, do a few things
+required for working with data in this context:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>anole2 <span class="ot">&lt;-</span> anole<span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(anole.eco)<span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Ecomorph<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">&quot;U&quot;</span>,<span class="st">&quot;CH&quot;</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
 <pre><code>## Joining, by = &quot;Species&quot;</code></pre>
 <pre><code>## # A tibble: 46 × 7
 ##    Species                SVL HTotal    PH ArbPD Ecomorph Ecomorph2   
@@ -584,58 +619,137 @@ The data loaded to <code>anole.co</code> are
 ##  9 Anolis_brevirostris   47     35   102.   21.1 T        trunk       
 ## 10 Anolis_chlorocyanus   68.7   43.9 357.   10.6 TC       trunk-crown 
 ## # … with 36 more rows</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>anole.log &lt;-<span class="st"> </span>anole2<span class="op">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">c</span>(<span class="st">&quot;SVL&quot;</span>, <span class="st">&quot;HTotal&quot;</span>,<span class="st">&quot;PH&quot;</span>,<span class="st">&quot;ArbPD&quot;</span>),log)</span></code></pre></div>
-<p>Notice that, before the mutate operation, we filtered the data, removing any rows is the tibble for which the <code>Ecomoroph</code> value was “U” or “CH”. These are species for which the ecomorphological designation was unique (“U”, i.e., unique to that species) or <em>Chamaeleolis</em>, a subgenus of the genus <em>Anolis</em> that had very few observations in the study. We use the <code>filter()</code> function, asking it to keep any values in the <code>Ecomorph</code> column that <strong>are not in</strong> <code>c("U","CH")</code> using <code>!</code>.</p>
-<p>Notice that we also omitted any rows of the tibble that had missing values (i.e., <code>NA</code>) in any of the columns with <code>na.omit</code>. That is, we only want to work with a complete data set. We’ve saved this filtered tibble to a new name, <code>anole2</code></p>
-<p>In the last operation, we have mutated our collective tibble containing morphological and ecological data so that we changed our columns containing size and ecological data to log transformations of their values, each for <code>SVL</code>, <code>HTotal</code>, <code>PH</code> and <code>ArbPD</code>. These are continuous data, i.e., they are not discrete and log transformation converts these data to proportional representations. This will be important for both our analysis of allometry and use in a phylogenetic comparative framework. We did this with <code>mutate_at</code>, a function that allows us to mutate columns in place, replacing each that we identify with the names wrapped in <code>c()</code>. The second argument in <code>mutate_at</code> specifies what we’ll do to the columns, in this case <code>log</code>, the natural log (<em>ln</em>).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>anole.log <span class="ot">&lt;-</span> anole2<span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">c</span>(<span class="st">&quot;SVL&quot;</span>, <span class="st">&quot;HTotal&quot;</span>,<span class="st">&quot;PH&quot;</span>,<span class="st">&quot;ArbPD&quot;</span>),log)</span></code></pre></div>
+<p>Notice that, before the mutate operation, we filtered the data,
+removing any rows is the tibble for which the <code>Ecomoroph</code>
+value was “U” or “CH”. These are species for which the ecomorphological
+designation was unique (“U”, i.e., unique to that species) or
+<em>Chamaeleolis</em>, a subgenus of the genus <em>Anolis</em> that had
+very few observations in the study. We use the <code>filter()</code>
+function, asking it to keep any values in the <code>Ecomorph</code>
+column that <strong>are not in</strong> <code>c("U","CH")</code> using
+<code>!</code>.</p>
+<p>Notice that we also omitted any rows of the tibble that had missing
+values (i.e., <code>NA</code>) in any of the columns with
+<code>na.omit</code>. That is, we only want to work with a complete data
+set. We’ve saved this filtered tibble to a new name,
+<code>anole2</code></p>
+<p>In the last operation, we have mutated our collective tibble
+containing morphological and ecological data so that we changed our
+columns containing size and ecological data to log transformations of
+their values, each for <code>SVL</code>, <code>HTotal</code>,
+<code>PH</code> and <code>ArbPD</code>. These are continuous data, i.e.,
+they are not discrete and log transformation converts these data to
+proportional representations. This will be important for both our
+analysis of allometry and use in a phylogenetic comparative framework.
+We did this with <code>mutate_at</code>, a function that allows us to
+mutate columns in place, replacing each that we identify with the names
+wrapped in <code>c()</code>. The second argument in
+<code>mutate_at</code> specifies what we’ll do to the columns, in this
+case <code>log</code>, the natural log (<em>ln</em>).</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>Why have we log-transformed our size and ecological data? This, from Luke Harmon’s <span class="citation">(2018)</span> excellent book on phylogenetic comparative methods, explains why.</p>
+<p>Why have we log-transformed our size and ecological data? This, from
+Luke Harmon’s -<span class="citation">Harmon (2018)</span> excellent
+book on phylogenetic comparative methods, explains why.</p>
 <blockquote>
-<p>One general rule for continuous traits in biology is to carry out a log-transformation (usually natural log, base e, denoted ln) of your data before undertaking any analysis. This also applies to comparative data. There are two main reasons for this, one statistical and the other biological. The statistical reason is that many methods assume that variables follow normal distributions. One can observe that, in general, measurements of species’ traits have a distribution that is skewed to the right. A log-transformation will often result in trait distributions that are closer to normal. But why is this the case? The answer is related to the biological reason for log-transformation. When you log transform a variable, the new scale for that variable is a ratio scale, so that a certain differences between points reflects a constant ratio of the two numbers represented by the points. So, for example, if any two numbers are separated by 0.693 units on a natural log scale, one will be exactly two times the other. Ratio scales make sense for living things because it is usually percentage changes rather than absolute changes that matter. For example, a change in body size of 1 mm might matter a lot for a termite, but be irrelevant for an elephant; whereas a change in body size of 50% might be expected to matter for them both.</p>
+<p>One general rule for continuous traits in biology is to carry out a
+log-transformation (usually natural log, base e, denoted ln) of your
+data before undertaking any analysis. This also applies to comparative
+data. There are two main reasons for this, one statistical and the other
+biological. The statistical reason is that many methods assume that
+variables follow normal distributions. One can observe that, in general,
+measurements of species’ traits have a distribution that is skewed to
+the right. A log-transformation will often result in trait distributions
+that are closer to normal. But why is this the case? The answer is
+related to the biological reason for log-transformation. When you log
+transform a variable, the new scale for that variable is a ratio scale,
+so that a certain differences between points reflects a constant ratio
+of the two numbers represented by the points. So, for example, if any
+two numbers are separated by 0.693 units on a natural log scale, one
+will be exactly two times the other. Ratio scales make sense for living
+things because it is usually percentage changes rather than absolute
+changes that matter. For example, a change in body size of 1 mm might
+matter a lot for a termite, but be irrelevant for an elephant; whereas a
+change in body size of 50% might be expected to matter for them
+both.</p>
 </blockquote>
 </div>
 </div>
 </div>
 <p><br></p>
 </div>
-<div id="visualizing-data-forming-and-refining-hypotheses" class="section level1">
+<div id="visualizing-data-forming-and-refining-hypotheses"
+class="section level1">
 <h1>Visualizing Data, Forming and Refining Hypotheses</h1>
-<p>As we’ve learned in our readings of R4DS, before we undertake any analysis of data, we must first visualize it so that we can begin to evaluate what reasonable questions about the data set can be asked. After that, we apply a model to see how best to describe the relationships we care about. In the context of this project, we have before us an important initial question: does hind limb length vary with size? Let’s assess this initially by plotting hind limb length vs size in anoles with <code>ggplot</code>. We’ll start with the untransformed data set.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>anole2<span class="op">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(SVL,HTotal))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<p>As we’ve learned in our readings of R4DS, before we undertake any
+analysis of data, we must first visualize it so that we can begin to
+evaluate what reasonable questions about the data set can be asked.
+After that, we apply a model to see how best to describe the
+relationships we care about. In the context of this project, we have
+before us an important initial question: does hind limb length vary with
+size? Let’s assess this initially by plotting hind limb length vs size
+in anoles with <code>ggplot</code>. We’ll start with the untransformed
+data set.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>anole2<span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(SVL,HTotal))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Remember from R4DS that we have to establish the aesthetic of the plot and then add geometries with <code>+</code> to plot. Here we established the aesthetic in <code>aes()</code> for our <code>ggplot</code> as <code>SVL</code> for the x values and <code>HTotal</code> for the y, then added two geometries, points and a smooth line built on a linear model using <code>method="lm"</code>. For two continuous variables, a linear model is a good place to start. And, as you see from the plot, the data look to have a linear relationship, that is <code>HTotal</code> can be modeled as a linear response to <code>SVL</code> or</p>
-<p><span class="math display">\[Htotal=\alpha{\cdot}SVL+\beta\]</span>,</p>
-<p>where, <span class="math inline">\(\alpha\)</span> is the slope and <span class="math inline">\(\beta\)</span> the y intercept.</p>
-<p>Although the <code>geom_smooth</code> geometry adds predictions based on this simple linear model and it looks to be a good fit, let’s evaluate just how good this fit is with establishing a simple linear model using the <code>lm()</code> function from the <code>stats</code> package which loads automatically with R.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>anole.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(HTotal<span class="op">~</span>SVL,anole2)</span>
-<span id="cb8-2"><a href="#cb8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="kw">coef</span>(anole.lm)</span></code></pre></div>
+<p>Remember from R4DS that we have to establish the aesthetic of the
+plot and then add geometries with <code>+</code> to plot. Here we
+established the aesthetic in <code>aes()</code> for our
+<code>ggplot</code> as <code>SVL</code> for the x values and
+<code>HTotal</code> for the y, then added two geometries, points and a
+smooth line built on a linear model using <code>method="lm"</code>. For
+two continuous variables, a linear model is a good place to start. And,
+as you see from the plot, the data look to have a linear relationship,
+that is <code>HTotal</code> can be modeled as a linear response to
+<code>SVL</code> or</p>
+<p><span
+class="math display">\[Htotal=\alpha{\cdot}SVL+\beta\]</span>,</p>
+<p>where, <span class="math inline">\(\alpha\)</span> is the slope and
+<span class="math inline">\(\beta\)</span> the y intercept.</p>
+<p>Although the <code>geom_smooth</code> geometry adds predictions based
+on this simple linear model and it looks to be a good fit, let’s
+evaluate just how good this fit is with establishing a simple linear
+model using the <code>lm()</code> function from the <code>stats</code>
+package which loads automatically with R.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>anole.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(HTotal<span class="sc">~</span>SVL,anole2)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(anole.lm)</span></code></pre></div>
 <pre><code>## (Intercept)         SVL 
 ##    4.005167    0.639719</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>anole2<span class="op">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(SVL,HTotal))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_abline</span>(<span class="dt">slope=</span><span class="kw">coef</span>(anole.lm)[<span class="dv">2</span>],<span class="dt">intercept=</span><span class="kw">coef</span>(anole.lm)[<span class="dv">1</span>],<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>anole2<span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(SVL,HTotal))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_abline</span>(<span class="at">slope=</span><span class="fu">coef</span>(anole.lm)[<span class="dv">2</span>],<span class="at">intercept=</span><span class="fu">coef</span>(anole.lm)[<span class="dv">1</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>Notice how the model is represented by the relationship <code>HTotal~SVL</code> Using <code>~</code> is a standard convention in R for model formulae where a variable to the left of <code>~</code> is predicted by one or more variables to the right. So here where asking R to build a linear model with <code>HTotal</code> predicted by <code>SVL</code>. The second parameter specifies what data the variables are coming from, in this case, <code>anole2</code>.</p>
-<p>Now that we have our linear model, we can use this to predict <code>HTotal</code> for a range of snout vent lengths rather than have <code>geom_smooth</code> do it for us. Let’s do this by creating a tibble with predictions:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>SVL2 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(anole2<span class="op">$</span>SVL),<span class="kw">max</span>(anole2<span class="op">$</span>SVL),<span class="fl">0.1</span>)</span>
-<span id="cb11-2"><a href="#cb11-2"></a></span>
-<span id="cb11-3"><a href="#cb11-3"></a>pred.lm &lt;-<span class="kw">tibble</span>(</span>
-<span id="cb11-4"><a href="#cb11-4"></a>  <span class="dt">SVL=</span>SVL2,</span>
-<span id="cb11-5"><a href="#cb11-5"></a>  <span class="dt">H.pred=</span><span class="kw">predict</span>(anole.lm,<span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">SVL=</span>SVL2))</span>
-<span id="cb11-6"><a href="#cb11-6"></a>)</span>
-<span id="cb11-7"><a href="#cb11-7"></a></span>
-<span id="cb11-8"><a href="#cb11-8"></a>anole2<span class="op">%&gt;%</span></span>
-<span id="cb11-9"><a href="#cb11-9"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(SVL,HTotal))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_point</span>(<span class="dt">data=</span>pred.lm,<span class="kw">aes</span>(SVL,H.pred),<span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p>Notice how the model is represented by the relationship
+<code>HTotal~SVL</code> Using <code>~</code> is a standard convention in
+R for model formulae where a variable to the left of <code>~</code> is
+predicted by one or more variables to the right. So here where asking R
+to build a linear model with <code>HTotal</code> predicted by
+<code>SVL</code>. The second parameter specifies what data the variables
+are coming from, in this case, <code>anole2</code>.</p>
+<p>Now that we have our linear model, we can use this to predict
+<code>HTotal</code> for a range of snout vent lengths rather than have
+<code>geom_smooth</code> do it for us. Let’s do this by creating a
+tibble with predictions:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>SVL2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(anole2<span class="sc">$</span>SVL),<span class="fu">max</span>(anole2<span class="sc">$</span>SVL),<span class="fl">0.1</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>pred.lm <span class="ot">&lt;-</span><span class="fu">tibble</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">SVL=</span>SVL2,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">H.pred=</span><span class="fu">predict</span>(anole.lm,<span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">SVL=</span>SVL2))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>anole2<span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(SVL,HTotal))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">data=</span>pred.lm,<span class="fu">aes</span>(SVL,H.pred),<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">summary</span>(anole.lm)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anole.lm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = HTotal ~ SVL, data = anole2)
@@ -654,14 +768,38 @@ The data loaded to <code>anole.co</code> are
 ## Residual standard error: 6.251 on 44 degrees of freedom
 ## Multiple R-squared:  0.933,  Adjusted R-squared:  0.9315 
 ## F-statistic: 612.6 on 1 and 44 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>From calling <code>summary(anole.lm)</code> we retrieved important information about the model, including that the estimated response of <code>HTotal</code> to <code>SVL</code> (i.e., the slope, a value of 0.63972) is a significant term at p&lt;2e-16. With <code>summary()</code>, we also retrieve the r squared value, the percentage of the response variable variation that is explained by our linear model. At 0.93, this model performs pretty well. However, maybe data would fit another model at least as well.</p>
-<p>Because we’re assessing how a variable relates to size, we should consider another model, a non-linear allometric one. Perhaps the icremental increase in hind-limb length decreases or increase with SVL, that is, the slope of this relationship is not stable with respect to SVL. Recall that an allometric model is a simple case of an exponential equation that, in this case, can be expressed thusly:</p>
-<p><span class="math display">\[Htotal={\alpha\cdot}SVL^{\beta}\]</span>,</p>
-<p>where <span class="math inline">\(\alpha\)</span> is the intercept and <span class="math inline">\(\beta\)</span> is the scaling exponent.</p>
-<p>To express such a model in R, we can turn to non-linear least squares with <code>nls()</code> from the <code>stats</code> package. Least squares analysis is a standard approach in regression modeling which approximates the relationship by minimizing the sum of the squares of the residuals. In it’s simplest case, this is how the model in our basic <code>lm</code> model is fit. In the case of non-linear least squares, the model is fit based on a non-linear relationship, i.e., an equation with the parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>. Thus we can fit an allometric model with <code>nls</code> by:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>anole.allo &lt;-<span class="st"> </span><span class="kw">nls</span>(HTotal<span class="op">~</span>a<span class="op">*</span>SVL<span class="op">^</span>b, <span class="dt">start=</span><span class="kw">list</span>(<span class="dt">b=</span><span class="dv">1</span>, <span class="dt">a=</span><span class="dv">1</span>),<span class="dt">data =</span> anole2)</span>
-<span id="cb14-2"><a href="#cb14-2"></a></span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="kw">summary</span>(anole.allo)</span></code></pre></div>
+<p>From calling <code>summary(anole.lm)</code> we retrieved important
+information about the model, including that the estimated response of
+<code>HTotal</code> to <code>SVL</code> (i.e., the slope, a value of
+0.63972) is a significant term at p&lt;2e-16. With
+<code>summary()</code>, we also retrieve the r squared value, the
+percentage of the response variable variation that is explained by our
+linear model. At 0.93, this model performs pretty well. However, maybe
+data would fit another model at least as well.</p>
+<p>Because we’re assessing how a variable relates to size, we should
+consider another model, a non-linear allometric one. Perhaps the
+icremental increase in hind-limb length decreases or increase with SVL,
+that is, the slope of this relationship is not stable with respect to
+SVL. Recall that an allometric model is a simple case of an exponential
+equation that, in this case, can be expressed thusly:</p>
+<p><span
+class="math display">\[Htotal={\alpha\cdot}SVL^{\beta}\]</span>,</p>
+<p>where <span class="math inline">\(\alpha\)</span> is the intercept
+and <span class="math inline">\(\beta\)</span> is the scaling
+exponent.</p>
+<p>To express such a model in R, we can turn to non-linear least squares
+with <code>nls()</code> from the <code>stats</code> package. Least
+squares analysis is a standard approach in regression modeling which
+approximates the relationship by minimizing the sum of the squares of
+the residuals. In it’s simplest case, this is how the model in our basic
+<code>lm</code> model is fit. In the case of non-linear least squares,
+the model is fit based on a non-linear relationship, i.e., an equation
+with the parameters <span class="math inline">\(\alpha\)</span> and
+<span class="math inline">\(\beta\)</span>. Thus we can fit an
+allometric model with <code>nls</code> by:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>anole.allo <span class="ot">&lt;-</span> <span class="fu">nls</span>(HTotal<span class="sc">~</span>a<span class="sc">*</span>SVL<span class="sc">^</span>b, <span class="at">start=</span><span class="fu">list</span>(<span class="at">b=</span><span class="dv">1</span>, <span class="at">a=</span><span class="dv">1</span>),<span class="at">data =</span> anole2)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anole.allo)</span></code></pre></div>
 <pre><code>## 
 ## Formula: HTotal ~ a * SVL^b
 ## 
@@ -675,50 +813,143 @@ The data loaded to <code>anole.co</code> are
 ## Residual standard error: 6.102 on 44 degrees of freedom
 ## 
 ## Number of iterations to convergence: 4 
-## Achieved convergence tolerance: 2.856e-06</code></pre>
+## Achieved convergence tolerance: 2.86e-06</code></pre>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>What is a residual you ask? A residual is a measure of how well a prediction or line (i.e., a model) fits an individual data point. In the plot above, this is the distance in terms of the y value that any point differs from the model prediction, i.e., the line in the plot.</p>
+<p>What is a residual you ask? A residual is a measure of how well a
+prediction or line (i.e., a model) fits an individual data point. In the
+plot above, this is the distance in terms of the y value that any point
+differs from the model prediction, i.e., the line in the plot.</p>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>Notice that, unlike in the use of <code>lm()</code>, we must specify starting values for parameters in our model with a list that’s specified by <code>start</code>. With <code>nls()</code>, the function conducts a search of the model parameter values to find those that reduce the sum of squares of the residuals. The starting points here are estimated on the basis that the scaling coefficient <span class="math inline">\(\beta\)</span> will probably be around 1 because the data fit a linear model pretty well and the intercept <span class="math inline">\(\alpha\)</span> will be close to but not zero (a reasonable assumption).</p>
-<p>When we call the summary of our allometric model, we see that the parameters <code>a</code> and <code>b</code>, <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, respectively, are significant, so both are likely explanatory parameters. But, how well do the data fit our model? Is it a better fit than the <code>lm()</code> model? Well this is tough to say. Notice that <code>summary()</code> doesn’t produce an r squared value like it did for our simple linear model. This, for tortuous reasons, is because it’s <a href="https://statisticsbyjim.com/regression/r-squared-invalid-nonlinear-regression/">not applicable to non-linear regression</a>. So what to do?</p>
-<p>Let’s go back to our readings in PCM, specifically, where the author, Luke Harmon, points out that standard frequentist approaches to comparative data are often limiting. The standard approach places a premium on evaluating null hypotheses and finding p values that, if low, reject the null, or if high, don’t reject it. In the context of what we’ve covered so far, we’ve assessed the null hypothesis that <code>SVL</code> has no effect on <code>HTotal</code> and rejected it based on two statistical tests under different models, one linear, the other allometric. This shouldn’t be a surprise: limbs get longer as individual lizards grow longer . . . duh. But, this is only part of our question: more than asking whether hind-limb length varies with size, we also want to know whether it varies linearly or allometrically.</p>
-<p>To answer this second part of the question, we must switch approaches and ask the question in a different way. Let’s first tackle this different way of asking our question. At first, we applied linear and non-linear models to the data and asked: "How well do my data fit the model? That is, specifically in the context of least-squares regression, how much do our points vary from the predictions of our models, i.e, what is the magnitude of the residuals? In both cases, the points in our data fit pretty well. However, this isn’t the question we really want to be asking. We’re asking <em>which model fits out data best?</em> See the difference?</p>
-<p>To ask this question, we must take a different approach. As outlined in PCM, we could perform likelihood ratio tests. In this approach, we compare the likelihood of two <strong>nested</strong> models. The statistical property of likelihood is defined as the probability, given a model and a set of parameter values, of obtaining a particular set of data. Or, as Harmon put it, . . . “given a mathematical description of the world, what is the probability that we would see the actual data that we have collected?” This is the right approach for us—find the model, linear or allometric, with a higher likelihood of describing our morphological data better and therefore is a better mathematical approximation of the hindlimb-size relationship.</p>
-<p>However, as we learned in PCM, likelihood ratio tests can only be used in limited cases, specifically to compare two models, one of which is a special case of the other. In other words, one model is exactly the same as the other, except that it is more complex, adding one or more parameters, which, in most cases means other independent variables. In our case, we don’t have nested models, but different model families all together—one linear, one allometric.</p>
-<p>To compare models of most any type, nested or not, we have an alternative, the information theory approach. Specifically, we can use the Akaike Information Criterion (AIC). This description of the model fit compares the likelihood of the model against the number of parameters estimated. The AIC can be described as favoring the model that provides the best fit to the data with as few parameters as possible.</p>
-<p>AIC is especially sensitive to sample size. Thus, another version of the AIC, one that penalizes models that have small sample sizes relative to the number of parameters, <span class="math inline">\(AIC_c\)</span>, is typically used in comparative biology.</p>
-<p>Fortunately, from a few of our packages loaded above, we can compute the <span class="math inline">\(AIC_c\)</span> of both of our models, then compare their fit. Additionally, we can calculate the relative support of each model using AIC weights (<span class="math inline">\(AIC_w\)</span>).</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co">#AICc from the MuMIn package</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a>anole.aic &lt;-<span class="st"> </span><span class="kw">AICc</span>(anole.lm,anole.allo)</span>
-<span id="cb16-3"><a href="#cb16-3"></a></span>
-<span id="cb16-4"><a href="#cb16-4"></a><span class="co">#aicw from the geiger package</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a>anole.aicw &lt;-<span class="st"> </span><span class="kw">aicw</span>(anole.aic<span class="op">$</span>AICc)</span>
-<span id="cb16-6"><a href="#cb16-6"></a></span>
-<span id="cb16-7"><a href="#cb16-7"></a><span class="kw">print</span>(anole.aicw)</span></code></pre></div>
+<p>Notice that, unlike in the use of <code>lm()</code>, we must specify
+starting values for parameters in our model with a list that’s specified
+by <code>start</code>. With <code>nls()</code>, the function conducts a
+search of the model parameter values to find those that reduce the sum
+of squares of the residuals. The starting points here are estimated on
+the basis that the scaling coefficient <span
+class="math inline">\(\beta\)</span> will probably be around 1 because
+the data fit a linear model pretty well and the intercept <span
+class="math inline">\(\alpha\)</span> will be close to but not zero (a
+reasonable assumption).</p>
+<p>When we call the summary of our allometric model, we see that the
+parameters <code>a</code> and <code>b</code>, <span
+class="math inline">\(\alpha\)</span> and <span
+class="math inline">\(\beta\)</span>, respectively, are significant, so
+both are likely explanatory parameters. But, how well do the data fit
+our model? Is it a better fit than the <code>lm()</code> model? Well
+this is tough to say. Notice that <code>summary()</code> doesn’t produce
+an r squared value like it did for our simple linear model. This, for
+tortuous reasons, is because it’s <a
+href="https://statisticsbyjim.com/regression/r-squared-invalid-nonlinear-regression/">not
+applicable to non-linear regression</a>. So what to do?</p>
+<p>Let’s go back to our readings in PCM, specifically, where the author,
+Luke Harmon, points out that standard frequentist approaches to
+comparative data are often limiting. The standard approach places a
+premium on evaluating null hypotheses and finding p values that, if low,
+reject the null, or if high, don’t reject it. In the context of what
+we’ve covered so far, we’ve assessed the null hypothesis that
+<code>SVL</code> has no effect on <code>HTotal</code> and rejected it
+based on two statistical tests under different models, one linear, the
+other allometric. This shouldn’t be a surprise: limbs get longer as
+individual lizards grow longer . . . duh. But, this is only part of our
+question: more than asking whether hind-limb length varies with size, we
+also want to know whether it varies linearly or allometrically.</p>
+<p>To answer this second part of the question, we must switch approaches
+and ask the question in a different way. Let’s first tackle this
+different way of asking our question. At first, we applied linear and
+non-linear models to the data and asked: “How well do my data fit the
+model? That is, specifically in the context of least-squares regression,
+how much do our points vary from the predictions of our models, i.e,
+what is the magnitude of the residuals? In both cases, the points in our
+data fit pretty well. However, this isn’t the question we really want to
+be asking. We’re asking <em>which model fits out data best?</em> See the
+difference?</p>
+<p>To ask this question, we must take a different approach. As outlined
+in PCM, we could perform likelihood ratio tests. In this approach, we
+compare the likelihood of two <strong>nested</strong> models. The
+statistical property of likelihood is defined as the probability, given
+a model and a set of parameter values, of obtaining a particular set of
+data. Or, as Harmon put it, . . . “given a mathematical description of
+the world, what is the probability that we would see the actual data
+that we have collected?” This is the right approach for us—find the
+model, linear or allometric, with a higher likelihood of describing our
+morphological data better and therefore is a better mathematical
+approximation of the hindlimb-size relationship.</p>
+<p>However, as we learned in PCM, likelihood ratio tests can only be
+used in limited cases, specifically to compare two models, one of which
+is a special case of the other. In other words, one model is exactly the
+same as the other, except that it is more complex, adding one or more
+parameters, which, in most cases means other independent variables. In
+our case, we don’t have nested models, but different model families all
+together—one linear, one allometric.</p>
+<p>To compare models of most any type, nested or not, we have an
+alternative, the information theory approach. Specifically, we can use
+the Akaike Information Criterion (AIC). This description of the model
+fit compares the likelihood of the model against the number of
+parameters estimated. The AIC can be described as favoring the model
+that provides the best fit to the data with as few parameters as
+possible.</p>
+<p>AIC is especially sensitive to sample size. Thus, another version of
+the AIC, one that penalizes models that have small sample sizes relative
+to the number of parameters, <span class="math inline">\(AIC_c\)</span>,
+is typically used in comparative biology.</p>
+<p>Fortunately, from a few of our packages loaded above, we can compute
+the <span class="math inline">\(AIC_c\)</span> of both of our models,
+then compare their fit. Additionally, we can calculate the relative
+support of each model using AIC weights (<span
+class="math inline">\(AIC_w\)</span>).</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#AICc from the MuMIn package</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>anole.aic <span class="ot">&lt;-</span> <span class="fu">AICc</span>(anole.lm,anole.allo)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#aicw from the geiger package</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>anole.aicw <span class="ot">&lt;-</span> <span class="fu">aicw</span>(anole.aic<span class="sc">$</span>AICc)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(anole.aicw)</span></code></pre></div>
 <pre><code>##        fit    delta         w
 ## 1 303.6785 2.220885 0.2477884
 ## 2 301.4576 0.000000 0.7522116</code></pre>
-<p>From our <code>anole.aic</code>, we see that the second model, <code>anole.allo</code> has a lower AIC score, and <strong>lower scores indicate a better fit</strong>. Although the relative fit is three times better for our allometric model, the difference in <span class="math inline">\(AIC_c\)</span> is somewhat small (<span class="math inline">\(\Delta AIC\)</span>=2.2). A general rule of thumb is that a <span class="math inline">\(\Delta AIC\)</span> of less the 4 indicates roughly equivalent models, 4–8 little support for a lesser fit, and over 10 a poor fit and the model can be ignored. So, because we have <span class="math inline">\(\Delta AIC\)</span>&lt;4, there’s little difference between our linear and allometric models of hind-limb growth; thus, we can say that <strong>allometry and isometry are roughly equivalent models</strong>. This was almost expected given that, after that calling <code>summary(anole.allo)</code> we see that the estimate for <code>b</code> the scaling exponent, is pretty close to 1 at b 0.92.</p>
+<p>From our <code>anole.aic</code>, we see that the second model,
+<code>anole.allo</code> has a lower AIC score, and <strong>lower scores
+indicate a better fit</strong>. Although the relative fit is three times
+better for our allometric model, the difference in <span
+class="math inline">\(AIC_c\)</span> is somewhat small (<span
+class="math inline">\(\Delta AIC\)</span>=2.2). A general rule of thumb
+is that a <span class="math inline">\(\Delta AIC\)</span> of less the 4
+indicates roughly equivalent models, 4–8 little support for a lesser
+fit, and over 10 a poor fit and the model can be ignored. So, because we
+have <span class="math inline">\(\Delta AIC\)</span>&lt;4, there’s
+little difference between our linear and allometric models of hind-limb
+growth; thus, we can say that <strong>allometry and isometry are roughly
+equivalent models</strong>. This was almost expected given that, after
+that calling <code>summary(anole.allo)</code> we see that the estimate
+for <code>b</code> the scaling exponent, is pretty close to 1 at b
+0.92.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>You might be wondering, “If both the allometric and linear models have the same number of parameters (both have <code>SVL</code> and two other parameters), why not just look at the likelihood?” We can certainly do that:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">logLik</span>(anole.lm)</span></code></pre></div>
+<p>You might be wondering, “If both the allometric and linear models
+have the same number of parameters (both have <code>SVL</code> and two
+other parameters), why not just look at the likelihood?” We can
+certainly do that:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(anole.lm)</span></code></pre></div>
 <pre><code>## &#39;log Lik.&#39; -148.5536 (df=3)</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">logLik</span>(anole.allo)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(anole.allo)</span></code></pre></div>
 <pre><code>## &#39;log Lik.&#39; -147.4431 (df=3)</code></pre>
-<p>Here, the allometric model has the <strong>highest</strong> likelihood and, because the models have the same number of parameters, is the model that fits best.</p>
+<p>Here, the allometric model has the <strong>highest</strong>
+likelihood and, because the models have the same number of parameters,
+is the model that fits best.</p>
 </div>
 </div>
 </div>
@@ -726,16 +957,34 @@ The data loaded to <code>anole.co</code> are
 </div>
 <div id="more-complex-visualizations-and-models" class="section level1">
 <h1>More Complex Visualizations and Models</h1>
-<p>So now that we understand the basics of visualizing data, applying models, and choosing which fit our data best, let’s consider a more complicated relationship among our data. Specifically, we’ll consider the effect of ecomorph on the hindlimb-SVL relationships.</p>
-<p>For this we’ll use our log-transformed data for the reasons outlined in the note above. We’ll begin by visualizing hindlimb-SVL relationships for each ecomorph in <code>ggplot</code>:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>anole.log<span class="op">%&gt;%</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(HTotal,SVL,<span class="dt">col=</span>Ecomorph2))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<p>So now that we understand the basics of visualizing data, applying
+models, and choosing which fit our data best, let’s consider a more
+complicated relationship among our data. Specifically, we’ll consider
+the effect of ecomorph on the hindlimb-SVL relationships.</p>
+<p>For this we’ll use our log-transformed data for the reasons outlined
+in the note above. We’ll begin by visualizing hindlimb-SVL relationships
+for each ecomorph in <code>ggplot</code>:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>anole.log<span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(HTotal,SVL,<span class="at">col=</span>Ecomorph2))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<p>Most of what we did here should be rather familiar by now. We passed our log-transformed data with the pipe to a <code>ggplot</code> call, specifying <code>SVL</code> for the x values and <code>HTotal</code> for the y, then added point and line (of type <code>"lm"</code>) geometries to the plot. Notice that we added another argument to the <code>aes</code> of the <code>ggplot</code>, specifically <code>col=Ecomorph2</code>. This colors all the added geometries according to the column values in <code>Ecomorph2</code>, a longer description of ecomorph than the abbreviations one <code>Ecomorph</code>. In addition, this establishes groups of data to compute multiple regression lines for `geom_smooth()’.</p>
-<p>By plotting out data in this way, it’s clear we should consider ecomorph as an important variable explaining the hindlimb-SVL relationship. So let’s now construct a model that includes this new variable:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>anole.log.eco.lm &lt;-<span class="st"> </span><span class="kw">lm</span>(HTotal<span class="op">~</span>SVL<span class="op">*</span>Ecomorph2,anole.log)</span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="kw">summary</span>(anole.log.eco.lm)</span></code></pre></div>
+<p>Most of what we did here should be rather familiar by now. We passed
+our log-transformed data with the pipe to a <code>ggplot</code> call,
+specifying <code>SVL</code> for the x values and <code>HTotal</code> for
+the y, then added point and line (of type <code>"lm"</code>) geometries
+to the plot. Notice that we added another argument to the
+<code>aes</code> of the <code>ggplot</code>, specifically
+<code>col=Ecomorph2</code>. This colors all the added geometries
+according to the column values in <code>Ecomorph2</code>, a longer
+description of ecomorph than the abbreviations one
+<code>Ecomorph</code>. In addition, this establishes groups of data to
+compute multiple regression lines for `geom_smooth()’.</p>
+<p>By plotting out data in this way, it’s clear we should consider
+ecomorph as an important variable explaining the hindlimb-SVL
+relationship. So let’s now construct a model that includes this new
+variable:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>anole.log.eco.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(HTotal<span class="sc">~</span>SVL<span class="sc">*</span>Ecomorph2,anole.log)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anole.log.eco.lm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = HTotal ~ SVL * Ecomorph2, data = anole.log)
@@ -764,7 +1013,7 @@ The data loaded to <code>anole.co</code> are
 ## Residual standard error: 0.08786 on 34 degrees of freedom
 ## Multiple R-squared:  0.9713, Adjusted R-squared:  0.962 
 ## F-statistic: 104.7 on 11 and 34 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="kw">anova</span>(anole.log.eco.lm)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(anole.log.eco.lm)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: HTotal
@@ -775,10 +1024,26 @@ The data loaded to <code>anole.co</code> are
 ## Residuals     34 0.2625  0.0077                        
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>Notice that we performed an ANOVA test on our new model with the <code>anova()</code> function. This is, more precisely defined, a two-way analysis of covariance. That is, we are assessing the effect of a categorical variable (<code>Ecomorph2</code>) in the context of how <code>HTotal</code> <em>covaries</em> with <code>SVL</code>. The results of the ANOVA indicates that we should reject the null hypothesis that ecomorph groups do not have separate hindlimb-SVL relationships. This is indicated by the p=3.761e-09 for the <code>Ecomorph2</code> variable</p>
-<p>Great! We now have established that ecomorph has a significant effect on the hindlimb-SVL relationship. But, to come back to our readings in PCM and what we discussed above, although this model may have some significant terms, we really want to know if adding the <code>Ecomorph2</code> parameter results in a better fit as compared to a simple model that doesn’t include this parameter. Put another way, is a model of hindlimb growth that includes ecomorph describing the system better than one that doesn’t? Let’s establish this simple model with log-transformed data and compare it with AIC and AICw to this more complicated model.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>anole.log.lm  &lt;-<span class="st"> </span><span class="kw">lm</span>(HTotal<span class="op">~</span>SVL,anole.log)</span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="kw">anova</span>(anole.log.lm)</span></code></pre></div>
+<p>Notice that we performed an ANOVA test on our new model with the
+<code>anova()</code> function. This is, more precisely defined, a
+two-way analysis of covariance. That is, we are assessing the effect of
+a categorical variable (<code>Ecomorph2</code>) in the context of how
+<code>HTotal</code> <em>covaries</em> with <code>SVL</code>. The results
+of the ANOVA indicates that we should reject the null hypothesis that
+ecomorph groups do not have separate hindlimb-SVL relationships. This is
+indicated by the p=3.761e-09 for the <code>Ecomorph2</code> variable</p>
+<p>Great! We now have established that ecomorph has a significant effect
+on the hindlimb-SVL relationship. But, to come back to our readings in
+PCM and what we discussed above, although this model may have some
+significant terms, we really want to know if adding the
+<code>Ecomorph2</code> parameter results in a better fit as compared to
+a simple model that doesn’t include this parameter. Put another way, is
+a model of hindlimb growth that includes ecomorph describing the system
+better than one that doesn’t? Let’s establish this simple model with
+log-transformed data and compare it with AIC and AICw to this more
+complicated model.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>anole.log.lm  <span class="ot">&lt;-</span> <span class="fu">lm</span>(HTotal<span class="sc">~</span>SVL,anole.log)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(anole.log.lm)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: HTotal
@@ -787,123 +1052,352 @@ The data loaded to <code>anole.co</code> are
 ## Residuals 44 1.0957  0.0249                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>anole.log.aic &lt;-<span class="st"> </span><span class="kw">AICc</span>(anole.log.lm,anole.log.eco.lm)</span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="kw">aicw</span>(anole.log.aic<span class="op">$</span>AICc)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>anole.log.aic <span class="ot">&lt;-</span> <span class="fu">AICc</span>(anole.log.lm,anole.log.eco.lm)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aicw</span>(anole.log.aic<span class="sc">$</span>AICc)</span></code></pre></div>
 <pre><code>##         fit    delta            w
 ## 1 -34.79896 34.93394 2.595324e-08
 ## 2 -69.73290  0.00000 1.000000e+00</code></pre>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>Notice that we added our <code>Ecomorph2</code> variable to the model with <code>*</code> in our model formula: <code>HTotal~SVL*Ecomorph2</code>. This could have been done with <code>+</code>, but the difference between <code>*</code> and <code>+</code> is huge. The symbol <code>+</code> adds this variable to model and asks the regression to consider if only the intercepts of the groups within <code>Ecomorph2</code> will vary, that is, if the mean response of <code>HTotal</code> vs. <code>SVL</code> is different according to the groups in <code>Ecomorph2</code>. The <code>*</code> adds an interaction between terms in the model. This asks the regression to consider if the <strong>slopes</strong> of <code>HTotal</code> vs. <code>SVL</code> is different according to the groups in <code>Ecomorph2</code>. Put another way, <code>SVL*Ecomorph2</code> considers if <code>HTotal</code> responds differently to <code>SVL</code> according to <code>Ecomorph2</code> This is a good place to start, assuming that different ecological groups have different relationship between the response and the covariate.</p>
+<p>Notice that we added our <code>Ecomorph2</code> variable to the model
+with <code>*</code> in our model formula:
+<code>HTotal~SVL*Ecomorph2</code>. This could have been done with
+<code>+</code>, but the difference between <code>*</code> and
+<code>+</code> is huge. The symbol <code>+</code> adds this variable to
+model and asks the regression to consider if only the intercepts of the
+groups within <code>Ecomorph2</code> will vary, that is, if the mean
+response of <code>HTotal</code> vs. <code>SVL</code> is different
+according to the groups in <code>Ecomorph2</code>. The <code>*</code>
+adds an interaction between terms in the model. This asks the regression
+to consider if the <strong>slopes</strong> of <code>HTotal</code>
+vs. <code>SVL</code> is different according to the groups in
+<code>Ecomorph2</code>. Put another way, <code>SVL*Ecomorph2</code>
+considers if <code>HTotal</code> responds differently to
+<code>SVL</code> according to <code>Ecomorph2</code> This is a good
+place to start, assuming that different ecological groups have different
+relationship between the response and the covariate.</p>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>OK, yes! A model with the added <code>Ecomorph2</code> parameter results in a much better fit, both in terms of <span class="math inline">\(\Delta AIC\)</span> and AIC<span class="math inline">\(_w\)</span>.</p>
-<p>Now that we’ve found a better fitting model, let’s explore just how much each ecomorph varies among anoles in their hindlimb-SVL relationship. Think for a second or two how we might go about this. Our problem is a multivariate one: we have the covariaton of <code>HTotal</code> vs. <code>SVL</code> to consider in the context of ecomorph. As we’ve learned, visualization is the most important first step of data analysis. But, how should we represent these data in a plot?</p>
-<p>Let’s come back to the residual. The residual represents how much any one data point varies from the prediction. If we have a global model that predicts thehindlimb length based on SVL for all our anole species, we can determine how much each species deviates from the prediction. We can then take the residuals for each species and look for patterns by plotting the residuals versus ecomorph. That is, we need to go beyond plotting points and regressions and plot data based on a categorical values (in this case, <code>Ecomorph2</code>). This is easily implemented in <code>ggplot</code>.</p>
-<p>First we need to compute the residuals based on our global <code>anole.log.lm</code> model:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>anole.log &lt;-<span class="st"> </span>anole.log <span class="op">%&gt;%</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">res=</span><span class="kw">residuals</span>(anole.log.lm))</span></code></pre></div>
-<p>For this, we use the <code>residuals()</code> function from the <code>stats</code> package, computing residuals for the <code>anole.log.lm</code> model. Notice that we used a <code>mutate()</code> operation to establish a new <code>res</code> column that contains the residuals. Notice that we also redefined <code>anole.log</code> as a tibble containing this new column. Now, let’s plot the residuals against <code>Ecomorph2</code>.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>anole.log<span class="op">%&gt;%</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(Ecomorph2,res))<span class="op">+</span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p>OK, yes! A model with the added <code>Ecomorph2</code> parameter
+results in a much better fit, both in terms of <span
+class="math inline">\(\Delta AIC\)</span> and AIC<span
+class="math inline">\(_w\)</span>.</p>
+<p>Now that we’ve found a better fitting model, let’s explore just how
+much each ecomorph varies among anoles in their hindlimb-SVL
+relationship. Think for a second or two how we might go about this. Our
+problem is a multivariate one: we have the covariaton of
+<code>HTotal</code> vs. <code>SVL</code> to consider in the context of
+ecomorph. As we’ve learned, visualization is the most important first
+step of data analysis. But, how should we represent these data in a
+plot?</p>
+<p>Let’s come back to the residual. The residual represents how much any
+one data point varies from the prediction. If we have a global model
+that predicts thehindlimb length based on SVL for all our anole species,
+we can determine how much each species deviates from the prediction. We
+can then take the residuals for each species and look for patterns by
+plotting the residuals versus ecomorph. That is, we need to go beyond
+plotting points and regressions and plot data based on a categorical
+values (in this case, <code>Ecomorph2</code>). This is easily
+implemented in <code>ggplot</code>.</p>
+<p>First we need to compute the residuals based on our global
+<code>anole.log.lm</code> model:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>anole.log <span class="ot">&lt;-</span> anole.log <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res=</span><span class="fu">residuals</span>(anole.log.lm))</span></code></pre></div>
+<p>For this, we use the <code>residuals()</code> function from the
+<code>stats</code> package, computing residuals for the
+<code>anole.log.lm</code> model. Notice that we used a
+<code>mutate()</code> operation to establish a new <code>res</code>
+column that contains the residuals. Notice that we also redefined
+<code>anole.log</code> as a tibble containing this new column. Now,
+let’s plot the residuals against <code>Ecomorph2</code>.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>anole.log<span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Ecomorph2,res))<span class="sc">+</span><span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-<p>In this <code>ggplot()</code> operation, we established the x variable as <code>Ecomorph2</code> and y as the residual (<code>res</code>).</p>
-<p>From this we see that model deviations (i.e., residuals) are greatest in the twig and trunk-ground ecomorphs. But, this isn’t so pleasing. Perhaps we would like a better summarization of the data, including the median residual for each ecomorph. We could do this with more mutations of the data; however, we can let <code>ggplot</code> do this with <code>geom_boxplot()</code>. This geometry plots summary statistics including the median, hinges that correspond to the first and third quartiles, and whiskers that correspond to 1.5 times the interquartile range.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>p.eco &lt;-<span class="st"> </span>anole.log<span class="op">%&gt;%</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Ecomorph2,<span class="dt">y=</span>res)) <span class="op">+</span><span class="kw">geom_boxplot</span>()</span>
-<span id="cb34-3"><a href="#cb34-3"></a><span class="kw">print</span>(p.eco)</span></code></pre></div>
+<p>In this <code>ggplot()</code> operation, we established the x
+variable as <code>Ecomorph2</code> and y as the residual
+(<code>res</code>).</p>
+<p>From this we see that model deviations (i.e., residuals) are greatest
+in the twig and trunk-ground ecomorphs. But, this isn’t so pleasing.
+Perhaps we would like a better summarization of the data, including the
+median residual for each ecomorph. We could do this with more mutations
+of the data; however, we can let <code>ggplot</code> do this with
+<code>geom_boxplot()</code>. This geometry plots summary statistics
+including the median, hinges that correspond to the first and third
+quartiles, and whiskers that correspond to 1.5 times the interquartile
+range.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>p.eco <span class="ot">&lt;-</span> anole.log<span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Ecomorph2,<span class="at">y=</span>res)) <span class="sc">+</span><span class="fu">geom_boxplot</span>()</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p.eco)</span></code></pre></div>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<p>This is a great summary of our hindlimb-SVL residual data according to ecomorph. But, often, as biologists, we prefer to visualize the mean of values in our a priori groups rather than median. One asset of <code>ggplot</code> is that we can add geometries to existing plot. Because we saved out plot as <code>p.eco</code>, we can simply add a geometry that includes a representation of mean residual for each ecomorph.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>p.eco<span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="kw">stat_summary</span>(<span class="dt">fun=</span>mean, <span class="dt">geom=</span><span class="st">&quot;point&quot;</span>, <span class="dt">size=</span><span class="dv">3</span>)</span></code></pre></div>
+<p>This is a great summary of our hindlimb-SVL residual data according
+to ecomorph. But, often, as biologists, we prefer to visualize the mean
+of values in our a priori groups rather than median. One asset of
+<code>ggplot</code> is that we can add geometries to existing plot.
+Because we saved out plot as <code>p.eco</code>, we can simply add a
+geometry that includes a representation of mean residual for each
+ecomorph.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>p.eco<span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span><span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">3</span>)</span></code></pre></div>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<p>Here we added a point with the <code>stat_summary()</code> geometry. This applies a summarizing function to the already established group (established by <code>x=Ecomorph2</code>) and plots the value of the summary with a specified geometry. The function we applied to the y data is the mean (<code>fun=mean</code>) and we specified a point with size 3 for the geometry to add (<code>geom=point</code> and <code>size=3</code>, respectively). Lovely.</p>
+<p>Here we added a point with the <code>stat_summary()</code> geometry.
+This applies a summarizing function to the already established group
+(established by <code>x=Ecomorph2</code>) and plots the value of the
+summary with a specified geometry. The function we applied to the y data
+is the mean (<code>fun=mean</code>) and we specified a point with size 3
+for the geometry to add (<code>geom=point</code> and
+<code>size=3</code>, respectively). Lovely.</p>
 </div>
 <div id="not-so-fast-phylogeny-matters" class="section level1">
 <h1>Not So Fast: Phylogeny Matters</h1>
-<p>So far we’ve concluded that ecomorph is an important explanatory variable when it comes to anole hinglimb-SVL relationships. But (and this is the biggest of buts), we’ve ignored an important and potentially confounding fact. These lizards, like every group of organisms, have an evolutionary history. Because of this, some species are more closely related than others and thus, they cannot be seen as independent samples in the statistical sense. In other words, any trait we seek to study likely covaries with phylogenetic position. For example, in the context of anole hindlimb-SVL data, it is entirely possible, perhaps probable, that more closely related species share a similar pattern. Thus, it may be that any patterns we’ve uncovered thus far are the result of phylogeny, not merely ecomorph alone.</p>
-<p>To account for phylogeny in statistical analysis, we must turn to an important toolbox used by organismal biologists, phylogenetic comparative methods (PCMs). PCMs have a long history and today they are defined as any statistical operations that include the use of phylogenies, that is, information from phylogenetic trees. For regression analysis, the modeling approach we’ve taken on in this project, there exist several PCM procedures that account for phylogeny. Phylogenetic generalized least squares (PGLS) is perhaps the most flexible and widely used among them.</p>
-<p>In typical least squares regression operations performed already, the residuals of any relationship are assumed to be independent and normally distributed. In PGLS, the variance and covariance of the residuals are structured given a model of trait and the closeness of relationships in a phylogenetic tree. So to perform PGLS, we establish this covriation matrix with a tree and assume that the characters have evolved in this tree under some evolutionary model.</p>
+<p>So far we’ve concluded that ecomorph is an important explanatory
+variable when it comes to anole hinglimb-SVL relationships. But (and
+this is the biggest of buts), we’ve ignored an important and potentially
+confounding fact. These lizards, like every group of organisms, have an
+evolutionary history. Because of this, some species are more closely
+related than others and thus, they cannot be seen as independent samples
+in the statistical sense. In other words, any trait we seek to study
+likely covaries with phylogenetic position. For example, in the context
+of anole hindlimb-SVL data, it is entirely possible, perhaps probable,
+that more closely related species share a similar pattern. Thus, it may
+be that any patterns we’ve uncovered thus far are the result of
+phylogeny, not merely ecomorph alone.</p>
+<p>To account for phylogeny in statistical analysis, we must turn to an
+important toolbox used by organismal biologists, phylogenetic
+comparative methods (PCMs). PCMs have a long history and today they are
+defined as any statistical operations that include the use of
+phylogenies, that is, information from phylogenetic trees. For
+regression analysis, the modeling approach we’ve taken on in this
+project, there exist several PCM procedures that account for phylogeny.
+Phylogenetic generalized least squares (PGLS) is perhaps the most
+flexible and widely used among them.</p>
+<p>In typical least squares regression operations performed already, the
+residuals of any relationship are assumed to be independent and normally
+distributed. In PGLS, the variance and covariance of the residuals are
+structured given a model of trait and the closeness of relationships in
+a phylogenetic tree. So to perform PGLS, we establish this covriation
+matrix with a tree and assume that the characters have evolved in this
+tree under some evolutionary model.</p>
 <p>Let’s first have a look at the tree.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>anole.tree &lt;-<span class="st"> </span><span class="kw">read.tree</span>(<span class="st">&quot;anole.tre&quot;</span>)</span>
-<span id="cb36-2"><a href="#cb36-2"></a><span class="kw">plot</span>(anole.tree,<span class="dt">cex=</span><span class="fl">0.4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>anole.tree <span class="ot">&lt;-</span> <span class="fu">read.tree</span>(<span class="st">&quot;anole.tre&quot;</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(anole.tree,<span class="at">cex=</span><span class="fl">0.4</span>)</span></code></pre></div>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
-<p>Here we read in the tree using <code>read.tree</code> from the <code>ape</code> package. This stores the tree as a <code>phylo</code> object, a list of branch order, branch lengths, and tip labels. We’ll use the <code>phylo</code> object in our analysis. One can plot <code>phylo</code> objects with the <code>plot()</code> function. We added <code>cex=0.4</code>. <code>cex</code> stands for the character expansion factor—-how the size of the text should be adjusted. In this case, the tip label (i.e., species names) are too cluttered if we don’t reduce the character size to 0.4 of the default.</p>
-<p>Now that we have a tree that we’ll use in our PGLS regression analysis, let’s consider what we mean by an evolutionary model. By this we mean under what process or mode does a trait (or several) evolve over a tree, from the root to the tips. Many PCMs assume a Brownian motion model of character evolution. You can think of this as a “random-walk” process. At each point in time, the value of the character walks higher or lower from the previous value. Over time, the sum of these changes describes the change in the value. How much the value can change over time is described by the rate parameter <span class="math inline">\(\sigma^2\)</span>—the higher the value, the greater the changes at each point in time. To illustrate the random-walk nature of this process and the effect of <span class="math inline">\(\sigma^2\)</span> on the magnitude of change over time, consider the following 4 simulations each with a 100 simulations with different value of <span class="math inline">\(\sigma^2\)</span> ranging from 1 to 20:</p>
+<p>Here we read in the tree using <code>read.tree</code> from the
+<code>ape</code> package. This stores the tree as a <code>phylo</code>
+object, a list of branch order, branch lengths, and tip labels. We’ll
+use the <code>phylo</code> object in our analysis. One can plot
+<code>phylo</code> objects with the <code>plot()</code> function. We
+added <code>cex=0.4</code>. <code>cex</code> stands for the character
+expansion factor—-how the size of the text should be adjusted. In this
+case, the tip label (i.e., species names) are too cluttered if we don’t
+reduce the character size to 0.4 of the default.</p>
+<p>Now that we have a tree that we’ll use in our PGLS regression
+analysis, let’s consider what we mean by an evolutionary model. By this
+we mean under what process or mode does a trait (or several) evolve over
+a tree, from the root to the tips. Many PCMs assume a Brownian motion
+model of character evolution. You can think of this as a “random-walk”
+process. At each point in time, the value of the character walks higher
+or lower from the previous value. Over time, the sum of these changes
+describes the change in the value. How much the value can change over
+time is described by the rate parameter <span
+class="math inline">\(\sigma^2\)</span>—the higher the value, the
+greater the changes at each point in time. To illustrate the random-walk
+nature of this process and the effect of <span
+class="math inline">\(\sigma^2\)</span> on the magnitude of change over
+time, consider the following 4 simulations each with a 100 simulations
+with different value of <span class="math inline">\(\sigma^2\)</span>
+ranging from 1 to 20:</p>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-<p>Notice, as Harmon pointed out in hist PCM book, this resembles a genetic drift model and indeed BM can be used to model a process of trait evolution under genetic drift.</p>
-<p>In PGLS, or any number of other comparative methods, we can implement this model of character evolution over the tree where time corresponds to the branch lengths and each node of the tree represents a new random walk away from the previous value at the previous node. This from Harmon’s PCM book explains the process:</p>
+<p>Notice, as Harmon pointed out in hist PCM book, this resembles a
+genetic drift model and indeed BM can be used to model a process of
+trait evolution under genetic drift.</p>
+<p>In PGLS, or any number of other comparative methods, we can implement
+this model of character evolution over the tree where time corresponds
+to the branch lengths and each node of the tree represents a new random
+walk away from the previous value at the previous node. This from
+Harmon’s PCM book explains the process:</p>
 <enter> <img src="pcmfigure3-4.png" />
 </center>
 <p><br></p>
-<p>In A, we see the evolution in a single lineage over time period <span class="math inline">\(t_1\)</span>. At the end of time <span class="math inline">\(t_1\)</span>, the trait will have evolved value <span class="math inline">\(\bar{z}(t_1)\)</span>, a magnitude that is approximated by <span class="math inline">\(\bar{z}(0)\)</span> plus the amount of change along the branch (roughly described by <span class="math inline">\(\sigma^2t_1\)</span>, the product of the rate parameter and time). In panel B,the evolutionary change described by Brownian motion occurs over a total time of <span class="math inline">\(t_41\)</span>+<span class="math inline">\(t_2\)</span>. Thus, the change at this tip (<span class="math inline">\(\bar{x}_a\)</span>) would be equal to the starting value, <span class="math inline">\(\bar{z}(0)\)</span> plus <span class="math inline">\(\sigma^2(t_1+t_2)\)</span>. Similarly, the change at tip “b” would be equal to <span class="math inline">\(\bar{z}(0)\)</span> + <span class="math inline">\(\sigma^2(t_1+t_3)\)</span>. Note that the mean value for tips “a” and “b” (<span class="math inline">\(\bar{x}_a\)</span>) and <span class="math inline">\(\bar{x}_b\)</span>) are not independent: the two tips share a branch in common and each tip’s trait value is the ancestral value plus the sum of two separate evolutionary changes. In a more complex tree with many taxa, this process is modeled from the root (the ancestor or all species) to every tip.</p>
-<p>Another way to model character evolution over a tree, an Ornstein-Uhlenbeck (OU) model, is a little more complicated, however, worth mentioning because it remains a popular alternative model to the BM process. We won’t go into the same detail because of its similarity to BM and the mathematics are somewhat involved. In this model, traits evolving over a tree are “pulled” toward an optimum and this is often assumed to model a process of stabilizing selection (although other processes the result in optima can’t be ruled out). The process of fitting an OU model is quite similar to BM including a starting value (<span class="math inline">\(\bar{z}(0)\)</span>), the evolutionary rate <span class="math inline">\(\sigma^2\)</span>, and the additional parameters of the trait optimum (<span class="math inline">\(\theta\)</span>) and strength of selection (<span class="math inline">\(\alpha\)</span>). The <span class="math inline">\(\alpha\)</span> parameter determines how strongly the trait is pulled back to the optimum and, for this reason, is sometimes referred to as a “rubber band” parameter. It’s important to note that when <span class="math inline">\(\alpha\)</span>=0, i.e., no selection, the OU is mechanistically identical to the BM process.</p>
-<p>Now that we have explained the theory behind a few evolutionary models and we have a tree for our anoles, let’s perform some PGLS under these two different models: both with simple regression models that doesn’t include ecomorph and then models that do. We’ll start with setting up the code using <code>gls()</code> from the <code>nlme</code> package and then discuss what’s in it.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co">#PGLS under BM, no ecomorph</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a>pgls.BM1 &lt;-<span class="st"> </span><span class="kw">gls</span>(HTotal <span class="op">~</span>SVL, <span class="dt">correlation =</span> <span class="kw">corBrownian</span>(<span class="dv">1</span>,<span class="dt">phy =</span> anole.tree,<span class="dt">form=</span><span class="op">~</span>Species),<span class="dt">data =</span> anole.log, <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
-<span id="cb37-3"><a href="#cb37-3"></a></span>
-<span id="cb37-4"><a href="#cb37-4"></a><span class="co">#PGLS under BM, w ecomorph</span></span>
-<span id="cb37-5"><a href="#cb37-5"></a>pgls.BM2 &lt;-<span class="st"> </span><span class="kw">gls</span>(HTotal <span class="op">~</span>SVL <span class="op">*</span><span class="st"> </span>Ecomorph2, <span class="dt">correlation =</span> <span class="kw">corBrownian</span>(<span class="dv">1</span>,<span class="dt">phy =</span> anole.tree,<span class="dt">form=</span><span class="op">~</span>Species),<span class="dt">data =</span> anole.log, <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
-<span id="cb37-6"><a href="#cb37-6"></a></span>
-<span id="cb37-7"><a href="#cb37-7"></a></span>
-<span id="cb37-8"><a href="#cb37-8"></a><span class="co">#PGLS under OU, no ecomorph</span></span>
-<span id="cb37-9"><a href="#cb37-9"></a>pgls.OU1 &lt;-<span class="st"> </span><span class="kw">gls</span>(HTotal <span class="op">~</span>SVL, <span class="dt">correlation =</span> <span class="kw">corMartins</span>(<span class="dv">0</span>,<span class="dt">phy =</span> anole.tree,<span class="dt">form=</span><span class="op">~</span>Species),<span class="dt">data =</span> anole.log, <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
-<span id="cb37-10"><a href="#cb37-10"></a></span>
-<span id="cb37-11"><a href="#cb37-11"></a><span class="co">#PGLS under OU, w, ecomorph</span></span>
-<span id="cb37-12"><a href="#cb37-12"></a>pgls.OU2 &lt;-<span class="st"> </span><span class="kw">gls</span>(HTotal <span class="op">~</span>SVL <span class="op">*</span><span class="st"> </span>Ecomorph2, <span class="dt">correlation =</span> <span class="kw">corMartins</span>(<span class="dv">0</span>,<span class="dt">phy =</span> anole.tree,<span class="dt">form=</span><span class="op">~</span>Species),<span class="dt">data =</span> anole.log, <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>)</span></code></pre></div>
-<p>What we did here is set up generalized least squares models that establish a correlation matrix based on BM and OU models of evolution. We establish this matrix with <code>corBrownian()</code> from the <code>ape</code> package for the BM models and <code>corMartins()</code>, also from <code>ape</code>, for the OU models. The <code>corMartins()</code> function for establishing the OU covariation matrix is so name by the <code>ape</code> authors as an homage to <span class="citation">Martins and Hansen (1997)</span>, the paper that most precisely defined the OU model in comparative analysis [see note below]. Notice that we don’t have to specify what any of the parameters are; they are estimated under maximum likelihood when <code>method=ML</code>. For the BM model, we used a stating starting value of 1 for <span class="math inline">\(\sigma^2\)</span> and for the OU model we used a starting value of 0 for <span class="math inline">\(\alpha\)</span>. In each correlation function, we have to specify the tree (<code>anole.tree</code>) and the column names in data that will form the covariation matrix, that is, species (<code>~Species</code>).</p>
+<p>In A, we see the evolution in a single lineage over time period <span
+class="math inline">\(t_1\)</span>. At the end of time <span
+class="math inline">\(t_1\)</span>, the trait will have evolved value
+<span class="math inline">\(\bar{z}(t_1)\)</span>, a magnitude that is
+approximated by <span class="math inline">\(\bar{z}(0)\)</span> plus the
+amount of change along the branch (roughly described by <span
+class="math inline">\(\sigma^2t_1\)</span>, the product of the rate
+parameter and time). In panel B,the evolutionary change described by
+Brownian motion occurs over a total time of <span
+class="math inline">\(t_41\)</span>+<span
+class="math inline">\(t_2\)</span>. Thus, the change at this tip (<span
+class="math inline">\(\bar{x}_a\)</span>) would be equal to the starting
+value, <span class="math inline">\(\bar{z}(0)\)</span> plus <span
+class="math inline">\(\sigma^2(t_1+t_2)\)</span>. Similarly, the change
+at tip “b” would be equal to <span
+class="math inline">\(\bar{z}(0)\)</span> + <span
+class="math inline">\(\sigma^2(t_1+t_3)\)</span>. Note that the mean
+value for tips “a” and “b” (<span
+class="math inline">\(\bar{x}_a\)</span>) and <span
+class="math inline">\(\bar{x}_b\)</span>) are not independent: the two
+tips share a branch in common and each tip’s trait value is the
+ancestral value plus the sum of two separate evolutionary changes. In a
+more complex tree with many taxa, this process is modeled from the root
+(the ancestor or all species) to every tip.</p>
+<p>Another way to model character evolution over a tree, an
+Ornstein-Uhlenbeck (OU) model, is a little more complicated, however,
+worth mentioning because it remains a popular alternative model to the
+BM process. We won’t go into the same detail because of its similarity
+to BM and the mathematics are somewhat involved. In this model, traits
+evolving over a tree are “pulled” toward an optimum and this is often
+assumed to model a process of stabilizing selection (although other
+processes the result in optima can’t be ruled out). The process of
+fitting an OU model is quite similar to BM including a starting value
+(<span class="math inline">\(\bar{z}(0)\)</span>), the evolutionary rate
+<span class="math inline">\(\sigma^2\)</span>, and the additional
+parameters of the trait optimum (<span
+class="math inline">\(\theta\)</span>) and strength of selection (<span
+class="math inline">\(\alpha\)</span>). The <span
+class="math inline">\(\alpha\)</span> parameter determines how strongly
+the trait is pulled back to the optimum and, for this reason, is
+sometimes referred to as a “rubber band” parameter. It’s important to
+note that when <span class="math inline">\(\alpha\)</span>=0, i.e., no
+selection, the OU is mechanistically identical to the BM process.</p>
+<p>Now that we have explained the theory behind a few evolutionary
+models and we have a tree for our anoles, let’s perform some PGLS under
+these two different models: both with simple regression models that
+doesn’t include ecomorph and then models that do. We’ll start with
+setting up the code using <code>gls()</code> from the <code>nlme</code>
+package and then discuss what’s in it.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#PGLS under BM, no ecomorph</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>pgls.BM1 <span class="ot">&lt;-</span> <span class="fu">gls</span>(HTotal <span class="sc">~</span>SVL, <span class="at">correlation =</span> <span class="fu">corBrownian</span>(<span class="dv">1</span>,<span class="at">phy =</span> anole.tree,<span class="at">form=</span><span class="sc">~</span>Species),<span class="at">data =</span> anole.log, <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co">#PGLS under BM, w ecomorph</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>pgls.BM2 <span class="ot">&lt;-</span> <span class="fu">gls</span>(HTotal <span class="sc">~</span>SVL <span class="sc">*</span> Ecomorph2, <span class="at">correlation =</span> <span class="fu">corBrownian</span>(<span class="dv">1</span>,<span class="at">phy =</span> anole.tree,<span class="at">form=</span><span class="sc">~</span>Species),<span class="at">data =</span> anole.log, <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="co">#PGLS under OU, no ecomorph</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>pgls.OU1 <span class="ot">&lt;-</span> <span class="fu">gls</span>(HTotal <span class="sc">~</span>SVL, <span class="at">correlation =</span> <span class="fu">corMartins</span>(<span class="dv">0</span>,<span class="at">phy =</span> anole.tree,<span class="at">form=</span><span class="sc">~</span>Species),<span class="at">data =</span> anole.log, <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="co">#PGLS under OU, w, ecomorph</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>pgls.OU2 <span class="ot">&lt;-</span> <span class="fu">gls</span>(HTotal <span class="sc">~</span>SVL <span class="sc">*</span> Ecomorph2, <span class="at">correlation =</span> <span class="fu">corMartins</span>(<span class="dv">0</span>,<span class="at">phy =</span> anole.tree,<span class="at">form=</span><span class="sc">~</span>Species),<span class="at">data =</span> anole.log, <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>)</span></code></pre></div>
+<p>What we did here is set up generalized least squares models that
+establish a correlation matrix based on BM and OU models of evolution.
+We establish this matrix with <code>corBrownian()</code> from the
+<code>ape</code> package for the BM models and
+<code>corMartins()</code>, also from <code>ape</code>, for the OU
+models. The <code>corMartins()</code> function for establishing the OU
+covariation matrix is so name by the <code>ape</code> authors as an
+homage to <span class="citation">Martins and Hansen (1997)</span>, the
+paper that most precisely defined the OU model in comparative analysis
+[see note below]. Notice that we don’t have to specify what any of the
+parameters are; they are estimated under maximum likelihood when
+<code>method=ML</code>. For the BM model, we used a stating starting
+value of 1 for <span class="math inline">\(\sigma^2\)</span> and for the
+OU model we used a starting value of 0 for <span
+class="math inline">\(\alpha\)</span>. In each correlation function, we
+have to specify the tree (<code>anole.tree</code>) and the column names
+in data that will form the covariation matrix, that is, species
+(<code>~Species</code>).</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>The field of phylogenetic comparative methods, like the discipline of biology as a whole, is remarkably white and especially male. Yet, several woman have made important contributions to comparative methods. <a href="https://sols.asu.edu/emilia-martins">Emilia Martins</a>, a computational mastermind and lead author in <span class="citation">Martins and Hansen (1997)</span>, is one of these distinctive female scientist who has contributed so profoundly to the field.</p>
+<p>The field of phylogenetic comparative methods, like the discipline of
+biology as a whole, is remarkably white and especially male. Yet,
+several woman have made important contributions to comparative methods.
+<a href="https://sols.asu.edu/emilia-martins">Emilia Martins</a>, a
+computational mastermind and lead author in <span
+class="citation">Martins and Hansen (1997)</span>, is one of these
+distinctive female scientist who has contributed so profoundly to the
+field.</p>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>Now that we have our models, we can preform our AIC operations to see which models fit that data best:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>anole.phylo.aic &lt;-<span class="st"> </span><span class="kw">AICc</span>(pgls.BM1,pgls.BM2,pgls.OU1,pgls.OU2)</span>
-<span id="cb38-2"><a href="#cb38-2"></a><span class="kw">aicw</span>(anole.phylo.aic<span class="op">$</span>AICc)</span></code></pre></div>
+<p>Now that we have our models, we can preform our AIC operations to see
+which models fit that data best:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>anole.phylo.aic <span class="ot">&lt;-</span> <span class="fu">AICc</span>(pgls.BM1,pgls.BM2,pgls.OU1,pgls.OU2)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aicw</span>(anole.phylo.aic<span class="sc">$</span>AICc)</span></code></pre></div>
 <pre><code>##         fit     delta            w
 ## 1 -63.66118 29.319176 4.225281e-07
 ## 2 -92.98036  0.000000 9.827289e-01
 ## 3 -57.31864 35.661714 1.772520e-08
 ## 4 -84.89770  8.082653 1.727062e-02</code></pre>
-<p>From the AIC results, we con safely say that a phyloggnetically corrected regression model that includes <code>Ecomorph2</code> with traits evolving under BM is the best fit. The OU models that specify a pull to some global optimum are rejected. We can interpret this to mean that the traits have evolved randomly, <em>but</em> randomly within each lineage.</p>
-<p>Next, we can now consider whether <code>Ecomorph</code> is a significant factor in predicting the hinglimb-SVL relationship in a phylogenetic context by preforming an ANOVA on our best fitting model, <code>pgsl.BM2</code></p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="kw">anova</span>(pgls.BM2)</span></code></pre></div>
+<p>From the AIC results, we con safely say that a phyloggnetically
+corrected regression model that includes <code>Ecomorph2</code> with
+traits evolving under BM is the best fit. The OU models that specify a
+pull to some global optimum are rejected. We can interpret this to mean
+that the traits have evolved randomly, <em>but</em> randomly within each
+lineage.</p>
+<p>Next, we can now consider whether <code>Ecomorph</code> is a
+significant factor in predicting the hinglimb-SVL relationship in a
+phylogenetic context by preforming an ANOVA on our best fitting model,
+<code>pgsl.BM2</code></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(pgls.BM2)</span></code></pre></div>
 <pre><code>## Denom. DF: 34 
 ##               numDF   F-value p-value
 ## (Intercept)       1 15848.498  &lt;.0001
 ## SVL               1  1073.374  &lt;.0001
 ## Ecomorph2         5    16.731  &lt;.0001
 ## SVL:Ecomorph2     5     1.596  0.1878</code></pre>
-<p>Like our simple linear model, this variable remains significant: <code>Ecomorph2</code> has a significant effect on this relationship at p&lt;0.0001. However, if we dig deeper with some visualization, we see that ecomorph isn’t as strong as a factor when we consider phylogeny. Let’s come back to the residuals of our hinglimb-SVL relationship, but now we’ll consider BM evolution of this relationship over the tree. We’ll first mutate and redefine our <code>anole.log</code> data to include a column for <em>phylogenetically</em> corrected residuals and then plot them against ecomorph just as we did in the case of our simple <code>lm()</code> model that didn’t consider phylogeny:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>anole.log &lt;-<span class="st"> </span>anole.log<span class="op">%&gt;%</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">phylo.res=</span><span class="kw">residuals</span>(pgls.BM2))</span>
-<span id="cb42-3"><a href="#cb42-3"></a></span>
-<span id="cb42-4"><a href="#cb42-4"></a>p.eco.phylo &lt;-<span class="st"> </span>anole.log<span class="op">%&gt;%</span></span>
-<span id="cb42-5"><a href="#cb42-5"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Ecomorph2,<span class="dt">y=</span>phylo.res)) <span class="op">+</span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="kw">stat_summary</span>(<span class="dt">fun=</span>mean, <span class="dt">geom=</span><span class="st">&quot;point&quot;</span>, <span class="dt">size=</span><span class="dv">3</span>)</span>
-<span id="cb42-6"><a href="#cb42-6"></a></span>
-<span id="cb42-7"><a href="#cb42-7"></a><span class="kw">print</span>(p.eco.phylo)</span></code></pre></div>
+<p>Like our simple linear model, this variable remains significant:
+<code>Ecomorph2</code> has a significant effect on this relationship at
+p&lt;0.0001. However, if we dig deeper with some visualization, we see
+that ecomorph isn’t as strong as a factor when we consider phylogeny.
+Let’s come back to the residuals of our hinglimb-SVL relationship, but
+now we’ll consider BM evolution of this relationship over the tree.
+We’ll first mutate and redefine our <code>anole.log</code> data to
+include a column for <em>phylogenetically</em> corrected residuals and
+then plot them against ecomorph just as we did in the case of our simple
+<code>lm()</code> model that didn’t consider phylogeny:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>anole.log <span class="ot">&lt;-</span> anole.log<span class="sc">%&gt;%</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">phylo.res=</span><span class="fu">residuals</span>(pgls.BM2))</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>p.eco.phylo <span class="ot">&lt;-</span> anole.log<span class="sc">%&gt;%</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Ecomorph2,<span class="at">y=</span>phylo.res)) <span class="sc">+</span><span class="fu">geom_boxplot</span>() <span class="sc">+</span><span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">3</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p.eco.phylo)</span></code></pre></div>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 <div id="plotting-more-with-less" class="section level1">
 <h1>Plotting More with Less</h1>
-<p>Now that we have phylogentically corrected residuals in addition to the uncorrected residuals, let’s now compare them visually. To do this we could use <code>ggplot()</code> to plot two separate boxplots of the uncorrected and corrected residuals. But, this wouldn’t be very concise. What we’ll do instead is make the <code>anole.log</code> tibble longer with respect to the two types of residuals. Think back to the <a href="mod2_proj.html#pivoting_to_different_questions">last project where we made a tibble wider</a>. In that case, we had a column of fin amplitudes (both left and right) and another identifying from which fin the amplitude came. With respect to fin amplitude, this is a long table, and we modified it to wide format with separate columns of values, one for each fin amplitude. In our <code>anole.log</code> tibble, we now have this wide format, a column for each type of residual. If we can make this tibble longer, with a column of both residual values and another identifying to which type of residual the value belongs, we can you <code>ggplot()</code>’s handy faceting tools to include our boxplots of both residual types in one plot.</p>
-<p>In the previous project, we introduced <a href="mod2_proj.html#using_customized_functions">the concept of facets</a>. If you recall, facets are used to break the plot up into a grid according values in the data. Let’s massage the data to a longer format and then use a faceting function from <code>ggplot</code> to plot the phlyognetically corrected and uncorrected residuals against ecomorph with a boxplot. This is how it can be done:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>anole.log<span class="op">%&gt;%</span></span>
-<span id="cb43-2"><a href="#cb43-2"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(Ecomorph2,res,phylo.res)<span class="op">%&gt;%</span></span>
-<span id="cb43-3"><a href="#cb43-3"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols=</span><span class="kw">c</span>(<span class="st">&quot;res&quot;</span>,<span class="st">&quot;phylo.res&quot;</span>))<span class="op">%&gt;%</span></span>
-<span id="cb43-4"><a href="#cb43-4"></a><span class="st">  </span>print<span class="op">%&gt;%</span></span>
-<span id="cb43-5"><a href="#cb43-5"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Ecomorph2,<span class="dt">y=</span>value)) <span class="op">+</span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="kw">stat_summary</span>(<span class="dt">fun=</span>mean, <span class="dt">geom=</span><span class="st">&quot;point&quot;</span>, <span class="dt">size=</span><span class="dv">3</span>)<span class="op">+</span><span class="kw">facet_grid</span>(name<span class="op">~</span>.,<span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>)<span class="op">+</span><span class="kw">ylab</span>(<span class="st">&quot;residual&quot;</span>)</span></code></pre></div>
+<p>Now that we have phylogentically corrected residuals in addition to
+the uncorrected residuals, let’s now compare them visually. To do this
+we could use <code>ggplot()</code> to plot two separate boxplots of the
+uncorrected and corrected residuals. But, this wouldn’t be very concise.
+What we’ll do instead is make the <code>anole.log</code> tibble longer
+with respect to the two types of residuals. Think back to the <a
+href="mod2_proj.html#pivoting_to_different_questions">last project where
+we made a tibble wider</a>. In that case, we had a column of fin
+amplitudes (both left and right) and another identifying from which fin
+the amplitude came. With respect to fin amplitude, this is a long table,
+and we modified it to wide format with separate columns of values, one
+for each fin amplitude. In our <code>anole.log</code> tibble, we now
+have this wide format, a column for each type of residual. If we can
+make this tibble longer, with a column of both residual values and
+another identifying to which type of residual the value belongs, we can
+you <code>ggplot()</code>’s handy faceting tools to include our boxplots
+of both residual types in one plot.</p>
+<p>In the previous project, we introduced <a
+href="mod2_proj.html#using_customized_functions">the concept of
+facets</a>. If you recall, facets are used to break the plot up into a
+grid according values in the data. Let’s massage the data to a longer
+format and then use a faceting function from <code>ggplot</code> to plot
+the phlyognetically corrected and uncorrected residuals against ecomorph
+with a boxplot. This is how it can be done:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>anole.log<span class="sc">%&gt;%</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Ecomorph2,res,phylo.res)<span class="sc">%&gt;%</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">c</span>(<span class="st">&quot;res&quot;</span>,<span class="st">&quot;phylo.res&quot;</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  print<span class="sc">%&gt;%</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Ecomorph2,<span class="at">y=</span>value)) <span class="sc">+</span><span class="fu">geom_boxplot</span>() <span class="sc">+</span><span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span><span class="fu">facet_grid</span>(name<span class="sc">~</span>.,<span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>)<span class="sc">+</span><span class="fu">ylab</span>(<span class="st">&quot;residual&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 92 × 3
 ##    Ecomorph2    name         value
 ##    &lt;chr&gt;        &lt;chr&gt;        &lt;dbl&gt;
@@ -919,61 +1413,155 @@ The data loaded to <code>anole.co</code> are
 ## 10 grass-bush   phylo.res  0.0868 
 ## # … with 82 more rows</code></pre>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
-<p>Here we selected the three columns of interest (<code>Ecomorph2</code>, <code>res</code> [the uncorrected residual], and <code>phylo.res</code> [the phylogenetically corrected residual]) in <code>anole.log</code> and passed that to a pivoting function, <code>pivot_longer()</code>. We specified the columns that will make the tibble longer with <code>cols=c("res","phylo.res")</code>. <code>pivot_longer()</code> constructed two new columns: one of both these values and another indicating the names of the column from whence they came. <code>print</code> was included so that we can see how this works. Notice the <code>Ecomorph2</code> column remains and now, rather than separate columns for the values of the residuals, their in a single column <code>value</code> and these values are identified by the <code>name</code> column. In other words, for each entry of an individual ecomorph in our tibble, there’s now two types of residuals identified by name, along with their values in <code>value</code>.</p>
+<p>Here we selected the three columns of interest
+(<code>Ecomorph2</code>, <code>res</code> [the uncorrected residual],
+and <code>phylo.res</code> [the phylogenetically corrected residual]) in
+<code>anole.log</code> and passed that to a pivoting function,
+<code>pivot_longer()</code>. We specified the columns that will make the
+tibble longer with <code>cols=c("res","phylo.res")</code>.
+<code>pivot_longer()</code> constructed two new columns: one of both
+these values and another indicating the names of the column from whence
+they came. <code>print</code> was included so that we can see how this
+works. Notice the <code>Ecomorph2</code> column remains and now, rather
+than separate columns for the values of the residuals, their in a single
+column <code>value</code> and these values are identified by the
+<code>name</code> column. In other words, for each entry of an
+individual ecomorph in our tibble, there’s now two types of residuals
+identified by name, along with their values in <code>value</code>.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>Notice that the <code>select()</code> function in the code above is prefaced with <code>dplyr::</code>. This is R speak for “use the function <code>select</code> from the <code>dplyr</code> package.” We have to do this here because a few of the other packages we loaded also have different functions of the same name. A common lament of folks writing code for other folks to use (i.e., packages) is that the toughest part of the work is naming things. That is, one has to be careful.</p>
+<p>Notice that the <code>select()</code> function in the code above is
+prefaced with <code>dplyr::</code>. This is R speak for “use the
+function <code>select</code> from the <code>dplyr</code> package.” We
+have to do this here because a few of the other packages we loaded also
+have different functions of the same name. A common lament of folks
+writing code for other folks to use (i.e., packages) is that the
+toughest part of the work is naming things. That is, one has to be
+careful.</p>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>All we had to do from there to plot a boxplot of both residuals for each ecomorph was borrow our boxplot code from above, modifying it a bit to produce the facets. Now, rather than having the y values equal <code>res</code> or <code>phylo.res</code>, we have it equal <code>value</code> in our tibble, a column that reflects values for both types of residuals in our new tibble. Once we add <code>facet_grid()</code> to the plot, with <code>name~.</code>, we get each type of residual plotted as a boxplot against ecomorph in a separate row. Recall that function takes a formula as input which corresponds to “row facets ~ column facets”, that is, what should the rows and columns in the grid represent. So, we want each of the different values according to <code>name</code> (the type of residual), boxplotted in a different row, thus <code>name~.</code>. The <code>.</code> tells the facets not to worry about columns as we don’t have any additional patterns to plot in the columns. Notice that the facet rows in the plot are name with the values unique values in the <code>name</code> column.</p>
-<p>We also added <code>scales="free_y"</code> to <code>facet_grid()</code>. This allows the scale on the y axis to be different in each row. As you can see, the scales of the residuals is much less expansive for the phylogentically residuals than for the uncorrected residuals. Without this, the boxes (hinges, whiskers, etc.) would be indistinguishable for the phylgentically corrected values.</p>
-<p>Lastly, we added a new label to the y axis with <code>ylab()</code> to provide a more appropriate name than “value”.</p>
-<p>Let’s come back to the comparison of the two types of residuals. With our faceted plot before us, we can see that the residuals condense quite a bit when we consider phylogeny. In other words, there was quite a bit of phylogenetic signal in our hindlimb-SVL data. Notice as well when we consider phylogeny, the patterns of which groups vary substantially changes a lot. Take, for instance, the trunk-ground ecomorph: it no longer has such a high mean residual, but is rather pretty close to the phylogenetically corrected mean for anoles. That is, compared to all the other anoles, it’s a rather unremarkable group in terms of relative hindlimb size.</p>
+<p>All we had to do from there to plot a boxplot of both residuals for
+each ecomorph was borrow our boxplot code from above, modifying it a bit
+to produce the facets. Now, rather than having the y values equal
+<code>res</code> or <code>phylo.res</code>, we have it equal
+<code>value</code> in our tibble, a column that reflects values for both
+types of residuals in our new tibble. Once we add
+<code>facet_grid()</code> to the plot, with <code>name~.</code>, we get
+each type of residual plotted as a boxplot against ecomorph in a
+separate row. Recall that function takes a formula as input which
+corresponds to “row facets ~ column facets”, that is, what should the
+rows and columns in the grid represent. So, we want each of the
+different values according to <code>name</code> (the type of residual),
+boxplotted in a different row, thus <code>name~.</code>. The
+<code>.</code> tells the facets not to worry about columns as we don’t
+have any additional patterns to plot in the columns. Notice that the
+facet rows in the plot are name with the values unique values in the
+<code>name</code> column.</p>
+<p>We also added <code>scales="free_y"</code> to
+<code>facet_grid()</code>. This allows the scale on the y axis to be
+different in each row. As you can see, the scales of the residuals is
+much less expansive for the phylogentically residuals than for the
+uncorrected residuals. Without this, the boxes (hinges, whiskers, etc.)
+would be indistinguishable for the phylgentically corrected values.</p>
+<p>Lastly, we added a new label to the y axis with <code>ylab()</code>
+to provide a more appropriate name than “value”.</p>
+<p>Let’s come back to the comparison of the two types of residuals. With
+our faceted plot before us, we can see that the residuals condense quite
+a bit when we consider phylogeny. In other words, there was quite a bit
+of phylogenetic signal in our hindlimb-SVL data. Notice as well when we
+consider phylogeny, the patterns of which groups vary substantially
+changes a lot. Take, for instance, the trunk-ground ecomorph: it no
+longer has such a high mean residual, but is rather pretty close to the
+phylogenetically corrected mean for anoles. That is, compared to all the
+other anoles, it’s a rather unremarkable group in terms of relative
+hindlimb size.</p>
 </div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
-<p>It’s likely that your head is spinning: we’ve covered a ton of topics in the project. What’s left to do is merely pick up the high points of what we’ve explored and apply these in a few relatively straightforward operations.</p>
-<p>Let’s have your team explore some ecological data and how it effects hindlimb-SVL patterns. We’ll not take the a priori ecomorph designations for granted, but rather assess if important ecological parameters of perch height (how high in the tree the anole resides) and the diameter of the perch predicts discrete patterns in the hindlimb-SVL relationship. We’ll use the log-transformed values of these variables that are contained in the <code>anole.log</code> tibble.</p>
-<p>For this project report, write a script named “groupname_module3.R” and undertake the following operations.</p>
+<p>It’s likely that your head is spinning: we’ve covered a ton of topics
+in the project. What’s left to do is merely pick up the high points of
+what we’ve explored and apply these in a few relatively straightforward
+operations.</p>
+<p>Let’s have your team explore some ecological data and how it effects
+hindlimb-SVL patterns. We’ll not take the a priori ecomorph designations
+for granted, but rather assess if important ecological parameters of
+perch height (how high in the tree the anole resides) and the diameter
+of the perch predicts discrete patterns in the hindlimb-SVL
+relationship. We’ll use the log-transformed values of these variables
+that are contained in the <code>anole.log</code> tibble.</p>
+<p>For this project report, write a script named “groupname_module3.R”
+and undertake the following operations.</p>
 <ol style="list-style-type: decimal">
-<li>Combine the code above so that you can establish the <code>anole.log</code> data tibble.</li>
-<li>Using the log-transformed data, construct two simple linear models that assess the effect of perch diameter and height by including these as covariates in your models. Be sure to use <code>+</code> notation rather than <code>*</code>, assuming there is no interaction (there isn’t, trust me!).</li>
-<li>Explore how both perch diameter and height effect the hindlimb-SVL relationship by plotting the residuals of your simple linear models against these covariates. This will require mutating a data tibble to include residuals from both models. Please produce two separate plots.</li>
-<li>Under a BM model of trait evolution and using the tree provided, construct phylogenetic least squares models of the hindlimb-SVL relationships that include the unique combinations of these two covariates, i.e,</li>
+<li>Combine the code above so that you can establish the
+<code>anole.log</code> data tibble.</li>
+<li>Using the log-transformed data, construct two simple linear models
+that assess the effect of perch diameter and height by including these
+as covariates in your models. Be sure to use <code>+</code> notation
+rather than <code>*</code>, assuming there is no interaction (there
+isn’t, trust me!).</li>
+<li>Explore how both perch diameter and height effect the hindlimb-SVL
+relationship by plotting the residuals of your simple linear models
+against these covariates. This will require mutating a data tibble to
+include residuals from both models. Please produce two separate
+plots.</li>
+<li>Under a BM model of trait evolution and using the tree provided,
+construct phylogenetic least squares models of the hindlimb-SVL
+relationships that include the unique combinations of these two
+covariates, i.e,</li>
 </ol>
 <pre><code>* A PGLS model with the hindlimb-SVL relationship + perch height
 * A PGLS model with the hindlimb-SVL relationship + perch diameter
 * A PGSL model with the hindlimb-SVL relationship + perch height + perch diameter</code></pre>
 <ol start="5" style="list-style-type: decimal">
-<li>Assess the fit of each of these three models using AICc and AICw and comment on (with comments in the script) whether one or both of the covariates is a significant predictor of hinglimb length in a phylogenetic context.</li>
-<li>Produce a plot of your own design that concisely visualizes the effect of your covariate(s) on the hindlimb residuals of the best fitting PGLS model.</li>
+<li>Assess the fit of each of these three models using AICc and AICw and
+comment on (with comments in the script) whether one or both of the
+covariates is a significant predictor of hinglimb length in a
+phylogenetic context.</li>
+<li>Produce a plot of your own design that concisely visualizes the
+effect of your covariate(s) on the hindlimb residuals of the best
+fitting PGLS model.</li>
 <li>Commit your script to your group repository.</li>
 </ol>
 <p>Submissions are due by 11:59 PM on Sunday, September 26th.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
-<h1>References</h1>
-<div id="refs" class="references">
-<div id="ref-hagey2017there">
-<p>Hagey, Travis J, Scott Harte, Mathew Vickers, Luke J Harmon, and Lin Schwarzkopf. 2017. “There’s More Than One Way to Climb a Tree: Limb Length and Microhabitat Use in Lizards with Toe Pads.” <em>PloS One</em> 12 (9): e0184641.</p>
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-hagey2017there" class="csl-entry">
+Hagey, Travis J, Scott Harte, Mathew Vickers, Luke J Harmon, and Lin
+Schwarzkopf. 2017. <span>“There’s More Than One Way to Climb a Tree:
+Limb Length and Microhabitat Use in Lizards with Toe Pads.”</span>
+<em>PloS One</em> 12 (9): e0184641.
 </div>
-<div id="ref-harmon2018phylogenetic">
-<p>Harmon, Luke. 2018. “Phylogenetic Comparative Methods: Learning from Trees.”</p>
+<div id="ref-harmon2018phylogenetic" class="csl-entry">
+Harmon, Luke. 2018. <span>“Phylogenetic Comparative Methods: Learning
+from Trees.”</span>
 </div>
-<div id="ref-lapiedra2018predator">
-<p>Lapiedra, Oriol, Thomas W Schoener, Manuel Leal, Jonathan B Losos, and Jason J Kolbe. 2018. “Predator-Driven Natural Selection on Risk-Taking Behavior in Anole Lizards.” <em>Science</em> 360 (6392): 1017–20.</p>
+<div id="ref-lapiedra2018predator" class="csl-entry">
+Lapiedra, Oriol, Thomas W Schoener, Manuel Leal, Jonathan B Losos, and
+Jason J Kolbe. 2018. <span>“Predator-Driven Natural Selection on
+Risk-Taking Behavior in Anole Lizards.”</span> <em>Science</em> 360
+(6392): 1017–20.
 </div>
-<div id="ref-martins1997phylogenies">
-<p>Martins, Emilia P, and Thomas F Hansen. 1997. “Phylogenies and the Comparative Method: A General Approach to Incorporating Phylogenetic Information into the Analysis of Interspecific Data.” <em>The American Naturalist</em> 149 (4): 646–67.</p>
+<div id="ref-martins1997phylogenies" class="csl-entry">
+Martins, Emilia P, and Thomas F Hansen. 1997. <span>“Phylogenies and the
+Comparative Method: A General Approach to Incorporating Phylogenetic
+Information into the Analysis of Interspecific Data.”</span> <em>The
+American Naturalist</em> 149 (4): 646–67.
 </div>
-<div id="ref-poe2017phylogenetic">
-<p>Poe, Steven, Adrian Nieto-Montes de Oca, Omar Torres-Carvajal, Kevin De Queiroz, Julián A Velasco, Brad Truett, Levi N Gray, et al. 2017. “A Phylogenetic, Biogeographic, and Taxonomic Study of All Extant Species of Anolis (Squamata; Iguanidae).” <em>Systematic Biology</em> 66 (5): 663–97.</p>
+<div id="ref-poe2017phylogenetic" class="csl-entry">
+Poe, Steven, Adrian Nieto-Montes de Oca, Omar Torres-Carvajal, Kevin De
+Queiroz, Julián A Velasco, Brad Truett, Levi N Gray, et al. 2017.
+<span>“A Phylogenetic, Biogeographic, and Taxonomic Study of All Extant
+Species of Anolis (Squamata; Iguanidae).”</span> <em>Systematic
+Biology</em> 66 (5): 663–97.
 </div>
 </div>
 </div>
@@ -1007,7 +1595,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -1016,6 +1604,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

@@ -47,7 +47,7 @@ Our Arduino units require connections to a standard USB (i.e., USB2 or 3) port o
 
 ## GitHub account
 
-Why a [GitHub account](https://github.com/join)? GitHub is a handy place for those developing code and offers free hosting of websites produced and maintained from a desktop (that's how this site was constructed). Our site is under the ``class" repository (i.e., a space where code resides) within the organization [bcorgbio](https://github.com/bcorgbio) on GitHub. To access  our organization, create a team, and use bcorgbio discussion pages, you'll need an account. Once you have an account, I'll be able to add you to our [bcorgbio](https://github.com/bcorgbio) organization and the class-wide team for discussion purposes.
+Why a [GitHub account](https://github.com/join)? GitHub is a handy place for those developing code and offers free hosting of websites produced and maintained from a desktop (that's how this site was constructed). Our site is under the ``class" repository (i.e., a space where code resides) within the organization [bcorgbio](https://github.com/bcorgbio) on GitHub. To access our organization, create a team, and use bcorgbio discussion pages, you'll need an account. Once you have an account, I'll be able to add you to our [bcorgbio](https://github.com/bcorgbio) organization and the class-wide team for discussion purposes.
 
 ## Course DAQPack
 

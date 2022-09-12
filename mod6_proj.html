@@ -13,17 +13,26 @@
 
 <title>Module 6 Project</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -35,21 +44,29 @@
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,7 +86,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -122,40 +139,31 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+
 
 
 <style type="text/css">
-h1 {
-  font-size: 34px;
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
 }
-h1.title {
-  font-size: 38px;
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-h2 {
-  font-size: 30px;
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-h3 {
-  font-size: 24px;
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
 }
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
+div.csl-indent {
+  margin-left: 2em;
 }
 </style>
-
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -166,10 +174,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -186,40 +190,16 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 61px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h2 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h3 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h4 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h5 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h6 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -247,7 +227,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -259,7 +239,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -270,10 +250,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -285,7 +278,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -411,7 +403,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -425,7 +417,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -441,7 +433,7 @@ div.tocify {
   <a href="schedule.html">Schedule</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Projects
      
     <span class="caret"></span>
@@ -496,7 +488,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f21">BIOL 3140 Discussion</a>
+  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f22">BIOL 3140 Discussion</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -506,7 +498,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -522,19 +514,85 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>The ability to maintain a consistent and elevated body temperature (<span class="math inline">\(T_b\)</span>) was an important evolutionary step in birds and mammals, permitting these taxa the ability to achieve higher metabolic output, regardless of ambient temperatures. Despite relatively consistent body temperatures, nearly all mammals engage in some form of heterothermy, etheir of the regional type (varying accross the body) or the temporal type (varying across time) <span class="citation">(Aschoff 1982)</span>. Temporal heterothermy is often used as a strategy to modulate metabolic demands and reduce evaporative water loss <span class="citation">(Ostrowski, Williams, and Ismael 2003)</span>. Over seasonal time scales, metabolic rate, and thus temperature, can be reduced when food availability declines in a form of torpor known as hibernation <span class="citation">(McNab 1983)</span>. Reducing the metabolic rate reduces energy requirements and allows a hibernating endotherm to wait out the food-scarce (and often cold) seasons <span class="citation">(Angilletta Jr and Angilletta 2009)</span>.</p>
+<p>The ability to maintain a consistent and elevated body temperature
+(<span class="math inline">\(T_b\)</span>) was an important evolutionary
+step in birds and mammals, permitting these taxa the ability to achieve
+higher metabolic output, regardless of ambient temperatures. Despite
+relatively consistent body temperatures, nearly all mammals engage in
+some form of heterothermy, etheir of the regional type (varying accross
+the body) or the temporal type (varying across time) <span
+class="citation">(Aschoff 1982)</span>. Temporal heterothermy is often
+used as a strategy to modulate metabolic demands and reduce evaporative
+water loss <span class="citation">(Ostrowski, Williams, and Ismael
+2003)</span>. Over seasonal time scales, metabolic rate, and thus
+temperature, can be reduced when food availability declines in a form of
+torpor known as hibernation <span class="citation">(McNab 1983)</span>.
+Reducing the metabolic rate reduces energy requirements and allows a
+hibernating endotherm to wait out the food-scarce (and often cold)
+seasons <span class="citation">(Angilletta Jr and Angilletta
+2009)</span>.</p>
 <center>
-<p><img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fsrep39640/MediaObjects/41598_2017_Article_BFsrep39640_Fig1_HTML.jpg?as=webp" style="width:50.0%" /></p>
-<br> <em>Even humans are temperal heterotherms as seen from the variability of <span class="math inline">\(T_b\)</span> over diel cycles (panel C). From <span class="citation">Hibi et al. (2017)</span>.</em>
+<p><img
+src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fsrep39640/MediaObjects/41598_2017_Article_BFsrep39640_Fig1_HTML.jpg?as=webp"
+style="width:50.0%" /></p>
+<br> <em>Even humans are temperal heterotherms as seen from the
+variability of <span class="math inline">\(T_b\)</span> over diel cycles
+(panel C). From <span class="citation">Hibi et al. (2017)</span>.</em>
 </center>
 <p><br> <br></p>
-<p>On diel time scales, fluxuations in <span class="math inline">\(T_b\)</span> for mammals are nearly universal <span class="citation">(Angilletta Jr and Angilletta 2009)</span>. These high <span class="math inline">\(T_b\)</span> oscillations have been characterized by physiologists as a mechanism to reduce evaporative water loss, although other explainations have been tendered. By capturing and storing heat during the day and loosing heat at night through convenction, <span class="math inline">\(T_b\)</span> oscillations reduce the need to cool during the day through evaporative processeses <span class="citation">(Ostrowski, Williams, and Ismael 2003)</span>. An important prediction is born out of this functional hypothesis: larger mammals, with their higher capacitance (the ability to story energy), should have lower amplitudes associated with thes oscillations. Put simply, larger mammals need to discharge a smaller share of their stored heat energy to achieve this water-loss savings. Thus, we should expect some type of scaling of relationship between the difference between max daily <span class="math inline">\(T_b\)</span> (<span class="math inline">\(T_{max}\)</span>) and mininum daily <span class="math inline">\(T_b\)</span> (<span class="math inline">\(T_{min}\)</span>, or <span class="math inline">\(T_{\Delta}\)</span>) and mass (<span class="math inline">\(W\)</span>).</p>
-<p>Many inter-specific scaling relationships playout within species as well. The variation of mass-specific metabolic rate (<span class="math inline">\(M_b\)</span> or <span class="math inline">\(\dot V_{O_2}\)</span>) with <span class="math inline">\(W\)</span> is one such scaling relationship. Larger species have lower mass-specific <span class="math inline">\(\dot V_{O_2}\)</span> values than smaller species AND larger individuals within a particular species have lower mass-specific <span class="math inline">\(\dot V_{O_2}\)</span> than small individuals <span class="citation">(Aschoff 1982; Mortola and Lanthier 2004)</span>. The goals of this project follow this same inference: evaluate whether humans demonstrate a scaling relationship with respect to <span class="math inline">\(T_{\Delta}\)</span> and <span class="math inline">\(W\)</span> and whether mean <span class="math inline">\(T_{\Delta}\)</span> values for humans and other mammals scale according to mass.</p>
+<p>On diel time scales, fluxuations in <span
+class="math inline">\(T_b\)</span> for mammals are nearly universal
+<span class="citation">(Angilletta Jr and Angilletta 2009)</span>. These
+high <span class="math inline">\(T_b\)</span> oscillations have been
+characterized by physiologists as a mechanism to reduce evaporative
+water loss, although other explainations have been tendered. By
+capturing and storing heat during the day and loosing heat at night
+through convenction, <span class="math inline">\(T_b\)</span>
+oscillations reduce the need to cool during the day through evaporative
+processeses <span class="citation">(Ostrowski, Williams, and Ismael
+2003)</span>. An important prediction is born out of this functional
+hypothesis: larger mammals, with their higher capacitance (the ability
+to story energy), should have lower amplitudes associated with thes
+oscillations. Put simply, larger mammals need to discharge a smaller
+share of their stored heat energy to achieve this water-loss savings.
+Thus, we should expect some type of scaling of relationship between the
+difference between max daily <span class="math inline">\(T_b\)</span>
+(<span class="math inline">\(T_{max}\)</span>) and mininum daily <span
+class="math inline">\(T_b\)</span> (<span
+class="math inline">\(T_{min}\)</span>, or <span
+class="math inline">\(T_{\Delta}\)</span>) and mass (<span
+class="math inline">\(W\)</span>).</p>
+<p>Many inter-specific scaling relationships playout within species as
+well. The variation of mass-specific metabolic rate (<span
+class="math inline">\(M_b\)</span> or <span class="math inline">\(\dot
+V_{O_2}\)</span>) with <span class="math inline">\(W\)</span> is one
+such scaling relationship. Larger species have lower mass-specific <span
+class="math inline">\(\dot V_{O_2}\)</span> values than smaller species
+AND larger individuals within a particular species have lower
+mass-specific <span class="math inline">\(\dot V_{O_2}\)</span> than
+small individuals <span class="citation">(Aschoff 1982; Mortola and
+Lanthier 2004)</span>. The goals of this project follow this same
+inference: evaluate whether humans demonstrate a scaling relationship
+with respect to <span class="math inline">\(T_{\Delta}\)</span> and
+<span class="math inline">\(W\)</span> and whether mean <span
+class="math inline">\(T_{\Delta}\)</span> values for humans and other
+mammals scale according to mass.</p>
 </div>
 <div id="methods" class="section level1">
 <h1>Methods</h1>
-<p>To capture <span class="math inline">\(T_b\)</span> data, you must redesign and construct a portable Arduino-based temperature data aqusition system (DAQ). Your device should record body axial temperature data over the course of 15 minutes for <strong>ONE</strong> of your team members.</p>
-<p>Sampling times should correspond to predictably high <span class="math inline">\(T_b\)</span> (i.e., 15 minutes when the subject is active, say in the middle of the day) and <a href="https://www.nature.com/articles/srep39640/figures/1">predictably low <span class="math inline">\(T_b\)</span></a> (i.e., 15 minutes early in the morning, say 4 AM, before you typically get up—sorry! Set those alarms). This won’t capture the full diurnal cycle, but will reduce the DAQ’s running time while recording the important points.</p>
+<p>To capture <span class="math inline">\(T_b\)</span> data, you must
+redesign and construct a portable Arduino-based temperature data
+aqusition system (DAQ). Your device should record body axial temperature
+data over the course of 15 minutes for <strong>ONE</strong> of your team
+members.</p>
+<p>Sampling times should correspond to predictably high <span
+class="math inline">\(T_b\)</span> (i.e., 15 minutes when the subject is
+active, say in the middle of the day) and <a
+href="https://www.nature.com/articles/srep39640/figures/1">predictably
+low <span class="math inline">\(T_b\)</span></a> (i.e., 15 minutes early
+in the morning, say 4 AM, before you typically get up—sorry! Set those
+alarms). This won’t capture the full diurnal cycle, but will reduce the
+DAQ’s running time while recording the important points.</p>
 <div id="daq-design-components" class="section level2">
 <h2>DAQ Design Components</h2>
 <ul>
@@ -545,7 +603,8 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </div>
 <div id="daq-assembly-and-programming" class="section level2">
 <h2>DAQ Assembly and Programming</h2>
-<p>Assembly for this temperature logger is identical to the process you completed in <a href="mod5_proj.html">Module 5</a>.</p>
+<p>Assembly for this temperature logger is identical to the process you
+completed in <a href="mod5_proj.html">Module 5</a>.</p>
 <!-- Assembly for this temperature logger is almost entirely captured in ~~[this tutorial](http://arduinolearning.com/projects/temperature-logger.php)~~[this tutorial](https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data). To this prototype, we must add battery power. That's easy enough: merely connect the battery power cable in the battery barrel connector on the Arduino (see pic below).  -->
 <!-- <center> -->
 <!-- ![](https://i2.wp.com/technobyte.org/wp-content/uploads/2016/06/Arduino-Uno-power-jack-or-barrel-connector-e1466952229868.jpg?ssl=1){width=50%} -->
@@ -561,74 +620,151 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <h2>Data Collection and Analysis</h2>
 <div id="intra-specific-scaling" class="section level3">
 <h3>Intra-specific Scaling</h3>
-<p>To evaluate the scaling relationship between <span class="math inline">\(T_{\Delta}\)</span> and mass, construct various models that describe the relationship between mass (<span class="math inline">\(W\)</span>) and the difference between mean <span class="math inline">\(T_{high}\)</span> and <span class="math inline">\(T_{low}\)</span> for all participants in the study. By all participants, I mean the 10 or so from this year’s class and the 30+ who participated in last year’s class. After completing data collection, each group should submit their data as .csv text files to <a href="https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing">this google directory</a> <strong>by Thursday, October 21st</strong>.</p>
-<p>Rememember from the <a href="mod5_proj.html#Saving_Data_from_the_Serial_Monitor">Module 5 project description</a>, that saving data files with a predictable format containing metadata is essential to a clean and easy workflow in R. The metadata needed for this project include your team name, subject, and mass. Therefore, please contruct the file names thusly: "BIOL3140_Subject#_Time_Mass.csv".</p>
+<p>To evaluate the scaling relationship between <span
+class="math inline">\(T_{\Delta}\)</span> and mass, construct various
+models that describe the relationship between mass (<span
+class="math inline">\(W\)</span>) and the difference between mean <span
+class="math inline">\(T_{high}\)</span> and <span
+class="math inline">\(T_{low}\)</span> for all participants in the
+study. By all participants, I mean the 10 or so from this year’s class
+and the 30+ who participated in last year’s class. After completing data
+collection, each group should submit their data as .csv text files to <a
+href="https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing">this
+google directory</a> <strong>by Thursday, October 21st</strong>.</p>
+<p>Rememember from the <a
+href="mod5_proj.html#Saving_Data_from_the_Serial_Monitor">Module 5
+project description</a>, that saving data files with a predictable
+format containing metadata is essential to a clean and easy workflow in
+R. The metadata needed for this project include your team name, subject,
+and mass. Therefore, please contruct the file names thusly:
+“BIOL3140_Subject#_Time_Mass.csv”.</p>
 <ul>
 <li>BIOL314021: The class and year of the data.</li>
-<li>Subject#: a subject number that uniquely identifies the participant anonymously (e.g., “Subject1”). Because we’re only using last year’s data and there we 30 subjects in that study, add your teams original team number to 30. Eg., If your team was originally named “team 2” this field would be “Subject32”</li>
+<li>Subject#: a subject number that uniquely identifies the participant
+anonymously (e.g., “Subject1”). Because we’re only using last year’s
+data and there we 30 subjects in that study, add your teams original
+team number to 30. Eg., If your team was originally named “team 2” this
+field would be “Subject32”</li>
 <li>Time: Time of day, i.e., “day” or “night”.</li>
-<li>Mass: The subject’s mass <strong>in kilograms</strong> (an estimate is fine).</li>
-<li>Make sure each of the metadata are separated by and underscore, "_".</li>
+<li>Mass: The subject’s mass <strong>in kilograms</strong> (an estimate
+is fine).</li>
+<li>Make sure each of the metadata are separated by and underscore,
+“_“.</li>
 </ul>
-<p>Once all files of these data can be downloaded and from this directory, analysis can commence. (- 5 pts for not submitting on time).</p>
+<p>Once all files of these data can be downloaded and from this
+directory, analysis can commence. (- 5 pts for not submitting on
+time).</p>
 </div>
 <div id="inter-specific-scaling" class="section level3">
 <h3>Inter-specific scaling</h3>
-<p>From the study-wide values, compute the mean mass and mean <span class="math inline">\(T_{\Delta}\)</span> for our human subjects and add these values to a dataset that includes the same data from 51 species of non-human mammals from <span class="citation">(Mortola and Lanthier 2004)</span>. From here you can commence with modeling and analysis. These data can be dowloaded <a href="mammal.temp.csv">here</a>.</p>
-<p><strong>NOTE</strong>: To get a leg up on the analyses, I recommend downloading last year’s data to begin modeling. Once you have the models established, your team can simply rerun them with the full data set after the 10 participants submit their data.</p>
+<p>From the study-wide values, compute the mean mass and mean <span
+class="math inline">\(T_{\Delta}\)</span> for our human subjects and add
+these values to a dataset that includes the same data from 51 species of
+non-human mammals from <span class="citation">(Mortola and Lanthier
+2004)</span>. From here you can commence with modeling and analysis.
+These data can be dowloaded <a href="mammal.temp.csv">here</a>.</p>
+<p><strong>NOTE</strong>: To get a leg up on the analyses, I recommend
+downloading last year’s data to begin modeling. Once you have the models
+established, your team can simply rerun them with the full data set
+after the 10 participants submit their data.</p>
 </div>
 </div>
 </div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
-<p>Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following:</p>
+<p>Please submit your report to your team GitHub repository as an .Rmd
+document with HTML output that addresses the following:</p>
 <ul>
-<li>What is the relationship between <span class="math inline">\(T_{\Delta}\)</span> and body mass in humans? I.e., is there a relationship and if so, is it allometric rather than isometric? Be sure to estimate important model parameters including scaling coefficients and slopes.</li>
-<li>What is the relationship between <span class="math inline">\(T_{\Delta}\)</span> and body mass across mammals, including humans?</li>
-<li>Does taxonomic group with respect to order effectively predict differences in this relationship across mammals?</li>
+<li>What is the relationship between <span
+class="math inline">\(T_{\Delta}\)</span> and body mass in humans? I.e.,
+is there a relationship and if so, is it allometric rather than
+isometric? Be sure to estimate important model parameters including
+scaling coefficients and slopes.</li>
+<li>What is the relationship between <span
+class="math inline">\(T_{\Delta}\)</span> and body mass across mammals,
+including humans?</li>
+<li>Does taxonomic group with respect to order effectively predict
+differences in this relationship across mammals?</li>
 </ul>
-<p>In answering these questions, be sure to use the visualization, modeling, and model-assessments tools we’ve used in the course so far.</p>
-<p>In answering your question, your .Rmd should include the following components:</p>
+<p>In answering these questions, be sure to use the visualization,
+modeling, and model-assessments tools we’ve used in the course so
+far.</p>
+<p>In answering your question, your .Rmd should include the following
+components:</p>
 <ul>
-<li>A YAML header that specifies HTML output, the authors, and a bibliograph named “BIOL3140.bib”. <strong>Submit this bibliography as well!</strong></li>
-<li>Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially:
+<li>A YAML header that specifies HTML output, the authors, and a
+bibliograph named “BIOL3140.bib”. <strong>Submit this bibliography as
+well!</strong></li>
+<li>Sections including an introduction, methods, results, discussion,
+author contributions, and references. Make sure that each, aside from
+the references, includes one to two short paragraphs. Specifially:
 <ul>
-<li>Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. <strong>Please include at least one reference to support the summary of previous work.</strong> Note: this can be done easily by refiguring the introduction to this project report.</li>
-<li>Methods: Explicitly state how you answered the questions, including a narrative of all the anlyses both qualitative and quantitative.</li>
-<li>Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.</li>
-<li>Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. <strong>Please include at least one reference to another relevant study.</strong> Note: circling back to the introductions, both to this project description and yours, will be helpful here.</li>
-<li>Author contributions: Breifly outline what each team member contributed to the project.</li>
+<li>Introduction: Frame the questions, indicating why they are
+important, what background work has been done in this realm, and how you
+will answer them. <strong>Please include at least one reference to
+support the summary of previous work.</strong> Note: this can be done
+easily by refiguring the introduction to this project report.</li>
+<li>Methods: Explicitly state how you answered the questions, including
+a narrative of all the anlyses both qualitative and quantitative.</li>
+<li>Results: Include any appropriate figures or tables and a narrative
+of the main results that are important to answering the questions.</li>
+<li>Discussion: Succinctly declare how the results relate to the
+question and how they compare to previous work devoted to the topic. In
+addition, be sure to comment on the importance of your findings to the
+broader topic at hand. <strong>Please include at least one reference to
+another relevant study.</strong> Note: circling back to the
+introductions, both to this project description and yours, will be
+helpful here.</li>
+<li>Author contributions: Breifly outline what each team member
+contributed to the project.</li>
 </ul></li>
 </ul>
-<p>Project reports should be uploaded by 11:59 PM on Sunday, October 24th.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>f &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="st">&quot;./proj6data&quot;</span>,<span class="dt">full.names =</span> T)</span>
-<span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">gsub</span>(<span class="st">&quot;BIOL3140(.+)&quot;</span>,<span class="st">&quot;BIOL314020</span><span class="ch">\\</span><span class="st">1&quot;</span>,<span class="st">&quot;BIOL3140_subject21&quot;</span>)</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="cf">for</span>(i <span class="cf">in</span> f ){</span>
-<span id="cb1-5"><a href="#cb1-5"></a> i2 &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;(.+)BIOL3140(.+)&quot;</span>,<span class="st">&quot;</span><span class="ch">\\</span><span class="st">1BIOL314020</span><span class="ch">\\</span><span class="st">2&quot;</span>,i)</span>
-<span id="cb1-6"><a href="#cb1-6"></a>  <span class="kw">file.copy</span>(i,i2)</span>
-<span id="cb1-7"><a href="#cb1-7"></a>}</span></code></pre></div>
+<p>Project reports should be uploaded by 11:59 PM on Sunday, October
+24th.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;./proj6data&quot;</span>,<span class="at">full.names =</span> T)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="st">&quot;BIOL3140(.+)&quot;</span>,<span class="st">&quot;BIOL314020</span><span class="sc">\\</span><span class="st">1&quot;</span>,<span class="st">&quot;BIOL3140_subject21&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> f ){</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> i2 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;(.+)BIOL3140(.+)&quot;</span>,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">1BIOL314020</span><span class="sc">\\</span><span class="st">2&quot;</span>,i)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.copy</span>(i,i2)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="references" class="section level1 unnumbered">
-<h1>References</h1>
-<div id="refs" class="references">
-<div id="ref-angilletta2009thermal">
-<p>Angilletta Jr, Michael J, and Michael James Angilletta. 2009. <em>Thermal Adaptation: A Theoretical and Empirical Synthesis</em>. Oxford University Press.</p>
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-angilletta2009thermal" class="csl-entry">
+Angilletta Jr, Michael J, and Michael James Angilletta. 2009.
+<em>Thermal Adaptation: A Theoretical and Empirical Synthesis</em>.
+Oxford University Press.
 </div>
-<div id="ref-aschoff1982circadian">
-<p>Aschoff, J. 1982. “The Circadian Rhythm of Body Temperature as a Function of Body Size.” <em>A Companion to Animal Physiology</em>, 173–88.</p>
+<div id="ref-aschoff1982circadian" class="csl-entry">
+Aschoff, J. 1982. <span>“The Circadian Rhythm of Body Temperature as a
+Function of Body Size.”</span> <em>A Companion to Animal
+Physiology</em>, 173–88.
 </div>
-<div id="ref-hibi2017effect">
-<p>Hibi, Masanobu, Chie Kubota, Tomohito Mizuno, Sayaka Aritake, Yuki Mitsui, Mitsuhiro Katashima, and Sunao Uchida. 2017. “Effect of Shortened Sleep on Energy Expenditure, Core Body Temperature, and Appetite: A Human Randomised Crossover Trial.” <em>Scientific Reports</em> 7 (1): 1–11.</p>
+<div id="ref-hibi2017effect" class="csl-entry">
+Hibi, Masanobu, Chie Kubota, Tomohito Mizuno, Sayaka Aritake, Yuki
+Mitsui, Mitsuhiro Katashima, and Sunao Uchida. 2017. <span>“Effect of
+Shortened Sleep on Energy Expenditure, Core Body Temperature, and
+Appetite: A Human Randomised Crossover Trial.”</span> <em>Scientific
+Reports</em> 7 (1): 1–11.
 </div>
-<div id="ref-mcnab1983energetics">
-<p>McNab, Brian K. 1983. “Energetics, Body Size, and the Limits to Endothermy.” <em>Journal of Zoology</em> 199 (1): 1–29.</p>
+<div id="ref-mcnab1983energetics" class="csl-entry">
+McNab, Brian K. 1983. <span>“Energetics, Body Size, and the Limits to
+Endothermy.”</span> <em>Journal of Zoology</em> 199 (1): 1–29.
 </div>
-<div id="ref-mortola2004scaling">
-<p>Mortola, Jacopo P, and Clement Lanthier. 2004. “Scaling the Amplitudes of the Circadian Pattern of Resting Oxygen Consumption, Body Temperature and Heart Rate in Mammals.” <em>Comparative Biochemistry and Physiology Part A: Molecular &amp; Integrative Physiology</em> 139 (1): 83–95.</p>
+<div id="ref-mortola2004scaling" class="csl-entry">
+Mortola, Jacopo P, and Clement Lanthier. 2004. <span>“Scaling the
+Amplitudes of the Circadian Pattern of Resting Oxygen Consumption, Body
+Temperature and Heart Rate in Mammals.”</span> <em>Comparative
+Biochemistry and Physiology Part A: Molecular &amp; Integrative
+Physiology</em> 139 (1): 83–95.
 </div>
-<div id="ref-ostrowski2003heterothermy">
-<p>Ostrowski, Stéphane, Joseph B Williams, and Khairi Ismael. 2003. “Heterothermy and the Water Economy of Free-Living Arabian Oryx (Oryx Leucoryx).” <em>Journal of Experimental Biology</em> 206 (9): 1471–8.</p>
+<div id="ref-ostrowski2003heterothermy" class="csl-entry">
+Ostrowski, Stéphane, Joseph B Williams, and Khairi Ismael. 2003.
+<span>“Heterothermy and the Water Economy of Free-Living Arabian Oryx
+(Oryx Leucoryx).”</span> <em>Journal of Experimental Biology</em> 206
+(9): 1471–78.
 </div>
 </div>
 </div>
@@ -662,7 +798,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -671,6 +807,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

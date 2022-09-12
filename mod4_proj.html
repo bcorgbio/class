@@ -13,17 +13,26 @@
 
 <title>Module 4 Project</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
@@ -37,21 +46,29 @@
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -71,7 +88,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -124,40 +141,31 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+
 
 
 <style type="text/css">
-h1 {
-  font-size: 34px;
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
 }
-h1.title {
-  font-size: 38px;
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-h2 {
-  font-size: 30px;
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-h3 {
-  font-size: 24px;
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
 }
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
+div.csl-indent {
+  margin-left: 2em;
 }
 </style>
-
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -168,10 +176,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -188,40 +192,16 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 61px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h2 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h3 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h4 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h5 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h6 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -249,7 +229,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -261,7 +241,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -272,10 +252,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -287,7 +280,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -413,7 +405,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -427,7 +419,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -443,7 +435,7 @@ div.tocify {
   <a href="schedule.html">Schedule</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Projects
      
     <span class="caret"></span>
@@ -498,7 +490,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f21">BIOL 3140 Discussion</a>
+  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f22">BIOL 3140 Discussion</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -508,7 +500,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -524,69 +516,162 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Now that we’ve learned (at breakneck speed!) some ins and outs of data analysis, visualization, and modeling, we’ll turn to how a scientist can easily organize, share, and communicate results and ideas. Communication of the results of any research in science is, at its final stage, usually done through publishing scientific papers. However, before this final product, scientists must catalog the maturation of their work and often seek to repeatedly share it with collaborators. Cataloging the progress and sharing preliminary results can take many forms: exchanging scripts that analyze data, giving presentations to colleagues, and passing manuscripts back and forth between team members, just to name a few activities.</p>
-<p>From a mechanistic standpoint, the workflow for sharing progress is often decentralized. Want to share scripts? Send the over email or store them in cloud (or GitHub!). Want to give a presentation? Import figures from your scripts into a slide deck. Want to create and share a manuscript? Write it up in a word-processing software and distributed over email or the cloud. Fortunately, there exists a unifying alternative: markdowns, an easy-to-read and easy-to-write plain text format that’s then converted to any one of a variety of formats (slides, PDF, HTML, etc.). For we scientists working in R, we can use R Markdown, giving us the added benefit of adding code and the results of our code to text and commentary about our work. It’s one stop shopping.</p>
-<p>In this project, we’ll learn the basics of R Markdown. Specifically, we’ll learn how to author documents that include code, the graphics that are produced from it, and stylistically pleasing text that place the results of our analysis in context.</p>
+<p>Now that we’ve learned (at breakneck speed!) some ins and outs of
+data analysis, visualization, and modeling, we’ll turn to how a
+scientist can easily organize, share, and communicate results and ideas.
+Communication of the results of any research in science is, at its final
+stage, usually done through publishing scientific papers. However,
+before this final product, scientists must catalog the maturation of
+their work and often seek to repeatedly share it with collaborators.
+Cataloging the progress and sharing preliminary results can take many
+forms: exchanging scripts that analyze data, giving presentations to
+colleagues, and passing manuscripts back and forth between team members,
+just to name a few activities.</p>
+<p>From a mechanistic standpoint, the workflow for sharing progress is
+often decentralized. Want to share scripts? Send the over email or store
+them in cloud (or GitHub!). Want to give a presentation? Import figures
+from your scripts into a slide deck. Want to create and share a
+manuscript? Write it up in a word-processing software and distributed
+over email or the cloud. Fortunately, there exists a unifying
+alternative: markdowns, an easy-to-read and easy-to-write plain text
+format that’s then converted to any one of a variety of formats (slides,
+PDF, HTML, etc.). For we scientists working in R, we can use R Markdown,
+giving us the added benefit of adding code and the results of our code
+to text and commentary about our work. It’s one stop shopping.</p>
+<p>In this project, we’ll learn the basics of R Markdown. Specifically,
+we’ll learn how to author documents that include code, the graphics that
+are produced from it, and stylistically pleasing text that place the
+results of our analysis in context.</p>
 <p>Our tasks will be to:</p>
 <ol style="list-style-type: decimal">
 <li>Familiarize ourselves with the R Markdown framework.</li>
 <li>Author a simple R Markdown.</li>
 <li>Run code within an R Markdown document.</li>
-<li>Add graphics (i.e., figures), images, tables and references to and R Markdown document.</li>
-<li>Render (i.e., knit) this R Markdown into HTML and PDF documents.</li>
+<li>Add graphics (i.e., figures), images, tables and references to and R
+Markdown document.</li>
+<li>Render (i.e., knit) this R Markdown into HTML and PDF
+documents.</li>
 </ol>
 </div>
 <div id="set-up" class="section level1">
 <h1>Set up</h1>
-<p>First of all, let’s precisely define what we mean by a markdown, the syntax for R Markdown. Markdown is a very simple ``markup" language which creates documents with headers, images, references, pieces of code and so much more from plain text files. Because it’s text based, the document can be rendered into many other file formats like HTML or PDF that will contain the organized content.</p>
-<p>To get R Markdown up and running, you don’t need to do much at all if you’re using R Studio. You just need to open a new markdown document: “File-&gt;New File-&gt;R Markdown”. This will open a dialog where you are asked to include important pieces that will specify the document type, and author and title of the document.</p>
+<p>First of all, let’s precisely define what we mean by a markdown, the
+syntax for R Markdown. Markdown is a very simple ``markup” language
+which creates documents with headers, images, references, pieces of code
+and so much more from plain text files. Because it’s text based, the
+document can be rendered into many other file formats like HTML or PDF
+that will contain the organized content.</p>
+<p>To get R Markdown up and running, you don’t need to do much at all if
+you’re using R Studio. You just need to open a new markdown document:
+“File-&gt;New File-&gt;R Markdown”. This will open a dialog where you
+are asked to include important pieces that will specify the document
+type, and author and title of the document.</p>
 <p><img src="newRmd.png" /> <br></p>
-<p>Enter in a title (“Project 4”, is just fine) and the author (your team name is great, e.g., “aRtful coders”). Select “OK”. Now, this doesn’t save the new .Rmd, but rather establishes the author and title in the YAML header (more below). You should see that the document is now open in a tab with the name “Untitled1.Rmd”. Go ahead and save this with the name “TEAMNAME_Module4” in an appropriate directory. The “.Rmd” extension informs R Studio that this is a source file for markdown and thus it will treat it as such.</p>
+<p>Enter in a title (“Project 4”, is just fine) and the author (your
+team name is great, e.g., “aRtful coders”). Select “OK”. Now, this
+doesn’t save the new .Rmd, but rather establishes the author and title
+in the YAML header (more below). You should see that the document is now
+open in a tab with the name “Untitled1.Rmd”. Go ahead and save this with
+the name “TEAMNAME_Module4” in an appropriate directory. The “.Rmd”
+extension informs R Studio that this is a source file for markdown and
+thus it will treat it as such.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>In R4DS, you may have noticed a discussion about the difference between R Markdown and R Notebooks. Notebooks are merely more compact version of R Markdowns. R Notebooks permit direct interaction with R while producing a reproducible document. However, any R Markdown document can be used as a notebook, so we’ll bypass R Notebooks for now, and focus on R Markdowns.</p>
+<p>In R4DS, you may have noticed a discussion about the difference
+between R Markdown and R Notebooks. Notebooks are merely more compact
+version of R Markdowns. R Notebooks permit direct interaction with R
+while producing a reproducible document. However, any R Markdown
+document can be used as a notebook, so we’ll bypass R Notebooks for now,
+and focus on R Markdowns.</p>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>Keep this document open and ready to edit. But, before was start, let’s establish the context for authoring an R Markdown. Say, thinking back to the <a href="mod3_proj.html">Module 3 Project</a>, we wanted to report on some of our results, how we came to them, and what they mean. In that project, we found that ecomorph was an important predictor of the hindlimb-SVL relationship in anoles. Specifically, we used phylogenetic least squares analysis to assess this relationship under Brownian motion and OU models of trait evolution.</p>
-<p>To assemble such a report, we should include sections that reflect the the progression of the analysis, each containing text, figures, captions, and references. Our sections should include an introduction, methods, results, discussion, author contributions, and a bibliography. Our tasks for this project will be taken on in this context: producing a succinct and reproducible report on the analysis of anole hindlimb evolution. Let’s get started.</p>
+<p>Keep this document open and ready to edit. But, before was start,
+let’s establish the context for authoring an R Markdown. Say, thinking
+back to the <a href="mod3_proj.html">Module 3 Project</a>, we wanted to
+report on some of our results, how we came to them, and what they mean.
+In that project, we found that ecomorph was an important predictor of
+the hindlimb-SVL relationship in anoles. Specifically, we used
+phylogenetic least squares analysis to assess this relationship under
+Brownian motion and OU models of trait evolution.</p>
+<p>To assemble such a report, we should include sections that reflect
+the the progression of the analysis, each containing text, figures,
+captions, and references. Our sections should include an introduction,
+methods, results, discussion, author contributions, and a bibliography.
+Our tasks for this project will be taken on in this context: producing a
+succinct and reproducible report on the analysis of anole hindlimb
+evolution. Let’s get started.</p>
 </div>
 <div id="resources" class="section level1">
 <h1>Resources</h1>
-<p>As you learn more about R Markdown, you may want to reference the following online resources:</p>
+<p>As you learn more about R Markdown, you may want to reference the
+following online resources:</p>
 <ul>
-<li>A rather <a href="https://github.com/rstudio/bookdown">complete guide to R Markdown by Yikui Xie</a></li>
-<li>R Markdown <a href="https://rmarkdown.rstudio.com/lesson-15.html">Cheatsheets</a></li>
-<li>R Studio’s <a href="https://rmarkdown.rstudio.com/">markdown tutorial</a></li>
+<li>A rather <a href="https://github.com/rstudio/bookdown">complete
+guide to R Markdown by Yikui Xie</a></li>
+<li>R Markdown <a
+href="https://rmarkdown.rstudio.com/lesson-15.html">Cheatsheets</a></li>
+<li>R Studio’s <a href="https://rmarkdown.rstudio.com/">markdown
+tutorial</a></li>
 </ul>
 </div>
 <div id="the-yaml-header" class="section level1">
 <h1>The YAML Header</h1>
-<p>You’ll see at the top of your new “.Rmd” file a header contained between two lines (<code>---</code>). This is the YAML header that specifies the the attributes of the markdown, all of which are inherited from the dialog your answered when opening the new .Rmd. By default it includes a title, author, date, and type of file for your output. These are but a few of the formatting options and settings that could apply to the whole document. For now, let’s leave it as is. So it should look like this:</p>
+<p>You’ll see at the top of your new “.Rmd” file a header contained
+between two lines (<code>---</code>). This is the YAML header that
+specifies the the attributes of the markdown, all of which are inherited
+from the dialog your answered when opening the new .Rmd. By default it
+includes a title, author, date, and type of file for your output. These
+are but a few of the formatting options and settings that could apply to
+the whole document. For now, let’s leave it as is. So it should look
+like this:</p>
 <pre><code>---
 title: &quot;Project 4&quot;
 author: aRtful coders
 date: 22/Sep/2020
 output: html_document
 ---</code></pre>
-<p>Below the YAML header is the space where you’ll include text, code, etc.</p>
+<p>Below the YAML header is the space where you’ll include text, code,
+etc.</p>
 </div>
 <div id="knitting-cozy-report" class="section level1">
 <h1>knitting Cozy Report</h1>
-<p>In the .Rmd before us, we have a template with some marked up text. This is the file that will be interpreted by the markdown language to produce a document. To do so, you must “knit” the .Rmd. You can do this by selecting the “knit” icon at the top of the file panel or keying in “cmd+shift+k”. Go ahead and do either and see what happens. You’ll get an HTML rendering of your document. You may end up doing this often as you add new pieces and markup to the text. Notice that there’s now an .html file saved to the same directory containing the .Rmd file.</p>
+<p>In the .Rmd before us, we have a template with some marked up text.
+This is the file that will be interpreted by the markdown language to
+produce a document. To do so, you must “knit” the .Rmd. You can do this
+by selecting the “knit” icon at the top of the file panel or keying in
+“cmd+shift+k”. Go ahead and do either and see what happens. You’ll get
+an HTML rendering of your document. You may end up doing this often as
+you add new pieces and markup to the text. Notice that there’s now an
+.html file saved to the same directory containing the .Rmd file.</p>
 </div>
 <div id="set-the-working-directory-no-more" class="section level1">
 <h1>Set the Working Directory No More</h1>
-<p>You may have noticed that we haven’t yet set a working directory. In R markdown, this is unneeded and, frankly, discouraged. It’s assumed that <strong>all the things you need to knit your document are in the same directory as the .Rmd file</strong>. We’ll be running the same code from Project 3 in this .Rmd, so make sure all the data files from Project 3 reside where you have your .Rmd saved.</p>
+<p>You may have noticed that we haven’t yet set a working directory. In
+R markdown, this is unneeded and, frankly, discouraged. It’s assumed
+that <strong>all the things you need to knit your document are in the
+same directory as the .Rmd file</strong>. We’ll be running the same code
+from Project 3 in this .Rmd, so make sure all the data files from
+Project 3 reside where you have your .Rmd saved.</p>
 </div>
 <div id="headers" class="section level1">
 <h1>Headers</h1>
-<p>When you start putting together the content of an .Rmd, you should consider adding sections almost immediately. This can serve as an outline for the document. Headers provide a way of hierarchically organizing the document into sections that reflect an outline. These are identified in the markdown by using one or several <code>#</code>. The more you use, the smaller the text and, presumably the less inclusive the header. That is, <code>#</code> is the biggest header and <code>##</code> is typically nested within a <code>#</code> header, and <code>###</code> is nested within a <code>##</code> header. For instance, this</p>
+<p>When you start putting together the content of an .Rmd, you should
+consider adding sections almost immediately. This can serve as an
+outline for the document. Headers provide a way of hierarchically
+organizing the document into sections that reflect an outline. These are
+identified in the markdown by using one or several <code>#</code>. The
+more you use, the smaller the text and, presumably the less inclusive
+the header. That is, <code>#</code> is the biggest header and
+<code>##</code> is typically nested within a <code>#</code> header, and
+<code>###</code> is nested within a <code>##</code> header. For
+instance, this</p>
 <pre><code># Header 1
 
 Text under Header 1
@@ -601,25 +686,41 @@ Text under Header 3
 </code></pre>
 <p>will produce this:</p>
 <p><img src="headers.png" /></p>
-<p>In your future project reports for Phase II and III of the class, you’ll always want to include sections for an introduction, methods, results, discussion, author contributions, and references. We’ll organize the .Rmd accordingly, so please add those sections to your .Rmd. with a high-level header <code>#</code>. We’ll add nested subsections and text later.</p>
+<p>In your future project reports for Phase II and III of the class,
+you’ll always want to include sections for an introduction, methods,
+results, discussion, author contributions, and references. We’ll
+organize the .Rmd accordingly, so please add those sections to your
+.Rmd. with a high-level header <code>#</code>. We’ll add nested
+subsections and text later.</p>
 </div>
 <div id="adding-code-with-chunks" class="section level1">
 <h1>Adding Code with Chunks</h1>
-<p>Code you include in your .Rmd should be written in sections enclosed by three backwards apostrophes (```). These sections are known as code chunks and look like this:</p>
+<p>Code you include in your .Rmd should be written in sections enclosed
+by three backwards apostrophes (```). These sections are known as code
+chunks and look like this:</p>
 <pre><code>```{r}
 x<-1:100
 mean(50)
 ```</code></pre>
-<p>You can insert code chunks with by selecting the “insert” icon at the top of the the tab or my keying in “command+option+i”.</p>
+<p>You can insert code chunks with by selecting the “insert” icon at the
+top of the the tab or my keying in “command+option+i”.</p>
 <center>
 <p><img src="insertchunk.png" /></p>
 </center>
-<p>To run the chunk, your can click on “run” tap and selection “Run Current Chunk” or insert your cursor in the chunk and key in “command+shift+return”.</p>
+<p>To run the chunk, your can click on “run” tap and selection “Run
+Current Chunk” or insert your cursor in the chunk and key in
+“command+shift+return”.</p>
 <center>
 <p><img src="runchunk.png" /></p>
 </center>
-<p>The content inside the curly brackets (<code>{}</code>) controls the behavior of code chunk. In this case, we’re telling R markdown that the code inside the chunk is to be interpreted with R. This is a handy place to control the output of the code chunk. Let’s jump right into how you would include code in chunks from our relavent anole project.</p>
-<p>At first, you’ll want to include a chunk that loads the libraries you intend to use in the .Rmd. This can be added to the very top of the document. Something that looks like this:</p>
+<p>The content inside the curly brackets (<code>{}</code>) controls the
+behavior of code chunk. In this case, we’re telling R markdown that the
+code inside the chunk is to be interpreted with R. This is a handy place
+to control the output of the code chunk. Let’s jump right into how you
+would include code in chunks from our relavent anole project.</p>
+<p>At first, you’ll want to include a chunk that loads the libraries you
+intend to use in the .Rmd. This can be added to the very top of the
+document. Something that looks like this:</p>
 <pre><code>```{r,include=FALSE}
 library(tidyverse) #always
 library(ape) #for evo analysis
@@ -628,8 +729,16 @@ library(MuMIn) #for AIC
 library(geiger) #for eco analysis
 library(knitr) #for knitting options
 ```</code></pre>
-<p>Notice here that we included a behavior to the chunk, specifically <code>include=FALSE</code>. This prevents the code, and the results from appearing in the finished file. Have a look at <a href="https://rmarkdown.rstudio.com/lesson-3.html">this page</a> to familiarize yourself with handy and often used chunk options.</p>
-<p>With a few exceptions, the logical place to include the code that produces analyses or figures is in the results sections. This is where the first output of the code will likely be relevant. So, under the results section, insert the following code chunks that establish the data we need and performs the initial analysis for PGLS.</p>
+<p>Notice here that we included a behavior to the chunk, specifically
+<code>include=FALSE</code>. This prevents the code, and the results from
+appearing in the finished file. Have a look at <a
+href="https://rmarkdown.rstudio.com/lesson-3.html">this page</a> to
+familiarize yourself with handy and often used chunk options.</p>
+<p>With a few exceptions, the logical place to include the code that
+produces analyses or figures is in the results sections. This is where
+the first output of the code will likely be relevant. So, under the
+results section, insert the following code chunks that establish the
+data we need and performs the initial analysis for PGLS.</p>
 <pre><code>```{r, "load the data"}
 anole <- read_csv("anole.dat.csv")
 anole.eco <- read_csv("anole.eco.csv")
@@ -677,19 +786,46 @@ ggplot(aes(x=Ecomorph2,y=phylo.res)) +geom_boxplot() +stat_summary(fun=mean, geo
 print(p.eco.phylo)
 
 ```</code></pre>
-<p>Notice that for each chunk, we included some text in quotes. This identifies the chunk with a name or label, as R Markdown calls it. Each name must be unique. These names are useful especially when we render the document and any errors or warnings emerge. More on that later.</p>
-<p>Also notice that this last chunk named “plot residuals” has another parameter, <code>fig.cap</code>. This specifies a caption to produce under a figure produced from the chunk. In communicating result through visualizations, figures or otherwise, it’s <strong>essential that you include a description</strong> caption. The caption should include what’s going in the figure (e.g., type of plot, the axes, where the data come from).</p>
+<p>Notice that for each chunk, we included some text in quotes. This
+identifies the chunk with a name or label, as R Markdown calls it. Each
+name must be unique. These names are useful especially when we render
+the document and any errors or warnings emerge. More on that later.</p>
+<p>Also notice that this last chunk named “plot residuals” has another
+parameter, <code>fig.cap</code>. This specifies a caption to produce
+under a figure produced from the chunk. In communicating result through
+visualizations, figures or otherwise, it’s <strong>essential that you
+include a description</strong> caption. The caption should include
+what’s going in the figure (e.g., type of plot, the axes, where the data
+come from).</p>
 </div>
 <div id="modifying-text" class="section level1">
 <h1>Modifying Text</h1>
-<p>The basic syntax of a markdown language, so oddly named, is formulated around mark up. This is similar to other mark up languages like HTML or XML in that it uses tags to define elements within a document. There are many often used tags that you should be familiar with and most can be found in this <a href="https://rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R Markdown cheatsheet</a>. Let’s consider the text in first paragraph of the introduction to the <a href="mod3_proj.html#Introduction">Module 3 Project</a> description in block quotes below.</p>
+<p>The basic syntax of a markdown language, so oddly named, is
+formulated around mark up. This is similar to other mark up languages
+like HTML or XML in that it uses tags to define elements within a
+document. There are many often used tags that you should be familiar
+with and most can be found in this <a
+href="https://rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R
+Markdown cheatsheet</a>. Let’s consider the text in first paragraph of
+the introduction to the <a href="mod3_proj.html#Introduction">Module 3
+Project</a> description in block quotes below.</p>
 <blockquote>
-<p>The central theme of this project will be to assess the morphological and allometric differences between ecomorphs within the genus <em>Anolis</em>. First coined by the famous evolutionary biologist and herpetologist Ernest Williams, the term ecomorph describes a group of species, perhaps not sharing a most recent common ancestor, with a similar ecological niche and behavior within the context of this niche. His model for this concept was the genus <em>Anolis</em>, although the ecomorph construct has been widely applied to many other species (think reef fish and Darwin’s Finches).</p>
+<p>The central theme of this project will be to assess the morphological
+and allometric differences between ecomorphs within the genus
+<em>Anolis</em>. First coined by the famous evolutionary biologist and
+herpetologist Ernest Williams, the term ecomorph describes a group of
+species, perhaps not sharing a most recent common ancestor, with a
+similar ecological niche and behavior within the context of this niche.
+His model for this concept was the genus <em>Anolis</em>, although the
+ecomorph construct has been widely applied to many other species (think
+reef fish and Darwin’s Finches).</p>
 </blockquote>
 <center>
 <blockquote>
 <div class="figure">
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg" alt="" />
+<img
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"
+alt="" />
 <p class="caption">An anolis lizard</p>
 </div>
 </blockquote>
@@ -699,27 +835,44 @@ print(p.eco.phylo)
 </blockquote>
 <blockquote>
 <ol style="list-style-type: decimal">
-<li>Visualize how hind limb length varies with size (i.e., allometry!).</li>
-<li>Visualize and asses how hind limb length vs. size relationship covary with ecological niche.</li>
-<li>Learn more complex operations in <code>ggplot</code> than we’ve undertaken so far.</li>
-<li>Evaluate this hindlimb-size relationship using standard frequentist models within and without a phylogenetic context.</li>
-<li>Using an information theory approach, assess the fit of phylogenetically corrected models of hind-limb variation under different modes of character evolution.</li>
+<li>Visualize how hind limb length varies with size (i.e.,
+allometry!).</li>
+<li>Visualize and asses how hind limb length vs. size relationship
+covary with ecological niche.</li>
+<li>Learn more complex operations in <code>ggplot</code> than we’ve
+undertaken so far.</li>
+<li>Evaluate this hindlimb-size relationship using standard frequentist
+models within and without a phylogenetic context.</li>
+<li>Using an information theory approach, assess the fit of
+phylogenetically corrected models of hind-limb variation under different
+modes of character evolution.</li>
 </ol>
 </blockquote>
 <div id="basic-formatting" class="section level2">
 <h2>Basic Formatting</h2>
-<p>Notice that there are several pieces of text that have unique formats. For instance the genus <em>Anolis</em> is italicized. This is accomplished by wrapping the text with <code>*</code> or <code>*Anolis*</code>. You could, just as easily, bold text with <code>**</code>, <code>**Anolis**</code> to produce <strong>Anolis</strong>.</p>
-<p>As you’ve probably noticed in reading markdowns so far, where any code and names of code are written inline (i.e., not in a chunk), the convention is to outline it with a distinctive background (usually gray). To do this, code-bearing text is wrapped in <code>``</code>. So <code>`ggplot`</code> becomes <code>ggplot</code>.</p>
+<p>Notice that there are several pieces of text that have unique
+formats. For instance the genus <em>Anolis</em> is italicized. This is
+accomplished by wrapping the text with <code>*</code> or
+<code>*Anolis*</code>. You could, just as easily, bold text with
+<code>**</code>, <code>**Anolis**</code> to produce
+<strong>Anolis</strong>.</p>
+<p>As you’ve probably noticed in reading markdowns so far, where any
+code and names of code are written inline (i.e., not in a chunk), the
+convention is to outline it with a distinctive background (usually
+gray). To do this, code-bearing text is wrapped in <code>``</code>. So
+<code>`ggplot`</code> becomes <code>ggplot</code>.</p>
 </div>
 <div id="ordered-lists" class="section level2">
 <h2>Ordered Lists</h2>
-<p>We can easily include lists in an .Rmd with simple mark ups. A numbered list is as simple as . . .</p>
+<p>We can easily include lists in an .Rmd with simple mark ups. A
+numbered list is as simple as . . .</p>
 <pre><code>  1. Visualize how hind limb length varies with size (i.e., allometry!).
   2. Visualize and asses how hind limb length vs. size relationship covary with ecological niche.
   3. Learn more complex operations in `ggplot` than we&#39;ve undertaken so far. 
   4. Evaluate this hindlimb-size relationship using standard frequentist models within and without a phylogenetic context.
   5. Using an information theory approach, assess the fit of phylogenetically corrected models of hind-limb variation under different modes of character evolution.</code></pre>
-<p>And this will produce what you see above. If you’d prefer a bulleted list, take this approach:</p>
+<p>And this will produce what you see above. If you’d prefer a bulleted
+list, take this approach:</p>
 <pre><code>  * Visualize how hind limb length varies with size (i.e., allometry!).
   * Visualize and asses how hind limb length vs. size relationship covary with ecological niche.
   * Learn more complex operations in `ggplot` than we&#39;ve undertaken so far. 
@@ -727,38 +880,72 @@ print(p.eco.phylo)
   * Using an information theory approach, assess the fit of phylogenetically corrected models of hind-limb variation under different modes of character evolution.</code></pre>
 <p>This will produce the following:</p>
 <ul>
-<li>Visualize how hind limb length varies with size (i.e., allometry!).</li>
-<li>Visualize and asses how hind limb length vs. size relationship covary with ecological niche.</li>
-<li>Learn more complex operations in <code>ggplot</code> than we’ve undertaken so far.</li>
-<li>Evaluate this hindlimb-size relationship using standard frequentist models within and without a phylogenetic context.</li>
-<li>Using an information theory approach, assess the fit of phylogenetically corrected models of hind-limb variation under different modes of character evolution.</li>
+<li>Visualize how hind limb length varies with size (i.e.,
+allometry!).</li>
+<li>Visualize and asses how hind limb length vs. size relationship
+covary with ecological niche.</li>
+<li>Learn more complex operations in <code>ggplot</code> than we’ve
+undertaken so far.</li>
+<li>Evaluate this hindlimb-size relationship using standard frequentist
+models within and without a phylogenetic context.</li>
+<li>Using an information theory approach, assess the fit of
+phylogenetically corrected models of hind-limb variation under different
+modes of character evolution.</li>
 </ul>
-<p>Notice the list elements are indented and the text separated by <code>*</code> with and empty space.</p>
+<p>Notice the list elements are indented and the text separated by
+<code>*</code> with and empty space.</p>
 </div>
 <div id="links" class="section level2">
 <h2>Links</h2>
-<p>While no links are included in the example above, they abound in this and many other .Rmd documents. Inserting them couldn’t be easier. One just has to wrap the text in brackets followed by the link path in parentheses. For example, <code>[class site](https://bcorgbio.github.io/class/)</code> gives us <a href="https://bcorgbio.github.io/class/">class site</a>, text linking us to our class site.</p>
+<p>While no links are included in the example above, they abound in this
+and many other .Rmd documents. Inserting them couldn’t be easier. One
+just has to wrap the text in brackets followed by the link path in
+parentheses. For example,
+<code>[class site](https://bcorgbio.github.io/class/)</code> gives us <a
+href="https://bcorgbio.github.io/class/">class site</a>, text linking us
+to our class site.</p>
 </div>
 <div id="images" class="section level2">
 <h2>Images</h2>
-<p>We also have an image inserted above. Inserting images can be useful for all sorts of reasons, especially when you’d like to include a graphic that is not produced by R and resides elsewhere, like say online. The image above is inserted with:</p>
+<p>We also have an image inserted above. Inserting images can be useful
+for all sorts of reasons, especially when you’d like to include a
+graphic that is not produced by R and resides elsewhere, like say
+online. The image above is inserted with:</p>
 <pre><code>![An anolis lizard](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)</code></pre>
-<p>Notice this is much like inserting a link, but we have to tell R markdown to stop interpreting text by including <code>!</code> before a set of brackets, then we include the file path (in this case, a URL). This is the simplest way to insert an image. But, say you want to include an image that is a live link as well. All you have to to is include the link tags around the image tags, like this:</p>
+<p>Notice this is much like inserting a link, but we have to tell R
+markdown to stop interpreting text by including <code>!</code> before a
+set of brackets, then we include the file path (in this case, a URL).
+This is the simplest way to insert an image. But, say you want to
+include an image that is a live link as well. All you have to to is
+include the link tags around the image tags, like this:</p>
 <pre><code>[![An anolis lizard](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)</code></pre>
 <p><br></p>
 <p>And this is what you’ll get:</p>
-<p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg" alt="An anolis lizard" /></a> <br></p>
-<p>This image isn’t centered on the page. The easy way to modify the position of an image (or any element, really) is to use standard HTML tags. So wrapping <code>&lt;center&gt;</code> and <code>&lt;/center&gt;</code> around our image code like so . . .</p>
+<p><a
+href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"><img
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"
+alt="An anolis lizard" /></a> <br></p>
+<p>This image isn’t centered on the page. The easy way to modify the
+position of an image (or any element, really) is to use standard HTML
+tags. So wrapping <code>&lt;center&gt;</code> and
+<code>&lt;/center&gt;</code> around our image code like so . . .</p>
 <pre><code>&lt;center&gt;
 [![An anolis lizard](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)
 &lt;/center&gt;</code></pre>
 <p>. . . gives us:</p>
 <center>
-<a href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg" alt="An anolis lizard" /></a>
+<a
+href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"><img
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"
+alt="An anolis lizard" /></a>
 </center>
 <p><br></p>
 <p>Keep in mind that R markdown prefers .jpg or .png images.</p>
-<p>Of course, one can also add local images, i.e., those stored on your computer. For instance, say we wanted to include a small version of the radiograph image from the <a href="mod3_proj#Introduction">Module 3 project Description</a>, a .png stored in the same directory as this .Rmd file, we simply write</p>
+<p>Of course, one can also add local images, i.e., those stored on your
+computer. For instance, say we wanted to include a small version of the
+radiograph image from the <a href="mod3_proj#Introduction">Module 3
+project Description</a>, a .png stored in the same directory as this
+.Rmd file, we simply write</p>
 <pre><code>&lt;center&gt;
 ![](svl_small.png)
 &lt;/center&gt;</code></pre>
@@ -769,16 +956,37 @@ print(p.eco.phylo)
 </div>
 <div id="equations" class="section level2">
 <h2>Equations</h2>
-<p>As scientists, we often need to express our ideas in equation form (e.g., linear model of hindlimb vs. snout-vent length in case of our last project). Fortunately, this is made easy by R Markdown’s inclusion of another markup language, <span class="math inline">\(\LaTeX\)</span>. This is a favorite of those writing really technical documents and the equation markup capabilities are rather extensive but eminently approachable. For instance, if we need to write out an equation that expresses a linear model (e.g. <code>lm(y~x)</code>) we can write <code>$$y=\alpha+\beta x$$</code> to produce:</p>
+<p>As scientists, we often need to express our ideas in equation form
+(e.g., linear model of hindlimb vs. snout-vent length in case of our
+last project). Fortunately, this is made easy by R Markdown’s inclusion
+of another markup language, <span class="math inline">\(\LaTeX\)</span>.
+This is a favorite of those writing really technical documents and the
+equation markup capabilities are rather extensive but eminently
+approachable. For instance, if we need to write out an equation that
+expresses a linear model (e.g. <code>lm(y~x)</code>) we can write
+<code>$$y=\alpha+\beta x$$</code> to produce:</p>
 <p><span class="math display">\[y=\alpha+\beta x\]</span></p>
-<p>Notice the equation is wrapped by two <code>$$</code>. A single <code>$</code> indicates the use of <span class="math inline">\(\LaTeX\)</span> markup and two indicates the equation should stand alone on a separate section. If we just wanted to include the aforementioned equation inline with the rest of the text, we’d use just one <code>$</code>, or `<code>$y=\alpha+\beta x$</code> to get <span class="math inline">\(y=\alpha+\beta x\)</span>.</p>
+<p>Notice the equation is wrapped by two <code>$$</code>. A single
+<code>$</code> indicates the use of <span
+class="math inline">\(\LaTeX\)</span> markup and two indicates the
+equation should stand alone on a separate section. If we just wanted to
+include the aforementioned equation inline with the rest of the text,
+we’d use just one <code>$</code>, or `<code>$y=\alpha+\beta x$</code> to
+get <span class="math inline">\(y=\alpha+\beta x\)</span>.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>Although it may appear as a coding free-for-all, the ability to include HTML and <span class="math inline">\(\LaTeX\)</span> markup in addition to R markdown language injects enormous flexibility. One can use all the standard methods of HTML and <span class="math inline">\(LaTeX\)</span> wizardry to expand R Markdown’s capabilities and charm. These note boxes, for example are a container class written in HTML.</p>
+<p>Although it may appear as a coding free-for-all, the ability to
+include HTML and <span class="math inline">\(\LaTeX\)</span> markup in
+addition to R markdown language injects enormous flexibility. One can
+use all the standard methods of HTML and <span
+class="math inline">\(LaTeX\)</span> wizardry to expand R Markdown’s
+capabilities and charm. These note boxes, for example are a container
+class written in HTML.</p>
 </div>
 </div>
 </div>
@@ -787,16 +995,24 @@ print(p.eco.phylo)
 </div>
 <div id="tables" class="section level1">
 <h1>Tables</h1>
-<p>Tables are often important devices in communicating something about your project. Sometimes your want tables populated with your data and code, others we need to create them by hand.</p>
+<p>Tables are often important devices in communicating something about
+your project. Sometimes your want tables populated with your data and
+code, others we need to create them by hand.</p>
 <div id="tables-from-code" class="section level2">
 <h2>Tables From Code</h2>
-<p>For smallish tables generated from your code, I suggest the <code>kable()</code> function from the <code>knitr</code> package which is included with R Studio. It’s simple and rather intuitive to use. For instance, let’s say we wanted to know how many species were include in each ecomorph for our anole study. We’d first write the code to do so and then with the pipe, finally pass it to the <code>kable</code> function:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>n.spec &lt;-<span class="st"> </span>anole.log<span class="op">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="st">  </span><span class="kw">group_by</span>(Ecomorph2)<span class="op">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n.species=</span><span class="kw">n</span>())</span>
-<span id="cb9-4"><a href="#cb9-4"></a></span>
-<span id="cb9-5"><a href="#cb9-5"></a>n.spec<span class="op">%&gt;%</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="st">  </span><span class="kw">kable</span>()</span></code></pre></div>
+<p>For smallish tables generated from your code, I suggest the
+<code>kable()</code> function from the <code>knitr</code> package which
+is included with R Studio. It’s simple and rather intuitive to use. For
+instance, let’s say we wanted to know how many species were include in
+each ecomorph for our anole study. We’d first write the code to do so
+and then with the pipe, finally pass it to the <code>kable</code>
+function:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>n.spec <span class="ot">&lt;-</span> anole.log<span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Ecomorph2)<span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n.species=</span><span class="fu">n</span>())</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>n.spec<span class="sc">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr>
@@ -860,9 +1076,10 @@ twig
 </tbody>
 </table>
 <p><br></p>
-<p>One nice attribute about <code>kable()</code> is that we can easily specify a table caption. Something like:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>n.spec<span class="op">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">caption =</span> <span class="st">&quot;Number of species within each anole ecormorph included in this study&quot;</span>)</span></code></pre></div>
+<p>One nice attribute about <code>kable()</code> is that we can easily
+specify a table caption. Something like:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>n.spec<span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">&quot;Number of species within each anole ecormorph included in this study&quot;</span>)</span></code></pre></div>
 <table>
 <caption>
 Number of species within each anole ecormorph included in this study
@@ -929,18 +1146,24 @@ twig
 </tbody>
 </table>
 <p><br></p>
-<p>For large tables, say data sets with a large number rows, you may want to consider using the <code>paged_table()</code> function from <code>rmarkdown</code> to create a table that has pagination of rows and columns. For example:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">paged_table</span>(anole.log, <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">rows.print =</span> <span class="dv">15</span>))</span></code></pre></div>
+<p>For large tables, say data sets with a large number rows, you may
+want to consider using the <code>paged_table()</code> function from
+<code>rmarkdown</code> to create a table that has pagination of rows and
+columns. For example:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paged_table</span>(anole.log, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">rows.print =</span> <span class="dv">15</span>))</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["Species"],"name":[1],"type":["chr"],"align":["left"]},{"label":["SVL"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["HTotal"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["PH"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["ArbPD"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Ecomorph"],"name":[6],"type":["chr"],"align":["left"]},{"label":["Ecomorph2"],"name":[7],"type":["chr"],"align":["left"]},{"label":["phylo.res"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"Anolis_ahli","2":"4.054269","3":"3.845670","4":"4.642466","5":"2.1400662","6":"TG","7":"trunk-ground","8":"-0.007474892"},{"1":"Anolis_aliniger","2":"4.023564","3":"3.549617","4":"6.137511","5":"2.9231616","6":"TC","7":"trunk-crown","8":"-0.080102807"},{"1":"Anolis_allisoni","2":"4.347694","3":"3.813307","4":"5.737540","5":"2.4932055","6":"TC","7":"trunk-crown","8":"-0.203436345"},{"1":"Anolis_allogus","2":"4.002777","3":"3.789855","4":"4.855150","5":"2.0918641","6":"TG","7":"trunk-ground","8":"-0.003565769"},{"1":"Anolis_alutaceus","2":"3.564817","3":"3.298795","4":"4.530447","5":"1.1314021","6":"GB","7":"grass-bush","8":"0.086806436"},{"1":"Anolis_angusticeps","2":"3.725693","3":"3.038792","4":"5.734635","5":"-0.1053605","6":"TW","7":"twig","8":"-0.067267329"},{"1":"Anolis_bahorucoensis","2":"3.782666","3":"3.589059","4":"5.010635","5":"0.9932518","6":"GB","7":"grass-bush","8":"0.105518473"},{"1":"Anolis_barahonae","2":"5.051988","3":"4.657098","4":"6.715383","5":"3.4965076","6":"CG","7":"crown-giant","8":"0.030878505"},{"1":"Anolis_brevirostris","2":"3.850148","3":"3.555348","4":"4.629863","5":"3.0492730","6":"T","7":"trunk","8":"0.037254607"},{"1":"Anolis_chlorocyanus","2":"4.229269","3":"3.781687","4":"5.878856","5":"2.3608540","6":"TC","7":"trunk-crown","8":"-0.093652604"},{"1":"Anolis_coelestinus","2":"4.272030","3":"3.864302","4":"5.531411","5":"3.0397492","6":"TC","7":"trunk-crown","8":"-0.062095901"},{"1":"Anolis_cooki","2":"4.092000","3":"3.846951","4":"5.007965","5":"2.0541237","6":"TG","7":"trunk-ground","8":"-0.049956560"},{"1":"Anolis_cristatellus","2":"4.155753","3":"3.984716","4":"4.778283","5":"2.5877640","6":"TG","7":"trunk-ground","8":"0.013862871"},{"1":"Anolis_cuvieri","2":"4.894101","3":"4.611152","4":"5.783825","5":"2.1400662","6":"CG","7":"crown-giant","8":"0.109016842"},{"1":"Anolis_cybotes","2":"4.203692","3":"4.003690","4":"4.960044","5":"3.1986731","6":"TG","7":"trunk-ground","8":"-0.022765430"},{"1":"Anolis_distichus","2":"3.937047","3":"3.646233","4":"5.550631","5":"2.9069011","6":"T","7":"trunk","8":"0.019515277"},{"1":"Anolis_equestris","2":"5.049856","3":"4.590057","4":"5.998688","5":"2.7278528","6":"CG","7":"crown-giant","8":"-0.034487405"},{"1":"Anolis_evermanni","2":"4.131737","3":"3.868907","4":"5.814727","5":"3.5638830","6":"TC","7":"trunk-crown","8":"0.110024631"},{"1":"Anolis_garmani","2":"4.681205","3":"4.366913","4":"5.858219","5":"3.5025499","6":"CG","7":"crown-giant","8":"0.032094463"},{"1":"Anolis_grahami","2":"4.112037","3":"3.816173","4":"5.513025","5":"2.8735646","6":"TC","7":"trunk-crown","8":"0.080812628"},{"1":"Anolis_guazuma","2":"3.654987","3":"2.871868","4":"5.438079","5":"-0.1053605","6":"TW","7":"twig","8":"-0.167205206"},{"1":"Anolis_gundlachi","2":"4.176140","3":"4.054390","4":"4.897093","5":"3.5115454","6":"TG","7":"trunk-ground","8":"0.059891917"},{"1":"Anolis_homolechis","2":"4.039536","3":"3.730501","4":"4.872905","5":"3.1135153","6":"TG","7":"trunk-ground","8":"-0.105555530"},{"1":"Anolis_insolitus","2":"3.732896","3":"3.152736","4":"5.818004","5":"-0.9162907","6":"TW","7":"twig","8":"0.039853107"},{"1":"Anolis_isolepis","2":"3.663562","3":"2.970414","4":"6.569481","5":"-1.2039728","6":"TC","7":"trunk-crown","8":"-0.229448613"},{"1":"Anolis_jubar","2":"4.018956","3":"3.690628","4":"4.595120","5":"2.3321439","6":"TG","7":"trunk-ground","8":"-0.121558613"},{"1":"Anolis_krugi","2":"3.883624","3":"3.660480","4":"4.163560","5":"1.7404662","6":"GB","7":"grass-bush","8":"0.051093770"},{"1":"Anolis_lineatopus","2":"4.035037","3":"3.829728","4":"4.606170","5":"3.2580965","6":"TG","7":"trunk-ground","8":"-0.001110021"},{"1":"Anolis_longitibialis","2":"4.245634","3":"4.110874","4":"4.890349","5":"2.1972246","6":"TG","7":"trunk-ground","8":"0.035771205"},{"1":"Anolis_loysianus","2":"3.688879","3":"3.208825","4":"4.363099","5":"3.1986731","6":"T","7":"trunk","8":"-0.107683592"},{"1":"Anolis_luteogularis","2":"5.209486","3":"4.718499","4":"6.334345","5":"2.4248027","6":"CG","7":"crown-giant","8":"-0.031499493"},{"1":"Anolis_marcanoi","2":"4.017518","3":"3.832763","4":"4.605170","5":"2.4510051","6":"TG","7":"trunk-ground","8":"0.022245571"},{"1":"Anolis_mestrei","2":"3.944355","3":"3.715278","4":"5.161352","5":"2.4336134","6":"TG","7":"trunk-ground","8":"-0.010380612"},{"1":"Anolis_noblei","2":"5.108971","3":"4.672829","4":"6.396930","5":"2.2300144","6":"CG","7":"crown-giant","8":"0.001825856"},{"1":"Anolis_olssoni","2":"3.838635","3":"3.577110","4":"3.830813","5":"0.4054651","6":"GB","7":"grass-bush","8":"0.023802580"},{"1":"Anolis_opalinus","2":"3.866733","3":"3.528417","4":"4.923624","5":"3.1863526","6":"TC","7":"trunk-crown","8":"0.085960086"},{"1":"Anolis_ophiolepis","2":"3.637586","3":"3.182627","4":"3.218876","5":"-0.2231436","6":"GB","7":"grass-bush","8":"-0.120069829"},{"1":"Anolis_poncensis","2":"3.781345","3":"3.440098","4":"4.496471","5":"1.2809338","6":"GB","7":"grass-bush","8":"-0.041796387"},{"1":"Anolis_porcatus","2":"4.248495","3":"3.724488","4":"5.438079","5":"3.8628328","6":"TC","7":"trunk-crown","8":"-0.173808416"},{"1":"Anolis_pulchellus","2":"3.774300","3":"3.482163","4":"3.387774","5":"0.3364722","6":"GB","7":"grass-bush","8":"0.009050158"},{"1":"Anolis_rejectus","2":"3.522146","3":"3.165897","4":"3.988984","5":"-0.9162907","6":"GB","7":"grass-bush","8":"0.007098747"},{"1":"Anolis_sagrei","2":"3.891820","3":"3.589059","4":"3.732896","5":"2.7343675","6":"TG","7":"trunk-ground","8":"-0.075666525"},{"1":"Anolis_singularis","2":"3.828641","3":"3.295837","4":"5.703782","5":"2.0794415","6":"TC","7":"trunk-crown","8":"-0.101137786"},{"1":"Anolis_stratulus","2":"3.794365","3":"3.488903","4":"6.552936","5":"2.2617631","6":"TC","7":"trunk-crown","8":"0.132855692"},{"1":"Anolis_valencienni","2":"4.286341","3":"3.655840","4":"5.443283","5":"1.7917595","6":"TW","7":"twig","8":"0.018639453"},{"1":"Anolis_vanidicus","2":"3.630985","3":"3.243764","4":"3.701302","5":"-1.6094379","6":"GB","7":"grass-bush","8":"-0.050705118"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[15],"max":[15]},"pages":{}}}
   </script>
 </div>
-<p>Here we also added a parameter to <code>options</code> to print 15 row at a time.</p>
+<p>Here we also added a parameter to <code>options</code> to print 15
+row at a time.</p>
 </div>
 <div id="tables-by-hand" class="section level2">
 <h2>Tables “By Hand”</h2>
-<p>You can also define tables explicitly using markdown. For this, we merely mark up the text with <code>-</code> to specify the header and <code>|</code> to specify rows. So this . . .</p>
+<p>You can also define tables explicitly using markdown. For this, we
+merely mark up the text with <code>-</code> to specify the header and
+<code>|</code> to specify rows. So this . . .</p>
 <pre><code>|    Ecomorph        | Description                             |
 |------------------|-------------------------------------------|
 | crown-giant     | Large bodied, lives in crown               |
@@ -988,10 +1211,34 @@ twig
 </div>
 <div id="inserting-references" class="section level1">
 <h1>Inserting References</h1>
-<p>As we prosecute out projects in Phase I and II, we’ll be reading scientific papers, some assigned, some asked to find so that we can place our results in context. In addition, as scientists, we always want to support our statements of fact with references. For this, we’ll need to cite and include these papers in a bibliography.</p>
-<p><a href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html">Adding reference to an .Rmd</a> is pretty straight forward. First we’ll need to establish a .bib file that will reside in the same directory as your .Rmd file. To do this, select “File-&gt;New File-&gt;Text File.” A new tab will appear with the name “Untitled1.txt”. Save this file as “BIOL2140.bib” (note the “.bib” extension) in the same directory as your .Rmd file. This .bib file will be referenced by your .Rmd when inserting citations.</p>
-<p>The framework for citations and references in .Rmd can be formulated around <a href="https://en.wikipedia.org/wiki/BibTeX">BibTex</a>. BibTex is handy because you can find BibTex formatted citations in all your typical outlets (see note below). This system of citation uses a .bib file that contains text describing published works. Each work or potential reference in the .bib file is identified with a unique tag at the top of its entry and this entry contains the important bibliographic information. For instance, a .bib file containing a reference to the following paper</p>
-<p>Hagey, T.J., Harte, S., Vickers, M., Harmon, L.J. and Schwarzkopf, L., 2017. There’s more than one way to climb a tree: Limb length and microhabitat use in lizards with toe pads. <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0184641">PloS one, 12(9), p.e0184641</a>.</p>
+<p>As we prosecute out projects in Phase I and II, we’ll be reading
+scientific papers, some assigned, some asked to find so that we can
+place our results in context. In addition, as scientists, we always want
+to support our statements of fact with references. For this, we’ll need
+to cite and include these papers in a bibliography.</p>
+<p><a
+href="https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html">Adding
+reference to an .Rmd</a> is pretty straight forward. First we’ll need to
+establish a .bib file that will reside in the same directory as your
+.Rmd file. To do this, select “File-&gt;New File-&gt;Text File.” A new
+tab will appear with the name “Untitled1.txt”. Save this file as
+“BIOL2140.bib” (note the “.bib” extension) in the same directory as your
+.Rmd file. This .bib file will be referenced by your .Rmd when inserting
+citations.</p>
+<p>The framework for citations and references in .Rmd can be formulated
+around <a href="https://en.wikipedia.org/wiki/BibTeX">BibTex</a>. BibTex
+is handy because you can find BibTex formatted citations in all your
+typical outlets (see note below). This system of citation uses a .bib
+file that contains text describing published works. Each work or
+potential reference in the .bib file is identified with a unique tag at
+the top of its entry and this entry contains the important bibliographic
+information. For instance, a .bib file containing a reference to the
+following paper</p>
+<p>Hagey, T.J., Harte, S., Vickers, M., Harmon, L.J. and Schwarzkopf,
+L., 2017. There’s more than one way to climb a tree: Limb length and
+microhabitat use in lizards with toe pads. <a
+href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0184641">PloS
+one, 12(9), p.e0184641</a>.</p>
 <p>would have the following text:</p>
 <pre><code>@article{hagey2017there,
   title={There’s more than one way to climb a tree: Limb length and microhabitat use in lizards with toe pads},
@@ -1003,8 +1250,16 @@ twig
   year={2017}
 }
 </code></pre>
-<p>Notice we have a tag `@article{hagey2017there,". This identifies the entry as a journal article (as apposed to a book or manual, etc.) and contains a key that is unique among all the other references in the .bib file. After this, the entry then goes on to identify the important bibliographic pieces: title, author, journal, etc.). Go ahead and add this BibTex reference to your BIOL3140.bib file and save it.</p>
-<p>For .Rmd to reference this .bib file, we need to specify a bibliography file in the YAML header. So now alter your YAML header at the top of the .Rmd so that it contains `bibliography: BIOL3140.bib". The YAML header should now look like this:</p>
+<p>Notice we have a tag `@article{hagey2017there,“. This identifies the
+entry as a journal article (as apposed to a book or manual, etc.) and
+contains a key that is unique among all the other references in the .bib
+file. After this, the entry then goes on to identify the important
+bibliographic pieces: title, author, journal, etc.). Go ahead and add
+this BibTex reference to your BIOL3140.bib file and save it.</p>
+<p>For .Rmd to reference this .bib file, we need to specify a
+bibliography file in the YAML header. So now alter your YAML header at
+the top of the .Rmd so that it contains `bibliography: BIOL3140.bib”.
+The YAML header should now look like this:</p>
 <pre><code>---
 title: &quot;Project 4&quot;
 author: aRtful coders
@@ -1012,25 +1267,61 @@ date: 22/Sep/2020
 output: html_document
 bibliography: BIOL3140.bib
 ---</code></pre>
-<p>With a .bib file now in place, we can use the reference keys to cite works listed in the .bib file. For this, we simply add the key label to the text with ‘@’. For instance, <code>@hagey2017there</code> with produce <span class="citation">Hagey et al. (2017)</span>.</p>
-<p>When citing published works in text, we often follow certain formatting conventions. To be honest, your professor couldn’t care less about which format gets used in your .Rmds. Fortunately, R Markdown uses a familiar <a href="https://www.citethisforme.com/harvard-referencing">Harvard-like</a> format by default and he recommends plowing ahead with it. In a Harvard-like format, a reference in a sentence used in an explicit manner, includes the reference year in parentheses. For instance, if we were to express that these authors studied the hindlimb-ecomorph relationship in anoles, we would write, “<span class="citation">Hagey et al. (2017)</span> studied the hindlimb-ecomorph relationship in anoles.” The reference <code>@hagey2017there</code> is just inserted at the beginning of the sentence as in the following:</p>
+<p>With a .bib file now in place, we can use the reference keys to cite
+works listed in the .bib file. For this, we simply add the key label to
+the text with ‘@’. For instance, <code>@hagey2017there</code> with
+produce <span class="citation">Hagey et al. (2017)</span>.</p>
+<p>When citing published works in text, we often follow certain
+formatting conventions. To be honest, your professor couldn’t care less
+about which format gets used in your .Rmds. Fortunately, R Markdown uses
+a familiar <a
+href="https://www.citethisforme.com/harvard-referencing">Harvard-like</a>
+format by default and he recommends plowing ahead with it. In a
+Harvard-like format, a reference in a sentence used in an explicit
+manner, includes the reference year in parentheses. For instance, if we
+were to express that these authors studied the hindlimb-ecomorph
+relationship in anoles, we would write, “<span class="citation">Hagey et
+al. (2017)</span> studied the hindlimb-ecomorph relationship in anoles.”
+The reference <code>@hagey2017there</code> is just inserted at the
+beginning of the sentence as in the following:</p>
 <pre><code>@hagey2017there studied the hindlimb-ecomorph relationship in anoles.</code></pre>
-<p>However, Harvard-like convention follows that if we aren’t explicit about the study, we include the entire reference in parentheses. For instance, if we wanted to write, “A recent study considered the hindlimb-ecomorph relationship in anoles <span class="citation">(Hagey et al. 2017)</span>.” we would include the following:</p>
+<p>However, Harvard-like convention follows that if we aren’t explicit
+about the study, we include the entire reference in parentheses. For
+instance, if we wanted to write, “A recent study considered the
+hindlimb-ecomorph relationship in anoles <span class="citation">(Hagey
+et al. 2017)</span>.” we would include the following:</p>
 <pre><code>A recent study considered the hindlimb-ecomorph relationship in anoles [@hagey2017there].</code></pre>
-<p>Note that <code>@hagey2017there</code> is wrapped in <code>[]</code>.</p>
-<p>In R Markdown, bibliographies will be placed at the end of the document. Normally, this means you want to end your document with the header “References”. This will anchor the bibliography in this section.</p>
-<p>Note that this .bib file can be used in all your .Rmd documents, not just this one. As long as all the BibTex entries have unique keys, this .bib file can serve as a reference database for all your .Rmd citations.</p>
+<p>Note that <code>@hagey2017there</code> is wrapped in
+<code>[]</code>.</p>
+<p>In R Markdown, bibliographies will be placed at the end of the
+document. Normally, this means you want to end your document with the
+header “References”. This will anchor the bibliography in this
+section.</p>
+<p>Note that this .bib file can be used in all your .Rmd documents, not
+just this one. As long as all the BibTex entries have unique keys, this
+.bib file can serve as a reference database for all your .Rmd
+citations.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>You may be wondering where you can find BibTex citations. Like so much of our lives, the answer points to Google, specifically Google Scholar. As an example, go to <a href="http://scholar.google.com/">Google Scholar</a> and search for the <span class="citation">Hagey et al. (2017)</span> paper. The entry under scholar will look like the following:</p>
+<p>You may be wondering where you can find BibTex citations. Like so
+much of our lives, the answer points to Google, specifically Google
+Scholar. As an example, go to <a
+href="http://scholar.google.com/">Google Scholar</a> and search for the
+<span class="citation">Hagey et al. (2017)</span> paper. The entry under
+scholar will look like the following:</p>
 <p><img src="scholar1.png" /> <br></p>
-<p>Click on the big <code>"</code> at the bottom of the entry. This will bring you to a pop-up window that contains different citation formats for the entry.</p>
+<p>Click on the big <code>"</code> at the bottom of the entry. This will
+bring you to a pop-up window that contains different citation formats
+for the entry.</p>
 <p><img src="scholar2.png" /> <br></p>
-<p>Now click on the “BibTex” link at the bottom of the window. This will lead you to a text file of the BibTex format. Simply copy and paste this to your .bib file. Voila.</p>
+<p>Now click on the “BibTex” link at the bottom of the window. This will
+lead you to a text file of the BibTex format. Simply copy and paste this
+to your .bib file. Voila.</p>
 </div>
 </div>
 </div>
@@ -1038,33 +1329,62 @@ bibliography: BIOL3140.bib
 </div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
-<p>The goal of this project report is to produce an R Markdown in HTML that includes all the important components of the project reports you’ll produce in Phases I and II of the course. You can think of this as a template that can be used when writing writing up your reports in all the subsequent modules.</p>
-<p>For this project report, write an .Rmd document named “TEAMNAME_Module4.R” that includes the following:</p>
+<p>The goal of this project report is to produce an R Markdown in HTML
+that includes all the important components of the project reports you’ll
+produce in Phases I and II of the course. You can think of this as a
+template that can be used when writing writing up your reports in all
+the subsequent modules.</p>
+<p>For this project report, write an .Rmd document named
+“TEAMNAME_Module4.R” that includes the following:</p>
 <ol style="list-style-type: decimal">
-<li>A YAML header that specifies the author, title, date, output, and bibliography file.</li>
-<li>The following section headers that organize your text and includes 2-3 short relevant sentences:
+<li>A YAML header that specifies the author, title, date, output, and
+bibliography file.</li>
+<li>The following section headers that organize your text and includes
+2-3 short relevant sentences:
 <ul>
-<li>Introduction: Include a brief background to the anole project (why are we studying this anyway?), what the main questions is, and how this question will be answered.</li>
-<li>Methods: Briefly outline the specifics of how the question will be answered.</li>
+<li>Introduction: Include a brief background to the anole project (why
+are we studying this anyway?), what the main questions is, and how this
+question will be answered.</li>
+<li>Methods: Briefly outline the specifics of how the question will be
+answered.</li>
 <li>Results: Briefly summarize the results.</li>
-<li>Discussion: Briefly discuss the importance of the results (i.e., how they relate to the main question).</li>
-<li>Author Contributions: Briefly state what the contributions of each team member to the project.</li>
-<li>References: Populate a bibliography section that includes the works cited in the text.</li>
+<li>Discussion: Briefly discuss the importance of the results (i.e., how
+they relate to the main question).</li>
+<li>Author Contributions: Briefly state what the contributions of each
+team member to the project.</li>
+<li>References: Populate a bibliography section that includes the works
+cited in the text.</li>
 </ul></li>
-<li>A centered image from an online source of an <em>Anolis</em> lizard at the end of the introduction. Please make sure this is in the <a href="reativecommons.org">creative commons</a>.]</li>
-<li>All the code chunks included in the <a href="#adding-code-with-chunks">Adding Code with Chunks</a> section.</li>
-<li>An altered “AIC” chunk that produces a table of AIC values with <code>kable</code>. Be sure to include a descriptive caption</li>
-<li>Another chunk of code, inserted before the “plot residuals” chunk, that produces a figure of a regression plot of log-transformed <code>HTotal</code> vs <code>SVL</code> with points colored by <code>Ecomorph2</code>. Be sure to include a descriptive caption here, too.</li>
-<li>A citation to the <span class="citation">Hagey et al. (2017)</span> paper in the introduction (include in the References section, too)</li>
-<li>A citation in the methods sections that identifies the source of the phylogenetic tree used in PGLS analysis (include in the References section as well).</li>
+<li>A centered image from an online source of an <em>Anolis</em> lizard
+at the end of the introduction. Please make sure this is in the <a
+href="reativecommons.org">creative commons</a>.]</li>
+<li>All the code chunks included in the <a
+href="#adding-code-with-chunks">Adding Code with Chunks</a>
+section.</li>
+<li>An altered “AIC” chunk that produces a table of AIC values with
+<code>kable</code>. Be sure to include a descriptive caption</li>
+<li>Another chunk of code, inserted before the “plot residuals” chunk,
+that produces a figure of a regression plot of log-transformed
+<code>HTotal</code> vs <code>SVL</code> with points colored by
+<code>Ecomorph2</code>. Be sure to include a descriptive caption here,
+too.</li>
+<li>A citation to the <span class="citation">Hagey et al. (2017)</span>
+paper in the introduction (include in the References section, too)</li>
+<li>A citation in the methods sections that identifies the source of the
+phylogenetic tree used in PGLS analysis (include in the References
+section as well).</li>
 </ol>
-<p>Submissions are due by 11:59 PM on Sunday, October 3th. Submission should be pushed to your team repo.</p>
+<p>Submissions are due by 11:59 PM on Sunday, October 3th. Submission
+should be pushed to your team repo.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
-<h1>References</h1>
-<div id="refs" class="references">
-<div id="ref-hagey2017there">
-<p>Hagey, Travis J, Scott Harte, Mathew Vickers, Luke J Harmon, and Lin Schwarzkopf. 2017. “There’s More Than One Way to Climb a Tree: Limb Length and Microhabitat Use in Lizards with Toe Pads.” <em>PloS One</em> 12 (9): e0184641.</p>
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-hagey2017there" class="csl-entry">
+Hagey, Travis J, Scott Harte, Mathew Vickers, Luke J Harmon, and Lin
+Schwarzkopf. 2017. <span>“There’s More Than One Way to Climb a Tree:
+Limb Length and Microhabitat Use in Lizards with Toe Pads.”</span>
+<em>PloS One</em> 12 (9): e0184641.
 </div>
 </div>
 </div>
@@ -1098,7 +1418,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -1107,6 +1427,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

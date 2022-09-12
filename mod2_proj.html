@@ -13,17 +13,26 @@
 
 <title>Module 2 Project</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -35,21 +44,29 @@
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,7 +86,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -122,39 +139,8 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
 
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -166,10 +152,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -186,40 +168,16 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 61px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h2 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h3 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h4 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h5 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h6 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -247,7 +205,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -259,7 +217,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -270,10 +228,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -285,7 +256,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -411,7 +381,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -425,7 +395,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -441,7 +411,7 @@ div.tocify {
   <a href="schedule.html">Schedule</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Projects
      
     <span class="caret"></span>
@@ -496,7 +466,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f21">BIOL 3140 Discussion</a>
+  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f22">BIOL 3140 Discussion</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -506,7 +476,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -522,102 +492,221 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Now that we have read and explored the basics of how to tidy, transform, and summarize data in R, let’s put some of these new skills into practice. In this exercise, we’ll work toward the goal of plotting kinematic data from a swimming fish. To do this, we’ll have to load data from text files, join related data tables, add new columns to the data based on other columns and a custom function, and summarize our data based on grouping variables.</p>
+<p>Now that we have read and explored the basics of how to tidy,
+transform, and summarize data in R, let’s put some of these new skills
+into practice. In this exercise, we’ll work toward the goal of plotting
+kinematic data from a swimming fish. To do this, we’ll have to load data
+from text files, join related data tables, add new columns to the data
+based on other columns and a custom function, and summarize our data
+based on grouping variables.</p>
 </div>
 <div id="set-up" class="section level1">
 <h1>Set up</h1>
 <p>There are several data sets that need to be loaded:</p>
 <ul>
-<li>A file of pectoral fin amplitude from two <a href="https://www.newyorkupstate.com/life-and-culture/g66l-2019/08/b2a354a76c7e4/sunfish-101-how-to-id-a-bluegill-pumpkinseed-or-redbreast.html">pumpkinseed sunfish</a> at <a href="pseed.fin.amps.csv">this link</a>.</li>
-<li>A file containing the body length of pumpkinseed sunfish included in the study at <a href="pseed.lengths.csv">this link</a>.</li>
-<li>A file of the speeds at which specimens swam in the study at <a href="pseed.calibration.csv">this link</a>.</li>
+<li>A file of pectoral fin amplitude from two <a
+href="https://www.newyorkupstate.com/life-and-culture/g66l-2019/08/b2a354a76c7e4/sunfish-101-how-to-id-a-bluegill-pumpkinseed-or-redbreast.html">pumpkinseed
+sunfish</a> at <a href="pseed.fin.amps.csv">this link</a>.</li>
+<li>A file containing the body length of pumpkinseed sunfish included in
+the study at <a href="pseed.lengths.csv">this link</a>.</li>
+<li>A file of the speeds at which specimens swam in the study at <a
+href="pseed.calibration.csv">this link</a>.</li>
 </ul>
-<p>Let’s do so and then comment on the origin and importance of the data.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(tidyverse) <span class="co"># Remember to load your libraries!</span></span></code></pre></div>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
-<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
-## ✓ tibble  3.1.3     ✓ dplyr   1.0.7
-## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
-## ✓ readr   1.4.0     ✓ forcats 0.5.1</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#Remember to set your working directory, too!</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#load data</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a>pseed &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;pseed.fin.amps.csv&quot;</span>)</span></code></pre></div>
-<pre><code>## 
+<p>Let’s do so and then comment on the origin and importance of the
+data.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># Remember to load your libraries!</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Remember to set your working directory, too!</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#load data</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pseed <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;pseed.fin.amps.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 73352 Columns: 7
 ## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   fish = col_character(),
-##   speed = col_double(),
-##   frame = col_double(),
-##   date = col_character(),
-##   amp = col_double(),
-##   fin = col_character(),
-##   amp.bl = col_double()
-## )</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>pseed.bl &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;pseed.lengths.csv&quot;</span>)</span></code></pre></div>
-<pre><code>## 
+## Delimiter: &quot;,&quot;
+## chr (3): fish, date, fin
+## dbl (4): speed, frame, amp, amp.bl
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pseed.bl <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;pseed.lengths.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 3 Columns: 2
 ## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   fish = col_character(),
-##   bl = col_double()
-## )</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>speeds &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;pseed.calibration.csv&quot;</span>)</span></code></pre></div>
-<pre><code>## 
+## Delimiter: &quot;,&quot;
+## chr (1): fish
+## dbl (1): bl
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>speeds <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;pseed.calibration.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 119 Columns: 3
 ## ── Column specification ────────────────────────────────────────────────────────
-## cols(
-##   vol = col_double(),
-##   m.s = col_double(),
-##   cm.s = col_double()
-## )</code></pre>
-<p>First, notice that we used <code>read_csv()</code> to load our .csv data files rather than <code>read.csv()</code>. <code>read_csv()</code> from the <code>tidyverse</code> package <code>readr</code> is identical to <code>read.csv()</code>. However, it loads data as a tibble, an object like a data.frame but one that works seamlessly with the other functions contained in <code>tidyverse</code>.</p>
+## Delimiter: &quot;,&quot;
+## dbl (3): vol, m.s, cm.s
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>First, notice that we used <code>read_csv()</code> to load our .csv
+data files rather than <code>read.csv()</code>. <code>read_csv()</code>
+from the <code>tidyverse</code> package <code>readr</code> is identical
+to <code>read.csv()</code>. However, it loads data as a tibble, an
+object like a data.frame but one that works seamlessly with the other
+functions contained in <code>tidyverse</code>.</p>
 <center>
 <iframe width="460" height="315" src="https://www.youtube.com/embed/xYEJThBVoXM" frameborder="0" allowfullscreen>
 </iframe>
 </center>
 <p><br></p>
-<p>The data loaded to <code>pseed</code> are amplitudes of pectoral fin oscillations (i.e., fin beats) from two pumpkinseeds swimming across a range of speeds in a swim tunnel. Points on the pectoral fin (red dots in the video above) were tracked frame by frame automatically from video files in R with the package <code>trackter</code>. The video above represents 100 frames or so from one experiment. The data set includes the following columns:</p>
+<p>The data loaded to <code>pseed</code> are amplitudes of pectoral fin
+oscillations (i.e., fin beats) from two pumpkinseeds swimming across a
+range of speeds in a swim tunnel. Points on the pectoral fin (red dots
+in the video above) were tracked frame by frame automatically from video
+files in R with the package <code>trackter</code>. The video above
+represents 100 frames or so from one experiment. The data set includes
+the following columns:</p>
 <ul>
 <li><code>fish</code>: The fish number in the experiment.</li>
-<li><code>speed</code>: The voltage sent to the motor driving the prop that is moving the water. Higher voltages result in a faster motor speed.</li>
-<li><code>frame</code>: The frame in the experiment video from which the data are taken.</li>
-<li><code>date</code>: A date in the format “year-month-day-hourminutesecond” that identifies when the experiment started. This is unique for each experiment.</li>
+<li><code>speed</code>: The voltage sent to the motor driving the prop
+that is moving the water. Higher voltages result in a faster motor
+speed.</li>
+<li><code>frame</code>: The frame in the experiment video from which the
+data are taken.</li>
+<li><code>date</code>: A date in the format
+“year-month-day-hourminutesecond” that identifies when the experiment
+started. This is unique for each experiment.</li>
 <li><code>amp</code>: Fin amplitude in pixels.</li>
-<li><code>fin</code>: From which fin, left or right, the amplitude was recorded.</li>
-<li><code>amp.bl</code>: The specific fin amplitude as a proportion of body length (BL<span class="math inline">\(^{-1}\)</span>).</li>
+<li><code>fin</code>: From which fin, left or right, the amplitude was
+recorded.</li>
+<li><code>amp.bl</code>: The specific fin amplitude as a proportion of
+body length (BL<span class="math inline">\(^{-1}\)</span>).</li>
 </ul>
-<p>This data set doesn’t include important information about the data, including the size of each specimen and what water speeds the motor speeds resulted in. These are critical data. For instance, data for locomotor speed are often reported as <em>specific speeds</em>, i.e., body lengths per second (BL<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span>) by physiologists to control for the difference in size between organisms. Using motor voltage wouldn’t be so helpful in this regard. To do something like compute the specific swimming speed, we need both the length of the specimen (in cm, say) and the speed of the water (in cm<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span>). Fortunately, we measured the BL of each fish and conducted calibration experiments to assess water speed for each motor voltage.</p>
-<p>The size of each fish is contained in the “peed.lengths.csv” file that we passed to the <code>pseed.bl</code> variable. It contains the columns <code>fish</code>, the specimen number, and <code>bl</code>, the body length in cm. The calibrated speed in cm<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span> of the flow tank according to motor RPM is contained in the “pseed.calibration.csv” file that we passed to the <code>speeds</code> variable. The columns in <code>speeds</code> include <code>vol</code>, the motor voltage, <code>m.s</code> and <code>cm.s</code> the water speed inside the flow tank resulting from that voltage in in m<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span> and in cm<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span>, respectively.</p>
-<p>Our goal in this project is to qualitatively assess if pectoral-fin amplitude changes over the range of speeds swam by our two pumpkin seeds. To do this, we’ll plot these data (in convention dimension units of BL<span class="math inline">\(^{-1}\)</span> for amplitude and BL<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span> for speed). This will require that we combine our data sets and perform some transformations on the data, adding new columns of data for plotting along the way.</p>
+<p>This data set doesn’t include important information about the data,
+including the size of each specimen and what water speeds the motor
+speeds resulted in. These are critical data. For instance, data for
+locomotor speed are often reported as <em>specific speeds</em>, i.e.,
+body lengths per second (BL<span
+class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span>) by physiologists to control for
+the difference in size between organisms. Using motor voltage wouldn’t
+be so helpful in this regard. To do something like compute the specific
+swimming speed, we need both the length of the specimen (in cm, say) and
+the speed of the water (in cm<span
+class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span>). Fortunately, we measured the BL
+of each fish and conducted calibration experiments to assess water speed
+for each motor voltage.</p>
+<p>The size of each fish is contained in the “peed.lengths.csv” file
+that we passed to the <code>pseed.bl</code> variable. It contains the
+columns <code>fish</code>, the specimen number, and <code>bl</code>, the
+body length in cm. The calibrated speed in cm<span
+class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span> of the flow tank according to motor
+RPM is contained in the “pseed.calibration.csv” file that we passed to
+the <code>speeds</code> variable. The columns in <code>speeds</code>
+include <code>vol</code>, the motor voltage, <code>m.s</code> and
+<code>cm.s</code> the water speed inside the flow tank resulting from
+that voltage in in m<span class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span> and in cm<span
+class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span>, respectively.</p>
+<p>Our goal in this project is to qualitatively assess if pectoral-fin
+amplitude changes over the range of speeds swam by our two pumpkin
+seeds. To do this, we’ll plot these data (in convention dimension units
+of BL<span class="math inline">\(^{-1}\)</span> for amplitude and
+BL<span class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span> for speed). This will require that
+we combine our data sets and perform some transformations on the data,
+adding new columns of data for plotting along the way.</p>
 </div>
-<div id="more-complicated-operations-joining-relational-data" class="section level1">
+<div id="more-complicated-operations-joining-relational-data"
+class="section level1">
 <h1>More Complicated Operations: Joining Relational Data</h1>
-<p>As we learned in <a href="https://r4ds.had.co.nz/relational-data.html">R4DS</a>, separate but related data can exist in different places (i.e., different data frames or tibbles), yet have similar properties, specifically common attributes such as columns that contain the same data. By using these common attributes, known as keys, we can combine data to ask and answer a more expansive array of questions. In the context of analysis of data from scientific experiments, we often have many data files, including one that contains the results of the experiments and others that contain important data not recorded in the course of the experiments but that are essential to analysis.</p>
-<p>Consider the pectoral-fin data we loaded and the goals we have. Our main results table in <code>pseed</code> contains the the amplitude of left and right pectoral fins recorded over many experiments for two fish over many speeds. Our goal is to assess how amplitude varies with speed. The speed in the main data table isn’t reported as a conventional unit, like cm<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span>, but rather as the motor voltage that spun the prop. Higher voltages resulted in higher water speeds, but we don’t know the exact relationship based on this alone and, thus, if we worked with this table for analysis, we are left in the awkward position of reporting our results for various speeds in voltage. Not good.</p>
+<p>As we learned in <a
+href="https://r4ds.had.co.nz/relational-data.html">R4DS</a>, separate
+but related data can exist in different places (i.e., different data
+frames or tibbles), yet have similar properties, specifically common
+attributes such as columns that contain the same data. By using these
+common attributes, known as keys, we can combine data to ask and answer
+a more expansive array of questions. In the context of analysis of data
+from scientific experiments, we often have many data files, including
+one that contains the results of the experiments and others that contain
+important data not recorded in the course of the experiments but that
+are essential to analysis.</p>
+<p>Consider the pectoral-fin data we loaded and the goals we have. Our
+main results table in <code>pseed</code> contains the the amplitude of
+left and right pectoral fins recorded over many experiments for two fish
+over many speeds. Our goal is to assess how amplitude varies with speed.
+The speed in the main data table isn’t reported as a conventional unit,
+like cm<span class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span>, but rather as the motor voltage
+that spun the prop. Higher voltages resulted in higher water speeds, but
+we don’t know the exact relationship based on this alone and, thus, if
+we worked with this table for analysis, we are left in the awkward
+position of reporting our results for various speeds in voltage. Not
+good.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>You may be wondering <em>How does water speed in the tunnel relate to swimming speed of a fish in it?</em> Answer: think of the swim tunnel as a treadmill for aquatic locomotors (i.e., swimmers). If you were on a treadmill and set the speed to an 8-minute mile, the tread would be moving at 7.5 miles<span class="math inline">\(\cdot\)</span>h<span class="math inline">\(^{-1}\)</span>. If you keep up with the tread, running stationary with reference the the space surrounding the treadmill, you’re running at 7.5 miles<span class="math inline">\(\cdot\)</span>h<span class="math inline">\(^{-1}\)</span>. Therefore a fish swimming in place in a swim tunnel that is moving water at 5 cm<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span> is swimming at 5 cm<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span></p>
+<p>You may be wondering <em>How does water speed in the tunnel relate to
+swimming speed of a fish in it?</em> Answer: think of the swim tunnel as
+a treadmill for aquatic locomotors (i.e., swimmers). If you were on a
+treadmill and set the speed to an 8-minute mile, the tread would be
+moving at 7.5 miles<span class="math inline">\(\cdot\)</span>h<span
+class="math inline">\(^{-1}\)</span>. If you keep up with the tread,
+running stationary with reference the the space surrounding the
+treadmill, you’re running at 7.5 miles<span
+class="math inline">\(\cdot\)</span>h<span
+class="math inline">\(^{-1}\)</span>. Therefore a fish swimming in place
+in a swim tunnel that is moving water at 5 cm<span
+class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span> is swimming at 5 cm<span
+class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span></p>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>To easily plot data and undertake our qualitative analysis, we need amplitude and swim/water speed in the same table. Fortunately, we have loaded the tunnel’s water speed as it varies with motor voltage. To combine the data, we must perform a merge or join operation. In this case, we need to perform an <a href="https://r4ds.had.co.nz/relational-data.html#mutating-joins">outer join</a> whereby we add observations that appear in at least one of the tables. By this I mean that we have many observations (over 74,000!) of amplitude, each with an associated speed value in voltage in the main data table and fewer observations of voltages and associated water speeds in another (i.e., one voltage and water speed in each row). We want to add these water speeds to the many observations in our main <code>pseed</code> table.</p>
-<p>Joining data tables in this way requires that we identify a key, a common attribute to both tables whose values will be used to add the new data to the table. What is this key? It’s voltage, represented in the <code>pseed</code> table as <code>speed</code> and the <code>speeds</code> table as <code>vol</code>.</p>
+<p>To easily plot data and undertake our qualitative analysis, we need
+amplitude and swim/water speed in the same table. Fortunately, we have
+loaded the tunnel’s water speed as it varies with motor voltage. To
+combine the data, we must perform a merge or join operation. In this
+case, we need to perform an <a
+href="https://r4ds.had.co.nz/relational-data.html#mutating-joins">outer
+join</a> whereby we add observations that appear in at least one of the
+tables. By this I mean that we have many observations (over 74,000!) of
+amplitude, each with an associated speed value in voltage in the main
+data table and fewer observations of voltages and associated water
+speeds in another (i.e., one voltage and water speed in each row). We
+want to add these water speeds to the many observations in our main
+<code>pseed</code> table.</p>
+<p>Joining data tables in this way requires that we identify a key, a
+common attribute to both tables whose values will be used to add the new
+data to the table. What is this key? It’s voltage, represented in the
+<code>pseed</code> table as <code>speed</code> and the
+<code>speeds</code> table as <code>vol</code>.</p>
 <center>
-<img src="leftjoin.png" title="fig:" alt="FigName" />
+<div class="figure">
+<img src="leftjoin.png" alt="" />
+<p class="caption">FigName</p>
+</div>
 </center>
 <p><br></p>
-<p>In the figure above, we see the two tables and their columns represented. The key columns are outlined in gray. The arrow indicates the direction and manner of the join: the smaller <code>speeds</code> table that, based on the key values will add the remaining <code>m.s</code> and <code>cm.s</code> columns to the <code>pseed</code> table on its left.</p>
-<p>Fortunately, the powerful data analysis package <code>dplyr</code> in the <code>tidyverse</code> has a join function for just such an operation: <code>join_left()</code>, joining new data to left data. Here’s how this works:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>pseed2 &lt;-<span class="st"> </span>pseed<span class="op">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="st">  </span><span class="kw">left_join</span>(speeds,<span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;speed&quot;</span>=<span class="st">&quot;vol&quot;</span>))<span class="op">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="st">  </span><span class="kw">print</span>()</span></code></pre></div>
+<p>In the figure above, we see the two tables and their columns
+represented. The key columns are outlined in gray. The arrow indicates
+the direction and manner of the join: the smaller <code>speeds</code>
+table that, based on the key values will add the remaining
+<code>m.s</code> and <code>cm.s</code> columns to the <code>pseed</code>
+table on its left.</p>
+<p>Fortunately, the powerful data analysis package <code>dplyr</code> in
+the <code>tidyverse</code> has a join function for just such an
+operation: <code>join_left()</code>, joining new data to left data.
+Here’s how this works:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pseed2 <span class="ot">&lt;-</span> pseed<span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(speeds,<span class="at">by=</span><span class="fu">c</span>(<span class="st">&quot;speed&quot;</span><span class="ot">=</span><span class="st">&quot;vol&quot;</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 73,352 × 9
 ##    fish   speed frame date                amp fin   amp.bl   m.s  cm.s
 ##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -632,33 +721,80 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ##  9 Pseed5    43     4 2019-06-17-151149  68.6 L      0.130  0.11    11
 ## 10 Pseed5    43     4 2019-06-17-151149  88.8 R      0.168  0.11    11
 ## # … with 73,342 more rows</code></pre>
-<p>Here we create a new tibble by passing <code>pseed</code> with the pipe <code>%&gt;%</code> to a <code>left_join()</code> function. The <code>left_join()</code> operation takes the <code>speeds</code> table and joins it leftward to the <code>pseed</code> table. The <code>by</code> parameter specifies by what columns to join the tables, i.e., the key values for each. Notice that the names of the key values are different because the key columns have different names in <code>pseed</code> and <code>speeds</code>. With <code>print()</code>, we printed the new table, complete with <code>m.s</code> and <code>cm.s</code> columns. Notice that there’s no <code>vol</code> column added from the <code>speeds</code> table. Voila, almost there.</p>
+<p>Here we create a new tibble by passing <code>pseed</code> with the
+pipe <code>%&gt;%</code> to a <code>left_join()</code> function. The
+<code>left_join()</code> operation takes the <code>speeds</code> table
+and joins it leftward to the <code>pseed</code> table. The
+<code>by</code> parameter specifies by what columns to join the tables,
+i.e., the key values for each. Notice that the names of the key values
+are different because the key columns have different names in
+<code>pseed</code> and <code>speeds</code>. With <code>print()</code>,
+we printed the new table, complete with <code>m.s</code> and
+<code>cm.s</code> columns. Notice that there’s no <code>vol</code>
+column added from the <code>speeds</code> table. Voila, almost
+there.</p>
 </div>
-<div id="mutation-adding-data-to-data-from-its-own-data" class="section level1">
+<div id="mutation-adding-data-to-data-from-its-own-data"
+class="section level1">
 <h1>Mutation: Adding Data to Data from its Own Data</h1>
-<p>Great, we have speed in cm and m<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span> added to our results table, however, it is common practice in physiology to report locomotor speeds as specific speeds, that is, as a proportion of body lengths per second (BL<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span>). This means we need to add BL to our results table <code>pseed</code> and compute the specific speed, that is divide BL (in cm) by cm<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span> to get BL<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span>. Fortunately, we have BL information contained in our <code>pseed.bl</code> tibble.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>pseed.bl<span class="op">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="st">  </span><span class="kw">print</span>()</span></code></pre></div>
+<p>Great, we have speed in cm and m<span
+class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span> added to our results table,
+however, it is common practice in physiology to report locomotor speeds
+as specific speeds, that is, as a proportion of body lengths per second
+(BL<span class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span>). This means we need to add BL to
+our results table <code>pseed</code> and compute the specific speed,
+that is divide BL (in cm) by cm<span
+class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span> to get BL<span
+class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span>. Fortunately, we have BL
+information contained in our <code>pseed.bl</code> tibble.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pseed.bl<span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 2
 ##   fish      bl
 ##   &lt;chr&gt;  &lt;dbl&gt;
 ## 1 Pseed1  13.3
 ## 2 Pseed5  12.7
 ## 3 Pseed6  12.6</code></pre>
-<p>Notice that this tibble contains three values for <code>fish</code> and we only have two fish in our new results table, “Pseed5” and “Pseed6”:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>pseed2<span class="op">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="st">  </span><span class="kw">select</span>(fish)<span class="op">%&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="st">  </span><span class="kw">unique</span>()</span></code></pre></div>
+<p>Notice that this tibble contains three values for <code>fish</code>
+and we only have two fish in our new results table, “Pseed5” and
+“Pseed6”:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pseed2<span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(fish)<span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 1
 ##   fish  
 ##   &lt;chr&gt; 
 ## 1 Pseed5
 ## 2 Pseed6</code></pre>
-<p>To join <code>pseed.bl</code> to <code>pseed2</code>, the logical key value would be the column <code>fish</code>, a column common to both tibbles. You might at first think that a join operation would be complicated because the key values of each table aren’t identical (i.e., “Pseed5” and “Pseed6” in <code>pseed</code> but “Pseed1”, “Pseed5”, and “Pseed6” in <code>pseed.bl</code>. Because the table we’re joining to <code>pseed</code> has one additional value (“Pseed1”), all the values in the <code>pseed2</code> <code>fish</code> column are present in the <code>pseed.bl</code> <code>fish</code> column. So, we won’t have a problem. By default, an outer join operation in <code>dplyr</code> like <code>left_join()</code> will only add values to the leftward table if the key value is present in both tables. However, if the opposite was the case and the key column in the leftward table contained more values than the right table to join, we’d have a problem. Say, there was a value of “Pseed2” in the key column <code>fish</code> of the <code>pseed2</code> table. There’d be no matching value in the key column <code>fish</code> in <code>pseed.bl</code> and a value of “NA” would be added to the new joined table.</p>
-<p>Let’s go ahead and join the body length table <code>pseed.bl</code> with the results tibble <code>pseed2</code> using <code>left_join()</code> again. Notice we’ll redefine <code>pseed2</code> as this new merged tibble:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>pseed2 &lt;-<span class="st"> </span>pseed2<span class="op">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="st">  </span><span class="kw">left_join</span>(pseed.bl,<span class="dt">by=</span><span class="st">&quot;fish&quot;</span>)<span class="op">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a><span class="st">  </span><span class="kw">print</span>()</span></code></pre></div>
+<p>To join <code>pseed.bl</code> to <code>pseed2</code>, the logical key
+value would be the column <code>fish</code>, a column common to both
+tibbles. You might at first think that a join operation would be
+complicated because the key values of each table aren’t identical (i.e.,
+“Pseed5” and “Pseed6” in <code>pseed</code> but “Pseed1”, “Pseed5”, and
+“Pseed6” in <code>pseed.bl</code>. Because the table we’re joining to
+<code>pseed</code> has one additional value (“Pseed1”), all the values
+in the <code>pseed2</code> <code>fish</code> column are present in the
+<code>pseed.bl</code> <code>fish</code> column. So, we won’t have a
+problem. By default, an outer join operation in <code>dplyr</code> like
+<code>left_join()</code> will only add values to the leftward table if
+the key value is present in both tables. However, if the opposite was
+the case and the key column in the leftward table contained more values
+than the right table to join, we’d have a problem. Say, there was a
+value of “Pseed2” in the key column <code>fish</code> of the
+<code>pseed2</code> table. There’d be no matching value in the key
+column <code>fish</code> in <code>pseed.bl</code> and a value of “NA”
+would be added to the new joined table.</p>
+<p>Let’s go ahead and join the body length table <code>pseed.bl</code>
+with the results tibble <code>pseed2</code> using
+<code>left_join()</code> again. Notice we’ll redefine
+<code>pseed2</code> as this new merged tibble:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pseed2 <span class="ot">&lt;-</span> pseed2<span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(pseed.bl,<span class="at">by=</span><span class="st">&quot;fish&quot;</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 73,352 × 10
 ##    fish   speed frame date                amp fin   amp.bl   m.s  cm.s    bl
 ##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -673,10 +809,19 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ##  9 Pseed5    43     4 2019-06-17-151149  68.6 L      0.130  0.11    11  12.7
 ## 10 Pseed5    43     4 2019-06-17-151149  88.8 R      0.168  0.11    11  12.7
 ## # … with 73,342 more rows</code></pre>
-<p>We now have BL in cm stored in a <code>bl</code> column. Now we need to compute specific speed in BL<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span>. Because <code>pseed2</code> now contains <code>cm.s</code> (cm<span class="math inline">\(\cdot\)</span>s<span class="math inline">\(^{-1}\)</span>) and <code>bl</code> (in cm), all that’s left to do is compute a new <code>bl.s</code> column based on dividing <code>cm.s</code> by <code>bl.s</code>. For this, we’ll mutate the tibble, that is, add a new column with this calculation.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>pseed2 &lt;-<span class="st"> </span>pseed2<span class="op">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">bl.s=</span>cm.s<span class="op">/</span>bl)<span class="op">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="st">  </span><span class="kw">print</span>()</span></code></pre></div>
+<p>We now have BL in cm stored in a <code>bl</code> column. Now we need
+to compute specific speed in BL<span
+class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span>. Because <code>pseed2</code> now
+contains <code>cm.s</code> (cm<span
+class="math inline">\(\cdot\)</span>s<span
+class="math inline">\(^{-1}\)</span>) and <code>bl</code> (in cm), all
+that’s left to do is compute a new <code>bl.s</code> column based on
+dividing <code>cm.s</code> by <code>bl.s</code>. For this, we’ll mutate
+the tibble, that is, add a new column with this calculation.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pseed2 <span class="ot">&lt;-</span> pseed2<span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bl.s=</span>cm.s<span class="sc">/</span>bl)<span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 73,352 × 11
 ##    fish   speed frame date              amp fin   amp.bl   m.s  cm.s    bl  bl.s
 ##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -691,47 +836,102 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ##  9 Pseed5    43     4 2019-06-17-151…  68.6 L      0.130  0.11    11  12.7 0.863
 ## 10 Pseed5    43     4 2019-06-17-151…  88.8 R      0.168  0.11    11  12.7 0.863
 ## # … with 73,342 more rows</code></pre>
-<p>Here we passed <code>pseed2</code> to a <code>mutate()</code> operation to add the new column, <code>bl.s</code>, based on the division of <code>cm.s</code> by <code>bl.s</code>. Note that we redefined <code>pseed2</code> as this new mutated tibble containing the specific swimming speed in the <code>bl.s</code> column.</p>
-<p>Let’s now use <code>ggplot</code>, our fantastic plotting package included in <code>tidyverse</code> to plot specific fin amplitude (<code>amp.bl</code>) against specific swimming speed (<code>bl.s</code>).</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>pseed2<span class="op">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>bl.s,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>()</span></code></pre></div>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-7-1.png" width="672" /> First of all, this is some sort of a mess: just a bunch of points for each speed. But, let’s briefly breakdown what we did with <code>ggplot</code> (in our next module, we’ll go into more specifics). We passed <code>pseed2</code> to a new plot with <code>ggplot()</code> and specified what it should look like with the <code>aes()</code> parameter. This is the aesthetic of the plot. Specifically, we want the x axis to reflect <code>bl.s</code> values in <code>pseed2</code> and the y axis to reflect <code>amp.bl</code>. To this we added a geometry layer, a specific type of plot, in this case, a scatter or point plot with <code>geom_point()</code>.</p>
+<p>Here we passed <code>pseed2</code> to a <code>mutate()</code>
+operation to add the new column, <code>bl.s</code>, based on the
+division of <code>cm.s</code> by <code>bl.s</code>. Note that we
+redefined <code>pseed2</code> as this new mutated tibble containing the
+specific swimming speed in the <code>bl.s</code> column.</p>
+<p>Let’s now use <code>ggplot</code>, our fantastic plotting package
+included in <code>tidyverse</code> to plot specific fin amplitude
+(<code>amp.bl</code>) against specific swimming speed
+(<code>bl.s</code>).</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pseed2<span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>bl.s,<span class="at">y=</span>amp.bl))<span class="sc">+</span><span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+First of all, this is some sort of a mess: just a bunch of points for
+each speed. But, let’s briefly breakdown what we did with
+<code>ggplot</code> (in our next module, we’ll go into more specifics).
+We passed <code>pseed2</code> to a new plot with <code>ggplot()</code>
+and specified what it should look like with the <code>aes()</code>
+parameter. This is the aesthetic of the plot. Specifically, we want the
+x axis to reflect <code>bl.s</code> values in <code>pseed2</code> and
+the y axis to reflect <code>amp.bl</code>. To this we added a geometry
+layer, a specific type of plot, in this case, a scatter or point plot
+with <code>geom_point()</code>.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>We haven’t spent much time discussing the ins and out of <code>ggplot</code>. That will come in the next module. So for now, don’t worry too much about it’s grammar and seemingly odd mechanics.</p>
+<p>We haven’t spent much time discussing the ins and out of
+<code>ggplot</code>. That will come in the next module. So for now,
+don’t worry too much about it’s grammar and seemingly odd mechanics.</p>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>This plot is indeed a mess. We have so many plotted y values (over 74,000!) that we can’t say much about the pattern in question <code>amp.bl</code> vs. <code>bl.s</code>. In this case it, it may be that we have a lot of overlapping points, obscuring any patterns. To confirm this suspicion, we can simply adjust the transparency of the points with the <code>alpha</code> parameter in <code>ggplot</code>. The lower the value for <code>alpha</code> (from 0-1), the more transparent the geometry being plotted. Let’s try a really low <code>alpha</code> of 0.01, something like:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>pseed2<span class="op">%&gt;%</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>bl.s,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.01</span>)</span></code></pre></div>
+<p>This plot is indeed a mess. We have so many plotted y values (over
+74,000!) that we can’t say much about the pattern in question
+<code>amp.bl</code> vs. <code>bl.s</code>. In this case it, it may be
+that we have a lot of overlapping points, obscuring any patterns. To
+confirm this suspicion, we can simply adjust the transparency of the
+points with the <code>alpha</code> parameter in <code>ggplot</code>. The
+lower the value for <code>alpha</code> (from 0-1), the more transparent
+the geometry being plotted. Let’s try a really low <code>alpha</code> of
+0.01, something like:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pseed2<span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>bl.s,<span class="at">y=</span>amp.bl))<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.01</span>)</span></code></pre></div>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<p>One thing should be apparent here: there are a lot of low values for each speed and many fewer high values. Duh! This is a flapping fin! That is, it moves through a range of motion from a low amplitude to high and back again. Let’s look at the left pelvic fin for only one experiment identified by the first value of the <code>date</code> column by using the <code>filter()</code> function. Let’s look at the amplitude over each frame by plotting these values.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>pseed2<span class="op">%&gt;%</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="st">  </span><span class="kw">filter</span>(date<span class="op">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="op">==</span><span class="st">&quot;L&quot;</span>)<span class="op">%&gt;%</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>frame,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p>One thing should be apparent here: there are a lot of low values for
+each speed and many fewer high values. Duh! This is a flapping fin! That
+is, it moves through a range of motion from a low amplitude to high and
+back again. Let’s look at the left pelvic fin for only one experiment
+identified by the first value of the <code>date</code> column by using
+the <code>filter()</code> function. Let’s look at the amplitude over
+each frame by plotting these values.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pseed2<span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date<span class="sc">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="sc">==</span><span class="st">&quot;L&quot;</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>frame,<span class="at">y=</span>amp.bl))<span class="sc">+</span><span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<p>Yep, the fin amplitude is oscillating for sure, just like you would predict a flapping fin would. Maybe it’s not simply amplitude we should be looking at.</p>
+<p>Yep, the fin amplitude is oscillating for sure, just like you would
+predict a flapping fin would. Maybe it’s not simply amplitude we should
+be looking at.</p>
 </div>
 <div id="using-customized-functions" class="section level1">
 <h1>Using Customized Functions</h1>
-<p>Maybe it’s not simply amplitude we care about. In the the plot above, we see that the pectoral fin is oscillating like a sine wave. Perhaps we should look at the <em>max</em> amplitude across speeds. The max amplitude corresponds to the peak of each wave. But how do we find this value? One part of the power of scripting in R is that someone has probably written a package to do just what you want to do. Another powerful aspect of R is that you can write customized functions from these packages to suit your needs.</p>
-<p>The R package <code>features</code> is super handy here. It’s main function <code>features()</code>, so cleverly named, can find local minima and maxima (i.e., peaks and troughs) of curvy data. Install and then load the <code>features</code> library:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co">#make sure features is installed first</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="kw">library</span>(features)</span></code></pre></div>
+<p>Maybe it’s not simply amplitude we care about. In the the plot above,
+we see that the pectoral fin is oscillating like a sine wave. Perhaps we
+should look at the <em>max</em> amplitude across speeds. The max
+amplitude corresponds to the peak of each wave. But how do we find this
+value? One part of the power of scripting in R is that someone has
+probably written a package to do just what you want to do. Another
+powerful aspect of R is that you can write customized functions from
+these packages to suit your needs.</p>
+<p>The R package <code>features</code> is super handy here. It’s main
+function <code>features()</code>, so cleverly named, can find local
+minima and maxima (i.e., peaks and troughs) of curvy data. Install and
+then load the <code>features</code> library:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#make sure features is installed first</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(features)</span></code></pre></div>
 <pre><code>## Loading required package: lokern</code></pre>
-<p>Let’s first see what the <code>features()</code> function can do for us by running the first experiment through this function:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>exp1 &lt;-<span class="st"> </span>pseed2<span class="op">%&gt;%</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="st">  </span><span class="kw">filter</span>(date<span class="op">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="op">==</span><span class="st">&quot;L&quot;</span>)</span>
-<span id="cb26-3"><a href="#cb26-3"></a></span>
-<span id="cb26-4"><a href="#cb26-4"></a> f1 &lt;-<span class="st">  </span><span class="kw">features</span>(<span class="dt">x =</span> exp1<span class="op">$</span>frame,<span class="dt">y=</span>exp1<span class="op">$</span>amp.bl)-&gt;f1</span></code></pre></div>
-<p><code>features()</code> will only accept a vector for the x and y data of a curvy relationship. So we have to break up our filtered <code>pseed2</code> table so that it can be used by the function. Here we made an <code>epx1</code> <code>data.frame</code> and passed the <code>frame</code> column to the x parameter and <code>amp.bl</code> to the y parameter. We saved the results of the <code>features()</code> operation to <code>f1</code>. Let’s see what <code>features()</code> gave us with the <code>fget()</code> function in <code>features</code> (it simply extracts the important stuff from the results):</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="kw">fget</span>(f1)</span></code></pre></div>
+<p>Let’s first see what the <code>features()</code> function can do for
+us by running the first experiment through this function:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>exp1 <span class="ot">&lt;-</span> pseed2<span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date<span class="sc">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="sc">==</span><span class="st">&quot;L&quot;</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a> f1 <span class="ot">&lt;-</span>  <span class="fu">features</span>(<span class="at">x =</span> exp1<span class="sc">$</span>frame,<span class="at">y=</span>exp1<span class="sc">$</span>amp.bl)<span class="ot">-&gt;</span>f1</span></code></pre></div>
+<p><code>features()</code> will only accept a vector for the x and y
+data of a curvy relationship. So we have to break up our filtered
+<code>pseed2</code> table so that it can be used by the function. Here
+we made an <code>epx1</code> <code>data.frame</code> and passed the
+<code>frame</code> column to the x parameter and <code>amp.bl</code> to
+the y parameter. We saved the results of the <code>features()</code>
+operation to <code>f1</code>. Let’s see what <code>features()</code>
+gave us with the <code>fget()</code> function in <code>features</code>
+(it simply extracts the important stuff from the results):</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fget</span>(f1)</span></code></pre></div>
 <pre><code>## $f
 ##   fmean    fmin    fmax     fsd   noise     snr   d1min   d1max fwiggle   ncpts 
 ##    0.08    0.00    0.18    0.06    0.00   18.47   -0.02    0.02    0.00   24.00 
@@ -746,14 +946,31 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 
 ## $outlier
 ##  [1]   3  45  92 118 137 138 174 175 177 218 304</code></pre>
-<p><code>fget()</code> tells us that there are 24 critical points (where the curvature (i.e., second derivative) of the curve is 0) in the "crit.pts<code>output. Let's plot  vertical lines that correspond to the critical points over our original plot of the first experimnet's</code>amp.bl<code>vs.</code>frame`:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>pseed2<span class="op">%&gt;%</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="st">  </span><span class="kw">filter</span>(date<span class="op">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="op">==</span><span class="st">&quot;L&quot;</span>)<span class="op">%&gt;%</span></span>
-<span id="cb29-3"><a href="#cb29-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>frame,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">fget</span>(f1)<span class="op">$</span>crit.pts)</span></code></pre></div>
+<p><code>fget()</code> tells us that there are 24 critical points (where
+the curvature (i.e., second derivative) of the curve is 0) in the
+“crit.pts<code>output. Let's plot  vertical lines that correspond to the critical points over our original plot of the first experimnet's</code>amp.bl<code>vs.</code>frame`:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pseed2<span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date<span class="sc">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="sc">==</span><span class="st">&quot;L&quot;</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>frame,<span class="at">y=</span>amp.bl))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">fget</span>(f1)<span class="sc">$</span>crit.pts)</span></code></pre></div>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-<p>This is pretty good. We get all the peaks (the maxima of amplitude we’re after). We’re missing some troughs and have a few lines close to one another, likely due to noise. But, this isn’t a problem because we’re after the peaks only. How to isolate the peaks? That’s a matter of looking at the curvature form the <code>fget()</code> output: by convention, negative curvature indicates a convex line, positive curvature a concave line. Peaks, in other words, will have a negative curvature. There’s a problem here. We see that from the <code>fget()</code> output above that the curvature for each critical point comes back as 0 in all cases. We’re getting 0 for the curvature values because the second derivative of our low specific amplitudes is really small and <code>features()</code> defaults to outputs of two decimal points, i.e., it rounds. If we merely multiply our amplitude values by 100, we’ll see that some curvatures are negative (the peaks), while some are positive (the troughs). Let’s rerun <code>features()</code>with this change and see what we get.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a> f2 &lt;-<span class="st">  </span><span class="kw">features</span>(<span class="dt">x =</span> exp1<span class="op">$</span>frame,<span class="dt">y=</span>exp1<span class="op">$</span>amp.bl<span class="op">*</span><span class="dv">100</span>)</span>
-<span id="cb30-2"><a href="#cb30-2"></a> <span class="kw">fget</span>(f2)</span></code></pre></div>
+<p>This is pretty good. We get all the peaks (the maxima of amplitude
+we’re after). We’re missing some troughs and have a few lines close to
+one another, likely due to noise. But, this isn’t a problem because
+we’re after the peaks only. How to isolate the peaks? That’s a matter of
+looking at the curvature form the <code>fget()</code> output: by
+convention, negative curvature indicates a convex line, positive
+curvature a concave line. Peaks, in other words, will have a negative
+curvature. There’s a problem here. We see that from the
+<code>fget()</code> output above that the curvature for each critical
+point comes back as 0 in all cases. We’re getting 0 for the curvature
+values because the second derivative of our low specific amplitudes is
+really small and <code>features()</code> defaults to outputs of two
+decimal points, i.e., it rounds. If we merely multiply our amplitude
+values by 100, we’ll see that some curvatures are negative (the peaks),
+while some are positive (the troughs). Let’s rerun
+<code>features()</code>with this change and see what we get.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a> f2 <span class="ot">&lt;-</span>  <span class="fu">features</span>(<span class="at">x =</span> exp1<span class="sc">$</span>frame,<span class="at">y=</span>exp1<span class="sc">$</span>amp.bl<span class="sc">*</span><span class="dv">100</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">fget</span>(f2)</span></code></pre></div>
 <pre><code>## $f
 ##   fmean    fmin    fmax     fsd   noise     snr   d1min   d1max fwiggle   ncpts 
 ##    8.02    0.08   18.46    6.26    0.34   18.51   -2.20    1.60    0.15   24.00 
@@ -769,12 +986,15 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ## 
 ## $outlier
 ##  [1]   3  45  92 118 137 138 174 175 177 218 304</code></pre>
-<p>Very good, we now get postie and negative curvatures for the critical points. Now let’s pull out the peaks, choosing those critical points that are negative. Let’s make a tibble so we can use our <code>tidyverse</code> skillzzzz.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>f.tib &lt;-<span class="st"> </span><span class="kw">fget</span>(f2)[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]<span class="op">%&gt;%</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a><span class="st">  </span><span class="kw">as_tibble</span>()<span class="op">%&gt;%</span></span>
-<span id="cb32-3"><a href="#cb32-3"></a><span class="st">  </span><span class="kw">filter</span>(curvature<span class="op">&lt;</span><span class="dv">0</span>)<span class="op">%&gt;%</span></span>
-<span id="cb32-4"><a href="#cb32-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peaks=</span><span class="kw">round</span>(crit.pts,<span class="dv">0</span>))<span class="op">%&gt;%</span></span>
-<span id="cb32-5"><a href="#cb32-5"></a><span class="st">  </span><span class="kw">print</span>()</span></code></pre></div>
+<p>Very good, we now get postie and negative curvatures for the critical
+points. Now let’s pull out the peaks, choosing those critical points
+that are negative. Let’s make a tibble so we can use our
+<code>tidyverse</code> skillzzzz.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>f.tib <span class="ot">&lt;-</span> <span class="fu">fget</span>(f2)[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]<span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(curvature<span class="sc">&lt;</span><span class="dv">0</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">peaks=</span><span class="fu">round</span>(crit.pts,<span class="dv">0</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 11 × 3
 ##    crit.pts curvature peaks
 ##       &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
@@ -789,70 +1009,128 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ##  9    386.      -0.29   386
 ## 10    430.      -0.31   430
 ## 11    472.      -0.27   472</code></pre>
-<p>Here we took the second and third elements—the critical points and curvatures, respectively—of the <code>f2</code> output from <code>features()</code> and passed it to a new tibble. Then <code>filter()</code> is applied so that we output only the peaks to <code>f.tib</code>. Finally, the estimated critical points in terms of frame that were calculated by <code>freatures()</code> is not an integer value like frame should be. So we create a new column, <code>peaks</code> that has this discrete value based on a rounding operation of <code>crit.pts</code>.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>pseed2<span class="op">%&gt;%</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a><span class="st">  </span><span class="kw">filter</span>(date<span class="op">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="op">==</span><span class="st">&quot;L&quot;</span>)<span class="op">%&gt;%</span></span>
-<span id="cb34-3"><a href="#cb34-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peak=</span>frame <span class="op">%in%</span><span class="st"> </span>f.tib<span class="op">$</span>peaks)<span class="op">%&gt;%</span></span>
-<span id="cb34-4"><a href="#cb34-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>frame,<span class="dt">y=</span>amp.bl,<span class="dt">col=</span>peak))<span class="op">+</span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p>Here we took the second and third elements—the critical points and
+curvatures, respectively—of the <code>f2</code> output from
+<code>features()</code> and passed it to a new tibble. Then
+<code>filter()</code> is applied so that we output only the peaks to
+<code>f.tib</code>. Finally, the estimated critical points in terms of
+frame that were calculated by <code>freatures()</code> is not an integer
+value like frame should be. So we create a new column,
+<code>peaks</code> that has this discrete value based on a rounding
+operation of <code>crit.pts</code>.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>pseed2<span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date<span class="sc">==</span><span class="st">&quot;2019-06-17-151149&quot;</span>, fin<span class="sc">==</span><span class="st">&quot;L&quot;</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">peak=</span>frame <span class="sc">%in%</span> f.tib<span class="sc">$</span>peaks)<span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>frame,<span class="at">y=</span>amp.bl,<span class="at">col=</span>peak))<span class="sc">+</span><span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
-<p>Looks like we have a rather sophisticated and reliable way to find peaks in the amplitude data that we can then use to calculate the max amplitude across a set of frames while the fin is oscillating. However, we’ve just done this for one experiment and there are how many experiments?</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>pseed2<span class="op">%&gt;%</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n=</span><span class="kw">length</span>(<span class="kw">unique</span>(date)))</span></code></pre></div>
+<p>Looks like we have a rather sophisticated and reliable way to find
+peaks in the amplitude data that we can then use to calculate the max
+amplitude across a set of frames while the fin is oscillating. However,
+we’ve just done this for one experiment and there are how many
+experiments?</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>pseed2<span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n=</span><span class="fu">length</span>(<span class="fu">unique</span>(date)))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##       n
 ##   &lt;int&gt;
 ## 1    50</code></pre>
-<p>That’s right, 50. And remember, there are two fins to consider! To find the max amplitude for each fin during each oscillation, we could write a <code>for</code> loop and use the code above to find the peaks over the frames of each experiment for each fin. However, this would be a lot of code and, as it turns out, rather slow. Let’s consider another way: passing a custom function to the defined groups in our data set (<code>date</code> for experiment and <code>fin</code>).</p>
-<p>To accomplish this, we can construct this custom function from the code we wrote to find the max amplitudes for the left fin in the first experiment. Let’s define this function <code>find.peaks()</code> thusly and break down its components with some comments:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>find.peaks &lt;-<span class="st"> </span><span class="cf">function</span>(x,y,<span class="dt">mult=</span><span class="dv">100</span>){ <span class="co">#define the functions parameter/inputs:x,y, and how much we won&#39;t to multiple y by (remember the rounding issue)</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a>f &lt;-<span class="st"> </span><span class="kw">fget</span>(<span class="kw">features</span>(<span class="dt">x =</span> x,<span class="dt">y=</span>y<span class="op">*</span>mult))[<span class="dv">2</span><span class="op">:</span><span class="dv">3</span>]<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#store results in `f` and compute the features for the x-y relationship, wrap in in fget to retrieve the important features, subset the results to take the 2nd and 3rd and  items, the critical points and curvature, then pass it to a tibble</span></span>
-<span id="cb37-3"><a href="#cb37-3"></a><span class="st">  </span><span class="kw">as_tibble</span>()<span class="op">%&gt;%</span><span class="st"> </span><span class="co"># pass in through a filter that returns curvatures &lt;0</span></span>
-<span id="cb37-4"><a href="#cb37-4"></a><span class="st">  </span><span class="kw">filter</span>(curvature<span class="op">&lt;</span><span class="dv">0</span>)<span class="op">%&gt;%</span><span class="st"> </span><span class="co">#add a column that rounds the critical point to an integer that represents the frame</span></span>
-<span id="cb37-5"><a href="#cb37-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peaks=</span><span class="kw">round</span>(crit.pts,<span class="dv">0</span>))</span>
-<span id="cb37-6"><a href="#cb37-6"></a> <span class="kw">return</span>(f<span class="op">$</span>peaks) <span class="co"># return the peaks from tibble</span></span>
-<span id="cb37-7"><a href="#cb37-7"></a>}</span></code></pre></div>
-<p>Here we define the function’s parameters, and then between <code>{}</code>, ask r to perform some operations on these inputs. Lastly, before the <code>}</code>, we ask R to return some value (the peaks).</p>
-<p>Let’s now see how this function works on our data set <code>pseed2</code>. Remember, we have 50 experiments and two fins and even though passing a function to groups using <code>dplyr</code> is easier and faster than running a loop, it will still take a while. So let’s use a filter to limit the operation at first, using only the first 3 unique values of the date column, i.e., the first 3 experiments. Let’s run the following and break it down.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>pseed2<span class="op">%&gt;%</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a><span class="st">  </span><span class="kw">filter</span>(date<span class="op">%in%</span><span class="kw">unique</span>(date)[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])<span class="op">%&gt;%</span></span>
-<span id="cb38-3"><a href="#cb38-3"></a><span class="st">  </span><span class="kw">group_by</span>(date,fin)<span class="op">%&gt;%</span></span>
-<span id="cb38-4"><a href="#cb38-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peak=</span>frame <span class="op">%in%</span><span class="st"> </span><span class="kw">find.peaks</span>(frame,amp.bl))<span class="op">%&gt;%</span></span>
-<span id="cb38-5"><a href="#cb38-5"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>frame,<span class="dt">y=</span>amp.bl,<span class="dt">alpha=</span>peak,<span class="dt">col=</span>peak))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">facet_grid</span>(date<span class="op">~</span>fin)</span></code></pre></div>
+<p>That’s right, 50. And remember, there are two fins to consider! To
+find the max amplitude for each fin during each oscillation, we could
+write a <code>for</code> loop and use the code above to find the peaks
+over the frames of each experiment for each fin. However, this would be
+a lot of code and, as it turns out, rather slow. Let’s consider another
+way: passing a custom function to the defined groups in our data set
+(<code>date</code> for experiment and <code>fin</code>).</p>
+<p>To accomplish this, we can construct this custom function from the
+code we wrote to find the max amplitudes for the left fin in the first
+experiment. Let’s define this function <code>find.peaks()</code> thusly
+and break down its components with some comments:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>find.peaks <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y,<span class="at">mult=</span><span class="dv">100</span>){ <span class="co">#define the functions parameter/inputs:x,y, and how much we won&#39;t to multiple y by (remember the rounding issue)</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">fget</span>(<span class="fu">features</span>(<span class="at">x =</span> x,<span class="at">y=</span>y<span class="sc">*</span>mult))[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]<span class="sc">%&gt;%</span> <span class="co">#store results in `f` and compute the features for the x-y relationship, wrap in in fget to retrieve the important features, subset the results to take the 2nd and 3rd and  items, the critical points and curvature, then pass it to a tibble</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()<span class="sc">%&gt;%</span> <span class="co"># pass in through a filter that returns curvatures &lt;0</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(curvature<span class="sc">&lt;</span><span class="dv">0</span>)<span class="sc">%&gt;%</span> <span class="co">#add a column that rounds the critical point to an integer that represents the frame</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">peaks=</span><span class="fu">round</span>(crit.pts,<span class="dv">0</span>))</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">return</span>(f<span class="sc">$</span>peaks) <span class="co"># return the peaks from tibble</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Here we define the function’s parameters, and then between
+<code>{}</code>, ask r to perform some operations on these inputs.
+Lastly, before the <code>}</code>, we ask R to return some value (the
+peaks).</p>
+<p>Let’s now see how this function works on our data set
+<code>pseed2</code>. Remember, we have 50 experiments and two fins and
+even though passing a function to groups using <code>dplyr</code> is
+easier and faster than running a loop, it will still take a while. So
+let’s use a filter to limit the operation at first, using only the first
+3 unique values of the date column, i.e., the first 3 experiments. Let’s
+run the following and break it down.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>pseed2<span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date<span class="sc">%in%</span><span class="fu">unique</span>(date)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])<span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(date,fin)<span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">peak=</span>frame <span class="sc">%in%</span> <span class="fu">find.peaks</span>(frame,amp.bl))<span class="sc">%&gt;%</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>frame,<span class="at">y=</span>amp.bl,<span class="at">alpha=</span>peak,<span class="at">col=</span>peak))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">facet_grid</span>(date<span class="sc">~</span>fin)</span></code></pre></div>
 <pre><code>## Warning: Using alpha for a discrete variable is not advised.</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p>After the filter, we:</p>
 <ol style="list-style-type: decimal">
-<li>Grouped the data by <code>date</code> (experiment) and <code>fin</code></li>
-<li>We then added a column <code>peak</code> to the data set. This new column returned the results of a logical operation: *is the frame in a set of peaks found by <code>find.peaks</code>).</li>
-<li>Lastly, we plotted the amplitude over frame, controlling the transparency and color of the point according to whether it’s a peak or not.</li>
+<li>Grouped the data by <code>date</code> (experiment) and
+<code>fin</code></li>
+<li>We then added a column <code>peak</code> to the data set. This new
+column returned the results of a logical operation: *is the frame in a
+set of peaks found by <code>find.peaks</code>).</li>
+<li>Lastly, we plotted the amplitude over frame, controlling the
+transparency and color of the point according to whether it’s a peak or
+not.</li>
 </ol>
-<p>Notice the we added something new, a grid with <code>facet_grid()</code>. This breaks the plot up into a grid according values in the data. This function takes a formula as input which corresponds to “row facets ~ column facets”, that is, what should the rows and columns in the grid represent. Here make a grid of dates/experiments in the plot’s rows and fin in the columns. As a result, we get a 3x2 plot.</p>
-<p>It looks like this new function of ours did a really nice job of finding the peaks in each of the experiments and fins. Let’s do this for ALL the data. Remember, we have 100 individual groups to apply this function to and determine if the frame in each corresponds to a peak. So, run this code without the plotting operations and a final filter to only return the frames that correspond to a peak. Check the weather and then come back after 90s or so.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>pseed.max &lt;-<span class="st"> </span>pseed2<span class="op">%&gt;%</span></span>
-<span id="cb40-2"><a href="#cb40-2"></a><span class="st">  </span><span class="kw">group_by</span>(date,fin)<span class="op">%&gt;%</span></span>
-<span id="cb40-3"><a href="#cb40-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peak=</span>frame <span class="op">%in%</span><span class="st"> </span><span class="kw">find.peaks</span>(frame,amp.bl))<span class="op">%&gt;%</span></span>
-<span id="cb40-4"><a href="#cb40-4"></a><span class="st">  </span><span class="kw">filter</span>(peak<span class="op">==</span>T) <span class="co">#new filter</span></span></code></pre></div>
-<p>This produces a tibble of 3300 amplitudes representing those at the peak of each oscillation. Let’s come back to our original question: <em>How does amplitude change with speed?</em> by plotting specific amplitude against specific swimming speed and adding a smooth line that represents a linear regression model (<code>method="lm"</code>).</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>pseed.max<span class="op">%&gt;%</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>bl.s,<span class="dt">y=</span>amp.bl))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<p>Notice the we added something new, a grid with
+<code>facet_grid()</code>. This breaks the plot up into a grid according
+values in the data. This function takes a formula as input which
+corresponds to “row facets ~ column facets”, that is, what should the
+rows and columns in the grid represent. Here make a grid of
+dates/experiments in the plot’s rows and fin in the columns. As a
+result, we get a 3x2 plot.</p>
+<p>It looks like this new function of ours did a really nice job of
+finding the peaks in each of the experiments and fins. Let’s do this for
+ALL the data. Remember, we have 100 individual groups to apply this
+function to and determine if the frame in each corresponds to a peak.
+So, run this code without the plotting operations and a final filter to
+only return the frames that correspond to a peak. Check the weather and
+then come back after 90s or so.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>pseed.max <span class="ot">&lt;-</span> pseed2<span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(date,fin)<span class="sc">%&gt;%</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">peak=</span>frame <span class="sc">%in%</span> <span class="fu">find.peaks</span>(frame,amp.bl))<span class="sc">%&gt;%</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(peak<span class="sc">==</span>T) <span class="co">#new filter</span></span></code></pre></div>
+<p>This produces a tibble of 3300 amplitudes representing those at the
+peak of each oscillation. Let’s come back to our original question:
+<em>How does amplitude change with speed?</em> by plotting specific
+amplitude against specific swimming speed and adding a smooth line that
+represents a linear regression model (<code>method="lm"</code>).</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>pseed.max<span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>bl.s,<span class="at">y=</span>amp.bl))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
-<p>There we have it. It’s a little noisy, but it looks like amplitude does indeed <em>decrease</em> with with speed! To confirm, maybe we want to run a simple statistical test on this model, an ANOVA, say:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a> amp.aov &lt;-<span class="st">  </span><span class="kw">aov</span>(amp.bl<span class="op">~</span>bl.s,pseed.max)</span>
-<span id="cb43-2"><a href="#cb43-2"></a><span class="kw">summary</span>(amp.aov)</span></code></pre></div>
+<p>There we have it. It’s a little noisy, but it looks like amplitude
+does indeed <em>decrease</em> with with speed! To confirm, maybe we want
+to run a simple statistical test on this model, an ANOVA, say:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a> amp.aov <span class="ot">&lt;-</span>  <span class="fu">aov</span>(amp.bl<span class="sc">~</span>bl.s,pseed.max)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(amp.aov)</span></code></pre></div>
 <pre><code>##               Df Sum Sq Mean Sq F value Pr(&gt;F)    
 ## bl.s           1  5.038   5.038    1658 &lt;2e-16 ***
 ## Residuals   3300 10.027   0.003                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>We see in <code>Pr(&gt;F)</code> that the p value is much lower than 0.05, indicating a significant relationship.</p>
+<p>We see in <code>Pr(&gt;F)</code> that the p value is much lower than
+0.05, indicating a significant relationship.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>For what it’s worth, this was an unexpected result for us, one we found consistent after adding more specimens to the data set. In your spare time (hahahaha!), can you hypothesize why amplitude would decrease with speed?</p>
+<p>For what it’s worth, this was an unexpected result for us, one we
+found consistent after adding more specimens to the data set. In your
+spare time (hahahaha!), can you hypothesize why amplitude would decrease
+with speed?</p>
 </div>
 </div>
 </div>
@@ -860,21 +1138,48 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </div>
 <div id="next-steps" class="section level1">
 <h1>Next Steps</h1>
-<p>As newly minted data scientists, you may not like that there are hundreds of observations for each speed. This may bias the results if we have clustered high and low points. In addition, you may wonder if the max amplitude may vary with speed differently between the two fish in our experiment. Let’s compute means for each speed and for each fish. For this we can trot out the <code>summarize()</code> function in <code>dplyr</code>. Let’s also plot our means vs. speed and a linear regression line for each fish. Something like:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>pseed.max <span class="op">%&gt;%</span></span>
-<span id="cb45-2"><a href="#cb45-2"></a><span class="st">  </span><span class="kw">group_by</span>(fish, bl.s) <span class="op">%&gt;%</span></span>
-<span id="cb45-3"><a href="#cb45-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean.max=</span><span class="kw">mean</span>(amp.bl)) <span class="op">%&gt;%</span></span>
-<span id="cb45-4"><a href="#cb45-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>bl.s,<span class="dt">y=</span>mean.max,<span class="dt">col=</span>fish))<span class="op">+</span><span class="kw">geom_point</span>()<span class="op">+</span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;fish&#39;. You can override using the `.groups` argument.</code></pre>
-<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p>As newly minted data scientists, you may not like that there are
+hundreds of observations for each speed. This may bias the results if we
+have clustered high and low points. In addition, you may wonder if the
+max amplitude may vary with speed differently between the two fish in
+our experiment. Let’s compute means for each speed and for each fish.
+For this we can trot out the <code>summarize()</code> function in
+<code>dplyr</code>. Let’s also plot our means vs. speed and a linear
+regression line for each fish. Something like:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>pseed.max <span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fish, bl.s) <span class="sc">%&gt;%</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean.max=</span><span class="fu">mean</span>(amp.bl)) <span class="sc">%&gt;%</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>bl.s,<span class="at">y=</span>mean.max,<span class="at">col=</span>fish))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;fish&#39;. You can override using the
+## `.groups` argument.
+## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 </div>
 <div id="pivoting-to-different-questions" class="section level1">
 <h1>Pivoting to Different Questions</h1>
-<p>In our readings of R4DS, <a href="https://r4ds.had.co.nz/tidy-data.html">we learned about tidy data</a>. Specifically, tidy data are a data set that meets the following requirements: 1. Each variable must have its own column. 2. Each observation must have its own row. 3. Each value must have its own cell.</p>
-<p>Fortunately the data sets we’ve been working with in this project are tidy. We have observations for a fin, on fish, during an experiment, at certain speed. Each of these variables have their own column. This allows us to compute operations across rows and by groups according to column variables (experiment, fin, fish, etc.). If our data weren’t we could use pivoting operations we learned about to make it tidy. However, sometimes you want to make additional observations, asking a different question even, and we need to do the pivoting operations just the same.</p>
-<p>In asking how each fin’s amplitude varies with each speed across fish, we can do operations on these variables and plot them easily enough as we just have. But, what if the question changes to <em>what is the sum of amplitude of <strong>both fins</strong> over our range of speeds?</em> Because our data are tidy and the amplitude of each fin is in a different row for each frame, this is made difficult. Have a look at <code>pseed2</code> again:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>pseed2</span></code></pre></div>
+<p>In our readings of R4DS, <a
+href="https://r4ds.had.co.nz/tidy-data.html">we learned about tidy
+data</a>. Specifically, tidy data are a data set that meets the
+following requirements: 1. Each variable must have its own column. 2.
+Each observation must have its own row. 3. Each value must have its own
+cell.</p>
+<p>Fortunately the data sets we’ve been working with in this project are
+tidy. We have observations for a fin, on fish, during an experiment, at
+certain speed. Each of these variables have their own column. This
+allows us to compute operations across rows and by groups according to
+column variables (experiment, fin, fish, etc.). If our data weren’t we
+could use pivoting operations we learned about to make it tidy. However,
+sometimes you want to make additional observations, asking a different
+question even, and we need to do the pivoting operations just the
+same.</p>
+<p>In asking how each fin’s amplitude varies with each speed across
+fish, we can do operations on these variables and plot them easily
+enough as we just have. But, what if the question changes to <em>what is
+the sum of amplitude of <strong>both fins</strong> over our range of
+speeds?</em> Because our data are tidy and the amplitude of each fin is
+in a different row for each frame, this is made difficult. Have a look
+at <code>pseed2</code> again:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>pseed2</span></code></pre></div>
 <pre><code>## # A tibble: 73,352 × 11
 ##    fish   speed frame date              amp fin   amp.bl   m.s  cm.s    bl  bl.s
 ##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -889,13 +1194,23 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ##  9 Pseed5    43     4 2019-06-17-151…  68.6 L      0.130  0.11    11  12.7 0.863
 ## 10 Pseed5    43     4 2019-06-17-151…  88.8 R      0.168  0.11    11  12.7 0.863
 ## # … with 73,342 more rows</code></pre>
-<p>Note each frame has two rows, one for each fin. How would we compute the sum of the amplitude for each frame? You might at first think we should add column (say <code>amp.sum</code>) to the tibble that represents the sum of the amplitudes, left and right, for each frame across experiments:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>pseed2 &lt;-<span class="st"> </span>pseed2 <span class="op">%&gt;%</span></span>
-<span id="cb50-2"><a href="#cb50-2"></a><span class="st">  </span><span class="kw">group_by</span>(date,frame) <span class="op">%&gt;%</span></span>
-<span id="cb50-3"><a href="#cb50-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">amp.sum=</span><span class="kw">sum</span>(amp.bl))</span></code></pre></div>
-<p>When we do this, our data now violates a tidy principle, namely that each data value must have it’s own cell (especially data that are responses to other variables we care about!). Look at our <code>amp.sum</code> column and you see that each value spans two cells, one for each fin. This makes the data appear as if there is an <code>amp.sum</code> for each fin. To fix this, and keep the data tidy, we could delete one of the rows for each frame in each experiment:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>pseed2 <span class="op">%&gt;%</span></span>
-<span id="cb51-2"><a href="#cb51-2"></a><span class="st">  </span><span class="kw">filter</span>(fin<span class="op">==</span><span class="st">&quot;R&quot;</span>)</span></code></pre></div>
+<p>Note each frame has two rows, one for each fin. How would we compute
+the sum of the amplitude for each frame? You might at first think we
+should add column (say <code>amp.sum</code>) to the tibble that
+represents the sum of the amplitudes, left and right, for each frame
+across experiments:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>pseed2 <span class="ot">&lt;-</span> pseed2 <span class="sc">%&gt;%</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(date,frame) <span class="sc">%&gt;%</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">amp.sum=</span><span class="fu">sum</span>(amp.bl))</span></code></pre></div>
+<p>When we do this, our data now violates a tidy principle, namely that
+each data value must have it’s own cell (especially data that are
+responses to other variables we care about!). Look at our
+<code>amp.sum</code> column and you see that each value spans two cells,
+one for each fin. This makes the data appear as if there is an
+<code>amp.sum</code> for each fin. To fix this, and keep the data tidy,
+we could delete one of the rows for each frame in each experiment:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>pseed2 <span class="sc">%&gt;%</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(fin<span class="sc">==</span><span class="st">&quot;R&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 36,676 × 12
 ## # Groups:   date, frame [36,676]
 ##    fish   speed frame date      amp fin   amp.bl   m.s  cm.s    bl  bl.s amp.sum
@@ -911,12 +1226,17 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ##  9 Pseed5    43     8 2019-0…  57.3 R     0.108   0.11    11  12.7 0.863   0.178
 ## 10 Pseed5    43     9 2019-0…  49.7 R     0.0939  0.11    11  12.7 0.863   0.149
 ## # … with 36,666 more rows</code></pre>
-<p>But, I’m sure you see the problem—we’ve lost half our data and <code>amp.sum</code> appears to apply only to the right fin. We can avoid this problem by pivoting our data, making it wider. That is, we can give left and right fins their own amplitude column and sum the values of these to get our sum of amplitude. Here’s how with <code>pivot_wider()</code>:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>pseed.wide &lt;-<span class="st"> </span>pseed2 <span class="op">%&gt;%</span></span>
-<span id="cb53-2"><a href="#cb53-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>amp)<span class="op">%&gt;%</span></span>
-<span id="cb53-3"><a href="#cb53-3"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> fin,<span class="dt">values_from =</span> amp.bl) <span class="op">%&gt;%</span></span>
-<span id="cb53-4"><a href="#cb53-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">amp.sum=</span>L<span class="op">+</span>R)<span class="op">%&gt;%</span></span>
-<span id="cb53-5"><a href="#cb53-5"></a><span class="st">  </span><span class="kw">print</span>() </span></code></pre></div>
+<p>But, I’m sure you see the problem—we’ve lost half our data and
+<code>amp.sum</code> appears to apply only to the right fin. We can
+avoid this problem by pivoting our data, making it wider. That is, we
+can give left and right fins their own amplitude column and sum the
+values of these to get our sum of amplitude. Here’s how with
+<code>pivot_wider()</code>:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>pseed.wide <span class="ot">&lt;-</span> pseed2 <span class="sc">%&gt;%</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>amp)<span class="sc">%&gt;%</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> fin,<span class="at">values_from =</span> amp.bl) <span class="sc">%&gt;%</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">amp.sum=</span>L<span class="sc">+</span>R)<span class="sc">%&gt;%</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>() </span></code></pre></div>
 <pre><code>## # A tibble: 36,676 × 11
 ## # Groups:   date, frame [36,676]
 ##    fish   speed frame date           m.s  cm.s    bl  bl.s amp.sum      L      R
@@ -932,39 +1252,86 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 ##  9 Pseed5    43     8 2019-06-17-…  0.11    11  12.7 0.863   0.178 0.0691 0.108 
 ## 10 Pseed5    43     9 2019-06-17-…  0.11    11  12.7 0.863   0.149 0.0550 0.0939
 ## # … with 36,666 more rows</code></pre>
-<p>What we did is create a wider tibble (i.e., one with more columns) by:</p>
+<p>What we did is create a wider tibble (i.e., one with more columns)
+by:</p>
 <ol style="list-style-type: decimal">
-<li>Passing <code>pseed2</code> through a <code>select()</code> operation to remove the unneeded <code>amp</code> column (we’ll concentrate as we have on the specific amplitude, <code>amp.bl</code>).</li>
-<li>Passing the new tibble to a <code>pivot_wider()</code>operation the pulls the names from the <code>fin</code> column and the data from the <code>amp.bl</code> column. Notice how there’s now new columns with amplitude data, <code>L</code> and <code>R</code>.</li>
-<li>Lastly, we add our new column <code>amp.sum</code> using <code>mutate()</code>.</li>
+<li>Passing <code>pseed2</code> through a <code>select()</code>
+operation to remove the unneeded <code>amp</code> column (we’ll
+concentrate as we have on the specific amplitude,
+<code>amp.bl</code>).</li>
+<li>Passing the new tibble to a <code>pivot_wider()</code>operation the
+pulls the names from the <code>fin</code> column and the data from the
+<code>amp.bl</code> column. Notice how there’s now new columns with
+amplitude data, <code>L</code> and <code>R</code>.</li>
+<li>Lastly, we add our new column <code>amp.sum</code> using
+<code>mutate()</code>.</li>
 </ol>
-<p>You’re now ready to take the rains and repeat our previous analyses using the <code>amp.sum</code> data to answer the question, <strong>How does the sum of amplitude of both fins vary over our range of speeds?</strong></p>
+<p>You’re now ready to take the rains and repeat our previous analyses
+using the <code>amp.sum</code> data to answer the question, <strong>How
+does the sum of amplitude of both fins vary over our range of
+speeds?</strong></p>
 </div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
-<p>In this project report, you’ll use the principles and tools outlined above to analyze the <code>amp.sum</code> data in our <code>pseed.wide</code> tibble in the same manner we analyzed amplitude data for each fin. You’ll also create your own custom function to add another piece of information to our analysis.</p>
+<p>In this project report, you’ll use the principles and tools outlined
+above to analyze the <code>amp.sum</code> data in our
+<code>pseed.wide</code> tibble in the same manner we analyzed amplitude
+data for each fin. You’ll also create your own custom function to add
+another piece of information to our analysis.</p>
 <p>For this project report, perform the following tasks.</p>
 <ol style="list-style-type: decimal">
-<li>In a script named “groupname_module2.R”, combine the code above so that you can establish the <code>pseed.wide</code> data tibble.</li>
-<li>Compute the mean <strong>maximum</strong>* of all the <code>amp.sum</code>s for each specific swimming speed for each fish just like we did for mean maximum amplitude of each fin (i.e., the mean of all the max amplitudes across each experiment for each fish). Make sure this is contained in a new tibble named <code>pseed.sum.max</code>. Call this column <code>amp.sum.mean</code>.</li>
-<li>Create a custom function that computes the standard error of the mean (SE). [see below] and add a column in your summary table <code>pseed.sum.max</code> for SE and call it <code>amp.sum.se</code>.</li>
-<li>Using <code>ggplot</code>, plot the mean <code>amp.sum</code> vs. specific swimming speed and <a href="http://www.cookbook-r.com/Graphs/Plotting_means_and_error_bars_(ggplot2)/">add error bars</a> that correspond to the SE of <code>amp.sum</code>. Be sure to color your points and error bars by specimen (fish).</li>
-<li>Download <a href="pseed.met.rate.csv">this file</a>, read it as a tibble and merge it with the your new <code>pseed.sum.max</code> tibble. [see below].</li>
-<li>Use <code>ggplot</code> to plot the metabolic power output of each fish vs. mean maximum of <code>amp.sum</code>. <!-- should be the mean metabolic power vs. mean maximum of amp.sum. This confused folks the first two--></li>
-<li>Include the code for all the tasks listed above in the “groupname_module2.R” script and upload it to <a href="https://forms.gle/ZRvFUySA5bP19tmQ9">this link</a>.</li>
+<li>In a script named “groupname_module2.R”, combine the code above so
+that you can establish the <code>pseed.wide</code> data tibble.</li>
+<li>Compute the mean <strong>maximum</strong>* of all the
+<code>amp.sum</code>s for each specific swimming speed for each fish
+just like we did for mean maximum amplitude of each fin (i.e., the mean
+of all the max amplitudes across each experiment for each fish). Make
+sure this is contained in a new tibble named <code>pseed.sum.max</code>.
+Call this column <code>amp.sum.mean</code>.</li>
+<li>Create a custom function that computes the standard error of the
+mean (SE). [see below] and add a column in your summary table
+<code>pseed.sum.max</code> for SE and call it
+<code>amp.sum.se</code>.</li>
+<li>Using <code>ggplot</code>, plot the mean <code>amp.sum</code>
+vs. specific swimming speed and <a
+href="http://www.cookbook-r.com/Graphs/Plotting_means_and_error_bars_(ggplot2)/">add
+error bars</a> that correspond to the SE of <code>amp.sum</code>. Be
+sure to color your points and error bars by specimen (fish).</li>
+<li>Download <a href="pseed.met.rate.csv">this file</a>, read it as a
+tibble and merge it with the your new <code>pseed.sum.max</code> tibble.
+[see below].</li>
+<li>Use <code>ggplot</code> to plot the metabolic power output of each
+fish vs. mean maximum of <code>amp.sum</code>.
+<!-- should be the mean metabolic power vs. mean maximum of amp.sum. This confused folks the first two--></li>
+<li>Include the code for all the tasks listed above in the
+“groupname_module2.R” script and upload it to <a
+href="https://forms.gle/ZRvFUySA5bP19tmQ9">this link</a>.</li>
 </ol>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style -->
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p><strong>Why compute the standard error of the mean?</strong> Often, scientists like to report standard deviation, the degree to which individuals within the sample differ from the sample mean. But, when reporting sample means, it’s nice to report how well that mean is likely to reflect the population mean. This is where SE comes in. It represents an estimate of how far the sample mean is likely to be from the population mean.</p>
+<p><strong>Why compute the standard error of the mean?</strong> Often,
+scientists like to report standard deviation, the degree to which
+individuals within the sample differ from the sample mean. But, when
+reporting sample means, it’s nice to report how well that mean is likely
+to reflect the population mean. This is where SE comes in. It represents
+an estimate of how far the sample mean is likely to be from the
+population mean.</p>
 </div>
 </div>
 </div>
 <p><br></p>
-<p><strong>What’s in the “pseed.met.rate.csv” file?</strong> This file represents the active metabolic rate while swimming (the swim tunnel is both a treadmill for fishes and a closed metabolic chamber). You’ll notice many of the same columns as our kinematic data and one new one: <code>met.rate</code>, the metabolic power output in W<span class="math inline">\(\cdot\)</span>kg<span class="math inline">\(^{-1}\)</span>.</p>
+<p><strong>What’s in the “pseed.met.rate.csv” file?</strong> This file
+represents the active metabolic rate while swimming (the swim tunnel is
+both a treadmill for fishes and a closed metabolic chamber). You’ll
+notice many of the same columns as our kinematic data and one new one:
+<code>met.rate</code>, the metabolic power output in W<span
+class="math inline">\(\cdot\)</span>kg<span
+class="math inline">\(^{-1}\)</span>.</p>
 <p>Submissions are due by 11:59 PM on Sunday, September 19th.</p>
 </div>
 
@@ -997,7 +1364,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -1006,6 +1373,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')
