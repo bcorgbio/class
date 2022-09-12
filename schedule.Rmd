@@ -113,7 +113,7 @@ All assignments are due at 11:59 on the specified date.
 
 # Module 2: Data Wrangling: Introduction to Tools of the Trade in Data Analysis
 
-This module is intended to give students the background and skills to begin simple data tidying and transformation operations. We need our data to be tidy before we can analyze it that, that is, structured in a way that makes analysis possible. In addition, often the data we have aren't exactly what we want to analyze. For example, say you had data on the f  
+This module is intended to give students the background and skills to begin simple data tidying and transformation operations. We need our data to be tidy before we can analyze it, that is, structured in a way that makes analysis possible. In addition, often the data we have aren't exactly what we want to analyze. In this module, we'll focus on how to read, tidy, and merge data.
 
 ## Dates: 
 Week 3 (Sep 12—18): 
