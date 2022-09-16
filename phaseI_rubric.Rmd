@@ -4,7 +4,7 @@ title: "Phase I Project Report Rubric"
 
 # General Guidelines
 
-Phase I is meant to bring you up to speed on the ins and outs of intrument prototyping and data analysis in the context of organismal biology. The project reports for this initial stage are not meant to be burdonsome, however they will require some diligent work and a consitent effort to seek help. The following rubric represents how the 10 points for each of the 5 reports will be assessed.
+Phase I is meant to bring you up to speed on the ins and outs of intrument prototyping and data analysis in the context of organismal biology. The project reports for this initial stage are not meant to be burdonsome, however they will require some diligent work and a consitent effort to seek help. The following rubric represents how the 15 points for each of the project reports for Phase I will be assessed.
 
 # Rubric
  |Component| **Spot On (5 pts)** |  **Pretty Good (3 pts)** | **Needs Work (1 pt)**  
