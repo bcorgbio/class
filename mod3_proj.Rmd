@@ -59,8 +59,8 @@ anole.eco <- read_csv("anole.eco.csv")
 
 The data loaded to `anole` are species (`Species`), mean snout-vent length (`SVL`, length between the snout and the vent, i.e., anus, a standard for reptiles), and the mean total hind-limb length (`HTotal`). The figure below from @lapiedra2018predator indicates how these measurements are taken on specimens of anoles.
 
-The data loaded to `anole.co` are 
-  <center>
+
+<center>
 
 [![Alt text](svl.png)]
 
@@ -494,6 +494,23 @@ For this project report, write a script named "groupname_module3.R" and undertak
   5. Assess the fit of each of these three models using AICc and AICw and comment on (with comments in the script) whether one or both of the covariates is a significant predictor of hinglimb length in a phylogenetic context. 
   6. Produce a plot of your own design that concisely visualizes the effect of your covariate(s) on the hindlimb residuals of the best fitting PGLS model. 
   7. Commit your script to your group repository.
+  
+**NB**: Please number your operations with a comment to identify which of these prompts you're addressing, e.g. . . 
+
+```{r,eval=FALSE}
+#1 establishing the data tibble
+
+dat <- dat%>%
+  left_join(dat2)
+
+#2 the two linear models
+
+lm.PH <- lm(HL~PH,dat)
+lm.PD <- lm(HL~PD,dat)
+
+#etc., etc.
+
+```
 
 ```{r,include=FALSE}
 
@@ -528,6 +545,6 @@ ggplot(aes(x=ArbPD,y=phylo.res2,col=Ecomorph2)) +geom_point()
  
 ```
 
-Submissions are due by 11:59 PM on Sunday, September 26th.
+Submissions are due by 11:59 PM on Tuesday, September 27th.
 
 # References
