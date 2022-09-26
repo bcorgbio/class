@@ -374,14 +374,15 @@ In this project report, you'll use the principles and tools outlined above to an
 
 For this project report, perform the following tasks. 
   
-  1. In a script named "groupname_module2.R", combine the code above so that you can establish the `pseed.wide` data tibble. 
-  2. Compute the mean **maximum*** of all the `amp.sum`s for each specific swimming speed for each fish just like we did for mean maximum amplitude of each fin (i.e., the mean of all the max amplitudes across each experiment for each fish). Make sure this is contained in a new tibble named `pseed.sum.max`. Call this column `amp.sum.mean`.
-  3. Create a custom function that computes the standard error of the mean (SE). [see below] and add a column in your summary table `pseed.sum.max` for SE and call it `amp.sum.se`.
-  4. Using `ggplot`, plot the mean `amp.sum` vs. specific swimming speed and [add error bars](http://www.cookbook-r.com/Graphs/Plotting_means_and_error_bars_(ggplot2)/) that correspond to the SE of `amp.sum`. Be sure to color your points and error bars by specimen (fish). 
-  5. Download [this file](pseed.met.rate.csv), read it as a tibble and merge it with the your new `pseed.sum.max` tibble. [see below].
-  6. Use `ggplot` to plot the metabolic power output of each fish vs. mean maximum of `amp.sum`.
+  1. In a script named "your_module2.R", combine the code above so that you can establish the `pseed.wide` data tibble. 
+   2. Create a custom function that computes the standard error of the mean (SE). [see #3 and below]
+  3. Compute the mean **maximum*** of **all** the `amp.sum`s across all fin-beat cycles for each specific swimming speed for each fish just like we did for mean maximum amplitude of each fin (i.e., the mean of all the max amplitudes across all cycles for each experiment for each fish). Make sure this is contained in a new tibble named `pseed.sum.max`. Call this column `amp.sum.mean`.
+  4. While establishing `pseed.sum.max`, add a column to your summary table `pseed.sum.max` for SE and call it `amp.sum.se`.
+  5. Using `ggplot`, plot the mean `amp.sum` vs. specific swimming speed and [add error bars](http://www.cookbook-r.com/Graphs/Plotting_means_and_error_bars_(ggplot2)/) that correspond to the SE of `amp.sum`. Be sure to color your points and error bars by specimen (fish). 
+  6. Download [this file](pseed.met.rate.csv), read it as a tibble and merge it with the your new `pseed.sum.max` tibble. [see below].
+  7. Use `ggplot` to plot the metabolic power output of each fish vs. mean maximum of `amp.sum`.
   <!-- should be the mean metabolic power vs. mean maximum of amp.sum. This confused folks the first two-->
-  7. Include the code for all the tasks listed above in the "groupname_module2.R" script and upload it to [this link](https://forms.gle/ZRvFUySA5bP19tmQ9).
+  8. Include the code for all the tasks listed above in the "yourname_module2.R" script and push it to your teams repo.
   
   
 
@@ -421,4 +422,4 @@ pseed.met.kin%>%
   
 ```
 
-Submissions are due by 11:59 PM on Sunday, September 19th.
+Submissions are due by 11:59 PM on Sunday, September 18th.

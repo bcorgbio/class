@@ -363,7 +363,7 @@ Notice, as Harmon pointed out in hist PCM book, this resembles a genetic drift m
 
 In PGLS, or any number of other comparative methods, we can implement this model of character evolution over the tree where time corresponds to the branch lengths and each node of the tree represents a new random walk away from the previous value at the previous node. This from Harmon's PCM book explains the process:
 
-<enter>
+<center>
 ![](pcmfigure3-4.png)
 </center>
 <br>
@@ -484,7 +484,7 @@ For this project report, write a script named "groupname_module3.R" and undertak
   
   1. Combine the code above so that you can establish the `anole.log` data tibble.
   2. Using the log-transformed data, construct two simple linear models that assess the effect of perch diameter and height by including these as covariates in your models. Be sure to use `+` notation rather than `*`, assuming there is no interaction (there isn't, trust me!).
-  3. Explore how both perch diameter and height effect the hindlimb-SVL relationship by plotting the residuals of your simple linear models against these covariates. This will require mutating a data tibble to include residuals from both models. Please produce two separate plots.
+  3. Explore how both perch diameter and height effect the hindlimb-SVL relationship by plotting the residuals of your simple linear models against these discrete factors. This will require mutating a data tibble to include residuals from both models. Please produce two separate plots.
   4. Under a BM model of trait evolution and using the tree provided, construct phylogenetic least squares models of the hindlimb-SVL relationships that include the unique combinations of these two covariates, i.e,
   
     * A PGLS model with the hindlimb-SVL relationship + perch height
@@ -492,7 +492,7 @@ For this project report, write a script named "groupname_module3.R" and undertak
     * A PGSL model with the hindlimb-SVL relationship + perch height + perch diameter
     
   5. Assess the fit of each of these three models using AICc and AICw and comment on (with comments in the script) whether one or both of the covariates is a significant predictor of hinglimb length in a phylogenetic context. 
-  6. Produce a plot of your own design that concisely visualizes the effect of your covariate(s) on the hindlimb residuals of the best fitting PGLS model. 
+  6. Produce a plot of your own design that concisely visualizes the effect of your covariate(s) and factors (i.e., ecomorph) on the hindlimb residuals of the best fitting PGLS model. 
   7. Commit your script to your group repository.
   
 **NB**: Please number your operations with a comment to identify which of these prompts you're addressing, e.g. . . 

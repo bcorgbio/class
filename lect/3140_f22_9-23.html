@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>The Whiz and Viz Bang of Data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Christopher Kenaley" />
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# The Whiz and Viz Bang of Data
+]
+.subtitle[
+## The Basics of Visualizaiton and Modeling (part deux)
+]
+.author[
+### Dr. Christopher Kenaley
+]
+.institute[
+### Boston College
+]
+.date[
+### 2022/9/23
+]
+
+---
+
+class: inverse, top
+# In class today 
+
+
+
+&lt;!-- Add icon library --&gt;
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"&gt;
+
+
+
+
+
+.pull-left[
+Today we'll ....
+
+- Consider a little history
+
+- Consider the effect of phylogeny
+
+]
+
+.pull-right[
+![](https://evolution.genetics.washington.edu/phylip/joe.gif)
+]
+
+---
+class: inverse, top
+# First, some history
+
+
+.pull-left[
+The comparative method:
+
+- Documenting diversity of traits 
+
+- Quantifying their intercorrelations 
+
+- Speculating on their evolution
+
+Before Felsenstein (1985), no theoretical method to account for phylogeny and this effect was largely ignored of explained away.
+]
+
+.pull-right[
+Cited &gt;10000 times!!!
+![](fel85.png)
+]
+
+
+---
+class: inverse, top
+## Before Felsenstein (1985)
+
+.pull-left[
+- Sample a breadth of species
+
+- Document the phenotype (e.g., Met. rate vs. size)
+
+- Quantifying the contrast or trend between them (ANOVA, T-test, etc.)
+
+
+![](3140_f22_9-23_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+![](3140_f22_9-23_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+
+
+
+
+```
+## # A tibble: 2 × 3
+##   term      statistic  p.value
+##   &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;
+## 1 log(mass)      14.4  0.00134
+## 2 Residuals      NA   NA
+```
+]
+
+
+---
+class: inverse, top
+## After Felsenstein (1985)
+
+.pull-left[
+
+```r
+mass.pic &lt;- pic(log(mass),phy)
+met.pic &lt;- pic(log(met),phy)
+
+qplot(mass.pic,met.pic)+geom_smooth(method = "lm")+theme_classic(20)
+```
+
+```
+## `geom_smooth()` using formula 'y ~ x'
+```
+
+![](3140_f22_9-23_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+
+```r
+d.lm.pic &lt;- lm(met.pic~mass.pic)
+tidy(anova(d.lm.pic))[,c(1,5,6)]
+```
+
+```
+## # A tibble: 2 × 3
+##   term      statistic p.value
+##   &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;
+## 1 mass.pic     0.0191   0.892
+## 2 Residuals   NA       NA
+```
+]
+
+
+---
+class: inverse, top
+## After Felsenstein (1985)
+
+
+.pull-left[
+
+Metabolic Rate
+
+![](3140_f22_9-23_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+]
+
+
+.pull-right[
+
+Mass
+
+![](3140_f22_9-23_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+]
+
+
+
+
+]
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+## Humble beginnings
+
+&gt; This paper addresses a complex and important issue, and provides a solution to part of the problem—a very unsatisfactory solution, as the author is well aware, given the degree to which our data will usually fall short of the quality required by the method he proposes. … Nevertheless, as far as I can tell the method does what is claimed, and it is probably worth publishing.
+              
+              -Anonymous reviewer of Felsenstein (1985)
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+## More complex models
+
+### Brownian motion
+&lt;center&gt;
+![](pcmfigure3.png)
+&lt;/center&gt;
+&lt;br&gt;
+
+`\(\sigma^2\)`
+
+the rate parameter
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+## More complex models
+
+![](3140_f22_9-23_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+## More complex models
+
+### OU process
+
+.pull-left[
+&lt;center&gt;
+![](ou.png)
+&lt;/center&gt;
+&lt;br&gt;
+]
+
+.pull-right[
+`\(\sigma^2\)`
+the rate parameter
+
+`\(\theta\)`
+trait optimum
+
+`\(\alpha\)`
+strength of selection
+]
+
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+## More complex models
+
+### Phylogenetic Least Squares
+
+
+Models that include process (mode) and relationships
+
+```r
+#PGLS under BM,
+gls(y ~x, correlation = corBrownian(1,phy = tree,form=~Species),data = data, method = "ML")
+
+#PGLS under OU
+pgls.OU1 &lt;- gls(y ~x, correlation = corMartins(0,phy = tree,form=~Species),data =dat, method = "ML")
+```
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
