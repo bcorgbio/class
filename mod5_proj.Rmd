@@ -10,7 +10,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 # Introduction
 
-Now that we have learned the basics of data analysis, visualization, and modeling. Let's move on to how we collect data in the first place. So much of experimental work in organismal biology requires specialized equipment. Often, equipment is expensive or devices and instruments needed for the work aren't commercially available. Because of the expense and unique requirements of instruments, organismal biologist often make their own. Prototyping instruments can be tedious and challenging, often requiring collaboration with engineers or other technical consultants. However, many simple sensor-based instruments that fit the requirements of researches can be built around Arduino, an open source, inexpensive prototyping platform. 
+Now that we have learned the basics of data analysis, visualization, and modeling. Let's move on to how we collect data in the first place. So much of experimental work in organismal biology requires specialized equipment. Often, equipment is expensive or devices and instruments needed for the work aren't commercially available. Because of the expense and unique requirements of instruments, organismal biologist often make their own. Prototyping instruments can be tedious and challenging, often requiring collaboration with engineers or other technical consultants. However, many simple sensor-based instruments that fit the requirements of researchers can be built around Arduino, an open source, inexpensive prototyping platform. 
 
 In this project, we'll proceed with prototyping a simple sensor, one that can very accurately record temperature. This project assumes you have worked through the the assigned readings and links and therefore understand how an Arduino Uno (or a clone) is programmed and how serial data are sent and received from an Arduino.
 
@@ -328,7 +328,7 @@ void loop() {
 
 # Saving Data from the Serial Monitor
 
-In future projects, we'll write data to an SD card. But, saving your data for now can be as simple as copying the data printed to the serial monitor and pasting it into a text file. The code we're working with produces comma-separated values for easy reading into analysis software, like R. 
+It would be very easy to integrate another piece of hardware, namely and SD card board, to save data. However, for this module and the other that requires Arduino data, saving your data for now can be as simple as copying the data printed to the serial monitor and pasting it into a text file. The code we're working with produces comma-separated values for easy reading into analysis software, like R. 
 
 Be sure to copy your data into a text file, not a Word document or Excel. I suggest using a free text editing like [BBedit (for Mac)](https://www.barebones.com/products/bbedit/download.html) or [Notepadd++ (for Windows)](https://notepad-plus-plus.org/downloads/). 
 
@@ -419,7 +419,7 @@ This report will require you to submit an .Rmd with HTML output that includes al
   + Find, cite, and comment on a study in the discussion that frames the results, i.e., are your result congruent or not with previous findings and why? 
   + In the author contributions section, include short, explicit statements of each team member's role in executing the project. 
   
-Submit your .Rmd to the projects directory established for each team on GitHub. **Submissions are due by 11:59 pm on October 17th.**
+Push your .Rmd to the projects directory established for each team on GitHub. **Submissions are due by 11:59 pm on Tuesday, October 11th.**
 
 Good luck!!
 

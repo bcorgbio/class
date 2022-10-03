@@ -332,7 +332,7 @@ This module is intended to give students the background and skills to begin desi
 
 
 ## Dates 
-Week 6 (Oct 2—9):
+Week 6 (Oct 2—12th):
 
 ## Key Concepts
   + Arduino IDE basics (the sketch).
@@ -378,8 +378,12 @@ All assignments are due at 11:59 on the specified date.
 
  || Monday <br> 10/3 |  Tuesday <br>10/4    | Wednesday<br>  10/5 | Thursday <br> 10/6 | Friday <br> 10/7 |Saturday<br> 10/8 | Sunday<br> 10/9 
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | | Push/commit Module 5Project Report
-||||||||
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | | Push/commit Module 5 Project Report
+
+ || Monday <br> 10/10 |  Tuesday <br>10/11   | 
+|--------|-------- |--------|-------- |--------|--------|--------|--------    
+**Assignment due** | |Push/commit Module 5 Project Report | | | | | 
+
 
 
 # Phase II: Developing a Toolbox
@@ -421,7 +425,7 @@ Upon completion of this module, students will be able to:
 ## Do
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
-  + Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing) by Tuesday, October XXth
+  + Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing) by Tuesday, October 11th
   + Complete and commit Module 6 Project report
 
 
@@ -449,7 +453,7 @@ All assignments are due at 11:59 on the specified date.
 **Assignment due** | | | Post question to discussion board | Answer a question on discussion board <br> Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing) | | | Push 6 Project Report
 ||||||||
 
-*Note: There will be no class on Friday 10/14
+*Note: There will be no class on Friday 10/14 and Tuesday 10/18 is a Monday schedule.
 
 
   
