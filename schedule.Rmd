@@ -378,7 +378,7 @@ All assignments are due at 11:59 on the specified date.
 
  || Monday <br> 10/3 |  Tuesday <br>10/4    | Wednesday<br>  10/5 | Thursday <br> 10/6 | Friday <br> 10/7 |Saturday<br> 10/8 | Sunday<br> 10/9 
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | | Push/commit Module 5 Project Report
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | | 
 
  || Monday <br> 10/10 |  Tuesday <br>10/11   | 
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
