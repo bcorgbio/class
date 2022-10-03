@@ -572,9 +572,9 @@ team name is great, e.g., “aRtful coders”). Select “OK”. Now, this
 doesn’t save the new .Rmd, but rather establishes the author and title
 in the YAML header (more below). You should see that the document is now
 open in a tab with the name “Untitled1.Rmd”. Go ahead and save this with
-the name “TEAMNAME_Module4” in an appropriate directory. The “.Rmd”
-extension informs R Studio that this is a source file for markdown and
-thus it will treat it as such.</p>
+the name “TEAMNAME_Module4” in your project (i.e., cloned) directory.
+The “.Rmd” extension informs R Studio that this is a source file for
+markdown and thus it will treat it as such.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
@@ -606,7 +606,8 @@ captions, and references. Our sections should include an introduction,
 methods, results, discussion, author contributions, and a bibliography.
 Our tasks for this project will be taken on in this context: producing a
 succinct and reproducible report on the analysis of anole hindlimb
-evolution. Let’s get started.</p>
+evolution, the topic of the <a href="mod3_proj.html">Module 3
+Project</a>. Let’s get started.</p>
 </div>
 <div id="resources" class="section level1">
 <h1>Resources</h1>
@@ -640,8 +641,8 @@ output: html_document
 <p>Below the YAML header is the space where you’ll include text, code,
 etc.</p>
 </div>
-<div id="knitting-cozy-report" class="section level1">
-<h1>knitting Cozy Report</h1>
+<div id="knitting-cozy-reports" class="section level1">
+<h1>knitting Cozy Reports</h1>
 <p>In the .Rmd before us, we have a template with some marked up text.
 This is the file that will be interpreted by the markdown language to
 produce a document. To do so, you must “knit” the .Rmd. You can do this
@@ -658,7 +659,8 @@ R markdown, this is unneeded and, frankly, discouraged. It’s assumed
 that <strong>all the things you need to knit your document are in the
 same directory as the .Rmd file</strong>. We’ll be running the same code
 from Project 3 in this .Rmd, so make sure all the data files from
-Project 3 reside where you have your .Rmd saved.</p>
+Project 3 reside where you have your .Rmd saved. This should be yout
+cloned directory that gets committed and pushed to github.</p>
 </div>
 <div id="headers" class="section level1">
 <h1>Headers</h1>
@@ -701,7 +703,8 @@ chunks and look like this:</p>
 <pre><code>```{r}
 x<-1:100
 mean(50)
-```</code></pre>
+```
+</code></pre>
 <p>You can insert code chunks with by selecting the “insert” icon at the
 top of the the tab or my keying in “command+option+i”.</p>
 <center>
@@ -1335,7 +1338,7 @@ produce in Phases I and II of the course. You can think of this as a
 template that can be used when writing writing up your reports in all
 the subsequent modules.</p>
 <p>For this project report, write an .Rmd document named
-“TEAMNAME_Module4.R” that includes the following:</p>
+“TEAMNAME_Module4.Rmd” that includes the following:</p>
 <ol style="list-style-type: decimal">
 <li>A YAML header that specifies the author, title, date, output, and
 bibliography file.</li>
