@@ -476,7 +476,7 @@ outs.l %>%
   stack()
 ```
 
-Wonderful! Fore- and hindwings loaded for the 10 examples species. However, notice we have a problem. 
+Wonderful! Fore- and hindwings loaded for the 10 examples species. However, notice we have a few problems. First, both fore- and hindwing are included in the  
 
 
 ```{r include=FALSE, eval=FALSE}
