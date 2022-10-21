@@ -614,32 +614,6 @@ and R package, <a
 href="https://www.gbif.org/tool/81747/rgbif"><code>rgif</code></a>, that
 permits access to GBIF’s application programming interface (API),
 rendering their records searchable from the command line.</p>
-<p>Thus, the images we’ll be studying were found by querying GBIFs
-holdings and downloading the images from URLs that are provided with the
-records. Prof. Kenaley has screened these images to make sure they are
-suitable for digitizing and morphometric analysis.</p>
-<p>The species list</p>
-<p>BMNH image collection: <a
-href="https://data.nhm.ac.uk/dataset/56e711e6-c847-4f99-915a-6894bb5c5dea/resource/05ff2255-c38a-40c9-b657-4ccb55ab2feb?q=lepidoptera&amp;_gl=1*z3b8cj*_ga*NDMwNjI0MzMyLjE2NjQ4MjMzMzg"
-class="uri">https://data.nhm.ac.uk/dataset/56e711e6-c847-4f99-915a-6894bb5c5dea/resource/05ff2255-c38a-40c9-b657-4ccb55ab2feb?q=lepidoptera&amp;_gl=1*z3b8cj*_ga*NDMwNjI0MzMyLjE2NjQ4MjMzMzg</a>.*_ga_PYMKGK73C4*MTY2NDgyMzMzOC4xLjAuMTY2NDgyMzMzOC4wLjAuMA..&amp;filters=_has_image%3Atrue</p>
-<p>Phylogeny: <a
-href="https://www.pnas.org/doi/pdf/10.1073/pnas.1907847116"
-class="uri">https://www.pnas.org/doi/pdf/10.1073/pnas.1907847116</a></p>
-<p>Tree from ^ <a
-href="https://www.pnas.org/cms/10.1073/pnas.1907847116/asset/075c8ff7-6363-462d-a528-f2b13710804d/assets/graphic/pnas.1907847116fig01.jpeg"
-class="uri">https://www.pnas.org/cms/10.1073/pnas.1907847116/asset/075c8ff7-6363-462d-a528-f2b13710804d/assets/graphic/pnas.1907847116fig01.jpeg</a></p>
-<p>I think this is tree file for figure S12 (based on <a
-href="https://datadryad.org/stash/dataset/doi:10.5061/dryad.j477b40">READme</a>
-file and <a
-href="https://www.pnas.org/doi/suppl/10.1073/pnas.1907847116/suppl_file/pnas.1907847116.sapp.pdf">Appendix</a>)</p>
-<p>papilio paper: <a
-href="https://academic.oup.com/sysbio/article/69/5/813/5817324"
-class="uri">https://academic.oup.com/sysbio/article/69/5/813/5817324</a>
-To capture shape data, we’ll produce outlines for fore- and hindwing
-shapes from photographs of moths and butterflies</p>
-<p>evolution paper: <a
-href="https://onlinelibrary.wiley.com/doi/full/10.1111/evo.12114"
-class="uri">https://onlinelibrary.wiley.com/doi/full/10.1111/evo.12114</a></p>
 </div>
 <div id="species-list-and-phylogeny" class="section level2">
 <h2>Species list and phylogeny</h2>
@@ -798,24 +772,47 @@ Prof. Kenaley has already produced for 10 species of butterflies and
 moths. Please <a href="lep_examples.zip">download these</a> to follow
 along. You can unzip this directory and place it your project
 directory.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Momocs)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;lep_examples&quot;</span>,<span class="at">pattern=</span><span class="st">&quot;.txt&quot;</span>,<span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(f[<span class="dv">1</span>],<span class="at">delim=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
+## ✔ readr   2.1.3      ✔ forcats 0.5.2 
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Momocs)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;Momocs&#39;
+## 
+## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     arrange, combine, filter, mutate, rename, sample_frac, sample_n,
+##     select, slice
+## 
+## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     chop
+## 
+## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;lep_examples&quot;</span>,<span class="at">pattern=</span><span class="st">&quot;.txt&quot;</span>,<span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(f[<span class="dv">1</span>],<span class="at">delim=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span></code></pre></div>
 <pre><code>## Rows: 361 Columns: 2
-## ── Column specification ─────────────────────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## dbl (2): X, Y
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>out <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Out</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coo_flipx</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>out <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Out</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coo_flipx</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
 <p><img src="mod6_proj_files/figure-html/momocexp1-1.png" width="672" /></p>
 <p>Notice that we’ve found all the files in the “lep_examples” directory
 with <code>list.files()</code>, searching for the patter “.txt” and
@@ -838,19 +835,19 @@ with PCA. For this challenge we will rely on the <code>for</code> loop
 convention we’ve learned in projects past. We have the file pathes store
 in <code>f</code>, so let’s develop this loop and store our outline data
 in a list.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>outs.l <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> f){</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  outs.l[[i]] <span class="ot">&lt;-</span> out <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(i,<span class="at">delim=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>outs.l <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> f){</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  outs.l[[i]] <span class="ot">&lt;-</span> out <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(i,<span class="at">delim=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>As was mentioned above, the <code>Out()</code> function prefers a
 list, so we can work on the list established here to visualize our
 outlines.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>outs.l <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Out</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coo_flipx</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>outs.l <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Out</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coo_flipx</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
 <p><img src="mod6_proj_files/figure-html/out-1.png" width="672" /></p>
 <p>Wonderful! Fore- and hindwings loaded for the 10 examples species.
 However, notice we have a few problems. First, both fore- and hindwing
@@ -897,13 +894,13 @@ contributed to the project.</li>
 </ul>
 <p>Project reports should be uploaded by 11:59 PM on Sunday, October
 24th.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;./proj6data&quot;</span>,<span class="at">full.names =</span> T)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="st">&quot;BIOL3140(.+)&quot;</span>,<span class="st">&quot;BIOL314020</span><span class="sc">\\</span><span class="st">1&quot;</span>,<span class="st">&quot;BIOL3140_subject21&quot;</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> f ){</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a> i2 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;(.+)BIOL3140(.+)&quot;</span>,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">1BIOL314020</span><span class="sc">\\</span><span class="st">2&quot;</span>,i)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.copy</span>(i,i2)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;./proj6data&quot;</span>,<span class="at">full.names =</span> T)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="st">&quot;BIOL3140(.+)&quot;</span>,<span class="st">&quot;BIOL314020</span><span class="sc">\\</span><span class="st">1&quot;</span>,<span class="st">&quot;BIOL3140_subject21&quot;</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> f ){</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a> i2 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;(.+)BIOL3140(.+)&quot;</span>,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">1BIOL314020</span><span class="sc">\\</span><span class="st">2&quot;</span>,i)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.copy</span>(i,i2)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>

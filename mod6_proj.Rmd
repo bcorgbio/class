@@ -316,24 +316,6 @@ A few decades ago, a morphometric project like this would require visiting museu
 
 Until very recently, amassing a data set of images for morphometric work  would require querying individual databases, one at a time. However, most natural history museums share their data with the Global Biodiversity Information Facility (GBIF), a clearing house of collections and species information. In the context of our project, one could search the GBIF database online for moth and butterfly records that have images. Fortunately for use, the folks at GBIF have created and R package, [`rgif`](https://www.gbif.org/tool/81747/rgbif), that permits access to GBIF's application programming interface (API), rendering their records searchable from the command line.
 
-Thus, the images we'll be studying were found by querying GBIFs holdings and downloading the images from URLs that are provided with the records. Prof. Kenaley has screened these images to make sure they are suitable for digitizing and morphometric analysis.
-
-The species list
-
-BMNH image collection: https://data.nhm.ac.uk/dataset/56e711e6-c847-4f99-915a-6894bb5c5dea/resource/05ff2255-c38a-40c9-b657-4ccb55ab2feb?q=lepidoptera&_gl=1*z3b8cj*_ga*NDMwNjI0MzMyLjE2NjQ4MjMzMzg.*_ga_PYMKGK73C4*MTY2NDgyMzMzOC4xLjAuMTY2NDgyMzMzOC4wLjAuMA..&filters=_has_image%3Atrue
-
-Phylogeny:
-https://www.pnas.org/doi/pdf/10.1073/pnas.1907847116
-
-Tree from ^ https://www.pnas.org/cms/10.1073/pnas.1907847116/asset/075c8ff7-6363-462d-a528-f2b13710804d/assets/graphic/pnas.1907847116fig01.jpeg
-
-I think this is tree file for figure S12 (based on [READme](https://datadryad.org/stash/dataset/doi:10.5061/dryad.j477b40) file and [Appendix](https://www.pnas.org/doi/suppl/10.1073/pnas.1907847116/suppl_file/pnas.1907847116.sapp.pdf))
-
-papilio paper: https://academic.oup.com/sysbio/article/69/5/813/5817324
-To capture shape data, we'll produce outlines for fore- and hindwing shapes from photographs of moths and butterflies 
-
-evolution paper: https://onlinelibrary.wiley.com/doi/full/10.1111/evo.12114
-
 
 
 ## Species list and phylogeny
