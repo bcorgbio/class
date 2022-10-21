@@ -122,7 +122,8 @@ class: inverse, top
 
 .pull-left[
 ```{r}
-spec.lm2 <- lm(y~x,d)
+spec.lm2 <- lm(y~x*species,d)
+anova(spec.lm2)
 AIC(spec.lm1,spec.lm2)
 ```
 ]

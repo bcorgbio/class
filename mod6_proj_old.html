@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Module 6 Project</title>
+
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">BIOL 3140</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="schedule.html">Schedule</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Projects
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Phase I</li>
+    <li>
+      <a href="phaseI_rubric.html">Phase I report rubric</a>
+    </li>
+    <li>
+      <a href="mod1_proj.html">Module 1 Project</a>
+    </li>
+    <li>
+      <a href="mod2_proj.html">Module 2 Project</a>
+    </li>
+    <li>
+      <a href="mod3_proj.html">Module 3 Project</a>
+    </li>
+    <li>
+      <a href="mod4_proj.html">Module 4 Project</a>
+    </li>
+    <li>
+      <a href="mod5_proj.html">Module 5 Project</a>
+    </li>
+    <li class="dropdown-header">Phase II</li>
+    <li>
+      <a href="phaseII_rubric.html">Phase II report rubric</a>
+    </li>
+    <li>
+      <a href="mod6_proj.html">Module 6 Project</a>
+    </li>
+    <li>
+      <a href="mod7_proj.html">Module 7 Project</a>
+    </li>
+    <li>
+      <a href="mod8_proj.html">Module 8 Project</a>
+    </li>
+    <li>
+      <a href="mod9_proj.html">Module 9 Project</a>
+    </li>
+    <li class="dropdown-header">Phase III</li>
+    <li>
+      <a href="phaseIII_rubric.html">Phase III report rubric</a>
+    </li>
+    <li>
+      <a href="final_proj.html">Final Project</a>
+    </li>
+    <li class="dropdown-header">DaqPacks</li>
+    <li>
+      <a href="daqpack.html">DaqPack Item List</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f22">BIOL 3140 Discussion</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Module 6 Project</h1>
+
+</div>
+
+
+<style>
+div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
+</style>
+<!-- Add icon library -->
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The ability to maintain a consistent and elevated body temperature
+(<span class="math inline">\(T_b\)</span>) was an important evolutionary
+step in birds and mammals, permitting these taxa the ability to achieve
+higher metabolic output, regardless of ambient temperatures. Despite
+relatively consistent body temperatures, nearly all mammals engage in
+some form of heterothermy, etheir of the regional type (varying accross
+the body) or the temporal type (varying across time) <span
+class="citation">(Aschoff 1982)</span>. Temporal heterothermy is often
+used as a strategy to modulate metabolic demands and reduce evaporative
+water loss <span class="citation">(Ostrowski, Williams, and Ismael
+2003)</span>. Over seasonal time scales, metabolic rate, and thus
+temperature, can be reduced when food availability declines in a form of
+torpor known as hibernation <span class="citation">(McNab 1983)</span>.
+Reducing the metabolic rate reduces energy requirements and allows a
+hibernating endotherm to wait out the food-scarce (and often cold)
+seasons <span class="citation">(Angilletta Jr and Angilletta
+2009)</span>.</p>
+<center>
+<p><img
+src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fsrep39640/MediaObjects/41598_2017_Article_BFsrep39640_Fig1_HTML.jpg?as=webp"
+style="width:50.0%" /></p>
+<br> <em>Even humans are temperal heterotherms as seen from the
+variability of <span class="math inline">\(T_b\)</span> over diel cycles
+(panel C). From <span class="citation">Hibi et al. (2017)</span>.</em>
+</center>
+<p><br> <br></p>
+<p>On diel time scales, fluxuations in <span
+class="math inline">\(T_b\)</span> for mammals are nearly universal
+<span class="citation">(Angilletta Jr and Angilletta 2009)</span>. These
+high <span class="math inline">\(T_b\)</span> oscillations have been
+characterized by physiologists as a mechanism to reduce evaporative
+water loss, although other explainations have been tendered. By
+capturing and storing heat during the day and loosing heat at night
+through convenction, <span class="math inline">\(T_b\)</span>
+oscillations reduce the need to cool during the day through evaporative
+processeses <span class="citation">(Ostrowski, Williams, and Ismael
+2003)</span>. An important prediction is born out of this functional
+hypothesis: larger mammals, with their higher capacitance (the ability
+to story energy), should have lower amplitudes associated with thes
+oscillations. Put simply, larger mammals need to discharge a smaller
+share of their stored heat energy to achieve this water-loss savings.
+Thus, we should expect some type of scaling of relationship between the
+difference between max daily <span class="math inline">\(T_b\)</span>
+(<span class="math inline">\(T_{max}\)</span>) and mininum daily <span
+class="math inline">\(T_b\)</span> (<span
+class="math inline">\(T_{min}\)</span>, or <span
+class="math inline">\(T_{\Delta}\)</span>) and mass (<span
+class="math inline">\(W\)</span>).</p>
+<p>Many inter-specific scaling relationships playout within species as
+well. The variation of mass-specific metabolic rate (<span
+class="math inline">\(M_b\)</span> or <span class="math inline">\(\dot
+V_{O_2}\)</span>) with <span class="math inline">\(W\)</span> is one
+such scaling relationship. Larger species have lower mass-specific <span
+class="math inline">\(\dot V_{O_2}\)</span> values than smaller species
+AND larger individuals within a particular species have lower
+mass-specific <span class="math inline">\(\dot V_{O_2}\)</span> than
+small individuals <span class="citation">(Aschoff 1982; Mortola and
+Lanthier 2004)</span>. The goals of this project follow this same
+inference: evaluate whether humans demonstrate a scaling relationship
+with respect to <span class="math inline">\(T_{\Delta}\)</span> and
+<span class="math inline">\(W\)</span> and whether mean <span
+class="math inline">\(T_{\Delta}\)</span> values for humans and other
+mammals scale according to mass.</p>
+</div>
+<div id="methods" class="section level1">
+<h1>Methods</h1>
+<p>To capture <span class="math inline">\(T_b\)</span> data, you must
+redesign and construct a portable Arduino-based temperature data
+aqusition system (DAQ). Your device should record body axial temperature
+data over the course of 15 minutes for <strong>ONE</strong> of your team
+members.</p>
+<p>Sampling times should correspond to predictably high <span
+class="math inline">\(T_b\)</span> (i.e., 15 minutes when the subject is
+active, say in the middle of the day) and <a
+href="https://www.nature.com/articles/srep39640/figures/1">predictably
+low <span class="math inline">\(T_b\)</span></a> (i.e., 15 minutes early
+in the morning, say 4 AM, before you typically get up—sorry! Set those
+alarms). This won’t capture the full diurnal cycle, but will reduce the
+DAQ’s running time while recording the important points.</p>
+<div id="daq-design-components" class="section level2">
+<h2>DAQ Design Components</h2>
+<ul>
+<li>DHT11 precision linear analog temperature sensor</li>
+<li>Elegoo Arduino Uno clone</li>
+<li>variety of jumper or prototyping wires</li>
+</ul>
+</div>
+<div id="daq-assembly-and-programming" class="section level2">
+<h2>DAQ Assembly and Programming</h2>
+<p>Assembly for this temperature logger is identical to the process you
+completed in <a href="mod5_proj.html">Module 5</a>.</p>
+<!-- Assembly for this temperature logger is almost entirely captured in ~~[this tutorial](http://arduinolearning.com/projects/temperature-logger.php)~~[this tutorial](https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data). To this prototype, we must add battery power. That's easy enough: merely connect the battery power cable in the battery barrel connector on the Arduino (see pic below).  -->
+<!-- <center> -->
+<!-- ![](https://i2.wp.com/technobyte.org/wp-content/uploads/2016/06/Arduino-Uno-power-jack-or-barrel-connector-e1466952229868.jpg?ssl=1){width=50%} -->
+<!-- <br> -->
+<!-- *The barrel connector for a battery pack on an Arduino Uno.*  -->
+<!-- </center> -->
+<!-- <br> -->
+<!-- <br> -->
+<!-- With the battery pack and SDcard module installed and writing data, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking temperature data.  -->
+<p>Be sure to modify your sketch to take data for 15 minutues.</p>
+</div>
+<div id="data-collection-and-analysis" class="section level2">
+<h2>Data Collection and Analysis</h2>
+<div id="intra-specific-scaling" class="section level3">
+<h3>Intra-specific Scaling</h3>
+<p>To evaluate the scaling relationship between <span
+class="math inline">\(T_{\Delta}\)</span> and mass, construct various
+models that describe the relationship between mass (<span
+class="math inline">\(W\)</span>) and the difference between mean <span
+class="math inline">\(T_{high}\)</span> and <span
+class="math inline">\(T_{low}\)</span> for all participants in the
+study. By all participants, I mean the 10 or so from this year’s class
+and the 30+ who participated in last year’s class. After completing data
+collection, each group should submit their data as .csv text files to <a
+href="https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing">this
+google directory</a> <strong>by Thursday, October 21st</strong>.</p>
+<p>Rememember from the <a
+href="mod5_proj.html#Saving_Data_from_the_Serial_Monitor">Module 5
+project description</a>, that saving data files with a predictable
+format containing metadata is essential to a clean and easy workflow in
+R. The metadata needed for this project include your team name, subject,
+and mass. Therefore, please contruct the file names thusly:
+“BIOL3140_Subject#_Time_Mass.csv”.</p>
+<ul>
+<li>BIOL314021: The class and year of the data.</li>
+<li>Subject#: a subject number that uniquely identifies the participant
+anonymously (e.g., “Subject1”). Because we’re only using last year’s
+data and there we 30 subjects in that study, add your teams original
+team number to 30. Eg., If your team was originally named “team 2” this
+field would be “Subject32”</li>
+<li>Time: Time of day, i.e., “day” or “night”.</li>
+<li>Mass: The subject’s mass <strong>in kilograms</strong> (an estimate
+is fine).</li>
+<li>Make sure each of the metadata are separated by and underscore,
+“_“.</li>
+</ul>
+<p>Once all files of these data can be downloaded and from this
+directory, analysis can commence. (- 5 pts for not submitting on
+time).</p>
+</div>
+<div id="inter-specific-scaling" class="section level3">
+<h3>Inter-specific scaling</h3>
+<p>From the study-wide values, compute the mean mass and mean <span
+class="math inline">\(T_{\Delta}\)</span> for our human subjects and add
+these values to a dataset that includes the same data from 51 species of
+non-human mammals from <span class="citation">(Mortola and Lanthier
+2004)</span>. From here you can commence with modeling and analysis.
+These data can be dowloaded <a href="mammal.temp.csv">here</a>.</p>
+<p><strong>NOTE</strong>: To get a leg up on the analyses, I recommend
+downloading last year’s data to begin modeling. Once you have the models
+established, your team can simply rerun them with the full data set
+after the 10 participants submit their data.</p>
+</div>
+</div>
+</div>
+<div id="project-report" class="section level1">
+<h1>Project Report</h1>
+<p>Please submit your report to your team GitHub repository as an .Rmd
+document with HTML output that addresses the following:</p>
+<ul>
+<li>What is the relationship between <span
+class="math inline">\(T_{\Delta}\)</span> and body mass in humans? I.e.,
+is there a relationship and if so, is it allometric rather than
+isometric? Be sure to estimate important model parameters including
+scaling coefficients and slopes.</li>
+<li>What is the relationship between <span
+class="math inline">\(T_{\Delta}\)</span> and body mass across mammals,
+including humans?</li>
+<li>Does taxonomic group with respect to order effectively predict
+differences in this relationship across mammals?</li>
+</ul>
+<p>In answering these questions, be sure to use the visualization,
+modeling, and model-assessments tools we’ve used in the course so
+far.</p>
+<p>In answering your question, your .Rmd should include the following
+components:</p>
+<ul>
+<li>A YAML header that specifies HTML output, the authors, and a
+bibliograph named “BIOL3140.bib”. <strong>Submit this bibliography as
+well!</strong></li>
+<li>Sections including an introduction, methods, results, discussion,
+author contributions, and references. Make sure that each, aside from
+the references, includes one to two short paragraphs. Specifially:
+<ul>
+<li>Introduction: Frame the questions, indicating why they are
+important, what background work has been done in this realm, and how you
+will answer them. <strong>Please include at least one reference to
+support the summary of previous work.</strong> Note: this can be done
+easily by refiguring the introduction to this project report.</li>
+<li>Methods: Explicitly state how you answered the questions, including
+a narrative of all the anlyses both qualitative and quantitative.</li>
+<li>Results: Include any appropriate figures or tables and a narrative
+of the main results that are important to answering the questions.</li>
+<li>Discussion: Succinctly declare how the results relate to the
+question and how they compare to previous work devoted to the topic. In
+addition, be sure to comment on the importance of your findings to the
+broader topic at hand. <strong>Please include at least one reference to
+another relevant study.</strong> Note: circling back to the
+introductions, both to this project description and yours, will be
+helpful here.</li>
+<li>Author contributions: Breifly outline what each team member
+contributed to the project.</li>
+</ul></li>
+</ul>
+<p>Project reports should be uploaded by 11:59 PM on Sunday, October
+24th.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;./proj6data&quot;</span>,<span class="at">full.names =</span> T)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="st">&quot;BIOL3140(.+)&quot;</span>,<span class="st">&quot;BIOL314020</span><span class="sc">\\</span><span class="st">1&quot;</span>,<span class="st">&quot;BIOL3140_subject21&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> f ){</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> i2 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;(.+)BIOL3140(.+)&quot;</span>,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">1BIOL314020</span><span class="sc">\\</span><span class="st">2&quot;</span>,i)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.copy</span>(i,i2)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-angilletta2009thermal" class="csl-entry">
+Angilletta Jr, Michael J, and Michael James Angilletta. 2009.
+<em>Thermal Adaptation: A Theoretical and Empirical Synthesis</em>.
+Oxford University Press.
+</div>
+<div id="ref-aschoff1982circadian" class="csl-entry">
+Aschoff, J. 1982. <span>“The Circadian Rhythm of Body Temperature as a
+Function of Body Size.”</span> <em>A Companion to Animal
+Physiology</em>, 173–88.
+</div>
+<div id="ref-hibi2017effect" class="csl-entry">
+Hibi, Masanobu, Chie Kubota, Tomohito Mizuno, Sayaka Aritake, Yuki
+Mitsui, Mitsuhiro Katashima, and Sunao Uchida. 2017. <span>“Effect of
+Shortened Sleep on Energy Expenditure, Core Body Temperature, and
+Appetite: A Human Randomised Crossover Trial.”</span> <em>Scientific
+Reports</em> 7 (1): 1–11.
+</div>
+<div id="ref-mcnab1983energetics" class="csl-entry">
+McNab, Brian K. 1983. <span>“Energetics, Body Size, and the Limits to
+Endothermy.”</span> <em>Journal of Zoology</em> 199 (1): 1–29.
+</div>
+<div id="ref-mortola2004scaling" class="csl-entry">
+Mortola, Jacopo P, and Clement Lanthier. 2004. <span>“Scaling the
+Amplitudes of the Circadian Pattern of Resting Oxygen Consumption, Body
+Temperature and Heart Rate in Mammals.”</span> <em>Comparative
+Biochemistry and Physiology Part A: Molecular &amp; Integrative
+Physiology</em> 139 (1): 83–95.
+</div>
+<div id="ref-ostrowski2003heterothermy" class="csl-entry">
+Ostrowski, Stéphane, Joseph B Williams, and Khairi Ismael. 2003.
+<span>“Heterothermy and the Water Economy of Free-Living Arabian Oryx
+(Oryx Leucoryx).”</span> <em>Journal of Experimental Biology</em> 206
+(9): 1471–78.
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,7 +1,6 @@
 
 ---
 title: "Welcome"
-output: pdf_document
 ---
 
 
