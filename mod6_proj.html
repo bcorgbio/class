@@ -586,7 +586,13 @@ variability in wingshape. From <span class="citation">Penz and Peggie
 lepidoptera, including hundreds of species from both the moths (a
 paraphyletic group) and butterflies. To do this, we’ll take a
 morphometric approach, characterizing the shape outline of fore- and
-hindwings from about 200 species of Lepidoptera.</p>
+hindwings from about 200 species of Lepidoptera. The specific questions
+we’ll answer with our morphometric data are:</p>
+<ol style="list-style-type: decimal">
+<li><p>Do hind- and forewings vary in their evolutionary rates?</p></li>
+<li><p>Does the evolvability of the hind- and forewings vary
+signficantly among major lineages of moths and butterflies?</p></li>
+</ol>
 </div>
 <div id="methods" class="section level1">
 <h1>Methods</h1>
@@ -657,7 +663,7 @@ the hindwing is most exposed. Open that best image in Fiji.</p>
 <ol style="list-style-type: decimal">
 <li><p>If there’s a scale bar, <a
 href="https://imagejdocu.list.lu/gui/analyze/set_scale">set the
-scale</a>.</p></li>
+scale</a>. Please set the scale in mm.</p></li>
 <li><p>If the right wing pair is damaged, flip the image horizontally.
 Select “Image” <span class="math inline">\(\rightarrow\)</span>
 “Transform” <span class="math inline">\(\rightarrow\)</span> “Flip
@@ -801,7 +807,7 @@ directory.</p>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(f[<span class="dv">1</span>],<span class="at">delim=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span></code></pre></div>
-<pre><code>## Rows: 361 Columns: 2
+<pre><code>## Rows: 1032 Columns: 2
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## dbl (2): X, Y
@@ -851,7 +857,491 @@ outlines.</p>
 <p><img src="mod6_proj_files/figure-html/out-1.png" width="672" /></p>
 <p>Wonderful! Fore- and hindwings loaded for the 10 examples species.
 However, notice we have a few problems. First, both fore- and hindwing
-are included in the</p>
+are included in the in the same data set. This confounds analyzing and
+comparing shape in fore- and hindwing separately, a major goal of this
+project. Second, the outlines are of arbitrary size due to how much of
+the pixel field they spanned in the photos and whether or not a scale in
+mm was set. Thus, this arbitrary size scale would confound shape
+analysis from the start. Let’s take on fixing the hind- forewing issue
+first and, later, we’ll tackle the size issue.</p>
+<p>Fortunately, we know whether each outline comes from either a fore-
+or hindwing because we added this metadata to the file name. Thus, we
+merely need to strip this information from the file name when loading
+the data in our <code>for</code> loop. Let’s do that by modified the
+loop.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>outs.l <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>wing.l <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> f){</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  outs.l[[i]] <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(i,<span class="at">delim=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  wing.l[[i]] <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;.+_(hindwing|forewing).txt&quot;</span>,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">1&quot;</span>,i)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Here, we use a general regular expression function
+<code>gsub()</code>, which <a
+href="https://www.programmingr.com/tutorial/gsub-in-r/">finds a
+character string within a fuller string</a> and replaces it. In this
+case, we’ve asked <code>gsub()</code> to find either “hindwing” or
+“forewing” by using “|” for the or part. We’ve also specified that these
+two strings will be after any string (<code>grep</code> “.”) of any
+length (<code>grep</code> “+”) and after the “_“. They’ll also appear
+before”.txt”. Each wing descriptor is saved to a unique position in the
+list <code>wing.l</code>.</p>
+<p>To store our wing descriptors within our outlines, we can access the
+<code>fac</code> option in <code>Out()</code> when transforming our list
+of matrices into a list of <code>Momocs</code> outlines. This
+<code>fac</code> option takes a list of named one-dimensional vectors,
+so we make a list with a name “wing” that has the unlisted values of
+<code>wing.l</code>. Let’s save this newly labeled list of outlines as
+<code>outs</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>outs <span class="ot">&lt;-</span> outs.l <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Out</span>(<span class="at">fac=</span><span class="fu">list</span>(<span class="at">wing=</span>wing.l <span class="sc">%&gt;%</span> unlist)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coo_flipx</span>()</span></code></pre></div>
+<p>Now we can invoke <code>Momocs</code> <code>tidy</code>-like
+<code>filter()</code> function to parse the outlines according to their
+wing. Let’s do that and visualize each group with
+<code>stack()</code>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>forewings <span class="ot">&lt;-</span> outs <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(wing<span class="sc">==</span><span class="st">&quot;forewing&quot;</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>hindwings <span class="ot">&lt;-</span> outs <span class="sc">%&gt;%</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(wing<span class="sc">==</span><span class="st">&quot;hindwing&quot;</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>forewings <span class="sc">%&gt;%</span> </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
+<p><img src="mod6_proj_files/figure-html/wingfilter-1.png" width="672" /></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>hindwings <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
+<p><img src="mod6_proj_files/figure-html/wingfilter-2.png" width="672" /></p>
+<p>Now that we have two lists of outlines ready for analysis, let’s come
+back to our size issue. If we ran and EFA analysis on these outlines,
+most of the variance would be due to their arbitrary size differences.
+To address this, practitioners of shape analysis transform their shapes
+into a common coordinate space that removes size altogether. The method
+of choice for this is the <a
+href="https://en.wikipedia.org/wiki/Procrustes_analysis">Procrustes
+transformation</a>. This method superimposes the shapes by optimally
+translating, rotating and uniformly scaling the objects. That is, both
+the placement in space and the size of the shapes are freely adjusted so
+that they are the same size and the distance between the positions of
+the points constituting the shape is reduced. To align the shapes, the
+can be compared to an arbitrarily selected reference shape (referred to
+as ordinary Procrustes analysis) or the shapes can be aligned to an
+optimally determined mean shape (referred to as generalized Procrustes
+analysis). We’ll perform the latter.</p>
+<p>Fortunately, <code>Momocs</code> has just a function for generalize
+Procrustes superimposition, <code>fgProcrustes()</code>. Let’s use this
+and visualize our results. But before we do, we must tackle another
+problem: our outlines have a variable number of coordinates, making it
+impossible for <code>fgProcrustes()</code> to minimize the distance
+between points in each outline (which would it choose?). So we’ll just
+sample 100 of the points in each outline using <code>Momocs</code>’s
+<code>coo_interpolate()</code>. This function fits a spline with high
+resolution to all the shapes and extracts a determined number of points
+at equal intervals. We can easily find the number of coordinates in each
+each set of wings and use the minimum value as the number we’ll sample
+with <code>coo_interpolate()</code>. this will minimize the amount of
+information we lose.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fore.min <span class="ot">&lt;-</span> forewings <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coo_nb</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">min</span>()</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>forewings <span class="sc">%&gt;%</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coo_interpolate</span>(fore.min) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fgProcrustes</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
+<p><img src="mod6_proj_files/figure-html/proc-1.png" width="672" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>hind.min <span class="ot">&lt;-</span> hindwings <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coo_nb</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">min</span>()</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>hindwings <span class="sc">%&gt;%</span> </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coo_interpolate</span>(hind.min) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fgProcrustes</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
+<p><img src="mod6_proj_files/figure-html/proc-2.png" width="672" /></p>
+<p>Now all that’s left to do is perform the EFA and then we can move on
+to PC analysis. For this, all we have to do is pipe in the
+<code>Momocs</code> EFA function, <code>efourier()</code>. We’ll do this
+and specify <code>norm=FALSE</code> for these <a
+href="https://momx.github.io/Momocs/reference/efourier.html#details">very
+arcane reasons</a>.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>forewings <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coo_interpolate</span>(fore.min) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fgProcrustes</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">efourier</span>(<span class="at">norm=</span><span class="cn">FALSE</span>) </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>hindwings <span class="sc">%&gt;%</span> </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coo_interpolate</span>(hind.min) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fgProcrustes</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">efourier</span>(<span class="at">norm=</span><span class="cn">FALSE</span>) </span></code></pre></div>
+<p>Performing the PCA is just as easy. We just finally add
+<code>PCA()</code> with the pipe. We’ll have the results in
+appropriately name variables.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>forewing.pca <span class="ot">&lt;-</span> forewings <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coo_interpolate</span>(fore.min) <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coo_slide</span>(<span class="at">id=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fgProcrustes</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">efourier</span>(<span class="at">norm=</span><span class="cn">FALSE</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="at">smooth.it=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">PCA</span>()</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>hindwing.pca <span class="ot">&lt;-</span>hindwings <span class="sc">%&gt;%</span> </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coo_interpolate</span>(hind.min) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">coo_slide</span>(<span class="at">id=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fgProcrustes</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">efourier</span>(<span class="at">norm=</span><span class="cn">FALSE</span>,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="at">smooth.it=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">PCA</span>()</span></code></pre></div>
+<p>We can visualize the PCA with <code>plot_PCA()</code>, which will, by
+default produce a biplot of the first two PCs, the amount of variance
+explained by each, and a representation of the morphoshape described by
+the PCs (the outlines in the background).</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>forewing.pca <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_PCA</span>(<span class="at">title =</span> <span class="st">&quot;forewings&quot;</span>)</span></code></pre></div>
+<p><img src="mod6_proj_files/figure-html/plotpca-1.png" width="672" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>hindwing.pca <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_PCA</span>(<span class="at">title =</span> <span class="st">&quot;hindwings&quot;</span>)</span></code></pre></div>
+<p><img src="mod6_proj_files/figure-html/plotpca-2.png" width="672" /></p>
+<p>Now we can move on to the comparative analysis.</p>
+</div>
+<div id="comparative-analysis" class="section level2">
+<h2>Comparative analysis</h2>
+<p>Before we begin, Let’s remind ourselves of the questions we’re
+attempting to answer so that we can figure out exactly how to answer
+then. First, do hind- and forewings vary in their evolutionary rates?
+Second, do major groups of the Lepidoptera vary in their hind- and
+forewing evolvability?</p>
+<p>For this first question, we can simply evaluate the evolutionary rate
+of our PC scores for the hind and forewings using a method of choice.
+For the second question, we can look at the evolutionary rates of our PC
+scores across our Lepidopteran tree.</p>
+<p>We also used a second method, RRPhylo (Castiglione et al.2018), to
+estimate rates of plumage evolution. Like BAMM,RRPhylo is designed to
+model heterogeneity in rates of evolu-tion and identify shifts in
+phenotypic evolutionary rates but isspecifically designed to account for
+rate heterogeneity amongindividual lineages rather than entire clades.
+Using phylogeneticridge regression (Kratsch and McHardy 2014), RRPhylo
+esti-mates rates of phenotypic evolution along every branch in a treeand
+ancestral character states at nodes. We used the maximumclade
+credibility tree from Burns et al. (2014) and RRPhyloversion 2.0.3 in R
+to estimate rates of phenotypic evolution usingphylogenetic ridge
+regression</p>
+<p>First of all, as mentioned previously, we need a tree and fortunately
+we have one for these species. Indeed, the species choice for this
+project was based on those sampled in the <span
+class="citation">Kawahara et al. (2019)</span> study. So let’s load the
+tree you can <a href="lept.tree2.tre">download here</a>. Make sure it’s
+in your project’s directory. We’ll use <code>read.tree()</code> from the
+<code>ape</code> package and plot it just to check things out. Notice
+<code>cex=0.1</code> to keep the tip labels small in the relatively
+large tree.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>lep.tree <span class="ot">&lt;-</span> ape<span class="sc">::</span><span class="fu">read.tree</span>(<span class="st">&quot;lep_tree2.tre&quot;</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lep.tree,<span class="at">cex=</span><span class="fl">0.1</span>)</span></code></pre></div>
+<p><img src="mod6_proj_files/figure-html/tree-1.png" width="672" /></p>
+<p>Looks great; however, the convention is for the root of the tree to
+be positioned in the upper left. This is easy to fix with
+<code>ape</code>’s <code>laddersize()</code> function. We’ll also remove
+the pesky underscore between names in the tip labels. This will help
+with joining the tree data with our species data.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>lep.tree <span class="ot">&lt;-</span> <span class="fu">ladderize</span>(lep.tree)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lep.tree,<span class="at">cex=</span><span class="fl">0.1</span>)</span></code></pre></div>
+<p><img src="mod6_proj_files/figure-html/treefix-1.png" width="672" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>lep.tree<span class="sc">$</span>tip.label <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;_&quot;</span>,<span class="st">&quot; &quot;</span>,lep.tree<span class="sc">$</span>tip.label)</span></code></pre></div>
+<p>Now that we have our PCA data and a tree of species, we need to a add
+species information (e.g., the species, higher taxonomic information,
+etc.) to the shape data so the tree and shape data can work together.
+Notice that each species is represented in the <code>outs</code> list
+(from whence our PCA is derived) by the file name that belongs to its
+outline. Let’s look at their names.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">basename</span>(<span class="fu">names</span>(outs))[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>## [1] &quot;XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt&quot;
+## [2] &quot;XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt&quot;
+## [3] &quot;XY_133953fbf2c0b0b5f4828c66c9edf43e_forewing.txt&quot;              
+## [4] &quot;XY_133953fbf2c0b0b5f4828c66c9edf43e_hindwing.txt&quot;              
+## [5] &quot;XY_14-O191_JPG-_ups%2B1431607676_forewing.txt&quot;</code></pre>
+<p>Not a bit of species data. However, Prof. Kenaley has stored the
+filenames of each species in a table you can <a
+href="lep_image_data.csv">download here</a>. Have a look.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>lep.sp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;lep_image_data.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 1106 Columns: 5
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (5): species, identifier, higher_taxon, common_name, highest_common_name
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lep.sp)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 5
+##   species                      identifier                highe…¹ commo…² highe…³
+##   &lt;chr&gt;                        &lt;chr&gt;                     &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+## 1 Acanthopteroctetes unifascia Acanthopteroctetes_unifa… Neopse… Archai… moths  
+## 2 Acanthopteroctetes unifascia MCZ-ENT00754647_Acanthop… Neopse… Archai… moths  
+## 3 Acrocercops transecta        transecta_Acrocercops_A_… Gracil… Cocoon… moths  
+## 4 Actias luna                  MCZ-ENT00639291_Actias_l… Bombyc… Sphynx… moths  
+## 5 Actias luna                  MCZ-ENT00639295_Actias_l… Bombyc… Sphynx… moths  
+## 6 Actias luna                  UDCC_TCN_00062177_148710… Bombyc… Sphynx… moths  
+## # … with abbreviated variable names ¹​higher_taxon, ²​common_name,
+## #   ³​highest_common_name</code></pre>
+<p>Have a look at the column “identifier”.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lep.sp<span class="sc">$</span>identifier)</span></code></pre></div>
+<pre><code>## [1] &quot;Acanthopteroctetes_unifascia_M_1477601198_lg&quot;    
+## [2] &quot;MCZ-ENT00754647_Acanthopteroctetes_unifascia_had&quot;
+## [3] &quot;transecta_Acrocercops_A_EIHU&quot;                    
+## [4] &quot;MCZ-ENT00639291_Actias_luna_had&quot;                 
+## [5] &quot;MCZ-ENT00639295_Actias_luna_had&quot;                 
+## [6] &quot;UDCC_TCN_00062177_1487105077_lg&quot;</code></pre>
+<p>This is the vector of the image file names minus the extension (.jpg,
+.png, etc.). Notice that our outline names, rather than species, contain
+this information—you saved the FIJI results as
+“XY_filename_hingwing.txt” or “XY_filename_forewing.txt”. That is, this
+very same identifier in the species table is buried in the names of our
+outline data. So let’s make a new tibble that strips the same identifier
+from the outline names and join the species data to this new tibble.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>out.data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">xy.file=</span><span class="fu">basename</span>(<span class="fu">names</span>(outs))) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">identifier=</span><span class="fu">gsub</span>(<span class="st">&quot;XY_|_hindwing|_forewing|.txt&quot;</span>,<span class="st">&quot;&quot;</span>,xy.file)) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(lep.sp)</span></code></pre></div>
+<pre><code>## Joining, by = &quot;identifier&quot;</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(out.data)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 6
+##   xy.file                                ident…¹ species highe…² commo…³ highe…⁴
+##   &lt;chr&gt;                                  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+## 1 XY_050cc270e6f1670fdb2d884d0e04befe?s… 050cc2… Papili… Papili… Papili… butter…
+## 2 XY_050cc270e6f1670fdb2d884d0e04befe?s… 050cc2… Papili… Papili… Papili… butter…
+## 3 XY_133953fbf2c0b0b5f4828c66c9edf43e_f… 133953… Calyco… Papili… Papili… butter…
+## 4 XY_133953fbf2c0b0b5f4828c66c9edf43e_h… 133953… Calyco… Papili… Papili… butter…
+## 5 XY_14-O191_JPG-_ups%2B1431607676_fore… 14-O19… Polygo… Papili… Papili… butter…
+## 6 XY_14-O191_JPG-_ups%2B1431607676_hind… 14-O19… Polygo… Papili… Papili… butter…
+## # … with abbreviated variable names ¹​identifier, ²​higher_taxon, ³​common_name,
+## #   ⁴​highest_common_name</code></pre>
+<p>With this tibble in place, we can now add species information to our
+PCA data. The PC scores are store in the the variable <code>x</code>, so
+we can summon them this way. Notice that the row names correspond to the
+outline file names, a column in out <code>out.data</code> tibble.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(hindwing.pca<span class="sc">$</span>x,<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##                                                                                     PC1
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -0.02245246
+##                                                                                     PC2
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt 0.001318323
+##                                                                                      PC3
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -0.001941424
+##                                                                                      PC4
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -0.003353328
+##                                                                                      PC5
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -0.006356692
+##                                                                                     PC6
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt 0.002604093
+##                                                                                      PC7
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -0.005015323
+##                                                                                     PC8
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt 0.002042128
+##                                                                                       PC9
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -0.0004608585
+##                                                                                      PC10
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -0.0009474625
+##                                                                                     PC11
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -0.000290545
+##                                                                                     PC12
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt 0.0002691478
+##                                                                                      PC13
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -0.0006124021
+##                                                                                      PC14
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -0.0003043164
+##                                                                                     PC15
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt 0.0002690045
+##                                                                                      PC16
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -0.0004202002
+##                                                                                     PC17
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt 3.818343e-07
+##                                                                                     PC18
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt 9.608326e-05
+##                                                                                     PC19
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt 0.0001127107
+##                                                                                     PC20
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt 1.919069e-05
+##                                                                                      PC21
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -9.707425e-05
+##                                                                                     PC22
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt 8.496511e-06
+##                                                                                      PC23
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -4.879663e-06
+##                                                                                      PC24
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -1.488783e-05
+##                                                                                      PC25
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_hindwing.txt -1.657245e-18</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(forewing.pca<span class="sc">$</span>x,<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##                                                                                      PC1
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt -0.004762064
+##                                                                                       PC2
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt -0.0001121685
+##                                                                                    PC3
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt 0.00450827
+##                                                                                      PC4
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt -0.004348634
+##                                                                                     PC5
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt 0.000896125
+##                                                                                      PC6
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt 0.0001721947
+##                                                                                       PC7
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt -0.0006537529
+##                                                                                       PC8
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt -0.0006024198
+##                                                                                     PC9
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt 0.000210261
+##                                                                                    PC10
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt 0.001158964
+##                                                                                     PC11
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt -0.000453266
+##                                                                                     PC12
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt 0.0002848715
+##                                                                                      PC13
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt -0.0002056965
+##                                                                                      PC14
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt -0.0002559536
+##                                                                                     PC15
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt 0.0002726673
+##                                                                                     PC16
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt 0.0002056042
+##                                                                                     PC17
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt 4.260206e-05
+##                                                                                      PC18
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt -1.685663e-05
+##                                                                                     PC19
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt 0.0002625234
+##                                                                                     PC20
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt -0.000116118
+##                                                                                      PC21
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt -5.385455e-05
+##                                                                                     PC22
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt 1.789726e-05
+##                                                                                      PC23
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt -1.376277e-05
+##                                                                                      PC24
+## lep_examples/XY_050cc270e6f1670fdb2d884d0e04befe?size=fullsize_forewing.txt -4.628298e-18</code></pre>
+<p>Let’s now join the species information in our <code>out.data</code>
+tibble to the PCA data, storing these in new variables.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>hindwing.pca2 <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(<span class="at">xy.file=</span><span class="fu">basename</span>(<span class="fu">rownames</span>(hindwing.pca<span class="sc">$</span>x)),<span class="at">PC1=</span>hindwing.pca<span class="sc">$</span>x[,<span class="dv">1</span>],<span class="at">PC2=</span>hindwing.pca<span class="sc">$</span>x[,<span class="dv">2</span>]) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(out.data)</span></code></pre></div>
+<pre><code>## Joining, by = &quot;xy.file&quot;</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>forewing.pca2 <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(<span class="at">xy.file=</span><span class="fu">basename</span>(<span class="fu">rownames</span>(forewing.pca<span class="sc">$</span>x)),<span class="at">PC1=</span>forewing.pca<span class="sc">$</span>x[,<span class="dv">1</span>],<span class="at">PC2=</span>forewing.pca<span class="sc">$</span>x[,<span class="dv">2</span>])<span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(out.data)</span></code></pre></div>
+<pre><code>## Joining, by = &quot;xy.file&quot;</code></pre>
+<p>Now we have the first 2 PCs for each wing stored with species
+information and are now ready for comparative analysis.</p>
+</div>
+<div id="evolutionary-rates" class="section level2">
+<h2>Evolutionary rates</h2>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BAMMtools)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>drops <span class="ot">&lt;-</span> lep.tree<span class="sc">$</span>tip.label[<span class="sc">!</span>lep.tree<span class="sc">$</span>tip.label<span class="sc">%in%</span><span class="fu">unique</span>(out.data<span class="sc">$</span>species)]</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>lep.tree2 <span class="ot">&lt;-</span> <span class="fu">drop.tip</span>(lep.tree,drops)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>pc1 <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">rbind</span>(<span class="fu">tibble</span>(<span class="at">pc1=</span>hindwing.pca2<span class="sc">$</span>PC1,<span class="at">wing=</span><span class="st">&quot;hind&quot;</span>),<span class="fu">tibble</span>(<span class="at">pc1=</span>forewing.pca2<span class="sc">$</span>PC1,<span class="at">wing=</span><span class="st">&quot;fore&quot;</span>)))</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>grps <span class="ot">&lt;-</span> <span class="fu">c</span>(hindwing.pca2<span class="sc">$</span>species,forewing.pca2<span class="sc">$</span>species)</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(pc1) <span class="ot">&lt;-</span> <span class="fu">c</span>(hindwing.pca2<span class="sc">$</span>species,forewing.pca2<span class="sc">$</span>species)</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="fu">compare.multi.evol.rates</span>(<span class="at">A=</span>pc1,<span class="at">phy=</span>lep.tree2,<span class="at">gp=Subset =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>out.data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">xy.file=</span><span class="fu">basename</span>(<span class="fu">names</span>(outs)),</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">identifier=</span><span class="fu">gsub</span>(<span class="st">&quot;XY_|_hindwing|_forewing|.txt&quot;</span>,<span class="st">&quot;&quot;</span>,xy.file))</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co"># lep.sp &lt;- lep.sp %&gt;% </span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(identifier=gsub(&quot;(.+)\\.\\w+$&quot;,&quot;\\1&quot;,filename))</span></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="co"># write_csv(lep.sp,&quot;lep_image_data.csv&quot;)</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>out.data <span class="ot">&lt;-</span>out.data <span class="sc">%&gt;%</span> </span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(lep.sp)</span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>drops <span class="ot">&lt;-</span> lep.tree<span class="sc">$</span>tip.label[<span class="sc">!</span>lep.tree<span class="sc">$</span>tip.label<span class="sc">%in%</span><span class="fu">unique</span>(out.data<span class="sc">$</span>species)]</span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>lep.tree2 <span class="ot">&lt;-</span> <span class="fu">drop.tip</span>(lep.tree,drops)</span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a><span class="co">#retrieve pca data for joining with species data</span></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>hindwing.pca2 <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(<span class="at">xy.file=</span><span class="fu">basename</span>(<span class="fu">rownames</span>(hindwing.pca<span class="sc">$</span>x)),<span class="at">PC1=</span>hindwing.pca<span class="sc">$</span>x[,<span class="dv">1</span>],<span class="at">PC2=</span>hindwing.pca<span class="sc">$</span>x[,<span class="dv">2</span>]) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(out.data)</span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a>forewing.pca2 <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(<span class="at">xy.file=</span><span class="fu">basename</span>(<span class="fu">rownames</span>(forewing.pca<span class="sc">$</span>x)),<span class="at">PC1=</span>forewing.pca<span class="sc">$</span>x[,<span class="dv">1</span>],<span class="at">PC2=</span>forewing.pca<span class="sc">$</span>x[,<span class="dv">2</span>])<span class="sc">%&gt;%</span> </span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(out.data)</span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a><span class="co">#are shape evolution rate different btwn superfamilies</span></span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a>forewing.pca2 <span class="sc">%&gt;%</span> </span>
+<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span><span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>higher_taxon,<span class="at">y=</span>PC1))</span>
+<span id="cb45-30"><a href="#cb45-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-31"><a href="#cb45-31" aria-hidden="true" tabindex="-1"></a>hindwing.pca2 <span class="sc">%&gt;%</span> </span>
+<span id="cb45-32"><a href="#cb45-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>()<span class="sc">+</span><span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>higher_taxon,<span class="at">y=</span>PC1))</span>
+<span id="cb45-33"><a href="#cb45-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-34"><a href="#cb45-34" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lep.tree2)</span>
+<span id="cb45-35"><a href="#cb45-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-36"><a href="#cb45-36" aria-hidden="true" tabindex="-1"></a>hind.pc1 <span class="ot">&lt;-</span> hindwing.pca2<span class="sc">$</span>PC1</span>
+<span id="cb45-37"><a href="#cb45-37" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(hind.pc1) <span class="ot">&lt;-</span> hindwing.pca2<span class="sc">$</span>species</span>
+<span id="cb45-38"><a href="#cb45-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-39"><a href="#cb45-39" aria-hidden="true" tabindex="-1"></a>fore.pc1 <span class="ot">&lt;-</span> forewing.pca2<span class="sc">$</span>PC1</span>
+<span id="cb45-40"><a href="#cb45-40" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(fore.pc1) <span class="ot">&lt;-</span> forewing.pca2<span class="sc">$</span>species</span>
+<span id="cb45-41"><a href="#cb45-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-42"><a href="#cb45-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-43"><a href="#cb45-43" aria-hidden="true" tabindex="-1"></a>lep.rates <span class="ot">&lt;-</span> <span class="fu">RRphylo</span>(<span class="at">tree=</span>lep.tree2,<span class="at">y=</span>hind.pc1)</span>
+<span id="cb45-44"><a href="#cb45-44" aria-hidden="true" tabindex="-1"></a>lep.shifts <span class="ot">&lt;-</span> <span class="fu">search.shift</span>(<span class="at">RR=</span>lep.rates,<span class="at">status.type=</span><span class="st">&quot;clade&quot;</span>)</span>
+<span id="cb45-45"><a href="#cb45-45" aria-hidden="true" tabindex="-1"></a>lep.plot <span class="ot">&lt;-</span> <span class="fu">plotShift</span>(<span class="at">RR=</span>lep.rates,<span class="at">SS=</span>lep.shifts)</span>
+<span id="cb45-46"><a href="#cb45-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-47"><a href="#cb45-47" aria-hidden="true" tabindex="-1"></a>lep.plot<span class="sc">$</span><span class="fu">plotClades</span>()</span>
+<span id="cb45-48"><a href="#cb45-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-49"><a href="#cb45-49" aria-hidden="true" tabindex="-1"></a>lep.plot</span>
+<span id="cb45-50"><a href="#cb45-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-51"><a href="#cb45-51" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(forewing.pca2<span class="sc">$</span>PC1,hindwing.pca2<span class="sc">$</span>PC1)</span>
+<span id="cb45-52"><a href="#cb45-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-53"><a href="#cb45-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-54"><a href="#cb45-54" aria-hidden="true" tabindex="-1"></a> clade.n <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">rownames</span>(lep.shifts<span class="sc">$</span>single.clades))</span>
+<span id="cb45-55"><a href="#cb45-55" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-56"><a href="#cb45-56" aria-hidden="true" tabindex="-1"></a> tax.tab <span class="ot">&lt;-</span> lep.sp <span class="sc">%&gt;%</span> </span>
+<span id="cb45-57"><a href="#cb45-57" aria-hidden="true" tabindex="-1"></a>   <span class="fu">select</span>(species,higher_taxon) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-58"><a href="#cb45-58" aria-hidden="true" tabindex="-1"></a>   unique</span>
+<span id="cb45-59"><a href="#cb45-59" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-60"><a href="#cb45-60" aria-hidden="true" tabindex="-1"></a>clade.names <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">tre=</span>lep.tree2,<span class="at">clade=</span>clade.n,<span class="at">tax.table=</span>tax.tab){</span>
+<span id="cb45-61"><a href="#cb45-61" aria-hidden="true" tabindex="-1"></a> clades <span class="ot">&lt;-</span> <span class="fu">lapply</span>(clade,<span class="cf">function</span>(x) <span class="fu">extract.clade</span>(tre,x))</span>
+<span id="cb45-62"><a href="#cb45-62" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-63"><a href="#cb45-63" aria-hidden="true" tabindex="-1"></a> clade.sp <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb45-64"><a href="#cb45-64" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-65"><a href="#cb45-65" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(clades)){</span>
+<span id="cb45-66"><a href="#cb45-66" aria-hidden="true" tabindex="-1"></a>   clade.sp[[i]] <span class="ot">&lt;-</span> clades[[i]]<span class="sc">$</span>tip.label</span>
+<span id="cb45-67"><a href="#cb45-67" aria-hidden="true" tabindex="-1"></a> }</span>
+<span id="cb45-68"><a href="#cb45-68" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-69"><a href="#cb45-69" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-70"><a href="#cb45-70" aria-hidden="true" tabindex="-1"></a> tax <span class="ot">&lt;-</span> <span class="fu">lapply</span>(clade.sp, <span class="cf">function</span>(x) tax.table <span class="sc">%&gt;%</span> <span class="fu">filter</span>(species<span class="sc">%in%</span> x)) </span>
+<span id="cb45-71"><a href="#cb45-71" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-72"><a href="#cb45-72" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-73"><a href="#cb45-73" aria-hidden="true" tabindex="-1"></a> <span class="fu">names</span>(tax) <span class="ot">&lt;-</span> clade</span>
+<span id="cb45-74"><a href="#cb45-74" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-75"><a href="#cb45-75" aria-hidden="true" tabindex="-1"></a> <span class="fu">return</span>(tax)</span>
+<span id="cb45-76"><a href="#cb45-76" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb45-77"><a href="#cb45-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-78"><a href="#cb45-78" aria-hidden="true" tabindex="-1"></a> <span class="fu">do.call</span>(<span class="cf">function</span>(x){x<span class="sc">$</span>tip.labels},clades)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RRphylo)</span></code></pre></div>
+<pre><code>## Loading required package: emmeans</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>lep.sp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;lep_image_data.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 1106 Columns: 5</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (5): species, identifier, higher_taxon, common_name, highest_common_name
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>DataOrnithodirans<span class="sc">$</span>treedino<span class="ot">-&gt;</span>treedino</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>DataOrnithodirans<span class="sc">$</span>massdino<span class="ot">-&gt;</span>massdino</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>DataOrnithodirans<span class="sc">$</span>statedino<span class="ot">-&gt;</span>statedino</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="fu">RRphylo</span>(<span class="at">tree=</span>treedino,<span class="at">y=</span>massdino)<span class="ot">-&gt;</span>dinoRates</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="fu">search.shift</span>(<span class="at">RR=</span>dinoRates,<span class="at">status.type=</span><span class="st">&quot;clade&quot;</span>)<span class="ot">-&gt;</span>SSauto</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plotShift</span>(<span class="at">RR=</span>dinoRates,<span class="at">SS=</span>SSauto)<span class="ot">-&gt;</span>plotSS</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>plotSS<span class="sc">$</span><span class="fu">plotClades</span>()</span></code></pre></div>
+<p><img src="mod6_proj_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 </div>
 <div id="project-report" class="section level1">
@@ -894,13 +1384,13 @@ contributed to the project.</li>
 </ul>
 <p>Project reports should be uploaded by 11:59 PM on Sunday, October
 24th.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;./proj6data&quot;</span>,<span class="at">full.names =</span> T)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="st">&quot;BIOL3140(.+)&quot;</span>,<span class="st">&quot;BIOL314020</span><span class="sc">\\</span><span class="st">1&quot;</span>,<span class="st">&quot;BIOL3140_subject21&quot;</span>)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> f ){</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a> i2 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;(.+)BIOL3140(.+)&quot;</span>,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">1BIOL314020</span><span class="sc">\\</span><span class="st">2&quot;</span>,i)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.copy</span>(i,i2)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;./proj6data&quot;</span>,<span class="at">full.names =</span> T)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="st">&quot;BIOL3140(.+)&quot;</span>,<span class="st">&quot;BIOL314020</span><span class="sc">\\</span><span class="st">1&quot;</span>,<span class="st">&quot;BIOL3140_subject21&quot;</span>)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> f ){</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a> i2 <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;(.+)BIOL3140(.+)&quot;</span>,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">1BIOL314020</span><span class="sc">\\</span><span class="st">2&quot;</span>,i)</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.copy</span>(i,i2)</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>

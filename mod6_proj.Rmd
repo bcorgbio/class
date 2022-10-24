@@ -35,7 +35,11 @@ Studies based on experimental manipulations like those of Jantzen and Eisner (20
 <br>
 <br>
 
-The goal of this project is to study wing-shape evolution across the lepidoptera, including hundreds of species from both the moths (a paraphyletic group) and butterflies. To do this, we'll take a morphometric approach, characterizing the shape outline of fore- and hindwings from about 200 species of Lepidoptera.
+The goal of this project is to study wing-shape evolution across the lepidoptera, including hundreds of species from both the moths (a paraphyletic group) and butterflies. To do this, we'll take a morphometric approach, characterizing the shape outline of fore- and hindwings from about 200 species of Lepidoptera. The specific questions we'll answer with our morphometric data are:
+
+1. Do hind- and forewings vary in their evolutionary rates?
+
+2. Does the evolvability of the hind- and forewings vary signficantly among major lineages of moths and butterflies?
 
 ```{r images, include=FALSE,eval=FALSE}
 library(tidyverse)
@@ -72,7 +76,14 @@ if(length(r)==0){
 
 ) %>% unlist
 
+
+#fix Polygonia problem
+tips2[grep("Polygonia",tips2)] <- "Polygonia c-album"
+
+
 hi.taxa <- tibble(higher_taxon=lapply(tips,function(x) x[1]) %>% unlist,species=tips2) 
+
+
   
 
 common.names <- tibble(higher_taxon=hi.taxa$higher_taxon %>% unique(),
@@ -118,6 +129,16 @@ common.names <- tibble(higher_taxon=hi.taxa$higher_taxon %>% unique(),
   left_join(hi.taxa)
 
 
+###PROBLEM: polygonia c-album was retrieved in gbif as 5 sepearate species. must combine.
+
+common.names <- common.names %>% 
+  mutate(species=ifelse(grepl("Polygonia",species),"Polygonia c-album",species))
+
+
+common.names$species[grepl("Polygonia",common.names$species)]
+#fix name problem viz Polygonia
+tips2[grep("Polygonia",tips2)] <- "Polygonia c-album"
+      
 lep.tree$tip.label <- sp <- tips2
 
 write.tree(lep.tree,"lep_tree2.tre")
@@ -346,7 +367,7 @@ By now, you and your team should have been assigned about 20 of the ~200 species
 
 After opening the photo, follow the steps above.
 
-1. If there's a scale bar, [set the scale](https://imagejdocu.list.lu/gui/analyze/set_scale).
+1. If there's a scale bar, [set the scale](https://imagejdocu.list.lu/gui/analyze/set_scale). Please set the scale in mm.
 
 2. If the right wing pair is damaged, flip the image horizontally. Select "Image" $\rightarrow$ "Transform" $\rightarrow$ "Flip horizontally". **Note:** you may have to do this only for the fore- or hindwing.
 
@@ -458,23 +479,339 @@ outs.l %>%
   stack()
 ```
 
-Wonderful! Fore- and hindwings loaded for the 10 examples species. However, notice we have a few problems. First, both fore- and hindwing are included in the  
+Wonderful! Fore- and hindwings loaded for the 10 examples species. However, notice we have a few problems. First, both fore- and hindwing are included in the in the same data set. This confounds analyzing and comparing shape in fore- and hindwing separately, a major goal of this project. Second, the outlines are of arbitrary size due to how much of the pixel field they spanned in the photos and whether or not a scale in mm was set. Thus, this arbitrary size scale would confound shape analysis from the start. Let's take on fixing the hind- forewing issue first and, later, we'll tackle the size issue.
+
+Fortunately, we know whether each outline comes from either a fore- or hindwing because we added this metadata to the file name. Thus, we merely need to strip this information from the file name when loading the data in our `for` loop. Let's do that by modified the loop.
+
+```{r datlist2, results=FALSE,message=FALSE}
+outs.l <- list()
+wing.l <- list()
+for(i in f){
+  outs.l[[i]] <- read_delim(i,delim="\t") %>% 
+  as.matrix()
+  wing.l[[i]] <- gsub(".+_(hindwing|forewing).txt","\\1",i)
+}
+
+
+```
+Here, we use a general regular expression function `gsub()`, which [finds a character string within a fuller string](https://www.programmingr.com/tutorial/gsub-in-r/) and replaces it. In this case, we've asked `gsub()` to find either "hindwing" or "forewing" by using "|" for the or part. We've also specified that these two strings will be after any string (`grep` ".") of any length (`grep` "+") and after the "_". They'll also appear before ".txt". Each wing descriptor is saved to a unique position in the list `wing.l`.
+
+To store our wing descriptors within our outlines, we can access the `fac` option in `Out()` when transforming our list of matrices into a list of `Momocs` outlines. This `fac` option takes a list of named one-dimensional vectors, so we make a list with a name "wing" that has the unlisted values of `wing.l`. Let's save this newly labeled list of outlines as `outs`.
+
+```{r fac}
+outs <- outs.l %>% 
+  Out(fac=list(wing=wing.l %>% unlist)) %>% 
+  coo_flipx()
+```
+
+
+Now we can invoke `Momocs` `tidy`-like `filter()` function to parse the outlines according to their wing. Let's do that and visualize each group with `stack()`.
+
+```{r wingfilter,message=FALSE}
+forewings <- outs %>% 
+  filter(wing=="forewing")
+
+hindwings <- outs %>% 
+  filter(wing=="hindwing")
+
+forewings %>% 
+  stack()
+
+hindwings %>% 
+  stack()
+```
+
+
+Now that we have two lists of outlines ready for analysis, let's come back to our size issue. If we ran and EFA analysis on these outlines, most of the variance would be due to their arbitrary size differences. To address this, practitioners of shape analysis transform their shapes into a common coordinate space that removes size altogether. The method of choice for this is the [Procrustes transformation](https://en.wikipedia.org/wiki/Procrustes_analysis). This method superimposes the shapes by optimally translating, rotating and uniformly scaling the objects. That is, both the placement in space and the size of the shapes are freely adjusted so that they are the same size and the distance between the positions of the points constituting the shape is reduced. To align the shapes, the can be compared to an arbitrarily selected reference shape (referred to as ordinary Procrustes analysis) or the shapes can be aligned to an optimally determined mean shape (referred to as generalized Procrustes analysis). We'll perform the latter.
+
+Fortunately, `Momocs` has just a function for generalize Procrustes superimposition, `fgProcrustes()`. Let's use this and visualize our results. But before we do, we must tackle another problem: our outlines have a variable number of coordinates, making it impossible for `fgProcrustes()` to minimize the distance between points in each outline (which would it choose?). So we'll just sample 100 of the points in each outline using `Momocs`'s `coo_interpolate()`. This function fits a spline with high resolution to all the shapes and extracts a determined number of points at equal intervals. We can easily find the number of coordinates in each each set of wings and use the minimum value as the number we'll sample with `coo_interpolate()`. this will minimize the amount of information we lose.
+
+```{r proc, results=FALSE,message=FALSE}
+
+fore.min <- forewings %>% 
+  coo_nb() %>% 
+  min()
+
+forewings %>%
+  coo_interpolate(fore.min) %>% 
+  fgProcrustes() %>% 
+  stack()
+
+hind.min <- hindwings %>% 
+  coo_nb() %>% 
+  min()
+
+hindwings %>% 
+   coo_interpolate(hind.min) %>% 
+  fgProcrustes() %>% 
+  stack()
+```
+
+Now all that's left to do is perform the EFA and then we can move on to PC analysis. For this, all we have to do is pipe in the `Momocs` EFA function, `efourier()`. We'll do this and specify `norm=FALSE` for these [very arcane reasons](https://momx.github.io/Momocs/reference/efourier.html#details).
+
+```{r efour, results=FALSE,message=FALSE}
+forewings %>%
+  coo_interpolate(fore.min) %>% 
+  fgProcrustes() %>% 
+  efourier(norm=FALSE) 
+
+hindwings %>% 
+   coo_interpolate(hind.min) %>% 
+  fgProcrustes() %>% 
+  efourier(norm=FALSE) 
+
+```
+
+Performing the PCA is just as easy. We just finally add `PCA()` with the pipe. We'll have the results in appropriately name variables.
+
+```{r PCA, message=FALSE, results=FALSE}
+
+forewing.pca <- forewings %>%
+  coo_interpolate(fore.min) %>%
+  coo_slide(id=1) %>% 
+  fgProcrustes() %>% 
+  efourier(norm=FALSE,
+smooth.it=0) %>% 
+  PCA()
+
+hindwing.pca <-hindwings %>% 
+   coo_interpolate(hind.min) %>% 
+   coo_slide(id=1) %>% 
+  fgProcrustes() %>% 
+  efourier(norm=FALSE,
+smooth.it=0) %>% 
+  PCA()
+
+```
+
+We can visualize the PCA with `plot_PCA()`, which will, by default produce a biplot of the first two PCs, the amount of variance explained by each, and a representation of the morphoshape described by the PCs (the outlines in the background).
+
+```{r plotpca}
+forewing.pca %>% 
+  plot_PCA(title = "forewings")
+
+hindwing.pca %>% 
+  plot_PCA(title = "hindwings")
+```
+
+Now we can move on to the comparative analysis.
+
+## Comparative analysis
+
+Before we begin, Let's remind ourselves of the questions we're attempting to answer so that we can figure out exactly how to answer then. First, do hind- and forewings vary in their evolutionary rates? Second, do major groups of the Lepidoptera vary in their hind- and forewing evolvability?
+
+For this first question, we can simply evaluate the evolutionary rate of our PC scores for the hind and forewings using a method of choice. For the second question, we can look at the evolutionary rates of our PC scores across our Lepidopteran tree.
+
+We also used a second method, RRPhylo (Castiglione et al.2018), to estimate rates of plumage evolution. Like BAMM,RRPhylo is designed to model heterogeneity in rates of evolu-tion and identify shifts in phenotypic evolutionary rates but isspecifically designed to account for rate heterogeneity amongindividual lineages rather than entire clades. Using phylogeneticridge regression (Kratsch and McHardy 2014), RRPhylo esti-mates rates of phenotypic evolution along every branch in a treeand ancestral character states at nodes. We used the maximumclade credibility tree from Burns et al. (2014) and RRPhyloversion 2.0.3 in R to estimate rates of phenotypic evolution usingphylogenetic ridge regression
+
+First of all, as mentioned previously, we need a tree and fortunately we have one for these species. Indeed, the species choice for this project was based on those sampled in the @kawahara2019phylogenomics study. So let's load the tree you can [download here](lept.tree2.tre). Make sure it's in your project's directory. We'll use `read.tree()` from the `ape` package and plot it just to check things out. Notice `cex=0.1` to keep the tip labels small in the relatively large tree.
+
+```{r, tree}
+library(ape)
+
+lep.tree <- ape::read.tree("lep_tree2.tre")
+
+plot(lep.tree,cex=0.1)
+```
+
+Looks great; however, the convention is for the root of the tree to be positioned in the upper left. This is easy to fix with `ape`'s `laddersize()` function. We'll also remove the pesky underscore between names in the tip labels. This will help with joining the tree data with our species data.
+
+```{r treefix}
+lep.tree <- ladderize(lep.tree)
+plot(lep.tree,cex=0.1)
+
+lep.tree$tip.label <- gsub("_"," ",lep.tree$tip.label)
+```
+
+Now that we have our PCA data and a tree of species, we need to a add species information (e.g., the species, higher taxonomic information, etc.) to the shape data so the tree and shape data can work together. Notice that each species is represented in the `outs` list (from whence our PCA is derived) by the file name that belongs to its outline. Let's look at their names.
+
+```{r names}
+basename(names(outs))[1:5]
+```
+
+Not a bit of species data. However, Prof. Kenaley has stored the filenames of each species in a table you can [download here](lep_image_data.csv). Have a look.
+
+```{r sptab}
+lep.sp <- read_csv("lep_image_data.csv")
+
+head(lep.sp)
+```
+Have a look at the column "identifier".
+
+```{r ident}
+head(lep.sp$identifier)
+```
+
+This is the vector of the image file names minus the extension (.jpg, .png, etc.). Notice that our outline names, rather than species, contain this information---you saved the FIJI results as "XY_filename_hingwing.txt" or "XY_filename_forewing.txt". That is, this very same identifier in the species table is buried in the names of our outline data. So let's make a new tibble that strips the same identifier from the outline names and join the species data to this new tibble.
+
+```{r, outdata}
+out.data <- tibble(xy.file=basename(names(outs))) %>% 
+  mutate(identifier=gsub("XY_|_hindwing|_forewing|.txt","",xy.file)) %>% 
+  left_join(lep.sp)
+
+head(out.data)
+```
+
+With this tibble in place, we can now add species information to our PCA data. The PC scores are store in the the variable `x`, so we can summon them this way. Notice that the row names correspond to the outline file names, a column in out `out.data` tibble. 
+
+```{r pcsores}
+
+head(hindwing.pca$x,1)
+head(forewing.pca$x,1)
+
+```
+
+Let's now join the species information in our `out.data` tibble to the PCA data, storing these in new variables. 
+
+```{r pca2}
+hindwing.pca2 <-  tibble(xy.file=basename(rownames(hindwing.pca$x)),PC1=hindwing.pca$x[,1],PC2=hindwing.pca$x[,2]) %>% 
+  left_join(out.data)
+
+forewing.pca2 <-  tibble(xy.file=basename(rownames(forewing.pca$x)),PC1=forewing.pca$x[,1],PC2=forewing.pca$x[,2])%>% 
+  left_join(out.data)
+```
+
+Now we have the first 2 PCs for each wing stored with species information and are now ready for comparative analysis.
+
+## Evolutionary rates
+
+```{r, evolrates, eval=FALSE}
+
+library(BAMMtools)
+drops <- lep.tree$tip.label[!lep.tree$tip.label%in%unique(out.data$species)]
+
+lep.tree2 <- drop.tip(lep.tree,drops)
+
+pc1 <- as.matrix(rbind(tibble(pc1=hindwing.pca2$PC1,wing="hind"),tibble(pc1=forewing.pca2$PC1,wing="fore")))
+
+grps <- c(hindwing.pca2$species,forewing.pca2$species)
+rownames(pc1) <- c(hindwing.pca2$species,forewing.pca2$species)
+
+compare.multi.evol.rates(A=pc1,phy=lep.tree2,gp=Subset = FALSE)
+
+```
+
+
+```{r, eval=FALSE}
+
+out.data <- tibble(xy.file=basename(names(outs)),
+       ) %>% 
+  mutate(identifier=gsub("XY_|_hindwing|_forewing|.txt","",xy.file))
+
+
+# 
+# lep.sp <- lep.sp %>% 
+#   mutate(identifier=gsub("(.+)\\.\\w+$","\\1",filename))
+# write_csv(lep.sp,"lep_image_data.csv")
+
+
+
+out.data <-out.data %>% 
+  left_join(lep.sp)
+
+drops <- lep.tree$tip.label[!lep.tree$tip.label%in%unique(out.data$species)]
+
+lep.tree2 <- drop.tip(lep.tree,drops)
+
+#retrieve pca data for joining with species data
+hindwing.pca2 <-  tibble(xy.file=basename(rownames(hindwing.pca$x)),PC1=hindwing.pca$x[,1],PC2=hindwing.pca$x[,2]) %>% 
+  left_join(out.data)
+
+forewing.pca2 <-  tibble(xy.file=basename(rownames(forewing.pca$x)),PC1=forewing.pca$x[,1],PC2=forewing.pca$x[,2])%>% 
+  left_join(out.data)
+
+#are shape evolution rate different btwn superfamilies
+forewing.pca2 %>% 
+  ggplot()+geom_boxplot(aes(x=higher_taxon,y=PC1))
+
+hindwing.pca2 %>% 
+  ggplot()+geom_boxplot(aes(x=higher_taxon,y=PC1))
+
+plot(lep.tree2)
+
+hind.pc1 <- hindwing.pca2$PC1
+names(hind.pc1) <- hindwing.pca2$species
+
+fore.pc1 <- forewing.pca2$PC1
+names(fore.pc1) <- forewing.pca2$species
+
+
+lep.rates <- RRphylo(tree=lep.tree2,y=hind.pc1)
+lep.shifts <- search.shift(RR=lep.rates,status.type="clade")
+lep.plot <- plotShift(RR=lep.rates,SS=lep.shifts)
+
+lep.plot$plotClades()
+
+lep.plot
+
+plot(forewing.pca2$PC1,hindwing.pca2$PC1)
+
+
+ clade.n <- as.numeric(rownames(lep.shifts$single.clades))
+ 
+ tax.tab <- lep.sp %>% 
+   select(species,higher_taxon) %>% 
+   unique
+ 
+clade.names <- function(tre=lep.tree2,clade=clade.n,tax.table=tax.tab){
+ clades <- lapply(clade,function(x) extract.clade(tre,x))
+ 
+ clade.sp <- list()
+ 
+ for(i in 1:length(clades)){
+   clade.sp[[i]] <- clades[[i]]$tip.label
+ }
+ 
+ 
+ tax <- lapply(clade.sp, function(x) tax.table %>% filter(species%in% x)) 
+ 
+ 
+ names(tax) <- clade
+ 
+ return(tax)
+}
+
+ do.call(function(x){x$tip.labels},clades)
+
+ 
+ 
+```
+
+
+
+```{r}
+library(RRphylo)
+lep.sp <- read_csv("lep_image_data.csv")
+
+
+DataOrnithodirans$treedino->treedino
+DataOrnithodirans$massdino->massdino
+DataOrnithodirans$statedino->statedino
+
+RRphylo(tree=treedino,y=massdino)->dinoRates
+
+search.shift(RR=dinoRates,status.type="clade")->SSauto
+plotShift(RR=dinoRates,SS=SSauto)->plotSS
+plotSS$plotClades()
+```
 
 
 ```{r include=FALSE, eval=FALSE}
 
 
 #find the id that matches the data
-image.f <- list.files("lep_photos",recursive = TRUE,include.dirs = FALSE,full.names = TRUE)
+image.f <- list.files("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/lep_photos",recursive = TRUE,include.dirs = FALSE,full.names = TRUE)
 
 images <- tibble(
   path=image.f,
   identifier2=basename(image.f),
-  species=gsub("lep_photos\\/(.+)\\/.+$","\\1",image.f)
+  species=gsub(".+lep_photos\\/(.+)\\/.+$","\\1",image.f)
 ) %>% 
   mutate(dup=duplicated(identifier2)) %>% 
   mutate(filename=ifelse(dup==TRUE,paste0(species,"_",basename(identifier2)),basename(identifier2)),filename2=gsub("\\..+$","",filename))
 
+images %>% select(species,filename) %>% left_join(common.names) %>% 
+  write_csv("lep_image_data.csv")
 
 
 #are file names duplicate? and fix
@@ -519,6 +856,7 @@ images <- tibble(filename=list.files("lep_photos",full.names = TRUE,recursive = 
 sp.dirs <- list.dirs("lep_photos")
 
 
+
 # diff.n=100
 # while(diff.n>4){
 # spec.sample <-  tibble(species=gsub("lep_photos\\/","",list.dirs("lep_photos")[-1])) %>% 
@@ -560,7 +898,62 @@ images %>%
   mutate(to=paste0(to,"/",basename(filename))) %>% 
   mutate(file.copy(filename,to))
 
+  
+  f.grp <- list.files("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/group_photos",recursive=TRUE)
+  
+   f.lep <- list.files("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/lep_photos",recursive=TRUE)
+   
+
+   length(f.grp)
+   length(f.lep)
+   
+  lep.dirs <-  list.dirs("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/lep_photos")
+  grp.dirs <-  list.dirs("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/group_photos")
+  
+  lep.f <- sapply(lep.dirs,list.files)
+  grp.f <- sapply(grp.dirs,list.files)
+   
+  lep.l <- lapply(lep.f, length)
+ grp.l <- lapply(grp.f, length)
+  
+  which(grp.l<1)
+  
+  lep.dirs <- basename(lep.dirs)
+  
+  common.names$species[!common.names$species%in%lep.dirs]
+
+  common.names$species[grepl("Bicyclus",common.names$species)]
+  
+  tips2[grepl("Striacosta",tips2)]
+  
+  
+  lep.dirs[grepl("Striacosta",lep.dirs)]
+  
+  
 ```
+
+
+
+```{r,eval=FALSE,include=FALSE}
+### store image information
+
+  image.f <- list.files("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/lep_photos",recursive = TRUE,include.dirs = FALSE,full.names = TRUE)
+
+images <- tibble(
+  filename=basename(image.f),
+  species=gsub(".+lep_photos\\/(.+)\\/.+$","\\1",image.f)
+) %>% 
+  mutate(identifier=gsub("(.+)\\..+$","\\1",filename)) %>% 
+  mutate(species=ifelse(grepl("Polygonia",species),"Polygonia c-album",species))
+
+images %>% 
+  filter(grepl("Polygonia",species))
+
+images %>% select(species,identifier) %>% left_join(common.names) %>% 
+  write_csv("lep_image_data.csv")
+```
+
+
                        
 ```{r outline, include=FALSE, eval=FALSE}
 f <- list.files("lep_examples",pattern = ".txt",full.names = TRUE)
