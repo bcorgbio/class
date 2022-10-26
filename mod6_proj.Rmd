@@ -570,16 +570,14 @@ forewing.pca <- forewings %>%
   coo_interpolate(fore.min) %>%
   coo_slide(id=1) %>% 
   fgProcrustes() %>% 
-  efourier(norm=FALSE,
-smooth.it=0) %>% 
+  efourier(norm=FALSE) %>% 
   PCA()
 
 hindwing.pca <-hindwings %>% 
    coo_interpolate(hind.min) %>% 
    coo_slide(id=1) %>% 
   fgProcrustes() %>% 
-  efourier(norm=FALSE,
-smooth.it=0) %>% 
+  efourier(norm=FALSE) %>% 
   PCA()
 
 ```
@@ -592,6 +590,7 @@ forewing.pca %>%
 
 hindwing.pca %>% 
   plot_PCA(title = "hindwings")
+
 ```
 
 Now we can move on to the comparative analysis.
@@ -675,22 +674,241 @@ Now we have the first 2 PCs for each wing stored with species information and ar
 
 ## Evolutionary rates
 
-```{r, evolrates, eval=FALSE}
+There are several methods available to comparative biologist to estimate the rates of morphological evolution over a phylogenetic tree. We'll be using @o2006testing's method, the so-called "noncensored test" which uses the entire varian-cecovariance matrix (established by the a phylogeny) to calculate the likelihood of rates accross the tree. In this approach, one ancestral state is estimated under Brownian motion for the entire tree and the the optimal rate parameter values are estimated numerically until the likelihood of the model is maximized. This method is captured in the R package `phytools` with the function `brownie.lite()`. 
 
-library(BAMMtools)
+`brownie.lite()` takes two important arguments, a tree and the phenotypic values for each tip in the tree. Let's take our tree and drop any tips that don't occur in our PCA data.
+
+```{r, tree2}
+
 drops <- lep.tree$tip.label[!lep.tree$tip.label%in%unique(out.data$species)]
 
 lep.tree2 <- drop.tip(lep.tree,drops)
 
-pc1 <- as.matrix(rbind(tibble(pc1=hindwing.pca2$PC1,wing="hind"),tibble(pc1=forewing.pca2$PC1,wing="fore")))
+plot(lep.tree2)
+```
 
-grps <- c(hindwing.pca2$species,forewing.pca2$species)
-rownames(pc1) <- c(hindwing.pca2$species,forewing.pca2$species)
+Here we only include `lep.tree` tip labels that are in the unique species values of our `out.data` variable. Then we use `ape`'s `drop.tip()` function to drop the tips in our tree that don't occur in our `out.data` tibble.
 
-compare.multi.evol.rates(A=pc1,phy=lep.tree2,gp=Subset = FALSE)
+
+The phenotypic data passed to the `x` argument must be a named vector of values, so let's establish that for PCs 1 and 2, for both the hind- and forewings.
+
+```{r brownie1}
+
+#PC1s
+hind.pc1 <- hindwing.pca2 %>% 
+    filter(species%in% lep.tree2$tip.label) %>% 
+  group_by(species) %>% 
+  summarize(PC1=mean(PC1)) %>% 
+  pull
+
+names(hind.pc1) <-  hindwing.pca2%>% 
+    filter(species%in% lep.tree2$tip.label) %>% 
+  group_by(species) %>% 
+  summarize(PC1=mean(PC1)) %>% 
+  pull(species)
+
+fore.pc1 <- forewing.pca2 %>% 
+    filter(species%in% lep.tree2$tip.label) %>% 
+   group_by(species) %>% 
+  summarize(PC1=mean(PC1)) %>% 
+  pull(PC1)
+
+names(fore.pc1) <-  forewing.pca2 %>% 
+  filter(species%in% lep.tree2$tip.label) %>% 
+     group_by(species) %>% 
+  summarize(PC1=mean(PC1)) %>% 
+  pull(species)
+
+#PC2s
+hind.pc2 <- hindwing.pca2 %>% 
+    filter(species%in% lep.tree2$tip.label) %>% 
+  group_by(species) %>% 
+  summarize(PC2=mean(PC2)) %>% 
+  pull(PC2)
+
+names(hind.pc2) <-  hindwing.pca2%>% 
+    filter(species%in% lep.tree2$tip.label) %>% 
+  group_by(species) %>%
+  summarize(PC2=mean(PC2)) %>% 
+  pull(species)
+
+fore.pc2 <- forewing.pca2 %>% 
+    filter(species%in% lep.tree2$tip.label) %>% 
+   group_by(species) %>% 
+  summarize(PC2=mean(PC2)) %>% 
+  pull(PC2)
+
+names(fore.pc2) <-  forewing.pca2 %>% 
+  filter(species%in% lep.tree2$tip.label) %>% 
+     group_by(species) %>% 
+  summarize(PC2=mean(PC2)) %>% 
+  pull(species)
+```
+
+
+Notice here that we filtered the PCA data to include only species that occur in our new, pruned tree. That is, tree species may be in the the PCA data, but species in the PCA data may not be in the tree. This is because some species queried in GBIF were returned as [synonyms](https://en.wikipedia.org/wiki/Synonym_(taxonomy)) under different valid taxonomic names. We won't worry about this now except to exclude these species as we have above and forge ahead. 
+
+```{r brownie2}
+library(phytools)
+
+forePC1.BM<-brownie.lite(lep.tree2,fore.pc1*10)
+hindPC1.BM<-brownie.lite(lep.tree2,hind.pc1*10)
+
+forePC2.BM<-brownie.lite(lep.tree2,fore.pc2*10)
+hindPC2.BM<-brownie.lite(lep.tree2,hind.pc2*10)
 
 ```
 
+Also notice here that we multiplied our tip values by an arbitrary 10 units. This is because this [algorithm stumbles](http://blog.phytools.org/2011/12/error-message-from-brownielite-and.html) when tip branches are short and tip values are small. Great, now we have evolutionary rate estimates of wing shape store in each variable under `sig2.single`.
+
+```{r singlerate}
+forePC1.BM$sig2.single
+```
+
+With these values stored we can compare the evolutionary rate for the first and second PCs between fore- and hindwings, something you should do in your report.
+
+## Shifts in evolutionary rates
+
+We are also seeking to answer whether major groups of the Lepidoptera have undergone significant changes in the rate of wing-shape evolution. `brownie.lite()` can do this, but this method tells the practitioner nothing about the sign of the rate shife, i.e, whether the shift was to a slower or faster rate. For this, we'll use another method, phylogenetic ridge regression [@kratsch2014ridgerace]. This approach  takes a tree and a vector of tip data phenotypes, calculates the ancestral states at each node in the tree, and produces a regression line through each path in the tree, from root to tip including from each deeper node to a daugter node. The regressions are based on the phenotype values at each node vs. time between nodes and along path. The value of the slope parameter of these regressions is the rate. From this, we have rate vectors, i.e, changes in rate. 
+
+To implement ridge regression, we'll turn to the `RRphylo` package written by @castiglione2018new.  Like, `brownie.lite()` the function `RRphylo()` takes a tree and tip data as argurment. For instance, here we compute the rates along the branches for hingwing PC1.
+
+
+```{r RR}
+library(RRphylo)
+
+hindPC1.RR <- RRphylo(tree=lep.tree2,y=hind.pc1)
+```
+
+The output of `RRphylo()` is massive, including the rates computed for each branch in the tree.
+
+```{r}
+hindPC1.RR$rates
+```
+
+Because we're interested in rate shifts, we use the rates from `RRphylo()` to tests whether individual clades evolve at different rates as compared to the rest of the tree. This is performed with `RRphylo`'s `search.shift()`. Here we specify that we want to know if any clades/lineages have exceptional rate shifts with `status.type="clade"`. The singles clades with exception shifts are stored in `single.clade`, only the p value of the shift. Large rates are significantly larger than the rest of the tree (at alpha = 0.05), when the probability is > 0.975; and small rates are significantly small for p < 0.025.
+
+```{r}
+hindPC1.SS<- search.shift(RR=hindPC1.RR,status.type="clade")
+
+hindPC1.SS$single.clades
+```
+With this information we could visualize the nodes with exceptional shifts using `ape`'s `nodelabels` function. We merely need to plot the tree and take the numeric values of the row names returned in `single.clades`.
+
+```{r viznodes}
+plot(lep.tree2)
+nodelabels(node = as.numeric(rownames(hindPC1.SS$single.clades)),text = rownames(hindPC1.SS$single.clades))
+```
+
+This is fine, but `RRphylo`'s `plotShift()` does this for us. It's a little odd, but this function stores a plot in `plotClades()`, rather than produce a plot.
+
+```{r plotshifts}
+hindPC1.plot <- plotShift(RR=hindPC1.RR,SS=hindPC1.SS)
+
+hindPC1.plot$plotClades()
+```
+
+From the `single.clades` output and the tree labeled with `nodelabels`, we see that clade 36 represents a signifcant slow down, shifting -0.0034 units, but in clade 33 there's a signifant increase of 0.0053 units. 
+
+Seems we've answer part of the question at least as it pertains to hindwing PC1 and our limited sample of species, "Have there been shifts in wing shape evolution in Lepidopteran lineages?"
+But, which lineage have shifted? We know which species belong to these lineages, but not the lineage name.
+
+To extract this information and view it on the tree, let's use a custom function, one written by Prof. Kenaley. For this, we'll need `ggtree`, a tree annotation package written to work with trees like `ggplot2` works with data and standard plots. We'll have to download `ggtree` rom the `Bioconductor` repository, another place where packages are stored, much like `CRAN`. To do this, run the following only **ONCE**:
+
+
+```{r ggtree, eval=FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("ggtree")
+```
+
+We'll also need the `wesanderson` package for nice colors which can be downloaded from `CRAN`
+
+```{r ggtre}
+library(ggtree)
+library(wesanderson)
+
+plot_SS <- function(tre=NULL,SS=NULL,taxon.names=NULL){
+  
+  pal <- wes_palette("BottleRocket1",n=length(SS$single.clades))
+
+  nodes <- as.numeric(rownames(SS$single.clades))
+  sp <- list()
+  for(i in nodes){
+  sp[[paste0(i)]] <- tibble(nodes=i,species=extract.clade(tre,i)$tip.label)
+  }
+  
+    col.pal <- tibble(nodes=nodes,col=pal)
+  d <- do.call(rbind,sp) %>% left_join(taxon.names) %>% left_join(col.pal)%>% 
+    rename(label=species) 
+  
+d2<- d %>% rename(clade=higher_taxon) 
+
+
+dh <- tibble(n=nodes,SS$single.clades) %>% filter(rate.difference>0)
+
+dl <- tibble(n=nodes,SS$single.clades) %>% filter(rate.difference<0)
+
+
+  p <- ggtree(tre) + xlim(NA, 8)+ scale_y_reverse()
+  
+  p$data <- p$data %>% left_join(d) 
+  
+ p <-  p+geom_tiplab(aes(col=higher_taxon),geom="text")+
+    geom_cladelab(data=d2,mapping=aes(node=nodes,col=clade,label=clade),offset=2.5)+
+      geom_hilight(d2,mapping = aes(node = nodes,fill=clade),alpha = 0.02)+geom_nodepoint(data=dl,aes(subset = node %in% n), size=5, shape=25,fill='blue',color='blue',alpha=0.7,inherit.aes = FALSE)+
+   geom_nodepoint(dh,aes(subset = node %in%n), size=5, shape=24, fill='red',color='red',alpha=0.7,inherit.aes = FALSE)+
+    scale_fill_manual(values = pal)+
+   scale_color_manual(values = pal)+
+    theme(legend.position = "none")
+ 
+   res <- tibble(nodes=nodes,SS$single.clades) %>% left_join(d %>% select(nodes,higher_taxon) %>% unique)
+ 
+   return(list(plot=p,res=res))
+  
+}
+
+
+```
+
+This custom function `plot_SS` take three arguments, `tre` (a tree variable of class `phy`), `SS` (output from `search.shift()`), and `taxon.names` (a tibble/data.frame, containing the column `species` and `higher_taxon`). We have the higher taxon names store in our PCA tibbles (`hindwing.pca2`, etc.). The function returns a plot unter `$plot` and the `search.shift()` results under `$res`.
+
+Let's try it out.
+
+```{r newplot, eval=FALSE}
+hindPC1.res <- plot_SS(lep.tree2,hindPC1.SS,hindwing.pca2)
+
+```
+Notice that the clades and their taxa are color coded and the exceptional shifts are indicated by triangles (blue and down for low shifts, red and up for high shifts). Now we have a method of indicating what clades/lineags underwent a shift and the scale of the shift.
+
+## Shape evolution correlation
+
+To say something about whether hing- and forewing shape evolution is correlated we could undertake phylogenetic least squares analysis like we have in previous projects. But, we've done a ton already. So, let's make this simple and just perform [phylogenetic independent contrasts (PIC)](https://en.wikipedia.org/wiki/Phylogenetic_comparative_methods#:~:text=Phylogenetically%20independent%20contrasts,-The%20standardized%20contrasts&text=The%20logic%20of%20the%20method,statistically%20independent%20and%20identically%20distributed.) analysis. First proposed by @felsenstein1985phylogenies in his seminal paper, he proposed using phylogenetic information (under a Brownian-motion like model) to transform the original tip data into values that are statistically independent of one another. This method is captured in the `ape` function `pic()` For hindwing and forewing PC1, such analysis would look like this.
+
+
+```{r pic}
+hindPC1.pic <- pic(hind.pc1,phy = lep.tree2)
+forePC1.pic <- pic(fore.pc1,phy = lep.tree2)
+```
+Here we just imputed our store PC vectors we used in the rate analysis and our tree of course. Now we have transformed values we can regress against one another. Let's first plot them and see what we get.
+
+```{r picplot}
+PC1.pic <- tibble(
+  hind=hindPC1.pic,
+  fore=forePC1.pic
+)
+
+PC1.pic %>% 
+  ggplot(aes(x=fore,y=hind))+geom_point()+geom_smooth(method="lm")
+```
+
+Wow! These PC1s Look pretty correlated! Let's see what the r-squared value is and if there is a significant relationship. For this, we need simple to create a simple linear model.
+
+
+```{r picmod}
+summary(lm(hind~fore,PC1.pic))
+```
 
 ```{r, eval=FALSE}
 
@@ -736,11 +954,7 @@ fore.pc1 <- forewing.pca2$PC1
 names(fore.pc1) <- forewing.pca2$species
 
 
-lep.rates <- RRphylo(tree=lep.tree2,y=hind.pc1)
-lep.shifts <- search.shift(RR=lep.rates,status.type="clade")
-lep.plot <- plotShift(RR=lep.rates,SS=lep.shifts)
 
-lep.plot$plotClades()
 
 lep.plot
 
