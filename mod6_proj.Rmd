@@ -23,7 +23,7 @@ species. (For context, the vertebrates comprise just 70,000 species or so.) The 
 <br>
 
 
-Studies based on experimental manipulations like those of Jantzen and Eisner (2008), important as they are, are limited in their ability to characterize shape variables and the ecological roles of fore- and hind wings over evolutionary time scales and across lepidoptera lineages. Comparative analysis of shape data from natural history collections has helped bridge the gap between experimental studies and macroevolutionary patterns. If there is in fact different constraints on the evolution of fore- and hindwing morphology, we would expect to find a consistent patterns of diffent fore- and hindwing shape across the lepidopter. Indeed, a number of studies have investigated whether for- and hindwing shape and size differs in several isolated groups of butterflies. Strauss (1990) found the shape of hindwings were much more variable than forewings in heliconiine and ithomiine butterflies. In contrast, Chazot et al. (2016) found a strong correlation between forewing and hindwing shapes in the famous morpho group of butterflies. Therefore, the limited research on this topic does not resolve whether fore- and hindwing shape differ consistently across the Lepidoptera. Each of these studies was limited in their phylogenetic scope, encompassing very few species spanning few families of butterflies. Addressing whether fore- and hindwing shape varies independently, a much broader phylogenetic sample should be analyzed, one that includes not just representatives of the butterfly lineage, but also moths.
+Studies based on experimental manipulations like those of @jantzen2008hindwings, important as they are, are limited in their ability to characterize shape variables and the ecological roles of fore- and hind wings over evolutionary time scales and across lepidoptera lineages. Comparative analysis of shape data from natural history collections has helped bridge the gap between experimental studies and macroevolutionary patterns. If there is in fact different constraints on the evolution of fore- and hindwing morphology, we would expect to find a consistent patterns of diffent fore- and hindwing shape across the lepidopter. Indeed, a number of studies have investigated whether for- and hindwing shape and size differs in several isolated groups of butterflies. Strauss (1990) found the shape of hindwings were much more variable than forewings in heliconiine and ithomiine butterflies. In contrast, Chazot et al. (2016) found a strong correlation between forewing and hindwing shapes in the famous morpho group of butterflies. Therefore, the limited research on this topic does not resolve whether fore- and hindwing shape differ consistently across the Lepidoptera. Each of these studies was limited in their phylogenetic scope, encompassing very few species spanning few families of butterflies. Addressing whether fore- and hindwing shape varies independently, a much broader phylogenetic sample should be analyzed, one that includes not just representatives of the butterfly lineage, but also moths.
 
 
 <center>
@@ -39,7 +39,657 @@ The goal of this project is to study wing-shape evolution across the lepidoptera
 
 1. Do hind- and forewings vary in their evolutionary rates?
 
-2. Does the evolvability of the hind- and forewings vary signficantly among major lineages of moths and butterflies?
+2. Does the evolvability of the hind- and forewings vary significantly among major lineages of moths and butterflies?
+
+3. Is hindwing and forewing shape correlated?
+
+# Methods
+
+## Image acquisition
+
+A few decades ago, a morphometric project like this would require visiting museums collections from around the world to take images of the specimens and species of interest. In fact, this was a major part of Prof. Kenaley's PhD thesis, which included trips to natural history collections in France, Denmark, Great Britain, Taiwan, Japan, Monaco, New Zealand, and Australia. Ahhhhhh, the gool ol' days. Fortunately (or unfortunately), travel to such wonderful places may be avoided as collections have made major efforts to photograph their specimens. Now that most museums around the world have their holdings cataloged in databases, researchers can search their collections for records that have images. 
+
+Until very recently, amassing a data set of images for morphometric work  would require querying individual databases, one at a time. However, most natural history museums share their data with the Global Biodiversity Information Facility (GBIF), a clearing house of collections and species information. In the context of our project, one could search the GBIF database online for moth and butterfly records that have images. Fortunately for use, the folks at GBIF have created and R package, [`rgif`](https://www.gbif.org/tool/81747/rgbif), that permits access to GBIF's application programming interface (API), rendering their records searchable from the command line.
+
+
+
+## Species list and phylogeny
+
+Because we'll be comparing wing shape across species of the Lepidoptera, this project is by definition a comparative one and we'll need a phylogeny for the group. Fortunately a recent phylogenomic analysis for 200 species of Lepidotera by @kawahara2019phylogenomics resolved the relationships of the majore groups of this order. We've used the taxa studied in this paper to find images in GBIF and we'll use [a tree file](lep_tree2.tre) representing phylogeny for our comparative analsyis. 
+
+<center>
+<br>
+![](https://www.pnas.org/cms/10.1073/pnas.1907847116/asset/075c8ff7-6363-462d-a528-f2b13710804d/assets/graphic/pnas.1907847116fig01.jpeg){width=50%}
+<br>
+
+The phylogenetic relationships of the Lepidoptera according the @kawahara2019phylogenomics.
+</center>
+<br>
+
+## Digitization
+
+Our shape analysis will be based on the outline of the hind- and fore-wings of ~200 species of Lepidoptera. To outline the wings, we'll follow this generalize workflow below in the image analysis program FIJI (FIJI is just imageJ). 
+
+<br>
+<center>
+![](lep_workflow.jpeg){width=70%}
+<br>
+</center>
+<br>
+
+By now, you and your team should have been assigned about 20 of the ~200 species to outline and have accessed [the directories containing their photos](https://drive.google.com/drive/folders/1NEdQ0h5KXum3DzbhCzl857R_5YxZEQq3?usp=sharing). First choose one of your species to work on. For each species, start with what you think is the best image, that is, it has a scale bar, the wings are not damaged, and the hindwing is most exposed. Open that best image in Fiji.
+
+After opening the photo, follow the steps above.
+
+1. If there's a scale bar, [set the scale](https://imagejdocu.list.lu/gui/analyze/set_scale). Please set the scale in mm.
+
+2. If the right wing pair is damaged, flip the image horizontally. Select "Image" $\rightarrow$ "Transform" $\rightarrow$ "Flip horizontally". **Note:** you may have to do this only for the fore- or hindwing.
+
+3. Select the [polygon selection tool](https://imagej.nih.gov/ij/docs/guide/146-19.html).
+
+4. Trace the wing by placing the first point on the polygon on the anterior margin of the wing where it meets the thorax. Like so . . 
+
+<center>
+
+![](firstpoint.png){width=40%}
+<br>
+</center>
+<br>
+
+Continue to trace the outline of the wing being sure to include enough points to capture more complex areas. For instance, in this swallowtail hindwing, it may require 30 or more points to outline the interesting projections along the posterior margin.
+
+<br>
+<center>
+![](hindwing.png){width=40%}
+<br>
+</center>
+<br>
+
+You may also find it easier to get an acurate outline if you zoom in (`crtl+` or `command+`).
+
+5. Run the following macro in imageJ.
+
+```{}
+run("Fit Spline");
+run("Properties... ", "list");
+```
+
+
+This script [fits a spline](https://en.wikipedia.org/wiki/Spline_interpolation) through the selected points and produces a list of the x,y coordinates.
+
+**Note:** For the first image you outline, you will have to open the macro editor ("Plugins" $\rightarrow$ "New" $\Macro$). Paste the script command from above into the editor and save this new macro to an appropriate directory, perhaps you cloned repo. You'll want to access this later ("Plugins" $\rightarrow$ "Edit") so that you automate this process.
+
+6. Save the results table that pops up and be sure to append either "_hindwing" or "_forewing" to the file name and make sure this is before the ".txt" file extension. `command+s` or `ctrl+s` works. 
+
+For some species there may be only one image. For others there may be 10 or more. If you can, aim to outline the wing of three specimens per species.
+
+
+After your team has completed outlining the assigned species, upload your text files to [this directory](https://drive.google.com/drive/folders/1M7kb_6EooVdXZlMvkpOPSbwaRu2TfCDJ?usp=sharing). Once all the data appear here, your team can download all the outline data.
+
+## Shape analysis
+
+As we learned in class and you've been reading, researchers interested in comparing shape change between species can use one of two methods: landmark- or outline-base shape analysis. We'll use the latter. 
+
+Outline analysis involves breaking the shapes down into a mathematical description of the points that constitute the shapes. The most popular approach for fitting functions is elliptical Fourier analysis (EFA) in which the shapes in a data set are described as a series of ellipses. EFA attempts to align a number of ellipses to the outline of shapes and the scale of the major and minor axes of the ellipses are then used as the descriptor of the shapes. Of course, one could fit a lot of ellipses and describe the shape perfectly, i.e., with 100% power; however practitioners usually stop short of this and choose some lower lever of lower, say 99%. The number of ellipses is referred to as the number of harmonics. In the figure below, you see the a higher number of harmonics describe the shape in question more perfectly.
+
+<br>
+<center>
+![](https://www.researchgate.net/profile/Ryan-Felice/publication/260448082/figure/fig4/AS:297032695730198@1447829521359/Outline-reconstruction-using-Elliptical-Fourier-Descriptors-Black-contours-represent-the.png
+){width=60%}
+<br>
+<br>
+Elliptical Fourier analysis of the pygostyle, the fused plate of caudal vertebrae that support tail feathers in birds.
+</center>
+<br>
+<br>
+
+Once EFA is used to describe the shapes in a data set, one is left with many variables to consider including all the descriptors of all the ellipses that form the outlines. This could be many hundreds of variables in a data set like ours. This is a serious [multivariate problem](https://en.wikipedia.org/wiki/Multivariate_statistics).
+
+For such a problem, researchers usually turn to Principal Components Analysis (PCA) whereby the very complicated suite of variables is distilled into a set of fewer variables that describe the important variance among the original variables. In a sense, PCA produces a series of regressions, or vectors, that pass through the values of the original variables. This operation is performed iteratively, with the first vector (the first principal component, PC1), drawn through the variable space that accounts for the most variance in the data set. After the combination of variables forming PC1 is removed, a subsequent vector (PC2) is drawn through another unique variable space that describes the second most amount of variance. This continues until most of the variance is captured, resulting in scores of PCs. The first two or three, however, are usually enough to describe a health amount of variance, say 90% or more.
+
+To perform EFA and then PCA, we need only to turn to one R package, `Momocs`. Let's load this package and begin with an example analysis that we can scale up on our full data set. 
+
+
+Let's begin by reading in one of the outline text files, Prof. Kenaley has already produced for 10 species of butterflies and moths. Please [download these](lep_examples.zip) to follow along. You can unzip this directory and place it your project directory.
+
+```{r momocexp1}
+library(tidyverse)
+library(Momocs)
+f <- list.files("lep_examples",pattern=".txt",full.names = TRUE)
+
+out <- read_delim(f[1],delim="\t") %>% 
+  as.matrix()
+
+out %>% 
+  list() %>% 
+  Out() %>% 
+  coo_flipx() %>% 
+  stack()
+
+```
+
+Notice that we've found all the files in the "lep_examples" directory with `list.files()`, searching for the patter ".txt" and using the full filepath to make a loading the data in the directory possible. Next, we use `read_delim()` with `delim=\t` rather than `read_csc()` because FIJI outputs tab-delimited data. We save this outline as `out` after tranforming it to a matrix, the prefer format for `Momocs`.
+
+In the next operation, we transform this matrix into an `Momocs` outline using `Out()`; however, `Out()` must take a list of matrices and therefore we pipe in the `list()` function first. Next, `coo_flipx()` is invoked to flip the outline about the x axis--remember that the origin of the image field is the upper left, not the lower left in the usual graphical representation. Lastly, `stack()` is invoked to visualize the outline. And here we have a forewing visualized.
+
+Now, we will of course have hundreds of files to load and analyze with PCA. For this challenge we will rely on the `for` loop convention we've learned in projects past. We have the file pathes store in `f`, so let's develop this loop and store our outline data in a list.
+
+```{r datalist, message=FALSE}
+
+outs.l <- list()
+
+for(i in f){
+  outs.l[[i]] <- out <- read_delim(i,delim="\t") %>% 
+  as.matrix()
+}
+
+
+```
+
+As was mentioned above, the `Out()` function prefers a list, so we can work on the list established here to visualize our outlines.
+
+```{r out}
+outs.l %>% 
+  Out() %>% 
+  coo_flipx() %>% 
+  stack()
+```
+
+Wonderful! Fore- and hindwings loaded for the 10 examples species. However, notice we have a few problems. First, both fore- and hindwing are included in the in the same data set. This confounds analyzing and comparing shape in fore- and hindwing separately, a major goal of this project. Second, the outlines are of arbitrary size due to how much of the pixel field they spanned in the photos and whether or not a scale in mm was set. Thus, this arbitrary size scale would confound shape analysis from the start. Let's take on fixing the hind- forewing issue first and, later, we'll tackle the size issue.
+
+Fortunately, we know whether each outline comes from either a fore- or hindwing because we added this metadata to the file name. Thus, we merely need to strip this information from the file name when loading the data in our `for` loop. Let's do that by modified the loop.
+
+```{r datlist2, results=FALSE,message=FALSE}
+outs.l <- list()
+wing.l <- list()
+for(i in f){
+  outs.l[[i]] <- read_delim(i,delim="\t") %>% 
+  as.matrix()
+  wing.l[[i]] <- gsub(".+_(hindwing|forewing).txt","\\1",i)
+}
+
+
+```
+Here, we use a general regular expression function `gsub()`, which [finds a character string within a fuller string](https://www.programmingr.com/tutorial/gsub-in-r/) and replaces it. In this case, we've asked `gsub()` to find either "hindwing" or "forewing" by using "|" for the or part. We've also specified that these two strings will be after any string (`grep` ".") of any length (`grep` "+") and after the "_". They'll also appear before ".txt". Each wing descriptor is saved to a unique position in the list `wing.l`.
+
+To store our wing descriptors within our outlines, we can access the `fac` option in `Out()` when transforming our list of matrices into a list of `Momocs` outlines. This `fac` option takes a list of named one-dimensional vectors, so we make a list with a name "wing" that has the unlisted values of `wing.l`. Let's save this newly labeled list of outlines as `outs`.
+
+```{r fac}
+outs <- outs.l %>% 
+  Out(fac=list(wing=wing.l %>% unlist)) %>% 
+  coo_flipx()
+```
+
+
+Now we can invoke `Momocs` `tidy`-like `filter()` function to parse the outlines according to their wing. Let's do that and visualize each group with `stack()`.
+
+```{r wingfilter,message=FALSE}
+forewings <- outs %>% 
+  filter(wing=="forewing")
+
+hindwings <- outs %>% 
+  filter(wing=="hindwing")
+
+forewings %>% 
+  stack()
+
+hindwings %>% 
+  stack()
+```
+
+
+Now that we have two lists of outlines ready for analysis, let's come back to our size issue. If we ran and EFA analysis on these outlines, most of the variance would be due to their arbitrary size differences. To address this, practitioners of shape analysis transform their shapes into a common coordinate space that removes size altogether. The method of choice for this is the [Procrustes transformation](https://en.wikipedia.org/wiki/Procrustes_analysis). This method superimposes the shapes by optimally translating, rotating and uniformly scaling the objects. That is, both the placement in space and the size of the shapes are freely adjusted so that they are the same size and the distance between the positions of the points constituting the shape is reduced. To align the shapes, the can be compared to an arbitrarily selected reference shape (referred to as ordinary Procrustes analysis) or the shapes can be aligned to an optimally determined mean shape (referred to as generalized Procrustes analysis). We'll perform the latter.
+
+Fortunately, `Momocs` has just a function for generalize Procrustes superimposition, `fgProcrustes()`. Let's use this and visualize our results. But before we do, we must tackle another problem: our outlines have a variable number of coordinates, making it impossible for `fgProcrustes()` to minimize the distance between points in each outline (which would it choose?). So we'll just sample 100 of the points in each outline using `Momocs`'s `coo_interpolate()`. This function fits a spline with high resolution to all the shapes and extracts a determined number of points at equal intervals. We can easily find the number of coordinates in each each set of wings and use the minimum value as the number we'll sample with `coo_interpolate()`. this will minimize the amount of information we lose.
+
+```{r proc, results=FALSE,message=FALSE}
+
+fore.min <- forewings %>% 
+  coo_nb() %>% 
+  min()
+
+forewings %>%
+  coo_interpolate(fore.min) %>% 
+  fgProcrustes() %>% 
+  stack()
+
+hind.min <- hindwings %>% 
+  coo_nb() %>% 
+  min()
+
+hindwings %>% 
+   coo_interpolate(hind.min) %>% 
+  fgProcrustes() %>% 
+  stack()
+```
+
+Now all that's left to do is perform the EFA and then we can move on to PC analysis. For this, all we have to do is pipe in the `Momocs` EFA function, `efourier()`. We'll do this and specify `norm=FALSE` for these [very arcane reasons](https://momx.github.io/Momocs/reference/efourier.html#details).
+
+```{r efour, results=FALSE,message=FALSE}
+forewings %>%
+  coo_interpolate(fore.min) %>% 
+  fgProcrustes() %>% 
+  efourier(norm=FALSE) 
+
+hindwings %>% 
+   coo_interpolate(hind.min) %>% 
+  fgProcrustes() %>% 
+  efourier(norm=FALSE) 
+
+```
+
+Performing the PCA is just as easy. We just finally add `PCA()` with the pipe. We'll have the results in appropriately name variables.
+
+```{r PCA, message=FALSE, results=FALSE}
+
+forewing.pca <- forewings %>%
+  coo_interpolate(fore.min) %>%
+  coo_slide(id=1) %>% 
+  fgProcrustes() %>% 
+  efourier(norm=FALSE) %>% 
+  PCA()
+
+hindwing.pca <-hindwings %>% 
+   coo_interpolate(hind.min) %>% 
+   coo_slide(id=1) %>% 
+  fgProcrustes() %>% 
+  efourier(norm=FALSE) %>% 
+  PCA()
+
+```
+
+We can visualize the PCA with `plot_PCA()`, which will, by default produce a biplot of the first two PCs, the amount of variance explained by each, and a representation of the morphoshape described by the PCs (the outlines in the background).
+
+```{r plotpca}
+forewing.pca %>% 
+  plot_PCA(title = "forewings")
+
+hindwing.pca %>% 
+  plot_PCA(title = "hindwings")
+
+```
+
+Now we can move on to the comparative analysis.
+
+```{r morphspace, eval=FALSE, include=FALSE}
+
+#some momocs functions are hidden, ones that make backtransformation of morphospace easy. Stored here:
+source("Momocs_functions.R")
+
+
+  
+hind.hulls.grp <- hindwing.pca2 %>%
+  group_by(higher_taxon)%>%
+  slice(chull(PC1, PC2))
+
+fore.hulls.grp <- forewing.pca2 %>%
+  group_by(higher_taxon)%>%
+  slice(chull(PC1, PC2))
+
+labs <- tibble(
+  PC1=c(-0.1,0.15),
+  PC2=c(0.015,0.015),
+  label=c("WT","TH-")
+)
+
+
+hind.sp <- morphospacePCA(hindwing.pca,"PC1","PC2",pos.shp = "range",plot=F,size.shp = 0.1)[[1]]
+
+
+
+hind.sp <- lapply(1:length(hind.sp),function(x){
+  hind.sp[[x]] %>%as_tibble()%>%mutate(shp=x)}
+)
+
+hind.sp <- do.call(rbind,hind.sp)%>%dplyr::rename(x=V1,y=V2)
+
+
+hind.pos <- morphospace_positions(hindwing.pca$x,nr.shp = 6,nc.shp = 5)%>%
+  as_tibble()%>%dplyr::rename(pos.x=x,pos.y=y)%>%mutate(shp=1:nrow(.))
+
+
+hind.sp <-hind.sp%>%
+  left_join(hind.pos)%>%
+  mutate(x2=x+pos.x,y2=y+pos.y)
+
+
+ggplot()+geom_polygon(data=hind.sp,aes(x=x2,y=y2,group=shp),fill="white",col="darkgrey")+geom_hline(yintercept = 0, lty = 2) +geom_vline(xintercept = 0, lty = 2)+geom_point(data=hindwing.pca2,aes(x = PC1, y = PC2, color = higher_taxon),alpha = 0.5,size=4)+geom_polygon(data=hind.hulls.grp,aes(PC1,PC2,group=higher_taxon),alpha=0.01,inherit.aes = F)
+```
+
+## Comparative analysis
+
+Before we begin, Let's remind ourselves of the questions we're attempting to answer so that we can figure out exactly how to answer then. First, do hind- and forewings vary in their evolutionary rates? Second, do major groups of the Lepidoptera vary in their hind- and forewing evolvability?
+
+For this first question, we can simply evaluate the evolutionary rate of our PC scores for the hind and forewings using a method of choice. For the second question, we can look at the evolutionary rates of our PC scores across our Lepidopteran tree.
+
+First of all, as mentioned previously, we need a tree and fortunately we have one for these species. Indeed, the species choice for this project was based on those sampled in the @kawahara2019phylogenomics study. So let's load the tree you can [download here](lep_tree2.tre). Make sure it's in your project's directory. We'll use `read.tree()` from the `ape` package and plot it just to check things out. Notice `cex=0.1` to keep the tip labels small in the relatively large tree.
+
+```{r, tree}
+library(ape)
+
+lep.tree <- ape::read.tree("lep_tree2.tre")
+
+plot(lep.tree,cex=0.1)
+```
+
+Looks great; however, the convention is for the root of the tree to be positioned in the upper left. This is easy to fix with `ape`'s `laddersize()` function. We'll also remove the pesky underscore between names in the tip labels. This will help with joining the tree data with our species data.
+
+```{r treefix}
+lep.tree <- ladderize(lep.tree)
+plot(lep.tree,cex=0.1)
+
+lep.tree$tip.label <- gsub("_"," ",lep.tree$tip.label)
+```
+
+Now that we have our PCA data and a tree of species, we need to a add species information (e.g., the species, higher taxonomic information, etc.) to the shape data so the tree and shape data can work together. Notice that each species is represented in the `outs` list (from whence our PCA is derived) by the file name that belongs to its outline. Let's look at their names.
+
+```{r names}
+basename(names(outs))[1:5]
+```
+
+Not a bit of species data. However, Prof. Kenaley has stored the filenames of each species in a table you can [download here](lep_image_data.csv). Have a look.
+
+```{r sptab}
+lep.sp <- read_csv("lep_image_data.csv")
+
+head(lep.sp)
+```
+Have a look at the column "identifier".
+
+```{r ident}
+head(lep.sp$identifier)
+```
+
+This is the vector of the image file names minus the extension (.jpg, .png, etc.). Notice that our outline names, rather than species, contain this information---you saved the FIJI results as "XY_filename_hingwing.txt" or "XY_filename_forewing.txt". That is, this very same identifier in the species table is buried in the names of our outline data. So let's make a new tibble that strips the same identifier from the outline names and join the species data to this new tibble.
+
+```{r, outdata}
+out.data <- tibble(xy.file=basename(names(outs))) %>% 
+  mutate(identifier=gsub("XY_|_hindwing|_forewing|.txt","",xy.file)) %>% 
+  left_join(lep.sp)
+
+head(out.data)
+```
+
+With this tibble in place, we can now add species information to our PCA data. The PC scores are store in the the variable `x`, so we can summon them this way. Notice that the row names correspond to the outline file names, a column in out `out.data` tibble. 
+
+```{r pcsores}
+
+head(hindwing.pca$x,1)
+head(forewing.pca$x,1)
+
+```
+
+Let's now join the species information in our `out.data` tibble to the PCA data, storing these in new variables. 
+
+```{r pca2}
+hindwing.pca2 <-  tibble(xy.file=basename(rownames(hindwing.pca$x)),PC1=hindwing.pca$x[,1],PC2=hindwing.pca$x[,2]) %>% 
+  left_join(out.data)
+
+forewing.pca2 <-  tibble(xy.file=basename(rownames(forewing.pca$x)),PC1=forewing.pca$x[,1],PC2=forewing.pca$x[,2])%>% 
+  left_join(out.data)
+```
+
+Now we have the first 2 PCs for each wing stored with species information and are now ready for comparative analysis.
+
+## Evolutionary rates
+
+There are several methods available to comparative biologist to estimate the rates of morphological evolution over a phylogenetic tree. We'll be using @o2006testing's method, the so-called "noncensored test" which uses the entire varian-cecovariance matrix (established by the a phylogeny) to calculate the likelihood of rates accross the tree. In this approach, one ancestral state is estimated under Brownian motion for the entire tree and the the optimal rate parameter values are estimated numerically until the likelihood of the model is maximized. This method is captured in the R package `phytools` with the function `brownie.lite()`. 
+
+`brownie.lite()` takes two important arguments, a tree and the phenotypic values for each tip in the tree. Let's take our tree and drop any tips that don't occur in our PCA data.
+
+```{r, tree2}
+
+drops <- lep.tree$tip.label[!lep.tree$tip.label%in%unique(out.data$species)]
+
+lep.tree2 <- drop.tip(lep.tree,drops)
+
+plot(lep.tree2)
+```
+
+Here we only include `lep.tree` tip labels that are in the unique species values of our `out.data` variable. Then we use `ape`'s `drop.tip()` function to drop the tips in our tree that don't occur in our `out.data` tibble.
+
+
+The phenotypic data passed to the `x` argument must be a named vector of values, so let's establish that for PCs 1 and 2, for both the hind- and forewings.
+
+```{r brownie1}
+
+#PC1s
+hind.pc1 <- hindwing.pca2 %>% 
+    filter(species%in% lep.tree2$tip.label) %>% 
+  group_by(species) %>% 
+  summarize(PC1=mean(PC1)) %>% 
+  pull
+
+names(hind.pc1) <-  hindwing.pca2%>% 
+    filter(species%in% lep.tree2$tip.label) %>% 
+  group_by(species) %>% 
+  summarize(PC1=mean(PC1)) %>% 
+  pull(species)
+
+fore.pc1 <- forewing.pca2 %>% 
+    filter(species%in% lep.tree2$tip.label) %>% 
+   group_by(species) %>% 
+  summarize(PC1=mean(PC1)) %>% 
+  pull(PC1)
+
+names(fore.pc1) <-  forewing.pca2 %>% 
+  filter(species%in% lep.tree2$tip.label) %>% 
+     group_by(species) %>% 
+  summarize(PC1=mean(PC1)) %>% 
+  pull(species)
+
+#PC2s
+hind.pc2 <- hindwing.pca2 %>% 
+    filter(species%in% lep.tree2$tip.label) %>% 
+  group_by(species) %>% 
+  summarize(PC2=mean(PC2)) %>% 
+  pull(PC2)
+
+names(hind.pc2) <-  hindwing.pca2%>% 
+    filter(species%in% lep.tree2$tip.label) %>% 
+  group_by(species) %>%
+  summarize(PC2=mean(PC2)) %>% 
+  pull(species)
+
+fore.pc2 <- forewing.pca2 %>% 
+    filter(species%in% lep.tree2$tip.label) %>% 
+   group_by(species) %>% 
+  summarize(PC2=mean(PC2)) %>% 
+  pull(PC2)
+
+names(fore.pc2) <-  forewing.pca2 %>% 
+  filter(species%in% lep.tree2$tip.label) %>% 
+     group_by(species) %>% 
+  summarize(PC2=mean(PC2)) %>% 
+  pull(species)
+```
+
+
+Notice here that we filtered the PCA data to include only species that occur in our new, pruned tree. That is, tree species may be in the the PCA data, but species in the PCA data may not be in the tree. This is because some species queried in GBIF were returned as [synonyms](https://en.wikipedia.org/wiki/Synonym_(taxonomy)) under different valid taxonomic names. We won't worry about this now except to exclude these species as we have above and forge ahead. 
+
+```{r brownie2}
+library(phytools)
+
+forePC1.BM<-brownie.lite(lep.tree2,fore.pc1*10)
+hindPC1.BM<-brownie.lite(lep.tree2,hind.pc1*10)
+
+forePC2.BM<-brownie.lite(lep.tree2,fore.pc2*10)
+hindPC2.BM<-brownie.lite(lep.tree2,hind.pc2*10)
+
+```
+
+Also notice here that we multiplied our tip values by an arbitrary 10 units. This is because this [algorithm stumbles](http://blog.phytools.org/2011/12/error-message-from-brownielite-and.html) when tip branches are short and tip values are small. Great, now we have evolutionary rate estimates of wing shape store in each variable under `sig2.single`.
+
+```{r singlerate}
+forePC1.BM$sig2.single
+```
+
+With these values stored we can compare the evolutionary rate for the first and second PCs between fore- and hindwings, something you should do in your report.
+
+## Shifts in evolutionary rates
+
+We are also seeking to answer whether major groups of the Lepidoptera have undergone significant changes in the rate of wing-shape evolution. `brownie.lite()` can do this, but this method tells the practitioner nothing about the sign of the rate shife, i.e, whether the shift was to a slower or faster rate. For this, we'll use another method, phylogenetic ridge regression [@kratsch2014ridgerace]. This approach  takes a tree and a vector of tip data phenotypes, calculates the ancestral states at each node in the tree, and produces a regression line through each path in the tree, from root to tip including from each deeper node to a daugter node. The regressions are based on the phenotype values at each node vs. time between nodes and along path. The value of the slope parameter of these regressions is the rate. From this, we have rate vectors, i.e, changes in rate. 
+
+To implement ridge regression, we'll turn to the `RRphylo` package written by @castiglione2018new.  Like, `brownie.lite()` the function `RRphylo()` takes a tree and tip data as argurment. For instance, here we compute the rates along the branches for hingwing PC1.
+
+
+```{r RR}
+library(RRphylo)
+
+hindPC1.RR <- RRphylo(tree=lep.tree2,y=hind.pc1)
+```
+
+The output of `RRphylo()` is massive, including the rates computed for each branch in the tree.
+
+```{r}
+hindPC1.RR$rates
+```
+
+Because we're interested in rate shifts, we use the rates from `RRphylo()` to tests whether individual clades evolve at different rates as compared to the rest of the tree. This is performed with `RRphylo`'s `search.shift()`. Here we specify that we want to know if any clades/lineages have exceptional rate shifts with `status.type="clade"`. The singles clades with exception shifts are stored in `single.clade`, only the p value of the shift. Large rates are significantly larger than the rest of the tree (at alpha = 0.05), when the probability is > 0.975; and small rates are significantly small for p < 0.025.
+
+```{r}
+hindPC1.SS<- search.shift(RR=hindPC1.RR,status.type="clade")
+
+hindPC1.SS$single.clades
+```
+With this information we could visualize the nodes with exceptional shifts using `ape`'s `nodelabels` function. We merely need to plot the tree and take the numeric values of the row names returned in `single.clades`.
+
+```{r viznodes}
+plot(lep.tree2)
+nodelabels(node = as.numeric(rownames(hindPC1.SS$single.clades)),text = rownames(hindPC1.SS$single.clades))
+```
+
+This is fine, but `RRphylo`'s `plotShift()` does this for us. It's a little odd, but this function stores a plot in `plotClades()`, rather than produce a plot.
+
+```{r plotshifts}
+hindPC1.plot <- plotShift(RR=hindPC1.RR,SS=hindPC1.SS)
+
+hindPC1.plot$plotClades()
+```
+
+From the `single.clades` output and the tree labeled with `nodelabels`, we see that clade 36 represents a signifcant slow down, shifting -0.0034 units, but in clade 33 there's a signifant increase of 0.0053 units. 
+
+Seems we've answer part of the question at least as it pertains to hindwing PC1 and our limited sample of species, "Have there been shifts in wing shape evolution in Lepidopteran lineages?"
+But, which lineage have shifted? We know which species belong to these lineages, but not the lineage name.
+
+To extract this information and view it on the tree, let's use a custom function, one written by Prof. Kenaley. For this, we'll need `ggtree`, a tree annotation package written to work with trees like `ggplot2` works with data and standard plots. We'll have to download `ggtree` rom the `Bioconductor` repository, another place where packages are stored, much like `CRAN`. To do this, run the following only **ONCE**:
+
+
+```{r ggtree, eval=FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("ggtree")
+```
+
+We'll also need the `wesanderson` package for nice colors which can be downloaded from `CRAN`
+
+```{r ggtre, message=FALSE}
+library(ggtree)
+library(wesanderson)
+
+plot_SS <- function(tre=NULL,SS=NULL,taxon.names=NULL){
+  
+  pal <- wes_palette("BottleRocket1",n=length(SS$single.clades))
+
+  nodes <- as.numeric(rownames(SS$single.clades))
+  sp <- list()
+  for(i in nodes){
+  sp[[paste0(i)]] <- tibble(nodes=i,species=extract.clade(tre,i)$tip.label)
+  }
+  
+    col.pal <- tibble(nodes=nodes,col=pal)
+  d <- do.call(rbind,sp) %>% left_join(taxon.names) %>% left_join(col.pal)%>% 
+    rename(label=species) 
+  
+d2<- d %>% rename(clade=higher_taxon) 
+
+  p <- ggtree(tre) + xlim(NA, 8)+ scale_y_reverse()
+  
+  p$data <- p$data %>% left_join(d) %>% left_join(tibble(node=nodes,SS$single.clades) %>% mutate(shift=ifelse(rate.difference>0,"+","-")))
+  
+ p <-  p+geom_tiplab(aes(col=higher_taxon),geom="text")+
+    geom_cladelab(data=d2,mapping=aes(node=nodes,col=clade,label=clade),offset=2.5)+
+      geom_hilight(d2,mapping = aes(node = nodes,fill=clade),alpha = 0.02)+geom_nodepoint(mapping=aes(subset = shift =="-"), size=5, shape=25,fill='blue',color='blue',alpha=0.7)+
+   geom_nodepoint(mapping=aes(subset = shift =="+"), size=5, shape=24, fill='red',color='red',alpha=0.7)+
+    scale_fill_manual(values = pal)+
+   scale_color_manual(values = pal)+
+    theme(legend.position = "none")
+ 
+   res <- tibble(nodes=nodes,SS$single.clades) %>% left_join(d %>% select(nodes,higher_taxon) %>% unique)
+ 
+   return(list(plot=p,res=res))
+  
+}
+
+
+```
+
+This custom function `plot_SS()` takes three arguments, `tre` (a tree variable of class `phy`), `SS` (output from `search.shift()`), and `taxon.names` (a tibble/data.frame, containing the column `species` and `higher_taxon`). We have the higher taxon names store in our PCA tibbles (`hindwing.pca2`, etc.). The function returns a plot unter `$plot` and the `search.shift()` results under `$res`.
+
+Let's try it out.
+
+```{r newplot}
+hindPC1.res <- plot_SS(lep.tree2,hindPC1.SS,hindwing.pca2)
+
+hindPC1.res$plot
+hindPC1.res$res
+```
+Notice that the clades and their taxa are color coded and the exceptional shifts are indicated by triangles (blue and down for low shifts, red and up for high shifts). Now we have a method of indicating what clades/lineags underwent a shift and the scale of the shift.
+
+## Shape evolution correlation
+
+To say something about whether hing- and forewing shape evolution is correlated we could undertake phylogenetic least squares analysis like we have in previous projects. But, we've done a ton already. So, let's make this simple and just perform [phylogenetic independent contrasts (PIC)](https://en.wikipedia.org/wiki/Phylogenetic_comparative_methods#:~:text=Phylogenetically%20independent%20contrasts,-The%20standardized%20contrasts&text=The%20logic%20of%20the%20method,statistically%20independent%20and%20identically%20distributed.) analysis. First proposed by @felsenstein1985phylogenies in his seminal paper, he proposed using phylogenetic information (under a Brownian-motion like model) to transform the original tip data into values that are statistically independent of one another. This method is captured in the `ape` function `pic()` For hindwing and forewing PC1, such analysis would look like this.
+
+
+```{r pic}
+hindPC1.pic <- pic(hind.pc1,phy = lep.tree2)
+forePC1.pic <- pic(fore.pc1,phy = lep.tree2)
+```
+
+Here we just inputed our store PC vectors we used in the rate analysis and our tree of course. Now we have transformed values we can regress against one another. Let's first plot them and see what we get.
+
+```{r picplot}
+PC1.pic <- tibble(
+  hind=hindPC1.pic,
+  fore=forePC1.pic
+)
+
+PC1.pic %>% 
+  ggplot(aes(x=fore,y=hind))+geom_point()+geom_smooth(method="lm")
+```
+
+Wow! These PC1s Look pretty correlated! Let's see what the r-squared value is and if there is a significant relationship. For this, we need simply to create a linear model and retrieve these values with `summary()`.
+
+
+```{r picmod}
+summary(lm(hind~fore,PC1.pic))
+```
+
+
+# Project Report
+
+Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following:
+  
+  * Are the rates of wing-shape evolution different between the hind- and forewing? By how much? 
+  * Have major lineages of the Lepidoptera undergone significant shifts in evolutionary rate? 
+  * Are hind- and forewing shapes correlated?
+  
+Please be sure to answer this question based on both PC1 and PC2 shape scores.
+  
+In answering your question, your .Rmd should include the following components:
+
+   * A YAML header that specifies HTML output, the authors, and a bibliograph named "BIOL3140.bib". **Submit this bibliography as well!**
+   * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially:
+      + Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. **Please include at least one reference to support the summary of previous work.** Note: this can be done easily by refiguring the introduction to this project report.
+      + Methods: Explicitly state how you answered the questions, including a narrative of all the anlyses both qualitative and quantitative.
+      + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.
+      + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here.
+      + Author contributions: Breifly outline what each team member contributed to the project.
+
+Project reports should be uploaded by 11:59 PM on Sunday, November 5th.
+
+
 
 ```{r images, include=FALSE,eval=FALSE}
 library(tidyverse)
@@ -329,686 +979,6 @@ all.dat2 <- rbind(all.dat %>% mutate(source="gbif"),
 
 
 
-# Methods
-
-## Image acquisition
-
-A few decades ago, a morphometric project like this would require visiting museums collections from around the world to take images of the specimens and species of interest. In fact, this was a major part of Prof. Kenaley's PhD thesis, which included trips to natural history collections in France, Denmark, Great Britain, Taiwan, Japan, Monaco, New Zealand, and Australia. Ahhhhhh, the gool ol' days. Fortunately (or unfortunately), travel to such wonderful places may be avoided as collections have made major efforts to photograph their specimens. Now that most museums around the world have their holdings cataloged in databases, researchers can search their collections for records that have images. 
-
-Until very recently, amassing a data set of images for morphometric work  would require querying individual databases, one at a time. However, most natural history museums share their data with the Global Biodiversity Information Facility (GBIF), a clearing house of collections and species information. In the context of our project, one could search the GBIF database online for moth and butterfly records that have images. Fortunately for use, the folks at GBIF have created and R package, [`rgif`](https://www.gbif.org/tool/81747/rgbif), that permits access to GBIF's application programming interface (API), rendering their records searchable from the command line.
-
-
-
-## Species list and phylogeny
-
-Because we'll be comparing wing shape across species of the Lepidoptera, this project is by definition a comparative one and we'll need a phylogeny for the group. Fortunately a recent phylogenomic analysis for 200 species of Lepidotera by @kawahara2019phylogenomics resolved the relationships of the majore groups of this order. We've used the taxa studied in this paper to find images in GBIF and we'll use [a tree file](lep_tree2.tre) representing phylogeny for our comparative analsyis. 
-
-<center>
-<br>
-![](https://www.pnas.org/cms/10.1073/pnas.1907847116/asset/075c8ff7-6363-462d-a528-f2b13710804d/assets/graphic/pnas.1907847116fig01.jpeg){width=50%}
-<br>
-
-The phylogenetic relationships of the Lepidoptera according the @kawahara2019phylogenomics.
-</center>
-<br>
-
-## Digitization
-
-Our shape analysis will be based on the outline of the hind- and fore-wings of ~200 species of Lepidoptera. To outline the wings, we'll follow this generalize workflow below in the image analysis program FIJI (FIJI is just imageJ). 
-
-<br>
-<center>
-![](lep_workflow.jpeg){width=50%}
-<br>
-</center>
-<br>
-
-By now, you and your team should have been assigned about 20 of the ~200 species to outline and have accessed [the directories containing their photos](https://drive.google.com/drive/folders/1NEdQ0h5KXum3DzbhCzl857R_5YxZEQq3?usp=sharing). First choose one of your species to work on. For each species, start with what you think is the best image, that is, it has a scale bar, the wings are not damaged, and the hindwing is most exposed. Open that best image in Fiji.
-
-After opening the photo, follow the steps above.
-
-1. If there's a scale bar, [set the scale](https://imagejdocu.list.lu/gui/analyze/set_scale). Please set the scale in mm.
-
-2. If the right wing pair is damaged, flip the image horizontally. Select "Image" $\rightarrow$ "Transform" $\rightarrow$ "Flip horizontally". **Note:** you may have to do this only for the fore- or hindwing.
-
-3. Select the [polygon selection tool](https://imagej.nih.gov/ij/docs/guide/146-19.html).
-
-4. Trace the wing by placing the first point on the polygon on the anterior margin of the wing where it meets the thorax. Like so . . 
-
-<center>
-
-![](firstpoint.png){width=40%}
-<br>
-</center>
-<br>
-
-Continue to trace the outline of the wing being sure to include enough points to capture more complex areas. For instance, in this swallowtail hindwing, it may require 30 or more points to outline the interesting projections along the posterior margin.
-
-<br>
-<center>
-![](hindwing.png){width=40%}
-<br>
-</center>
-<br>
-
-You may also find it easier to get an acurate outline if you zoom in (`crtl+` or `command+`).
-
-5. Run the following macro in imageJ.
-
-```{}
-run("Fit Spline");
-run("Properties... ", "list");
-```
-
-
-This script [fits a spline](https://en.wikipedia.org/wiki/Spline_interpolation) through the selected points and produces a list of the x,y coordinates.
-
-**Note:** For the first image you outline, you will have to open the macro editor ("Plugins" $\rightarrow$ "New" $\Macro$). Paste the script command from above into the editor and save this new macro to an appropriate directory, perhaps you cloned repo. You'll want to access this later ("Plugins" $\rightarrow$ "Edit") so that you automate this process.
-
-6. Save the results table that pops up and be sure to append either "_hindwing" or "_forewing" to the file name and make sure this is before the ".txt" file extension. `command+s` or `ctrl+s` works. 
-
-For some species there may be only one image. For others there may be 10 or more. If you can, aim to outline the wing of three specimens per species.
-
-
-After you team has completed outlining the assigned species, upload your text files to [this directory](https://drive.google.com/drive/folders/1M7kb_6EooVdXZlMvkpOPSbwaRu2TfCDJ?usp=sharing). Once all the data appear here, your team can download all the outline data.
-
-## Shape analysis
-
-As we learned in class and you've been reading, researchers interested in comparing shape change between species can use one of two methods: landmark- or outline-base shape analysis. We'll use the latter. 
-
-Outline analysis involves breaking the shapes down into a mathematical description of the points that constitute the shapes. The most popular approach for fitting functions is elliptical Fourier analysis (EFA) in which the shapes in a data set are described as a series of ellipses. EFA attempts to align a number of ellipses to the outline of shapes and the scale of the major and minor axes of the ellipses are then used as the descriptor of the shapes. Of course, one could fit a lot of ellipses and describe the shape perfectly, i.e., with 100% power; however practitioners usually stop short of this and choose some lower lever of lower, say 99%. The number of ellipses is referred to as the number of harmonics. In the figure below, you see the a higher number of harmonics describe the shape in question more perfectly.
-
-<br>
-<center>
-![](https://www.researchgate.net/profile/Ryan-Felice/publication/260448082/figure/fig4/AS:297032695730198@1447829521359/Outline-reconstruction-using-Elliptical-Fourier-Descriptors-Black-contours-represent-the.png
-){width=60%}
-<br>
-Elliptical Fourier analysis of the pygostyle, the fused plate of caudal vertebrae that support tail feathers in birds.
-</center>
-<br>
-
-Once EFA is used to describe the shapes in a data set, one is left with many variables to consider including all the descriptors of all the ellipses that form the outlines. This could be many hundreds of variables in a data set like ours. This is a serious [multivariate problem](https://en.wikipedia.org/wiki/Multivariate_statistics).
-
-For such a problem, researchers usually turn to Principal Components analysis (PCA) whereby the very complicated suite of variables is distilled into a set of fewer variables that describe the important variance among the original variables. In a sense, PCA produces a series of regressions, or vectors, that pass through the values of the original variables. This operation is performed iteratively, with the first vector (the first principal component, PC1), drawn through the variable space that accounts for the most variance in the data set. After the combination of variables forming PC1 is removed, a subsequent vector (PC2) is drawn through another unique variable space that describes the second most amount of variance. This continues until most of the varaince is captured, resulting in scores of PCs. The first two or three, however, are usually enough to describe a health amount of variance, say 90% or more.
-
-To perform EFA and then PCA, we need only to turn to one R package, `Momocs`. Let's load this package and begin with an example analysis that we can scale up on our full data set. 
-
-
-Let's begin by reading in one of the outline text files, Prof. Kenaley has already produced for 10 species of butterflies and moths. Please [download these](lep_examples.zip) to follow along. You can unzip this directory and place it your project directory.
-
-```{r momocexp1}
-library(tidyverse)
-library(Momocs)
-f <- list.files("lep_examples",pattern=".txt",full.names = TRUE)
-
-out <- read_delim(f[1],delim="\t") %>% 
-  as.matrix()
-
-out %>% 
-  list() %>% 
-  Out() %>% 
-  coo_flipx() %>% 
-  stack()
-
-```
-
-Notice that we've found all the files in the "lep_examples" directory with `list.files()`, searching for the patter ".txt" and using the full filepath to make a loading the data in the directory possible. Next, we use `read_delim()` with `delim=\t` rather than `read_csc()` because FIJI outputs tab-delimited data. We save this outline as `out` after tranforming it to a matrix, the prefer format for `Momocs`.
-
-In the next operation, we transform this matrix into an `Momocs` outline using `Out()`; however, `Out()` must take a list of matrices and therefore we pipe in the `list()` function first. Next, `coo_flipx()` is invoked to flip the outline about the x axis--remember that the origin of the image field is the upper left, not the lower left in the usual graphical representation. Lastly, `stack()` is invoked to visualize the outline. And here we have a forewing visualized.
-
-Now, we will of course have hundreds of files to load and analyze with PCA. For this challenge we will rely on the `for` loop convention we've learned in projects past. We have the file pathes store in `f`, so let's develop this loop and store our outline data in a list.
-
-```{r datalist, message=FALSE}
-
-outs.l <- list()
-
-for(i in f){
-  outs.l[[i]] <- out <- read_delim(i,delim="\t") %>% 
-  as.matrix()
-}
-
-
-```
-
-As was mentioned above, the `Out()` function prefers a list, so we can work on the list established here to visualize our outlines.
-
-```{r out}
-outs.l %>% 
-  Out() %>% 
-  coo_flipx() %>% 
-  stack()
-```
-
-Wonderful! Fore- and hindwings loaded for the 10 examples species. However, notice we have a few problems. First, both fore- and hindwing are included in the in the same data set. This confounds analyzing and comparing shape in fore- and hindwing separately, a major goal of this project. Second, the outlines are of arbitrary size due to how much of the pixel field they spanned in the photos and whether or not a scale in mm was set. Thus, this arbitrary size scale would confound shape analysis from the start. Let's take on fixing the hind- forewing issue first and, later, we'll tackle the size issue.
-
-Fortunately, we know whether each outline comes from either a fore- or hindwing because we added this metadata to the file name. Thus, we merely need to strip this information from the file name when loading the data in our `for` loop. Let's do that by modified the loop.
-
-```{r datlist2, results=FALSE,message=FALSE}
-outs.l <- list()
-wing.l <- list()
-for(i in f){
-  outs.l[[i]] <- read_delim(i,delim="\t") %>% 
-  as.matrix()
-  wing.l[[i]] <- gsub(".+_(hindwing|forewing).txt","\\1",i)
-}
-
-
-```
-Here, we use a general regular expression function `gsub()`, which [finds a character string within a fuller string](https://www.programmingr.com/tutorial/gsub-in-r/) and replaces it. In this case, we've asked `gsub()` to find either "hindwing" or "forewing" by using "|" for the or part. We've also specified that these two strings will be after any string (`grep` ".") of any length (`grep` "+") and after the "_". They'll also appear before ".txt". Each wing descriptor is saved to a unique position in the list `wing.l`.
-
-To store our wing descriptors within our outlines, we can access the `fac` option in `Out()` when transforming our list of matrices into a list of `Momocs` outlines. This `fac` option takes a list of named one-dimensional vectors, so we make a list with a name "wing" that has the unlisted values of `wing.l`. Let's save this newly labeled list of outlines as `outs`.
-
-```{r fac}
-outs <- outs.l %>% 
-  Out(fac=list(wing=wing.l %>% unlist)) %>% 
-  coo_flipx()
-```
-
-
-Now we can invoke `Momocs` `tidy`-like `filter()` function to parse the outlines according to their wing. Let's do that and visualize each group with `stack()`.
-
-```{r wingfilter,message=FALSE}
-forewings <- outs %>% 
-  filter(wing=="forewing")
-
-hindwings <- outs %>% 
-  filter(wing=="hindwing")
-
-forewings %>% 
-  stack()
-
-hindwings %>% 
-  stack()
-```
-
-
-Now that we have two lists of outlines ready for analysis, let's come back to our size issue. If we ran and EFA analysis on these outlines, most of the variance would be due to their arbitrary size differences. To address this, practitioners of shape analysis transform their shapes into a common coordinate space that removes size altogether. The method of choice for this is the [Procrustes transformation](https://en.wikipedia.org/wiki/Procrustes_analysis). This method superimposes the shapes by optimally translating, rotating and uniformly scaling the objects. That is, both the placement in space and the size of the shapes are freely adjusted so that they are the same size and the distance between the positions of the points constituting the shape is reduced. To align the shapes, the can be compared to an arbitrarily selected reference shape (referred to as ordinary Procrustes analysis) or the shapes can be aligned to an optimally determined mean shape (referred to as generalized Procrustes analysis). We'll perform the latter.
-
-Fortunately, `Momocs` has just a function for generalize Procrustes superimposition, `fgProcrustes()`. Let's use this and visualize our results. But before we do, we must tackle another problem: our outlines have a variable number of coordinates, making it impossible for `fgProcrustes()` to minimize the distance between points in each outline (which would it choose?). So we'll just sample 100 of the points in each outline using `Momocs`'s `coo_interpolate()`. This function fits a spline with high resolution to all the shapes and extracts a determined number of points at equal intervals. We can easily find the number of coordinates in each each set of wings and use the minimum value as the number we'll sample with `coo_interpolate()`. this will minimize the amount of information we lose.
-
-```{r proc, results=FALSE,message=FALSE}
-
-fore.min <- forewings %>% 
-  coo_nb() %>% 
-  min()
-
-forewings %>%
-  coo_interpolate(fore.min) %>% 
-  fgProcrustes() %>% 
-  stack()
-
-hind.min <- hindwings %>% 
-  coo_nb() %>% 
-  min()
-
-hindwings %>% 
-   coo_interpolate(hind.min) %>% 
-  fgProcrustes() %>% 
-  stack()
-```
-
-Now all that's left to do is perform the EFA and then we can move on to PC analysis. For this, all we have to do is pipe in the `Momocs` EFA function, `efourier()`. We'll do this and specify `norm=FALSE` for these [very arcane reasons](https://momx.github.io/Momocs/reference/efourier.html#details).
-
-```{r efour, results=FALSE,message=FALSE}
-forewings %>%
-  coo_interpolate(fore.min) %>% 
-  fgProcrustes() %>% 
-  efourier(norm=FALSE) 
-
-hindwings %>% 
-   coo_interpolate(hind.min) %>% 
-  fgProcrustes() %>% 
-  efourier(norm=FALSE) 
-
-```
-
-Performing the PCA is just as easy. We just finally add `PCA()` with the pipe. We'll have the results in appropriately name variables.
-
-```{r PCA, message=FALSE, results=FALSE}
-
-forewing.pca <- forewings %>%
-  coo_interpolate(fore.min) %>%
-  coo_slide(id=1) %>% 
-  fgProcrustes() %>% 
-  efourier(norm=FALSE) %>% 
-  PCA()
-
-hindwing.pca <-hindwings %>% 
-   coo_interpolate(hind.min) %>% 
-   coo_slide(id=1) %>% 
-  fgProcrustes() %>% 
-  efourier(norm=FALSE) %>% 
-  PCA()
-
-```
-
-We can visualize the PCA with `plot_PCA()`, which will, by default produce a biplot of the first two PCs, the amount of variance explained by each, and a representation of the morphoshape described by the PCs (the outlines in the background).
-
-```{r plotpca}
-forewing.pca %>% 
-  plot_PCA(title = "forewings")
-
-hindwing.pca %>% 
-  plot_PCA(title = "hindwings")
-
-```
-
-Now we can move on to the comparative analysis.
-
-## Comparative analysis
-
-Before we begin, Let's remind ourselves of the questions we're attempting to answer so that we can figure out exactly how to answer then. First, do hind- and forewings vary in their evolutionary rates? Second, do major groups of the Lepidoptera vary in their hind- and forewing evolvability?
-
-For this first question, we can simply evaluate the evolutionary rate of our PC scores for the hind and forewings using a method of choice. For the second question, we can look at the evolutionary rates of our PC scores across our Lepidopteran tree.
-
-We also used a second method, RRPhylo (Castiglione et al.2018), to estimate rates of plumage evolution. Like BAMM,RRPhylo is designed to model heterogeneity in rates of evolu-tion and identify shifts in phenotypic evolutionary rates but isspecifically designed to account for rate heterogeneity amongindividual lineages rather than entire clades. Using phylogeneticridge regression (Kratsch and McHardy 2014), RRPhylo esti-mates rates of phenotypic evolution along every branch in a treeand ancestral character states at nodes. We used the maximumclade credibility tree from Burns et al. (2014) and RRPhyloversion 2.0.3 in R to estimate rates of phenotypic evolution usingphylogenetic ridge regression
-
-First of all, as mentioned previously, we need a tree and fortunately we have one for these species. Indeed, the species choice for this project was based on those sampled in the @kawahara2019phylogenomics study. So let's load the tree you can [download here](lep_tree2.tre). Make sure it's in your project's directory. We'll use `read.tree()` from the `ape` package and plot it just to check things out. Notice `cex=0.1` to keep the tip labels small in the relatively large tree.
-
-```{r, tree}
-library(ape)
-
-lep.tree <- ape::read.tree("lep_tree2.tre")
-
-plot(lep.tree,cex=0.1)
-```
-
-Looks great; however, the convention is for the root of the tree to be positioned in the upper left. This is easy to fix with `ape`'s `laddersize()` function. We'll also remove the pesky underscore between names in the tip labels. This will help with joining the tree data with our species data.
-
-```{r treefix}
-lep.tree <- ladderize(lep.tree)
-plot(lep.tree,cex=0.1)
-
-lep.tree$tip.label <- gsub("_"," ",lep.tree$tip.label)
-```
-
-Now that we have our PCA data and a tree of species, we need to a add species information (e.g., the species, higher taxonomic information, etc.) to the shape data so the tree and shape data can work together. Notice that each species is represented in the `outs` list (from whence our PCA is derived) by the file name that belongs to its outline. Let's look at their names.
-
-```{r names}
-basename(names(outs))[1:5]
-```
-
-Not a bit of species data. However, Prof. Kenaley has stored the filenames of each species in a table you can [download here](lep_image_data.csv). Have a look.
-
-```{r sptab}
-lep.sp <- read_csv("lep_image_data.csv")
-
-head(lep.sp)
-```
-Have a look at the column "identifier".
-
-```{r ident}
-head(lep.sp$identifier)
-```
-
-This is the vector of the image file names minus the extension (.jpg, .png, etc.). Notice that our outline names, rather than species, contain this information---you saved the FIJI results as "XY_filename_hingwing.txt" or "XY_filename_forewing.txt". That is, this very same identifier in the species table is buried in the names of our outline data. So let's make a new tibble that strips the same identifier from the outline names and join the species data to this new tibble.
-
-```{r, outdata}
-out.data <- tibble(xy.file=basename(names(outs))) %>% 
-  mutate(identifier=gsub("XY_|_hindwing|_forewing|.txt","",xy.file)) %>% 
-  left_join(lep.sp)
-
-head(out.data)
-```
-
-With this tibble in place, we can now add species information to our PCA data. The PC scores are store in the the variable `x`, so we can summon them this way. Notice that the row names correspond to the outline file names, a column in out `out.data` tibble. 
-
-```{r pcsores}
-
-head(hindwing.pca$x,1)
-head(forewing.pca$x,1)
-
-```
-
-Let's now join the species information in our `out.data` tibble to the PCA data, storing these in new variables. 
-
-```{r pca2}
-hindwing.pca2 <-  tibble(xy.file=basename(rownames(hindwing.pca$x)),PC1=hindwing.pca$x[,1],PC2=hindwing.pca$x[,2]) %>% 
-  left_join(out.data)
-
-forewing.pca2 <-  tibble(xy.file=basename(rownames(forewing.pca$x)),PC1=forewing.pca$x[,1],PC2=forewing.pca$x[,2])%>% 
-  left_join(out.data)
-```
-
-Now we have the first 2 PCs for each wing stored with species information and are now ready for comparative analysis.
-
-## Evolutionary rates
-
-There are several methods available to comparative biologist to estimate the rates of morphological evolution over a phylogenetic tree. We'll be using @o2006testing's method, the so-called "noncensored test" which uses the entire varian-cecovariance matrix (established by the a phylogeny) to calculate the likelihood of rates accross the tree. In this approach, one ancestral state is estimated under Brownian motion for the entire tree and the the optimal rate parameter values are estimated numerically until the likelihood of the model is maximized. This method is captured in the R package `phytools` with the function `brownie.lite()`. 
-
-`brownie.lite()` takes two important arguments, a tree and the phenotypic values for each tip in the tree. Let's take our tree and drop any tips that don't occur in our PCA data.
-
-```{r, tree2}
-
-drops <- lep.tree$tip.label[!lep.tree$tip.label%in%unique(out.data$species)]
-
-lep.tree2 <- drop.tip(lep.tree,drops)
-
-plot(lep.tree2)
-```
-
-Here we only include `lep.tree` tip labels that are in the unique species values of our `out.data` variable. Then we use `ape`'s `drop.tip()` function to drop the tips in our tree that don't occur in our `out.data` tibble.
-
-
-The phenotypic data passed to the `x` argument must be a named vector of values, so let's establish that for PCs 1 and 2, for both the hind- and forewings.
-
-```{r brownie1}
-
-#PC1s
-hind.pc1 <- hindwing.pca2 %>% 
-    filter(species%in% lep.tree2$tip.label) %>% 
-  group_by(species) %>% 
-  summarize(PC1=mean(PC1)) %>% 
-  pull
-
-names(hind.pc1) <-  hindwing.pca2%>% 
-    filter(species%in% lep.tree2$tip.label) %>% 
-  group_by(species) %>% 
-  summarize(PC1=mean(PC1)) %>% 
-  pull(species)
-
-fore.pc1 <- forewing.pca2 %>% 
-    filter(species%in% lep.tree2$tip.label) %>% 
-   group_by(species) %>% 
-  summarize(PC1=mean(PC1)) %>% 
-  pull(PC1)
-
-names(fore.pc1) <-  forewing.pca2 %>% 
-  filter(species%in% lep.tree2$tip.label) %>% 
-     group_by(species) %>% 
-  summarize(PC1=mean(PC1)) %>% 
-  pull(species)
-
-#PC2s
-hind.pc2 <- hindwing.pca2 %>% 
-    filter(species%in% lep.tree2$tip.label) %>% 
-  group_by(species) %>% 
-  summarize(PC2=mean(PC2)) %>% 
-  pull(PC2)
-
-names(hind.pc2) <-  hindwing.pca2%>% 
-    filter(species%in% lep.tree2$tip.label) %>% 
-  group_by(species) %>%
-  summarize(PC2=mean(PC2)) %>% 
-  pull(species)
-
-fore.pc2 <- forewing.pca2 %>% 
-    filter(species%in% lep.tree2$tip.label) %>% 
-   group_by(species) %>% 
-  summarize(PC2=mean(PC2)) %>% 
-  pull(PC2)
-
-names(fore.pc2) <-  forewing.pca2 %>% 
-  filter(species%in% lep.tree2$tip.label) %>% 
-     group_by(species) %>% 
-  summarize(PC2=mean(PC2)) %>% 
-  pull(species)
-```
-
-
-Notice here that we filtered the PCA data to include only species that occur in our new, pruned tree. That is, tree species may be in the the PCA data, but species in the PCA data may not be in the tree. This is because some species queried in GBIF were returned as [synonyms](https://en.wikipedia.org/wiki/Synonym_(taxonomy)) under different valid taxonomic names. We won't worry about this now except to exclude these species as we have above and forge ahead. 
-
-```{r brownie2}
-library(phytools)
-
-forePC1.BM<-brownie.lite(lep.tree2,fore.pc1*10)
-hindPC1.BM<-brownie.lite(lep.tree2,hind.pc1*10)
-
-forePC2.BM<-brownie.lite(lep.tree2,fore.pc2*10)
-hindPC2.BM<-brownie.lite(lep.tree2,hind.pc2*10)
-
-```
-
-Also notice here that we multiplied our tip values by an arbitrary 10 units. This is because this [algorithm stumbles](http://blog.phytools.org/2011/12/error-message-from-brownielite-and.html) when tip branches are short and tip values are small. Great, now we have evolutionary rate estimates of wing shape store in each variable under `sig2.single`.
-
-```{r singlerate}
-forePC1.BM$sig2.single
-```
-
-With these values stored we can compare the evolutionary rate for the first and second PCs between fore- and hindwings, something you should do in your report.
-
-## Shifts in evolutionary rates
-
-We are also seeking to answer whether major groups of the Lepidoptera have undergone significant changes in the rate of wing-shape evolution. `brownie.lite()` can do this, but this method tells the practitioner nothing about the sign of the rate shife, i.e, whether the shift was to a slower or faster rate. For this, we'll use another method, phylogenetic ridge regression [@kratsch2014ridgerace]. This approach  takes a tree and a vector of tip data phenotypes, calculates the ancestral states at each node in the tree, and produces a regression line through each path in the tree, from root to tip including from each deeper node to a daugter node. The regressions are based on the phenotype values at each node vs. time between nodes and along path. The value of the slope parameter of these regressions is the rate. From this, we have rate vectors, i.e, changes in rate. 
-
-To implement ridge regression, we'll turn to the `RRphylo` package written by @castiglione2018new.  Like, `brownie.lite()` the function `RRphylo()` takes a tree and tip data as argurment. For instance, here we compute the rates along the branches for hingwing PC1.
-
-
-```{r RR}
-library(RRphylo)
-
-hindPC1.RR <- RRphylo(tree=lep.tree2,y=hind.pc1)
-```
-
-The output of `RRphylo()` is massive, including the rates computed for each branch in the tree.
-
-```{r}
-hindPC1.RR$rates
-```
-
-Because we're interested in rate shifts, we use the rates from `RRphylo()` to tests whether individual clades evolve at different rates as compared to the rest of the tree. This is performed with `RRphylo`'s `search.shift()`. Here we specify that we want to know if any clades/lineages have exceptional rate shifts with `status.type="clade"`. The singles clades with exception shifts are stored in `single.clade`, only the p value of the shift. Large rates are significantly larger than the rest of the tree (at alpha = 0.05), when the probability is > 0.975; and small rates are significantly small for p < 0.025.
-
-```{r}
-hindPC1.SS<- search.shift(RR=hindPC1.RR,status.type="clade")
-
-hindPC1.SS$single.clades
-```
-With this information we could visualize the nodes with exceptional shifts using `ape`'s `nodelabels` function. We merely need to plot the tree and take the numeric values of the row names returned in `single.clades`.
-
-```{r viznodes}
-plot(lep.tree2)
-nodelabels(node = as.numeric(rownames(hindPC1.SS$single.clades)),text = rownames(hindPC1.SS$single.clades))
-```
-
-This is fine, but `RRphylo`'s `plotShift()` does this for us. It's a little odd, but this function stores a plot in `plotClades()`, rather than produce a plot.
-
-```{r plotshifts}
-hindPC1.plot <- plotShift(RR=hindPC1.RR,SS=hindPC1.SS)
-
-hindPC1.plot$plotClades()
-```
-
-From the `single.clades` output and the tree labeled with `nodelabels`, we see that clade 36 represents a signifcant slow down, shifting -0.0034 units, but in clade 33 there's a signifant increase of 0.0053 units. 
-
-Seems we've answer part of the question at least as it pertains to hindwing PC1 and our limited sample of species, "Have there been shifts in wing shape evolution in Lepidopteran lineages?"
-But, which lineage have shifted? We know which species belong to these lineages, but not the lineage name.
-
-To extract this information and view it on the tree, let's use a custom function, one written by Prof. Kenaley. For this, we'll need `ggtree`, a tree annotation package written to work with trees like `ggplot2` works with data and standard plots. We'll have to download `ggtree` rom the `Bioconductor` repository, another place where packages are stored, much like `CRAN`. To do this, run the following only **ONCE**:
-
-
-```{r ggtree, eval=FALSE}
-if (!require("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-
-BiocManager::install("ggtree")
-```
-
-We'll also need the `wesanderson` package for nice colors which can be downloaded from `CRAN`
-
-```{r ggtre}
-library(ggtree)
-library(wesanderson)
-
-plot_SS <- function(tre=NULL,SS=NULL,taxon.names=NULL){
-  
-  pal <- wes_palette("BottleRocket1",n=length(SS$single.clades))
-
-  nodes <- as.numeric(rownames(SS$single.clades))
-  sp <- list()
-  for(i in nodes){
-  sp[[paste0(i)]] <- tibble(nodes=i,species=extract.clade(tre,i)$tip.label)
-  }
-  
-    col.pal <- tibble(nodes=nodes,col=pal)
-  d <- do.call(rbind,sp) %>% left_join(taxon.names) %>% left_join(col.pal)%>% 
-    rename(label=species) 
-  
-d2<- d %>% rename(clade=higher_taxon) 
-
-
-dh <- tibble(n=nodes,SS$single.clades) %>% filter(rate.difference>0)
-
-dl <- tibble(n=nodes,SS$single.clades) %>% filter(rate.difference<0)
-
-
-  p <- ggtree(tre) + xlim(NA, 8)+ scale_y_reverse()
-  
-  p$data <- p$data %>% left_join(d) 
-  
- p <-  p+geom_tiplab(aes(col=higher_taxon),geom="text")+
-    geom_cladelab(data=d2,mapping=aes(node=nodes,col=clade,label=clade),offset=2.5)+
-      geom_hilight(d2,mapping = aes(node = nodes,fill=clade),alpha = 0.02)+geom_nodepoint(data=dl,aes(subset = node %in% n), size=5, shape=25,fill='blue',color='blue',alpha=0.7,inherit.aes = FALSE)+
-   geom_nodepoint(dh,aes(subset = node %in%n), size=5, shape=24, fill='red',color='red',alpha=0.7,inherit.aes = FALSE)+
-    scale_fill_manual(values = pal)+
-   scale_color_manual(values = pal)+
-    theme(legend.position = "none")
- 
-   res <- tibble(nodes=nodes,SS$single.clades) %>% left_join(d %>% select(nodes,higher_taxon) %>% unique)
- 
-   return(list(plot=p,res=res))
-  
-}
-
-
-```
-
-This custom function `plot_SS` take three arguments, `tre` (a tree variable of class `phy`), `SS` (output from `search.shift()`), and `taxon.names` (a tibble/data.frame, containing the column `species` and `higher_taxon`). We have the higher taxon names store in our PCA tibbles (`hindwing.pca2`, etc.). The function returns a plot unter `$plot` and the `search.shift()` results under `$res`.
-
-Let's try it out.
-
-```{r newplot, eval=FALSE}
-hindPC1.res <- plot_SS(lep.tree2,hindPC1.SS,hindwing.pca2)
-
-```
-Notice that the clades and their taxa are color coded and the exceptional shifts are indicated by triangles (blue and down for low shifts, red and up for high shifts). Now we have a method of indicating what clades/lineags underwent a shift and the scale of the shift.
-
-## Shape evolution correlation
-
-To say something about whether hing- and forewing shape evolution is correlated we could undertake phylogenetic least squares analysis like we have in previous projects. But, we've done a ton already. So, let's make this simple and just perform [phylogenetic independent contrasts (PIC)](https://en.wikipedia.org/wiki/Phylogenetic_comparative_methods#:~:text=Phylogenetically%20independent%20contrasts,-The%20standardized%20contrasts&text=The%20logic%20of%20the%20method,statistically%20independent%20and%20identically%20distributed.) analysis. First proposed by @felsenstein1985phylogenies in his seminal paper, he proposed using phylogenetic information (under a Brownian-motion like model) to transform the original tip data into values that are statistically independent of one another. This method is captured in the `ape` function `pic()` For hindwing and forewing PC1, such analysis would look like this.
-
-
-```{r pic}
-hindPC1.pic <- pic(hind.pc1,phy = lep.tree2)
-forePC1.pic <- pic(fore.pc1,phy = lep.tree2)
-```
-Here we just imputed our store PC vectors we used in the rate analysis and our tree of course. Now we have transformed values we can regress against one another. Let's first plot them and see what we get.
-
-```{r picplot}
-PC1.pic <- tibble(
-  hind=hindPC1.pic,
-  fore=forePC1.pic
-)
-
-PC1.pic %>% 
-  ggplot(aes(x=fore,y=hind))+geom_point()+geom_smooth(method="lm")
-```
-
-Wow! These PC1s Look pretty correlated! Let's see what the r-squared value is and if there is a significant relationship. For this, we need simple to create a simple linear model.
-
-
-```{r picmod}
-summary(lm(hind~fore,PC1.pic))
-```
-
-```{r, eval=FALSE}
-
-out.data <- tibble(xy.file=basename(names(outs)),
-       ) %>% 
-  mutate(identifier=gsub("XY_|_hindwing|_forewing|.txt","",xy.file))
-
-
-# 
-# lep.sp <- lep.sp %>% 
-#   mutate(identifier=gsub("(.+)\\.\\w+$","\\1",filename))
-# write_csv(lep.sp,"lep_image_data.csv")
-
-
-
-out.data <-out.data %>% 
-  left_join(lep.sp)
-
-drops <- lep.tree$tip.label[!lep.tree$tip.label%in%unique(out.data$species)]
-
-lep.tree2 <- drop.tip(lep.tree,drops)
-
-#retrieve pca data for joining with species data
-hindwing.pca2 <-  tibble(xy.file=basename(rownames(hindwing.pca$x)),PC1=hindwing.pca$x[,1],PC2=hindwing.pca$x[,2]) %>% 
-  left_join(out.data)
-
-forewing.pca2 <-  tibble(xy.file=basename(rownames(forewing.pca$x)),PC1=forewing.pca$x[,1],PC2=forewing.pca$x[,2])%>% 
-  left_join(out.data)
-
-#are shape evolution rate different btwn superfamilies
-forewing.pca2 %>% 
-  ggplot()+geom_boxplot(aes(x=higher_taxon,y=PC1))
-
-hindwing.pca2 %>% 
-  ggplot()+geom_boxplot(aes(x=higher_taxon,y=PC1))
-
-plot(lep.tree2)
-
-hind.pc1 <- hindwing.pca2$PC1
-names(hind.pc1) <- hindwing.pca2$species
-
-fore.pc1 <- forewing.pca2$PC1
-names(fore.pc1) <- forewing.pca2$species
-
-
-
-
-lep.plot
-
-plot(forewing.pca2$PC1,hindwing.pca2$PC1)
-
-
- clade.n <- as.numeric(rownames(lep.shifts$single.clades))
- 
- tax.tab <- lep.sp %>% 
-   select(species,higher_taxon) %>% 
-   unique
- 
-clade.names <- function(tre=lep.tree2,clade=clade.n,tax.table=tax.tab){
- clades <- lapply(clade,function(x) extract.clade(tre,x))
- 
- clade.sp <- list()
- 
- for(i in 1:length(clades)){
-   clade.sp[[i]] <- clades[[i]]$tip.label
- }
- 
- 
- tax <- lapply(clade.sp, function(x) tax.table %>% filter(species%in% x)) 
- 
- 
- names(tax) <- clade
- 
- return(tax)
-}
-
- do.call(function(x){x$tip.labels},clades)
-
- 
- 
-```
-
-
-
-```{r}
-library(RRphylo)
-lep.sp <- read_csv("lep_image_data.csv")
-
-
-DataOrnithodirans$treedino->treedino
-DataOrnithodirans$massdino->massdino
-DataOrnithodirans$statedino->statedino
-
-RRphylo(tree=treedino,y=massdino)->dinoRates
-
-search.shift(RR=dinoRates,status.type="clade")->SSauto
-plotShift(RR=dinoRates,SS=SSauto)->plotSS
-plotSS$plotClades()
-```
-
 
 ```{r include=FALSE, eval=FALSE}
 
@@ -1247,34 +1217,4 @@ vert2.pcs.long <- verts2.pcs%>%
 ```
 
 
-# Project Report
-
-Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following:
-
-  * lorem ipsum 
-  * lorem ispum
-  
-  
-In answering your question, your .Rmd should include the following components:
-
-   * A YAML header that specifies HTML output, the authors, and a bibliograph named "BIOL3140.bib". **Submit this bibliography as well!**
-   * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially:
-      + Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. **Please include at least one reference to support the summary of previous work.** Note: this can be done easily by refiguring the introduction to this project report.
-      + Methods: Explicitly state how you answered the questions, including a narrative of all the anlyses both qualitative and quantitative.
-      + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.
-      + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here.
-      + Author contributions: Breifly outline what each team member contributed to the project.
-
-Project reports should be uploaded by 11:59 PM on Sunday, October 24th.
-
-```{r eval=FALSE}
-
-f <- list.files("./proj6data",full.names = T)
-
-gsub("BIOL3140(.+)","BIOL314020\\1","BIOL3140_subject21")
-for(i in f ){
- i2 <- gsub("(.+)BIOL3140(.+)","\\1BIOL314020\\2",i)
-  file.copy(i,i2)
-}
-```
 # References
