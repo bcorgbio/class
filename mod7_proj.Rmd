@@ -1,5 +1,5 @@
 ---
-title: "Module 8 Project"
+title: "Module 7 Project"
 bibliography: class.bib
 ---
 <style>
