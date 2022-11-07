@@ -1,5 +1,5 @@
 ---
-title: "Module 7 Project"
+title: "Module 8 Project"
 bibliography: class.bib
 ---
 <style>
@@ -11,149 +11,397 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 # Introduction
 
-As we took on in [the last module](mod6_proj.html) and read in @mortola2004scaling, body temperature ($T_b$) across mammals demonstrates predictable scaling patterns. In the analysis for the last project and in the analysis performed by @mortola2004scaling, neither accounted for the phylogenetic relationships of the species considered. After the project for [Module 3](mod3_proj.html), you'd be forgiven if you put a giant asterisk next to results of these analyses. That is, species are not statistically indepedent samples due to their shared evolutionary history [@felsenstein1985phylogenies]. 
+Any student steeped in the mechanics of muscle understands that force produced by this tissue is governed by two important parameters: speed and length. In this project, we'll explore the effect of length on muscle force generation and evaluate how fatigue affects this force-length (FL) relationship. 
 
-Organismal biologists---ecologists, physiologists, and behavioral ecologists, to name a few---have a checkered history of including phylogenetic structure in their analyses [@freckleton2002phylogenetic]. Accounting for phylogeny when asking comparative questions (i.e., how do traits vary between species?) isn't always necessary [@westoby1995further], nor is it always appropriate in the way biologist use comparative methods [@uyeda2018rethinking]. However, generally, when a biologists asks if one trait varies with another, especially when those traits are continuous, it's a good idea to at least explore if those traits demonstrate some phylogenetic signal.
-
-
-In this project, let's reconsider the $T_b$ analyses of @mortola2004scaling in a phylogenetic context. In our last project, we focused on $T_b$ oscillations ($T_{\Delta}$) using our own data for humans and data from @mortola2004scaling for 52 species of non-human mammals. For our Module 7 project, we'll also consider the scaling relationships of maximum daily $T_b$ ($T_{max}$) and mininum daily $T_b$ ($T_{min}$). We'll focus only on their data so as to directly compare results. That is, we'll use their data for humans, not ours from Module 6. 
-
-The specific goals of this porject are to:
-
-  1. Reproduce the scaling relationships (i.e. log-log regression models) of @mortola2004scaling for $T_{min}$,$T_{max}$, and $T_{\Delta}$.
-  2. Assess the phylogentic signal of the four variables in question (i.e., mass, $T_{min}$, $T_{max}$, and $T_{\Delta}$) using Pagel's lamba.
-  3. Reanalyze these models in a phylogenetic context using phylogenetic least squares (PGLS) under Brownian Motion (BM) and Ornstein-Uhlenbeck (OU) models of trait evolution.
-  4. Using an information theory approach, assess the best fitting PGLS scaling models for each of the three $T_b$ variables
-  5. Compare the significance of the results of @mortola2004scaling with respect to the scaling of $T_b$ variables to your results that include phylogenetic correction.
-
-
-
+The FL relationship is governed by several important biophysical aspects of muscle architecture. At the fiber level, the force produced is largely mediated by the number of crossbridges that can be formed. Crossbridges are small and have a limited attachment range. Therefore, crossbridge attachments only occur in the actin-myosin overlap zone of a sarcomere. Together with the assumptions underlying the crossbridge theory, this limitation implies that the maximal isometric force of a sarcomere is directly related to the amount of actin-myosin overlap (Fig. 1).
 
 <center>
-![](mammaltree.png){width=50%}
-
-
+![](https://journals.physiology.org/cms/10.1152/jappl.1999.86.5.1445/asset/images/medium/japp05516002x.jpeg)
 <br>
-*A time-calibrated molecular phylogeny of 5,911 extant and recently extinct species of mammals from  @upham2019inferring. Colors at the tips indicate speciation rates.* 
+**Fig. 1.** The force-length relationship of a sarcomere as predicted by cross-bridge theory.
 </center>
 <br>
+
+Of course, many muscles transect a lever system composed of a few bones articulating at a joint. For our subject, the human upper limb, the forearm flexors originate on the pectoral girdle above the humerus and insert on the radius and ulna, spanning the elbow joint. Simply put, the arm is a 3rd order lever (Fig 2). If we are to consider the force transmitted to the hand (or any other part along the antebrachium), we must also consider this lever configuration. As a lever, this system has a mechanical advantage that predicts the amount of output force transmitted by the input force. Mechanical advantage is defined by the following:
+
+$$MA=\frac{L_i}{L_o}$$,
+
+where $L_i$ is the in-lever and $L_o$ the output leaver. For the human upper limb, the inlever is the distance between the flexor insertion and elbow joint and the out-lever is the length of the antebrachium and hand (or the distance between the elbow and the load). This ratio generally accords to 0.2 in this system. What this predicts is that any force applied to the in-lever results in 20% of that force at the end of the out-lever (i.e., the palm).
+
+What makes this more complicated is that the effective in-lever, the input moment arm, changes as the forearm flexes. This is due to the fact that the insertion angle changes as the forearm rotates (Fig. 3). Because the force produced by an input is variable with respect to insertion angle, the output isn't necessarily predicted by MA alone.
+
+<center>
+![](https://openoregon.pressbooks.pub/app/uploads/sites/42/2018/07/Range-300x262.png)
+
+**Fig. 2** The 3rd-order level system of the human upper limb.
+</center>
 <br>
+
+Fortunately for us, physiologists have found that studying the force (or torque) produced by a biomechanical system can still be useful in uncovering the FL relationships of the input muscles [@rassier1999length]. For this project, we take this assumption to mean that the force we measure at the hand as the muscle produces isometric force at various lengths is a reasonable reflection of the FL relationship governing force at the fiber level.
+
+
+```{r eval=FALSE,include=FALSE}
+
+library(tidyverse)
+library(data.table)
+library(gganimate)
+library(emojifont)
+ #return coord for a point r away at angle=ang
+  point.ang.r <- function(p,r,theta){x.2 <-p[1]+r*cos(theta); y.2 <- p[2]+r*sin(theta);return(list(x.2,y.2))}
+  
+  #set up angle and arm data
+  pos <- seq(157.5,0,-22.5)-90
+  pos.rad <- pos * pi/180 
+  humerus <- 1
+  distal.arm <- 1
+  elb.x <- 0
+  elb.y <- 0
+  hum.x <- 0
+  hum.y <- 1
+  
+  #make a data.table for easy calculation for new columns
+  arm <- data.table(pos,pos.rad,elb.x,elb.y,hum.x,hum.y)
+  
+  #columns for hand and inlever position
+  arm[,c("hand.x","hand.y"):=point.ang.r(c(elb.x,elb.y),r=humerus,theta=pos.rad),by=pos]
+  arm[,c("inlever.x","inlever.y"):=point.ang.r(c(elb.x,elb.y),r=humerus*0.2,theta=pos.rad),by=pos]
+  
+ arm.m <-  arm%>%
+   pivot_longer(col=-c(pos,pos.rad))%>%
+   mutate(part=gsub("(.+)\\..","\\1",name),x.y=gsub("(.+)\\.(.)","\\2",name))%>%
+   pivot_wider(-name,names_from = c(x.y),values_from=value)%>%
+   mutate(pos2 =90-pos) #rotate angle 90 
+ 
+
+#add bones
+ p <- ggplot()+geom_segment(data=arm.m%>%filter(part!="hum"),aes(x = 0, y = 0, xend = x, yend = y),size=3,col="gray")+geom_segment(data=arm.m%>%filter(part=="hum"),aes(x = 0, y = 0, xend = 0, yend = 1), col = "black",size=4)
+ 
+ #add points
+ p <- p+geom_point(dat=arm.m%>%filter(part!="hand"),aes(x,y,col=part),size=4)+xlim(c(-.5,1.5))+ylim(c(-1.2,1.2)) 
+ 
+ #add muscle lines
+ p <- p+geom_curve(data=arm.m%>%filter(part=="inlever"),aes(x = 0, y = 1, xend = x, yend = y),curvature = -0.3,col="red")+geom_curve(data=arm.m%>%filter(part=="inlever"),aes(x = 0, y = 1, xend = x, yend = y),curvature = 0.0,col="red")
+ 
+ #add emoji hand
+ p <- p+geom_text(data=arm.m%>%filter(part=="hand"),aes(x,y,label=emoji("hand"),angle=pos2*-1),family="EmojiOne", size=20,vjust=0,hjust=.4)
+ 
+ print(p)
+ 
+ #get rid of axes and background
+p<- p+theme_void()
+ 
+
+#transition according to arm position and make pretty
+ anim <- p + transition_states(pos,transition_length = 10,state_length = 70)+shadow_wake(.01)+enter_fade()+exit_fade()
+  
+anim_save("arm.gif", anim)
+
+
+
+https://www.researchgate.net/profile/Ella_Yeung/publication/6223955_Shift_of_Peak_Torque_Angle_After_Eccentric_Exercise/links/53e1a0f60cf2235f352bd385/Shift-of-Peak-Torque-Angle-After-Eccentric-Exercise.pdf
+
+
+#good summary
+https://journals.physiology.org/doi/full/10.1152/jappl.1999.86.5.1445
+```
+
+<center>
+![](arm.gif)
+<br>
+**Fig. 4.** Rotation of the forearm through its typical range of motion. Notice that the insertion angle of the biceps changes. (This was of course produced with R . . . have a look at [this gist on github](https://gist.github.com/ckenaley/924171571a73874384a6aaaef93e372b) if you'd like the code.)
+</center>
+<br>
+
+Keeping all this mind mind, we'll study the FL relationship of the human upper limb and how this relationship responds to fatigue. Eccentric fatigue, whereby the muscle has been asked to do a lot of negative work (producing tension while lengthening) has been a particular interested to muscle physiologists [@yeung2008shift]. That is, this research has shown that the force/torque-length/angle relationship shifts soon after and long after eccentric fatigue. Specifically, the peak normalized isometric force shifts over the typical range of angles for a biomechanical system.   
+
+The specific goals of this project are to:
+
+  1. Produce isometric force-angle curves for the human forearm flexors undertaking maximum voluntary contractions (MVCs).
+  2. Compare the angle at which maximum isometric force ($F_{max}$) occurs ($\theta_{max}$) between non-fatigued (i.e., control) and eccentrically fatigued forearm flexors.
+  3. Discuss the underlying mechanisms resulting in a shift of $\theta_{max}$ after eccentric fatigue.
 
 
 # Methods
 
+## Experimental Design
+
+To assess the affect of eccentric fatigue of elbow flexor muscles, we'll be measuring the isometric force over the range of motion of the forearm produced by MVC. To capture MVC data, you must design and construct a portable Arduino-based force-data acquisition system (DAQ). Your device should record force data over the course of 30s. 
+
+
+## DAQ Design Components
+
+1. 40-kg Load Cell with HX711 amplifier
+2. Arduino Uno microcontroller
+
+## DAQ Assembly and Programming
+
+Assembly for this force logger is almost entirely captured in [this tutorial](https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/). 
+
+You'll see that the sketch in the tutorial requires a calibration step to output appropriate force or mass units. **Don't worry about calibration.** We'll be looking a normalized force, so units don't matter. 
+
+<!-- As for your SD storage integration, make sure your sketch writes one column data to the SD card with the header "force". -->
+
+For each experiment, you'll be recording 12 bouts of MVC force, each corresponding to a different elbow angle, for 30 s.  For each arm angle, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking force data. So as not to confuse from where your data came, it's a good idea to change the name of the text file being saved to for each experiment, e.g., "Subject1_control.csv" and "Subject1_fatigue.csv".
+
 ## Data Collection
 
-You'll first need to [download the full dataset](mammal.temp2.csv) from @mortola2004scaling that includes humans and 52 other species of mammals. In addition, please [download the phylogeny](mammal.tree.pruned.txt) for the taxa included in @mortola2004scaling. This is the same phylogenetic tree represented in the figure above taken from @upham2019inferring, but pruned to include only those species represented in the study by  @mortola2004scaling.
+### Elbow Angle
 
-## Reproducing the Analyses of @mortola2004scaling
+You'll first need to construct a ganiometer, a simple device that measures the angle between the upper and lower arm (i.e., the elbow angle). One approach is to use the outline of a small plate to cut a disc out of cardboard and then bisect the diameter and then continue to bisect this semicircle into equal segments (Fig. 4.)
 
-Your first task is to reproduce the scaling models constucted by @mortola2004scaling and assess their signficance. For this you'll need to construct log-log regression models of the three $T_b$ variables as a function of mass ($W$). This is identical to the work you did in assessing the scaling relationships of $T_{\Delta}$ in the last project and only needs to be repeated with the @mortola2004scaling dataset and the two other $T_b$ variables, $T_{min}$ and $T_{max}$.
+<center>
+![](gan.jpg){width=50%}
+<br>
+**Fig. 4** A simple ganiometer made of cardboard.
+</center>
+<br>
 
+To use the ganiometer, find the center of the elbow joint in lateral view and mark this position with a marker. From this point, mark a line along the lateral margin of the radius. (Fig. 5). Then, poke a hole through the center of the ganiometer and affix it to the upper arm so its center aligns with your mark at the elbow joint and the 0-180$^o$ axis aligns with the long axis of the humerus (Fig. 6).You can affix the ganiometer to the upper arm by passing a strip of surgical tape through two tabs cut out on either side of the 0-180$^o$ axis (Fig. 6).
 
-## Pagel's Lambda
-
-The second task is to assess the phylogenetic signal of each of the four variables in the study: $W$, the independent variable (i.e., our one covariate) and the three $T_b$ variables. For this, we'll have to complete new analyses we haven't taken on before: Pagel's $\lambda$. This method transforms the tree, by decreasing $\lambda$ (the phylogenetic signal) which lengthens the tip branches relative to internal branches, eventually decomposing the tree so that it begins to look like a complete polytomy, i.e., no phylogenetic relatedness or covariance between species. This can be seen as a way of muting phylogentic signal until the covariation of the error structure can no longer be explained by phylogenetic relatedness. If our estimated $\lambda$ = 0, the tree has no effect on the traits and they are assumed to have no phylogenetic signal. When $\lambda$ = 1, the traits conform to a Brownian motion model. Betweewn 0 and 1, there is some phylogenetic signal.
-
-Let's explore how this works. First we'll have to load our mammal tree. Notice that there's a `gsub()` operation here to remove pesky "_" from the species names in the tree. **This will be important later when the tree is used in the PGLS analysis and the species names must match those in the tree and the dataset.** We'll also have to load the package `geiger` which carries the `rescale()` function we'll use to demonstrate what Pagel's $\lambda$ does. [You won't necessarily need `geiger` loaded for your project, this is just to demonstrate how Pagel's $\lambda$ works.]
-
-```{r}
-library(geiger)
-
-m.phy <- read.tree("mammal.tree.pruned.txt")
-m.phy$tip.label <- gsub("(\\w+)_(\\w+)","\\1 \\2",m.phy$tip.label)
-
-
-m.phy0<- rescale(m.phy, model = "lambda", 0)
-m.phy5 <- rescale(m.phy, model = "lambda", 0.5)
-
-par(mfcol = c(1, 3))
-plot(m.phy)
-plot(m.phy5)
-plot(m.phy0)
+<center>
+![](joint.jpg){width=50%}
+<br>
+**Fig. 4** The elbow joint on a tiny human and the lateral margin of the radius marked with a dark line. Thanks, Zo!
+</center>
+<br>
 
 
-```
+<center>
+![](90deg.jpg){width=50%}
+<br>
+**Fig. 5** The ganiometer affixed to the upper arm with surgical tape with its center placed over the elbow joint. Note how the marked line on the radius indicates an elbow angle of about 90$^o$.
+</center>
+<br>
 
-The tree on the left is the unscaled phylogeny, the tree we'll use in our analyses. The tree in the middle, with $\lambda$=0.5, rescales the tip branches, making the tips branch longer, allowing more phylogenetic independence between species. As you can see, the tree on the right, with a $\lambda$=0 removes the phylogenetic information form the tree, i.e., all species don't covary according to their phylogenetic position. When we use Pagel's $\lambda$ to assess phylogenetic signal of a character, we iterate through values to 0 to 1 to find rescaled branch lengths that optimize the covariance of the character according to Brownian motion. As a reminder, values near 1 indicate strong phylogenetic signal, while values close to 0 indicate none. 
+As the elbow flexes or extends, you should be able to peak at the ganiometer to assess elbow angle.
 
-Now let's assess phylogenetic signal for some simulated trait data over the mammal tree. We'll use `phytools`'s `phylosig()` function to do this after simulating some random trait.
 
-```{r}
-library(ape)
-library(phytools)
+### Isometric MVCs
 
-sim.trait <- runif(Ntip(m.phy))
+We will collect isometric force data from MVCs over 12 arm angles, 45-157.5$^o$ at 11.25$^o$ (call it 11$^o$) intervals. Your load-cell is affixed to two hooks. Attach one hook to the dowel in your DAQ pack and the other to something that won't move under the torque of your forearm. This could be a table, chair, bench, etc. Hold the dowel in your hand as shown in Fig. 6. Make sure your elbow is supported by something rigid (i.e. the top of a chair back, etc.). 
 
-names(sim.trait) <- m.phy$tip.label
+<center>
+![](grip.jpg){width=50%}
+<br>
+**Fig. 6** How to grip the the load-cell.
+</center>
+<br>
 
-print(sim.trait)
 
-sim.sig <- phylosig(m.phy,sim.trait,method="lambda",test=T)
+
+First collect your control (i.e., non-fatigued) data by starting at the largest arm angle, 157.5$^o$. You can move through the 12 arm angles by rotating your body about your hips. That is, at the high elbow angles, you'll be more upright, at lower angles, more bent over. At each angle, flex your elbow as hard as you can to produce a MVC, resetting your DAQ system each time. Make sure the load-cell forms a right angle with reference to your hand (Fig. 6). You might want to practice a few times to get a sense of how this will proceed.
+
+### MVCs after Eccentric Fatigue
+
+To eccentrically fatigue your forearm flexors, you'll perform isokinetic controlled drops of a heavy object weighing 1/3 your maximum isometric force recorded in the control experiments. A book bag or back pack full of heavy items (ahhh. . .  books) should do just fine. 
+
+To perform your isokinetic eccentric drops, grab the book bag with the hand not involved in the experiment and pass it to the other as its forearm is fully flexed. With the bag now in your study hand, lower the bag slowly and at a constant speed. When the arm is fully extended, grab the book bag with the free hand and then flex the study forearm. Repeat by passing the bag to your study hand. Continue repeating this exercise for 3 min. Keep the cycles uniformly frequent by monitoring the duration (probably 3-4 s each cycle). At the end of the 3 mins, your forearm flexors should feel tired.
+
+After you fatigue your flexors, wait 2 min. Then repeat the experiment exactly as you did for the control data.
+
+Once you complete your experiments, upload your 24 data files to [this Google directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing). Be sure to name your files according to the following convention: "team_subject_angle_control/fatigue.csv". Please stick to all lower case.
+
+## Summary of Experimental Protocol
   
-print(sim.sig)
+  + Fabricate and program a load-cell data acquisition system.
+  + Make a ganiometer.
+  + Record isometric MVCs at 12 distinct elbow angles.
+  + Eccentrically fatigue your flexors.
+  + Wait 2 minutes.
+  + Repeat recording isometric MVCs at the same 12 distinct elbow angles.
+  + Upload data to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing).
+
+ 
+## Data Analysis
+
+For each experiment, we'll stick to a convention within the muscle physiology world by considering maximum normalized force. That is:
+
+  1. Find maximum force for each recording (don't worry about the specific values or units because you'll. . .).
+  2. Find maximum force ($F_{max}$) across all angles for each experiment (control or fatigued) for each individual and then divide all maximum values for that experiment by $F_{max}$. Your values will now be normalize, i.e., scaled 0-1 with a value of 1 representing the highest force recorded during an experiment.
+  
+Using the normalized force data from the control and fatigued experiments, we'll consider shifts at which angle $F_{max}$ occurred, the difference in $\theta_{max}$. To assess any shift in $\theta_{max}$ with our limited elbow angle samples, we could simply look at the angle at which the flexors produce the most force. For instance, for the these data:
+
+
+```{r,message=FALSE}
+library(ggplot2)
+ang <- seq(45,168.75,length.out = 12) #elbow angle
+
+normF <- c(0.71, 0.77, 0.83, 0.91, 0.97, 1.00, 0.96, 0.94, 0.89, 0.84, 0.77, 0.74) #you'll get this by reading in data and calculating normalized values
+
+
+qplot(ang,normF)+geom_point(aes(x=ang[which.max(normF)],y=normF[which.max(normF)]),col="red",size=4)
+
+ang[which.max(normF)] #Find angle for Fmax, theta_max
+
 ```
-Here we simulated some random data (values from 0--1) for the number of tips on the tree using `runif()` to generate the values and `Ntip()` from the `ape` package to retrieve the number of tips (i.e., species) in the tree. We named these values with the tip labels from the tree, an important step. The `phylosig()` function in `phytools` requires that a vector of trait values must have names that match the tips in the tree. In your analyses **make sure you name your variable values with the species from your dataset**, not the tip labels. The order for these will certainly be different and, if not correct, will make any analysis rubbish.
 
-<div class = "green">
-<div class="row">
-  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
-  <div class="col-sm-9">
-Note: You won't need to include thes specific chunks, only to reproduce the Pagels' $\lambda$ analysis for $T_b$ variables with the `phylosig()`function from `phytools`. 
-</div>
-</div>
-</div>
-<br>
+So, of the 12 angles that we sampled (45--157.5$^o$), the maximum isometric force occurred at angle ($\theta_{max}$=) 101.25$^o$. Simply doing this overlooks the fact that the maximum force could have occurred between any two of the sampled angles. Given the trend in the figure above, $\theta_{max}$ could have been an angle either greater and less than 101.25$^o$. To estimate the trend and find a perhaps more refined estimation of $F_{max}$ we'll resort to (wait for it) . . . modeling. In this case, a series of [polynomial models](https://en.wikipedia.org/wiki/Polynomial_regression) should work. Polynomial models are great for fitting parabolic data like those we have here, but are tricky in that one can keep adding monomial terms very quickly to achieve a better fit. This requires the practitioner to make sure that they are not overfitting the model. Fortunately, we have the tools to prevent such a thing using AIC, as we have learned. 
 
-For the `phylogsig()` operation, we set the `method` to "lambda" for Pagels' $\lambda$ and `test=T` so that the function performs a likelihood ratio test (LRT). If you remember from reading the appropriate [section in Luke Harmon's PCM book](https://lukejharmon.github.io/pcm/chapter2_stats/#section-2.3b-the-likelihood-ratio-test), a likelihood ratio test assesses the goodness of fit of two related statistical models based on the ratio of their likelihoods. In this context, we're comparing the likelihoods of a model that includes an optimization of the $\lambda$ value versus on one that has a $\lambda$ value of 0, that is, no phylogenetic signal. As you can see from the results, the phylogenetic signal is extremely low at 6.6107e-05 and the result of the LRT, with a likelihood ratio of -0.0008, is nonsignifcant at p=1. That is, the phylogenetic signal is essentially 0 for these simulated data and, not suprisingly, there's a probability of 1 that the value is not different than 0.
+Therefore, let's fit some polynomial models to our example data with a different number of monomial terms (i.e., orders) and tease apart the fit and penalty for including more terms using AICc. Fortunately, we can use the `lm()` and `poly()` functions from the base package to fit the models and use `AICc()` from the `MuMIn` package for AICc fitting. 
 
 
+```{r,message=FALSE}
+library(MuMIn)
 
-Now that you've been introduced to Pagel's $\lambda$, undertake such an analysis of all four variables in the data. In your analyses, be sure to include a table of these results that indicates the estimated $\lambda$ value and p values from the LHTs. 
+poly.m2 <- lm(normF~poly(ang,2)) #second order
+poly.m3 <- lm(normF~poly(ang,3)) #third order
+poly.m4 <- lm(normF~poly(ang,4)) #fourth order
+
+AICc(poly.m2,poly.m3,poly.m4) #the second order model fits best
+
+x.pred <- seq(45,157.5,length.out = 1000) #define 1000 angles from our range
+
+normF.pred <- predict(poly.m4,newdata = data.frame(ang=x.pred)) #predict the force using 1000 angles
+
+qplot(ang,normF)+geom_point(aes(x=x.pred,y=normF.pred),col="red")+geom_point(aes(x=x.pred[which.max(normF.pred)],y=normF.pred[which.max(normF.pred)]),size=5,col="blue")
+
+x.pred[which.max(normF.pred)] #theta_max
+
+```
 
 
-<div class = "green">
-<div class="row">
-  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
-  <div class="col-sm-9">
-You'll notice that we're doing many of these phylogenetic comparative analyses without the principles of the tidyverse, i.e., no pipe, etc. Most of the functions written in R packages for comparative methods don't play well with tidy workflows. Be sure to pay attention to the pieces of advice given in this and other project descriptions to reduce headaches when performing comparative analyses.
-</div>
-</div>
-</div>
-<br>
+In this example we constructed 3 polynomial models of the 2nd, 3rd, 4th variety and then used AICc to find the lowest AICc score. The 4th order model fits best, so we then produced 1000 discrete values within our range with `seq()` to pass to`predict()` to predict force over this range using our best fitting model (producing `normF.pred`). We then found the max of `normF.pred` (the $F_{max}$) and plotted that, along with our predictions. Lastly, we found $\theta_{max}$, a value of 104.9.
 
-## PGLS Analysis of $T_b$ Variables
 
-Now that we have assessed phylogenetic signals for our four variables, procede with PGLS analyses of log-log regression models that include the three $T_b$ variables versus mass. For each regression, construct a PGLS model that includes both a BM and OU model of trait evolution using the tree provide for the species in @mortola2004scaling. Be sure to assess which of these models fits the data best. From each of your best-fitting models, extract the slope (i.e, the scaling coefficient) and intercept and then perform an ANOVA test to evaluate the significance of these parameters. Report these values in table with an appropriate caption.
+A goal of this project is to detect shifts in $F_{max}$ with respect to angle. If we had two data sets, one control and one produced after fatigue, we merely need to compare the two $\theta_{max}$, that is, the shift in angle for $F_{max}$ predicted by two polynomial models. This would look something like this:
 
-## Reassessing the Results of @mortola2004scaling
+```{r,message=FALSE}
 
-After reconstructing the models for $T_b$ scaling in @mortola2004scaling, assessing phylogenetic signal, and constructing phylogenetically corrected models of your own, compare and contrast these findings. Should important findings in @mortola2004scaling with regards to $T_b$ variables be challenged? Did any of the signficant findings in @mortola2004scaling become insignifcant or significant when they weren't before?
+normF.fat <- c(0.65, 0.71, 0.81, 0.89,0.92, 0.96, 0.99, 1, 0.96, 0.92, 0.84, 0.77) #fatigue data, you'll get this by reading in data and calculating normalized values
+
+
+qplot(ang,normF.fat)+geom_point(aes(x=ang[which.max(normF.fat)],y=normF.fat[which.max(normF.fat)]),col="red",size=4)
+
+ang[which.max(normF.fat)] #Find angle for Fmax for fatigue data
+
+poly.m2.fat <- lm(normF.fat~poly(ang,2)) #second order
+poly.m3.fat <- lm(normF.fat~poly(ang,3)) #third order
+poly.m4.fat <- lm(normF.fat~poly(ang,4)) #fourth order
+
+AICc(poly.m2.fat,poly.m3.fat,poly.m4.fat) #the second order model fits best
+
+normF.pred.fat <- predict(poly.m2.fat,newdata = data.frame(ang=x.pred)) #predict the force using 1000 angles
+
+qplot(ang,normF)+geom_point(aes(x=x.pred,y=normF.pred.fat),col="red")+geom_point(aes(x=x.pred[which.max(normF.pred.fat)],y=normF.pred.fat[which.max(normF.pred.fat)]),size=5,col="blue")
+
+
+x.pred[which.max(normF.pred.fat)]-x.pred[which.max(normF.pred)] #shift in angle for Fmax, theta_max
+
+```
+
+Looks as if there's a 10.3$^o$ shift in $\theta_{max}$. 
+
+Say we had a bunch of data (from only 10 subjects) and you wanted to compare the control against fatigued data graphically, you could do the following. First we'll simulate some control and fatigue data, adding random noise drawn form a normal distribution and plot the data with a color according to experiment to quickly assess the pattern.
+
+```{r}
+library(tidyverse)
+
+set.seed(1234) #to keep random noise the same
+
+sub <- 1:10 #ten subjects
+dat.l <- list() #empty list
+
+#loop to run through subjects and simulate data based on noise added to data above
+for(i in sub){
+  noise <- rnorm(length(ang),mean = 0.02,sd = 0.01)
+  noise2 <- rnorm(length(ang),mean = 0.02,sd = 0.01)
+  dat.l[[i]] <- tibble(
+    rbind(
+      data.frame(ang,force=normF+noise,subject=i,exp="control"),
+      data.frame(ang,force=normF.fat+noise2,subject=i,exp="fatigue")
+  )  
+  )%>%
+    group_by(subject,exp)%>%
+    mutate(force=force/max(force))
+  
+}
+
+dat <- do.call(rbind,dat.l) #get data into one tibble
+
+dat%>%
+  ggplot(aes(ang,force,col=exp))+geom_point()
+```
+
+Now let's take our data and get AICc scores for our three polynomial models. We'll group the data by subject and experiment and retrieve AICc from each model (`m2`, `m3`, and `m4`). Then, we'll pivot the tibble to a longer format so that we have a single column for AICc values.
+
+```{r, message=FALSE}
+AICs <- dat%>%
+  group_by(subject,exp)%>%
+  summarize(
+    m2=AICc(lm(force~poly(ang,2))), #second order
+    m3=AICc(lm(force~poly(ang,3))), #third order
+    m4=AICc(lm(force~poly(ang,4))) #fourth order
+  )%>%
+  pivot_longer(m2:m4,names_to="model",values_to="AICc")%>%
+  print()
+
+```
+
+Now we'll do something very similar, predicting values for 1000 discrete angles across our range of elbow positions. Notice that we've summarized the data by subject, experiment and model to find the angle (`x.pred`) which matches the max force value.
+```{r, message=FALSE}
+
+fits <- dat%>%
+  group_by(subject,exp)%>%
+  summarize(
+    m2=predict(lm(force~poly(ang,2)),newdata=data.frame(ang=x.pred)), #second order
+    m3=predict(lm(force~poly(ang,3)),newdata=data.frame(ang=x.pred)), #third order
+    m4=predict(lm(force~poly(ang,4)),newdata=data.frame(ang=x.pred)) #fourth order
+  )%>%
+   pivot_longer(m2:m4,names_to="model")%>%
+   group_by(subject,exp,model)%>%
+   summarize(theta_max=x.pred[which.max(value)])%>%
+   print()
+```
+
+Now let's join these the `AICs` and `fits` tables so that we can filter the model predictions by which model fits best. Note `filter(best==TRUE)` after constructing a `best` column according to the minimum AICc score using `mutate()`.
+
+```{r, message=TRUE}
+best.models <- fits%>%
+  left_join(AICs)%>%
+  group_by(subject,exp)%>%
+  mutate(best=AICc==min(AICc))%>%
+  filter(best==TRUE)%>%
+  dplyr::select(-best)%>%
+  print()
+```
+
+To investigate whether a shift if $\theta_{max}$ is different between the control and fatigue experiments, we can run the following ANOVA.
+```{r, message=TRUE}
+anova(lm(theta_max~exp,best.models))
+```
+
+Lastly, we should calculate the mean shift with SEM. To find the shift, we can pivot the `best.models` tibble to a wider format so we can have $\theta_{max}$ for each experiment in separate columns and find the difference with `mutate()`. Then, `summarise()` can be used to find the mean and SEM.
+
+```{r, message=TRUE}
+best.models%>%
+  pivot_wider(id_cols=subject,names_from = exp,values_from=theta_max)%>%
+  mutate(shift=fatigue-control)%>%
+  ungroup()%>%
+  summarise(mean.shift=mean(shift),se.shift=sd(shift)/sqrt(length(shift)))
+
+```
 
 
 # Project Report
 
 Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following questions:
 
-  * Could you and your team reproduce the scaling relationships (i.e. log-log regression models) of @mortola2004scaling for $T_{min}$,$T_{max}$, and $T_{\Delta}$?
-  * Was there any signficant phylogentic signal in the four variables in question (i.e., mass, $T_{min}$, $T_{max}$, and $T_{\Delta}$)?
-  * After reanalyzing these models that included any variables with significant phylogentic signal in a PCM context under BM and OU models of trait evolution, which phylogentically corrected models fit best? 
-  * Are new phylogenetically informed parameter estimates (i.e, intercept and slope coefficients) different than those in @mortola2004scaling and has their significance changed?
- * If any of the results concerning $T_b$ scaling patterns should be reinterpreted due to your phylogenetically informed analysis, how should the conclusions of @mortola2004scaling be reframed?
-
+  * Do class-wide force-angle data for isometric MVC accord to a typical FL relationship both under control and fatigued conditions?
+  * Is there a significant shift between $\theta_{max}$ between the control and fatigue FL relationships?
+  
 In answering these questions, be sure to use the visualization, modeling, and model-assessments tools we've used in the course so far.
   
-In answering your question, your .Rmd should include the following components:
+The answers and narrative in your .Rmd should include the following components:
 
-   * A YAML header that specifies HTML output, the authors, and a bibliograph named "BIOL3140.bib". **Submit this bibliography as well!**
-   * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially:
+   * A YAML header that specifies HTML output, the authors, and a bibliography named "BIOL3140.bib". **Submit this bibliography as well!**
+   * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifically:
       + Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. **Please include at least one reference to support the summary of previous work.** Note: this can be done easily by refiguring the introduction to this project report.
-      + Methods: Explicitly state how you answered the questions, including a narrative of all the anlyses both qualitative and quantitative.
+      + Methods: Explicitly state how you answered the questions, including a narrative of all the analyses both qualitative and quantitative.
       + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.
       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here.
-      + Author contributions: Breifly outline what each team member contributed to the project.
+      + Author contributions: Briefly outline what each team member contributed to the project.
 
-Project reports should be pushed by 11:59 PM on Sunday, October 31st.
+Project reports should be uploaded by 11:59 PM on Sunday, November 14th.
 
 <div class = "green">
 <div class="row">

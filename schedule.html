@@ -13,7 +13,7 @@
 
 <title>Schedule</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
@@ -133,11 +133,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -405,12 +409,11 @@ analyzed data from them. Rest assured, your experience will be curated,
 sticking to the bare bones of instrument design and data science. This
 introductory phase will set the groundwork for Phase II, the independent
 development of sensors and data analysis.</p>
-</div>
 <div
 id="module-1-data-pirates-code-with.-.-.-.-r-introduction-to-the-basics"
-class="section level1">
-<h1>Module 1: Data Pirates Code with. . . . R, Introduction to the
-Basics</h1>
+class="section level2">
+<h2>Module 1: Data Pirates Code with. . . . R, Introduction to the
+Basics</h2>
 <p>In this module we’ll tackle where to find resource you’ll need on a
 week-to-week, module-by-module basis. In addition, we’ll work on the
 first important topic of the course: an introduction to R, an ever more
@@ -418,12 +421,12 @@ popular language for data analysis and visualization. We’ll focus on the
 basics of importing and tidying data in R. By importing, we mean loading
 data collected by scientists and stored in text files, the lingua franca
 of scientific data. By tidying, we mean preparing data for analysis.</p>
-<div id="dates" class="section level2">
-<h2>Dates</h2>
+<div id="dates" class="section level3">
+<h3>Dates</h3>
 <p>Weeks 1 &amp; 2 (Aug 29—Sep 11):</p>
 </div>
-<div id="key-concepts" class="section level2">
-<h2>Key Concepts</h2>
+<div id="key-concepts" class="section level3">
+<h3>Key Concepts</h3>
 <ul>
 <li>Course workflow</li>
 <li>Course expectations</li>
@@ -436,8 +439,8 @@ of scientific data. By tidying, we mean preparing data for analysis.</p>
 <li>git, github, and version control</li>
 </ul>
 </div>
-<div id="learning-objectives" class="section level2">
-<h2>Learning Objectives</h2>
+<div id="learning-objectives" class="section level3">
+<h3>Learning Objectives</h3>
 <p>Upon completion of this week and module, students will be able
 to:</p>
 <ul>
@@ -454,8 +457,8 @@ interatively redundant task.</li>
 script and report files</li>
 </ul>
 </div>
-<div id="readwatch" class="section level2">
-<h2>Read/Watch</h2>
+<div id="readwatch" class="section level3">
+<h3>Read/Watch</h3>
 <p>From <a href="https://rstudio-education.github.io/hopr">Hands on
 Programming with R</a> (HOPR)</p>
 <ul>
@@ -515,8 +518,8 @@ about how R works.
 </div>
 <p><br></p>
 </div>
-<div id="do" class="section level2">
-<h2>Do</h2>
+<div id="do" class="section level3">
+<h3>Do</h3>
 <ul>
 <li>Post one and respond to one question each week of Module 1 in our <a
 href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion
@@ -529,8 +532,8 @@ with Prof. K’s help on Wednesday, Sept 1)</li>
 <li>Complete and commit a report for Module 1 Project</li>
 </ul>
 </div>
-<div id="guiding-questions" class="section level2">
-<h2>Guiding Questions</h2>
+<div id="guiding-questions" class="section level3">
+<h3>Guiding Questions</h3>
 <ul>
 <li>How do I perform simple operations in R?</li>
 <li>What are R’s basic object classes?</li>
@@ -542,8 +545,8 @@ used?</li>
 code.</li>
 </ul>
 </div>
-<div id="module-1-schedule" class="section level2">
-<h2>Module 1 Schedule</h2>
+<div id="module-1-schedule" class="section level3">
+<h3>Module 1 Schedule</h3>
 <p>All assignments are due at 11:59 on the specified date.</p>
 <table>
 <colgroup>
@@ -632,21 +635,21 @@ code.</li>
 </div>
 <div
 id="module-2-data-wrangling-introduction-to-tools-of-the-trade-in-data-analysis"
-class="section level1">
-<h1>Module 2: Data Wrangling: Introduction to Tools of the Trade in Data
-Analysis</h1>
+class="section level2">
+<h2>Module 2: Data Wrangling: Introduction to Tools of the Trade in Data
+Analysis</h2>
 <p>This module is intended to give students the background and skills to
 begin simple data tidying and transformation operations. We need our
 data to be tidy before we can analyze it, that is, structured in a way
 that makes analysis possible. In addition, often the data we have aren’t
 exactly what we want to analyze. In this module, we’ll focus on how to
 read, tidy, and merge data.</p>
-<div id="dates-1" class="section level2">
-<h2>Dates:</h2>
+<div id="dates-1" class="section level3">
+<h3>Dates:</h3>
 <p>Week 3 (Sep 12—18):</p>
 </div>
-<div id="key-concepts-1" class="section level2">
-<h2>Key Concepts</h2>
+<div id="key-concepts-1" class="section level3">
+<h3>Key Concepts</h3>
 <ul>
 <li>Reading text files in R</li>
 <li>Adding data based on data (i.e., data transformation)</li>
@@ -655,8 +658,8 @@ read, tidy, and merge data.</p>
 <li>Relational data and merging data sets</li>
 </ul>
 </div>
-<div id="learning-objectives-1" class="section level2">
-<h2>Learning Objectives</h2>
+<div id="learning-objectives-1" class="section level3">
+<h3>Learning Objectives</h3>
 <p>Upon completion of this week and module, students will be able
 to:</p>
 <ul>
@@ -669,6 +672,7 @@ columns.</li>
 mind.</li>
 <li>Join data sets based on similar data (i.e., key) attributes</li>
 </ul>
+</div>
 <div id="readwatch-1" class="section level3">
 <h3>Read/Watch</h3>
 <p>All form <a href="https://r4ds.had.co.nz/wrangle-intro.html">R for
@@ -783,24 +787,23 @@ board</a> [10 points]</li>
 </table>
 </div>
 </div>
-</div>
 <div
 id="module-3-the-whiz-and-viz-bang-of-data-the-basics-of-data-visualization-and-modeling"
-class="section level1">
-<h1>Module 3: The Whiz and Viz Bang of Data: The Basics of Data
-Visualization and Modeling</h1>
+class="section level2">
+<h2>Module 3: The Whiz and Viz Bang of Data: The Basics of Data
+Visualization and Modeling</h2>
 <p>In Module 3, we’ll cover the basics of visualizing and modeling data
 and hypothesis testing. We’ve used some simple visualization techniques
 in <code>ggplot</code> already and we’ll leverage this introduction to
 dig deeper into how data can be plotted to explore and ask informed
 questions about it. In addition, we’ll learn how and when to compared
 the fit of models.</p>
-<div id="dates-2" class="section level2">
-<h2>Dates:</h2>
+<div id="dates-2" class="section level3">
+<h3>Dates:</h3>
 <p>Week 4 (Sep 19—25):</p>
 </div>
-<div id="key-concepts-2" class="section level2">
-<h2>Key Concepts</h2>
+<div id="key-concepts-2" class="section level3">
+<h3>Key Concepts</h3>
 <ul>
 <li>The grammar of <code>ggplot</code></li>
 <li>Linear models and least squares regression</li>
@@ -809,8 +812,8 @@ the fit of models.</p>
 <li>Model fit and the Aikiake Information Criterion (AIC)</li>
 </ul>
 </div>
-<div id="learning-objectives-2" class="section level2">
-<h2>Learning Objectives</h2>
+<div id="learning-objectives-2" class="section level3">
+<h3>Learning Objectives</h3>
 <p>Upon completion of this week and module, students will be able
 to:</p>
 <ul>
@@ -822,8 +825,8 @@ comparative data.</li>
 <li>Compare model fit using an information theory approach.</li>
 </ul>
 </div>
-<div id="readwatch-2" class="section level2">
-<h2>Read/Watch</h2>
+<div id="readwatch-2" class="section level3">
+<h3>Read/Watch</h3>
 <p>All form <a href="https://r4ds.had.co.nz/wrangle-intro.html">R for
 Data Science</a> (R4DS):</p>
 <ul>
@@ -859,8 +862,8 @@ href="https://lukejharmon.github.io/pcm/chapter6_beyondbm/#section-6.4-non-brown
 evolution under stabilizing selection</a></li>
 </ul>
 </div>
-<div id="do-2" class="section level2">
-<h2>Do</h2>
+<div id="do-2" class="section level3">
+<h3>Do</h3>
 <ul>
 <li>Post one and respond to one question in <a
 href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion
@@ -868,8 +871,8 @@ board</a> [10 points]</li>
 <li>Complete and commit a report for Module 3 Project</li>
 </ul>
 </div>
-<div id="guiding-questions-2" class="section level2">
-<h2>Guiding Questions</h2>
+<div id="guiding-questions-2" class="section level3">
+<h3>Guiding Questions</h3>
 <ul>
 <li>What are the basic components of plotting in
 <code>ggplot</code>?</li>
@@ -885,8 +888,8 @@ the right model) in comparative research?</li>
 </ul>
 <p><br></p>
 </div>
-<div id="module-3-schedule" class="section level2">
-<h2>Module 3 Schedule</h2>
+<div id="module-3-schedule" class="section level3">
+<h3>Module 3 Schedule</h3>
 <p>All assignments are due at 11:59 on the specified date.</p>
 <table>
 <colgroup>
@@ -938,19 +941,19 @@ the right model) in comparative research?</li>
 </div>
 <div
 id="module-4-making-messes-pretty-leveraging-markdown-to-produce-pleasing-reports"
-class="section level1">
-<h1>Module 4: Making Messes Pretty: Leveraging Markdown to Produce
-Pleasing Reports</h1>
+class="section level2">
+<h2>Module 4: Making Messes Pretty: Leveraging Markdown to Produce
+Pleasing Reports</h2>
 <p>In Module 4, we’ll cover the basics of authoring reports in R
 Markdown, a markup language used to communicate the results of analysis
 in R. With R Markdown, you’ll develop a framework for compiling ideas,
 code, and graphics in one reproducible document.</p>
-<div id="dates-3" class="section level2">
-<h2>Dates:</h2>
+<div id="dates-3" class="section level3">
+<h3>Dates:</h3>
 <p>Week 5 (Sep 26—Oct 2):</p>
 </div>
-<div id="key-concepts-3" class="section level2">
-<h2>Key Concepts</h2>
+<div id="key-concepts-3" class="section level3">
+<h3>Key Concepts</h3>
 <ul>
 <li>The R Markdown framework</li>
 <li>Text markup</li>
@@ -959,8 +962,8 @@ code, and graphics in one reproducible document.</p>
 <li>Knitting documents in R Markdown</li>
 </ul>
 </div>
-<div id="learning-objectives-3" class="section level2">
-<h2>Learning Objectives</h2>
+<div id="learning-objectives-3" class="section level3">
+<h3>Learning Objectives</h3>
 <p>Upon completion of this week and module, students will be able
 to:</p>
 <ul>
@@ -972,8 +975,8 @@ Markdown document.</li>
 documents.</li>
 </ul>
 </div>
-<div id="readwatch-3" class="section level2">
-<h2>Read/Watch</h2>
+<div id="readwatch-3" class="section level3">
+<h3>Read/Watch</h3>
 <ul>
 <li>Chapter 27 in R4DS:<a
 href="https://r4ds.had.co.nz/r-markdown.html">R Markdown</a></li>
@@ -997,8 +1000,8 @@ needed.</p>
 </div>
 <p><br></p>
 </div>
-<div id="do-3" class="section level2">
-<h2>Do</h2>
+<div id="do-3" class="section level3">
+<h3>Do</h3>
 <ul>
 <li>Post one and respond to one question in <a
 href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion
@@ -1006,8 +1009,8 @@ board</a> [10 points]</li>
 <li>Complete and commit a report for Module 3 Project</li>
 </ul>
 </div>
-<div id="guiding-questions-3" class="section level2">
-<h2>Guiding Questions</h2>
+<div id="guiding-questions-3" class="section level3">
+<h3>Guiding Questions</h3>
 <ul>
 <li>What are the basic components of an .Rmd?</li>
 <li>How does one included headers, marked up text, graphics, tables, and
@@ -1016,8 +1019,8 @@ references in an .Rmd?</li>
 </ul>
 <p><br></p>
 </div>
-<div id="module-4-schedule" class="section level2">
-<h2>Module 4 Schedule</h2>
+<div id="module-4-schedule" class="section level3">
+<h3>Module 4 Schedule</h3>
 <p>All assignments are due at 11:59 on the specified date.</p>
 <table>
 <colgroup>
@@ -1069,26 +1072,26 @@ references in an .Rmd?</li>
 </div>
 <div
 id="module-5-cheap-tricks-in-physiology-designing-and-programming-simple-low-cost-data-acquisition-systems"
-class="section level1">
-<h1>Module 5: Cheap Tricks in Physiology: Designing and Programming
-Simple, Low-Cost Data Acquisition Systems</h1>
+class="section level2">
+<h2>Module 5: Cheap Tricks in Physiology: Designing and Programming
+Simple, Low-Cost Data Acquisition Systems</h2>
 <p>This module is intended to give students the background and skills to
 begin designing and programming of simple hardware devices using
 Arduino.</p>
-<div id="dates-4" class="section level2">
-<h2>Dates</h2>
+<div id="dates-4" class="section level3">
+<h3>Dates</h3>
 <p>Week 6 (Oct 2—12th):</p>
 </div>
-<div id="key-concepts-4" class="section level2">
-<h2>Key Concepts</h2>
+<div id="key-concepts-4" class="section level3">
+<h3>Key Concepts</h3>
 <ul>
 <li>Arduino IDE basics (the sketch).</li>
 <li>Instrument design basics.</li>
 <li>Saving data output from the serial monitor.</li>
 </ul>
 </div>
-<div id="learning-objectives-4" class="section level2">
-<h2>Learning Objectives</h2>
+<div id="learning-objectives-4" class="section level3">
+<h3>Learning Objectives</h3>
 <p>Upon completion of this week and module, students will be able
 to:</p>
 <ul>
@@ -1096,8 +1099,8 @@ to:</p>
 <li>Output data from a DAQ for subsequent analysis.</li>
 </ul>
 </div>
-<div id="readwatch-4" class="section level2">
-<h2>Read/Watch</h2>
+<div id="readwatch-4" class="section level3">
+<h3>Read/Watch</h3>
 <ul>
 <li><a href="https://www.arduino.cc/en/Guide/Introduction">What is
 Arduino?</a></li>
@@ -1117,8 +1120,8 @@ Does a Breadboard Work</a></li>
 a DHT11 Sensor</a></li>
 </ul>
 </div>
-<div id="do-4" class="section level2">
-<h2>Do</h2>
+<div id="do-4" class="section level3">
+<h3>Do</h3>
 <ul>
 <li>Post one and respond to one question in <a
 href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion
@@ -1131,8 +1134,8 @@ the Arduino UNO</a> (work with the desktop IDE)</li>
 <li>Complete Module 5 Project</li>
 </ul>
 </div>
-<div id="guiding-questions-4" class="section level2">
-<h2>Guiding Questions</h2>
+<div id="guiding-questions-4" class="section level3">
+<h3>Guiding Questions</h3>
 <ul>
 <li>What are the major components of an Arduino microcontroller?</li>
 <li>What are the major components of an Arduino-based DAQ?</li>
@@ -1140,8 +1143,8 @@ the Arduino UNO</a> (work with the desktop IDE)</li>
 <li>How are data acquired from an Arduino unit?</li>
 </ul>
 </div>
-<div id="module-5-schedule" class="section level2">
-<h2>Module 5 Schedule</h2>
+<div id="module-5-schedule" class="section level3">
+<h3>Module 5 Schedule</h3>
 <p>All assignments are due at 11:59 on the specified date.</p>
 <table>
 <colgroup>
@@ -1217,6 +1220,7 @@ the Arduino UNO</a> (work with the desktop IDE)</li>
 </table>
 </div>
 </div>
+</div>
 <div id="phase-ii-developing-a-toolbox" class="section level1">
 <h1>Phase II: Developing a Toolbox</h1>
 <p>In Phase II, we’ll use our new-found instrument- and code-development
@@ -1237,20 +1241,19 @@ to use in answering how wing shape has evolved in the Lepidoptera (i.e.,
 the moths and butterflies). Specifically, we’ll test whether wing shape
 has evolved differently between the two major groups of this indect
 order.</p>
-</div>
-<div id="dates-5" class="section level2">
-<h2>Dates</h2>
+<div id="dates-5" class="section level3">
+<h3>Dates:</h3>
 <p>Weeks 7–9 (Oct 10—30):</p>
 </div>
-<div id="key-concepts-5" class="section level2">
-<h2>Key Concepts</h2>
+<div id="key-concepts-5" class="section level3">
+<h3>Key Concepts</h3>
 <p><!-- + Saving instrument data to an SD card. --> + Morphometrics +
 Fluid mechanics + Evolutionary rate + Allometric scaling + Pagel’s <span
 class="math inline">\(\lambda\)</span> and phylogenetic signal +
 Phylognetically informed regression</p>
 </div>
-<div id="learning-objectives-5" class="section level2">
-<h2>Learning Objectives</h2>
+<div id="learning-objectives-5" class="section level3">
+<h3>Learning Objectives</h3>
 <p>Upon completion of this module, students will be able to:</p>
 <ul>
 <li>Understand the basics of geometric and outline morphometrics.</li>
@@ -1259,8 +1262,8 @@ Phylognetically informed regression</p>
 analysis in shape studies.</li>
 </ul>
 </div>
-<div id="readwatch-5" class="section level2">
-<h2>Read/Watch</h2>
+<div id="readwatch-5" class="section level3">
+<h3>Read/Watch</h3>
 <p><!-- + ~~[Temp sensor with SDcard module tutorial](http://arduinolearning.com/projects/temperature-logger.php)~~ -->
 <!-- + [Temp sensor with SDcard module tutorial](https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data) --></p>
 <ul>
@@ -1273,8 +1276,8 @@ href="https://momx.github.io/Momocs/articles/Momocs_intro.html">Intoduction
 to Momocs</a></li>
 </ul>
 </div>
-<div id="do-5" class="section level2">
-<h2>Do</h2>
+<div id="do-5" class="section level3">
+<h3>Do</h3>
 <ul>
 <li>Post one and respond to one question in <a
 href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion
@@ -1285,8 +1288,8 @@ directory</a> by Tuesday, October 11th</li>
 <li>Complete and commit Module 6 Project report</li>
 </ul>
 </div>
-<div id="guiding-questions-5" class="section level2">
-<h2>Guiding Questions</h2>
+<div id="guiding-questions-5" class="section level3">
+<h3>Guiding Questions</h3>
 <ul>
 <li>How does one acquire shape information for comparative
 analysis?</li>
@@ -1295,8 +1298,8 @@ analysis?</li>
 course?</li>
 </ul>
 </div>
-<div id="module-6-schedule" class="section level2">
-<h2>Module 6 Schedule</h2>
+<div id="module-6-schedule" class="section level3">
+<h3>Module 6 Schedule</h3>
 <p>All assignments are due at 11:59 on the specified date.</p>
 <table>
 <colgroup>
@@ -1421,16 +1424,13 @@ directory</a></td>
 </table>
 <p>*Note: There will be no class on Friday 10/14 and Tuesday 10/18 is a
 Monday schedule.</p>
-<p><strong>Assignment due</strong> | | | Post question to discussion
-board | Answer a question on discussion board | | |commit Project 7
-report</p>
 </div>
 </div>
 <div
-id="module-8-beach-muscles-exploring-force-length-relationships-in-vertebrate-muscle"
-class="section level1">
-<h1>Module 8: Beach Muscles: Exploring Force-Length Relationships in
-Vertebrate Muscle</h1>
+id="module-7-beach-muscles-exploring-force-length-relationships-in-vertebrate-muscle"
+class="section level2">
+<h2>Module 7: Beach Muscles: Exploring Force-Length Relationships in
+Vertebrate Muscle</h2>
 <p>In this module, we’ll explore how the force produced by vertebrate
 muscles is constrained by its length. To do this, we’ll design an
 Arduino-based load sensing data-acquisition system to record force
@@ -1438,12 +1438,12 @@ produced by upper-arm muscles over a series of different resting length.
 From our data, we’ll establish models of forearm force-length properties
 and investigate how fatigure changes this imporant property of
 vertebrate muscle.</p>
-<div id="dates-6" class="section level2">
-<h2>Dates</h2>
-<p>Weeks 10 &amp; 11 (Oct 31—Nov 13):</p>
+<div id="dates-6" class="section level3">
+<h3>Dates:</h3>
+<p>Weeks 11 &amp; 12 (Oct 31—Nov 13):</p>
 </div>
-<div id="key-concepts-6" class="section level2">
-<h2>Key Concepts</h2>
+<div id="key-concepts-6" class="section level3">
+<h3>Key Concepts</h3>
 <ul>
 <li>Cross-bridge theory</li>
 <li>Isometric force</li>
@@ -1452,8 +1452,8 @@ vertebrate muscle.</p>
 <li>Mechanical advantage</li>
 </ul>
 </div>
-<div id="learning-objectives-6" class="section level2">
-<h2>Learning Objectives</h2>
+<div id="learning-objectives-6" class="section level3">
+<h3>Learning Objectives</h3>
 <p>Upon completion of this week and module, students will be able
 to:</p>
 <ul>
@@ -1462,8 +1462,8 @@ to:</p>
 effect of fatigue on the shape of this relationship.</li>
 </ul>
 </div>
-<div id="readwatch-6" class="section level2">
-<h2>Read/Watch</h2>
+<div id="readwatch-6" class="section level3">
+<h3>Read/Watch</h3>
 <ul>
 <li>Read <a
 href="https://journals.physiology.org/doi/full/10.1152/jappl.1999.86.5.1445">Rassier,
@@ -1478,20 +1478,20 @@ href="https://www.omega.com/en-us/resources/wheatstone-bridge">The
 Wheastone Bridge from Omega</a></li>
 </ul>
 </div>
-<div id="do-6" class="section level2">
-<h2>Do</h2>
+<div id="do-6" class="section level3">
+<h3>Do</h3>
 <ul>
 <li>Post one and respond to one question in <a
 href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion
 board</a></li>
-<li>Complete and commit Module 8 Project report</li>
+<li>Complete and commit Module 7 Project report</li>
 <li>Upload force-angle data to <a
 href="https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing">this
-directory</a> by Monday, November 9th</li>
+directory</a> by Sunday, November 20th</li>
 </ul>
 </div>
-<div id="guiding-questions-6" class="section level2">
-<h2>Guiding Questions</h2>
+<div id="guiding-questions-6" class="section level3">
+<h3>Guiding Questions</h3>
 <ul>
 <li>How does one construct a low-cost load-cell force DAQ system?</li>
 <li>Can angle-force measurements predict force-length (FL) relationships
@@ -1500,8 +1500,8 @@ in the flexors of the human upper arm?</li>
 flexors?</li>
 </ul>
 </div>
-<div id="module-8-schedule" class="section level2">
-<h2>Module 8 Schedule</h2>
+<div id="module-7-schedule" class="section level3">
+<h3>Module 7 Schedule</h3>
 <p>All assignments are due at 11:59 on the specified date.</p>
 <table>
 <colgroup>
@@ -1517,13 +1517,13 @@ flexors?</li>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 10/31</th>
-<th>Tuesday <br>11/1</th>
-<th>Wednesday<br> 11/2</th>
-<th>Thursday <br> 11/3</th>
-<th>Friday <br> 11/4</th>
-<th>Saturday<br> 11/4</th>
-<th>Sunday<br> 11/6</th>
+<th>Monday <br> 11/7</th>
+<th>Tuesday <br>11/8</th>
+<th>Wednesday<br> 11/9</th>
+<th>Thursday <br> 11/10</th>
+<th>Friday <br> 11/11</th>
+<th>Saturday<br> 11/12</th>
+<th>Sunday<br> 11/13</th>
 </tr>
 </thead>
 <tbody>
@@ -1553,13 +1553,13 @@ flexors?</li>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 11/7</th>
-<th>Tuesday <br>11/8</th>
-<th>Wednesday<br> 11/9</th>
-<th>Thursday <br> 11/10</th>
-<th>Friday <br> 11/11</th>
-<th>Saturday<br> 11/12</th>
-<th>Sunday<br> 11/13</th>
+<th>Monday <br> 11/14</th>
+<th>Tuesday <br>11/15</th>
+<th>Wednesday<br> 11/16</th>
+<th>Thursday <br> 11/17</th>
+<th>Friday <br> 11/18</th>
+<th>Saturday<br> 11/19</th>
+<th>Sunday<br> 11/20</th>
 </tr>
 </thead>
 <tbody>
@@ -1587,15 +1587,14 @@ directory</a></td>
 </tr>
 </tbody>
 </table>
-<p>w</p>
 </div>
 </div>
 <div
-id="module-9-birds-of-a-feather-migrate-together-.-.-.-sometimes-using-ebird-data-to-explore-the-phenology-of-passerine-migration-data-driven"
-class="section level1">
-<h1>Module 9: Birds of a Feather Migrate Together . . . Sometimes: Using
+id="module-8-birds-of-a-feather-migrate-together-.-.-.-sometimes-using-ebird-data-to-explore-the-phenology-of-passerine-migration-data-driven"
+class="section level2">
+<h2>Module 8: Birds of a Feather Migrate Together . . . Sometimes: Using
 EBird data to Explore the Phenology of Passerine Migration (data
-driven)</h1>
+driven)</h2>
 <p>In this module, we’ll explore the phenology of spring arrival timing
 for neotropical passerines as it relates to historical weather
 conditions. To do so, we’ll download species occurrence data from the
@@ -1611,12 +1610,12 @@ historical weather data, we’ll also use another R package,
 <code>rnoa</code>. This package contains functions that interact with <a
 href="https://www.ncdc.noaa.gov/cdo-web/webservices/v2">NOAA’s National
 Climatic Data Center’s API</a>.</p>
-<div id="dates-7" class="section level2">
-<h2>Dates</h2>
-<p>Weeks 12 &amp; 13 (Nov 14—Nov 22):</p>
+<div id="dates-7" class="section level3">
+<h3>Dates</h3>
+<p>Weeks 12 &amp; 13 (Nov 21—Dec 4):</p>
 </div>
-<div id="key-concepts-7" class="section level2">
-<h2>Key Concepts</h2>
+<div id="key-concepts-7" class="section level3">
+<h3>Key Concepts</h3>
 <ul>
 <li>API</li>
 <li>Phenology</li>
@@ -1624,8 +1623,8 @@ Climatic Data Center’s API</a>.</p>
 <li>Linear Mixed-effects Modeling</li>
 </ul>
 </div>
-<div id="learning-objectives-7" class="section level2">
-<h2>Learning Objectives</h2>
+<div id="learning-objectives-7" class="section level3">
+<h3>Learning Objectives</h3>
 <p>Upon completion of this week and module, students will be able
 to:</p>
 <ul>
@@ -1635,8 +1634,8 @@ to:</p>
 bird poulaiton.</li>
 </ul>
 </div>
-<div id="readwatch-7" class="section level2">
-<h2>Read/Watch</h2>
+<div id="readwatch-7" class="section level3">
+<h3>Read/Watch</h3>
 <ul>
 <li>Watch <a href="https://www.youtube.com/watch?v=QCqF-2E86r0">Matthew
 E. Clapham from UCSC on Linear Mixed-Effect Modles</a></li>
@@ -1648,8 +1647,8 @@ the Study of Migratory Birds and Climate Change.” Biological Reviews 86
 (4): 928–46</a></li>
 </ul>
 </div>
-<div id="do-7" class="section level2">
-<h2>Do</h2>
+<div id="do-7" class="section level3">
+<h3>Do</h3>
 <ul>
 <li>Post one and respond to one question in <a
 href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion
@@ -1657,53 +1656,17 @@ board</a></li>
 <li>Complete and commit Module 9 Project report</li>
 </ul>
 </div>
-<div id="guiding-questions-7" class="section level2">
-<h2>Guiding Questions</h2>
+<div id="guiding-questions-7" class="section level3">
+<h3>Guiding Questions</h3>
 <ul>
 <li>How does one download data using interfaces developed for R?</li>
 <li>Is something other the temperature important in explaining the
 arrival time of neotropical migrants in MA?</li>
 </ul>
 </div>
-<div id="module-9-schedule" class="section level2">
-<h2>Module 9 Schedule</h2>
+<div id="module-8-schedule" class="section level3">
+<h3>Module 8 Schedule</h3>
 <p>All assignments are due at 11:59 on the specified date.</p>
-<table>
-<colgroup>
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>Monday <br> 11/14</th>
-<th>Tuesday <br>11/15</th>
-<th>Wednesday<br> 11/16</th>
-<th>Thursday <br> 11/17</th>
-<th>Friday <br> 11/18</th>
-<th>Saturday<br> 11/19</th>
-<th>Sunday<br> 11/20</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Assignment due</strong></td>
-<td></td>
-<td></td>
-<td>Post question to discussion board</td>
-<td>Answer a question on discussion board</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
 <table>
 <colgroup>
 <col width="12%" />
@@ -1736,7 +1699,43 @@ arrival time of neotropical migrants in MA?</li>
 <td></td>
 <td></td>
 <td></td>
-<td>Commit Module 9 Project Report</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Monday <br> 11/28</th>
+<th>Tuesday <br>11/29</th>
+<th>Wednesday<br> 11/30</th>
+<th>Thursday <br> 12/1</th>
+<th>Friday <br> 12/2</th>
+<th>Saturday<br> 12/3</th>
+<th>Sunday<br> 12/4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Assignment due</strong></td>
+<td></td>
+<td></td>
+<td>Post question to discussion board</td>
+<td>Answer a question on discussion board</td>
+<td></td>
+<td></td>
+<td>Commit Module 8 Project Report</td>
 </tr>
 <tr class="even">
 <td></td>
@@ -1750,7 +1749,8 @@ arrival time of neotropical migrants in MA?</li>
 </tr>
 </tbody>
 </table>
-<p>*note the shift due to Thanksgiving</p>
+<p>*note shift due to Thanksgiving week</p>
+</div>
 </div>
 </div>
 <div id="phase-iii-final-projects" class="section level1">
@@ -1787,12 +1787,12 @@ found <a href="final_proj.html">here</a>.</p>
 <tr class="header">
 <th></th>
 <th>Monday <br> 11/27</th>
-<th>Tuesday <br>11/29</th>
-<th>Wednesday<br> 11/30</th>
-<th>Thursday <br> 12/1</th>
-<th>Friday <br> 12/2</th>
-<th>Saturday<br> 12/3</th>
-<th>Sunday<br> 12/4</th>
+<th>Tuesday <br>11/28</th>
+<th>Wednesday<br> 11/29</th>
+<th>Thursday <br> 11/30</th>
+<th>Friday <br> 12/1</th>
+<th>Saturday<br> 12/2</th>
+<th>Sunday<br> 12/3</th>
 </tr>
 </thead>
 <tbody>

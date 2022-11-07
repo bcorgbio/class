@@ -18,14 +18,14 @@ In this one and only project for Phase III, you are tasked with quickly developi
 
 In either case, the project should address an important topic in organismal biology and has a scope that permits experimentation/data collection, analysis, and write up within the time frame of just a few short weeks. Furthermore, the project will require you to first delve into the the scientific literature to set the stage and then leverage your new data-analysis and report-writing skills in the synthesis of a markdown report. This final project report should follow the same format and requirements of the reports produced in Phase II, but with expanded content.
 
-**NOTE**: Teams may pursue [Module 9](mod9_proj.html) as their final project. All the following parameters apply.
+<!-- **NOTE**: Teams may pursue [Module 9](mod9_proj.html) as their final project. All the following parameters apply. -->
 
-Prof. Kenaley will work with each team to develop a timeline for preliminary deliverable that include defining an initial question, a framework for analysis, and a final-project draft that includes an abstract and potential figures and other representations of your date. Early in the project each team should work with Prof. Kenaley to schedule an initial meeting to work this out. Please email him directly.
+Prof. Kenaley will work with each team to develop a timeline for preliminary deliverables that include defining an initial question, a framework for analysis, and a final-project draft that includes an abstract and potential figures and other representations of your date. Early in the project each team should work with Prof. Kenaley to schedule an initial meeting to work this out. Please email him directly.
 
 
 # Methods
 
-You a free to pursue any methods introduced in the course. This may include, but need not be limited to, using a temperature, force, or acceleration prototype or purely data-driven analysis. All projects should include **visualization** and **modeling** approaches that mirror those used in the course so far. 
+You are free to pursue any methods introduced in the course. This may include, but need not be limited to, using a temperature, force, or acceleration prototype or purely data-driven analysis. All projects should include **visualization** and **modeling** approaches that mirror those used in the course so far. 
 
 # Project Report
 

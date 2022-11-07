@@ -12,14 +12,14 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 In this phase, we'll learn the basics of instrumentation and data analysis by working through 5 learning modules devoted to instrument design and data analysis. This will most likely be the most challenging part of the course in that many, if not most of you will not have ever designed and built instruments and data acquisition systems, let alone analyzed data from them. Rest assured, your experience will be curated, sticking to the bare bones of instrument design and data science. This introductory phase will set the groundwork for Phase II, the independent development of sensors and data analysis.
 
-# Module 1: Data Pirates Code with. . . . R, Introduction to the Basics
+## Module 1: Data Pirates Code with. . . . R, Introduction to the Basics
 
 In this module we'll tackle where to find resource you'll need on a week-to-week, module-by-module basis. In addition, we'll work on the first important topic of the course: an introduction to R, an ever more popular language for data analysis and visualization. We'll focus on the basics of importing and tidying data in R. By importing, we mean loading data collected by scientists and stored in text files, the lingua franca of scientific data. By tidying, we mean preparing data for analysis.
 
-## Dates 
+### Dates 
 Weeks 1 & 2 (Aug 29—Sep 11):
 
-## Key Concepts
+### Key Concepts
   + Course workflow
   + Course expectations
   + R user interface
@@ -30,7 +30,7 @@ Weeks 1 & 2 (Aug 29—Sep 11):
   + The `for` loop
   + git, github, and version control
   
-## Learning Objectives
+### Learning Objectives
 
 Upon completion of this week and module, students will be able to:
 
@@ -42,7 +42,7 @@ Upon completion of this week and module, students will be able to:
   + Construct and run a `for` loop in R to automate a interatively redundant task.
   + clone a local directory and version controlteam-based work on common script and report files
  
-## Read/Watch 
+### Read/Watch 
 
 From [Hands on Programming with R](https://rstudio-education.github.io/hopr) (HOPR)
 
@@ -79,7 +79,7 @@ Check out the new [github access token requirements](https://docs.github.com/en/
 
 <br>
 
-## Do
+### Do
 
   + Post one and respond to one question each week of Module 1 in our [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) 
   + [Install R and RStudio](https://rstudio-education.github.io/hopr/starting.html#starting)
@@ -87,8 +87,7 @@ Check out the new [github access token requirements](https://docs.github.com/en/
   + Complete and commit a report for Module 1 Project 
 
 
-
-## Guiding Questions
+### Guiding Questions
   
   + How do I perform simple operations in R?
   + What are R's basic object classes?
@@ -97,7 +96,7 @@ Check out the new [github access token requirements](https://docs.github.com/en/
   + How does a `for` loop work and when should it be used?
   + What are the basic git opertations and their value in sharing code.
   
-## Module 1 Schedule
+### Module 1 Schedule
 
 All assignments are due at 11:59 on the specified date.
 
@@ -111,21 +110,21 @@ All assignments are due at 11:59 on the specified date.
  |||||||
 <br>
 
-# Module 2: Data Wrangling: Introduction to Tools of the Trade in Data Analysis
+## Module 2: Data Wrangling: Introduction to Tools of the Trade in Data Analysis
 
 This module is intended to give students the background and skills to begin simple data tidying and transformation operations. We need our data to be tidy before we can analyze it, that is, structured in a way that makes analysis possible. In addition, often the data we have aren't exactly what we want to analyze. In this module, we'll focus on how to read, tidy, and merge data.
 
-## Dates: 
+### Dates: 
 Week 3 (Sep 12—18): 
 
-## Key Concepts
+### Key Concepts
   + Reading text files in R
   + Adding data based on data (i.e., data transformation)
   + Summarize data according to variables
   + Tidying data in R
   + Relational data and merging data sets
 
-## Learning Objectives
+### Learning Objectives
 
 Upon completion of this week and module, students will be able to:
 
@@ -190,22 +189,22 @@ All assignments are due at 11:59 on the specified date.
   ||||||||
 
 
-# Module 3: The Whiz and Viz Bang of Data: The Basics of Data Visualization and Modeling
+## Module 3: The Whiz and Viz Bang of Data: The Basics of Data Visualization and Modeling
 
 In Module 3, we'll cover the basics of visualizing and modeling data and hypothesis testing. We've used some simple visualization techniques in `ggplot` already and we'll leverage this introduction to dig deeper into how data can be plotted to explore and ask informed questions about it. In addition, we'll learn how and when to compared the fit of models.
 
-## Dates: 
+### Dates: 
 
 Week 4 (Sep 19—25):
 
-## Key Concepts
+### Key Concepts
   + The grammar of `ggplot`
   + Linear models and least squares regression
   + Phylogenetic signal and correction
   + Brownian motion models of trait evolution
   + Model fit and the Aikiake Information Criterion (AIC)
 
-## Learning Objectives
+### Learning Objectives
 
 Upon completion of this week and module, students will be able to:
 
@@ -214,7 +213,7 @@ Upon completion of this week and module, students will be able to:
   + Perform phylogenetically corrected regression analysis of comparative data.
   + Compare model fit using an information theory approach.
   
-## Read/Watch
+### Read/Watch
 
 All form [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS):
 
@@ -233,13 +232,13 @@ From [Phylogenetic Comparative Methods](https://lukejharmon.github.io/pcm) by Lu
   + Chapter 6.4: [Non-Brownian evolution under stabilizing selection](https://lukejharmon.github.io/pcm/chapter6_beyondbm/#section-6.4-non-brownian-evolution-under-stabilizing-selection)
 
 
-## Do 
+### Do 
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
   + Complete and commit a report for Module 3 Project 
 
 
-## Guiding Questions
+### Guiding Questions
 
 + What are the basic components of plotting in `ggplot`?
 + How does one use basic visualization techniques to propose questions in biology?
@@ -250,7 +249,7 @@ From [Phylogenetic Comparative Methods](https://lukejharmon.github.io/pcm) by Lu
 
 <br>
 
-## Module 3 Schedule
+### Module 3 Schedule
 
 All assignments are due at 11:59 on the specified date. 
 
@@ -260,22 +259,22 @@ All assignments are due at 11:59 on the specified date.
   ||||||||
   
   
-# Module 4: Making Messes Pretty: Leveraging Markdown to Produce Pleasing Reports
+## Module 4: Making Messes Pretty: Leveraging Markdown to Produce Pleasing Reports
 
 In Module 4, we'll cover the basics of authoring reports in R Markdown, a markup language used to communicate the results of analysis in R. With R Markdown, you'll develop a framework for compiling ideas, code, and graphics in one reproducible document.
 
-## Dates: 
+### Dates: 
 
 Week 5 (Sep 26—Oct 2):
 
-## Key Concepts
+### Key Concepts
   + The R Markdown framework
   + Text markup
   + Code chunks
   + Graphics and tables in R Markdown 
   + Knitting documents in R Markdown
 
-## Learning Objectives
+### Learning Objectives
 
 Upon completion of this week and module, students will be able to:
 
@@ -284,7 +283,7 @@ Upon completion of this week and module, students will be able to:
   + Add graphics (i.e., figures), images, tables and references to and R Markdown document. 
   + Render (i.e., knit) this R Markdown into HTML and PDF documents.
   
-## Read/Watch
+### Read/Watch
 
   + Chapter 27 in R4DS:[R Markdown](https://r4ds.had.co.nz/r-markdown.html)
   + [R Studio's markdown tutorial](https://rmarkdown.rstudio.com/)
@@ -303,13 +302,13 @@ This module is very much learn as you go. Please dive right into the project and
 </div> 
 <br>
 
-## Do 
+### Do 
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
   + Complete and commit a report for Module 3 Project 
 
 
-## Guiding Questions
+### Guiding Questions
 
 + What are the basic components of an .Rmd?
 + How does one included headers, marked up text, graphics, tables, and references in an .Rmd?
@@ -317,7 +316,7 @@ This module is very much learn as you go. Please dive right into the project and
 
 <br>
 
-## Module 4 Schedule
+### Module 4 Schedule
 
 All assignments are due at 11:59 on the specified date. 
 
@@ -326,27 +325,27 @@ All assignments are due at 11:59 on the specified date.
   **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  | | | commit Module 4 Project Report
   ||||||||
 
-# Module 5: Cheap Tricks in Physiology: Designing and Programming Simple, Low-Cost Data Acquisition Systems
+## Module 5: Cheap Tricks in Physiology: Designing and Programming Simple, Low-Cost Data Acquisition Systems
 
 This module is intended to give students the background and skills to begin designing and programming of simple hardware devices using Arduino.
 
 
-## Dates 
+### Dates 
 Week 6 (Oct 2—12th):
 
-## Key Concepts
+### Key Concepts
   + Arduino IDE basics (the sketch).
   + Instrument design basics.
   + Saving data output from the serial monitor.
   
-## Learning Objectives
+### Learning Objectives
 
 Upon completion of this week and module, students will be able to:
 
   + Design and program a simple temperature Arduino DAQ.
   + Output data from a DAQ for subsequent analysis.
 
-## Read/Watch 
+### Read/Watch 
 
   + [What is Arduino?](https://www.arduino.cc/en/Guide/Introduction)
   + [Getting started with Arduino](https://www.arduino.cc/en/Guide)
@@ -357,7 +356,7 @@ Upon completion of this week and module, students will be able to:
   + [Using a DHT11 Sensor](https://learn.adafruit.com/dht/using-a-dhtxx-sensor)
 
 
-## Do
+### Do
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
   + [Install Arduino IDE](https://www.arduino.cc/en/Guide)
@@ -365,14 +364,14 @@ Upon completion of this week and module, students will be able to:
   + Complete Module 5 Project
 
 
-## Guiding Questions
+### Guiding Questions
 
   + What are the major components of an Arduino microcontroller?
   + What are the major components of an Arduino-based DAQ? 
   + How does one program an Arduino microcontroller?
   + How are data acquired from an Arduino unit?
 
-## Module 5 Schedule
+### Module 5 Schedule
 
 All assignments are due at 11:59 on the specified date.
 
@@ -394,10 +393,11 @@ In Phase II, we'll use our new-found instrument- and code-development skills to 
 
 This module puts our newly formed data analysis and markdown skills to use in answering how wing shape has evolved in the Lepidoptera (i.e., the moths and butterflies). Specifically, we'll test whether wing shape has evolved differently between the two major groups of this indect order.
 
-## Dates 
+### Dates:
+
 Weeks 7--9 (Oct 10—30):
 
-## Key Concepts
+### Key Concepts
   <!-- + Saving instrument data to an SD card. -->
   + Morphometrics
   + Fluid mechanics
@@ -406,7 +406,7 @@ Weeks 7--9 (Oct 10—30):
   + Pagel's $\lambda$ and phylogenetic signal
   + Phylognetically informed regression
   
-## Learning Objectives
+### Learning Objectives
 
 Upon completion of this module, students will be able to:
 
@@ -414,7 +414,7 @@ Upon completion of this module, students will be able to:
   + Assemble a large dataset of comparative shape information.
   + Comment on how accounting for phylogenetic relationships affects analysis in shape studies.
 
-## Read/Watch 
+### Read/Watch 
 
   <!-- + ~~[Temp sensor with SDcard module tutorial](http://arduinolearning.com/projects/temperature-logger.php)~~ -->
   <!-- + [Temp sensor with SDcard module tutorial](https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data) -->
@@ -422,20 +422,20 @@ Upon completion of this module, students will be able to:
   + [DeVries, P.J., Penz, C.M. and Hill, R.I., 2010. Vertical distribution, flight behaviour and evolution of wing morphology in Morpho butterflies. Journal of Animal Ecology, 79(5): 1077-1085.](DeVries_etal_20210.pdf)
   + [Intoduction to Momocs](https://momx.github.io/Momocs/articles/Momocs_intro.html)
 
-## Do
+### Do
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
   + Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing) by Tuesday, October 11th
   + Complete and commit Module 6 Project report
 
 
-## Guiding Questions
+### Guiding Questions
 
   + How does one acquire shape information for comparative analysis?
   + Did shape evolve differently between the moths and butterflies?
   + How does one formulate a complete .Rmd report of Phase II of the course?
 
-## Module 6 Schedule
+### Module 6 Schedule
 
 All assignments are due at 11:59 on the specified date.
 
@@ -456,82 +456,79 @@ All assignments are due at 11:59 on the specified date.
 *Note: There will be no class on Friday 10/14 and Tuesday 10/18 is a Monday schedule.
 
 
-  
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |commit Project 7 report
-
-
-# Module 8:  Beach Muscles: Exploring Force-Length Relationships in Vertebrate Muscle 
+## Module 7:  Beach Muscles: Exploring Force-Length Relationships in Vertebrate Muscle 
 
 In this module, we'll explore how the force produced by vertebrate muscles is constrained by its length. To do this, we'll design an Arduino-based load sensing data-acquisition system to record force produced by upper-arm muscles over a series of different resting length. From our data, we'll establish models of forearm force-length properties and investigate how fatigure changes this imporant property of vertebrate muscle.
 
-## Dates 
-Weeks 10 & 11 (Oct 31—Nov 13):
+### Dates: 
 
-## Key Concepts
+Weeks 11 & 12 (Oct 31—Nov 13):
+
+### Key Concepts
   + Cross-bridge theory
   + Isometric force
   + Maximum voluntary contractions (MVCc)
   + Force-length relationships
   + Mechanical advantage
   
-## Learning Objectives
+### Learning Objectives
 
 Upon completion of this week and module, students will be able to:
 
   + Construct and program a low-cost load-cell DAQ system.
   + Comment on the FL relationship in human skeletal muscles and the effect of fatigue on the shape of this relationship.
 
-## Read/Watch 
+### Read/Watch 
 
   + Read [Rassier, D.E., MacIntosh, B.R. and Herzog, W., 1999. Length dependence of active force production in skeletal muscle. Journal of applied Physiology, 86(5), pp.1445-1457. 83–95.](https://journals.physiology.org/doi/full/10.1152/jappl.1999.86.5.1445)
   + Read [Oregon State's Body Physics page](https://openoregon.pressbooks.pub/bodyphysics/chapter/body-levers/)
   + Read [The Wheastone Bridge from Omega](https://www.omega.com/en-us/resources/wheatstone-bridge)
   
 
-## Do
+### Do
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
-  + Complete and commit Module 8 Project report
-  + Upload force-angle data to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing) by Monday, November 9th
+  + Complete and commit Module 7 Project report
+  + Upload force-angle data to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing) by Sunday, November 20th
 
 
 
-## Guiding Questions
+### Guiding Questions
 
   + How does one construct a low-cost load-cell force DAQ system?
   + Can angle-force measurements predict force-length (FL) relationships in the flexors of the human upper arm?
   + Does eccentric fatigue shift the FL relationship of human forearm flexors?
   
-## Module 8 Schedule
+### Module 7 Schedule
 
 All assignments are due at 11:59 on the specified date.
 
-|| Monday <br> 10/31 |  Tuesday <br>11/1    | Wednesday<br>  11/2 | Thursday <br> 11/3 | Friday <br> 11/4 |Saturday<br> 11/4 | Sunday<br> 11/6
+|| Monday <br> 11/7 |  Tuesday <br>11/8    | Wednesday<br>  11/9 | Thursday <br> 11/10 | Friday <br> 11/11 |Saturday<br> 11/12 | Sunday<br> 11/13
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
 **Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |
 
- || Monday <br> 11/7 |  Tuesday <br>11/8    | Wednesday<br>  11/9 | Thursday <br> 11/10 | Friday <br> 11/11 |Saturday<br> 11/12 | Sunday<br> 11/13
+ || Monday <br> 11/14 |  Tuesday <br>11/15    | Wednesday<br>  11/16 | Thursday <br> 11/17 | Friday <br> 11/18 |Saturday<br> 11/19 | Sunday<br> 11/20
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 
 **Assignment due** | Upload team data files to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing)| | Post question to discussion board | Answer a question on discussion board  | | | Commit Module 8 Project Report
 ||||||||
-w
 
-# Module 9:   Birds of a Feather Migrate Together . . . Sometimes: Using EBird data to Explore the Phenology of Passerine Migration (data driven)
+
+## Module 8:   Birds of a Feather Migrate Together . . . Sometimes: Using EBird data to Explore the Phenology of Passerine Migration (data driven)
 
 In this module, we'll explore the phenology of spring arrival timing for neotropical passerines as it relates to historical weather conditions. To do so, we'll download species occurrence data from the Global Biodiversity Information Facility (GBIF), an international network and data infrastructure whose goal is to provide users open access to data about all types of life on Earth. We'll access GBIF data using [`rgif`](https://www.gbif.org/tool/81747/rgbif), an R package that permits access to GBIF's application programming interface (API). An API permits a user to interact with multiple software pieces (databases, code sources for processing and analysis, etc.). To assemble historical weather data, we'll also use another R package, `rnoa`. This package contains functions that interact with [NOAA's National Climatic Data Center's API](https://www.ncdc.noaa.gov/cdo-web/webservices/v2).
 
 
 
-## Dates 
-Weeks 12 & 13 (Nov 14—Nov 22):
+### Dates 
+Weeks 12 & 13 (Nov 21—Dec 4):
 
-## Key Concepts
+### Key Concepts
 
   + API
   + Phenology
   + Migrations
   + Linear Mixed-effects Modeling
 
-## Learning Objectives
+### Learning Objectives
 
 Upon completion of this week and module, students will be able to:
 
@@ -539,37 +536,38 @@ Upon completion of this week and module, students will be able to:
   + Apply linear mixed-effect models to biological data.
   + Comment on how climatic and meteorological conditions may effect bird poulaiton.
   
-## Read/Watch 
+### Read/Watch 
 
   + Watch [Matthew E. Clapham from UCSC on Linear Mixed-Effect Modles](https://www.youtube.com/watch?v=QCqF-2E86r0)
   + Read [Knudsen, Endre, Andreas Lindén, Christiaan Both, Niclas Jonzén, Francisco Pulido, Nicola Saino, William J Sutherland, et al. 2011. “Challenging Claims in the Study of Migratory Birds and Climate Change.” Biological Reviews 86 (4): 928–46](https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1469-185X.2011.00179.x?casa_token=K1xQ3N19mywAAAAA:QURRP-NVNPk8V6W444cY6C3BUe5Py0WppwbsHnzPQLLChgJMZCE-95YxVDxZHVzQH9rDUCjqk9ovmyJB)
   
 
-## Do
+### Do
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
   + Complete and commit Module 9 Project report
 
 
-## Guiding Questions
+### Guiding Questions
 
   + How does one download data using interfaces developed for R?
   + Is something other the temperature important in explaining the arrival time of neotropical migrants in MA?
 
   
-## Module 9 Schedule
+### Module 8 Schedule
 
 All assignments are due at 11:59 on the specified date.
 
-|| Monday <br> 11/14 |  Tuesday <br>11/15    | Wednesday<br>  11/16 | Thursday <br> 11/17 | Friday <br> 11/18 |Saturday<br> 11/19 | Sunday<br> 11/20
-|--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | |
-
  || Monday <br> 11/21 |  Tuesday <br>11/22    | Wednesday<br>  11/23 | Thursday <br> 11/24 | Friday <br> 11/25 |Saturday<br> 11/26 | Sunday<br> 11/27
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 
-**Assignment due** | | Post question to discussion board* | Answer a question on discussion board* | | | | Commit Module 9 Project Report
+**Assignment due** | | Post question to discussion board* | Answer a question on discussion board* | | | | 
+
+ || Monday <br> 11/28 |  Tuesday <br>11/29    | Wednesday<br>  11/30 | Thursday <br> 12/1 | Friday <br> 12/2 |Saturday<br> 12/3 | Sunday<br> 12/4
+ |--------|-------- |--------|-------- |--------|--------|--------|-------- 
+**Assignment due** | | | Post question to discussion board | Answer a question on discussion board | | | Commit Module 8 Project Report
 ||||||||
 
-*note the shift due to Thanksgiving
+*note shift due to Thanksgiving week
+
 
 # Phase III: Final Projects
 
@@ -582,7 +580,7 @@ More details about the final project and its expectations can be found [here](fi
 
 All assignments are due at 11:59 on the specified date.
 
-|| Monday <br> 11/27 |  Tuesday <br>11/29    | Wednesday<br>  11/30 | Thursday <br> 12/1 | Friday <br> 12/2 |Saturday<br> 12/3 | Sunday<br> 12/4
+|| Monday <br> 11/27 |  Tuesday <br>11/28    | Wednesday<br>  11/29 | Thursday <br> 11/30 | Friday <br> 12/1 |Saturday<br> 12/2 | Sunday<br> 12/3
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
 **Assignment due** |  | | Post question to discussion board<br>Meet with Prof. K to discuss project ideas (by appt) | Answer a question on discussion board | Meet with Prof. K to discuss project ideas (by appt)| |
 

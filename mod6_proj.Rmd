@@ -818,7 +818,7 @@ out %>%
 
 ```
 
-Notice that we've found all the files in the "lep_examples" directory with `list.files()`, searching for the patter ".txt" and using the full filepath to make a loading the data in the directory possible. Next, we use `read_delim()` with `delim=\t` rather than `read_csc()` because FIJI outputs tab-delimited data. We save this outline as `out` after tranforming it to a matrix, the prefer format for `Momocs`.
+Notice that we've found all the files in the "lep_examples" directory with `list.files()`, searching for the patter ".txt" and using the full filepath to make a loading the data in the directory possible. Next, we use `read_delim()` with `delim=\t` rather than `read_csv()` because FIJI outputs tab-delimited data. We save this outline as `out` after tranforming it to a matrix, the prefer format for `Momocs`.
 
 In the next operation, we transform this matrix into an `Momocs` outline using `Out()`; however, `Out()` must take a list of matrices and therefore we pipe in the `list()` function first. Next, `coo_flipx()` is invoked to flip the outline about the x axis--remember that the origin of the image field is the upper left, not the lower left in the usual graphical representation. Lastly, `stack()` is invoked to visualize the outline. And here we have a forewing visualized.
 
@@ -958,12 +958,6 @@ hindwing.pca <-hindwings %>%
   efourier(norm=FALSE) %>% 
   PCA()
 
-hindwings %>% 
-   coo_interpolate(hind.min) %>% 
-   coo_align()  %>%
-   coo_slide(id=1) %>% 
-  fgProcrustes() %>% 
-  stack
   
 
 ```
@@ -1067,12 +1061,14 @@ There are several methods available to comparative biologist to estimate the rat
 `brownie.lite()` takes two important arguments, a tree and the phenotypic values for each tip in the tree. Let's take our tree and drop any tips that don't occur in our PCA data.
 
 ```{r, tree2}
-
-drops <- lep.tree$tip.label[!lep.tree$tip.label%in%unique(out.data$species)]
-
+drops <- c(
+  setdiff(unique(out.data$species),lep.tree$tip.label), #sp in tree not in data
+setdiff(lep.tree$tip.label,unique(out.data$species)) #sp in data, not in tree
+)
+  
 lep.tree2 <- drop.tip(lep.tree,drops)
 
-plot(lep.tree2,cex=0.5)
+plot(lep.tree2,cex=0.1)
 ```
 
 Here we only include `lep.tree` tip labels that are in the unique species values of our `out.data` variable. Then we use `ape`'s `drop.tip()` function to drop the tips in our tree that don't occur in our `out.data` tibble.
@@ -1317,6 +1313,7 @@ Notice that the clades and their taxa are color coded and the exceptional shifts
 
 ```{r comp,eval=FALSE,include=FALSE}
 
+
 forePC1.RR <- RRphylo(tree=lep.tree2,y=fore.pc1)
 forePC1.SS<- search.shift(RR=forePC1.RR,status.type="clade")
 forePC1.plot <- plotShift(RR=forePC1.RR,SS=forePC1.SS)
@@ -1351,20 +1348,37 @@ hindPC2.res <- plot_SS(lep.tree2,SS=hindPC2.SS,tax = tax.names)
 hindPC2.res$plot
 hindPC2.res$res
 
-
-
+```
+```{r comps,eval=FALSE,include=FALSE}
 ### had relative wing size shifted
 
-hind.area <- hindwings %>% 
+forewing.gp <- forewings %>%
+  coo_interpolate(fore.min) %>%
+   coo_align()  %>%
+  coo_slide(id=1) %>% 
+  fgProcrustes() 
+
+hindwing.gp <-hindwings %>% 
+   coo_interpolate(hind.min) %>% 
+   coo_align()  %>%
+   coo_slide(id=1) %>% 
+  fgProcrustes()
+
+hind.area <- hindwing.gp %>% 
+  coo_trans(10,10) %>% 
   coo_area()
 
-fore.area <- forewings %>% 
+fore.area <- forewing.gp %>% 
+  coo_trans(10,10) %>% 
   coo_area()
 
 area.prop <- fore.area/hind.area
 
 area.dat <- tibble(FH=area.prop,xy.file=basename(names(area.prop)))%>% 
-  left_join(out.data)
+  left_join(out.data) %>% 
+  filter(species%in% lep.tree2$tip.label) %>% 
+  group_by(species) %>% 
+  summarize(FH=mean(FH))
 
 area <- area.dat$FH
 names(area) <- area.dat$species
@@ -1380,26 +1394,35 @@ area.res$plot
 
 #AR
 
-hind.w <- hindwings %>% 
+hind.w <- hindwing.gp %>% 
   coo_length()
 
 hindwing.AR <- hind.w^2/hind.area
 
-fore.w <- forewings %>% 
+fore.w <- forewing.gp %>% 
   coo_length()
 
 forewing.AR <- fore.w^2/fore.area
 
 fore.AR <- tibble(AR=forewing.AR,xy.file=basename(names(forewing.AR)),wing="fore")%>% 
-  left_join(out.data)
+  left_join(out.data) %>% 
+   filter(species%in% lep.tree2$tip.label) %>% 
+group_by(species) %>% 
+  summarize(AR=mean(log(AR)),wing="fore")
 
 hind.AR <- tibble(AR=hindwing.AR,xy.file=basename(names(hindwing.AR)),wing="hind")%>% 
-  left_join(out.data)
+  left_join(out.data)%>% 
+   filter(species%in% lep.tree2$tip.label) %>% 
+group_by(species) %>% 
+  summarize(AR=mean(log(AR)),wing="hind")
 
 ar.dat <- rbind(hind.AR,fore.AR)
 
-ar.dat %>%  
-  ggplot(aes(x=higher_taxon,y=AR,col=wing))+geom_boxplot()
+ar.dat %>% pivot_wider(names_from = wing,
+    values_from = AR) %>% 
+  filter(species%in% lep.tree2$tip.label) %>% 
+  summarize(fore=pic(fore,lep.tree2),hind=pic(hind,lep.tree2)) %>% 
+  ggplot(aes(fore,hind))+geom_point()
 
 fore.ar <- fore.AR$AR
 names(fore.ar) <- fore.AR$species
@@ -1420,14 +1443,425 @@ fore.ar.res$res
 
 hind.ar.RR <- RRphylo(tree=lep.tree2,y=hind.ar)
 hind.ar.SS<- search.shift(RR=hind.ar.RR,status.type="clade")
-hind.ar.plot <- plotShift(RR=hind.ar.RR,SS=fore.ar.SS)
+hind.ar.plot <- plotShift(RR=hind.ar.RR,SS=hind.ar.SS)
 hind.ar.plot$plotClades()
 
 hind.ar.res <- plot_SS(lep.tree2,SS=hind.ar.SS,tax = tax.names)
 hind.ar.res$plot
 hind.ar.res$res
 
+library(data.table)
+Ix <- function(x,y,axes=F){
+  dt <- data.table(x=x,y=y)
+  if(axes) dt[,x:=x-mean(range(x))]; dt[,y:=y-mean(range(y))]
+  dt[,products:=(y^2+y*lead(y)+lead(y)^2)*(x*lead(y)-lead(x)*y)]
+  I <- dt[,.((1/12)*sum(products,na.rm = T))]
+  names(I) <- "I.x"
+  return(I)
+}
 
+forewing.gp2 <- forewing.gp %>% coo_trans(10,10)
+fore.I <- sapply(1:length(forewing.gp2),function(x) forewing.gp[x]) 
+fore.I <- sapply(fore.I, function(x) Ix(x[,2],x[,1])) %>% unlist
+
+
+fore.I <- tibble(I=fore.I,xy.file=basename(names(forewing.AR)),wing="fore")%>% 
+  left_join(out.data) %>% 
+   filter(species%in% lep.tree2$tip.label) %>% 
+group_by(species) %>% 
+  summarize(I=mean(I),wing="fore")
+
+
+hindwing.gp2 <- hindwing.gp %>% coo_trans(10,10)
+hind.I <- sapply(1:length(hindwing.gp2),function(x) hindwing.gp[x]) 
+hind.I <- sapply(hind.I, function(x) Ix(x[,1],x[,2])) %>% unlist
+
+
+hind.I <- tibble(I=hind.I,xy.file=basename(names(hindwing.AR)),wing="hind")%>% 
+  left_join(out.data) %>% 
+   filter(species%in% lep.tree2$tip.label) %>% 
+group_by(species) %>% 
+  summarize(I=mean(I),wing="hind")
+
+
+I.dat <- rbind(hind.I,fore.I)
+
+I.dat %>% pivot_wider(names_from = wing,
+    values_from = I) %>% 
+  filter(species%in% lep.tree2$tip.label) %>% 
+  summarize(fore=pic(fore,lep.tree2),hind=pic(hind,lep.tree2)) %>% 
+  ggplot(aes(fore,hind))+geom_point()
+
+hind.I2 <- hind.I %>% pull(I)
+names(hind.I2) <- hind.I %>% pull(species)
+hind.I.RR <- RRphylo(tree=lep.tree2,y=hind.I2)
+hind.I.SS<- search.shift(RR=hind.I.RR,status.type="clade")
+hind.I.plot <- plotShift(RR=hind.I.RR,SS=hind.I.SS)
+hind.ar.plot$plotClades()
+
+
+hind.I.res <- plot_SS(lep.tree2,SS=hind.I.SS,tax = tax.names)
+hind.I.res$plot
+hind.I.res$res
+
+
+fore.I2 <- fore.I %>% pull(I)
+names(fore.I2) <- fore.I %>% pull(species)
+fore.I.RR <- RRphylo(tree=lep.tree2,y=fore.I2)
+fore.I.SS<- search.shift(RR=fore.I.RR,status.type="clade")
+fore.I.plot <- plotShift(RR=fore.I.RR,SS=fore.I.SS)
+fore.ar.plot$plotClades()
+
+
+fore.I.res <- plot_SS(lep.tree2,SS=fore.I.SS,tax = tax.names)
+fore.I.res$plot
+fore.I.res$res
+
+fore.ARI <- fore.I %>% left_join(fore.AR)
+
+fore.ARI %>% 
+  ggplot(aes(AR,I))+geom_point()
+
+fore.ARI %>% filter(AR>1.25) %>% pull(species)
+hind.ARPC %>% 
+  ggplot(aes(AR,I))+geom_point()
+
+hind.ARPC %>% 
+  ggplot(aes(I,PC1))+geom_point()
+
+
+ARI.dat <- ar.dat %>% left_join(I.dat) %>% 
+  pivot_wider(names_from=c(wing),values_from=c(I,AR)) %>% 
+  left_join(out.data %>% select(species,identifier,higher_taxon) %>% unique)
+
+
+ARI.dat %>% 
+  ggplot(aes(higher_taxon,I_fore/I_hind))+geom_boxplot()+ylim(c(-1,-0.5))
+
+obj<-contMap(lep.tree2,fore.I2*1e10,plot=FALSE)
+plot(obj,legend=0.7*max(nodeHeights(lep.tree2)),
+     fsize=c(0.4,1),cex=0.1,lwd=2,res=200)
+
+#so cool!!!! VVVV
+
+img.f <- list.files("/Users/Chris/Dropbox/Documents/bc (1)/3140.f22/other_stuff/lep_photos",recursive=T,full.names=T)
+hi.AR <- ARI.dat %>% filter(AR_fore>1.5) %>%
+  group_by(species) %>% 
+  mutate(img.f=img.f[grep(identifier,img.f)])
+
+
+
+img1 <- hi.AR %>% ungroup %>% filter(AR_fore==max(AR_fore)) %>% pull(img.f) %>% readJPEG(.,native = TRUE)
+p1 <- ARI.dat %>% 
+  ggplot(aes(AR_fore,I_fore))+geom_point()
+
+library(ggimage)
+library(patchwork)
+p1 + 
+  geom_image(data=hi.AR,aes(image=img.f),size=.1)+geom_point(data=hi.AR,col="red")
+
+hi.AR %>% 
+  ggplot(aes(x=AR_fore,y=1))+geom_image(data=hi.AR,aes(image=img.f))+theme_classic()
+  
+  
+
+
+```
+
+```{r comp0,eval=FALSE,include=FALSE}
+
+forewing.nogp<- forewings %>%
+  coo_interpolate(fore.min) %>%
+  coo_align()  %>%
+  coo_slide(id=1)
+
+hindwing.nogp<- hindwings %>%
+  coo_interpolate(hind.min) %>%
+  coo_align()  %>%
+  coo_slide(id=1)
+
+l <- forewing.nogp %>% 
+  coo_length()
+
+range(l)
+
+hist(l,breaks=seq(0,2100,10))
+
+forewing.sc <- forewing.nogp %>% 
+  mutate(scale=l<120,l=coo_length(.),xy.file=names(.)) %>%
+  mutate(xy.file=basename(xy.file)) %>% 
+  filter(scale==T)
+
+forewing.sc <- forewing.sc$fac %>% left_join(out.data) %>% select(species,l,wing) %>% 
+  group_by(species,wing) %>% 
+  summarize(l=mean(l))
+
+
+
+hindwing.sc <- hindwing.nogp %>% 
+  mutate(scale=l<120,l=coo_length(.),xy.file=names(.)) %>%
+  mutate(xy.file=basename(xy.file)) %>% 
+  filter(scale==T)
+
+hindwing.sc <- hindwing.sc$fac  %>% left_join(out.data) %>% select(species,l,wing) %>% 
+  group_by(species,wing) %>% 
+  summarize(l=mean(l))
+
+#second moment in real terms
+
+fw.outs <- sapply(1:length(forewing.nogp),function(x) forewing.nogp[x])
+fw.outs  <- lapply(fw.outs, function(x) as.matrix(data.frame(x=c(x[,1]-x[1,1]),y=c(x[,2]-x[1,2]))) %>% coo_flipy())
+
+fore.I <- sapply(fw.outs, function(x) Ix(x[,2],x[,1])) %>% unlist
+
+
+fore.I <- tibble(I=fore.I,xy.file=basename(names(forewing.nogp)),wing="fore")%>% 
+  left_join(out.data) %>% 
+   filter(species%in% lep.tree2$tip.label) %>% 
+group_by(species) %>% 
+  summarize(I=mean(I),wing="fore")
+
+
+
+
+hw.outs <- sapply(1:length(hindwing.nogp),function(x) hindwing.nogp[x])
+hw.outs  <- lapply(hw.outs, function(x) as.matrix(data.frame(x=c(x[,1]-x[1,1]),y=c(x[,2]-x[1,2])))%>% coo_flipy())
+
+hind.Isc <- sapply(hw.outs, function(x) Ix(x[,2],x[,1])) %>% unlist
+
+
+hind.I <- tibble(I=hind.Isc,xy.file=basename(names(hindwing.nogp)),wing="hind")%>% 
+  left_join(out.data) %>% 
+   filter(species%in% lep.tree2$tip.label) %>% 
+group_by(species) %>% 
+  summarize(I=mean(I),wing="hind")
+
+
+I.dat <- rbind(hind.I,fore.I) %>% 
+  pivot_wider(names_from=wing, values_from=I,names_prefix="I_")
+
+I.dat %>% 
+  ggplot(aes(I_fore,I_hind))+geom_point()+geom_smooth(method="lm")
+
+
+sc.dat <- rbind(hindwing.sc,forewing.sc) %>% 
+  pivot_wider(names_from=wing,values_from=l,names_prefix="L_") %>% 
+  left_join(ARI.dat %>% select(-I_fore,-I_hind)) %>% 
+  left_join(I.dat) %>% 
+  filter(I_hind<1e4,I_fore<1e4)
+
+drops3 <- lep.tree2$tip.label[!lep.tree2$tip.label%in%sc.dat$species]
+drops4 <-  sc.dat$species[!sc.dat$species%in%lep.tree2$tip.label]
+lep.tree3 <- drop.tip(lep.tree2,c(drops3,drops4))
+
+sc.dat %>% 
+  ggplot(aes(I_fore,I_hind))+geom_point()+geom_smooth(method="lm")
+
+sc.dat %>% 
+  ggplot(aes(log(L_hindwing),log(I_hind), col=AR_hind))+geom_point()+geom_smooth(method="lm")
+
+sc.dat %>% 
+  ggplot(aes(AR_fore,I_fore, col=AR_hind))+geom_point()+geom_smooth(method="lm")
+
+sc.dat %>% 
+  ggplot(aes(AR_hind,I_hind, col=AR_hind))+geom_point()+geom_smooth(method="lm")
+
+sc.dat %>% 
+  ggplot(aes(AR_hind,AR_fore, col=AR_hind))+geom_point()+geom_smooth(method="lm")
+sc.dat %>% 
+  ggplot(aes(I_hind,I_fore, col=AR_hind))+geom_point()+geom_smooth(method="lm")
+
+###PIC (HERE)
+
+pic2 <- function(x=.,sp=species,t=lep.tree3){
+  names(x) <- sp
+  pic(x,t)
+}
+
+length(lep.tree3$tip.label)
+
+pic2(x=sc.dat$AR_hind,sp=sc.dat$species)
+sc.dat %>%
+  ungroup() %>% 
+  dplyr::mutate_at(c("AR_hind","AR_fore","I_fore","I_hind"),pic2(x=.,sp=.$species))
+```
+
+```{r comp4,eval=FALSE,include=FALSE}
+library(mvMORPH)
+
+
+#for.ar.sim <- make.simmap(lep.tree3, area, model="ER", nsim=1)
+#fore.ar.ou <- mvOU(for.ar.sim, area, model="OU1", diagnostic=FALSE, echo=FALSE)
+#plot(for.ar.sim)
+
+library(geiger)
+
+fore.I.dtt <- dtt(lep.tree2,fore.I2,nsim=1000, plot=TRUE,calculateMDIp=T)
+hind.I.dtt <- dtt(lep.tree2,hind.I2,nsim=1000, plot=TRUE,calculateMDIp=T)
+fore.ar.dtt <- dtt(lep.tree2,fore.ar,nsim=1000, plot=TRUE,calculateMDIp=T)
+hind.ar.dtt <- dtt(lep.tree2,hind.ar,nsim=1000, plot=TRUE,calculateMDIp=T)
+
+
+library(OUwie)
+
+n.tip <- seq(1,Ntip(lep.tree2),by=4)
+lep.tree3 <- keep.tip(lep.tree2,n.tip)
+
+hind.ar2 <- data.frame(species=names(hind.ar),Reg=1,AR=hind.ar) %>% 
+  filter(species%in%lep.tree3$tip.label)
+hind.ar.BM1 <- OUwie(lep.tree3,hind.ar2,model=c("BM1"))
+hind.ar.BMS <- OUwie(lep.tree3,hind.ar2,model=c("BMS"))
+hind.ar.OU1 <- OUwie(lep.tree3,hind.ar2,model=c("OU1"))
+hind.ar.OUM <- OUwie(lep.tree3,hind.ar2,model=c("OUM"))
+hind.ar.OUMV <- OUwie(lep.tree3,hind.ar2,model=c("OUMV"))
+hind.ar.OUMA <- OUwie(lep.tree3,hind.ar2,model=c("OUMA"))
+
+fits <- list(hind.ar.BM1,
+hind.ar.BMS,
+hind.ar.OU1,
+hind.ar.OUM,
+hind.ar.OUMV,
+hind.ar.OUMA
+)
+
+aics <- sapply(fits,function(x) x$"AICc")
+fits[[which.min(aics)]]
+all(!duplicated(names(hind.ar)))
+
+hindwing.pc3 <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>% select(PC1,PC2) %>% as.matrix
+rownames(hindwing.pc3) <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>%pull(species)
+
+sfs <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>% pull(higher_taxon) %>% as.factor
+
+
+library(geomorph)
+
+ 
+
+hind.Ppca <- gm.prcomp(hindwing.pc3,phy=lep.tree3,GLS = TRUE)
+
+grps <- as.numeric(sfs)
+names(grps) <- sfs
+
+g.pal <- viridis_pal()(length(levels(sfs)))
+plot(hind.Ppca,phylo=T,phylo.par = list(tip.labels = TRUE, tip.txt.cex = .75, edge.width = 2,node.labels = FALSE),time.plot=T,bg=sfs,pch=22)
+shapeHulls(hind.p,groups =,group.cols=1:23)
+
+
+
+plot(stom.Ppca,axis1 = 1,axis2=2,phylo = T,tip.tex.cex=0.1,phylo.par = list(tip.labels = TRUE, tip.txt.cex = .75, edge.width = 2,node.labels = FALSE),bg=diet2,pch=22)
+legend("topleft", pch=22, pt.bg = unique(diet2), legend = rev(levels(diet2)))
+shapeHulls(p12,groups = grps,group.cols = c("red","black"),group.lwd=c(2,2),group.lty = c(2, 2))
+dev.off()
+
+nrow(hindwing.pc3)
+Ntip(lep.tree2)
+#https://onlinelibrary.wiley.com/doi/full/10.1111/evo.14238
+
+td <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>% select(species,PC1,PC2,higher_taxon) %>% rename(tip=species) %>% as.matrix
+rownames(td) <-  hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>%pull(species)
+phylomorphospace.gg(lep.tree3,hindwing.pc3,tip.aes=aes(x,y,col=higher_taxon),tip.dat=td)
+  phylomorphospace.gg <- function (tree, X, A = NULL, control = list(), tip.dat=NULL,tip.aes=NULL,cont.disc="cont",...) 
+{
+  if (class(tree) != "phylo") 
+    stop("tree object must be of class 'phylo.'")
+  if (nrow(X) != length(tree$tip)) 
+    stop("X must contain the same number of rows as species in tree.")
+  if (is.null(rownames(X))) {
+    warning("X is missing row names; assuming order of tip labels.")
+    rownames(X) <- tree$tip.label
+  }
+  if (ncol(X) != 2) {
+    warning("X has more than 2 columns.  Using only the first 2 columns.")
+    X <- X[, 1:2]
+  }
+  if (is.null(A)) 
+    A <- apply(X, 2, fastAnc, tree = tree)
+  con = list(col.edge = setNames(rep("black", nrow(tree$edge)), 
+                                 as.character(tree$edge[, 2])), col.node = setNames(rep("black", 
+                                                                                        max(tree$edge)), as.character(1:max(tree$edge))))
+  con[(namc <- names(control))] <- control
+  if (hasArg(node.by.map)) 
+    node.by.map <- list(...)$node.by.map
+  else node.by.map <- FALSE
+  if (hasArg(node.size)) {
+    node.size <- list(...)$node.size
+    if (length(node.size) == 1) 
+      node.size <- c(node.size, node.size)
+  }
+  else node.size <- c(1, 1.3)
+  if (hasArg(xlab)) 
+    xlab <- list(...)$xlab
+  else xlab <- colnames(X)[1]
+  if (hasArg(ylab)) 
+    ylab <- list(...)$ylab
+  else ylab <- colnames(X)[2]
+  if (hasArg(fsize)) 
+    fsize <- 0.75 * list(...)$fsize
+  else fsize <- 0.75
+  if (hasArg(colors)) 
+    colors <- list(...)$colors
+  else if (!is.null(tree$maps)) 
+    colors <- setNames(palette()[1:ncol(tree$mapped.edge)], 
+                       sort(colnames(tree$mapped.edge)))
+  if (hasArg(lwd)) 
+    lwd <- list(...)$lwd
+  else lwd <- if (is.null(tree$maps)) 
+    1
+  else 2
+  if (hasArg(axes)) 
+    axes <- list(...)$axes
+  else axes <- TRUE
+  if (hasArg(add)) 
+    add <- list(...)$add
+  else add <- FALSE
+  aa <- setNames(c(X[tree$tip.label, 1], A[, 1]), c(1:length(tree$tip.label), 
+                                                    rownames(A)))
+  bb <- setNames(c(X[tree$tip.label, 2], A[, 2]), c(1:length(tree$tip.label), 
+                                                    rownames(A)))
+  XX <- matrix(aa[as.character(tree$edge)], nrow(tree$edge), 
+               2)
+  YY <- matrix(bb[as.character(tree$edge)], nrow(tree$edge), 
+               2)
+  if (!add) 
+    
+    A.df <- as.data.frame(A)
+  
+  edge.path<- data.frame(x.beg=XX[,1],x.end=XX[,2],y.beg=YY[,1],y.end=YY[,2])
+  
+  zz <- c(tree$edge[1, 1], tree$edge[tree$edge[, 2] > length(tree$tip.label),2])
+  node.df <- data.frame(x=c(XX[1, 1], XX[tree$edge[, 2] > length(tree$tip.label),2]), y=c(YY[1, 1], YY[tree$edge[, 2] > length(tree$tip.label),2]))
+  
+  tip.df <- data.frame(x=XX[tree$edge[, 2] <= length(tree$tip.label), 2], y=YY[tree$edge[,2] <= length(tree$tip.label), 2],tip=tree$tip.label)
+  
+  #print(tip.df)
+  
+  #expand plot array
+  px <- 1.2*(tip.df$x)
+  py <- 1.2*(tip.df$y)
+  x.range <- max(px)-min(px)
+  y.range <- max(py)-min(py)
+  
+  tip.df <- data.frame(x=XX[tree$edge[, 2] <= length(tree$tip.label), 2], y=YY[tree$edge[,2] <= length(tree$tip.label), 2],tip=tree$tip.label,angle=(tip.df$x)/range(tip.df$x)*90,vjust=(tip.df$x/x.range)*2,hjust=(tip.df$y/y.range))
+  
+  
+  if(!is.null(tip.dat)) tip.df <- merge(tip.df,tip.dat,by="tip")
+  print(tip.df)
+  if(is.null(tip.aes)) tip.aes <- aes(x,y)
+  
+  print(tip.aes)
+  
+  gg.p <- ggplot(data=edge.path)+geom_segment(aes(x=x.beg,y=y.beg,xend=x.end,yend=y.end),alpha=0.5)+geom_point(data=node.df,aes(x=x,y=y),alpha=0.5,size=5)+geom_point(data=tip.df,tip.aes,size=7,inherit.aes = F)+geom_text(data=tip.df,aes(x=x,y=y,label=tip,fontface=3,angle=angle,vjust=vjust),size=5)+scale_x_continuous(limits=range(px))+scale_y_continuous(limits=range(py))+xlab(label = "PC1")+ylab(label="PC2")
+  
+  
+  return(gg.p+theme_bw(30)+theme(panel.grid=element_blank(),axis.title.x = element_text(vjust=-0.5),axis.title.y = element_text(vjust=0.25))
+  )
+  
+  }
+  
+  
+  Betts, C.R. and Wootton, R.J., 1988. Wing shape and flight behaviour in butterflies (Lepidoptera: Papilionoidea and Hesperioidea): a preliminary analysis. Journal of experimental biology, 138(1), pp.271-288.
+  Le Roy, C., Debat, V. and Llaurens, V., 2019. Adaptive evolution of butterfly wing shape: from morphology to behaviour. Biological Reviews, 94(4), pp.1261-1281.
 ```
 
 ## Shape evolution correlation
@@ -1439,6 +1873,20 @@ To say something about whether hing- and forewing shape evolution is correlated 
 hindPC1.pic <- pic(hind.pc1,phy = lep.tree2)
 forePC1.pic <- pic(fore.pc1,phy = lep.tree2)
 ```
+
+```{r pic, include=FALSE,eval=FALSE}
+hindPC2.pic <- pic(hind.pc2,phy = lep.tree2)
+forePC2.pic <- pic(fore.pc2,phy = lep.tree2)
+
+PC2.pic <- tibble(
+  hind=hindPC2.pic,
+  fore=forePC2.pic
+)
+
+PC2.pic %>% 
+  ggplot(aes(x=fore,y=hind))+geom_point()+geom_smooth(method="lm")
+```
+
 
 Here we just inputed our store PC vectors we used in the rate analysis and our tree of course. Now we have transformed values we can regress against one another. Let's first plot them and see what we get.
 
