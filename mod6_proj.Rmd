@@ -1349,6 +1349,7 @@ hindPC2.res$plot
 hindPC2.res$res
 
 ```
+
 ```{r comps,eval=FALSE,include=FALSE}
 ### had relative wing size shifted
 
@@ -1356,13 +1357,15 @@ forewing.gp <- forewings %>%
   coo_interpolate(fore.min) %>%
    coo_align()  %>%
   coo_slide(id=1) %>% 
-  fgProcrustes() 
+  fgProcrustes() %>% 
+  coo_flipy()
 
 hindwing.gp <-hindwings %>% 
    coo_interpolate(hind.min) %>% 
    coo_align()  %>%
    coo_slide(id=1) %>% 
-  fgProcrustes()
+  fgProcrustes() %>% 
+  coo_flipy()
 
 hind.area <- hindwing.gp %>% 
   coo_trans(10,10) %>% 
@@ -1460,9 +1463,14 @@ Ix <- function(x,y,axes=F){
   return(I)
 }
 
-forewing.gp2 <- forewing.gp %>% coo_trans(10,10)
-fore.I <- sapply(1:length(forewing.gp2),function(x) forewing.gp[x]) 
+
+fore.I <- sapply(1:length(forewing.gp),function(x) forewing.gp[x])
+fore.I  <- lapply(fore.I, function(x) as.matrix(data.frame(x=c(x[,1]-min(x[,1])),y=c(x[,2]))))
 fore.I <- sapply(fore.I, function(x) Ix(x[,2],x[,1])) %>% unlist
+
+forewing.gp[[1]]
+
+```
 
 
 fore.I <- tibble(I=fore.I,xy.file=basename(names(forewing.AR)),wing="fore")%>% 
@@ -1472,9 +1480,9 @@ group_by(species) %>%
   summarize(I=mean(I),wing="fore")
 
 
-hindwing.gp2 <- hindwing.gp %>% coo_trans(10,10)
-hind.I <- sapply(1:length(hindwing.gp2),function(x) hindwing.gp[x]) 
-hind.I <- sapply(hind.I, function(x) Ix(x[,1],x[,2])) %>% unlist
+hind.I <- sapply(1:length(hindwing.gp),function(x) hindwing.gp[x]) 
+hind.I  <- lapply(hind.I, function(x) as.matrix(data.frame(x=c(x[,1]-min(x[,1])),y=c(x[,2]))))
+hind.I <- sapply(hind.I, function(x) Ix(x[,2],x[,1])) %>% unlist
 
 
 hind.I <- tibble(I=hind.I,xy.file=basename(names(hindwing.AR)),wing="hind")%>% 
@@ -1538,9 +1546,8 @@ ARI.dat <- ar.dat %>% left_join(I.dat) %>%
 ARI.dat %>% 
   ggplot(aes(higher_taxon,I_fore/I_hind))+geom_boxplot()+ylim(c(-1,-0.5))
 
-obj<-contMap(lep.tree2,fore.I2*1e10,plot=FALSE)
-plot(obj,legend=0.7*max(nodeHeights(lep.tree2)),
-     fsize=c(0.4,1),cex=0.1,lwd=2,res=200)
+obj<-contMap(lep.tree2,log(hind.I2*1e10),plot=FALSE)
+plot(obj,fsize=c(0.4,1),cex=0.1,lwd=2,res=200)
 
 #so cool!!!! VVVV
 
@@ -1650,9 +1657,7 @@ sc.dat <- rbind(hindwing.sc,forewing.sc) %>%
   left_join(I.dat) %>% 
   filter(I_hind<1e4,I_fore<1e4)
 
-drops3 <- lep.tree2$tip.label[!lep.tree2$tip.label%in%sc.dat$species]
-drops4 <-  sc.dat$species[!sc.dat$species%in%lep.tree2$tip.label]
-lep.tree3 <- drop.tip(lep.tree2,c(drops3,drops4))
+lep.tree3 <- keep.tip(lep.tree2,sc.dat$species)
 
 sc.dat %>% 
   ggplot(aes(I_fore,I_hind))+geom_point()+geom_smooth(method="lm")

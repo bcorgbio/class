@@ -13,7 +13,7 @@
 
 <title>Module 8 Project</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
@@ -33,6 +33,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -125,13 +127,20 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -249,11 +258,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -514,522 +527,1206 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Any student steeped in the mechanics of muscle understands that force
-produced by this tissue is governed by two important parameters: speed
-and length. In this project, we’ll explore the effect of length on
-muscle force generation and evaluate how fatigue affects this
-force-length (FL) relationship.</p>
-<p>The FL relationship is governed by several important biophysical
-aspects of muscle architecture. At the fiber level, the force produced
-is largely mediated by the number of crossbridges that can be formed.
-Crossbridges are small and have a limited attachment range. Therefore,
-crossbridge attachments only occur in the actin-myosin overlap zone of a
-sarcomere. Together with the assumptions underlying the crossbridge
-theory, this limitation implies that the maximal isometric force of a
-sarcomere is directly related to the amount of actin-myosin overlap
-(Fig. 1).</p>
-<center>
-<img
-src="https://journals.physiology.org/cms/10.1152/jappl.1999.86.5.1445/asset/images/medium/japp05516002x.jpeg" />
-<br> <strong>Fig. 1.</strong> The force-length relationship of a
-sarcomere as predicted by cross-bridge theory.
-</center>
-<p><br></p>
-<p>Of course, many muscles transect a lever system composed of a few
-bones articulating at a joint. For our subject, the human upper limb,
-the forearm flexors originate on the pectoral girdle above the humerus
-and insert on the radius and ulna, spanning the elbow joint. Simply put,
-the arm is a 3rd order lever (Fig 2). If we are to consider the force
-transmitted to the hand (or any other part along the antebrachium), we
-must also consider this lever configuration. As a lever, this system has
-a mechanical advantage that predicts the amount of output force
-transmitted by the input force. Mechanical advantage is defined by the
-following:</p>
-<p><span class="math display">\[MA=\frac{L_i}{L_o}\]</span>,</p>
-<p>where <span class="math inline">\(L_i\)</span> is the in-lever and
-<span class="math inline">\(L_o\)</span> the output leaver. For the
-human upper limb, the inlever is the distance between the flexor
-insertion and elbow joint and the out-lever is the length of the
-antebrachium and hand (or the distance between the elbow and the load).
-This ratio generally accords to 0.2 in this system. What this predicts
-is that any force applied to the in-lever results in 20% of that force
-at the end of the out-lever (i.e., the palm).</p>
-<p>What makes this more complicated is that the effective in-lever, the
-input moment arm, changes as the forearm flexes. This is due to the fact
-that the insertion angle changes as the forearm rotates (Fig. 3).
-Because the force produced by an input is variable with respect to
-insertion angle, the output isn’t necessarily predicted by MA alone.</p>
-<center>
-<p><img
-src="https://openoregon.pressbooks.pub/app/uploads/sites/42/2018/07/Range-300x262.png" /></p>
-<strong>Fig. 2</strong> The 3rd-order level system of the human upper
-limb.
-</center>
-<p><br></p>
-<p>Fortunately for us, physiologists have found that studying the force
-(or torque) produced by a biomechanical system can still be useful in
-uncovering the FL relationships of the input muscles <span
-class="citation">(Rassier, MacIntosh, and Herzog 1999)</span>. For this
-project, we take this assumption to mean that the force we measure at
-the hand as the muscle produces isometric force at various lengths is a
-reasonable reflection of the FL relationship governing force at the
-fiber level.</p>
-<center>
-<img src="arm.gif" /> <br> <strong>Fig. 4.</strong> Rotation of the
-forearm through its typical range of motion. Notice that the insertion
-angle of the biceps changes. (This was of course produced with R . . .
-have a look at <a
-href="https://gist.github.com/ckenaley/924171571a73874384a6aaaef93e372b">this
-gist on github</a> if you’d like the code.)
-</center>
-<p><br></p>
-<p>Keeping all this mind mind, we’ll study the FL relationship of the
-human upper limb and how this relationship responds to fatigue.
-Eccentric fatigue, whereby the muscle has been asked to do a lot of
-negative work (producing tension while lengthening) has been a
-particular interested to muscle physiologists <span
-class="citation">(Yeung and Yeung 2008)</span>. That is, this research
-has shown that the force/torque-length/angle relationship shifts soon
-after and long after eccentric fatigue. Specifically, the peak
-normalized isometric force shifts over the typical range of angles for a
-biomechanical system.</p>
-<p>The specific goals of this project are to:</p>
-<ol style="list-style-type: decimal">
-<li>Produce isometric force-angle curves for the human forearm flexors
-undertaking maximum voluntary contractions (MVCs).</li>
-<li>Compare the angle at which maximum isometric force (<span
-class="math inline">\(F_{max}\)</span>) occurs (<span
-class="math inline">\(\theta_{max}\)</span>) between non-fatigued (i.e.,
-control) and eccentrically fatigued forearm flexors.</li>
-<li>Discuss the underlying mechanisms resulting in a shift of <span
-class="math inline">\(\theta_{max}\)</span> after eccentric
-fatigue.</li>
-</ol>
+<p>Each northern hemisphere spring, many neotropical passerines
+undertake long-distance migrations from Central and South America to
+temperate latitudes to forage and breed. Many of these species fly
+non-stop over the Gulf of Mexico and arrived on land between Texas and
+Florida. These species are therefore described as trans-Gulf migrants
+(TGMs). The date when any individual migrant arrives on its breeding
+grounds has important fitness consequences and the evolution of this
+phenological event is likely the result of balancing important
+tradeoffs. For instance, arriving early increases the chances of finding
+a mate and breeding multiple times, however later arrival ensures higher
+food availability in these temperate and seasonal ecosystems <span
+class="citation">(Smith and Moore 2005; Newton 2008)</span>.</p>
+<p>In the context of a changing climate, failure of TGMs to shift
+arrival date at breeding areas in response to warmer spring temperatures
+may result in population declines <span class="citation">(Both et al.
+2006)</span>. If and how TGMs and other long-distance migrants shift
+their spring arrival in temperate North America in response to local
+temperature changes remains hotly debated <span class="citation">(Smith
+and Moore 2005; Knudsen et al. 2011)</span>. In studying the effects of
+changes in local environmental parameters linked to climate change on
+migration phenology, scientists have traditionally relied on field, <a
+href="https://www.fws.gov/faq/bandingfaq.html">banding</a>, or tracking
+studies <span class="citation">(e.g., Smith and Moore 2005; Askeyev,
+Sparks, and Askeyev 2009)</span>. These studies are often limited in
+temporal scope and in scale due to the few experts who are trained in
+this work</p>
+<p>In recent decades, there has been a marked increase in public
+interest in species conservation. Coupled with this is the development
+of several online programs in which amateur birders can submit bird
+observations. The Cornell Laboratory of Ornithology and the National
+Audubon Society have established the most popular and far-reaching of
+these programs: <a href="http://www.ebird.org">eBird</a>. Since its
+launch in 2002, eBird has collected and compiled well over 100 million
+bird observations from many thousand contributors. In addition to new
+checklists, users have also entered historical observations, so that
+eBird includes data prior to 2002 as well. This great cache of data has
+enormous implications for the study of bird ecology. Although it is a
+relatively new platform and its temporal reach is limited, the taxonomic
+and geographic breadth of eBird data will no doubt make it an important
+tool in studying avian biology.</p>
+<p>The goal of this project is to use eBird and meteorological data to
+study the effect of local weather conditions on the arrival time of TGMs
+in Massachusetts. To do this, we’ll download eBird’s species occurrence
+data from the Global Biodiversity Information Facility (GBIF) using <a
+href="https://www.gbif.org/tool/81747/rgbif"><code>rgif</code></a>, an R
+package that permits access to GBIF’s application programming interface
+(API). We’ll also compile weather using another R package,
+<code>rnoa</code> which contains functions that interact with <a
+href="https://www.ncdc.noaa.gov/cdo-web/webservices/v2">NOAA’s National
+Climatic Data Center’s API</a>.</p>
 </div>
 <div id="methods" class="section level1">
 <h1>Methods</h1>
-<div id="experimental-design" class="section level2">
-<h2>Experimental Design</h2>
-<p>To assess the affect of eccentric fatigue of elbow flexor muscles,
-we’ll be measuring the isometric force over the range of motion of the
-forearm produced by MVC. To capture MVC data, you must design and
-construct a portable Arduino-based force-data acquisition system (DAQ).
-Your device should record force data over the course of 30s.</p>
+<p>Firstly, you should decide which species to study. We’ll limit this
+to any 5 in this <a href="tgms.csv">list of TGMs</a> that make their way
+to MA each spring. Once you have 5 species chosen, download the
+occurrence data for these species using the <code>occ_data()</code>
+function from <code>rgbif</code>.</p>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
 </div>
-<div id="daq-design-components" class="section level2">
-<h2>DAQ Design Components</h2>
-<ol style="list-style-type: decimal">
-<li>40-kg Load Cell with HX711 amplifier</li>
-<li>Arduino Uno microcontroller</li>
-</ol>
+<div class="col-sm-9">
+<p>eBrid does indeed have its own API and R package (two actually,
+<code>rebird</code> and <code>auk</code>). However, I find them rather
+cumbersome and hard to work with. <code>auk</code> is especially so in
+that it requires downloading and filtering through the entire eBird data
+set when one only wants to work with just a few species. The developers
+suggest workarounds, however, one may still spend many hours just
+loading the initial data. Fortunately, eBird sends its data to GBIF and,
+thus, <code>rgbif</code>, which allows species-level queries to the GBIF
+API, is much easier to work with. Same data, fewer headaches.</p>
 </div>
-<div id="daq-assembly-and-programming" class="section level2">
-<h2>DAQ Assembly and Programming</h2>
-<p>Assembly for this force logger is almost entirely captured in <a
-href="https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/">this
-tutorial</a>.</p>
-<p>You’ll see that the sketch in the tutorial requires a calibration
-step to output appropriate force or mass units. <strong>Don’t worry
-about calibration.</strong> We’ll be looking a normalized force, so
-units don’t matter.</p>
-<!-- As for your SD storage integration, make sure your sketch writes one column data to the SD card with the header "force". -->
-<p>For each experiment, you’ll be recording 12 bouts of MVC force, each
-corresponding to a different elbow angle, for 30 s. For each arm angle,
-one only needs to unplug the Arduino and hit the red restart button on
-the Arduino to begin taking force data. So as not to confuse from where
-your data came, it’s a good idea to change the name of the text file
-being saved to for each experiment, e.g., “Subject1_control.csv” and
-“Subject1_fatigue.csv”.</p>
 </div>
-<div id="data-collection" class="section level2">
-<h2>Data Collection</h2>
-<div id="elbow-angle" class="section level3">
-<h3>Elbow Angle</h3>
-<p>You’ll first need to construct a ganiometer, a simple device that
-measures the angle between the upper and lower arm (i.e., the elbow
-angle). One approach is to use the outline of a small plate to cut a
-disc out of cardboard and then bisect the diameter and then continue to
-bisect this semicircle into equal segments (Fig. 4.)</p>
-<center>
-<img src="gan.jpg" style="width:50.0%" /> <br> <strong>Fig. 4</strong> A
-simple ganiometer made of cardboard.
-</center>
+</div>
 <p><br></p>
-<p>To use the ganiometer, find the center of the elbow joint in lateral
-view and mark this position with a marker. From this point, mark a line
-along the lateral margin of the radius. (Fig. 5). Then, poke a hole
-through the center of the ganiometer and affix it to the upper arm so
-its center aligns with your mark at the elbow joint and the 0-180<span
-class="math inline">\(^o\)</span> axis aligns with the long axis of the
-humerus (Fig. 6).You can affix the ganiometer to the upper arm by
-passing a strip of surgical tape through two tabs cut out on either side
-of the 0-180<span class="math inline">\(^o\)</span> axis (Fig. 6).</p>
-<center>
-<img src="joint.jpg" style="width:50.0%" /> <br> <strong>Fig. 4</strong>
-The elbow joint on a tiny human and the lateral margin of the radius
-marked with a dark line. Thanks, Zo!
-</center>
-<p><br></p>
-<center>
-<img src="90deg.jpg" style="width:50.0%" /> <br> <strong>Fig. 5</strong>
-The ganiometer affixed to the upper arm with surgical tape with its
-center placed over the elbow joint. Note how the marked line on the
-radius indicates an elbow angle of about 90<span
-class="math inline">\(^o\)</span>.
-</center>
-<p><br></p>
-<p>As the elbow flexes or extends, you should be able to peak at the
-ganiometer to assess elbow angle.</p>
+<div id="querying-gbifs-api" class="section level2">
+<h2>Querying GBIF’s API</h2>
+<p>Before we go too much further, let’s have a look at what
+<code>rgbif</code> can do. Its most promising function for our work is
+<code>occ_data()</code> which searches GBIF occurrences relatively
+quickly. Let’s first load the packages we’ll need now and later (make
+sure they’re installed!). Then, let’s query GBIF for the common raven, a
+most spectacular bird, in the state of Maine (a most spectacular place)
+and plot the occurrence lat/lon on a map of that state using
+<code>ggmap</code> and <code>cowplot</code> functions. Here we restrict
+the <code>occ_data()</code> search by specifying the scientific name
+(<em>Corvus corax</em>), the state/province to Maine, the year as 2018,
+and a limit of 200 records.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgbif)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MuMIn)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnoaa)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggmap)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usmap)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magick)<span class="co">#for examples</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)<span class="co">#for examples</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4) <span class="co">#for linear mixed effect models</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car) <span class="co">#for LME anova testing</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table) <span class="co">#for frollmean function (and others)</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>raven <span class="ot">&lt;-</span> <span class="fu">occ_data</span>(<span class="at">scientificName =</span> <span class="st">&quot;Corvus corax&quot;</span>, <span class="at">stateProvince=</span><span class="st">&quot;Maine&quot;</span>, <span class="at">limit=</span><span class="dv">200</span>,<span class="at">year=</span><span class="dv">2018</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#get the state of ME from ggmaps map data</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>ME<span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">&#39;state&#39;</span>, <span class="st">&#39;maine&#39;</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>raven.p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ME, <span class="fu">aes</span>(long,lat,<span class="at">group=</span>subregion) )<span class="sc">+</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_polygon</span>(<span class="at">colour =</span> <span class="st">&quot;gray&quot;</span>,<span class="at">fill=</span><span class="st">&quot;gray90&quot;</span>)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">data=</span>raven[[<span class="dv">2</span>]],<span class="fu">aes</span>(<span class="at">x=</span>decimalLongitude,<span class="at">y=</span>decimalLatitude,<span class="at">size=</span>individualCount),<span class="at">alpha=</span><span class="fl">0.3</span>,<span class="at">inherit.aes =</span> F)<span class="sc">+</span> <span class="fu">coord_quickmap</span>()<span class="sc">+</span><span class="fu">theme_void</span>()</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#and add image to the map with cowplot</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>raven.p2 <span class="ot">&lt;-</span> <span class="fu">ggdraw</span>() <span class="sc">+</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">draw_image</span>(<span class="st">&quot;https://www.allaboutbirds.org/guide/assets/photo/63739491-480px.jpg&quot;</span>,<span class="at">scale =</span> <span class="fl">0.3</span>,<span class="at">halign=</span><span class="dv">0</span>,<span class="at">valign=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">draw_plot</span>(raven.p)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(raven.p2)</span></code></pre></div>
+<div class="figure">
+<img src="mod8_proj_files/figure-html/unnamed-chunk-1-1.png" alt="Fig. 1. Records for common raven in Maine, 2018." width="672" />
+<p class="caption">
+Fig. 1. Records for common raven in Maine, 2018.
+</p>
 </div>
-<div id="isometric-mvcs" class="section level3">
-<h3>Isometric MVCs</h3>
-<p>We will collect isometric force data from MVCs over 12 arm angles,
-45-157.5<span class="math inline">\(^o\)</span> at 11.25<span
-class="math inline">\(^o\)</span> (call it 11<span
-class="math inline">\(^o\)</span>) intervals. Your load-cell is affixed
-to two hooks. Attach one hook to the dowel in your DAQ pack and the
-other to something that won’t move under the torque of your forearm.
-This could be a table, chair, bench, etc. Hold the dowel in your hand as
-shown in Fig. 6. Make sure your elbow is supported by something rigid
-(i.e. the top of a chair back, etc.).</p>
-<center>
-<img src="grip.jpg" style="width:50.0%" /> <br> <strong>Fig. 6</strong>
-How to grip the the load-cell.
-</center>
-<p><br></p>
-<p>First collect your control (i.e., non-fatigued) data by starting at
-the largest arm angle, 157.5<span class="math inline">\(^o\)</span>. You
-can move through the 12 arm angles by rotating your body about your
-hips. That is, at the high elbow angles, you’ll be more upright, at
-lower angles, more bent over. At each angle, flex your elbow as hard as
-you can to produce a MVC, resetting your DAQ system each time. Make sure
-the load-cell forms a right angle with reference to your hand (Fig. 6).
-You might want to practice a few times to get a sense of how this will
-proceed.</p>
-</div>
-<div id="mvcs-after-eccentric-fatigue" class="section level3">
-<h3>MVCs after Eccentric Fatigue</h3>
-<p>To eccentrically fatigue your forearm flexors, you’ll perform
-isokinetic controlled drops of a heavy object weighing 1/3 your maximum
-isometric force recorded in the control experiments. A book bag or back
-pack full of heavy items (ahhh. . . books) should do just fine.</p>
-<p>To perform your isokinetic eccentric drops, grab the book bag with
-the hand not involved in the experiment and pass it to the other as its
-forearm is fully flexed. With the bag now in your study hand, lower the
-bag slowly and at a constant speed. When the arm is fully extended, grab
-the book bag with the free hand and then flex the study forearm. Repeat
-by passing the bag to your study hand. Continue repeating this exercise
-for 3 min. Keep the cycles uniformly frequent by monitoring the duration
-(probably 3-4 s each cycle). At the end of the 3 mins, your forearm
-flexors should feel tired.</p>
-<p>After you fatigue your flexors, wait 2 min. Then repeat the
-experiment exactly as you did for the control data.</p>
-<p>Once you complete your experiments, upload your 24 data files to <a
-href="https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing">this
-Google directory</a>. Be sure to name your files according to the
-following convention: “team_subject_angle_control/fatigue.csv”. Please
-stick to all lower case.</p>
-</div>
-</div>
-<div id="summary-of-experimental-protocol" class="section level2">
-<h2>Summary of Experimental Protocol</h2>
+<p>Notice how <code>occ_data()</code> returns records as a list of
+different data types. See . . .</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(raven)</span></code></pre></div>
+<pre><code>## [1] &quot;meta&quot; &quot;data&quot;</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(raven,head)</span></code></pre></div>
+<pre><code>## $meta
+## $meta$offset
+## [1] 0
+## 
+## $meta$limit
+## [1] 200
+## 
+## $meta$endOfRecords
+## [1] FALSE
+## 
+## $meta$count
+## [1] 7665
+## 
+## 
+## $data
+## # A tibble: 6 × 78
+##   key     scien…¹ decim…² decim…³ issues datas…⁴ publi…⁵ insta…⁶ publi…⁷ proto…⁸
+##   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+## 1 183118… Corvus…    44.4   -68.1 &quot;cdro… 50c950… 28eb1a… 997448… US      DWC_AR…
+## 2 210248… Corvus…    44.6   -69.2 &quot;&quot;     4fa7b3… e2e717… 7182d3… US      DWC_AR…
+## 3 210257… Corvus…    44.4   -68.0 &quot;&quot;     4fa7b3… e2e717… 7182d3… US      DWC_AR…
+## 4 210262… Corvus…    44.3   -68.0 &quot;&quot;     4fa7b3… e2e717… 7182d3… US      DWC_AR…
+## 5 210277… Corvus…    44.4   -68.4 &quot;&quot;     4fa7b3… e2e717… 7182d3… US      DWC_AR…
+## 6 210309… Corvus…    44.6   -69.2 &quot;&quot;     4fa7b3… e2e717… 7182d3… US      DWC_AR…
+## # … with 68 more variables: lastCrawled &lt;chr&gt;, lastParsed &lt;chr&gt;, crawlId &lt;int&gt;,
+## #   hostingOrganizationKey &lt;chr&gt;, basisOfRecord &lt;chr&gt;, occurrenceStatus &lt;chr&gt;,
+## #   taxonKey &lt;int&gt;, kingdomKey &lt;int&gt;, phylumKey &lt;int&gt;, classKey &lt;int&gt;,
+## #   orderKey &lt;int&gt;, familyKey &lt;int&gt;, genusKey &lt;int&gt;, speciesKey &lt;int&gt;,
+## #   acceptedTaxonKey &lt;int&gt;, acceptedScientificName &lt;chr&gt;, kingdom &lt;chr&gt;,
+## #   phylum &lt;chr&gt;, order &lt;chr&gt;, family &lt;chr&gt;, genus &lt;chr&gt;, species &lt;chr&gt;,
+## #   genericName &lt;chr&gt;, specificEpithet &lt;chr&gt;, taxonRank &lt;chr&gt;, …</code></pre>
+<p>This includes the meta data (<code>$meta</code>), data about the data
+and the data themselves, (<code>$data</code>), a tibble. The
+<code>$data</code> tibble includes the information we need for this
+project, including date, lat, long, count, etc. Thus, to access the
+lat/lon data in our records, we refer to the second element in the list,
+that is <code>raven[[2]]</code>.</p>
+<p>Before we get a GBIF search for TGMs started, I suggest first storing
+your species names in a vector (so please choose them and store them).
+Say, for instance, you chose great-crested flycatcher, Baltimore oriole,
+rose-breasted grossbeak, yellow-billed cuckoo, and black-throated blue
+warbler. We also want to restrict the search to spring arrival time in
+years of interest (i.e., those with decent eBird data . . . &gt;1990 or
+so). Let’s store those values, too.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Myiarchus crinitus&quot;</span>,<span class="st">&quot;Icterus galbula&quot;</span>,<span class="st">&quot;Pheucticus ludovicianus&quot;</span>,<span class="st">&quot;Coccyzus americanus&quot;</span>,<span class="st">&quot;Setophaga caerulescens&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;1990&quot;</span>,<span class="st">&quot;,&quot;</span>,<span class="st">&quot;2019&quot;</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;3&quot;</span>,<span class="st">&quot;,&quot;</span>,<span class="st">&quot;6&quot;</span>)</span></code></pre></div>
+<p>Notice how the year and month vectors, <code>y</code> and
+<code>m</code>, respectively, are each a character string with two
+values separated by a comma. This is how we’ll constrain the search with
+<code>occ_data()</code>. Have a look at <code>?occ_data</code> to
+familiarize yourself with the function’s parameters and the values they
+take.</p>
+<p>To commence the GBIF queries for your 5 species, I suggest using a
+familiar convention: a <code>for</code> loop that passes data to an
+empty list. That is, establish that empty list and run the species
+through <code>occ_data()</code>, storing values in the list as the
+<code>for</code> loop progresses. Here are some important pieces.</p>
+<p>Constrain the <code>occ_data()</code> search by:</p>
 <ul>
-<li>Fabricate and program a load-cell data acquisition system.</li>
-<li>Make a ganiometer.</li>
-<li>Record isometric MVCs at 12 distinct elbow angles.</li>
-<li>Eccentrically fatigue your flexors.</li>
-<li>Wait 2 minutes.</li>
-<li>Repeat recording isometric MVCs at the same 12 distinct elbow
-angles.</li>
-<li>Upload data to <a
-href="https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing">this
-directory</a>.</li>
+<li>each of your species in your loop
+(i.e.,<code>scientificName=i</code> if <code>i</code> is your
+<code>for</code> variable)</li>
+<li>occurrences within our year and month range (<code>year=y</code> and
+<code>month=m</code>)</li>
+<li>occurrences in United States and the state Massachusetts
+(<code>country="US"</code> and
+<code>stateProvince="Massachusetts"</code>)</li>
+<li>occurrence record should be based on a human observation, that is,
+someone saw this in the wild (i.e., an eBird record,
+<code>basisOfRecord = "HUMAN_OBSERVATION"</code>).</li>
 </ul>
+<p>This will be a rather labored search in that it might take 20 minutes
+to run through all five species, depending on the number of records.
+But, this is nothing like the hours one would spend working with
+<code>auk</code>. So run this and grab a sandwich and refresh your
+twitter feed. After that, we should have a many thousands of MA eBird
+records loaded to the list.</p>
+<p>To get get you started, here’s what could be done . . .</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dat.l <span class="ot">&lt;-</span><span class="fu">list</span>()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(s <span class="cf">in</span> species){</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="do">## setting the limit=0 returns no records but can give you the number of observations if you access the meta data</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>n.obs <span class="ot">&lt;-</span>  <span class="fu">occ_data</span>(<span class="at">scientificName =</span> s,<span class="at">year=</span>y,<span class="at">month=</span>m,<span class="at">limit=</span><span class="dv">0</span>,<span class="at">country=</span><span class="st">&quot;US&quot;</span>,<span class="at">basisOfRecord =</span> <span class="st">&quot;HUMAN_OBSERVATION&quot;</span>,<span class="at">stateProvince=</span><span class="st">&quot;Massachusetts&quot;</span>)<span class="sc">$</span>meta<span class="sc">$</span>count </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(n.obs)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>dat.l[[<span class="fu">paste0</span>(s)]] <span class="ot">&lt;-</span> <span class="fu">occ_data</span>(<span class="at">scientificName =</span> s,<span class="at">year=</span>y,<span class="at">month=</span>m,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                               <span class="at">limit=</span>n.obs,<span class="at">country=</span><span class="st">&quot;US&quot;</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                               <span class="at">basisOfRecord =</span> <span class="st">&quot;HUMAN_OBSERVATION&quot;</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                               <span class="at">stateProvince=</span><span class="st">&quot;Massachusetts&quot;</span>)[[<span class="dv">2</span>]]</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(dat.l,<span class="at">fill=</span>T)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code></pre></div>
+<p>Note that we store the number of observations for each species,
+ripped from the meta data using <code>occ_data()</code> with
+<code>limit=0</code>. This won’t return records, but will return the
+meta data. We can then pass this number to <code>limit</code> in the
+subsequent use of <code>occ_data</code> to bypass the limit of 500,
+which is the default.</p>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
+</div>
+<div class="col-sm-9">
+<p>This search will take a little while and we certainly don’t want to
+repeat it any more than we have to. If the code that runs this lengthy
+search is part of your markdown (and it probably should be!), simply set
+the chunk options to <code>cache=TRUE</code>. So set, when this chunk
+runs successfully, the <a
+href="https://yihui.org/knitr/options/#cache">results are stored (i.e.,
+cached) so they can be accessed without running the code again</a>. The
+cache will be used in place of the chunk until the code within it
+changes. Give it a shot.</p>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>After a large operation like this, it’s best to save the data. Many
+in the R world prefer that large data objects be stored as serialized
+files. The <code>saveRDS()</code> function is exactly what we need for
+this. The following will save data as an R serialized file with the name
+“mass.bird.data.RDS”.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(data,<span class="st">&quot;massbird.data.RDS&quot;</span>)</span></code></pre></div>
+<p>Now, if your script or markdown should be interrupted (e.g., a crash,
+freeze, etc.), you can access your data with <code>readRDS()</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;massbird.data.RDS&quot;</span>)</span></code></pre></div>
+<p>With a sense of how the bird data will be downloaded, let’s see what
+sort of numbers we’ll be dealing with. These are year-by-year totals
+from <code>occ_data()</code> searches for the 5 species above . . .</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year,species)<span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count=</span><span class="fu">sum</span>(individualCount,<span class="at">na.rm =</span> T))<span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>year,<span class="at">y=</span>count,<span class="at">col=</span>species))<span class="sc">+</span><span class="fu">geom_point</span>()</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<p><img src="mod8_proj_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>It looks like there’s not much data before 2000 for all species.
+We’ll keep this in mind as we move forward. Now let’s move on to
+compiling weather data.</p>
+</div>
+<div id="querying-noaas-ncdc-api" class="section level2">
+<h2>Querying NOAA’s NCDC API</h2>
+<p>First off, let’s think about what weather parameters and at which
+locations and time frames we’ll compile data from. We’re studying TGMs
+so we probably want to look at weather along the migration route. That
+is, weather in Massachusetts may not be the best predictor of migration
+timing because migrants arriving there have to fly through local weather
+conditions along the way.</p>
+<p>Because nocturnal long-distance migrators fly about 200 km<span
+class="math inline">\(^{-d}\)</span> <span
+class="citation">(Hall-Karlsson and Fransson 2008)</span>, we can
+estimate that a bird that was 1000 km away from Massachusetts 5 days
+before arrival and 2000 km away 10 days before arrive. With this in
+mind, we can establish an assumed migration path from the Gulf of Mexico
+and sample weather from locations that are close to these distances from
+Massachusetts. If one draws a line from Mobile, AL on the Gulf Coast
+(about 2000 km from MA) to Boston, MA, Charlotte, NC sits along that
+line and half way along an assumed flight path (1000 km from MA). Thus,
+these locations represent logical sampling locations for our weather
+data.</p>
+<p>NOAA’s NCDC identifies weather stations by unique ID codes. The
+following vector, <code>sts</code>, represents the codes for stations in
+Mobile, Charlotte, and Boston that have relatively complete data sets
+for wind and temperature over our time frame (&gt;1990 or so).</p>
+<p>Before we start using <code>rnoaa</code> to access NOAA’s NCDC API,
+we have to establish a key, a token of sorts that identifies the user
+and establishes a connection to the NCDC servers. Head on over to <a
+href="https://www.ncdc.noaa.gov/cdo-web/token">this page on NOAA’s NCDC
+site</a> to retrieve a token. It will require entering an email address,
+to which the token will be sent. Copy the token (a string of random
+letters and numbers) and paste it into the following where “token” is
+indicated.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">noaakey =</span> <span class="st">&quot;token&quot;</span>)</span></code></pre></div>
+<p>The R function <code>options()</code> sets global parameter values
+for your R session. With <code>noaakey="token"</code>, you’re telling R
+to pass this token string to any function that asks for
+<code>noaakey</code>, that is, all the <code>rnoaa</code> query
+functions.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sts <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;GHCND:USW00013894&quot;</span>, <span class="co">#Mobible, AL 2k away about 10 days away @200 km/day</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;GHCND:USW00013881&quot;</span>, <span class="co">#Charlotte, NC 1000 km away about 6 days away @200 km/day</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;GHCND:USW00014739&quot;</span> <span class="co">#Boston</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Now that we have the station codes identified and a token key
+established, let’s query the the NCDC API with
+<code>ncdc_stations()</code> to retrieve their exact location. Let’s
+first see what this function returns using our Boston station ID.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>bos <span class="ot">&lt;-</span> <span class="fu">ncdc_stations</span>(<span class="at">stationid =</span> <span class="st">&quot;GHCND:USW00014739&quot;</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(bos)</span></code></pre></div>
+<pre><code>## $meta
+## NULL
+## 
+## $data
+##   elevation    mindate    maxdate latitude
+## 1       3.2 1936-01-01 2022-11-12 42.36057
+##                                        name datacoverage                id
+## 1 BOSTON LOGAN INTERNATIONAL AIRPORT, MA US            1 GHCND:USW00014739
+##   elevationUnit longitude
+## 1        METERS -71.00975
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;ncdc_stations&quot;</code></pre>
+<p>Notice that the data about this station is stored in the
+<code>$data</code> table returned by <code>ncdc_stations()</code> This
+means we can run all three of out stations through this function and
+combine the rows to give us a table with all the station data. We’ll use
+these data to map the station locations to visualize our weather
+sampling locations. Let’s do that using <code>lapply()</code> and a few
+other tricks to prepare the station data for mapping and use with other
+<code>ncdc</code> functions.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>sta.d <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>( <span class="co">#bind the rows</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(sts,<span class="cf">function</span>(x) <span class="fu">ncdc_stations</span>(<span class="at">stationid =</span> x)<span class="sc">$</span>data ) <span class="co">#use lapply to run through stations</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">usmap_transform</span>(.,<span class="at">input_names =</span> <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>,<span class="st">&quot;latitude&quot;</span>),<span class="at">output_names =</span> <span class="fu">c</span>(<span class="st">&quot;longitude.1&quot;</span>, <span class="st">&quot;latitude.1&quot;</span>)))<span class="sc">%&gt;%</span> <span class="co">#join transformation of lat/long for projection with usmap</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name=</span><span class="fu">str_sub</span>(name, <span class="sc">-</span><span class="dv">5</span>,<span class="sc">-</span><span class="dv">4</span>))<span class="sc">%&gt;%</span><span class="co">#simplify the name column, grab just the state</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">migr.day=</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">0</span>))<span class="sc">%&gt;%</span> <span class="co">#so we can look at wind speed 0, 5 or 10 days before arrive in boston</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(id,<span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;station.type&quot;</span>,<span class="st">&quot;id&quot;</span>))<span class="sc">%&gt;%</span><span class="co">#need to cut station type out from station id number</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">print</span>()</span></code></pre></div>
+<pre><code>##   elevation    mindate    maxdate latitude name datacoverage station.type
+## 1      65.5 1948-01-01 2022-11-12 30.68819   AL            1        GHCND
+## 2     222.6 1939-01-01 2022-11-12 35.22254   NC            1        GHCND
+## 3       3.2 1936-01-01 2022-11-12 42.36057   MA            1        GHCND
+##            id elevationUnit longitude longitude.1 latitude.1 migr.day
+## 1 USW00013894        METERS -88.24598     1128508 -1510291.3       10
+## 2 USW00013881        METERS -80.95433     1718307  -890812.8        5
+## 3 USW00014739        METERS -71.00975     2320536   125815.9        0</code></pre>
+<p>First, we surround <code>lapply()</code> with <code>dplyr</code>’s
+<code>bind_rows()</code> so that the results of the
+<code>lapply()</code> operation will be collapsed into a single table.
+Within <code>lapply()</code>, we have that function work on our stations
+vector, <code>sts</code>, using a short customized function that queries
+NCDC station data with <code>ncdc_stations()</code> and returns the data
+with <code>$data</code>.</p>
+<p>Next, we join transformed lat/lon data from this table using
+<code>usmap_tranform()</code> from the <code>usmap</code> package. We’ll
+use this package to map the eastern US with our sampling locations and
+this package uses a funky lat/long projection We then mutate the
+<code>name</code> column in the table to contain just the state using
+<code>str_sub()</code> from the <code>stringr</code> package loaded with
+<code>tidyverse</code>. With <code>str_sub(name, -5,-4)</code>, we’re
+mutating the name to contain the characters that are the 5th through 4th
+from the end of the string, that is, the state. Then, we add a column
+that reflects the assumed migration day away from Boston (10, 5, and 0
+for AL, NC, and MA, respectively). This will be important later. Lastly,
+we use <code>dplyr</code>’s <code>separate()</code> function to split
+the station ID column into two separate columns,
+<code>station.type</code> and <code>id</code>, essentially replacing the
+<code>id</code> column with the station code minus the prefix that
+represents station type. We’ll need station ID without this prefix for
+later <code>ncdc</code> operations.</p>
+<p>Now let’s plot these locations on a map of the eastern US. We’ll use
+<code>usmap</code>’s <code>plot_usmap()</code> function for this as it
+plays nice with <code>ggplot</code>. <code>plot_usmap()</code> allows
+one to include regions of the US. For our purposes, we need the
+northeast, south, and east north central regions, so we pass
+<code>c(.northeast_region,.south_region,.east_north_central)</code> to
+the <code>include</code> parameter. On top of this map, we add points
+using our transform lat/long data in the <code>sta.d</code> tibble.
+Let’s make the points big and color them by name (i.e., state). Then,
+let’s add a label using the same color scheme and nudge the position of
+the lable closer to the points. Lastly, we removed the legend because,
+duh, the points are labeled</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_usmap</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">include =</span> <span class="fu">c</span>(.northeast_region,.south_region,.east_north_central)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">data=</span>sta.d,<span class="fu">aes</span>(<span class="at">x=</span>longitude<span class="fl">.1</span>,<span class="at">y=</span>latitude<span class="fl">.1</span>,<span class="at">col=</span>name),<span class="at">size=</span><span class="dv">5</span>)<span class="sc">+</span><span class="fu">geom_label</span>(<span class="at">data=</span>sta.d,<span class="fu">aes</span>(<span class="at">x=</span>longitude<span class="fl">.1</span>,<span class="at">y=</span>latitude<span class="fl">.1</span>,<span class="at">col=</span>name,<span class="at">label=</span>name),<span class="at">size=</span><span class="dv">5</span>,<span class="at">nudge_x =</span> <span class="fl">1e6</span><span class="sc">*</span><span class="fl">0.25</span>)<span class="sc">+</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="figure">
+<img src="mod8_proj_files/figure-html/unnamed-chunk-13-1.png" alt="Fig. 2. Weather sampling locations for this project." width="672" />
+<p class="caption">
+Fig. 2. Weather sampling locations for this project.
+</p>
+</div>
+<p>Voila! Looks like our sampling locations align with a decent NE
+migration path. Now let’s get the weather data from these stations
+during the spring of the years we have decent eBird data for, since 2000
+when we see an uptick in eBird data. For this we’ll use
+<code>meteo_pull_monitors()</code> which returns a tidy tibble. Notice
+we pass the <code>sta.d$id</code> column to this function and it
+contains the station ID without the prefix.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>weather.d <span class="ot">&lt;-</span> <span class="fu">meteo_pull_monitors</span>(sta.d<span class="sc">$</span>id,<span class="at">date_min =</span> <span class="st">&quot;2000-01-01&quot;</span>)</span></code></pre></div>
+<pre><code>## using cached file: ~/Library/Caches/R/noaa_ghcnd/USW00013894.dly</code></pre>
+<pre><code>## date created (size, mb): 2022-09-07 15:21:38 (7.831)</code></pre>
+<pre><code>## file min/max dates: 1948-01-01 / 2022-09-30</code></pre>
+<pre><code>## using cached file: ~/Library/Caches/R/noaa_ghcnd/USW00013881.dly</code></pre>
+<pre><code>## date created (size, mb): 2022-09-07 15:21:49 (8.421)</code></pre>
+<pre><code>## file min/max dates: 1939-07-01 / 2022-09-30</code></pre>
+<pre><code>## using cached file: ~/Library/Caches/R/noaa_ghcnd/USW00014739.dly</code></pre>
+<pre><code>## date created (size, mb): 2022-09-07 15:22:00 (9.255)</code></pre>
+<pre><code>## file min/max dates: 1936-01-01 / 2022-09-30</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(weather.d)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 46
+##   id      date        adpt  aslp  astp  awbt  awnd  fmtm  pgtm  prcp  rhav  rhmn
+##   &lt;chr&gt;   &lt;date&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;
+## 1 USW000… 2000-01-01    NA    NA    NA    NA    35  1202  1341     0    NA    NA
+## 2 USW000… 2000-01-02    NA    NA    NA    NA    45  1200  1157     0    NA    NA
+## 3 USW000… 2000-01-03    NA    NA    NA    NA    68  1140  1418     0    NA    NA
+## 4 USW000… 2000-01-04    NA    NA    NA    NA    50    40  1334    94    NA    NA
+## 5 USW000… 2000-01-05    NA    NA    NA    NA    24   104   138     0    NA    NA
+## 6 USW000… 2000-01-06    NA    NA    NA    NA    13  1006  1244     0    NA    NA
+## # … with 34 more variables: rhmx &lt;int&gt;, snow &lt;dbl&gt;, snwd &lt;dbl&gt;, tavg &lt;dbl&gt;,
+## #   tmax &lt;dbl&gt;, tmin &lt;dbl&gt;, tsun &lt;int&gt;, wdf2 &lt;int&gt;, wdf5 &lt;int&gt;, wesd &lt;int&gt;,
+## #   wsf2 &lt;int&gt;, wsf5 &lt;int&gt;, wt01 &lt;int&gt;, wt02 &lt;int&gt;, wt03 &lt;int&gt;, wt04 &lt;int&gt;,
+## #   wt05 &lt;int&gt;, wt06 &lt;int&gt;, wt07 &lt;int&gt;, wt08 &lt;int&gt;, wt09 &lt;int&gt;, wt11 &lt;int&gt;,
+## #   wt13 &lt;int&gt;, wt14 &lt;int&gt;, wt15 &lt;int&gt;, wt16 &lt;int&gt;, wt17 &lt;int&gt;, wt18 &lt;int&gt;,
+## #   wt21 &lt;int&gt;, wt22 &lt;int&gt;, wv03 &lt;int&gt;, psun &lt;int&gt;, wt19 &lt;int&gt;, wt10 &lt;int&gt;</code></pre>
+<p>Also notice that this produces a series of messages that indicate
+you’ve queried the NCDC API and downloaded cached files to a local
+location.</p>
+<p>We’ll be looking at fourish weather parameters, the minimum and
+maximum temperature in tenths of <span
+class="math inline">\(^o\)</span>C (<code>tmin</code>), average wind
+velocity in m<span class="math inline">\(^{-s}\)</span>
+(<code>awnd</code>), and direction of fastest 2-minute wind
+(<code>wdf2</code>). With the weather and eBird data in place, we can
+move on to preparing the data for analysis and the analysis itself.</p>
 </div>
 <div id="data-analysis" class="section level2">
 <h2>Data Analysis</h2>
-<p>For each experiment, we’ll stick to a convention within the muscle
-physiology world by considering maximum normalized force. That is:</p>
-<ol style="list-style-type: decimal">
-<li>Find maximum force for each recording (don’t worry about the
-specific values or units because you’ll. . .).</li>
-<li>Find maximum force (<span class="math inline">\(F_{max}\)</span>)
-across all angles for each experiment (control or fatigued) for each
-individual and then divide all maximum values for that experiment by
-<span class="math inline">\(F_{max}\)</span>. Your values will now be
-normalize, i.e., scaled 0-1 with a value of 1 representing the highest
-force recorded during an experiment.</li>
-</ol>
-<p>Using the normalized force data from the control and fatigued
-experiments, we’ll consider shifts at which angle <span
-class="math inline">\(F_{max}\)</span> occurred, the difference in <span
-class="math inline">\(\theta_{max}\)</span>. To assess any shift in
-<span class="math inline">\(\theta_{max}\)</span> with our limited elbow
-angle samples, we could simply look at the angle at which the flexors
-produce the most force. For instance, for the these data:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ang <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">45</span>,<span class="fl">168.75</span>,<span class="at">length.out =</span> <span class="dv">12</span>) <span class="co">#elbow angle</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>normF <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.71</span>, <span class="fl">0.77</span>, <span class="fl">0.83</span>, <span class="fl">0.91</span>, <span class="fl">0.97</span>, <span class="fl">1.00</span>, <span class="fl">0.96</span>, <span class="fl">0.94</span>, <span class="fl">0.89</span>, <span class="fl">0.84</span>, <span class="fl">0.77</span>, <span class="fl">0.74</span>) <span class="co">#you&#39;ll get this by reading in data and calculating normalized values</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(ang,normF)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>ang[<span class="fu">which.max</span>(normF)],<span class="at">y=</span>normF[<span class="fu">which.max</span>(normF)]),<span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">size=</span><span class="dv">4</span>)</span></code></pre></div>
-<p><img src="mod8_proj_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ang[<span class="fu">which.max</span>(normF)] <span class="co">#Find angle for Fmax, theta_max</span></span></code></pre></div>
-<pre><code>## [1] 101.25</code></pre>
-<p>So, of the 12 angles that we sampled (45–157.5<span
-class="math inline">\(^o\)</span>), the maximum isometric force occurred
-at angle (<span class="math inline">\(\theta_{max}\)</span>=)
-101.25<span class="math inline">\(^o\)</span>. Simply doing this
-overlooks the fact that the maximum force could have occurred between
-any two of the sampled angles. Given the trend in the figure above,
-<span class="math inline">\(\theta_{max}\)</span> could have been an
-angle either greater and less than 101.25<span
-class="math inline">\(^o\)</span>. To estimate the trend and find a
-perhaps more refined estimation of <span
-class="math inline">\(F_{max}\)</span> we’ll resort to (wait for it) . .
-. modeling. In this case, a series of <a
-href="https://en.wikipedia.org/wiki/Polynomial_regression">polynomial
-models</a> should work. Polynomial models are great for fitting
-parabolic data like those we have here, but are tricky in that one can
-keep adding monomial terms very quickly to achieve a better fit. This
-requires the practitioner to make sure that they are not overfitting the
-model. Fortunately, we have the tools to prevent such a thing using AIC,
-as we have learned.</p>
-<p>Therefore, let’s fit some polynomial models to our example data with
-a different number of monomial terms (i.e., orders) and tease apart the
-fit and penalty for including more terms using AICc. Fortunately, we can
-use the <code>lm()</code> and <code>poly()</code> functions from the
-base package to fit the models and use <code>AICc()</code> from the
-<code>MuMIn</code> package for AICc fitting.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MuMIn)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>poly.m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(normF<span class="sc">~</span><span class="fu">poly</span>(ang,<span class="dv">2</span>)) <span class="co">#second order</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>poly.m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(normF<span class="sc">~</span><span class="fu">poly</span>(ang,<span class="dv">3</span>)) <span class="co">#third order</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>poly.m4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(normF<span class="sc">~</span><span class="fu">poly</span>(ang,<span class="dv">4</span>)) <span class="co">#fourth order</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">AICc</span>(poly.m2,poly.m3,poly.m4) <span class="co">#the second order model fits best</span></span></code></pre></div>
-<pre><code>##         df      AICc
-## poly.m2  4 -43.90316
-## poly.m3  5 -39.60496
-## poly.m4  6 -49.47748</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x.pred <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">45</span>,<span class="fl">157.5</span>,<span class="at">length.out =</span> <span class="dv">1000</span>) <span class="co">#define 1000 angles from our range</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>normF.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(poly.m4,<span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">ang=</span>x.pred)) <span class="co">#predict the force using 1000 angles</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(ang,normF)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>x.pred,<span class="at">y=</span>normF.pred),<span class="at">col=</span><span class="st">&quot;red&quot;</span>)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>x.pred[<span class="fu">which.max</span>(normF.pred)],<span class="at">y=</span>normF.pred[<span class="fu">which.max</span>(normF.pred)]),<span class="at">size=</span><span class="dv">5</span>,<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
-<p><img src="mod8_proj_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x.pred[<span class="fu">which.max</span>(normF.pred)] <span class="co">#theta_max</span></span></code></pre></div>
-<pre><code>## [1] 104.9099</code></pre>
-<p>In this example we constructed 3 polynomial models of the 2nd, 3rd,
-4th variety and then used AICc to find the lowest AICc score. The 4th
-order model fits best, so we then produced 1000 discrete values within
-our range with <code>seq()</code> to pass to<code>predict()</code> to
-predict force over this range using our best fitting model (producing
-<code>normF.pred</code>). We then found the max of
-<code>normF.pred</code> (the <span
-class="math inline">\(F_{max}\)</span>) and plotted that, along with our
-predictions. Lastly, we found <span
-class="math inline">\(\theta_{max}\)</span>, a value of 104.9.</p>
-<p>A goal of this project is to detect shifts in <span
-class="math inline">\(F_{max}\)</span> with respect to angle. If we had
-two data sets, one control and one produced after fatigue, we merely
-need to compare the two <span
-class="math inline">\(\theta_{max}\)</span>, that is, the shift in angle
-for <span class="math inline">\(F_{max}\)</span> predicted by two
-polynomial models. This would look something like this:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>normF.fat <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.65</span>, <span class="fl">0.71</span>, <span class="fl">0.81</span>, <span class="fl">0.89</span>,<span class="fl">0.92</span>, <span class="fl">0.96</span>, <span class="fl">0.99</span>, <span class="dv">1</span>, <span class="fl">0.96</span>, <span class="fl">0.92</span>, <span class="fl">0.84</span>, <span class="fl">0.77</span>) <span class="co">#fatigue data, you&#39;ll get this by reading in data and calculating normalized values</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(ang,normF.fat)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>ang[<span class="fu">which.max</span>(normF.fat)],<span class="at">y=</span>normF.fat[<span class="fu">which.max</span>(normF.fat)]),<span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">size=</span><span class="dv">4</span>)</span></code></pre></div>
-<p><img src="mod8_proj_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ang[<span class="fu">which.max</span>(normF.fat)] <span class="co">#Find angle for Fmax for fatigue data</span></span></code></pre></div>
-<pre><code>## [1] 123.75</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>poly.m2.fat <span class="ot">&lt;-</span> <span class="fu">lm</span>(normF.fat<span class="sc">~</span><span class="fu">poly</span>(ang,<span class="dv">2</span>)) <span class="co">#second order</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>poly.m3.fat <span class="ot">&lt;-</span> <span class="fu">lm</span>(normF.fat<span class="sc">~</span><span class="fu">poly</span>(ang,<span class="dv">3</span>)) <span class="co">#third order</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>poly.m4.fat <span class="ot">&lt;-</span> <span class="fu">lm</span>(normF.fat<span class="sc">~</span><span class="fu">poly</span>(ang,<span class="dv">4</span>)) <span class="co">#fourth order</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">AICc</span>(poly.m2.fat,poly.m3.fat,poly.m4.fat) <span class="co">#the second order model fits best</span></span></code></pre></div>
-<pre><code>##             df      AICc
-## poly.m2.fat  4 -54.91075
-## poly.m3.fat  5 -55.05750
-## poly.m4.fat  6 -49.10034</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>normF.pred.fat <span class="ot">&lt;-</span> <span class="fu">predict</span>(poly.m2.fat,<span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">ang=</span>x.pred)) <span class="co">#predict the force using 1000 angles</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(ang,normF)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>x.pred,<span class="at">y=</span>normF.pred.fat),<span class="at">col=</span><span class="st">&quot;red&quot;</span>)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>x.pred[<span class="fu">which.max</span>(normF.pred.fat)],<span class="at">y=</span>normF.pred.fat[<span class="fu">which.max</span>(normF.pred.fat)]),<span class="at">size=</span><span class="dv">5</span>,<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
-<p><img src="mod8_proj_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>x.pred[<span class="fu">which.max</span>(normF.pred.fat)]<span class="sc">-</span>x.pred[<span class="fu">which.max</span>(normF.pred)] <span class="co">#shift in angle for Fmax, theta_max</span></span></code></pre></div>
-<pre><code>## [1] 10.24775</code></pre>
-<p>Looks as if there’s a 10.3<span class="math inline">\(^o\)</span>
-shift in <span class="math inline">\(\theta_{max}\)</span>.</p>
-<p>Say we had a bunch of data (from only 10 subjects) and you wanted to
-compare the control against fatigued data graphically, you could do the
-following. First we’ll simulate some control and fatigue data, adding
-random noise drawn form a normal distribution and plot the data with a
-color according to experiment to quickly assess the pattern.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>) <span class="co">#to keep random noise the same</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>sub <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> <span class="co">#ten subjects</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>dat.l <span class="ot">&lt;-</span> <span class="fu">list</span>() <span class="co">#empty list</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#loop to run through subjects and simulate data based on noise added to data above</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> sub){</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  noise <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(ang),<span class="at">mean =</span> <span class="fl">0.02</span>,<span class="at">sd =</span> <span class="fl">0.01</span>)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  noise2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(ang),<span class="at">mean =</span> <span class="fl">0.02</span>,<span class="at">sd =</span> <span class="fl">0.01</span>)</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  dat.l[[i]] <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbind</span>(</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">data.frame</span>(ang,<span class="at">force=</span>normF<span class="sc">+</span>noise,<span class="at">subject=</span>i,<span class="at">exp=</span><span class="st">&quot;control&quot;</span>),</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">data.frame</span>(ang,<span class="at">force=</span>normF.fat<span class="sc">+</span>noise2,<span class="at">subject=</span>i,<span class="at">exp=</span><span class="st">&quot;fatigue&quot;</span>)</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  )  </span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(subject,exp)<span class="sc">%&gt;%</span></span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">force=</span>force<span class="sc">/</span><span class="fu">max</span>(force))</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind,dat.l) <span class="co">#get data into one tibble</span></span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">%&gt;%</span></span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ang,force,<span class="at">col=</span>exp))<span class="sc">+</span><span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="mod8_proj_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>Now let’s take our data and get AICc scores for our three polynomial
-models. We’ll group the data by subject and experiment and retrieve AICc
-from each model (<code>m2</code>, <code>m3</code>, and <code>m4</code>).
-Then, we’ll pivot the tibble to a longer format so that we have a single
-column for AICc values.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>AICs <span class="ot">&lt;-</span> dat<span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(subject,exp)<span class="sc">%&gt;%</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">m2=</span><span class="fu">AICc</span>(<span class="fu">lm</span>(force<span class="sc">~</span><span class="fu">poly</span>(ang,<span class="dv">2</span>))), <span class="co">#second order</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">m3=</span><span class="fu">AICc</span>(<span class="fu">lm</span>(force<span class="sc">~</span><span class="fu">poly</span>(ang,<span class="dv">3</span>))), <span class="co">#third order</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">m4=</span><span class="fu">AICc</span>(<span class="fu">lm</span>(force<span class="sc">~</span><span class="fu">poly</span>(ang,<span class="dv">4</span>))) <span class="co">#fourth order</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(m2<span class="sc">:</span>m4,<span class="at">names_to=</span><span class="st">&quot;model&quot;</span>,<span class="at">values_to=</span><span class="st">&quot;AICc&quot;</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
-<pre><code>## # A tibble: 60 × 4
-## # Groups:   subject [10]
-##    subject exp     model  AICc
-##      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;
-##  1       1 control m2    -43.2
-##  2       1 control m3    -39.3
-##  3       1 control m4    -42.5
-##  4       1 fatigue m2    -49.3
-##  5       1 fatigue m3    -46.0
-##  6       1 fatigue m4    -37.7
-##  7       2 control m2    -43.8
-##  8       2 control m3    -39.4
-##  9       2 control m4    -55.2
-## 10       2 fatigue m2    -57.6
-## # … with 50 more rows</code></pre>
-<p>Now we’ll do something very similar, predicting values for 1000
-discrete angles across our range of elbow positions. Notice that we’ve
-summarized the data by subject, experiment and model to find the angle
-(<code>x.pred</code>) which matches the max force value.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fits <span class="ot">&lt;-</span> dat<span class="sc">%&gt;%</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(subject,exp)<span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">m2=</span><span class="fu">predict</span>(<span class="fu">lm</span>(force<span class="sc">~</span><span class="fu">poly</span>(ang,<span class="dv">2</span>)),<span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">ang=</span>x.pred)), <span class="co">#second order</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">m3=</span><span class="fu">predict</span>(<span class="fu">lm</span>(force<span class="sc">~</span><span class="fu">poly</span>(ang,<span class="dv">3</span>)),<span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">ang=</span>x.pred)), <span class="co">#third order</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">m4=</span><span class="fu">predict</span>(<span class="fu">lm</span>(force<span class="sc">~</span><span class="fu">poly</span>(ang,<span class="dv">4</span>)),<span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">ang=</span>x.pred)) <span class="co">#fourth order</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">pivot_longer</span>(m2<span class="sc">:</span>m4,<span class="at">names_to=</span><span class="st">&quot;model&quot;</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(subject,exp,model)<span class="sc">%&gt;%</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarize</span>(<span class="at">theta_max=</span>x.pred[<span class="fu">which.max</span>(value)])<span class="sc">%&gt;%</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">print</span>()</span></code></pre></div>
-<pre><code>## # A tibble: 60 × 4
-## # Groups:   subject, exp [20]
-##    subject exp     model theta_max
-##      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;
-##  1       1 control m2         107.
-##  2       1 control m3         103.
-##  3       1 control m4         104.
-##  4       1 fatigue m2         115.
-##  5       1 fatigue m3         118.
-##  6       1 fatigue m4         117.
-##  7       2 control m2         107.
-##  8       2 control m3         103.
-##  9       2 control m4         105.
-## 10       2 fatigue m2         115.
-## # … with 50 more rows</code></pre>
-<p>Now let’s join these the <code>AICs</code> and <code>fits</code>
-tables so that we can filter the model predictions by which model fits
-best. Note <code>filter(best==TRUE)</code> after constructing a
-<code>best</code> column according to the minimum AICc score using
-<code>mutate()</code>.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>best.models <span class="ot">&lt;-</span> fits<span class="sc">%&gt;%</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(AICs)<span class="sc">%&gt;%</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(subject,exp)<span class="sc">%&gt;%</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">best=</span>AICc<span class="sc">==</span><span class="fu">min</span>(AICc))<span class="sc">%&gt;%</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(best<span class="sc">==</span><span class="cn">TRUE</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>best)<span class="sc">%&gt;%</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
-<pre><code>## Joining, by = c(&quot;subject&quot;, &quot;exp&quot;, &quot;model&quot;)</code></pre>
-<pre><code>## # A tibble: 20 × 5
-## # Groups:   subject, exp [20]
-##    subject exp     model theta_max  AICc
-##      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
-##  1       1 control m2         107. -43.2
-##  2       1 fatigue m2         115. -49.3
-##  3       2 control m4         105. -55.2
-##  4       2 fatigue m2         115. -57.6
-##  5       3 control m4         107. -47.7
-##  6       3 fatigue m3         119. -57.2
-##  7       4 control m4         104. -55.4
-##  8       4 fatigue m3         120. -51.9
-##  9       5 control m4         103. -48.9
-## 10       5 fatigue m2         115. -51.3
-## 11       6 control m4         103. -41.7
-## 12       6 fatigue m3         120. -53.7
-## 13       7 control m4         104. -48.0
-## 14       7 fatigue m3         120. -55.9
-## 15       8 control m2         107. -48.5
-## 16       8 fatigue m3         116. -65.9
-## 17       9 control m4         103. -48.3
-## 18       9 fatigue m2         115. -52.3
-## 19      10 control m4         105. -49.3
-## 20      10 fatigue m2         115. -55.0</code></pre>
-<p>To investigate whether a shift if <span
-class="math inline">\(\theta_{max}\)</span> is different between the
-control and fatigue experiments, we can run the following ANOVA.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(<span class="fu">lm</span>(theta_max<span class="sc">~</span>exp,best.models))</span></code></pre></div>
-<pre><code>## Analysis of Variance Table
+<div id="preparing-ebird-data" class="section level3">
+<h3>Preparing eBird Data</h3>
+<p>For our analysis, we’ll compute arrival time for each species by
+finding the day that corresponds to when 25% of all the individuals have
+arrived in a given year. This means that we’ll have to find the total
+number of individuals that arrived over our spring time frame for each
+year for each species. Once we have this in place, we can model the
+arrival as a process that resembles are logistic curve. Logistic curves
+are used to describe many processes in biology that take on an S-shaped
+response: population and tumor growth, infectious pathogen spread in a
+pandemic (!), and enzyme substrate binding (e.g., Hb-O<span
+class="math inline">\(_2\)</span> association).</p>
+<p>So let’s explore an example of the arrival as modeled logistically of
+one species, <em>“Myiarchus crinitus</em>, in previously a developed
+data set. For this and all our species we’ll use Julian day as the time
+variable, simply the day of the year. Let’s compute that and then . . .
+.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mc<span class="ot">&lt;-</span> dat<span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species<span class="sc">==</span><span class="st">&quot;Setophaga caerulescens&quot;</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year)<span class="sc">%&gt;%</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date=</span><span class="fu">as.Date</span>(<span class="fu">paste0</span>(year,<span class="st">&quot;-&quot;</span>,month,<span class="st">&quot;-&quot;</span>,day)),</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">j.day=</span><span class="fu">julian</span>(date,<span class="at">origin=</span><span class="fu">as.Date</span>(<span class="fu">paste0</span>(<span class="fu">unique</span>(year),<span class="st">&quot;-01-01&quot;</span>)))</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species,year,j.day,date)<span class="sc">%&gt;%</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">day.tot=</span><span class="fu">sum</span>(individualCount,<span class="at">na.rm=</span>T))<span class="sc">%&gt;%</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species,year)<span class="sc">%&gt;%</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop=</span><span class="fu">cumsum</span>(day.tot<span class="sc">/</span><span class="fu">sum</span>(day.tot,<span class="at">na.rm =</span> T)))<span class="sc">%&gt;%</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year<span class="sc">&gt;</span><span class="dv">1999</span>)</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;species&#39;, &#39;year&#39;, &#39;j.day&#39;. You can
+## override using the `.groups` argument.</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>mc<span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(j.day,prop))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">facet_wrap</span>(year<span class="sc">~</span>.)</span></code></pre></div>
+<p><img src="mod8_proj_files/figure-html/mc-1.png" width="672" /></p>
+<p>So as we can see, arrival of these migrants follows a logistic
+process when we consider the proportion of the population that has
+arrived. Now we can model this with a logistic model in R. We’ll add
+predictions based on <code>nls()</code> and <code>SSlogis()</code>
+functions from the <code>stats</code> package. This is similar to
+something we did in the project for <a
+href="https://bcorgbio.github.io/class/mod3_proj.html#More_Complex_Visualizations_and_Models">Module
+3</a>. A logistic model requires a few parameter: the asymptote
+(<code>Asym</code>), the x value (<code>j.day</code> in our case) at the
+inflection point of the curve (<code>xmid</code>), and the scale
+(<code>scale</code>). We’ll use <code>SSlogis()</code>, a self-starting
+model that creates initial estimates of the parameters. After modeling
+the logistic curves, let’s add the date back to the tibble (it’ll be
+important later) and then plot the predictions along with the original
+data.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>mc.pred <span class="ot">&lt;-</span> mc<span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year)<span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarize</span>(</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>   <span class="at">pred=</span><span class="fu">predict</span>(<span class="fu">nls</span>(prop<span class="sc">~</span><span class="fu">SSlogis</span>(j.day,Asym, xmid, scal)),<span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">j.day=</span><span class="fu">min</span>(j.day)<span class="sc">:</span><span class="fu">max</span>(j.day))),<span class="co">#predict the logistic curve for each species</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">j.day=</span><span class="fu">min</span>(j.day)<span class="sc">:</span><span class="fu">max</span>(j.day),</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mc<span class="sc">%&gt;%</span>dplyr<span class="sc">::</span><span class="fu">select</span>(j.day,date)) <span class="do">## add date back to tibble</span></span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
+## `.groups` argument.
+## Adding missing grouping variables: `species`, `year`
+## Joining, by = c(&quot;year&quot;, &quot;j.day&quot;)</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>mc<span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(j.day,prop))<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">aes=</span><span class="fl">0.3</span>)<span class="sc">+</span><span class="fu">geom_line</span>(<span class="at">data=</span>mc.pred,<span class="fu">aes</span>(<span class="at">x=</span>j.day,<span class="at">y=</span>pred),<span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">facet_wrap</span>(year<span class="sc">~</span>.)</span></code></pre></div>
+<pre><code>## Warning: Ignoring unknown parameters: aes</code></pre>
+<p><img src="mod8_proj_files/figure-html/logistic%20model-1.png" width="672" /></p>
+<p>Seems our logistic models for arrival of this species estimate the
+arrival function really well. Now we’ll find the Julian day each year
+that is closest to 0.25 of the population arriving. Let’s also plot how
+this arrival day varies with year.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>mc.arrive.date <span class="ot">&lt;-</span>mc.pred<span class="sc">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year)<span class="sc">%&gt;%</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(j.day<span class="sc">==</span>j.day[<span class="fu">which.min</span>(<span class="fu">abs</span>(pred<span class="fl">-0.25</span>))])</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>mc.arrive.date<span class="sc">%&gt;%</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year,j.day))<span class="sc">+</span><span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="mod8_proj_files/figure-html/mc%20arrive-1.png" width="672" /></p>
+<p>Pretty variable, so maybe weather can explain this. This is but just
+one of five species. We’ll come back to running a similar analysis for
+all five at once.</p>
+</div>
+<div id="preparing-weather-data" class="section level3">
+<h3>Preparing weather Data</h3>
+<p>Now let’s prepare our weather data. This first operation is rather
+involved, so we’ll work through it step by step. First, we’ll have to
+add columns for year and Julian day so that we can later join the
+weather and eBird data. We’ll strip the year from the date column using
+<code>str_sub()</code> and then group by year to compute the Julian day,
+just as we did for the eBird data. We’ll also make sure that date is
+stored as date-class data with <code>as.Date()</code>.</p>
+<p>Notice that along with computing Julian day with a
+<code>mutate()</code> operation, we also add columns for another date
+(<code>date2</code>) and new weather data columns, <code>wdir.rad</code>
+and <code>wvec</code>. We need to repeat the date column for a join
+later that allows the dates between the eBird and weather data sets to
+be offset by 0, 5, or 10 days according to the when we expected the
+birds to move through AL and NC.</p>
+<p>The <code>wdir.rad</code> column computes the wind direction in
+radians based on <code>wdf2</code>, the wind direction for two minutes.
+For this, we want to scale the direction to 180<span
+class="math inline">\(^o\)</span>, so we take the absolute of the
+difference from 180 and subtract that value from 180. Then we multiply
+this value by <span class="math inline">\(\pi/180\)</span> to get
+radians. Why are we doing this? See the note below.</p>
+<p>With this same mutate function, we’ll compute the wind vector by
+finding the <span class="math inline">\(cos\)</span> of the angle (in
+radians), multiplying it by wind velocity (<code>awnd</code>), and
+finally multiplying this value by -1. We flip the sign of the vector
+because wind is recorded as <em>out of</em> a direction in degrees. See
+the note below.</p>
+<p>After this, we’ll select the weather columns we want to work with,
+and then join the station tibble to this weather tibble. This will add
+the migration timing data, that is, the <code>migr.day</code> column
+that specifies how far back in time to look at weather in AL and NC.
+Notice, using this value in another mutate, we change <code>j.day</code>
+to reflect this shift. That is, <code>j.day</code> for AL and NC weather
+will be 10 and 5 days behind the original <code>j.day</code> (the Julian
+day of bird arrival, too.).</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>weather.d <span class="ot">&lt;-</span> weather.d<span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">as.integer</span>(<span class="fu">str_sub</span>(date,<span class="dv">1</span>,<span class="dv">4</span>)), <span class="co">#add year</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">date=</span><span class="fu">as.Date</span>(date))<span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year)<span class="sc">%&gt;%</span> <span class="co">#group by year so we can compute julian day</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">j.day=</span><span class="fu">julian</span>(date,<span class="at">origin=</span><span class="fu">as.Date</span>(<span class="fu">paste0</span>(<span class="fu">unique</span>(year),<span class="st">&quot;-01-01&quot;</span>))), <span class="co">#add julian day</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">date2=</span>date,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">wdir.rad=</span>(<span class="dv">180</span><span class="sc">-</span><span class="fu">abs</span>(wdf2<span class="dv">-180</span>))<span class="sc">*</span>pi<span class="sc">/</span><span class="dv">180</span>, <span class="co">#radians so we can use a trig function to compute wind vector, scale degrees first to 180 scale to 2x pi and subtract from 180 (wind comes out of a direction)</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">wvec=</span><span class="fu">cos</span>(wdir.rad)<span class="sc">*-</span><span class="dv">1</span><span class="sc">*</span>awnd <span class="co"># we want a negative value for positive value for 2x pi</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">%&gt;%</span> <span class="co">#store day in new column</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(id,year,date2,j.day,tmin,tmax,wvec)<span class="sc">%&gt;%</span> <span class="co">#select the rows we need</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sta.d<span class="sc">%&gt;%</span><span class="fu">select</span>(id,name,migr.day))<span class="sc">%&gt;%</span> <span class="co">#add the station id info (ie. name)</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">j.day=</span>j.day<span class="sc">+</span>migr.day)<span class="co">#make j.day ahead of BOS according to the migration days away so we can join weather along path</span></span></code></pre></div>
+<pre><code>## Joining, by = &quot;id&quot;</code></pre>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
+</div>
+<div class="col-sm-9">
+<p>So why scale the wind direction to 180<span
+class="math inline">\(^o\)</span>? Because we care about the direction
+relative to north only and we’re going to compute a vector—this is what
+will matter. Have a look at these four wind directions in the table
+below. Two winds coming out of the north at 10 and 350<span
+class="math inline">\(^o\)</span> or south at 160 and 200<span
+class="math inline">\(^o\)</span> have the same difference from 0<span
+class="math inline">\(^o\)</span> or exactly north (Fig. 3:A). When
+transformed to a 0-180<span class="math inline">\(^o\)</span> scale and
+into radians, you can see from the table the values are the same within
+each group. Now, when multiplied by a velocity, we’ll get a vector
+relative to north as well. In this case, because wind direction is
+reported as coming from a direction in degrees (rather than toward),
+we’ll multiply the vector by -1 to establish a vector that, if negative,
+represents a head wind and, if positive, represents a tailwind (Fig.
+3:B).</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+n
+</th>
+<th style="text-align:right;">
+deg
+</th>
+<th style="text-align:right;">
+deg.corr
+</th>
+<th style="text-align:right;">
+deg.rad
+</th>
+<th style="text-align:right;">
+velocity
+</th>
+<th style="text-align:right;">
+wvec
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.1745329
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+-9.848078
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:right;">
+350
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.1745329
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+-19.696155
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:right;">
+160
+</td>
+<td style="text-align:right;">
+160
+</td>
+<td style="text-align:right;">
+2.7925268
+</td>
+<td style="text-align:right;">
+30
+</td>
+<td style="text-align:right;">
+28.190779
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:right;">
+200
+</td>
+<td style="text-align:right;">
+160
+</td>
+<td style="text-align:right;">
+2.7925268
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+37.587705
+</td>
+</tr>
+</tbody>
+</table>
+<p><img src="mod8_proj_files/figure-html/wind%20dir-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Now, with the variables we want (arrival day on the bird side,
+<code>tmin</code>, <code>tmax</code>, and <code>wvec</code> on the
+weather side), we’re ready to join eBird and weather data for analysis.
+To get you started, let’s join the the arrival data for <em>Myiarchus
+crinitis</em> with our weather data. To this tibble, we’ll also join the
+<code>date</code> column from the original bird data so we can see if
+the weather data is the right number of days behind the bird arrive
+date.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>mc.arr.weath <span class="ot">&lt;-</span> mc.arrive.date<span class="sc">%&gt;%</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(weather.d)<span class="sc">%&gt;%</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(mc<span class="sc">%&gt;%</span>dplyr<span class="sc">::</span><span class="fu">select</span>(year,date,j.day))</span></code></pre></div>
+<pre><code>## Joining, by = c(&quot;year&quot;, &quot;j.day&quot;)
+## Adding missing grouping variables: `species`
+## Joining, by = c(&quot;year&quot;, &quot;j.day&quot;, &quot;species&quot;, &quot;date&quot;)</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mc.arr.weath)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 12
+## # Groups:   year [2]
+##    year  pred j.day species    date       id    date2       tmin  tmax      wvec
+##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;date&gt;     &lt;chr&gt; &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+## 1  2000 0.240   129 Setophaga… 2000-05-09 USW0… 2000-04-29    89   272  1.79e+ 1
+## 2  2000 0.240   129 Setophaga… 2000-05-09 USW0… 2000-05-04   117   250  2.1 e+ 1
+## 3  2000 0.240   129 Setophaga… 2000-05-09 USW0… 2000-05-09    83   183 -2.45e+ 1
+## 4  2001 0.260   131 Setophaga… 2001-05-12 USW0… 2001-05-02   139   278  2.07e+ 1
+## 5  2001 0.260   131 Setophaga… 2001-05-12 USW0… 2001-05-07   122   222 -1.30e+ 1
+## 6  2001 0.260   131 Setophaga… 2001-05-12 USW0… 2001-05-12   167   311 -3.12e-15
+## # … with 2 more variables: name &lt;chr&gt;, migr.day &lt;dbl&gt;</code></pre>
+<p>Sure enough, it is: <code>date2</code> from the weather data is 10
+and 5 days behind for AL and NC locations, respectively. Here we have
+the weather along the migration route with each of our stations and
+their data identified by name. But, how are we to analyze the data?
+Let’s think about the question (<strong>Does weather along the migration
+route predict arrival time?</strong>). Do we want just one day of
+weather at each location to predict arrival time (which the table above
+gives)? Let’s dive deeper into the weather data and compute the mean
+over two week (14 days) before a bird gets to each location. That is, at
+200 km<span class="math inline">\(^d\)</span>, the table above assumes
+that birds don’t stop. And, they certainly do to eat and rest <span
+class="citation">(Moore and Kerlinger 1987)</span>.</p>
+<p>So let’s assume that 5 and 10 days is the earliest they would arrive
+at these weather locations, but it could be two weeks earlier. If that’s
+the case, let’s calculate the mean of our weather variables over that
+time period. For this, we’ll use a group and mutate using
+<code>dplyr</code> and the <code>frollmean()</code> function from
+<code>data.table</code> package. <code>frollmean()</code> computes a
+rolling mean across the rows of a table, perfect for our application.
+We’ll use it to compute the rolling mean for our weather variables for
+two weeks preceding each Julian day. then join this weekly data tibble
+to our arrival data for subsequent analysis. When we use
+<code>left_join()</code>, only the Julian days in the weekly average
+tibble matching those in the arrival data will be kept.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>weather.wk <span class="ot">&lt;-</span>weather.d <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year,name) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wk.tmin =</span> <span class="fu">frollmean</span>(tmin, <span class="at">n=</span><span class="dv">14</span>,<span class="at">align=</span><span class="st">&quot;right&quot;</span>),</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">wk.tmax =</span> <span class="fu">frollmean</span>(tmax, <span class="at">n=</span><span class="dv">14</span>,<span class="at">align=</span><span class="st">&quot;right&quot;</span>),</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">wk.wvec =</span> <span class="fu">frollmean</span>(wvec, <span class="at">n=</span><span class="dv">14</span>,<span class="at">align=</span><span class="st">&quot;right&quot;</span>)</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>         )<span class="sc">%&gt;%</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(j.day,date2,name,wk.tmin,wk.tmax,wk.wvec)</span></code></pre></div>
+<pre><code>## Adding missing grouping variables: `year`</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>mc.arr.weath2 <span class="ot">&lt;-</span> mc.arrive.date<span class="sc">%&gt;%</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(weather.wk)</span></code></pre></div>
+<pre><code>## Joining, by = c(&quot;year&quot;, &quot;j.day&quot;)</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mc.arr.weath2)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 10
+## # Groups:   year [2]
+##    year  pred j.day species  date       date2      name  wk.tmin wk.tmax wk.wvec
+##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+## 1  2000 0.240   129 Setopha… 2000-05-09 2000-04-29 AL      119      267.  -0.141
+## 2  2000 0.240   129 Setopha… 2000-05-09 2000-05-04 NC       80.9    213.  -4.96 
+## 3  2000 0.240   129 Setopha… 2000-05-09 2000-05-09 MA       73.1    181.   6.16 
+## 4  2001 0.260   131 Setopha… 2001-05-12 2001-05-02 AL      127.     265.   9.50 
+## 5  2001 0.260   131 Setopha… 2001-05-12 2001-05-07 NC      105.     251.   1.49 
+## 6  2001 0.260   131 Setopha… 2001-05-12 2001-05-12 MA      108.     244.   0.662</code></pre>
+<p>Notice that <code>frollmean()</code> needs <code>n</code> specified,
+the number of values in adjacent rows (actually, n-1 rows) to compute
+the mean. We’ll also specify that the function look to the right when
+computing the mean, that is, each individual row and the preceding 13
+rows in this case. Lastly, we chopped down the weekly average tibble to
+relevant columns before joining it to the arrival data.</p>
+<p>With two joined tibbles each containing eBird and weather data, we’re
+finally ready for some analysis.</p>
+</div>
+</div>
+<div id="linear-mixed-effect-modeling" class="section level2">
+<h2>Linear Mixed-effect Modeling</h2>
+<p>To evaluate the effect of weather parameters on arrival time, one
+could undertake analysis using simple linear models. But, we have a
+rather complicated data set, including parameters (i.e., covariates) we
+see as important and explanatory that may contribute to a slope and
+intercept of the model and others that may be the reason that some
+groups within the data set have different slopes and intercepts. The
+variables that contribute to the slope and intercept are termed fixed
+effects, while those that contribute to distinct slopes and intercepts
+are termed random effects, and thus an analysis that accounts for both
+fixed and random effects is called a mixed effect model. In our case, we
+are interested in how the fixed effects of temperature and wind vector
+explains arrival and are OK with the fact that the location of these
+weather variables (a random effect) may contribute differently to the
+relationship. <strong>In subsequent analysis, you’ll also consider
+species as a random effect, allowing the response of arrival time may
+vary according to species.</strong></p>
+<p>Undertaking linear mixed-effect analysis in R is rather
+straightforward using the <code>lme4</code> package, specifically the
+<code>lme()</code> function. Any formula for <code>lme()</code> is
+similar to other model choices in R, except that we must specify a
+random effect. This takes the form of <code>+(1|variable)</code> or
+<code>+(y|variable)</code> where <code>variable</code> is a random
+effect and <code>y</code> is the response. The first of these
+constructions stipulates that the slope may vary according to the random
+effect, while the second stipulates that the slope <em>and</em>
+intercept may vary according to the random effect. With this in mind,
+let’s kick the tires on linear mixed-effects models using
+<code>lme()</code> with our two data tibbles, one with a single
+weather-day sample and another with a two week-average of the
+weather.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">#weather at 0, 5, and 10 days away from arrival</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>mc.lmer <span class="ot">&lt;-</span> <span class="fu">lmer</span>(j.day<span class="sc">~</span>tmin<span class="sc">*</span>tmax<span class="sc">*</span>wvec<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>name),mc.arr.weath,<span class="at">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Some predictor variables are on very different scales: consider
+## rescaling</code></pre>
+<pre><code>## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mc.lmer) <span class="co">#Anova from the car package</span></span></code></pre></div>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
 ## 
-## Response: theta_max
-##           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-## exp        1 749.21  749.21  180.18 8.144e-11 ***
-## Residuals 18  74.85    4.16                      
+## Response: j.day
+##                 Chisq Df Pr(&gt;Chisq)  
+## tmin           0.5729  1    0.44909  
+## tmax           0.0290  1    0.86468  
+## wvec           2.2213  1    0.13612  
+## tmin:tmax      3.7878  1    0.05163 .
+## tmin:wvec      0.1495  1    0.69898  
+## tmax:wvec      0.0038  1    0.95054  
+## tmin:tmax:wvec 0.3171  1    0.57334  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>Lastly, we should calculate the mean shift with SEM. To find the
-shift, we can pivot the <code>best.models</code> tibble to a wider
-format so we can have <span class="math inline">\(\theta_{max}\)</span>
-for each experiment in separate columns and find the difference with
-<code>mutate()</code>. Then, <code>summarise()</code> can be used to
-find the mean and SEM.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>best.models<span class="sc">%&gt;%</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols=</span>subject,<span class="at">names_from =</span> exp,<span class="at">values_from=</span>theta_max)<span class="sc">%&gt;%</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">shift=</span>fatigue<span class="sc">-</span>control)<span class="sc">%&gt;%</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()<span class="sc">%&gt;%</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean.shift=</span><span class="fu">mean</span>(shift),<span class="at">se.shift=</span><span class="fu">sd</span>(shift)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(shift)))</span></code></pre></div>
-<pre><code>## # A tibble: 1 × 2
-##   mean.shift se.shift
-##        &lt;dbl&gt;    &lt;dbl&gt;
-## 1       12.2    0.960</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co">#0Mean two week weather preceding arrival</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>mc.lmer2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(j.day<span class="sc">~</span>wk.tmin<span class="sc">*</span>wk.tmax<span class="sc">*</span>wk.wvec<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>name),mc.arr.weath2,<span class="at">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Some predictor variables are on very different scales: consider
+## rescaling</code></pre>
+<pre><code>## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(mc.lmer2) </span></code></pre></div>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: j.day
+##                          Chisq Df Pr(&gt;Chisq)  
+## wk.tmin                 0.8262  1    0.36338  
+## wk.tmax                 0.0000  1    0.99794  
+## wk.wvec                 6.0800  1    0.01367 *
+## wk.tmin:wk.tmax         4.1536  1    0.04154 *
+## wk.tmin:wk.wvec         0.3236  1    0.56947  
+## wk.tmax:wk.wvec         0.7507  1    0.38627  
+## wk.tmin:wk.tmax:wk.wvec 1.2220  1    0.26896  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Notice that we specified the random effect of location using
+<code>(1|name)</code>, allowing each location to have a separate effect
+on the slope of the relationship between <code>j.day</code> and the
+weather variable, <code>tmin</code>, <code>tmax</code>, and
+<code>wvec</code>. Specifying a random effect on slope is usually
+sufficient, especially for more complicated data sets. Notice also that
+we included interactions between all the fixed effects with
+<code>*</code>. As we’ve explored before, this is a good place to start,
+assuming interactions. To assesses the significance of the fixed effects
+we’ve used the <code>Anova()</code> function from the <code>car</code>
+package that suits mixed-effect models. As you can see from running
+<code>Anova()</code> over our two models, including only one day of data
+at each location doesn’t reveal any significant relationships between
+weather and arrival day; however, an analysis including a two-week
+average at each location (offset to reflect the soonest a bird would
+leave) does reveal significant fixed effects of weather.</p>
+<p>Also have a look at the interactions at the end of the anova tables.
+For analysis including two-weak averages of weather values, there is an
+important interactions between the averages for <code>tmin</code>,
+<code>tmax</code> and <code>mvec</code>, that is, the degree (i.e.,
+slope) of response varies according all three weather values.</p>
+<p>In keeping with one thrust of the course, any one model is just one
+way to explain data and, thus, we should consider other models using our
+model-choice framework. So let’s do that, dropping weather variables
+from the two-week average analysis. With three variables, we have at
+least 6 possible combinations when we include all the possible
+interactions, if we so choose. Fortunately, the <code>dredge()</code>
+from the <code>MuMIn</code> package allows one to decompose a model to
+all the combinations of the terms, including interactions, and report
+important model fit values (e.g., AICc, <span
+class="math inline">\(\Delta\)</span>AIC, and AIC<span
+class="math inline">\(_w\)</span>). We’ll ask <code>dredge()</code> to
+consider the our weather variables only with
+<code>fixed= c("wk.tmin","wk.tmax","wk.wvec")</code>.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>mc.arr.aic <span class="ot">&lt;-</span> <span class="fu">dredge</span>(mc.lmer2,<span class="at">fixed =</span> <span class="fu">c</span>(<span class="st">&quot;wk.tmin&quot;</span>,<span class="st">&quot;wk.tmax&quot;</span>,<span class="st">&quot;wk.wvec&quot;</span>),)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>mc.kb <span class="ot">&lt;-</span> <span class="fu">kable</span>(mc.arr.aic[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,],<span class="at">caption =</span> <span class="st">&quot;Fit values for nested models of the most complicated lme model&quot;</span>)</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable_styling</span>(mc.kb)</span></code></pre></div>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Fit values for nested models of the most complicated lme model
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+(Intercept)
+</th>
+<th style="text-align:right;">
+wk.tmax
+</th>
+<th style="text-align:right;">
+wk.tmin
+</th>
+<th style="text-align:right;">
+wk.wvec
+</th>
+<th style="text-align:right;">
+wk.tmax:wk.tmin
+</th>
+<th style="text-align:right;">
+wk.tmax:wk.wvec
+</th>
+<th style="text-align:right;">
+wk.tmin:wk.wvec
+</th>
+<th style="text-align:right;">
+wk.tmax:wk.tmin:wk.wvec
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+AICc
+</th>
+<th style="text-align:right;">
+delta
+</th>
+<th style="text-align:right;">
+weight
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:right;">
+129.1317
+</td>
+<td style="text-align:right;">
+-0.0040220
+</td>
+<td style="text-align:right;">
+0.0168047
+</td>
+<td style="text-align:right;">
+-0.0503748
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+-121.3847
+</td>
+<td style="text-align:right;">
+256.3543
+</td>
+<td style="text-align:right;">
+0.00000
+</td>
+<td style="text-align:right;">
+0.9960437880
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:right;">
+142.8859
+</td>
+<td style="text-align:right;">
+-0.0495030
+</td>
+<td style="text-align:right;">
+-0.1604163
+</td>
+<td style="text-align:right;">
+-0.0560965
+</td>
+<td style="text-align:right;">
+0.0006223
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-125.9679
+</td>
+<td style="text-align:right;">
+268.0897
+</td>
+<td style="text-align:right;">
+11.73545
+</td>
+<td style="text-align:right;">
+0.0028181084
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:right;">
+129.4436
+</td>
+<td style="text-align:right;">
+0.0000252
+</td>
+<td style="text-align:right;">
+0.0046528
+</td>
+<td style="text-align:right;">
+-0.1293820
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+0.0007193
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-127.2022
+</td>
+<td style="text-align:right;">
+270.5582
+</td>
+<td style="text-align:right;">
+14.20393
+</td>
+<td style="text-align:right;">
+0.0008202269
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:right;">
+129.1845
+</td>
+<td style="text-align:right;">
+-0.0033466
+</td>
+<td style="text-align:right;">
+0.0146545
+</td>
+<td style="text-align:right;">
+-0.0773914
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+0.0001241
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+-128.1501
+</td>
+<td style="text-align:right;">
+272.4540
+</td>
+<td style="text-align:right;">
+16.09977
+</td>
+<td style="text-align:right;">
+0.0003178767
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>best.lmer <span class="ot">&lt;-</span>  <span class="fu">lmer</span>(j.day<span class="sc">~</span>wk.tmin<span class="sc">+</span>wk.tmax<span class="sc">+</span>wk.wvec<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>name),mc.arr.weath2,<span class="at">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(best.lmer)</span></code></pre></div>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: j.day
+##          Chisq Df Pr(&gt;Chisq)  
+## wk.tmin 1.2920  1    0.25568  
+## wk.tmax 0.1932  1    0.66023  
+## wk.wvec 4.6570  1    0.03093 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Notice how <code>dredge()</code> return the ranks of the nested
+models according to AIC metrics and that the interactions columns (all
+with “:” between the terms) return <code>NA</code>, meaning they are not
+included in the best-fit model. So our best-fit model was
+<code>j.day~wk.tmin+wk.tmax+wk.wvec+(1|name)</code>. The last few lines
+of this run that model and report the anova results.</p>
+<p>To sum up this quick exploration of linear-mixed effects modeling for
+this one species, a model that includes minimum and maximum temperature
+and wind vector explains the data best and minimum temperature and wind
+vector are significant predictors.</p>
+</div>
+<div id="additional-operations-and-analyses" class="section level2">
+<h2>Additional Operations and Analyses</h2>
+<p>Your task is to repeat data compilation and analysis for five species
+of your choosing from this <a href="tgms.csv">list of TGMs</a>. The
+analysis should include the following components:</p>
+<ol style="list-style-type: decimal">
+<li>A <code>for</code> loop that passes your five species through
+<code>occ_data()</code> to retrieve occurrence data in MA during April
+and May in the years 2000-2019.</li>
+<li>Logistic modeling operations to predict arrival time (the Julian day
+when 25% of the population arrives) for each year and for each
+species.</li>
+<li>Operations that join offset single-day and two-week weather averages
+with your occurrence data. Both weather data sets should include minimum
+and maximum temperature and wind vectors (this will require operations
+on the weather data before these joins).</li>
+<li>Linear mixed-effect modeling of arrival day as it varies with these
+weather variables for both weather data sets (single-day and two-week
+average)</li>
+<li>Model-testing operations of both data sets using
+<code>dredge()</code>.</li>
+<li>Anova testing of the best-fit models from both data sets.</li>
+</ol>
 </div>
 </div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
 <p>Please submit your report to your team GitHub repository as an .Rmd
 document with HTML output that addresses the following questions:</p>
-<ul>
-<li>Do class-wide force-angle data for isometric MVC accord to a typical
-FL relationship both under control and fatigued conditions?</li>
-<li>Is there a significant shift between <span
-class="math inline">\(\theta_{max}\)</span> between the control and
-fatigue FL relationships?</li>
-</ul>
+<ol style="list-style-type: decimal">
+<li>Does arrival time vary according to temperature and wind variables
+along migration route for TGMs migrating to MA?</li>
+<li>If arrival time does vary with meteorological conditions, what role
+will climate change potentially play in the population status of TGMs
+arriving in MA during the spring?</li>
+<li>How does your analysis contribute to, challenge, or refine previous
+hypothesis concerning the role that climatic variables play in
+long-distance migration in passerine birds?</li>
+</ol>
 <p>In answering these questions, be sure to use the visualization,
 modeling, and model-assessments tools we’ve used in the course so
 far.</p>
@@ -1045,9 +1742,9 @@ the references, includes one to two short paragraphs. Specifically:
 <ul>
 <li>Introduction: Frame the questions, indicating why they are
 important, what background work has been done in this realm, and how you
-will answer them. <strong>Please include at least one reference to
-support the summary of previous work.</strong> Note: this can be done
-easily by refiguring the introduction to this project report.</li>
+will answer them. <strong>Please include at one reference to support the
+summary of previous work.</strong> Note: this can be done easily by
+refiguring the introduction to this project report.</li>
 <li>Methods: Explicitly state how you answered the questions, including
 a narrative of all the analyses both qualitative and quantitative.</li>
 <li>Results: Include any appropriate figures or tables and a narrative
@@ -1055,43 +1752,54 @@ of the main results that are important to answering the questions.</li>
 <li>Discussion: Succinctly declare how the results relate to the
 question and how they compare to previous work devoted to the topic. In
 addition, be sure to comment on the importance of your findings to the
-broader topic at hand. <strong>Please include at least one reference to
-another relevant study.</strong> Note: circling back to the
-introductions, both to this project description and yours, will be
-helpful here.</li>
+broader topic at hand. <strong>Please include at least two references to
+other relevant studies.</strong> Note: circling back to the introduction
+will be helpful here.</li>
 <li>Author contributions: Briefly outline what each team member
 contributed to the project.</li>
 </ul></li>
 </ul>
-<p>Project reports should be uploaded by 11:59 PM on Sunday, November
-14th.</p>
-<div class="green">
-<div class="row">
-<div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
-<!-- regular style -->
-</div>
-<div class="col-sm-9">
-<p>Please have a look at out <a href="phaseII_rubric.html">Phase II
-report rubric</a> to get a sense of how this and other Phase II reports
-will be grade.</p>
-</div>
-</div>
-</div>
-<p><br></p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-rassier1999length" class="csl-entry">
-Rassier, Dilson E, BR MacIntosh, and W Herzog. 1999. <span>“Length
-Dependence of Active Force Production in Skeletal Muscle.”</span>
-<em>Journal of Applied Physiology</em> 86 (5): 1445–57.
+<div id="ref-askeyev2009earliest" class="csl-entry">
+Askeyev, Oleg V, Tim H Sparks, and Igor V Askeyev. 2009. <span>“Earliest
+Recorded Tatarstan Skylark in 2008: Non-Linear Response to Temperature
+Suggests Advances in Arrival Dates May Accelerate.”</span> <em>Climate
+Research</em> 38 (3): 189–92.
 </div>
-<div id="ref-yeung2008shift" class="csl-entry">
-Yeung, SS, and EW Yeung. 2008. <span>“Shift of Peak Torque Angle After
-Eccentric Exercise.”</span> <em>International Journal of Sports
-Medicine</em> 29 (03): 251–56.
+<div id="ref-both2006climate" class="csl-entry">
+Both, Christiaan, Sandra Bouwhuis, CM Lessells, and Marcel E Visser.
+2006. <span>“Climate Change and Population Declines in a Long-Distance
+Migratory Bird.”</span> <em>Nature</em> 441 (7089): 81–83.
+</div>
+<div id="ref-hall2008far" class="csl-entry">
+Hall-Karlsson, K Susanna S, and Thord Fransson. 2008. <span>“How Far Do
+Birds Fly During One Migratory Flight Stage?”</span> <em>Ringing &amp;
+Migration</em> 24 (2): 95–100.
+</div>
+<div id="ref-knudsen2011challenging" class="csl-entry">
+Knudsen, Endre, Andreas Lindén, Christiaan Both, Niclas Jonzén,
+Francisco Pulido, Nicola Saino, William J Sutherland, et al. 2011.
+<span>“Challenging Claims in the Study of Migratory Birds and Climate
+Change.”</span> <em>Biological Reviews</em> 86 (4): 928–46.
+</div>
+<div id="ref-moore1987stopover" class="csl-entry">
+Moore, Frank, and Paul Kerlinger. 1987. <span>“Stopover and Fat
+Deposition by North American Wood-Warblers (Parulinae) Following Spring
+Migration over the Gulf of Mexico.”</span> <em>Oecologia</em> 74 (1):
+47–54.
+</div>
+<div id="ref-newton2008ecology" class="csl-entry">
+Newton, I. 2008. <em>The Ecology of Bird Migration</em>. Academic Press,
+London.
+</div>
+<div id="ref-smith2005arrival" class="csl-entry">
+Smith, Robert J, and Frank R Moore. 2005. <span>“Arrival Timing and
+Seasonal Reproductive Performance in a Long-Distance Migratory
+Landbird.”</span> <em>Behavioral Ecology and Sociobiology</em> 57 (3):
+231–39.
 </div>
 </div>
 </div>
