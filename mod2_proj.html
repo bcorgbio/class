@@ -460,9 +460,6 @@ div.tocify {
     <li>
       <a href="mod8_proj.html">Module 8 Project</a>
     </li>
-    <li>
-      <a href="mod9_proj.html">Module 9 Project</a>
-    </li>
     <li class="dropdown-header">Phase III</li>
     <li>
       <a href="phaseIII_rubric.html">Phase III report rubric</a>
@@ -532,7 +529,7 @@ data.</p>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#load data</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pseed <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;pseed.fin.amps.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 73352 Columns: 7
-## ── Column specification ─────────────────────────────────────────────
+## ── Column specification ─────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (3): fish, date, fin
 ## dbl (4): speed, frame, amp, amp.bl
@@ -541,7 +538,7 @@ data.</p>
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pseed.bl <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;pseed.lengths.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 3 Columns: 2
-## ── Column specification ─────────────────────────────────────────────
+## ── Column specification ─────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (1): fish
 ## dbl (1): bl
@@ -550,7 +547,7 @@ data.</p>
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>speeds <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;pseed.calibration.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 119 Columns: 3
-## ── Column specification ─────────────────────────────────────────────
+## ── Column specification ─────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (3): vol, m.s, cm.s
 ## 
@@ -1161,8 +1158,8 @@ regression line for each fish. Something like:</p>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fish, bl.s) <span class="sc">%&gt;%</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean.max=</span><span class="fu">mean</span>(amp.bl)) <span class="sc">%&gt;%</span></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>bl.s,<span class="at">y=</span>mean.max,<span class="at">col=</span>fish))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;fish&#39;. You can override using
-## the `.groups` argument.
+<pre><code>## `summarise()` has grouped output by &#39;fish&#39;. You can
+## override using the `.groups` argument.
 ## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 </div>
