@@ -13,7 +13,7 @@
 
 <title>Welcome</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.22/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
@@ -29,7 +29,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -170,8 +170,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -179,16 +179,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -421,7 +414,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <!-- regular style -->
 </div>
 <div class="col-sm-9">
-<p>This is a highly technical course and will surely challenge all us.
+<p>This is a highly technical course and will surely challenge us all.
 BIOL 3140 is designed for folks with no coding or prototyping
 experience, so at many times in the course, a student will feel lost and
 confused. <strong><em>This is exactly where we want to be!</em></strong>
@@ -583,15 +576,12 @@ reproducible markdown capabilities.</li>
 <h1>Course format and expectations</h1>
 <div id="lectures" class="section level2">
 <h2>Lectures</h2>
-<p>Our course will be a flipped experience. This will require students
-to read and explore outside of class and meet in pre-assigned smaller
-groups (i.e., teams) on their own to work through the material. We will
-use class time to tackle sticky problems and answer specific quesitons.
-In addition, I will be available during arranged face-to-face and online
-office hours.</p>
-<p>Lectures will be recorded through our Panopto system and <a
-href="https://bostoncollege.instructure.com/courses/1621564/external_tools/109499">available
-through Canvas</a>.</p>
+<p>Our course will be a semi-flipped experience. This will require
+students to read and explore outside of class and meet in pre-assigned
+smaller groups (i.e., teams) on their own to work through the material.
+We will use class time to tackle sticky problems and answer specific
+questions. In addition, I will be available during arranged face-to-face
+and online office hours.</p>
 </div>
 <div id="teams-and-team-responsibilities" class="section level2">
 <h2>Teams and team responsibilities</h2>
@@ -602,20 +592,20 @@ establish two things:</p>
 <li>A unique team name. Puns are welcome and encouraged (e.g., “R-tful
 Coders”)</li>
 <li>A team discussion on GitHub that includes me on the team (see <a
-href="#discussion-board">Discussion Board</a>).</li>
+href="#discussion-board">Discussion Board</a>). Each week, teams should
+use their team discussion boards to generate a question to post on the
+the class-wide discussion board. A team representative must submit this
+question and include the team handle in the title surrounded by
+brackets, like you see below for that make-believe team “R-tful codes”
+with the handle “<span class="citation">@bcorgbio/r-tful-coders</span>”.
+The team must also decide which question to answer and then post their
+feedback or answer addressing the handle for the original team posters
+(see below)</li>
 </ol>
-<p>Each week, teams should use their team discussion boards to generate
-a question to post on the the class-wide discussion board. A team
-representative must submit this question and include the team handle in
-the title surrounded by brackets, like you see below for that
-make-believe team “R-tful codes” with the handle “<span
-class="citation">@bcorgbio/r-tful-coders</span>”. The team must also
-decide which question to answer and then post their feedback or answer
-addressing the handle for the original team posters (see below)</p>
 <center>
-<div class="figure">
-<img src="discexamp.jpg" alt="" />
-<p class="caption">FigName</p>
+<div class="float">
+<img src="discexamp.jpg" alt="FigName" />
+<div class="figcaption">FigName</div>
 </div>
 </center>
 <p><br></p>
@@ -807,9 +797,9 @@ content.</p>
 <div id="course-assessment" class="section level1">
 <h1>Course Assessment</h1>
 <p>Your grade will be based on five assignment components: Asking and
-answering questions on our discussion board and series of project
-reports: 5 for Phase I projects, 5 for Phase II projects, and one for
-the Phase III project.</p>
+answering questions on our discussion board, many in-class coding
+exercises, and series of project reports: 5 for Phase I projects, 5 for
+Phase II projects, and one for the Phase III project.</p>
 <hr />
 <div id="grade-breakdown" class="section level3">
 <h3>Grade Breakdown</h3>
@@ -828,24 +818,29 @@ the Phase III project.</p>
 <tr class="even">
 <td>Discussion Q&amp;A</td>
 <td></td>
-<td align="center">75</td>
+<td align="center">50</td>
 </tr>
 <tr class="odd">
+<td>Wednesday Code Review (</td>
+<td>WCRs)</td>
+<td align="center">12x10*</td>
+</tr>
+<tr class="even">
 <td>Phase I Projects</td>
 <td></td>
-<td align="center">5x15</td>
-</tr>
-<tr class="even">
-<td>Phase II Projects</td>
-<td></td>
-<td align="center">3x75</td>
+<td align="center">5x20</td>
 </tr>
 <tr class="odd">
-<td>Phase III Project</td>
+<td>Phase II Projects</td>
 <td></td>
-<td align="center">1x150</td>
+<td align="center">3x50</td>
 </tr>
 <tr class="even">
+<td>Phase III Project</td>
+<td></td>
+<td align="center">1x100</td>
+</tr>
+<tr class="odd">
 <td></td>
 <td><strong>total</strong></td>
 <td align="center"><strong>500</strong></td>
@@ -853,14 +848,18 @@ the Phase III project.</p>
 </tbody>
 </table>
 <hr />
-<p><br></p>
+<p>Note: *the lowest two of the 12 WCRs will be dropped, for a total of
+100 pts. <br></p>
 <p>The discussion portion of your grade will be calculated by
 determining the percentage of times your team both asked and answered a
 question when assigned to (usually once per week) and multiplying this
-by 75. That is, if you are asked to submit 15 questions and answers over
+by 50. That is, if you are asked to submit 15 questions and answers over
 the course of the semester and post and answer 12, your discussion
-points will equal 60. A discussion assignment will be considered
+points will equal 40. A discussion assignment will be considered
 complete if and only if a question is posted AND another answered.</p>
+<p>As the name implies, on Wednesday of most weeks, we’ll have Wednesday
+Code Reviews (WCRs). These short excercises will assess your aptitude in
+scripting, data visualization, and modeling.</p>
 <p>More details about the specific requirements of Phase I, II, and III
 projects can be found under our “Projects” tab at the top of this
 page.</p>
@@ -931,9 +930,10 @@ href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion
 board</a>, It’s probably the case that others have the same
 questions.</p>
 <p>Office hours can be arranged by appointment via email and will take
-place over Zoom. Office hours may involve more more than studen or team,
-so please come equipped with poignant questions and expect that other
-students have questions as urgent as yours.</p>
+place over Zoom or in person (Higgins 535). Office hours may involve
+more more than student or team, so please come equipped with poignant
+questions and expect that other students have questions as urgent as
+yours.</p>
  
 <hr />
 <p style="text-align: center;">

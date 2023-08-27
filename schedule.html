@@ -13,7 +13,7 @@
 
 <title>Schedule</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.22/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
@@ -29,7 +29,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -170,8 +170,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -179,16 +179,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -359,9 +352,6 @@ div.tocify {
     <li>
       <a href="mod8_proj.html">Module 8 Project</a>
     </li>
-    <li>
-      <a href="mod9_proj.html">Module 9 Project</a>
-    </li>
     <li class="dropdown-header">Phase III</li>
     <li>
       <a href="phaseIII_rubric.html">Phase III report rubric</a>
@@ -423,7 +413,7 @@ data collected by scientists and stored in text files, the lingua franca
 of scientific data. By tidying, we mean preparing data for analysis.</p>
 <div id="dates" class="section level3">
 <h3>Dates</h3>
-<p>Weeks 1 &amp; 2 (Aug 29—Sep 11):</p>
+<p>Weeks 1 &amp; 2 (Aug 28—Sep 10):</p>
 </div>
 <div id="key-concepts" class="section level3">
 <h3>Key Concepts</h3>
@@ -562,13 +552,13 @@ code.</li>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 8/29</th>
-<th>Tuesday <br>8/30</th>
-<th>Wednesday<br> 8/321</th>
-<th>Thursday <br> 9/1</th>
-<th>Friday <br> 9/2</th>
-<th>Saturday<br> 9/3</th>
-<th>Sunday<br> 9/4</th>
+<th>Monday <br> 8/28</th>
+<th>Tuesday <br>8/29</th>
+<th>Wednesday<br> 8/30</th>
+<th>Thursday <br> 8/31</th>
+<th>Friday <br> 9/1</th>
+<th>Saturday<br> 9/2</th>
+<th>Sunday<br> 9/3</th>
 </tr>
 </thead>
 <tbody>
@@ -598,13 +588,13 @@ code.</li>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 9/5</th>
-<th>Tuesday <br>9/6</th>
-<th>Wednesday<br> 9/7</th>
-<th>Thursday <br> 9/8</th>
-<th>Friday <br> 9/9</th>
-<th>Saturday<br> 9/10</th>
-<th>Sunday<br> 9/11</th>
+<th>Monday <br> 9/4</th>
+<th>Tuesday <br>9/5</th>
+<th>Wednesday<br> 9/6</th>
+<th>Thursday <br> 9/7</th>
+<th>Friday <br> 9/8</th>
+<th>Saturday<br> 9/9</th>
+<th>Sunday<br> 9/10</th>
 </tr>
 </thead>
 <tbody>
@@ -646,7 +636,7 @@ exactly what we want to analyze. In this module, we’ll focus on how to
 read, tidy, and merge data.</p>
 <div id="dates-1" class="section level3">
 <h3>Dates:</h3>
-<p>Week 3 (Sep 12—18):</p>
+<p>Week 3 (Sep 11—17):</p>
 </div>
 <div id="key-concepts-1" class="section level3">
 <h3>Key Concepts</h3>
@@ -753,13 +743,13 @@ board</a> [10 points]</li>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 9/12</th>
-<th>Tuesday <br>9/13</th>
-<th>Wednesday<br> 9/14</th>
-<th>Thursday <br> 9/15</th>
-<th>Friday <br> 9/16</th>
-<th>Saturday<br> 9/17</th>
-<th>Sunday<br> 9/18</th>
+<th>Monday <br> 9/11</th>
+<th>Tuesday <br>9/11</th>
+<th>Wednesday<br> 9/13</th>
+<th>Thursday <br> 9/14</th>
+<th>Friday <br> 9/15</th>
+<th>Saturday<br> 9/16</th>
+<th>Sunday<br> 9/17</th>
 </tr>
 </thead>
 <tbody>
@@ -800,7 +790,7 @@ questions about it. In addition, we’ll learn how and when to compared
 the fit of models.</p>
 <div id="dates-2" class="section level3">
 <h3>Dates:</h3>
-<p>Week 4 (Sep 19—25):</p>
+<p>Week 4 (Sep 18—24):</p>
 </div>
 <div id="key-concepts-2" class="section level3">
 <h3>Key Concepts</h3>
@@ -905,13 +895,13 @@ the right model) in comparative research?</li>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 9/19</th>
-<th>Tuesday <br>9/20</th>
-<th>Wednesday<br> 9/21</th>
-<th>Thursday <br> 9/22</th>
-<th>Friday <br> 9/23</th>
-<th>Saturday<br> 9/24</th>
-<th>Sunday<br> 9/25</th>
+<th>Monday <br> 9/18</th>
+<th>Tuesday <br>9/19</th>
+<th>Wednesday<br> 9/20</th>
+<th>Thursday <br> 9/21</th>
+<th>Friday <br> 9/22</th>
+<th>Saturday<br> 9/23</th>
+<th>Sunday<br> 9/24</th>
 </tr>
 </thead>
 <tbody>
@@ -950,7 +940,7 @@ in R. With R Markdown, you’ll develop a framework for compiling ideas,
 code, and graphics in one reproducible document.</p>
 <div id="dates-3" class="section level3">
 <h3>Dates:</h3>
-<p>Week 5 (Sep 26—Oct 2):</p>
+<p>Week 5 (Sep 25—Oct 1):</p>
 </div>
 <div id="key-concepts-3" class="section level3">
 <h3>Key Concepts</h3>
@@ -1036,13 +1026,13 @@ references in an .Rmd?</li>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 9/26</th>
-<th>Tuesday <br>9/27</th>
-<th>Wednesday<br> 9/28</th>
-<th>Thursday <br> 9/29</th>
-<th>Friday <br> 9/30</th>
-<th>Saturday<br> 10/1</th>
-<th>Sunday<br> 10/2</th>
+<th>Monday <br> 9/25</th>
+<th>Tuesday <br>9/26</th>
+<th>Wednesday<br> 9/27</th>
+<th>Thursday <br> 9/28</th>
+<th>Friday <br> 9/29</th>
+<th>Saturday<br> 9/30</th>
+<th>Sunday<br> 10/1</th>
 </tr>
 </thead>
 <tbody>
@@ -1080,7 +1070,7 @@ begin designing and programming of simple hardware devices using
 Arduino.</p>
 <div id="dates-4" class="section level3">
 <h3>Dates</h3>
-<p>Week 6 (Oct 2—12th):</p>
+<p>Week 6 (Oct 2—8):</p>
 </div>
 <div id="key-concepts-4" class="section level3">
 <h3>Key Concepts</h3>
@@ -1160,13 +1150,13 @@ the Arduino UNO</a> (work with the desktop IDE)</li>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 10/3</th>
-<th>Tuesday <br>10/4</th>
-<th>Wednesday<br> 10/5</th>
-<th>Thursday <br> 10/6</th>
-<th>Friday <br> 10/7</th>
-<th>Saturday<br> 10/8</th>
-<th>Sunday<br> 10/9</th>
+<th>Monday <br> 10/2</th>
+<th>Tuesday <br>10/3</th>
+<th>Wednesday<br> 10/4</th>
+<th>Thursday <br> 10/5</th>
+<th>Friday <br> 10/6</th>
+<th>Saturday<br> 10/7</th>
+<th>Sunday<br> 10/8</th>
 </tr>
 </thead>
 <tbody>
@@ -1178,38 +1168,12 @@ the Arduino UNO</a> (work with the desktop IDE)</li>
 <td>Answer a question on discussion board</td>
 <td></td>
 <td></td>
-<td></td>
+<td>commit Module 5 Project Report</td>
 </tr>
-</tbody>
-</table>
-<table>
-<colgroup>
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>Monday <br> 10/10</th>
-<th>Tuesday <br>10/11</th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Assignment due</strong></td>
+<tr class="even">
 <td></td>
-<td>Push/commit Module 5 Project Report</td>
+<td></td>
+<td></td>
 <td></td>
 <td></td>
 <td></td>
@@ -1243,7 +1207,7 @@ has evolved differently between the two major groups of this indect
 order.</p>
 <div id="dates-5" class="section level3">
 <h3>Dates:</h3>
-<p>Weeks 7–9 (Oct 10—30):</p>
+<p>Weeks 7–9 (Oct 9—27):</p>
 </div>
 <div id="key-concepts-5" class="section level3">
 <h3>Key Concepts</h3>
@@ -1284,7 +1248,7 @@ href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion
 board</a></li>
 <li>Upload team data files to <a
 href="https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing">this
-directory</a> by Tuesday, October 11th</li>
+directory</a> by Tuesday, October 17th</li>
 <li>Complete and commit Module 6 Project report</li>
 </ul>
 </div>
@@ -1315,13 +1279,13 @@ course?</li>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 10/10</th>
-<th>Tuesday <br>10/11</th>
-<th>Wednesday<br> 10/12</th>
-<th>Thursday <br> 10/13</th>
-<th>Friday <br> 10/14*</th>
-<th>Saturday<br> 10/15</th>
-<th>Sunday<br> 10/16</th>
+<th>Monday <br> 10/9</th>
+<th>Tuesday <br>10/10*</th>
+<th>Wednesday<br> 10/11</th>
+<th>Thursday <br> 10/12</th>
+<th>Friday <br> 10/13</th>
+<th>Saturday<br> 10/14</th>
+<th>Sunday<br> 10/15</th>
 </tr>
 </thead>
 <tbody>
@@ -1351,49 +1315,13 @@ course?</li>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 10/17</th>
-<th>Tuesday <br>10/18</th>
-<th>Wednesday<br> 10/19</th>
-<th>Thursday <br> 10/20</th>
-<th>Friday <br> 10/21</th>
-<th>Saturday<br> 10/22</th>
-<th>Sunday<br> 10/23</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Assignment due</strong></td>
-<td></td>
-<td></td>
-<td>Post question to discussion board</td>
-<td>Answer a question on discussion board</td>
-<td></td>
-<td></td>
-<td>Push 6 Project Report</td>
-</tr>
-</tbody>
-</table>
-<table>
-<colgroup>
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>Monday <br> 10/24</th>
-<th>Tuesday <br>10/25</th>
-<th>Wednesday<br> 10/26</th>
-<th>Thursday <br> 10/27</th>
-<th>Friday <br> 10/28</th>
-<th>Saturday<br> 10/29</th>
-<th>Sunday<br> 10/30</th>
+<th>Monday <br> 10/16</th>
+<th>Tuesday <br>10/17</th>
+<th>Wednesday<br> 10/18</th>
+<th>Thursday <br> 10/19</th>
+<th>Friday <br> 10/20*</th>
+<th>Saturday<br> 10/21</th>
+<th>Sunday<br> 10/22</th>
 </tr>
 </thead>
 <tbody>
@@ -1408,22 +1336,48 @@ href="https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?u
 directory</a></td>
 <td></td>
 <td></td>
-<td>Push 6 Project Report</td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
 <td></td>
 </tr>
 </tbody>
 </table>
-<p>*Note: There will be no class on Friday 10/14 and Tuesday 10/18 is a
-Monday schedule.</p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Monday <br> 10/23</th>
+<th>Tuesday <br>10/24</th>
+<th>Wednesday<br> 10/25</th>
+<th>Thursday <br> 10/26</th>
+<th>Friday <br> 10/27</th>
+<th>Saturday<br> 10/28</th>
+<th>Sunday<br> 10/29</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Assignment due</strong></td>
+<td></td>
+<td></td>
+<td>Post question to discussion board</td>
+<td>Answer a question on discussion board <br></td>
+<td></td>
+<td></td>
+<td>Push 6 Project Report</td>
+</tr>
+</tbody>
+</table>
+<p>*Note: 10/10 is a Monday schedule and there will be no class on
+10/20.</p>
 </div>
 </div>
 <div
@@ -1440,7 +1394,7 @@ and investigate how fatigure changes this imporant property of
 vertebrate muscle.</p>
 <div id="dates-6" class="section level3">
 <h3>Dates:</h3>
-<p>Weeks 11 &amp; 12 (Oct 31—Nov 13):</p>
+<p>Weeks 11 &amp; 12 (Oct 30—Nov 12):</p>
 </div>
 <div id="key-concepts-6" class="section level3">
 <h3>Key Concepts</h3>
@@ -1487,7 +1441,7 @@ board</a></li>
 <li>Complete and commit Module 7 Project report</li>
 <li>Upload force-angle data to <a
 href="https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing">this
-directory</a> by Sunday, November 20th</li>
+directory</a> by Sunday, November 12th</li>
 </ul>
 </div>
 <div id="guiding-questions-6" class="section level3">
@@ -1517,13 +1471,13 @@ flexors?</li>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 11/7</th>
-<th>Tuesday <br>11/8</th>
-<th>Wednesday<br> 11/9</th>
-<th>Thursday <br> 11/10</th>
-<th>Friday <br> 11/11</th>
-<th>Saturday<br> 11/12</th>
-<th>Sunday<br> 11/13</th>
+<th>Monday <br> 11/6</th>
+<th>Tuesday <br>11/7</th>
+<th>Wednesday<br> 11/8</th>
+<th>Thursday <br> 11/9</th>
+<th>Friday <br> 11/10</th>
+<th>Saturday<br> 11/11</th>
+<th>Sunday<br> 11/12</th>
 </tr>
 </thead>
 <tbody>
@@ -1535,7 +1489,9 @@ flexors?</li>
 <td>Answer a question on discussion board</td>
 <td></td>
 <td></td>
-<td></td>
+<td>Upload team data files to <a
+href="https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing">this
+directory</a></td>
 </tr>
 </tbody>
 </table>
@@ -1553,21 +1509,19 @@ flexors?</li>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 11/14</th>
-<th>Tuesday <br>11/15</th>
-<th>Wednesday<br> 11/16</th>
-<th>Thursday <br> 11/17</th>
-<th>Friday <br> 11/18</th>
-<th>Saturday<br> 11/19</th>
-<th>Sunday<br> 11/20</th>
+<th>Monday <br> 11/13</th>
+<th>Tuesday <br>11/14</th>
+<th>Wednesday<br> 11/15</th>
+<th>Thursday <br> 11/16</th>
+<th>Friday <br> 11/17</th>
+<th>Saturday<br> 11/18</th>
+<th>Sunday<br> 11/19</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><strong>Assignment due</strong></td>
-<td>Upload team data files to <a
-href="https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing">this
-directory</a></td>
+<td></td>
 <td></td>
 <td>Post question to discussion board</td>
 <td>Answer a question on discussion board</td>
@@ -1612,7 +1566,7 @@ href="https://www.ncdc.noaa.gov/cdo-web/webservices/v2">NOAA’s National
 Climatic Data Center’s API</a>.</p>
 <div id="dates-7" class="section level3">
 <h3>Dates</h3>
-<p>Weeks 12 &amp; 13 (Nov 21—Dec 4):</p>
+<p>Weeks 12 &amp; 13 (Nov 20—Dec 8):</p>
 </div>
 <div id="key-concepts-7" class="section level3">
 <h3>Key Concepts</h3>
@@ -1681,13 +1635,13 @@ arrival time of neotropical migrants in MA?</li>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 11/21</th>
-<th>Tuesday <br>11/22</th>
-<th>Wednesday<br> 11/23</th>
-<th>Thursday <br> 11/24</th>
-<th>Friday <br> 11/25</th>
-<th>Saturday<br> 11/26</th>
-<th>Sunday<br> 11/27</th>
+<th>Monday <br> 11/20</th>
+<th>Tuesday <br>11/21</th>
+<th>Wednesday<br> 11/22</th>
+<th>Thursday <br> 11/23</th>
+<th>Friday <br> 11/24</th>
+<th>Saturday<br> 11/25</th>
+<th>Sunday<br> 11/26</th>
 </tr>
 </thead>
 <tbody>
@@ -1717,13 +1671,13 @@ arrival time of neotropical migrants in MA?</li>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 11/28</th>
-<th>Tuesday <br>11/29</th>
-<th>Wednesday<br> 11/30</th>
-<th>Thursday <br> 12/1</th>
-<th>Friday <br> 12/2</th>
-<th>Saturday<br> 12/3</th>
-<th>Sunday<br> 12/4</th>
+<th>Monday <br> 11/27</th>
+<th>Tuesday <br>11/28</th>
+<th>Wednesday<br> 11/29</th>
+<th>Thursday <br> 11/30</th>
+<th>Friday <br> 12/1</th>
+<th>Saturday<br> 12/2</th>
+<th>Sunday<br> 12/3</th>
 </tr>
 </thead>
 <tbody>
@@ -1771,6 +1725,9 @@ content.</p>
 found <a href="final_proj.html">here</a>.</p>
 <div id="final-project-schedule" class="section level2">
 <h2>Final Project Schedule</h2>
+<div id="dates-8" class="section level3">
+<h3>Dates</h3>
+<p>Weeks 15 &amp; beyond (Dec 4—Dec 13):</p>
 <p>All assignments are due at 11:59 on the specified date.</p>
 <table>
 <colgroup>
@@ -1786,13 +1743,13 @@ found <a href="final_proj.html">here</a>.</p>
 <thead>
 <tr class="header">
 <th></th>
-<th>Monday <br> 11/27</th>
-<th>Tuesday <br>11/28</th>
-<th>Wednesday<br> 11/29</th>
-<th>Thursday <br> 11/30</th>
-<th>Friday <br> 12/1</th>
-<th>Saturday<br> 12/2</th>
-<th>Sunday<br> 12/3</th>
+<th>Monday <br> 12/4</th>
+<th>Tuesday <br>12/5</th>
+<th>Wednesday<br> 12/6</th>
+<th>Thursday <br> 12/7</th>
+<th>Friday <br> 12/8</th>
+<th>Saturday<br> 12/9</th>
+<th>Sunday<br> 12/10</th>
 </tr>
 </thead>
 <tbody>
@@ -1809,98 +1766,8 @@ project ideas (by appt)</td>
 </tr>
 </tbody>
 </table>
-<table>
-<colgroup>
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>Monday <br> 12/5</th>
-<th>Tuesday <br>12/6</th>
-<th>Wednesday<br> 12/7</th>
-<th>Thursday <br> 12/8</th>
-<th>Friday <br> 12/9</th>
-<th>Saturday<br> 12/10</th>
-<th>Sunday<br> 12/11</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Assignment due</strong></td>
-<td>Meet with Prof. K to discuss project ideas (by appt)</td>
-<td></td>
-<td>Meet with Prof. K to discuss project ideas (by appt)</td>
-<td></td>
-<td>Meet with Prof. K to discuss project ideas (by appt)</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<table>
-<colgroup>
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-<col width="12%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>Monday <br> 12/12</th>
-<th>Tuesday <br>12/13</th>
-<th>Wednesday<br> 12/14</th>
-<th>Thursday <br> 12/15</th>
-<th>Friday <br> 12/16</th>
-<th>Saturday<br> 12/17</th>
-<th>Sunday<br> 12/18</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Assignment due</strong></td>
-<td>Meet with Prof. K to discuss project ideas (by appt)</td>
-<td></td>
-<td>Commit Final Project Report</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+<p>Commit final project report by Wednesday, December 13</p>
+</div>
 </div>
 </div>
 
