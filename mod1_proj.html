@@ -13,7 +13,7 @@
 
 <title>Module 1 Project</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.22/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
@@ -29,7 +29,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -90,11 +90,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #c4a000; } /* Attribute */
+code span.at { color: #204a87; } /* Attribute */
 code span.bn { color: #0000cf; } /* BaseN */
 code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #000000; } /* Constant */
+code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #8f5902; font-style: italic; } /* Comment */
 code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
 code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
@@ -103,14 +103,14 @@ code span.dv { color: #0000cf; } /* DecVal */
 code span.er { color: #a40000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #000000; } /* Function */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
 code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
 code span.ot { color: #8f5902; } /* Other */
 code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #000000; } /* SpecialChar */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
 code span.ss { color: #4e9a06; } /* SpecialString */
 code span.st { color: #4e9a06; } /* String */
 code span.va { color: #000000; } /* Variable */
@@ -271,8 +271,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -280,16 +280,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -474,7 +467,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f22">BIOL 3140 Discussion</a>
+  <a href="https://github.com/orgs/bcorgbio/discussions">BIOL 3140 Discussion</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -525,9 +518,9 @@ folder). Copy or move this file to a new directory, perhaps one named
 <p>Open R Studio and create a new script (File-&gt;New-&gt;R script, see
 below). Save it (File-&gt;Save) with an appropriate title in your new
 “scales” directory.</p>
-<div class="figure">
-<img src="newscript.png" alt="" />
-<p class="caption">FigName</p>
+<div class="float">
+<img src="newscript.png" alt="FigName" />
+<div class="figcaption">FigName</div>
 </div>
 </center>
 <p><br></p>
@@ -541,16 +534,17 @@ encounter an error. For this project and script, we need
 sure you’ve installed them, something you should have done will reading
 and working with HOPR. These initial lines of code would look like
 this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<pre><code>## ── Attaching packages ──────────── tidyverse 1.3.2 ──
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
-## ✔ readr   2.1.3      ✔ forcats 0.5.2 
-## ✔ purrr   0.3.4      
-## ── Conflicts ─────────────── tidyverse_conflicts() ──
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching core tidyverse packages ─────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.2     ✔ readr     2.1.4
+## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+## ✔ lubridate 1.9.2     ✔ tibble    3.2.1
+## ✔ purrr     1.0.1     ✔ tidyr     1.3.0
+## ── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 <p>Go ahead and just copy and paste these line into your script at line
 1. Notice that when you do this nothing happens. Entering code, either
 by typing or pasting doesn’t tell R to run it. <strong>You must do so
@@ -559,9 +553,9 @@ first line in this case) and pressing “enter” or compiling the entire
 script by clicking on the “run” icon at the top of the R Studio screen.
 Hit “run” and see what happens. In the console tab at the bottom of R
 Studio, you’ll see this:</p>
-<div class="figure">
-<img src="loadlib.png" alt="" />
-<p class="caption">FigName</p>
+<div class="float">
+<img src="loadlib.png" alt="FigName" />
+<div class="figcaption">FigName</div>
 </div>
 </center>
 <p><br></p>
@@ -625,23 +619,23 @@ and R Studio, just copy and paste the <code>setwd()</code> command from
 the console into you script. Now your script should look something like
 the following but with your own unique directory path to the working
 directory:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/Chris/Documents/bc/3140/scales&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/Chris/Documents/bc/3140/scales&quot;</span>)</span></code></pre></div>
 <p>Select these lines in your script and run them or click on “run”. If
 all goes well you’ll see these lines appear in the console without any
 errors. If you made some error in typing in the file path, then you’ll
 get an error. For example, if I forget the trailing “s” in the “scales”
 part of the directory path as in this code, I would’ve gotten the
 following output:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/Chris/Documents/bc/3140/scale&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/Chris/Documents/bc/3140/scale&quot;</span>)</span></code></pre></div>
 <pre><code>## Error in setwd(&quot;~/Chris/Documents/bc/3140/scale&quot;): cannot change working directory</code></pre>
 </div>
 <div id="loading-data" class="section level1">
 <h1>Loading Data</h1>
 <p>OK, now that we’ve gotten our working directory set, we can now load
 the “scales.csv” file that was placed in the “scales” directory.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;scales.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;scales.csv&quot;</span>)</span></code></pre></div>
 <p>Here, the command <code>read.csv()</code> is used to read in the data
 and the results are passed to the variable named <code>dat</code>, short
 for data. By default, the results of reading in a .csv file with
@@ -652,9 +646,9 @@ and say something about what they mean.</p>
 <p>One can see how large the data set is with <code>dim()</code> and
 reveal the first few lines of the data with the function
 <code>head()</code> :</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dat)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">dim</span>(dat)</span></code></pre></div>
 <pre><code>## [1] 1842    4</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code></pre></div>
 <pre><code>##          N quadrant      species specimen
 ## 1 3.558803       UR A. rupestris   Arup_1
 ## 2 3.528323       UR A. rupestris   Arup_1
@@ -685,9 +679,9 @@ scale</li>
 <li>“specimen” indicates from which specimen the scales came (several
 for each species)</li>
 </ul>
-<div class="figure">
-<img src="quad.png" alt="" />
-<p class="caption">FigName</p>
+<div class="float">
+<img src="quad.png" alt="FigName" />
+<div class="figcaption">FigName</div>
 </div>
 </center>
 <p><br></p>
@@ -698,23 +692,23 @@ subsetting techniques we’ve learning in HOPR to evaluate each column.
 Remember that the <code>$</code> symbol or numbers reflecting column
 position (i.e., index) can be employed to retrieve specific columns.
 Something like this:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#with &quot;$&quot;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dat<span class="sc">$</span>N)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co">#with &quot;$&quot;</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">class</span>(dat<span class="sc">$</span>N)</span></code></pre></div>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dat<span class="sc">$</span>quadrant)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">class</span>(dat<span class="sc">$</span>quadrant)</span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dat<span class="sc">$</span>species)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">class</span>(dat<span class="sc">$</span>species)</span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dat<span class="sc">$</span>specimen)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">class</span>(dat<span class="sc">$</span>specimen)</span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#with index, produces the same result</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dat[,<span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co">#with index, produces the same result</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">class</span>(dat[,<span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dat[,<span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">class</span>(dat[,<span class="dv">2</span>])</span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dat[,<span class="dv">3</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">class</span>(dat[,<span class="dv">3</span>])</span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dat[,<span class="dv">4</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">class</span>(dat[,<span class="dv">4</span>])</span></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
 <p>Here, using either method, we see that the “N” column is numeric
 (it’s a continuous value corresponding to force), while all the other
@@ -723,9 +717,9 @@ their discrete values for quadrant, species, and specimen. As you
 learned in HOPR, this means we must treat the numeric values differently
 than the factors and vice versa. Go ahead and try treating them the
 same:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dat<span class="sc">$</span>N)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">mean</span>(dat<span class="sc">$</span>N)</span></code></pre></div>
 <pre><code>## [1] 4.734429</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(dat<span class="sc">$</span>quadrant)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">mean</span>(dat<span class="sc">$</span>quadrant)</span></code></pre></div>
 <pre><code>## Warning in mean.default(dat$quadrant): argument is not numeric or logical:
 ## returning NA</code></pre>
 <pre><code>## [1] NA</code></pre>
@@ -737,7 +731,7 @@ of the columns. The power or R and other programming languages is that
 there’s almost always a faster and simpler way of doing things. In this
 case, we can inspect the class of out data in just one line using
 <code>sapply()</code>.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(dat,class)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">sapply</span>(dat,class)</span></code></pre></div>
 <pre><code>##           N    quadrant     species    specimen 
 ##   &quot;numeric&quot; &quot;character&quot; &quot;character&quot; &quot;character&quot;</code></pre>
 <p>Easy peasy with <code>sapply()</code>. Have a look at
@@ -781,16 +775,16 @@ for species. So let’s convert this column to a factor, then we can
 inspect the levels. To change the column class to a factor and then
 reveal the levels in factor-type data, we simply redefine the column and
 then pass those data through <code>levels</code>:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>species <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dat<span class="sc">$</span>species)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> <span class="fu">levels</span>(dat<span class="sc">$</span>species)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>species</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>dat<span class="sc">$</span>species <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dat<span class="sc">$</span>species)</span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>species <span class="ot">&lt;-</span> <span class="fu">levels</span>(dat<span class="sc">$</span>species)</span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>species</span></code></pre></div>
 <pre><code>## [1] &quot;A. rupestris&quot;   &quot;L. gibbosus&quot;    &quot;L. macrochirus&quot; &quot;Mi. salmoides&quot; 
 ## [5] &quot;Mo. saxatilis&quot;  &quot;P. flavescens&quot;</code></pre>
 <p>By storing the levels of species and calling “species” on separate
 line, we see that there are 6 species in our data set. But let’s have R
 tell us how many. We can count things in R with the
 <code>length()</code> function:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(species)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="fu">length</span>(species)</span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
 <p>The names and number of species, revealed in two lines of code.
 Pretty simple. Now how about how many observations per species. This is
@@ -813,7 +807,7 @@ the question <em>Does the value to the left equal the value to the
 right?</em> In this specific case, we use <code>==</code> to ask <em>Do
 the values in <code>dat$species</code> equal the first value in the
 “species” variable?</em></p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">1</span>]</span></code></pre></div>
 <p>Have a look at the result in the console (I’m not showing the output
 here, because . . .). You should see hundreds of logical values,
 <code>TRUE</code> and <code>FALSE</code> with many <code>TRUE</code>’s
@@ -821,23 +815,23 @@ at first. This indicates that the first 300 or so values for the
 “species” column matches “A. rupestris”. Now we can nest these logical
 values within the “species” vector (column) to return only those values
 that match “A. rupestris”, like so:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>species[dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>dat<span class="sc">$</span>species[dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">1</span>]]</span></code></pre></div>
 <p>From here, we can find the length of this subsetted vector, save the
 results in a new variable name that resembles that particular level of
 “species”, and then iterate through all the levels of “species”. After
 this, let’s combine the results in a data frame using our
 <code>species</code> variable and <code>c()</code> to combine our new
 length variables.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>A.rup<span class="ot">&lt;-</span><span class="fu">length</span>(dat<span class="sc">$</span>species[dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">1</span>]])</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>L.gib<span class="ot">&lt;-</span><span class="fu">length</span>(dat<span class="sc">$</span>species[dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">2</span>]])</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>L.mac<span class="ot">&lt;-</span><span class="fu">length</span>(dat<span class="sc">$</span>species[dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">3</span>]])</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>M.sal<span class="ot">&lt;-</span><span class="fu">length</span>(dat<span class="sc">$</span>species[dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">4</span>]])</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>M.sax<span class="ot">&lt;-</span><span class="fu">length</span>(dat<span class="sc">$</span>species[dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">5</span>]])</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>P.fla<span class="ot">&lt;-</span><span class="fu">length</span>(dat<span class="sc">$</span>species[dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">6</span>]])</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="co">#combine the results with species</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>species.obs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sp=</span>species,<span class="at">n=</span><span class="fu">c</span>(A.rup,L.gib,L.mac,M.sal,M.sax,P.fla))</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>species.obs</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>A.rup<span class="ot">&lt;-</span><span class="fu">length</span>(dat<span class="sc">$</span>species[dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">1</span>]])</span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a>L.gib<span class="ot">&lt;-</span><span class="fu">length</span>(dat<span class="sc">$</span>species[dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">2</span>]])</span>
+<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a>L.mac<span class="ot">&lt;-</span><span class="fu">length</span>(dat<span class="sc">$</span>species[dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">3</span>]])</span>
+<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a>M.sal<span class="ot">&lt;-</span><span class="fu">length</span>(dat<span class="sc">$</span>species[dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">4</span>]])</span>
+<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a>M.sax<span class="ot">&lt;-</span><span class="fu">length</span>(dat<span class="sc">$</span>species[dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">5</span>]])</span>
+<span id="cb40-6"><a href="#cb40-6" tabindex="-1"></a>P.fla<span class="ot">&lt;-</span><span class="fu">length</span>(dat<span class="sc">$</span>species[dat<span class="sc">$</span>species<span class="sc">==</span>species[<span class="dv">6</span>]])</span>
+<span id="cb40-7"><a href="#cb40-7" tabindex="-1"></a></span>
+<span id="cb40-8"><a href="#cb40-8" tabindex="-1"></a><span class="co">#combine the results with species</span></span>
+<span id="cb40-9"><a href="#cb40-9" tabindex="-1"></a>species.obs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sp=</span>species,<span class="at">n=</span><span class="fu">c</span>(A.rup,L.gib,L.mac,M.sal,M.sax,P.fla))</span>
+<span id="cb40-10"><a href="#cb40-10" tabindex="-1"></a>species.obs</span></code></pre></div>
 <pre><code>##               sp   n
 ## 1   A. rupestris 363
 ## 2    L. gibbosus 252
@@ -875,9 +869,9 @@ we’ll see in more detail later, the pipe <code>%&gt;%</code> passes
 results from left to right. Using the pipe with the data and the
 functions <code>group_by()</code> and <code>summarize()</code>, we
 summarize our data by species rather succinctly.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>dat <span class="sc">%&gt;%</span></span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
 ##   species            n
 ##   &lt;fct&gt;          &lt;int&gt;
@@ -893,10 +887,10 @@ and summarize it according to group with a count, <code>n()</code></em>.
 Notice the result is a tibble, a particular type of data object, akin to
 a data frame. We’ll discuss tibbles more in the next module.</p>
 <p>Of course, we can save these results to a variable.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>species.n<span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>species.n</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a>species.n<span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb44-3"><a href="#cb44-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb44-4"><a href="#cb44-4" tabindex="-1"></a>species.n</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
 ##   species            n
 ##   &lt;fct&gt;          &lt;int&gt;
@@ -913,10 +907,10 @@ for each species?</em>. This, again is super easy with
 groups (“species” and “specimen” in this case), use <code>print()</code>
 so you can see the output, and then we count this output of observations
 by “species” to find the unique values of “specimen”.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(species,specimen) <span class="sc">%&gt;%</span></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(species,<span class="at">name =</span> <span class="st">&quot;n.specimens&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a>  <span class="fu">count</span>(species,specimen) <span class="sc">%&gt;%</span></span>
+<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a>  <span class="fu">print</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb46-4"><a href="#cb46-4" tabindex="-1"></a>  <span class="fu">count</span>(species,<span class="at">name =</span> <span class="st">&quot;n.specimens&quot;</span>)</span></code></pre></div>
 <pre><code>##           species specimen   n
 ## 1    A. rupestris   Arup_1 100
 ## 2    A. rupestris   Arup_2  83
@@ -982,7 +976,7 @@ produce a bunch of figures.</p>
 <p>A <code>for()</code> loop essentially tells R to do something over a
 set of things in a vector. For instance, for “i” in 1 to 10, print each
 “i”:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="fu">print</span>(i)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="fu">print</span>(i)</span></code></pre></div>
 <pre><code>## [1] 1
 ## [1] 2
 ## [1] 3
@@ -1000,12 +994,12 @@ quadrant in each species. This is easily accomplished with a short
 <code>for()</code> loop that works over our <code>species</code>
 variable and contains a filter, pipes, and a <code>ggplot()</code>
 operation.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> species){</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species<span class="sc">==</span>i)<span class="sc">%&gt;%</span></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggplot</span>()<span class="sc">+</span><span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>quadrant,<span class="at">y=</span>N))<span class="sc">+</span><span class="fu">ggtitle</span>(i)</span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">print</span>(p)</span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> species){</span>
+<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a>  p <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb51-3"><a href="#cb51-3" tabindex="-1"></a>  <span class="fu">filter</span>(species<span class="sc">==</span>i)<span class="sc">%&gt;%</span></span>
+<span id="cb51-4"><a href="#cb51-4" tabindex="-1"></a> <span class="fu">ggplot</span>()<span class="sc">+</span><span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>quadrant,<span class="at">y=</span>N))<span class="sc">+</span><span class="fu">ggtitle</span>(i)</span>
+<span id="cb51-5"><a href="#cb51-5" tabindex="-1"></a> <span class="fu">print</span>(p)</span>
+<span id="cb51-6"><a href="#cb51-6" tabindex="-1"></a>}</span></code></pre></div>
 <p><img src="mod1_proj_files/figure-html/unnamed-chunk-18-1.png" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-2.png" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-3.png" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-4.png" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-5.png" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-6.png" width="672" /></p>
 <p>Here, for each value <code>i</code> in <code>species</code> we passed
 <code>dat</code> through a filter where <code>species==i</code>, plotted
@@ -1017,17 +1011,17 @@ graphical results are shown in R Studio. No need to establish 6 separate
 pieces of code for each figure.</p>
 <p>Let’s wrap this up by saving a PDF file containing all the
 figures.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">&quot;species_quadrant.pdf&quot;</span>)</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> species){</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species<span class="sc">==</span>i)<span class="sc">%&gt;%</span></span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggplot</span>()<span class="sc">+</span><span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>quadrant,<span class="at">y=</span>N))<span class="sc">+</span><span class="fu">ggtitle</span>(i)</span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">print</span>(p)</span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">&quot;species_quadrant.pdf&quot;</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> species){</span>
+<span id="cb52-3"><a href="#cb52-3" tabindex="-1"></a>  p <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb52-4"><a href="#cb52-4" tabindex="-1"></a>  <span class="fu">filter</span>(species<span class="sc">==</span>i)<span class="sc">%&gt;%</span></span>
+<span id="cb52-5"><a href="#cb52-5" tabindex="-1"></a> <span class="fu">ggplot</span>()<span class="sc">+</span><span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>quadrant,<span class="at">y=</span>N))<span class="sc">+</span><span class="fu">ggtitle</span>(i)</span>
+<span id="cb52-6"><a href="#cb52-6" tabindex="-1"></a> <span class="fu">print</span>(p)</span>
+<span id="cb52-7"><a href="#cb52-7" tabindex="-1"></a>}</span>
+<span id="cb52-8"><a href="#cb52-8" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
 <pre><code>## quartz_off_screen 
 ##                 2</code></pre>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">pattern=</span><span class="st">&quot;.pdf&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">pattern=</span><span class="st">&quot;.pdf&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;DeVries_etal_20210.pdf&quot; &quot;Mortolaetal.pdf&quot;        &quot;Rplots.pdf&quot;            
 ## [4] &quot;species_quadrant.pdf&quot;   &quot;species.quadrant.pdf&quot;</code></pre>
 <p>The wrapping function <code>pdf()</code> prints graphic output to a

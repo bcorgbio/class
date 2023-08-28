@@ -13,47 +13,41 @@
 
 <title>Phase III Project Report Rubric</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.22/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-
-
-
 
 <style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 
@@ -64,10 +58,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -84,40 +74,16 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 61px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h2 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h3 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h4 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h5 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
-.section h6 {
-  padding-top: 66px;
-  margin-top: -66px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -145,7 +111,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -157,7 +123,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -167,11 +133,28 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.parent().addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -183,13 +166,12 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -197,16 +179,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -309,7 +284,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -323,7 +298,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -339,7 +314,7 @@ div.tocify {
   <a href="schedule.html">Schedule</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Projects
      
     <span class="caret"></span>
@@ -377,9 +352,6 @@ div.tocify {
     <li>
       <a href="mod8_proj.html">Module 8 Project</a>
     </li>
-    <li>
-      <a href="mod9_proj.html">Module 9 Project</a>
-    </li>
     <li class="dropdown-header">Phase III</li>
     <li>
       <a href="phaseIII_rubric.html">Phase III report rubric</a>
@@ -394,7 +366,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="https://github.com/orgs/bcorgbio/teams/biol-3140">BIOL 3140 Discussion</a>
+  <a href="https://github.com/orgs/bcorgbio/discussions">BIOL 3140 Discussion</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -404,7 +376,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -415,7 +387,18 @@ div.tocify {
 
 <div id="general-guidelines" class="section level1">
 <h1>General Guidelines</h1>
-<p>Phase III is devoted to a single independent project that uses the data analysis and prototyping skills we’ve learned and refined in the first two phases of the course. Your team should work with Prof. K to develop an interesting question with a reasonable scope to answer with your Phase II project. Just like in Phase II, the project report for Phase III should resemble a short manuscript that models a scientific paper. By this, we mean that it should contain <a href="mod4_proj.html#Headers">appropriate headings or sections</a> framing the question, how it was answered, the results, and how these results relate to the question and similar work that has been done. The following rubric represents how the 100 points for Phase III report will be assessed.</p>
+<p>Phase III is devoted to a single independent project that uses the
+data analysis and prototyping skills we’ve learned and refined in the
+first two phases of the course. Your team should work with Prof. K to
+develop an interesting question with a reasonable scope to answer with
+your Phase II project. Just like in Phase II, the project report for
+Phase III should resemble a short manuscript that models a scientific
+paper. By this, we mean that it should contain <a
+href="mod4_proj.html#Headers">appropriate headings or sections</a>
+framing the question, how it was answered, the results, and how these
+results relate to the question and similar work that has been done. The
+following rubric represents how the 100 points for Phase III report will
+be assessed.</p>
 </div>
 <div id="rubric" class="section level1">
 <h1>Rubric</h1>
@@ -437,51 +420,95 @@ div.tocify {
 <tbody>
 <tr class="odd">
 <td>Tasks and Outputs</td>
-<td>Completes all tasks fully; submits all required outputs and materials on time, including those scheduled before the final deadline. <br><strong>(15 pts)</strong></td>
-<td>Completes a majority but not all tasks fully; final submission meets the deadline but some preliminary deadlines may have been missed <br><strong>( 8 pts)</strong></td>
-<td>Completes few required tasks or submits few required materials; most submissions miss their respective deadlines <br><strong>(3 pts)</strong></td>
+<td>Completes all tasks fully; submits all required outputs and
+materials on time, including those scheduled before the final deadline.
+<br><strong>(15 pts)</strong></td>
+<td>Completes a majority but not all tasks fully; final submission meets
+the deadline but some preliminary deadlines may have been missed
+<br><strong>( 8 pts)</strong></td>
+<td>Completes few required tasks or submits few required materials; most
+submissions miss their respective deadlines <br><strong>(3
+pts)</strong></td>
 </tr>
 <tr class="even">
 <td>Scientific Rigor</td>
-<td>The project approaches an important question in organismal biology with a reasonable scope using tools and techniques used in the course <br><strong>(15 pts)</strong></td>
-<td>The project question is well defined, but perhaps trivial, or the project scope is too narrow or ambitious <br><strong>(8 pts)</strong></td>
-<td>The question is trivial and the scope unreasonable. <br><strong>(3 pts)</strong></td>
+<td>The project approaches an important question in organismal biology
+with a reasonable scope using tools and techniques used in the course
+<br><strong>(15 pts)</strong></td>
+<td>The project question is well defined, but perhaps trivial, or the
+project scope is too narrow or ambitious <br><strong>(8
+pts)</strong></td>
+<td>The question is trivial and the scope unreasonable. <br><strong>(3
+pts)</strong></td>
 </tr>
 <tr class="odd">
 <td>Effort and Engagement</td>
-<td>The individual or team pursues help from the instructor, ask questions and/or seeks help regularly <br><strong>(15 pts)</strong></td>
-<td>Individual or team asks questions or seek help sometimes, but not regularly <br><strong>(8 pts)</strong></td>
-<td>Individual or team does not seem help <br><strong>(3 pts)</strong></td>
+<td>The individual or team pursues help from the instructor, ask
+questions and/or seeks help regularly <br><strong>(15 pts)</strong></td>
+<td>Individual or team asks questions or seek help sometimes, but not
+regularly <br><strong>(8 pts)</strong></td>
+<td>Individual or team does not seem help <br><strong>(3
+pts)</strong></td>
 </tr>
 <tr class="even">
 <td>Report Format</td>
-<td>Report contains all the <a href="mod4_proj.html#Headers">appropriate headings and components</a> (including a bibliography) <br><strong>(10 pts)</strong></td>
-<td>Report contains most of the appropriate headings and components (including a bibliography) <br><strong>(6 pts)</strong></td>
-<td>Report contains few of the appropriate headings and components <br><strong>(2 pt)</strong></td>
+<td>Report contains all the <a href="mod4_proj.html#Headers">appropriate
+headings and components</a> (including a bibliography) <br><strong>(10
+pts)</strong></td>
+<td>Report contains most of the appropriate headings and components
+(including a bibliography) <br><strong>(6 pts)</strong></td>
+<td>Report contains few of the appropriate headings and components
+<br><strong>(2 pt)</strong></td>
 </tr>
 <tr class="odd">
 <td>Analysis and Code</td>
-<td>Report contains concisely written code chunks within the results or methods sections that produce creative analyses, figures, and/or tables that have clear implications for the project’s question <br><strong>(15 pts)</strong></td>
-<td>One or a few code chunks are unneeded or produce analyses, figures, and/or tables that do not have clear implication for to the project goals <br><strong>(8 pts)</strong></td>
-<td>No code chunks contained in report or all code chunks are unneeded or produce analyses, figures, and/or tables not directly related to the project goals <br><strong>(3 pts)</strong></td>
+<td>Report contains concisely written code chunks within the results or
+methods sections that produce creative analyses, figures, and/or tables
+that have clear implications for the project’s question <br><strong>(15
+pts)</strong></td>
+<td>One or a few code chunks are unneeded or produce analyses, figures,
+and/or tables that do not have clear implication for to the project
+goals <br><strong>(8 pts)</strong></td>
+<td>No code chunks contained in report or all code chunks are unneeded
+or produce analyses, figures, and/or tables not directly related to the
+project goals <br><strong>(3 pts)</strong></td>
 </tr>
 <tr class="even">
 <td>Graphics and Tables</td>
-<td>Figures, tables, and images are clear, add much to the results in analysis, and have concise but descriptive captions <br><strong>(10 pts)</strong></td>
-<td>One or a few figures, tables, and images are unneeded or inappropriate or they lack captions that are concise or descriptive <br><strong>(6 pts)</strong></td>
-<td>All few figures, tables, and images are unneeded or inappropriate <br><strong>(2 pt)</strong></td>
+<td>Figures, tables, and images are clear, add much to the results in
+analysis, and have concise but descriptive captions <br><strong>(10
+pts)</strong></td>
+<td>One or a few figures, tables, and images are unneeded or
+inappropriate or they lack captions that are concise or descriptive
+<br><strong>(6 pts)</strong></td>
+<td>All few figures, tables, and images are unneeded or inappropriate
+<br><strong>(2 pt)</strong></td>
 </tr>
 <tr class="odd">
 <td>Writing and Style</td>
-<td>The writing is concise, clear, avoids passive constructions, and is in the past tense; grammar is appropriate <br><strong>(10 pts)</strong></td>
-<td>The writing is unclear or rambling in spots or uses passive constructions and future tense; grammar is shaky in spots <br><strong>(6 pts)</strong></td>
-<td>The writing is unclear, and/or uses passive constructions or future tense throughout; grammar is shaky for the most part <br><strong>(2 pt)</strong></td>
+<td>The writing is concise, clear, avoids passive constructions, and is
+in the past tense; grammar is appropriate <br><strong>(10
+pts)</strong></td>
+<td>The writing is unclear or rambling in spots or uses passive
+constructions and future tense; grammar is shaky in spots <br><strong>(6
+pts)</strong></td>
+<td>The writing is unclear, and/or uses passive constructions or future
+tense throughout; grammar is shaky for the most part <br><strong>(2
+pt)</strong></td>
 </tr>
 <tr class="even">
 <td>Sources and References</td>
-<td>The report contains 3 references to primary research pieces that support statements of fact; references are contained in a <a href="mod4_proj.html#Inserting_References">BibTex bibliography and inserted with <code>@</code> tags</a> <br><strong>(10 pts)</strong></td>
-<td>Report contains fewer than 3 references; some statements of scientific findings and fact are not supported by references; some references are not contained in a BibTex bibliography or inserted with <code>@</code> tags <br><strong>(6 pts)</strong></td>
-<td>Most statements of scientific findings and fact are not supported by references; references are not contained in a BibTex bibliography nor inserted with <code>@</code> tags <br><strong>(2 pt)</strong></td>
+<td>The report contains 3 references to primary research pieces that
+support statements of fact; references are contained in a <a
+href="mod4_proj.html#Inserting_References">BibTex bibliography and
+inserted with <code>@</code> tags</a> <br><strong>(10 pts)</strong></td>
+<td>Report contains fewer than 3 references; some statements of
+scientific findings and fact are not supported by references; some
+references are not contained in a BibTex bibliography or inserted with
+<code>@</code> tags <br><strong>(6 pts)</strong></td>
+<td>Most statements of scientific findings and fact are not supported by
+references; references are not contained in a BibTex bibliography nor
+inserted with <code>@</code> tags <br><strong>(2 pt)</strong></td>
 </tr>
 <tr class="odd">
 <td></td>
@@ -504,7 +531,7 @@ div.tocify {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -522,7 +549,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -531,6 +558,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

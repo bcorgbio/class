@@ -13,7 +13,7 @@
 
 <title>Module X Project</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.22/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
@@ -29,7 +29,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -170,8 +170,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -179,16 +179,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -373,7 +366,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f22">BIOL 3140 Discussion</a>
+  <a href="https://github.com/orgs/bcorgbio/discussions">BIOL 3140 Discussion</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -463,9 +456,9 @@ correct board and port from the “Tools” dropdown menu in the IDE!</p>
 </div>
 <p><br></p>
 <center>
-<div class="figure">
-<img src="tempserial.png" alt="" />
-<p class="caption">FigName</p>
+<div class="float">
+<img src="tempserial.png" alt="FigName" />
+<div class="figcaption">FigName</div>
 </div>
 </center>
 <p><br></p>
@@ -559,9 +552,9 @@ void loop(void) {
 </code></pre>
 <p>Check in on the serial monitor. Notice that there’s now a new line
 (outlined below in red) that reports time in milliseconds:</p>
-<div class="figure">
-<img src="tempserial2.png" alt="" />
-<p class="caption">FigName</p>
+<div class="float">
+<img src="tempserial2.png" alt="FigName" />
+<div class="figcaption">FigName</div>
 </div>
 </center>
 <p><br></p>
@@ -664,9 +657,9 @@ print the header to the serial port.</p>
 <p>After adding this and uploading the modified sketch, the serial
 monitor should now print a header (i.e., column names) and then the data
 like this:</p>
-<div class="figure">
-<img src="tempserial4.png" alt="" />
-<p class="caption">FigName</p>
+<div class="float">
+<img src="tempserial4.png" alt="FigName" />
+<div class="figcaption">FigName</div>
 </div>
 </center>
 <p><br></p>

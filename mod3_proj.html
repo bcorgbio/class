@@ -13,7 +13,7 @@
 
 <title>Module 3 Project</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.22/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
@@ -29,7 +29,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
@@ -90,11 +90,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #c4a000; } /* Attribute */
+code span.at { color: #204a87; } /* Attribute */
 code span.bn { color: #0000cf; } /* BaseN */
 code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #000000; } /* Constant */
+code span.cn { color: #8f5902; } /* Constant */
 code span.co { color: #8f5902; font-style: italic; } /* Comment */
 code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
 code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
@@ -103,14 +103,14 @@ code span.dv { color: #0000cf; } /* DecVal */
 code span.er { color: #a40000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #000000; } /* Function */
+code span.fu { color: #204a87; font-weight: bold; } /* Function */
 code span.im { } /* Import */
 code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
 code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
 code span.ot { color: #8f5902; } /* Other */
 code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #000000; } /* SpecialChar */
+code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
 code span.ss { color: #4e9a06; } /* SpecialString */
 code span.st { color: #4e9a06; } /* String */
 code span.va { color: #000000; } /* Variable */
@@ -293,8 +293,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -302,16 +302,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -496,7 +489,7 @@ div.tocify {
   </ul>
 </li>
 <li>
-  <a href="https://github.com/orgs/bcorgbio/teams/biol3140_f22">BIOL 3140 Discussion</a>
+  <a href="https://github.com/orgs/bcorgbio/discussions">BIOL 3140 Discussion</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -579,18 +572,18 @@ class="citation">Poe et al. (2017)</span>.</p>
 <p>As we have in the previous projects, let’s load the packages we need
 (make sure they’re downloaded!), then load these data and comment on the
 importance of it.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># Rember to load your libraries!</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geiger)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caper)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(phytools)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MuMIn)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#load data</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>anole <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;anole.dat.csv&quot;</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>anole.eco <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;anole.eco.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># Rember to load your libraries!</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(geiger)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(caper)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(phytools)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">library</span>(MuMIn)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#load data</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>anole <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;anole.dat.csv&quot;</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>anole.eco <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;anole.eco.csv&quot;</span>)</span></code></pre></div>
 <p>The data loaded to <code>anole</code> are species
 (<code>Species</code>), mean snout-vent length (<code>SVL</code>, length
 between the snout and the vent, i.e., anus, a standard for reptiles),
@@ -606,12 +599,12 @@ the data, specifically from which ecomorph the data were taken. Thus, we
 must merge the <code>anole</code> data tibble with the
 <code>anole.eco</code> tibble and, simultaneously, do a few things
 required for working with data in this context:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>anole2 <span class="ot">&lt;-</span> anole<span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(anole.eco)<span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Ecomorph<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">&quot;U&quot;</span>,<span class="st">&quot;CH&quot;</span>))<span class="sc">%&gt;%</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()<span class="sc">%&gt;%</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
-<pre><code>## Joining, by = &quot;Species&quot;</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>anole2 <span class="ot">&lt;-</span> anole<span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">left_join</span>(anole.eco)<span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Ecomorph<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">&quot;U&quot;</span>,<span class="st">&quot;CH&quot;</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="fu">na.omit</span>()<span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="fu">print</span>()</span></code></pre></div>
+<pre><code>## Joining with `by = join_by(Species)`</code></pre>
 <pre><code>## # A tibble: 46 × 7
 ##    Species                SVL HTotal    PH ArbPD Ecomorph Ecomorph2   
 ##    &lt;chr&gt;                &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;       
@@ -625,9 +618,9 @@ required for working with data in this context:</p>
 ##  8 Anolis_barahonae     156.   105.  825    33   CG       crown-giant 
 ##  9 Anolis_brevirostris   47     35   102.   21.1 T        trunk       
 ## 10 Anolis_chlorocyanus   68.7   43.9 357.   10.6 TC       trunk-crown 
-## # … with 36 more rows</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>anole.log <span class="ot">&lt;-</span> anole2<span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">c</span>(<span class="st">&quot;SVL&quot;</span>, <span class="st">&quot;HTotal&quot;</span>,<span class="st">&quot;PH&quot;</span>,<span class="st">&quot;ArbPD&quot;</span>),log)</span></code></pre></div>
+## # ℹ 36 more rows</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>anole.log <span class="ot">&lt;-</span> anole2<span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">c</span>(<span class="st">&quot;SVL&quot;</span>, <span class="st">&quot;HTotal&quot;</span>,<span class="st">&quot;PH&quot;</span>,<span class="st">&quot;ArbPD&quot;</span>),log)</span></code></pre></div>
 <p>Notice that, before the mutate operation, we filtered the data,
 removing any rows is the tibble for which the <code>Ecomoroph</code>
 value was “U” or “CH”. These are species for which the ecomorphological
@@ -704,9 +697,9 @@ before us an important initial question: does hind limb length vary with
 size? Let’s assess this initially by plotting hind limb length vs size
 in anoles with <code>ggplot</code>. We’ll start with the untransformed
 data set.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>anole2<span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(SVL,HTotal))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>anole2<span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(SVL,HTotal))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>Remember from R4DS that we have to establish the aesthetic of the
 plot and then add geometries with <code>+</code> to plot. Here we
@@ -727,13 +720,13 @@ on this simple linear model and it looks to be a good fit, let’s
 evaluate just how good this fit is with establishing a simple linear
 model using the <code>lm()</code> function from the <code>stats</code>
 package which loads automatically with R.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>anole.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(HTotal<span class="sc">~</span>SVL,anole2)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(anole.lm)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>anole.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(HTotal<span class="sc">~</span>SVL,anole2)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">coef</span>(anole.lm)</span></code></pre></div>
 <pre><code>## (Intercept)         SVL 
 ##    4.005167    0.639719</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>anole2<span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(SVL,HTotal))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_abline</span>(<span class="at">slope=</span><span class="fu">coef</span>(anole.lm)[<span class="dv">2</span>],<span class="at">intercept=</span><span class="fu">coef</span>(anole.lm)[<span class="dv">1</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>anole2<span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(SVL,HTotal))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_abline</span>(<span class="at">slope=</span><span class="fu">coef</span>(anole.lm)[<span class="dv">2</span>],<span class="at">intercept=</span><span class="fu">coef</span>(anole.lm)[<span class="dv">1</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Notice how the model is represented by the relationship
 <code>HTotal~SVL</code> Using <code>~</code> is a standard convention in
@@ -746,17 +739,17 @@ are coming from, in this case, <code>anole2</code>.</p>
 <code>HTotal</code> for a range of snout vent lengths rather than have
 <code>geom_smooth</code> do it for us. Let’s do this by creating a
 tibble with predictions:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>SVL2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(anole2<span class="sc">$</span>SVL),<span class="fu">max</span>(anole2<span class="sc">$</span>SVL),<span class="fl">0.1</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>pred.lm <span class="ot">&lt;-</span><span class="fu">tibble</span>(</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">SVL=</span>SVL2,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">H.pred=</span><span class="fu">predict</span>(anole.lm,<span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">SVL=</span>SVL2))</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>anole2<span class="sc">%&gt;%</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(SVL,HTotal))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">data=</span>pred.lm,<span class="fu">aes</span>(SVL,H.pred),<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>SVL2 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(anole2<span class="sc">$</span>SVL),<span class="fu">max</span>(anole2<span class="sc">$</span>SVL),<span class="fl">0.1</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>pred.lm <span class="ot">&lt;-</span><span class="fu">tibble</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="at">SVL=</span>SVL2,</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="at">H.pred=</span><span class="fu">predict</span>(anole.lm,<span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">SVL=</span>SVL2))</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>)</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>anole2<span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(SVL,HTotal))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">data=</span>pred.lm,<span class="fu">aes</span>(SVL,H.pred),<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anole.lm)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">summary</span>(anole.lm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = HTotal ~ SVL, data = anole2)
@@ -804,9 +797,9 @@ the model is fit based on a non-linear relationship, i.e., an equation
 with the parameters <span class="math inline">\(\alpha\)</span> and
 <span class="math inline">\(\beta\)</span>. Thus we can fit an
 allometric model with <code>nls</code> by:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>anole.allo <span class="ot">&lt;-</span> <span class="fu">nls</span>(HTotal<span class="sc">~</span>a<span class="sc">*</span>SVL<span class="sc">^</span>b, <span class="at">start=</span><span class="fu">list</span>(<span class="at">b=</span><span class="dv">1</span>, <span class="at">a=</span><span class="dv">1</span>),<span class="at">data =</span> anole2)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anole.allo)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>anole.allo <span class="ot">&lt;-</span> <span class="fu">nls</span>(HTotal<span class="sc">~</span>a<span class="sc">*</span>SVL<span class="sc">^</span>b, <span class="at">start=</span><span class="fu">list</span>(<span class="at">b=</span><span class="dv">1</span>, <span class="at">a=</span><span class="dv">1</span>),<span class="at">data =</span> anole2)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="fu">summary</span>(anole.allo)</span></code></pre></div>
 <pre><code>## 
 ## Formula: HTotal ~ a * SVL^b
 ## 
@@ -820,7 +813,7 @@ allometric model with <code>nls</code> by:</p>
 ## Residual standard error: 6.102 on 44 degrees of freedom
 ## 
 ## Number of iterations to convergence: 4 
-## Achieved convergence tolerance: 2.86e-06</code></pre>
+## Achieved convergence tolerance: 2.871e-06</code></pre>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
@@ -913,13 +906,13 @@ the <span class="math inline">\(AIC_c\)</span> of both of our models,
 then compare their fit. Additionally, we can calculate the relative
 support of each model using AIC weights (<span
 class="math inline">\(AIC_w\)</span>).</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#AICc from the MuMIn package</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>anole.aic <span class="ot">&lt;-</span> <span class="fu">AICc</span>(anole.lm,anole.allo)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#aicw from the geiger package</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>anole.aicw <span class="ot">&lt;-</span> <span class="fu">aicw</span>(anole.aic<span class="sc">$</span>AICc)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(anole.aicw)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="co">#AICc from the MuMIn package</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>anole.aic <span class="ot">&lt;-</span> <span class="fu">AICc</span>(anole.lm,anole.allo)</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co">#aicw from the geiger package</span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>anole.aicw <span class="ot">&lt;-</span> <span class="fu">aicw</span>(anole.aic<span class="sc">$</span>AICc)</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="fu">print</span>(anole.aicw)</span></code></pre></div>
 <pre><code>##        fit    delta         w
 ## 1 303.6785 2.220885 0.2477884
 ## 2 301.4576 0.000000 0.7522116</code></pre>
@@ -950,9 +943,9 @@ for <code>b</code> the scaling exponent, is pretty close to 1 at b
 have the same number of parameters (both have <code>SVL</code> and two
 other parameters), why not just look at the likelihood?” We can
 certainly do that:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(anole.lm)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">logLik</span>(anole.lm)</span></code></pre></div>
 <pre><code>## &#39;log Lik.&#39; -148.5536 (df=3)</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">logLik</span>(anole.allo)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">logLik</span>(anole.allo)</span></code></pre></div>
 <pre><code>## &#39;log Lik.&#39; -147.4431 (df=3)</code></pre>
 <p>Here, the allometric model has the <strong>highest</strong>
 likelihood and, because the models have the same number of parameters,
@@ -971,9 +964,9 @@ the effect of ecomorph on the hindlimb-SVL relationships.</p>
 <p>For this we’ll use our log-transformed data for the reasons outlined
 in the note above. We’ll begin by visualizing hindlimb-SVL relationships
 for each ecomorph in <code>ggplot</code>:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>anole.log<span class="sc">%&gt;%</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(HTotal,SVL,<span class="at">col=</span>Ecomorph2))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>anole.log<span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(HTotal,SVL,<span class="at">col=</span>Ecomorph2))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Most of what we did here should be rather familiar by now. We passed
 our log-transformed data with the pipe to a <code>ggplot</code> call,
@@ -990,8 +983,8 @@ compute multiple regression lines for `geom_smooth()’.</p>
 ecomorph as an important variable explaining the hindlimb-SVL
 relationship. So let’s now construct a model that includes this new
 variable:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>anole.log.eco.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(HTotal<span class="sc">~</span>SVL<span class="sc">*</span>Ecomorph2,anole.log)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(anole.log.eco.lm)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>anole.log.eco.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(HTotal<span class="sc">~</span>SVL<span class="sc">*</span>Ecomorph2,anole.log)</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="fu">summary</span>(anole.log.eco.lm)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = HTotal ~ SVL * Ecomorph2, data = anole.log)
@@ -1020,7 +1013,7 @@ variable:</p>
 ## Residual standard error: 0.08786 on 34 degrees of freedom
 ## Multiple R-squared:  0.9713, Adjusted R-squared:  0.962 
 ## F-statistic: 104.7 on 11 and 34 DF,  p-value: &lt; 2.2e-16</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(anole.log.eco.lm)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">anova</span>(anole.log.eco.lm)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: HTotal
@@ -1049,8 +1042,8 @@ a model of hindlimb growth that includes ecomorph describing the system
 better than one that doesn’t? Let’s establish this simple model with
 log-transformed data and compare it with AIC and AICw to this more
 complicated model.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>anole.log.lm  <span class="ot">&lt;-</span> <span class="fu">lm</span>(HTotal<span class="sc">~</span>SVL,anole.log)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(anole.log.lm)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>anole.log.lm  <span class="ot">&lt;-</span> <span class="fu">lm</span>(HTotal<span class="sc">~</span>SVL,anole.log)</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">anova</span>(anole.log.lm)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: HTotal
@@ -1059,8 +1052,8 @@ complicated model.</p>
 ## Residuals 44 1.0957  0.0249                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>anole.log.aic <span class="ot">&lt;-</span> <span class="fu">AICc</span>(anole.log.lm,anole.log.eco.lm)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aicw</span>(anole.log.aic<span class="sc">$</span>AICc)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>anole.log.aic <span class="ot">&lt;-</span> <span class="fu">AICc</span>(anole.log.lm,anole.log.eco.lm)</span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="fu">aicw</span>(anole.log.aic<span class="sc">$</span>AICc)</span></code></pre></div>
 <pre><code>##         fit    delta            w
 ## 1 -34.79896 34.93394 2.595324e-08
 ## 2 -69.73290  0.00000 1.000000e+00</code></pre>
@@ -1115,8 +1108,8 @@ values (in this case, <code>Ecomorph2</code>). This is easily
 implemented in <code>ggplot</code>.</p>
 <p>First we need to compute the residuals based on our global
 <code>anole.log.lm</code> model:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>anole.log <span class="ot">&lt;-</span> anole.log <span class="sc">%&gt;%</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res=</span><span class="fu">residuals</span>(anole.log.lm))</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>anole.log <span class="ot">&lt;-</span> anole.log <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">res=</span><span class="fu">residuals</span>(anole.log.lm))</span></code></pre></div>
 <p>For this, we use the <code>residuals()</code> function from the
 <code>stats</code> package, computing residuals for the
 <code>anole.log.lm</code> model. Notice that we used a
@@ -1124,8 +1117,8 @@ implemented in <code>ggplot</code>.</p>
 column that contains the residuals. Notice that we also redefined
 <code>anole.log</code> as a tibble containing this new column. Now,
 let’s plot the residuals against <code>Ecomorph2</code>.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>anole.log<span class="sc">%&gt;%</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Ecomorph2,res))<span class="sc">+</span><span class="fu">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>anole.log<span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Ecomorph2,res))<span class="sc">+</span><span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>In this <code>ggplot()</code> operation, we established the x
 variable as <code>Ecomorph2</code> and y as the residual
@@ -1139,9 +1132,9 @@ of the data; however, we can let <code>ggplot</code> do this with
 including the median, hinges that correspond to the first and third
 quartiles, and whiskers that correspond to 1.5 times the interquartile
 range.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>p.eco <span class="ot">&lt;-</span> anole.log<span class="sc">%&gt;%</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Ecomorph2,<span class="at">y=</span>res)) <span class="sc">+</span><span class="fu">geom_boxplot</span>()</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p.eco)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>p.eco <span class="ot">&lt;-</span> anole.log<span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Ecomorph2,<span class="at">y=</span>res)) <span class="sc">+</span><span class="fu">geom_boxplot</span>()</span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a><span class="fu">print</span>(p.eco)</span></code></pre></div>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>This is a great summary of our hindlimb-SVL residual data according
 to ecomorph. But, often, as biologists, we prefer to visualize the mean
@@ -1150,7 +1143,7 @@ of values in our a priori groups rather than median. One asset of
 Because we saved out plot as <code>p.eco</code>, we can simply add a
 geometry that includes a representation of mean residual for each
 ecomorph.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>p.eco<span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span><span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>p.eco<span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span><span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">3</span>)</span></code></pre></div>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>Here we added a point with the <code>stat_summary()</code> geometry.
 This applies a summarizing function to the already established group
@@ -1191,8 +1184,8 @@ a phylogenetic tree. So to perform PGLS, we establish this covriation
 matrix with a tree and assume that the characters have evolved in this
 tree under some evolutionary model.</p>
 <p>Let’s first have a look at the tree.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>anole.tree <span class="ot">&lt;-</span> <span class="fu">read.tree</span>(<span class="st">&quot;anole.tre&quot;</span>)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(anole.tree,<span class="at">cex=</span><span class="fl">0.4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>anole.tree <span class="ot">&lt;-</span> <span class="fu">read.tree</span>(<span class="st">&quot;anole.tre&quot;</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="fu">plot</span>(anole.tree,<span class="at">cex=</span><span class="fl">0.4</span>)</span></code></pre></div>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>Here we read in the tree using <code>read.tree</code> from the
 <code>ape</code> package. This stores the tree as a <code>phylo</code>
@@ -1281,18 +1274,18 @@ these two different models: both with simple regression models that
 doesn’t include ecomorph and then models that do. We’ll start with
 setting up the code using <code>gls()</code> from the <code>nlme</code>
 package and then discuss what’s in it.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#PGLS under BM, no ecomorph</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>pgls.BM1 <span class="ot">&lt;-</span> <span class="fu">gls</span>(HTotal <span class="sc">~</span>SVL, <span class="at">correlation =</span> <span class="fu">corBrownian</span>(<span class="dv">1</span>,<span class="at">phy =</span> anole.tree,<span class="at">form=</span><span class="sc">~</span>Species),<span class="at">data =</span> anole.log, <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co">#PGLS under BM, w ecomorph</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>pgls.BM2 <span class="ot">&lt;-</span> <span class="fu">gls</span>(HTotal <span class="sc">~</span>SVL <span class="sc">*</span> Ecomorph2, <span class="at">correlation =</span> <span class="fu">corBrownian</span>(<span class="dv">1</span>,<span class="at">phy =</span> anole.tree,<span class="at">form=</span><span class="sc">~</span>Species),<span class="at">data =</span> anole.log, <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="co">#PGLS under OU, no ecomorph</span></span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>pgls.OU1 <span class="ot">&lt;-</span> <span class="fu">gls</span>(HTotal <span class="sc">~</span>SVL, <span class="at">correlation =</span> <span class="fu">corMartins</span>(<span class="dv">0</span>,<span class="at">phy =</span> anole.tree,<span class="at">form=</span><span class="sc">~</span>Species),<span class="at">data =</span> anole.log, <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="co">#PGLS under OU, w, ecomorph</span></span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>pgls.OU2 <span class="ot">&lt;-</span> <span class="fu">gls</span>(HTotal <span class="sc">~</span>SVL <span class="sc">*</span> Ecomorph2, <span class="at">correlation =</span> <span class="fu">corMartins</span>(<span class="dv">0</span>,<span class="at">phy =</span> anole.tree,<span class="at">form=</span><span class="sc">~</span>Species),<span class="at">data =</span> anole.log, <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="co">#PGLS under BM, no ecomorph</span></span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>pgls.BM1 <span class="ot">&lt;-</span> <span class="fu">gls</span>(HTotal <span class="sc">~</span>SVL, <span class="at">correlation =</span> <span class="fu">corBrownian</span>(<span class="dv">1</span>,<span class="at">phy =</span> anole.tree,<span class="at">form=</span><span class="sc">~</span>Species),<span class="at">data =</span> anole.log, <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a><span class="co">#PGLS under BM, w ecomorph</span></span>
+<span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a>pgls.BM2 <span class="ot">&lt;-</span> <span class="fu">gls</span>(HTotal <span class="sc">~</span>SVL <span class="sc">*</span> Ecomorph2, <span class="at">correlation =</span> <span class="fu">corBrownian</span>(<span class="dv">1</span>,<span class="at">phy =</span> anole.tree,<span class="at">form=</span><span class="sc">~</span>Species),<span class="at">data =</span> anole.log, <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" tabindex="-1"></a><span class="co">#PGLS under OU, no ecomorph</span></span>
+<span id="cb37-9"><a href="#cb37-9" tabindex="-1"></a>pgls.OU1 <span class="ot">&lt;-</span> <span class="fu">gls</span>(HTotal <span class="sc">~</span>SVL, <span class="at">correlation =</span> <span class="fu">corMartins</span>(<span class="dv">0</span>,<span class="at">phy =</span> anole.tree,<span class="at">form=</span><span class="sc">~</span>Species),<span class="at">data =</span> anole.log, <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
+<span id="cb37-10"><a href="#cb37-10" tabindex="-1"></a></span>
+<span id="cb37-11"><a href="#cb37-11" tabindex="-1"></a><span class="co">#PGLS under OU, w, ecomorph</span></span>
+<span id="cb37-12"><a href="#cb37-12" tabindex="-1"></a>pgls.OU2 <span class="ot">&lt;-</span> <span class="fu">gls</span>(HTotal <span class="sc">~</span>SVL <span class="sc">*</span> Ecomorph2, <span class="at">correlation =</span> <span class="fu">corMartins</span>(<span class="dv">0</span>,<span class="at">phy =</span> anole.tree,<span class="at">form=</span><span class="sc">~</span>Species),<span class="at">data =</span> anole.log, <span class="at">method =</span> <span class="st">&quot;ML&quot;</span>)</span></code></pre></div>
 <p>What we did here is set up generalized least squares models that
 establish a correlation matrix based on BM and OU models of evolution.
 We establish this matrix with <code>corBrownian()</code> from the
@@ -1332,8 +1325,8 @@ field.</p>
 <p><br></p>
 <p>Now that we have our models, we can preform our AIC operations to see
 which models fit that data best:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>anole.phylo.aic <span class="ot">&lt;-</span> <span class="fu">AICc</span>(pgls.BM1,pgls.BM2,pgls.OU1,pgls.OU2)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aicw</span>(anole.phylo.aic<span class="sc">$</span>AICc)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>anole.phylo.aic <span class="ot">&lt;-</span> <span class="fu">AICc</span>(pgls.BM1,pgls.BM2,pgls.OU1,pgls.OU2)</span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="fu">aicw</span>(anole.phylo.aic<span class="sc">$</span>AICc)</span></code></pre></div>
 <pre><code>##         fit     delta            w
 ## 1 -63.66118 29.319176 4.225281e-07
 ## 2 -92.98036  0.000000 9.827289e-01
@@ -1349,7 +1342,7 @@ lineage.</p>
 significant factor in predicting the hinglimb-SVL relationship in a
 phylogenetic context by preforming an ANOVA on our best fitting model,
 <code>pgsl.BM2</code></p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(pgls.BM2)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="fu">anova</span>(pgls.BM2)</span></code></pre></div>
 <pre><code>## Denom. DF: 34 
 ##               numDF   F-value p-value
 ## (Intercept)       1 15848.498  &lt;.0001
@@ -1366,13 +1359,13 @@ We’ll first mutate and redefine our <code>anole.log</code> data to
 include a column for <em>phylogenetically</em> corrected residuals and
 then plot them against ecomorph just as we did in the case of our simple
 <code>lm()</code> model that didn’t consider phylogeny:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>anole.log <span class="ot">&lt;-</span> anole.log<span class="sc">%&gt;%</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">phylo.res=</span><span class="fu">residuals</span>(pgls.BM2))</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>p.eco.phylo <span class="ot">&lt;-</span> anole.log<span class="sc">%&gt;%</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Ecomorph2,<span class="at">y=</span>phylo.res)) <span class="sc">+</span><span class="fu">geom_boxplot</span>() <span class="sc">+</span><span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">3</span>)</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p.eco.phylo)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>anole.log <span class="ot">&lt;-</span> anole.log<span class="sc">%&gt;%</span></span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">phylo.res=</span><span class="fu">residuals</span>(pgls.BM2))</span>
+<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>p.eco.phylo <span class="ot">&lt;-</span> anole.log<span class="sc">%&gt;%</span></span>
+<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Ecomorph2,<span class="at">y=</span>phylo.res)) <span class="sc">+</span><span class="fu">geom_boxplot</span>() <span class="sc">+</span><span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">3</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" tabindex="-1"></a><span class="fu">print</span>(p.eco.phylo)</span></code></pre></div>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 <div id="plotting-more-with-less" class="section level1">
@@ -1401,11 +1394,11 @@ grid according values in the data. Let’s massage the data to a longer
 format and then use a faceting function from <code>ggplot</code> to plot
 the phlyognetically corrected and uncorrected residuals against ecomorph
 with a boxplot. This is how it can be done:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>anole.log<span class="sc">%&gt;%</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Ecomorph2,res,phylo.res)<span class="sc">%&gt;%</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">c</span>(<span class="st">&quot;res&quot;</span>,<span class="st">&quot;phylo.res&quot;</span>))<span class="sc">%&gt;%</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  print<span class="sc">%&gt;%</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Ecomorph2,<span class="at">y=</span>value)) <span class="sc">+</span><span class="fu">geom_boxplot</span>() <span class="sc">+</span><span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span><span class="fu">facet_grid</span>(name<span class="sc">~</span>.,<span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>)<span class="sc">+</span><span class="fu">ylab</span>(<span class="st">&quot;residual&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>anole.log<span class="sc">%&gt;%</span></span>
+<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Ecomorph2,res,phylo.res)<span class="sc">%&gt;%</span></span>
+<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">c</span>(<span class="st">&quot;res&quot;</span>,<span class="st">&quot;phylo.res&quot;</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a>  print<span class="sc">%&gt;%</span></span>
+<span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Ecomorph2,<span class="at">y=</span>value)) <span class="sc">+</span><span class="fu">geom_boxplot</span>() <span class="sc">+</span><span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">size=</span><span class="dv">3</span>)<span class="sc">+</span><span class="fu">facet_grid</span>(name<span class="sc">~</span>.,<span class="at">scales =</span> <span class="st">&quot;free_y&quot;</span>)<span class="sc">+</span><span class="fu">ylab</span>(<span class="st">&quot;residual&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 92 × 3
 ##    Ecomorph2    name         value
 ##    &lt;chr&gt;        &lt;chr&gt;        &lt;dbl&gt;
@@ -1419,7 +1412,7 @@ with a boxplot. This is how it can be done:</p>
 ##  8 trunk-ground phylo.res -0.00357
 ##  9 grass-bush   res        0.0980 
 ## 10 grass-bush   phylo.res  0.0868 
-## # … with 82 more rows</code></pre>
+## # ℹ 82 more rows</code></pre>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>Here we selected the three columns of interest
 (<code>Ecomorph2</code>, <code>res</code> [the uncorrected residual],
@@ -1539,17 +1532,17 @@ residuals of the best fitting PGLS model.</li>
 </ol>
 <p><strong>NB</strong>: Please number your operations with a comment to
 identify which of these prompts you’re addressing, e.g. . .</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#1 establishing the data tibble</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat<span class="sc">%&gt;%</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dat2)</span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="co">#2 the two linear models</span></span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>lm.PH <span class="ot">&lt;-</span> <span class="fu">lm</span>(HL<span class="sc">~</span>PH,dat)</span>
-<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>lm.PD <span class="ot">&lt;-</span> <span class="fu">lm</span>(HL<span class="sc">~</span>PD,dat)</span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="co">#etc., etc.</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="co">#1 establishing the data tibble</span></span>
+<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat<span class="sc">%&gt;%</span></span>
+<span id="cb46-4"><a href="#cb46-4" tabindex="-1"></a>  <span class="fu">left_join</span>(dat2)</span>
+<span id="cb46-5"><a href="#cb46-5" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" tabindex="-1"></a><span class="co">#2 the two linear models</span></span>
+<span id="cb46-7"><a href="#cb46-7" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="#cb46-8" tabindex="-1"></a>lm.PH <span class="ot">&lt;-</span> <span class="fu">lm</span>(HL<span class="sc">~</span>PH,dat)</span>
+<span id="cb46-9"><a href="#cb46-9" tabindex="-1"></a>lm.PD <span class="ot">&lt;-</span> <span class="fu">lm</span>(HL<span class="sc">~</span>PD,dat)</span>
+<span id="cb46-10"><a href="#cb46-10" tabindex="-1"></a></span>
+<span id="cb46-11"><a href="#cb46-11" tabindex="-1"></a><span class="co">#etc., etc.</span></span></code></pre></div>
 <p>Submissions are due by 11:59 PM on Tuesday, September 27th.</p>
 </div>
 <div id="references" class="section level1 unnumbered">

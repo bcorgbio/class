@@ -113,7 +113,8 @@ Our course will be a semi-flipped experience. This will require students to read
 To facilitate our team approach, I'll be assigning each student to a team of 4 students in the first few days of class. This team must establish two things:
 
   1. A unique team name. Puns are welcome and encouraged (e.g., "R-tful Coders") 
-  2. A team discussion on GitHub that includes me on the team (see [Discussion Board]). 
+  2. A team discussion on GitHub that includes me on the team (see [Discussion Board](https://github.com/orgs/bcorgbio/discussions)). 
+  
 Each week, teams should use their team discussion boards to generate a question to post on the the class-wide discussion board. A team representative must submit this question and include the team handle in the title surrounded by brackets, like you see below for that make-believe team "R-tful codes" with the handle "@bcorgbio/r-tful-coders". The team must also decide which question to answer and then post their feedback or answer addressing the handle for the original team posters (see below)
 
 <center>
@@ -243,7 +244,7 @@ In Phase III, you'll be tasked with quickly developing a project of your own des
 
 # Course Assessment
 
-Your grade will be based on five assignment components: Asking and answering questions on our discussion board, many in-class coding exercises, and series of project reports: 5 for Phase I projects, 5 for Phase II projects, and one for the Phase III project. 
+Your grade will be based on five assignment components: Asking and answering questions on our discussion board, many in-class coding exercises, and series of project reports: 5 for Phase I projects, 3 for Phase II projects, and one for the Phase III project. 
 
 ***
 
@@ -302,7 +303,7 @@ Students in this course, as all others at BC, must produce original work and cit
 
 # Email and Office Hours Policy
 
-If you write Professor Kenaley with a question, he’ll try to get back to you within 24 hours. If you don’t receive a response, it’s likely because the answer to your question is available here or on our discussion site. Rather than write Prof. Kenaley with questions related to course mechanics and expectations, please post these in our [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140), It’s probably the case that others have the same questions.
+If you write Professor Kenaley with a question, he’ll try to get back to you within 24 hours. If you don’t receive a response, it’s likely because the answer to your question is available here or on our discussion site. Rather than write Prof. Kenaley with questions related to course mechanics and expectations, please post these in our [discussion board](https://github.com/orgs/bcorgbio/discussions), It’s probably the case that others have the same questions.
 
 Office hours can be arranged by appointment via email and will take place over Zoom or in person (Higgins 535). Office hours may involve more more than student or team, so please come equipped with poignant questions and expect that other students have questions as urgent as yours.
 

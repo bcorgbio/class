@@ -1,0 +1,56 @@
+---
+title: "WCR 1"
+author: "BIOL 3140"
+date: "2023-09-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+Fist begin by creating an R script name `Last_Fist_WRC1.R` [1 pt]
+
+## Question 1
+
+Complete the following steps, writing lines of code as needed.
+
+1. Comment in "Question 1." [1 pt]
+
+2. Make a vector containing the integers 1 through 10. Save the vector as a variable names `my_vec`. [1 pt]
+
+3. Retrieve the 6th value of this vector. [1 pt]
+
+4. Multiply this vector by 2. [1 pt]
+
+5. Compute the `log` of each value. `?log` may help. [1 pt]
+
+
+```{r include=F}
+my_vec <- 1:10
+log(my_vec)
+```
+
+## Question 2
+
+Comment in "Question 2." Then, write a `for` loop that prints two times each value of `my_vec` appended with " is 2 times " and then the value, something like "2 is 2 times the value of 1". `?paste` may help. [4 pts]
+
+```{r include=F}
+for( i in my_vec){
+  print(paste(2*i,"is 2 times",i))
+}
+
+```
+
+## Submission
+
+Submit your script via attachment by emailing it with the subject line "WRC1" to [kenaley@bc.edu](mailto:kenaley@bc.edu)
+
+```{r eval=F,include=F}
+library(rmarkdown)
+library(fidelius)
+pw <- "WCR1"
+render("WCR_1.Rmd", html_password_protected(password=pw))
+
+```

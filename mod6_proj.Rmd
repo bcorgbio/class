@@ -16,7 +16,6 @@ library(ape)
 library(treeio)
 library(rgbif)
 library(data.table)
-library(EBImage)
 library(phytools)
 
 
@@ -251,8 +250,7 @@ all.dat%>%
    filter(is.na(identifier)&is.na(references)) %>% 
   count(species)
 
-dat %>% 
-  count(species)
+
 
 if(FALSE){
 
@@ -1470,7 +1468,6 @@ fore.I <- sapply(fore.I, function(x) Ix(x[,2],x[,1])) %>% unlist
 
 forewing.gp[[1]]
 
-```
 
 
 fore.I <- tibble(I=fore.I,xy.file=basename(names(forewing.AR)),wing="fore")%>% 
@@ -1874,7 +1871,7 @@ phylomorphospace.gg(lep.tree3,hindwing.pc3,tip.aes=aes(x,y,col=higher_taxon),tip
 To say something about whether hing- and forewing shape evolution is correlated we could undertake phylogenetic least squares analysis like we have in previous projects. But, we've done a ton already. So, let's make this simple and just perform [phylogenetic independent contrasts (PIC)](https://en.wikipedia.org/wiki/Phylogenetic_comparative_methods#:~:text=Phylogenetically%20independent%20contrasts,-The%20standardized%20contrasts&text=The%20logic%20of%20the%20method,statistically%20independent%20and%20identically%20distributed.) analysis. First proposed by @felsenstein1985phylogenies in his seminal paper, he proposed using phylogenetic information (under a Brownian-motion like model) to transform the original tip data into values that are statistically independent of one another. This method is captured in the `ape` function `pic()` For hindwing and forewing PC1, such analysis would look like this.
 
 
-```{r pic}
+```{r pic1}
 hindPC1.pic <- pic(hind.pc1,phy = lep.tree2)
 forePC1.pic <- pic(fore.pc1,phy = lep.tree2)
 ```
