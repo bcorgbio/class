@@ -102,7 +102,7 @@ All assignments are due at 11:59 on the specified date.
 
  || Monday <br> 8/28 |  Tuesday <br>8/29    | Wednesday<br>  8/30 | Thursday <br> 8/31 | Friday <br> 9/1 |Saturday<br> 9/2 | Sunday<br> 9/3
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** |[slides](lect\3140_f22_8-29.html) | | Post question to discussion board | Answer a question on discussion board  | | |
+**Assignment due** |[slides](lect\3140_f23_8-28.html) | | Post question to discussion board | Answer a question on discussion board  | | |
 
  || Monday <br> 9/4 |  Tuesday <br>9/5    | Wednesday<br>  9/6 | Thursday <br> 9/7 | Friday <br> 9/8 |Saturday<br> 9/9 | Sunday<br> 9/10
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
@@ -175,7 +175,7 @@ All form [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS):
   + How does one read data into R? 
   + What is tidy data? 
   + What's the difference between long and wide data tables? 
-  + How does one added and summarize data in R?
+  + How does one add and summarize data in R?
   + How does one merge data in join operations?  
 <br>
 
@@ -185,7 +185,7 @@ All assignments are due at 11:59 on the specified date.
 
   || Monday <br> 9/11 |  Tuesday <br>9/11    | Wednesday<br>  9/13 | Thursday <br> 9/14 | Friday <br> 9/15 |Saturday<br> 9/16 | Sunday<br> 9/17
   |--------|-------- |--------|-------- |--------|--------|--------|--------
-  **Assignment due** | | | Post question to discussion board | Answer a question on discussion board  <br> <br> [WCR 2](WCRs/WCR_2.html)| | | commit Module 2 Project Report
+  **Assignment due** | | | Post question to discussion board <br> <br> [WCR 2](WCRs/WCR_2.html)| Answer a question on discussion board  | | | commit Module 2 Project Report
   ||||||||
 
 
