@@ -2,5 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-lep_photos
-group_photos
+lep_photos/
+group_photos/
+ignore/

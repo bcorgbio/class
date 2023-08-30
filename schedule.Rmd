@@ -83,7 +83,7 @@ Check out the new [github access token requirements](https://docs.github.com/en/
 
   + Post one and respond to one question each week of Module 1 in our [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) 
   + [Install R and RStudio](https://rstudio-education.github.io/hopr/starting.html#starting)
-  + Clone a github team repository to a local directory (done in class with Prof. K's help on Wednesday, Sept 1)
+  + Clone a github team repository to a local directory (done in class with Prof. K's help on Wednesday, Aug 30)
   + Complete and commit a report for Module 1 Project 
 
 
@@ -102,7 +102,7 @@ All assignments are due at 11:59 on the specified date.
 
  || Monday <br> 8/28 |  Tuesday <br>8/29    | Wednesday<br>  8/30 | Thursday <br> 8/31 | Friday <br> 9/1 |Saturday<br> 9/2 | Sunday<br> 9/3
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** |[slides](lect\3140_f23_8-28.html) | | Post question to discussion board | Answer a question on discussion board  | | |
+**Assignment due** |[slides](lect\3140_f23_8-28.html) | | [slides](lect\3140_f23_8-30.html) <br> Post question to discussion board | Answer a question on discussion board  | | |
 
  || Monday <br> 9/4 |  Tuesday <br>9/5    | Wednesday<br>  9/6 | Thursday <br> 9/7 | Friday <br> 9/8 |Saturday<br> 9/9 | Sunday<br> 9/10
 |--------|-------- |--------|-------- |--------|--------|--------|--------    

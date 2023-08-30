@@ -3,7 +3,7 @@ title: "Welcome and Introduction"
 subtitle: "Setting the Stage"
 author: "Dr. Christopher Kenaley"
 institute: "Boston College"
-date: "2022/8/29"
+date: "2023/8/29"
 output:
   xaringan::moon_reader:
     lib_dir: libs
