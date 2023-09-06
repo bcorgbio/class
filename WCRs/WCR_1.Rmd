@@ -50,7 +50,7 @@ Submit your script via attachment by emailing it with the subject line "WRC1" to
 ```{r eval=F,include=F}
 library(rmarkdown)
 library(fidelius)
-pw <- "WCR1"
+pw <- "wcr!"
 render("WCR_1.Rmd", html_password_protected(password=pw))
 
 ```
