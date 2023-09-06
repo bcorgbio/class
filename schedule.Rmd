@@ -106,7 +106,7 @@ All assignments are due at 11:59 on the specified date.
 
  || Monday <br> 9/4 |  Tuesday <br>9/5    | Wednesday<br>  9/6 | Thursday <br> 9/7 | Friday <br> 9/8 |Saturday<br> 9/9 | Sunday<br> 9/10
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board | Answer a question on discussion board  <br> <br> [WCR 1](WCRs/WCR_1.html)| | | commit Module 1 project report
+**Assignment due** | | | Post question to discussion board  <br> <br> [WCR 1](WCRs/WCR_1.html)| | Answer a question on discussion board | | commit Module 1 project report
  |||||||
 <br>
 
