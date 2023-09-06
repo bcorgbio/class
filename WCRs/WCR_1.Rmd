@@ -10,6 +10,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
+**You will have 15 minutes to complete this WCR.**
+
 Fist begin by creating an R script name `Last_Fist_WRC1.R` [1 pt]
 
 ## Question 1
@@ -45,7 +47,7 @@ for( i in my_vec){
 
 ## Submission
 
-Submit your script via attachment by emailing it with the subject line "WRC1" to [kenaley@bc.edu](mailto:kenaley@bc.edu)
+Submit your script by uploading it to [this form](https://forms.gle/RnvBWAe1tGH2k8cKA).
 
 ```{r eval=F,include=F}
 library(rmarkdown)
