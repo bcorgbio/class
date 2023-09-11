@@ -183,9 +183,9 @@ All form [R for Data Science](https://r4ds.had.co.nz/wrangle-intro.html) (R4DS):
 
 All assignments are due at 11:59 on the specified date. 
 
-  || Monday <br> 9/11 |  Tuesday <br>9/11    | Wednesday<br>  9/13 | Thursday <br> 9/14 | Friday <br> 9/15 |Saturday<br> 9/16 | Sunday<br> 9/17
+  || Monday <br> 9/11 |  Tuesday <br>9/11 | Wednesday<br>  9/13 | Thursday <br> 9/14 | Friday <br> 9/15 |Saturday<br> 9/16 | Sunday<br> 9/17
   |--------|-------- |--------|-------- |--------|--------|--------|--------
-  **Assignment due** | | | Post question to discussion board <br> <br> [WCR 2](WCRs/WCR_2.html)| Answer a question on discussion board  | | | commit Module 2 Project Report
+  **Assignment due** |<br> <br> [slides](lect\3140_f23_9-11.html)  | | Post question to discussion board <br> <br> [WCR 2](WCRs/WCR_2.html)| Answer a question on discussion board  | | | commit Module 2 Project Report
   ||||||||
 
 
