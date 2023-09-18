@@ -178,7 +178,7 @@ Let's first see what the `features()` function can do for us by running the firs
 exp1 <- pseed2%>%
   filter(date=="2019-06-17-151149", fin=="L")
 
- f1 <-  features(x = exp1$frame,y=exp1$amp.bl)->f1
+ f1 <-  features(x = exp1$frame,y=exp1$amp.bl)
 ```
 
 `features()` will only accept a vector for the x and y data of a curvy relationship. So we have to break up our filtered `pseed2` table so that it can be used by the function. Here we made an `epx1` `data.frame` and passed the `frame` column to the x parameter and `amp.bl` to the y parameter. We saved the results of the `features()` operation to `f1`. Let's see what `features()` gave us with the `fget()` function in `features` (it simply extracts the important stuff from the results):
@@ -205,7 +205,7 @@ This is pretty good. We get all the peaks (the maxima of amplitude we're after).
  
 ```
 
-Very good, we now get postie and negative curvatures for the critical points. Now let's pull out the peaks, choosing those critical points that are negative. Let's make a tibble so we can use our `tidyverse` skillzzzz.
+Very good, we now get postive and negative curvatures for the critical points. Now let's pull out the peaks, choosing those critical points that are negative. Let's make a tibble so we can use our `tidyverse` skillzzzz.
 
 
 

@@ -491,6 +491,9 @@ div.tocify {
 <li>
   <a href="https://github.com/orgs/bcorgbio/discussions">BIOL 3140 Discussion</a>
 </li>
+<li>
+  <a href="https://bostoncollege.instructure.com/courses/1647043/gradebook">Grades on Canvas</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -799,7 +802,7 @@ unzipping it, and placing it in your project directory</p>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(f[<span class="dv">1</span>],<span class="at">delim=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span></code></pre></div>
 <pre><code>## Rows: 223 Columns: 2</code></pre>
-<pre><code>## ── Column specification ───────────────────────────────────────────────────
+<pre><code>## ── Column specification ──────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## dbl (2): X, Y
 ## 
@@ -1063,7 +1066,7 @@ filenames of each species in a table you can <a
 href="lep_image_data.csv">download here</a>. Have a look.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>lep.sp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;lep_image_data.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 1106 Columns: 5
-## ── Column specification ───────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (5): species, identifier, higher_taxon, common_name, highest_common_name
 ## 
@@ -1098,7 +1101,8 @@ from the outline names and join the species data to this new tibble.</p>
 <span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">identifier=</span><span class="fu">gsub</span>(<span class="st">&quot;XY_|_hindwing|_forewing|.txt&quot;</span>,<span class="st">&quot;&quot;</span>,xy.file)) <span class="sc">%&gt;%</span> </span>
 <span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a>  <span class="fu">left_join</span>(lep.sp)</span></code></pre></div>
 <pre><code>## Joining with `by = join_by(identifier)`</code></pre>
-<pre><code>## Warning in left_join(., lep.sp): Detected an unexpected many-to-many relationship between `x` and `y`.
+<pre><code>## Warning in left_join(., lep.sp): Detected an unexpected many-to-many relationship between `x` and
+## `y`.
 ## ℹ Row 5 of `x` matches multiple rows in `y`.
 ## ℹ Row 810 of `y` matches multiple rows in `x`.
 ## ℹ If a many-to-many relationship is expected, set `relationship =
@@ -1883,7 +1887,8 @@ file</a>.</p>
 <span id="cb67-2"><a href="#cb67-2" tabindex="-1"></a></span>
 <span id="cb67-3"><a href="#cb67-3" tabindex="-1"></a>hindPC1.res <span class="ot">&lt;-</span> <span class="fu">plot_SS</span>(lep.tree2,hindPC1.SS,<span class="at">tax =</span> tax.names)</span></code></pre></div>
 <pre><code>## Scale for y is already present.
-## Adding another scale for y, which will replace the existing scale.
+## Adding another scale for y, which will replace the existing
+## scale.
 ## Joining with `by = join_by(label)`
 ## Joining with `by = join_by(node)`
 ## Joining with `by = join_by(n)`</code></pre>
