@@ -322,7 +322,7 @@ All assignments are due at 11:59 on the specified date.
 
   || Monday <br> 9/25 |  Tuesday <br>9/26    | Wednesday<br>  9/27 | Thursday <br> 9/28 | Friday <br> 9/29 |Saturday<br> 9/30 | Sunday<br> 10/1
   |--------|-------- |--------|-------- |--------|--------|--------|--------
-  **Assignment due** | | | [slides](lect\3140_f23_9-25.html) <br> <br> Post question to discussion board  <br> <br> [WCR 4](WCRs/WCR_4.html)| Answer a question on discussion board  | | | commit Module 4 Project Report
+  **Assignment due** | [slides](lect\3140_f23_9-25.html) <br> <br> | | Post question to discussion board  <br> <br> [WCR 4](WCRs/WCR_4.html)| Answer a question on discussion board  | | | commit Module 4 Project Report
   ||||||||
 
 ## Module 5: Cheap Tricks in Physiology: Designing and Programming Simple, Low-Cost Data Acquisition Systems
