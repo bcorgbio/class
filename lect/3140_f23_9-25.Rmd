@@ -1,0 +1,50 @@
+---
+title: "Making Messes Pretty"
+subtitle: "R Markdown"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2023/9/25"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(ape)
+library(phytools)
+library(broom)
+
+
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+
+
+
+.pull-left[
+Today we'll ....
+
+- Introduce what a Markdown is.
+
+- Add pieces to a Markdown (text, headers, code, images, etc.)
+
+]
+
+.pull-right[
+![](https://d33wubrfki0l68.cloudfront.net/87603549ad0d95b0071da0f9270b2f89ead3b39b/48700/lesson-images/websites-1-render.png)
+]
+
+
+
