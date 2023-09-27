@@ -484,7 +484,7 @@ For this project report, write a script named "groupname_module3.R" and undertak
   
   1. Combine the code above so that you can establish the `anole.log` data tibble.
   2. Using the log-transformed data, construct two simple linear models that assess the effect of perch diameter and height by including these as covariates in your models. Be sure to use `+` notation rather than `*`, assuming there is no interaction (there isn't, trust me!).
-  3. Explore how both perch diameter and height effect the hindlimb-SVL relationship by plotting the residuals of your simple linear models against these discrete factors. This will require mutating a data tibble to include residuals from both models. Please produce two separate plots.
+  3. Explore how both perch diameter and height effect the hindlimb-SVL relationship by plotting the residuals of your simple linear models against the discrete factor of ecomorph with a plot of your choice. This will require mutating a data tibble to include residuals from both models. Please produce two separate plots.
   4. Under a BM model of trait evolution and using the tree provided, construct phylogenetic least squares models of the hindlimb-SVL relationships that include the unique combinations of these two covariates, i.e,
   
     * A PGLS model with the hindlimb-SVL relationship + perch height
@@ -512,38 +512,6 @@ lm.PD <- lm(HL~PD,dat)
 
 ```
 
-```{r,include=FALSE}
-
-anole.PD.lm <- lm(HTotal ~SVL+ArbPD,anole.log)
-anole.PH.lm <- lm(HTotal ~SVL+PH,anole.log)
-summary(anole.PD.lm)
-anole.log <-  anole.log%>%
-  mutate(pd.res=residuals(anole.PD.lm),ph.res=residuals(anole.PH.lm))
- 
-anole.log%>%
-ggplot(aes(x=ArbPD,y=pd.res,col=Ecomorph2)) +geom_point() 
-
-anole.log%>%
-ggplot(aes(x=ArbPD,y=ph.res,col=Ecomorph2)) +geom_point() 
-
-
-#PGLS under BM, w ecomorph
-pgls.BM3 <- gls(HTotal ~SVL+ArbPD, correlation = corBrownian(1,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
-
-pgls.BM4 <- gls(HTotal ~SVL+PH, correlation = corBrownian(1,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
-
-pgls.BM5 <- gls(HTotal ~SVL+ArbPD+PH, correlation = corBrownian(1,phy = anole.tree,form=~Species),data = anole.log, method = "ML")
-
-anole.phylo.aic <- AICc(pgls.BM3,pgls.BM4,pgls.BM5)
-aicw(anole.phylo.aic$AICc)
-
-anole.log <- anole.log%>%
-  mutate(phylo.res2=residuals(pgls.BM3))
-
- anole.log%>%
-ggplot(aes(x=ArbPD,y=phylo.res2,col=Ecomorph2)) +geom_point() 
- 
-```
 
 Submissions are due by 11:59 PM on Sunday, September 24th.
 
