@@ -20,43 +20,38 @@ In this project, we'll proceed with prototyping a simple sensor, one that can ve
 
 Assemble the following materials from your DaqPacks
 
-  + DHT11 precision linear analog temperature sensor
+  + DS18B20 precision linear digiral temperature sensor
   + Elegoo Arduino Uno clone
   + variety of jumper or prototyping wires
+  + wiring breadboard
   
 # Assembly and Programming
 
 ## Assembly
-Be sure to read this post about [Using a DHT11 Sensor](https://learn.adafruit.com/dht/using-a-dhtxx-sensor)---it provides a good overview of this temp sensor and explicit instructions for assembling and programming an Arduino-based temperature recording system.
+Be sure to read this post about [DS18B20 Sensor](https://randomnerdtutorials.com/guide-for-ds18b20-temperature-sensor-with-arduino/)---it provides a good overview of this temp sensor and explicit instructions for assembling and programming an Arduino-based temperature recording system.
 
-Let's start with assembly. First, we'll wire the three pins of the DHT11 according the this diagram (ignore the resistor component):
+Let's start with assembly. First, we'll wire the three pins of the DS18B20 according the this diagram:
 
 
 <center>
-<img src="https://arduinogetstarted.com/images/tutorial/arduino-dht11-temperature-humudity-module-wiring-diagram.jpg" alt="alternatetext">
+<img src="https://lastminuteengineers.b-cdn.net/wp-content/uploads/arduino/Wiring-DS18B20-Temperature-Sensor-to-Arduino.png" alt="alternatetext">
 </center>
 <br>
 
-**NOTE** Be very careful wiring this sensor. Be sure of the following, otherwise you may fry the sensor:
+**NOTE** Be very careful wiring this sensor. Be sure of the following using a breadboard, otherwise you may fry the sensor:
 
-  + The "+" or "VCC" pin on the sensor module is wired to the 5V pin on the Arduino and 
-  + The "GND" or "-" pin on the sensor is wired to the GND pin on the Arduino
-  + The "S" pin on the sensor is wired to a digital pin on the Arduino (D2 will do).
+  + The red ("+" or "VCC") pin on the sensor module is wired to the 5V pin on the Arduino and 
+  + The blacke ("GND" or "-") pin on the sensor is wired to the GND pin on the Arduino
+  + The yellow ("S" or data) pin on the sensor is wired to a digital pin on the Arduino (D2 will do).
+  + Use the provided 4.7K pullup resistor between the data and the 5V pint 
 
 ## Programming
 
-Begin by reading Adafruit's [programming guide for this sensor](https://learn.adafruit.com/dht/using-a-dhtxx-sensor). You'll have to add the DHT library to your Arduino IDE following the directions in the guide. While adding the library, you may see a prompt asking if you'd like to also install missing dependencies (things the DHT library also needs to run). Go ahead and click "install all". 
+You'll first have to add a few libraries---Onew Wire and Dallas Temperature---to your Arduino IDE following the directions in the [guide](https://randomnerdtutorials.com/guide-for-ds18b20-temperature-sensor-with-arduino/) linked above. Follow the section in  While adding the library, you may see a prompt asking if you'd like to also install missing dependencies (things the these library also needs to run). Go ahead and click "install all". 
 
-Once the library is installed, click on **File &#8594; Examples &#8594; DHT &#8594; DHTtester** to open an sketch. You may have to close and restart the IDE for the DHT example sketch to appear. Follow the directions in the guide to modify the sketch for use with the DHT11 sensor, namely that you'll have to comment out the line defines the sensor as a DHT2222 and uncomment the line that defines it as a DHT11. It should look like this:
+Once the library is installed, click on **File &#8594; Examples &#8594; Dallas Temperatue &#8594; Simple** to open an example sketch. You may have to close and restart the IDE for the example sketch to appear. 
 
-```{}  
-/ Uncomment whatever type you're using!
-#define DHTTYPE DHT11   // DHT 11
-//#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
-//#define DHTTYPE DHT21   // DHT 21 (AM2301)
-```
-
-If everything is in order---you've chosen the right port and board in Arduino IDE---you can now click on the serial monitor icon in the upper right of the IDE (or pres "cmd/ctrl+shift+m") to see what data are being printed from the microcontroller to your computer over the serial (USB) port. It should look something like this. If so, CONGRATS! You're recording temperature data!
+If everything is in order---you've chosen the right port and board in Arduino IDE---you can now click upload or `Ctrl`/Cmd`+`u` and then the serial monitor icon the IDE (or pres "cmd/ctrl+shift+m") to see what data are being printed from the microcontroller to your computer over the serial (USB) port. It should look something like this. If so, CONGRATS! You're recording temperature data!
 
 <div class = "green">
 <div class="row">
@@ -68,11 +63,11 @@ If everything is in order---you've chosen the right port and board in Arduino ID
 <br>
 
 <center>
-![FigName](tempserial.png)
+![FigName](https://lastminuteengineers.b-cdn.net/wp-content/uploads/arduino/DS18B20-Temperature-Sensor-Output-On-Serial-Monitor.png)
 </center>
 <br>
 
-Notice the serial monitor is ouputting data from the Arduino that include humidity, temperature (in °C and °F) and heat index (in °C and °F). This is great, but as a scientist, you're probably building this instrument to record temperature over some length of time. Thus, reporting when, relative to the start of the experiment, the temperature was recorded is important. In addition, we're using this sensor to give us temperature in readings in °C and we don't much care about all the other stuff. Fortunately, modifying the output is a piece of cake.
+Notice the serial monitor is ouputting data from the Arduino that include temperature (in °C and ). This is great, but as a scientist, you're probably building this instrument to record temperature over some length of time. Thus, reporting when, relative to the start of the experiment, the temperature was recorded is important. Fortunately, modifying the output is a piece of cake.
 
 First, recording and printing time to the serial connection is super easy. We can do this by adding a new variable `currentTime` and passing a time value in milliseconds to this variable in the void loop. First, add `int currentTime;` to the top of the sketch where the other variables are established. `int` establishes the variable as an integer, which is just fine because milliseconds is recorded as whole numbers. Second, add this to the `void(loop)`:
 
@@ -90,88 +85,66 @@ This first line above records the time in milliseconds. The second and third lin
 An amended code looks something like this:
 
 ```{}
-// Example testing sketch for various DHT humidity/temperature sensors
-// Written by ladyada, public domain
 
-// REQUIRES the following Arduino libraries:
-// - DHT Sensor Library: https://github.com/adafruit/DHT-sensor-library
-// - Adafruit Unified Sensor Lib: https://github.com/adafruit/Adafruit_Sensor
+//add current time variable
+int currentTime;
 
-#include "DHT.h"
+// Include the libraries we need
+#include <OneWire.h>
+#include <DallasTemperature.h>
 
-#define DHTPIN 2     // Digital pin connected to the DHT sensor
-// Feather HUZZAH ESP8266 note: use pins 3, 4, 5, 12, 13 or 14 --
-// Pin 15 can work but DHT must be disconnected during program upload.
+// Data wire is plugged into port 2 on the Arduino
+#define ONE_WIRE_BUS 2
 
-// Uncomment whatever type you're using!
-//#define DHTTYPE DHT11   // DHT 11
-#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
-//#define DHTTYPE DHT21   // DHT 21 (AM2301)
+// Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
+OneWire oneWire(ONE_WIRE_BUS);
 
-// Connect pin 1 (on the left) of the sensor to +5V
-// NOTE: If using a board with 3.3V logic like an Arduino Due connect pin 1
-// to 3.3V instead of 5V!
-// Connect pin 2 of the sensor to whatever your DHTPIN is
-// Connect pin 3 (on the right) of the sensor to GROUND (if your sensor has 3 pins)
-// Connect pin 4 (on the right) of the sensor to GROUND and leave the pin 3 EMPTY (if your sensor has 4 pins)
-// Connect a 10K resistor from pin 2 (data) to pin 1 (power) of the sensor
+// Pass our oneWire reference to Dallas Temperature. 
+DallasTemperature sensors(&oneWire);
 
-// Initialize DHT sensor.
-// Note that older versions of this library took an optional third parameter to
-// tweak the timings for faster processors.  This parameter is no longer needed
-// as the current DHT reading algorithm adjusts itself to work on faster procs.
-DHT dht(DHTPIN, DHTTYPE);
-
-//adding time variable
-int currentTime
-  
-void setup() {
+/*
+ * The setup function. We only start the sensors here
+ */
+void setup(void)
+{
+  // start serial port
   Serial.begin(9600);
-  Serial.println(F("DHTxx test!"));
+  Serial.println("Dallas Temperature IC Control Library Demo");
 
-  dht.begin();
+  // Start up the library
+  sensors.begin();
 }
 
-void loop() {
-  // Wait a few seconds between measurements.
-  delay(2000);
+/*
+ * Main function, get and show the temperature
+ */
+void loop(void)
+{ 
+  // call sensors.requestTemperatures() to issue a global temperature 
+  // request to all devices on the bus
+  Serial.print("Requesting temperatures...");
+  sensors.requestTemperatures(); // Send the command to get temperatures
+  Serial.println("DONE");
+  // After we got the temperatures, we can print them here.
+  // We use the function ByIndex, and as an example get the temperature from the first sensor only.
+  float tempC = sensors.getTempCByIndex(0);
 
-  // Reading temperature or humidity takes about 250 milliseconds!
-  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-  float h = dht.readHumidity();
-  // Read temperature as Celsius (the default)
-  float t = dht.readTemperature();
-  // Read temperature as Fahrenheit (isFahrenheit = true)
-  float f = dht.readTemperature(true);
-
-  // Check if any reads failed and exit early (to try again).
-  if (isnan(h) || isnan(t) || isnan(f)) {
-    Serial.println(F("Failed to read from DHT sensor!"));
-    return;
-  }
-
-  // Compute heat index in Fahrenheit (the default)
-  float hif = dht.computeHeatIndex(f, h);
-  // Compute heat index in Celsius (isFahreheit = false)
-  float hic = dht.computeHeatIndex(t, h, false);
-
- //add line to record current time 
+  // Check if reading was successful
+  if(tempC != DEVICE_DISCONNECTED_C) 
+  {
+    Serial.print("Temperature for the device 1 (index 0) is: ");
+    Serial.println(tempC);
+     //add line to record current time 
   currentTime=millis(); 
  
   //add line to print current time 
   Serial.print("Time = ");
   Serial.println(currentTime);
-  Serial.print(F("Humidity: "));
-  Serial.print(h);
-  Serial.print(F("%  Temperature: "));
-  Serial.print(t);
-  Serial.print(F("°C "));
-  Serial.print(f);
-  Serial.print(F("°F  Heat index: "));
-  Serial.print(hic);
-  Serial.print(F("°C "));
-  Serial.print(hif);
-  Serial.println(F("°F"));
+  } 
+  else
+  {
+    Serial.println("Error: Could not read temperature data");
+  }
 }
 
 
@@ -179,7 +152,7 @@ void loop() {
 
 Check in on the serial monitor. Notice that there's now a new line (outlined below in red) that reports time in milliseconds:
 
-![FigName](tempserial2.png)
+![FigName](serialtime.png)
 </center>
 <br>
 
@@ -191,7 +164,7 @@ To do this, we need to rearrange and add some `Serial.print()` commands to the `
 
 ```{}
   //add line to record current time 
-  currentTime=millis(); 
+ unsigned long currentTime; 
   
   //add line to print current time 
   Serial.print("Time = ");
@@ -210,23 +183,41 @@ To do this, we need to rearrange and add some `Serial.print()` commands to the `
   
 ```
 
- . . . let's ditch the prefixes and unneeded data and print some commas. Notice the last serial print command is  `Serial.println()` to start a new line before the next data are printed.
+ . . . let's ditch the error handling `if` loop,  prefixes (e.g., `Serial.print("Requesting temperatures...");`) and unneeded message and print data semparated by some commas. Replace the entire void loop with this:
  
+ Notice the last serial print command is  `Serial.println()` to start a new line before the next data are printed. 
 ```{}
- //print current time 
-  Serial.print(currentTime);
- //print a comma 
-  Serial.print(",");
-  Serial.println(t);
+ void loop(void)
+{ 
+  // call sensors.requestTemperatures() to issue a global temperature 
+  // request to all devices on the bus
   
+  sensors.requestTemperatures(); // Send the command to get temperatures
+  
+    //add line to record current time 
+  currentTime=millis(); 
+  // After we got the temperatures, we can print them here.
+  // We use the function ByIndex, and as an example get the temperature from the first sensor only.
+  float tempC = sensors.getTempCByIndex(0);
+
+     Serial.print(currentTime);
+     Serial.print(",");
+     Serial.println(tempC);
+    
+}
 ```
 
-Now we're only printing time (in ms) and temperature (in °C). If your wondering where the `t` variable comes from, it's this line in the loop that reads temperature from the module and stores it.
+Now we're only printing time (in ms) and temperature (in °C). If your wondering where the `tempC` variable comes from, it's this line in the loop that reads temperature from the module and stores it.
  
  ```{}
- // Read temperature as Celsius (the default)
-  float t = dht.readTemperature();
-  ```
+ float tempC = sensors.getTempCByIndex(0);
+```
+
+Notice that, there's still and unneeded message printed at the beginning of the program. Delete this from the `setup` void.
+
+```
+ Serial.println("Dallas Temperature IC Control Library Demo");
+```
   
 Upload the sketch and have a look at the serial monitor. Notice that we have data for milliseconds and temp in &deg;C separated by commas. That is, we have comma separated values (.csv)! There's just one problem with this---unless you knew the inner workings of this sketch, you wouldn't know which data were which. Is the first value time or temperature? Printing a header at the beginning of the program is the solution. After this, the header and data can be copied and pasted to a text file and any computing operations that follow will logically parse and have a name for each column or position in the series of data. 
 
@@ -239,90 +230,15 @@ Serial.println("ms,degC");
 
 After adding this and uploading the modified sketch, the serial monitor should now print a header (i.e., column names) and then the data like this:
 
-![FigName](tempserial4.png)
+![FigName](serialtime2.png)
 </center>
 <br>
 
 This new modified Arduino sketch follows here:
 
 ```{}
-// Example testing sketch for various DHT humidity/temperature sensors
-// Written by ladyada, public domain
-
-// REQUIRES the following Arduino libraries:
-// - DHT Sensor Library: https://github.com/adafruit/DHT-sensor-library
-// - Adafruit Unified Sensor Lib: https://github.com/adafruit/Adafruit_Sensor
-
-#include "DHT.h"
-
-#define DHTPIN 2     // Digital pin connected to the DHT sensor
-// Feather HUZZAH ESP8266 note: use pins 3, 4, 5, 12, 13 or 14 --
-// Pin 15 can work but DHT must be disconnected during program upload.
-
-// Uncomment whatever type you're using!
-//#define DHTTYPE DHT11   // DHT 11
-#define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
-//#define DHTTYPE DHT21   // DHT 21 (AM2301)
-
-// Connect pin 1 (on the left) of the sensor to +5V
-// NOTE: If using a board with 3.3V logic like an Arduino Due connect pin 1
-// to 3.3V instead of 5V!
-// Connect pin 2 of the sensor to whatever your DHTPIN is
-// Connect pin 3 (on the right) of the sensor to GROUND (if your sensor has 3 pins)
-// Connect pin 4 (on the right) of the sensor to GROUND and leave the pin 3 EMPTY (if your sensor has 4 pins)
-// Connect a 10K resistor from pin 2 (data) to pin 1 (power) of the sensor
-
-// Initialize DHT sensor.
-// Note that older versions of this library took an optional third parameter to
-// tweak the timings for faster processors.  This parameter is no longer needed
-// as the current DHT reading algorithm adjusts itself to work on faster procs.
-DHT dht(DHTPIN, DHTTYPE);
-
-//adding time variable
-int currentTime;
-
-void setup() {
-  Serial.begin(9600);
-  Serial.println(F("DHTxx test!"));
-
-  dht.begin();
-
-  //add header
-  Serial.println("ms,degC");
-}
-
-void loop() {
-  // Wait a few seconds between measurements.
-  delay(2000);
-
-  // Reading temperature or humidity takes about 250 milliseconds!
-  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-  float h = dht.readHumidity();
-  // Read temperature as Celsius (the default)
-  float t = dht.readTemperature();
-  // Read temperature as Fahrenheit (isFahrenheit = true)
-  float f = dht.readTemperature(true);
-
-  // Check if any reads failed and exit early (to try again).
-  if (isnan(h) || isnan(t) || isnan(f)) {
-    Serial.println(F("Failed to read from DHT sensor!"));
-    return;
-  }
-
-  // Compute heat index in Fahrenheit (the default)
-  float hif = dht.computeHeatIndex(f, h);
-  // Compute heat index in Celsius (isFahreheit = false)
-  float hic = dht.computeHeatIndex(t, h, false);
-
-  //add line to record current time
-  currentTime = millis();
-
-  //print current time
-  Serial.print(currentTime);
-  //print a comma
-  Serial.print(",");
-  Serial.println(t);
-}
+//add header
+Serial.println("ms,degC");
 ```
 
 
@@ -419,7 +335,7 @@ This report will require you to submit an .Rmd with HTML output that includes al
   + Find, cite, and comment on a study in the discussion that frames the results, i.e., are your result congruent or not with previous findings and why? 
   + In the author contributions section, include short, explicit statements of each team member's role in executing the project. 
   
-Push your .Rmd to your team's repo on GitHub. **Submissions are due by 11:59 pm on Sunday, October 8th.**
+Push your .Rmd to your team's repo on GitHub. **Submissions are due by 11:59 pm on Tuesday, October 10th.**
 
 Good luck!!
 
