@@ -419,7 +419,7 @@ This report will require you to submit an .Rmd with HTML output that includes al
   + Find, cite, and comment on a study in the discussion that frames the results, i.e., are your result congruent or not with previous findings and why? 
   + In the author contributions section, include short, explicit statements of each team member's role in executing the project. 
   
-Push your .Rmd to the projects directory established for each team on GitHub. **Submissions are due by 11:59 pm on Tuesday, October 11th.**
+Push your .Rmd to your team's repo on GitHub. **Submissions are due by 11:59 pm on Sunday, October 8th.**
 
 Good luck!!
 
