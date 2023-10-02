@@ -353,7 +353,7 @@ Upon completion of this week and module, students will be able to:
   + [Getting Started with the Arduino UNO](https://www.arduino.cc/en/Guide/ArduinoUno)
   + [The Serial Monitor](https://learn.adafruit.com/adafruit-arduino-lesson-5-the-serial-monitor/the-serial-monitor)
   + [How Does a Breadboard Work](https://www.sciencebuddies.org/science-fair-projects/references/how-to-use-a-breadboard)
-  + [Using a DHT11 Sensor](https://learn.adafruit.com/dht/using-a-dhtxx-sensor)
+  + [Using a DS18B20 sensor](https://randomnerdtutorials.com/guide-for-ds18b20-temperature-sensor-with-arduino/)
 
 
 ### Do
@@ -377,7 +377,7 @@ All assignments are due at 11:59 on the specified date.
 
  || Monday <br> 10/2 |  Tuesday <br>10/3    | Wednesday<br>  10/4 | Thursday <br> 10/5 | Friday <br> 10/6 |Saturday<br> 10/7 | Sunday<br> 10/8 
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board <br> <br> [WCR 5](WCRs/WCR_5.html) | Answer a question on discussion board | | | commit Module 5 Project Report
+**Assignment due** |[slides](lect\3140_f23_10-2.html)| | Post question to discussion board <br> <br> [WCR 5](WCRs/WCR_5.html) | Answer a question on discussion board | | | commit Module 5 Project Report
   ||||||||
 
 
