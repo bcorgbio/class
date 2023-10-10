@@ -396,7 +396,6 @@ This module puts our newly formed data analysis and markdown skills to use in an
 Weeks 7--9 (Oct 9—27):
 
 ### Key Concepts
-  <!-- + Saving instrument data to an SD card. -->
   + Morphometrics
   + Fluid mechanics
   + Evolutionary rate
@@ -419,11 +418,12 @@ Upon completion of this module, students will be able to:
   
   + [DeVries, P.J., Penz, C.M. and Hill, R.I., 2010. Vertical distribution, flight behaviour and evolution of wing morphology in Morpho butterflies. Journal of Animal Ecology, 79(5): 1077-1085.](DeVries_etal_20210.pdf)
   + [Intoduction to Momocs](https://momx.github.io/Momocs/articles/Momocs_intro.html)
+  + This [tutorial on Principal Components Analysis](https://builtin.com/data-science/step-step-explanation-principal-component-analysis).
 
 ### Do
-
+  + Download and install [FIJI (**F**iji **Is** **J**ust **i**mageJ)](https://imagej.net/software/fiji/downloads)
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
-  + Upload team data files to [this directory](https://drive.google.com/drive/folders/11VBPXKHWvlBSZ9z2asQ8EG4NYsGoOk0U?usp=sharing) by Tuesday, October 17th
+  + Upload team data files to [this directory](https://drive.google.com/drive/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Glk5?usp=drive_link) by Tuesday, October 17th
   + Complete and commit Module 6 Project report
 
 
@@ -440,7 +440,7 @@ All assignments are due at 11:59 on the specified date.
 
  || Monday <br> 10/9 |  Tuesday <br>10/10*    | Wednesday<br>  10/11 | Thursday <br> 10/12 | Friday <br> 10/13 |Saturday<br> 10/14 | Sunday<br> 10/15
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 
-**Assignment due** | | | Post question to discussion board <br> <br> [WCR 6](WCRs/WCR_6.html)| Answer a question on discussion board  | | |
+**Assignment due** | |[slides](lect\3140_f23_10-10.html) | Post question to discussion board <br> <br> [WCR 6](WCRs/WCR_6.html)| Answer a question on discussion board  | | |
  
  || Monday <br> 10/16 |  Tuesday <br>10/17    | Wednesday<br>  10/18 | Thursday <br> 10/19 | Friday <br> 10/20* |Saturday<br> 10/21 | Sunday<br> 10/22
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 

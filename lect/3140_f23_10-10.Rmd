@@ -1,0 +1,276 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 6: The Shape of Pretty Things"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2021/10/10"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(ape)
+library(phytools)
+library(broom)
+library(Momocs)
+
+
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Kick off Module 6
+
+- Introduce imageJ/FIJI
+
+- Shape analysis
+
+]
+
+.pull-right[
+![](https://3.bp.blogspot.com/-0ZJtpbcAlWo/W9R6ek_sNPI/AAAAAAAAUj0/ncYRT0nN9MctC-x60-boMe8bodGXNM2LQCLcBGAs/s450/ButterflyWing3a.jpg)
+]
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Module 6: Shape of Pretty Things
+
+.pull-left[
+
+- The Lepidoptera: a hyperdiverse radiation
+- Two wings: one more important than the other?
+
+
+]
+
+.pull-right[
+![](https://www.pnas.org/cms/10.1073/pnas.1907847116/asset/075c8ff7-6363-462d-a528-f2b13710804d/assets/graphic/pnas.1907847116fig01.jpeg)
+]
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Module 6: Shape of Pretty Things
+
+.pull-left[
+
+- The Lepidoptera: a hyperdiverse radiation
+- Two wings: one more important than the other?
+
+]
+
+.pull-right[
+![](https://d3i71xaburhd42.cloudfront.net/bb0cd297955c4ec58bd60777dc345f7c1d5d93bd/3-Figure1-1.png)
+]
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Module 6: Shape of Pretty Things
+
+.pull-left[
+
+- The Lepidoptera: a hyperdiverse radiation
+- Two wings: one more important than the other?
+
+]
+
+.pull-right[
+![](flightpath.png)
+Jantzen and Eisner (2008)
+]
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## More software: FIJI
+
+
+.pull-left[
+
+- Outline shapes of each wing
+- Worflow
+- Fit spline using a macro
+
+]
+
+.pull-right[
+![](http://bigwww.epfl.ch/sage/soft/mij/meta/splash.png)
+]
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## More software: FIJI
+
+
+.pull-left[
+
+- Outline shapes of each wing
+- Worflow
+- Fit spline using a macro
+
+]
+
+.pull-right[
+![](firstpoint.png)
+]
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## More software: FIJI
+
+
+.pull-left[
+
+- Outline shapes of each wing
+- Worflow
+- Fit spline using a macro
+
+]
+
+.pull-right[
+![](hindwing.png)
+]
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## More software: FIJI
+
+
+.pull-left[
+
+- Outline shapes of each wing
+- Worflow
+- Fit spline using a macro
+
+]
+
+.pull-right[
+![](lep_workflow.jpeg)
+]
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Shape Analysis
+
+
+
+```{r,message=F,echo=F}
+
+f <- list.files("out_data",full.names = T)
+f <- f[sample(1:length(f),50)]
+
+#make a large df with vroom
+out.df <- vroom::vroom(f, id = "filename")
+
+#add wing info
+out.df <- out.df %>% 
+  mutate(wing=gsub("XY_.+_(hindwing|forewing)\\..+","\\1",basename(filename))) %>% 
+  na.omit()
+
+#make a large df with vroom
+out.df <- vroom::vroom(f, id = "filename")
+
+#make list
+outs.l <- sapply(f,function(x) out.df %>% filter(filename==x) %>% select(X,Y) %>% as.matrix)
+
+outs.l %>% 
+  Out() %>% 
+  coo_flipx() %>% 
+  stack()
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Shape Analysis
+
+
+- Procrustes alignment
+
+```{r,message=F,echo=F}
+
+out <- outs.l %>% 
+  Out()
+
+
+```
+
+
+.pull-left[
+```{r,message=F,results='hide'}
+
+min <- out %>% 
+  coo_nb() %>% 
+  min()
+
+align_out <- out %>%
+  coo_interpolate(min) %>% 
+  fgProcrustes()
+```
+]
+
+.pull-right[
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Procrustes_superimposition.png/440px-Procrustes_superimposition.png)
+]
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Shape Analysis
+
+
+- Procrustes alignment
+
+
+
+```{r}
+align_out %>% 
+  stack
+
+```
+
+
+<!-- https://link.springer.com/article/10.1007/s00414-017-1555-0/figures/3 -->
+
+
+
+
+
+
+
+
