@@ -1,0 +1,226 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 6: The Shape of Pretty Things Part Deux"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2021/10/11"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(ape)
+library(phytools)
+library(broom)
+library(Momocs)
+
+
+
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Shape Analysis
+
+
+
+```{r,message=F,echo=F}
+
+f <- list.files("out_data",full.names = T)
+f <- f[sample(1:length(f),50)]
+
+#make a large df with vroom
+out.df <- vroom::vroom(f, id = "filename")
+
+#add wing info
+out.df <- out.df %>% 
+  mutate(wing=gsub("XY_.+_(hindwing|forewing)\\..+","\\1",basename(filename))) %>% 
+  na.omit()
+
+#make a large df with vroom
+out.df <- vroom::vroom(f, id = "filename")
+
+#make list
+outs.l <- sapply(f,function(x) out.df %>% filter(filename==x) %>% select(X,Y) %>% as.matrix)
+
+outs.l %>% 
+  Out() %>% 
+  coo_flipx() %>% 
+  stack()
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Shape Analysis
+
+
+- Procrustes alignment
+
+```{r,message=F,echo=F}
+
+out <- outs.l %>% 
+  Out()
+
+
+```
+
+
+.pull-left[
+```{r,message=F,results='hide'}
+
+min <- out %>% 
+  coo_nb() %>% 
+  min()
+
+align_out <- out %>%
+  coo_interpolate(min) %>% 
+  fgProcrustes()
+```
+]
+
+.pull-right[
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Procrustes_superimposition.png/440px-Procrustes_superimposition.png)
+]
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Shape Analysis
+
+
+- Procrustes alignment
+
+
+
+```{r}
+align_out %>% 
+  stack
+
+```
+
+
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Elliptical Fourier Analysis (EFA)
+
+
+.pull-left[
+
+- Describes shapes with harmonics, as series of ellipses
+- Increasing the number of harmonics increases fit
+
+![](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*tKUOj31pLMO4ZWr4-EzyGw.png)
+
+Step 1: Find the major frequency of the harmonics across the array of shapes
+]
+
+.pull-right[
+![](https://spatial-efd.readthedocs.io/en/latest/_images/figure_1.png)
+]
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Elliptical Fourier Analysis (EFA)
+
+
+
+
+.pull-left[
+
+- Describes shapes with harmonics, as series of ellipses
+- Increasing the number of harmonics increases fit
+- Each harmonic has its own set of coefficients:
+    - major and minor axes
+    - angles
+  
+
+Step 2: For the number of Fourier-derive harmonics describe the coefficient values for each in each shape
+
+]
+
+.pull-right[
+![](https://spatial-efd.readthedocs.io/en/latest/_images/figure_1.png)
+]
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Elliptical Fourier Analysis (EFA)
+
+
+
+
+.pull-left[
+
+```{r,results='hide',warning=FALSE}
+EFA_out <- out %>%
+  coo_interpolate(min) %>% 
+ fgProcrustes() %>% 
+  efourier(norm=T) 
+```
+  
+
+]
+
+.pull-right[
+
+```{r}
+EFA_out%>% 
+  PCA() %>% 
+  plot_PCA()
+```
+]
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Principal Components Analyss (PCA)
+
+
+
+
+.pull-left[
+
+- Reduce dimensionality
+- Regress through dimensions that find most variance
+- Extract these components
+  
+
+
+]
+
+
+
+.pull-right[
+![](https://spatial-efd.readthedocs.io/en/latest/_images/figure_1.png)]
+]
+
+
+
+
