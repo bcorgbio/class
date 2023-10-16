@@ -768,7 +768,7 @@ This script [fits a spline](https://en.wikipedia.org/wiki/Spline_interpolation) 
 For some species there may be only one image. For others there may be 10 or more. If you can, aim to outline the wing of *three specimens per species*.
 
 
-After your team has completed outlining the assigned species, upload your text files to [this directory](https://drive.google.com/drive/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Glk5?usp=drive_link).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the outlines and do some post-processing if required (i.e., file-name checks, outline quality, etc.). You can then download [these evaluated data](class_out_data.zip) for shape analysis.
+After your team has completed outlining the assigned species, upload your text files to [this directory](https://drive.google.com/drive/u/1/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Glk5).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the outlines and do some post-processing if required (i.e., file-name checks, outline quality, etc.). You can then download [these evaluated data](class_out_data.zip) for shape analysis.
 
 ## Shape analysis
 
