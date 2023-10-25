@@ -652,14 +652,12 @@ follow this generalize workflow below in the image analysis program FIJI
 </center>
 <p><br></p>
 <p>You and your team should will be assigned about 20 of the ~200
-species to outline. Images of these species can be accessed through
-[thes directories] (<a
-href="https://drive.google.com/drive/folders/1TYAzcMcH0u64OEqsuc61W97zIL7qLGWU?usp=sharing"
-class="uri">https://drive.google.com/drive/folders/1TYAzcMcH0u64OEqsuc61W97zIL7qLGWU?usp=sharing</a>).
-First choose one of your species to work on. For each species, start
-with what you think is the best image, that is, it has a scale bar, the
-wings are not damaged, and the hindwing is most exposed. Open that best
-image in Fiji.</p>
+species to outline. Images of these species can be accessed through <a
+href="https://drive.google.com/drive/folders/1TYAzcMcH0u64OEqsuc61W97zIL7qLGWU?usp=sharing">this
+directory</a>. First choose one of your species to work on. For each
+species, start with what you think is the best image, that is, it has a
+scale bar, the wings are not damaged, and the hindwing is most exposed.
+Open that best image in Fiji.</p>
 <p>After opening the photo, follow the steps above.</p>
 <ol style="list-style-type: decimal">
 <li><p>If there’s a scale bar, <a
@@ -724,8 +722,8 @@ href="https://drive.google.com/drive/u/1/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Gl
 directory</a>. Once all the data appear here, Prof. Kenaley will
 evaluate the quality of the outlines and do some post-processing if
 required (i.e., file-name checks, outline quality, etc.). You can then
-download <a href="class_out_data.zip">these evaluated data</a> for shape
-analysis.</p>
+download <a href="data/class_out_data.zip">these evaluated data</a> for
+shape analysis.</p>
 </div>
 <div id="shape-analysis" class="section level2">
 <h2>Shape analysis</h2>
@@ -777,20 +775,20 @@ variance, say 90% or more.</p>
 <p>To perform EFA and then PCA, we need only to turn to one R package,
 <code>Momocs</code>. Let’s load this package and begin with an example
 analysis that we can scale up on our full data set.</p>
-<p><del>Let’s begin by reading in one of the outline text files,
+<p>We can begin by reading in one of the outline text files,
 Prof. Kenaley has already produced for 10 species of butterflies and
 moths. Please <a href="lep_examples.zip">download these</a> to follow
 along. You can unzip this directory and place it your project
-directory.</del></p>
-<p>You can begin the full analysis by <a
-href="class_out_data.zip">downloading this zipped directory</a>,
+directory</p>
+<p>You can begin the full analysis on data collected by the whole class
+by <a href="class_out_data.zip">downloading this zipped directory</a>,
 unzipping it, and placing it in your project directory</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">library</span>(Momocs)</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;class_out_data&quot;</span>,<span class="at">pattern=</span><span class="st">&quot;.txt|.csv&quot;</span>,<span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;lep_examples&quot;</span>,<span class="at">pattern=</span><span class="st">&quot;.txt|.csv&quot;</span>,<span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(f[<span class="dv">1</span>],<span class="at">delim=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(f[<span class="dv">1</span>],<span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a></span>
 <span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>out <span class="sc">%&gt;%</span> </span>
@@ -825,19 +823,18 @@ which can be passed through this function.</p>
 list, so <del>we can work on the list established here to visualize our
 outlines.</del> we’ll have to construct a list a little differently.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co">#make a large df with vroom</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>out.df <span class="ot">&lt;-</span> vroom<span class="sc">::</span><span class="fu">vroom</span>(f, <span class="at">id =</span> <span class="st">&quot;filename&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>out.df <span class="ot">&lt;-</span> vroom<span class="sc">::</span><span class="fu">vroom</span>(f, <span class="at">id =</span> <span class="st">&quot;filename&quot;</span>,<span class="at">progress=</span>F)</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#make list</span></span>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>outs.l <span class="ot">&lt;-</span> <span class="fu">sapply</span>(f,<span class="cf">function</span>(x) out.df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(filename<span class="sc">==</span>x) <span class="sc">%&gt;%</span> <span class="fu">select</span>(X,Y) <span class="sc">%&gt;%</span> as.matrix)</span>
 <span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
 <span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>outs.l <span class="sc">%&gt;%</span> </span>
 <span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="fu">Out</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  <span class="fu">coo_flipx</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
 <p><img src="mod6_proj_files/figure-html/datlist2-1.png" width="672" /></p>
 <p>Wonderful! Fore- and hindwings loaded for the 10 examples species.
 However, notice we have a few problems. First, both fore- and hindwing
-are included in the in the same data set. This confounds analyzing and
+are included in the same data set. This confounds analyzing and
 comparing shape in fore- and hindwing separately, a major goal of this
 project. Second, the outlines are of arbitrary size due to how much of
 the pixel field they spanned in the photos and whether or not a scale in
@@ -1044,9 +1041,9 @@ outline. Let’s look at their names.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">basename</span>(<span class="fu">names</span>(outs))[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
 <pre><code>## [1] &quot;XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt&quot;
 ## [2] &quot;XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt&quot;
-## [3] &quot;XY_002-02-Thymelicus_sylvestris_(211a)_forewing.txt&quot;                             
-## [4] &quot;XY_002-02-Thymelicus_sylvestris_(211a)_hindwing.txt&quot;                             
-## [5] &quot;XY_04-SRNP-2010-DHJ331720%2B1145363716_forewing.txt&quot;</code></pre>
+## [3] &quot;XY_002-02-Thymelicus_sylvestris_(211a)_forewing.csv&quot;                             
+## [4] &quot;XY_002-02-Thymelicus_sylvestris_(211a)_hindwing.csv&quot;                             
+## [5] &quot;XY_0ACC7BDBD59CA0F16346AD4862319F97BDEE5FEDF34C5A7F48DF21E75A84223A_forewing.txt&quot;</code></pre>
 <p>Not a bit of species data. However, Prof. Kenaley has stored the
 filenames of each species in a table you can <a
 href="lep_image_data.csv">download here</a>. Have a look.</p>
@@ -1087,147 +1084,114 @@ from the outline names and join the species data to this new tibble.</p>
 <span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">identifier=</span><span class="fu">gsub</span>(<span class="st">&quot;XY_|_hindwing|_forewing|.txt&quot;</span>,<span class="st">&quot;&quot;</span>,xy.file)) <span class="sc">%&gt;%</span> </span>
 <span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>  <span class="fu">left_join</span>(lep.sp)</span></code></pre></div>
 <pre><code>## Joining with `by = join_by(identifier)`</code></pre>
-<pre><code>## Warning in left_join(., lep.sp): Detected an unexpected many-to-many relationship between `x` and `y`.
-## ℹ Row 5 of `x` matches multiple rows in `y`.
-## ℹ Row 810 of `y` matches multiple rows in `x`.
-## ℹ If a many-to-many relationship is expected, set `relationship =
-##   &quot;many-to-many&quot;` to silence this warning.</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">head</span>(out.data)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">head</span>(out.data)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 6
 ##   xy.file        identifier species higher_taxon common_name highest_common_name
 ##   &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;              
 ## 1 XY_001FE051A0… 001FE051A… Operop… Geometroidea Geometrid … moths              
 ## 2 XY_001FE051A0… 001FE051A… Operop… Geometroidea Geometrid … moths              
-## 3 XY_002-02-Thy… 002-02-Th… Thymel… Papilionoid… Papilionoi… butterflies        
-## 4 XY_002-02-Thy… 002-02-Th… Thymel… Papilionoid… Papilionoi… butterflies        
-## 5 XY_04-SRNP-20… 04-SRNP-2… Macros… Papilionoid… Papilionoi… butterflies        
-## 6 XY_04-SRNP-20… 04-SRNP-2… Macros… Papilionoid… Papilionoi… butterflies</code></pre>
+## 3 XY_002-02-Thy… 002-02-Th… &lt;NA&gt;    &lt;NA&gt;         &lt;NA&gt;        &lt;NA&gt;               
+## 4 XY_002-02-Thy… 002-02-Th… &lt;NA&gt;    &lt;NA&gt;         &lt;NA&gt;        &lt;NA&gt;               
+## 5 XY_0ACC7BDBD5… 0ACC7BDBD… Lymant… Noctuoidea   Owlet moths moths              
+## 6 XY_0ACC7BDBD5… 0ACC7BDBD… Lymant… Noctuoidea   Owlet moths moths</code></pre>
 <p>With this tibble in place, we can now add species information to our
 PCA data. The PC scores are stored in the the variable <code>x</code>,
 so we can summon them this way. Notice that the row names correspond to
 the outline file names, a column in out <code>out.data</code>
 tibble.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">head</span>(hindwing.pca<span class="sc">$</span>x,<span class="dv">1</span>)</span></code></pre></div>
-<pre><code>##                                                                                                         PC1
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.003631148
-##                                                                                                         PC2
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.009192726
-##                                                                                                          PC3
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.006802928
-##                                                                                                         PC4
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.008706418
-##                                                                                                         PC5
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.001515087
-##                                                                                                           PC6
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.0003417152
-##                                                                                                          PC7
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 6.897441e-05
-##                                                                                                           PC8
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -7.398159e-05
-##                                                                                                           PC9
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.0003655859
-##                                                                                                         PC10
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.0002388014
-##                                                                                                          PC11
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.0006352358
-##                                                                                                          PC12
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.0002105339
-##                                                                                                          PC13
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.0001928168
-##                                                                                                         PC14
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.0005111482
-##                                                                                                         PC15
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.0003291319
-##                                                                                                         PC16
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.0002054958
-##                                                                                                         PC17
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 1.703826e-06
-##                                                                                                          PC18
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.0002223371
-##                                                                                                          PC19
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.0001073889
-##                                                                                                         PC20
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.0003295411
-##                                                                                                         PC21
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 4.388289e-05
-##                                                                                                         PC22
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 8.539475e-05
-##                                                                                                          PC23
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -6.414159e-05
-##                                                                                                          PC24
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.0002203433
-##                                                                                                          PC25
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -3.704748e-05
-##                                                                                                         PC26
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 1.284548e-05
-##                                                                                                          PC27
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -5.584923e-05
-##                                                                                                          PC28
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -3.860342e-05</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">head</span>(forewing.pca<span class="sc">$</span>x,<span class="dv">1</span>)</span></code></pre></div>
-<pre><code>##                                                                                                         PC1
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.01074412
-##                                                                                                         PC2
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.004120168
-##                                                                                                         PC3
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.004827417
-##                                                                                                          PC4
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.003684695
-##                                                                                                         PC5
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.002192293
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">head</span>(hindwing.pca<span class="sc">$</span>x,<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##                                                                                                      PC1
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.07427538
+##                                                                                                        PC2
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.007263519
+##                                                                                                      PC3
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.00315887
+##                                                                                                        PC4
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.003075984
+##                                                                                                       PC5
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.003413181
 ##                                                                                                         PC6
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.002442838
-##                                                                                                           PC7
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.0004570351
-##                                                                                                           PC8
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.0002269393
-##                                                                                                          PC9
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 8.094222e-05
-##                                                                                                          PC10
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.0006470142
-##                                                                                                         PC11
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.001184385
-##                                                                                                          PC12
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.0003884604
-##                                                                                                         PC13
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.0001563969
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.0002220272
+##                                                                                                        PC7
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.0004662264
+##                                                                                                         PC8
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.0003102329
+##                                                                                                        PC9
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.0007162824
+##                                                                                                       PC10
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.0002985537
+##                                                                                                       PC11
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.0005230375
+##                                                                                                       PC12
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.0007891728
+##                                                                                                       PC13
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.0007712824
 ##                                                                                                        PC14
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.001037976
-##                                                                                                         PC15
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.0005432077
-##                                                                                                          PC16
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -9.424748e-05
-##                                                                                                          PC17
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.0006194248
-##                                                                                                         PC18
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.0003362484
-##                                                                                                          PC19
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.0001292404
-##                                                                                                          PC20
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.0002396219
-##                                                                                                          PC21
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.0002199065
-##                                                                                                         PC22
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.0002409763
-##                                                                                                        PC23
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 5.67136e-05
-##                                                                                                         PC24
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 6.950923e-06
-##                                                                                                         PC25
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.0001779673
-##                                                                                                         PC26
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 1.349174e-05
-##                                                                                                         PC27
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 4.460915e-05
-##                                                                                                          PC28
-## class_out_data/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -7.454586e-06</code></pre>
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.0008598182
+##                                                                                                       PC15
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.0001192057
+##                                                                                                        PC16
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -7.880626e-05
+##                                                                                                        PC17
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -2.307962e-05
+##                                                                                                       PC18
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 0.0002751756
+##                                                                                                      PC19
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt 7.94472e-05
+##                                                                                                        PC20
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -0.0001460284
+##                                                                                                        PC21
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt -4.242941e-18</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">head</span>(forewing.pca<span class="sc">$</span>x,<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##                                                                                                       PC1
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.003375728
+##                                                                                                      PC2
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.00433403
+##                                                                                                        PC3
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.001448621
+##                                                                                                      PC4
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.00279137
+##                                                                                                        PC5
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.0003017568
+##                                                                                                       PC6
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.002706337
+##                                                                                                         PC7
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.0003935088
+##                                                                                                        PC8
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.0009974732
+##                                                                                                         PC9
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.0001535658
+##                                                                                                       PC10
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 0.0005313986
+##                                                                                                        PC11
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.0002755445
+##                                                                                                       PC12
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -2.58365e-05
+##                                                                                                       PC13
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 2.494887e-05
+##                                                                                                        PC14
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -0.0001058483
+##                                                                                                        PC15
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -1.703569e-05
+##                                                                                                        PC16
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -6.478947e-05
+##                                                                                                       PC17
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 3.024312e-05
+##                                                                                                        PC18
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -4.983223e-05
+##                                                                                                        PC19
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt -7.413442e-05
+##                                                                                                       PC20
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 1.291418e-05
+##                                                                                                       PC21
+## lep_examples/XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt 5.200002e-18</code></pre>
 <p>Let’s now join the species information in our <code>out.data</code>
 tibble to the PCA data, storing these in new variables.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>hindwing.pca2 <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(<span class="at">xy.file=</span><span class="fu">basename</span>(<span class="fu">rownames</span>(hindwing.pca<span class="sc">$</span>x)),<span class="at">PC1=</span>hindwing.pca<span class="sc">$</span>x[,<span class="dv">1</span>],<span class="at">PC2=</span>hindwing.pca<span class="sc">$</span>x[,<span class="dv">2</span>]) <span class="sc">%&gt;%</span> </span>
-<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>  <span class="fu">left_join</span>(out.data)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>hindwing.pca2 <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(<span class="at">xy.file=</span><span class="fu">basename</span>(<span class="fu">rownames</span>(hindwing.pca<span class="sc">$</span>x)),<span class="at">PC1=</span>hindwing.pca<span class="sc">$</span>x[,<span class="dv">1</span>],<span class="at">PC2=</span>hindwing.pca<span class="sc">$</span>x[,<span class="dv">2</span>]) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a>  <span class="fu">left_join</span>(out.data)</span></code></pre></div>
 <pre><code>## Joining with `by = join_by(xy.file)`</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>forewing.pca2 <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(<span class="at">xy.file=</span><span class="fu">basename</span>(<span class="fu">rownames</span>(forewing.pca<span class="sc">$</span>x)),<span class="at">PC1=</span>forewing.pca<span class="sc">$</span>x[,<span class="dv">1</span>],<span class="at">PC2=</span>forewing.pca<span class="sc">$</span>x[,<span class="dv">2</span>])<span class="sc">%&gt;%</span> </span>
-<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>  <span class="fu">left_join</span>(out.data)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>forewing.pca2 <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(<span class="at">xy.file=</span><span class="fu">basename</span>(<span class="fu">rownames</span>(forewing.pca<span class="sc">$</span>x)),<span class="at">PC1=</span>forewing.pca<span class="sc">$</span>x[,<span class="dv">1</span>],<span class="at">PC2=</span>forewing.pca<span class="sc">$</span>x[,<span class="dv">2</span>])<span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a>  <span class="fu">left_join</span>(out.data)</span></code></pre></div>
 <pre><code>## Joining with `by = join_by(xy.file)`</code></pre>
 <p>Now we have the first 2 PCs for each wing stored with species
 information and are now ready for comparative analysis.</p>
@@ -1248,14 +1212,14 @@ in the R package <code>phytools</code> with the function
 <p><code>brownie.lite()</code> takes two important arguments, a tree and
 the phenotypic values for each tip in the tree. Let’s take our tree and
 drop any tips that don’t occur in our PCA data.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>drops <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a>  <span class="fu">setdiff</span>(<span class="fu">unique</span>(out.data<span class="sc">$</span>species),lep.tree<span class="sc">$</span>tip.label), <span class="co">#sp in tree not in data</span></span>
-<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a><span class="fu">setdiff</span>(lep.tree<span class="sc">$</span>tip.label,<span class="fu">unique</span>(out.data<span class="sc">$</span>species)) <span class="co">#sp in data, not in tree</span></span>
-<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>)</span>
-<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a>  </span>
-<span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a>lep.tree2 <span class="ot">&lt;-</span> <span class="fu">drop.tip</span>(lep.tree,drops)</span>
-<span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a></span>
-<span id="cb41-8"><a href="#cb41-8" tabindex="-1"></a><span class="fu">plot</span>(lep.tree2,<span class="at">cex=</span><span class="fl">0.1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>drops <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a>  <span class="fu">setdiff</span>(<span class="fu">unique</span>(out.data<span class="sc">$</span>species),lep.tree<span class="sc">$</span>tip.label), <span class="co">#sp in tree not in data</span></span>
+<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a><span class="fu">setdiff</span>(lep.tree<span class="sc">$</span>tip.label,<span class="fu">unique</span>(out.data<span class="sc">$</span>species)) <span class="co">#sp in data, not in tree</span></span>
+<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a>)</span>
+<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a>  </span>
+<span id="cb40-6"><a href="#cb40-6" tabindex="-1"></a>lep.tree2 <span class="ot">&lt;-</span> <span class="fu">drop.tip</span>(lep.tree,drops)</span>
+<span id="cb40-7"><a href="#cb40-7" tabindex="-1"></a></span>
+<span id="cb40-8"><a href="#cb40-8" tabindex="-1"></a><span class="fu">plot</span>(lep.tree2,<span class="at">cex=</span><span class="fl">0.1</span>)</span></code></pre></div>
 <p><img src="mod6_proj_files/figure-html/tree2-1.png" width="672" /></p>
 <p>Here we only include <code>lep.tree</code> tip labels that are in the
 unique species values of our <code>out.data</code> variable. Then we use
@@ -1264,55 +1228,55 @@ our tree that don’t occur in our <code>out.data</code> tibble.</p>
 <p>The phenotypic data passed to the <code>x</code> argument must be a
 named vector of values, so let’s establish that for PCs 1 and 2, for
 both the hind- and forewings.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="co">#PC1s</span></span>
-<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a>hind.pc1 <span class="ot">&lt;-</span> hindwing.pca2 <span class="sc">%&gt;%</span> </span>
-<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC1=</span><span class="fu">mean</span>(PC1)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a>  pull</span>
-<span id="cb42-7"><a href="#cb42-7" tabindex="-1"></a></span>
-<span id="cb42-8"><a href="#cb42-8" tabindex="-1"></a><span class="fu">names</span>(hind.pc1) <span class="ot">&lt;-</span>  hindwing.pca2<span class="sc">%&gt;%</span> </span>
-<span id="cb42-9"><a href="#cb42-9" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-10"><a href="#cb42-10" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-11"><a href="#cb42-11" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC1=</span><span class="fu">mean</span>(PC1)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-12"><a href="#cb42-12" tabindex="-1"></a>  <span class="fu">pull</span>(species)</span>
-<span id="cb42-13"><a href="#cb42-13" tabindex="-1"></a></span>
-<span id="cb42-14"><a href="#cb42-14" tabindex="-1"></a>fore.pc1 <span class="ot">&lt;-</span> forewing.pca2 <span class="sc">%&gt;%</span> </span>
-<span id="cb42-15"><a href="#cb42-15" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-16"><a href="#cb42-16" tabindex="-1"></a>   <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-17"><a href="#cb42-17" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC1=</span><span class="fu">mean</span>(PC1)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-18"><a href="#cb42-18" tabindex="-1"></a>  <span class="fu">pull</span>(PC1)</span>
-<span id="cb42-19"><a href="#cb42-19" tabindex="-1"></a></span>
-<span id="cb42-20"><a href="#cb42-20" tabindex="-1"></a><span class="fu">names</span>(fore.pc1) <span class="ot">&lt;-</span>  forewing.pca2 <span class="sc">%&gt;%</span> </span>
-<span id="cb42-21"><a href="#cb42-21" tabindex="-1"></a>  <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-22"><a href="#cb42-22" tabindex="-1"></a>     <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-23"><a href="#cb42-23" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC1=</span><span class="fu">mean</span>(PC1)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-24"><a href="#cb42-24" tabindex="-1"></a>  <span class="fu">pull</span>(species)</span>
-<span id="cb42-25"><a href="#cb42-25" tabindex="-1"></a></span>
-<span id="cb42-26"><a href="#cb42-26" tabindex="-1"></a><span class="co">#PC2s</span></span>
-<span id="cb42-27"><a href="#cb42-27" tabindex="-1"></a>hind.pc2 <span class="ot">&lt;-</span> hindwing.pca2 <span class="sc">%&gt;%</span> </span>
-<span id="cb42-28"><a href="#cb42-28" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-29"><a href="#cb42-29" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-30"><a href="#cb42-30" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC2=</span><span class="fu">mean</span>(PC2)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-31"><a href="#cb42-31" tabindex="-1"></a>  <span class="fu">pull</span>(PC2)</span>
-<span id="cb42-32"><a href="#cb42-32" tabindex="-1"></a></span>
-<span id="cb42-33"><a href="#cb42-33" tabindex="-1"></a><span class="fu">names</span>(hind.pc2) <span class="ot">&lt;-</span>  hindwing.pca2<span class="sc">%&gt;%</span> </span>
-<span id="cb42-34"><a href="#cb42-34" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-35"><a href="#cb42-35" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
-<span id="cb42-36"><a href="#cb42-36" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC2=</span><span class="fu">mean</span>(PC2)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-37"><a href="#cb42-37" tabindex="-1"></a>  <span class="fu">pull</span>(species)</span>
-<span id="cb42-38"><a href="#cb42-38" tabindex="-1"></a></span>
-<span id="cb42-39"><a href="#cb42-39" tabindex="-1"></a>fore.pc2 <span class="ot">&lt;-</span> forewing.pca2 <span class="sc">%&gt;%</span> </span>
-<span id="cb42-40"><a href="#cb42-40" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-41"><a href="#cb42-41" tabindex="-1"></a>   <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-42"><a href="#cb42-42" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC2=</span><span class="fu">mean</span>(PC2)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-43"><a href="#cb42-43" tabindex="-1"></a>  <span class="fu">pull</span>(PC2)</span>
-<span id="cb42-44"><a href="#cb42-44" tabindex="-1"></a></span>
-<span id="cb42-45"><a href="#cb42-45" tabindex="-1"></a><span class="fu">names</span>(fore.pc2) <span class="ot">&lt;-</span>  forewing.pca2 <span class="sc">%&gt;%</span> </span>
-<span id="cb42-46"><a href="#cb42-46" tabindex="-1"></a>  <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-47"><a href="#cb42-47" tabindex="-1"></a>     <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-48"><a href="#cb42-48" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC2=</span><span class="fu">mean</span>(PC2)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-49"><a href="#cb42-49" tabindex="-1"></a>  <span class="fu">pull</span>(species)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="co">#PC1s</span></span>
+<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a>hind.pc1 <span class="ot">&lt;-</span> hindwing.pca2 <span class="sc">%&gt;%</span> </span>
+<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC1=</span><span class="fu">mean</span>(PC1)) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a>  pull</span>
+<span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a></span>
+<span id="cb41-8"><a href="#cb41-8" tabindex="-1"></a><span class="fu">names</span>(hind.pc1) <span class="ot">&lt;-</span>  hindwing.pca2<span class="sc">%&gt;%</span> </span>
+<span id="cb41-9"><a href="#cb41-9" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-10"><a href="#cb41-10" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-11"><a href="#cb41-11" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC1=</span><span class="fu">mean</span>(PC1)) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-12"><a href="#cb41-12" tabindex="-1"></a>  <span class="fu">pull</span>(species)</span>
+<span id="cb41-13"><a href="#cb41-13" tabindex="-1"></a></span>
+<span id="cb41-14"><a href="#cb41-14" tabindex="-1"></a>fore.pc1 <span class="ot">&lt;-</span> forewing.pca2 <span class="sc">%&gt;%</span> </span>
+<span id="cb41-15"><a href="#cb41-15" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-16"><a href="#cb41-16" tabindex="-1"></a>   <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-17"><a href="#cb41-17" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC1=</span><span class="fu">mean</span>(PC1)) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-18"><a href="#cb41-18" tabindex="-1"></a>  <span class="fu">pull</span>(PC1)</span>
+<span id="cb41-19"><a href="#cb41-19" tabindex="-1"></a></span>
+<span id="cb41-20"><a href="#cb41-20" tabindex="-1"></a><span class="fu">names</span>(fore.pc1) <span class="ot">&lt;-</span>  forewing.pca2 <span class="sc">%&gt;%</span> </span>
+<span id="cb41-21"><a href="#cb41-21" tabindex="-1"></a>  <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-22"><a href="#cb41-22" tabindex="-1"></a>     <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-23"><a href="#cb41-23" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC1=</span><span class="fu">mean</span>(PC1)) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-24"><a href="#cb41-24" tabindex="-1"></a>  <span class="fu">pull</span>(species)</span>
+<span id="cb41-25"><a href="#cb41-25" tabindex="-1"></a></span>
+<span id="cb41-26"><a href="#cb41-26" tabindex="-1"></a><span class="co">#PC2s</span></span>
+<span id="cb41-27"><a href="#cb41-27" tabindex="-1"></a>hind.pc2 <span class="ot">&lt;-</span> hindwing.pca2 <span class="sc">%&gt;%</span> </span>
+<span id="cb41-28"><a href="#cb41-28" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-29"><a href="#cb41-29" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-30"><a href="#cb41-30" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC2=</span><span class="fu">mean</span>(PC2)) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-31"><a href="#cb41-31" tabindex="-1"></a>  <span class="fu">pull</span>(PC2)</span>
+<span id="cb41-32"><a href="#cb41-32" tabindex="-1"></a></span>
+<span id="cb41-33"><a href="#cb41-33" tabindex="-1"></a><span class="fu">names</span>(hind.pc2) <span class="ot">&lt;-</span>  hindwing.pca2<span class="sc">%&gt;%</span> </span>
+<span id="cb41-34"><a href="#cb41-34" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-35"><a href="#cb41-35" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb41-36"><a href="#cb41-36" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC2=</span><span class="fu">mean</span>(PC2)) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-37"><a href="#cb41-37" tabindex="-1"></a>  <span class="fu">pull</span>(species)</span>
+<span id="cb41-38"><a href="#cb41-38" tabindex="-1"></a></span>
+<span id="cb41-39"><a href="#cb41-39" tabindex="-1"></a>fore.pc2 <span class="ot">&lt;-</span> forewing.pca2 <span class="sc">%&gt;%</span> </span>
+<span id="cb41-40"><a href="#cb41-40" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-41"><a href="#cb41-41" tabindex="-1"></a>   <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-42"><a href="#cb41-42" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC2=</span><span class="fu">mean</span>(PC2)) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-43"><a href="#cb41-43" tabindex="-1"></a>  <span class="fu">pull</span>(PC2)</span>
+<span id="cb41-44"><a href="#cb41-44" tabindex="-1"></a></span>
+<span id="cb41-45"><a href="#cb41-45" tabindex="-1"></a><span class="fu">names</span>(fore.pc2) <span class="ot">&lt;-</span>  forewing.pca2 <span class="sc">%&gt;%</span> </span>
+<span id="cb41-46"><a href="#cb41-46" tabindex="-1"></a>  <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-47"><a href="#cb41-47" tabindex="-1"></a>     <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-48"><a href="#cb41-48" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC2=</span><span class="fu">mean</span>(PC2)) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-49"><a href="#cb41-49" tabindex="-1"></a>  <span class="fu">pull</span>(species)</span></code></pre></div>
 <p>Notice here that we filtered the PCA data to include only species
 that occur in our new, pruned tree. That is, tree species may be in the
 the PCA data, but species in the PCA data may not be in the tree. This
@@ -1320,7 +1284,7 @@ is because some species queried in GBIF were returned as <a
 href="https://en.wikipedia.org/wiki/Synonym_(taxonomy)">synonyms</a>
 under different valid taxonomic names. We won’t worry about this now
 except to exclude these species as we have above and forge ahead.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="fu">library</span>(phytools)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="fu">library</span>(phytools)</span></code></pre></div>
 <pre><code>## Loading required package: maps</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;maps&#39;</code></pre>
@@ -1332,19 +1296,19 @@ except to exclude these species as we have above and forge ahead.</p>
 <pre><code>## The following object is masked from &#39;package:Momocs&#39;:
 ## 
 ##     rescale</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a>forePC1.BM<span class="ot">&lt;-</span><span class="fu">brownie.lite</span>(lep.tree2,fore.pc1<span class="sc">*</span><span class="dv">10</span>)</span>
-<span id="cb49-2"><a href="#cb49-2" tabindex="-1"></a>hindPC1.BM<span class="ot">&lt;-</span><span class="fu">brownie.lite</span>(lep.tree2,hind.pc1<span class="sc">*</span><span class="dv">10</span>)</span>
-<span id="cb49-3"><a href="#cb49-3" tabindex="-1"></a></span>
-<span id="cb49-4"><a href="#cb49-4" tabindex="-1"></a>forePC2.BM<span class="ot">&lt;-</span><span class="fu">brownie.lite</span>(lep.tree2,fore.pc2<span class="sc">*</span><span class="dv">10</span>)</span>
-<span id="cb49-5"><a href="#cb49-5" tabindex="-1"></a>hindPC2.BM<span class="ot">&lt;-</span><span class="fu">brownie.lite</span>(lep.tree2,hind.pc2<span class="sc">*</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a>forePC1.BM<span class="ot">&lt;-</span><span class="fu">brownie.lite</span>(lep.tree2,fore.pc1<span class="sc">*</span><span class="dv">10</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a>hindPC1.BM<span class="ot">&lt;-</span><span class="fu">brownie.lite</span>(lep.tree2,hind.pc1<span class="sc">*</span><span class="dv">10</span>)</span>
+<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" tabindex="-1"></a>forePC2.BM<span class="ot">&lt;-</span><span class="fu">brownie.lite</span>(lep.tree2,fore.pc2<span class="sc">*</span><span class="dv">10</span>)</span>
+<span id="cb48-5"><a href="#cb48-5" tabindex="-1"></a>hindPC2.BM<span class="ot">&lt;-</span><span class="fu">brownie.lite</span>(lep.tree2,hind.pc2<span class="sc">*</span><span class="dv">10</span>)</span></code></pre></div>
 <p>Also notice here that we multiplied our tip values by an arbitrary 10
 units. This is because this <a
 href="http://blog.phytools.org/2011/12/error-message-from-brownielite-and.html">algorithm
 stumbles</a> when tip branches are short and tip values are small.
 Great, now we have evolutionary rate estimates of wing shape stored in
 each variable under <code>sig2.single</code>.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>forePC1.BM<span class="sc">$</span>sig2.single</span></code></pre></div>
-<pre><code>## [1] 0.006841987</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a>forePC1.BM<span class="sc">$</span>sig2.single</span></code></pre></div>
+<pre><code>## [1] 0.003254131</code></pre>
 <p>With these values stored we can compare the evolutionary rate for the
 first and second PCs between fore- and hindwings, something you should
 do in your report.</p>
@@ -1850,44 +1814,42 @@ model) to transform the original tip data into values that are
 statistically independent of one another. This method is captured in the
 <code>ape</code> function <code>pic()</code> For hindwing and forewing
 PC1, such analysis would look like this.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a>hindPC1.pic <span class="ot">&lt;-</span> <span class="fu">pic</span>(hind.pc1,<span class="at">phy =</span> lep.tree2)</span>
-<span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a>forePC1.pic <span class="ot">&lt;-</span> <span class="fu">pic</span>(fore.pc1,<span class="at">phy =</span> lep.tree2)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a>hindPC1.pic <span class="ot">&lt;-</span> <span class="fu">pic</span>(hind.pc1,<span class="at">phy =</span> lep.tree2)</span>
+<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a>forePC1.pic <span class="ot">&lt;-</span> <span class="fu">pic</span>(fore.pc1,<span class="at">phy =</span> lep.tree2)</span></code></pre></div>
 <p>Here we just inputed our stored PC vectors we used in the rate
 analysis and our tree of course. Now we have transformed values we can
 regress against one another. Let’s first plot them and see what we
 get.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a>PC1.pic <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a>  <span class="at">hind=</span>hindPC1.pic,</span>
-<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a>  <span class="at">fore=</span>forePC1.pic</span>
-<span id="cb53-4"><a href="#cb53-4" tabindex="-1"></a>)</span>
-<span id="cb53-5"><a href="#cb53-5" tabindex="-1"></a></span>
-<span id="cb53-6"><a href="#cb53-6" tabindex="-1"></a>PC1.pic <span class="sc">%&gt;%</span> </span>
-<span id="cb53-7"><a href="#cb53-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>fore,<span class="at">y=</span>hind))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a>PC1.pic <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a>  <span class="at">hind=</span>hindPC1.pic,</span>
+<span id="cb52-3"><a href="#cb52-3" tabindex="-1"></a>  <span class="at">fore=</span>forePC1.pic</span>
+<span id="cb52-4"><a href="#cb52-4" tabindex="-1"></a>)</span>
+<span id="cb52-5"><a href="#cb52-5" tabindex="-1"></a></span>
+<span id="cb52-6"><a href="#cb52-6" tabindex="-1"></a>PC1.pic <span class="sc">%&gt;%</span> </span>
+<span id="cb52-7"><a href="#cb52-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>fore,<span class="at">y=</span>hind))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="mod6_proj_files/figure-html/picplot-1.png" width="672" /></p>
 <p>Wow! These PC1s Look pretty correlated! Let’s see what the r-squared
 value is and if there is a significant relationship. For this, we need
 simply to create a linear model and retrieve these values with
 <code>summary()</code>.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(hind<span class="sc">~</span>fore,PC1.pic))</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(hind<span class="sc">~</span>fore,PC1.pic))</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = hind ~ fore, data = PC1.pic)
 ## 
 ## Residuals:
-##        Min         1Q     Median         3Q        Max 
-## -0.0267436 -0.0043699  0.0001257  0.0049235  0.0256387 
+##        1        2        3        4        5        6 
+## -0.05911  0.02070  0.06043  0.04014  0.00566 -0.06782 
 ## 
 ## Coefficients:
-##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -0.0002576  0.0005672  -0.454     0.65    
-## fore        -0.9512761  0.0683887 -13.910   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)  0.02057    0.02426   0.848    0.444
+## fore        -6.18322    3.93779  -1.570    0.191
 ## 
-## Residual standard error: 0.007712 on 183 degrees of freedom
-## Multiple R-squared:  0.5139, Adjusted R-squared:  0.5113 
-## F-statistic: 193.5 on 1 and 183 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 0.05877 on 4 degrees of freedom
+## Multiple R-squared:  0.3813, Adjusted R-squared:  0.2267 
+## F-statistic: 2.466 on 1 and 4 DF,  p-value: 0.1915</code></pre>
 </div>
 </div>
 <div id="project-report" class="section level1">

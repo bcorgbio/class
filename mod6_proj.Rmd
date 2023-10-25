@@ -721,7 +721,7 @@ Our shape analysis will be based on the outline of the hind- and fore-wings of ~
 </center>
 <br>
 
-You and your team should will be assigned about 20 of the ~200 species to outline. Images of these species can be accessed through [thes directories] (https://drive.google.com/drive/folders/1TYAzcMcH0u64OEqsuc61W97zIL7qLGWU?usp=sharing). First choose one of your species to work on. For each species, start with what you think is the best image, that is, it has a scale bar, the wings are not damaged, and the hindwing is most exposed. Open that best image in Fiji.
+You and your team should will be assigned about 20 of the ~200 species to outline. Images of these species can be accessed through [this directory](https://drive.google.com/drive/folders/1TYAzcMcH0u64OEqsuc61W97zIL7qLGWU?usp=sharing). First choose one of your species to work on. For each species, start with what you think is the best image, that is, it has a scale bar, the wings are not damaged, and the hindwing is most exposed. Open that best image in Fiji.
 
 After opening the photo, follow the steps above.
 
@@ -768,7 +768,7 @@ This script [fits a spline](https://en.wikipedia.org/wiki/Spline_interpolation) 
 For some species there may be only one image. For others there may be 10 or more. If you can, aim to outline the wing of *three specimens per species*.
 
 
-After your team has completed outlining the assigned species, upload your text files to [this directory](https://drive.google.com/drive/u/1/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Glk5).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the outlines and do some post-processing if required (i.e., file-name checks, outline quality, etc.). You can then download [these evaluated data](class_out_data.zip) for shape analysis.
+After your team has completed outlining the assigned species, upload your text files to [this directory](https://drive.google.com/drive/u/1/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Glk5).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the outlines and do some post-processing if required (i.e., file-name checks, outline quality, etc.). You can then download [these evaluated data](data/class_out_data.zip) for shape analysis.
 
 ## Shape analysis
 
@@ -793,17 +793,17 @@ For such a problem, researchers usually turn to Principal Components Analysis (P
 
 To perform EFA and then PCA, we need only to turn to one R package, `Momocs`. Let's load this package and begin with an example analysis that we can scale up on our full data set. 
 
-~~Let's begin by reading in one of the outline text files, Prof. Kenaley has already produced for 10 species of butterflies and moths. Please [download these](lep_examples.zip) to follow along. You can unzip this directory and place it your project directory.~~
+We can begin by reading in one of the outline text files, Prof. Kenaley has already produced for 10 species of butterflies and moths. Please [download these](lep_examples.zip) to follow along. You can unzip this directory and place it your project directory
 
-You can begin the full analysis by [downloading this zipped directory](class_out_data.zip), unzipping it, and placing it in your project directory
+You can begin the full analysis on data collected by the whole class by [downloading this zipped directory](class_out_data.zip), unzipping it, and placing it in your project directory
 
 ```{r momocexp1,message=F}
 library(tidyverse)
 library(Momocs)
-f <- list.files("class_out_data",pattern=".txt|.csv",full.names = TRUE)
+f <- list.files("lep_examples",pattern=".txt|.csv",full.names = TRUE)
 
 
-out <- read_delim(f[1],delim="\t") %>% 
+out <- read_delim(f[1],"\t") %>% 
   as.matrix()
 
 out %>% 
@@ -825,18 +825,17 @@ As was mentioned above, the `Out()` function prefers a list, so ~~we can work on
 
 ```{r datlist2, results=FALSE,message=FALSE}
 #make a large df with vroom
-out.df <- vroom::vroom(f, id = "filename")
+out.df <- vroom::vroom(f, id = "filename",progress=F)
 
 #make list
 outs.l <- sapply(f,function(x) out.df %>% filter(filename==x) %>% select(X,Y) %>% as.matrix)
 
 outs.l %>% 
   Out() %>% 
-  coo_flipx() %>% 
   stack()
 ```
 
-Wonderful! Fore- and hindwings loaded for the 10 examples species. However, notice we have a few problems. First, both fore- and hindwing are included in the in the same data set. This confounds analyzing and comparing shape in fore- and hindwing separately, a major goal of this project. Second, the outlines are of arbitrary size due to how much of the pixel field they spanned in the photos and whether or not a scale in mm was set. Thus, this arbitrary size scale would confound shape analysis from the start. Let's take on fixing the hindwing-forewing issue first and, later, we'll tackle the size issue.
+Wonderful! Fore- and hindwings loaded for the 10 examples species. However, notice we have a few problems. First, both fore- and hindwing are included in the same data set. This confounds analyzing and comparing shape in fore- and hindwing separately, a major goal of this project. Second, the outlines are of arbitrary size due to how much of the pixel field they spanned in the photos and whether or not a scale in mm was set. Thus, this arbitrary size scale would confound shape analysis from the start. Let's take on fixing the hindwing-forewing issue first and, later, we'll tackle the size issue.
 
 Fortunately, we know whether each outline comes from either a fore- or hindwing because we added these metadata to the file name. ~~Thus, we merely need to strip this information from the file name when loading the data in our `for` loop. Let's do that by modified the loop.~~ The `vroom()` function  stores filename data in a column as a way to identify data (we specified the name of this column with `id = `filename`.
 
