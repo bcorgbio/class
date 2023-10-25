@@ -768,7 +768,7 @@ This script [fits a spline](https://en.wikipedia.org/wiki/Spline_interpolation) 
 For some species there may be only one image. For others there may be 10 or more. If you can, aim to outline the wing of *three specimens per species*.
 
 
-After your team has completed outlining the assigned species, upload your text files to [this directory](https://drive.google.com/drive/u/1/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Glk5).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the outlines and do some post-processing if required (i.e., file-name checks, outline quality, etc.). You can then download [these evaluated data](data/class_out_data.zip) for shape analysis.
+After your team has completed outlining the assigned species, upload your text files to [this directory](https://drive.google.com/drive/u/1/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Glk5).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the outlines and do some post-processing if required (i.e., file-name checks, outline quality, etc.). You can then download [these evaluated data](data/class_out_data_f23.zip) for shape analysis.
 
 ## Shape analysis
 
@@ -795,7 +795,7 @@ To perform EFA and then PCA, we need only to turn to one R package, `Momocs`. Le
 
 We can begin by reading in one of the outline text files, Prof. Kenaley has already produced for 10 species of butterflies and moths. Please [download these](lep_examples.zip) to follow along. You can unzip this directory and place it your project directory
 
-You can begin the full analysis on data collected by the whole class by [downloading this zipped directory](class_out_data.zip), unzipping it, and placing it in your project directory
+You can begin the full analysis on data collected by the whole class by [downloading this zipped directory](data/class_out_data_f23.zip), unzipping it, and placing it in your project directory
 
 ```{r momocexp1,message=F}
 library(tidyverse)
@@ -1929,7 +1929,7 @@ In answering your question, your .Rmd should include the following components:
       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here.
       + Author contributions: Briefly outline what each team member contributed to the project.
 
-Project reports should be uploaded by 11:59 PM on Sunday, November 5th.
+Project reports should be uploaded by 11:59 PM on Sunday, October 29th.
 
 # References
 
