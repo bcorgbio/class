@@ -800,10 +800,10 @@ You can begin the full analysis on data collected by the whole class by [downloa
 ```{r momocexp1,message=F}
 library(tidyverse)
 library(Momocs)
-f <- list.files("lep_examples",pattern=".txt|.csv",full.names = TRUE)
 
+f <- list.files("class_out_data_f23",full.names=T)
 
-out <- read_delim(f[1],"\t") %>% 
+out <- read_csv(f[1]) %>% 
   as.matrix()
 
 out %>% 
@@ -841,7 +841,7 @@ Fortunately, we know whether each outline comes from either a fore- or hindwing 
 
 ```{r datlist3, results=FALSE,message=FALSE}
 #make a large df with vroom
-out.df <- vroom::vroom(f, id = "filename")
+out.df <- vroom::vroom(f, id = "filename",progress=F)
 
 #add wing info
 out.df <- out.df %>% 
@@ -942,7 +942,7 @@ forewing.pca <- forewings %>%
    coo_align()  %>%
   coo_slide(id=1) %>% 
   fgProcrustes() %>% 
-  efourier(norm=FALSE) %>% 
+  efourier(norm=T) %>% 
   PCA()
 
 hindwing.pca <-hindwings %>% 
@@ -961,11 +961,12 @@ We can visualize the PCA with `plot_PCA()`, which will, by default produce a bip
 
 ```{r plotpca,message=F}
 forewing.pca %>% 
-  plot_PCA(title = "forewings")
+  plot_PCA(title = "forewings",morphospace_position="circle")
 
 hindwing.pca %>% 
   plot_PCA(title = "hindwings")
 
+plot(hindwing.pca$x[,1],hindwing.pca$x[,2])
 
 
 ```
@@ -1018,9 +1019,11 @@ head(lep.sp$identifier)
 
 This is the vector of the image file names minus the extension (.jpg, .png, etc.). Notice that our outline names, rather than species, contain this information~~you saved the FIJI results as "XY_filename_hingwing.txt" or "XY_filename_forewing.txt". That is, this very same identifier in the species table is buried in the names of our outline data. So let's make a new tibble that strips the same identifier from the outline names and join the species data to this new tibble.
 
+**NOTE**: We've now added `.csv` to the gsub command.
+
 ```{r, outdata}
 out.data <- tibble(xy.file=basename(names(outs))) %>% 
-  mutate(identifier=gsub("XY_|_hindwing|_forewing|.txt","",xy.file)) %>% 
+  mutate(identifier=gsub("XY_|_hindwing|_forewing|.txt|.csv","",xy.file)) %>% 
   left_join(lep.sp)
 
 head(out.data)
@@ -1053,15 +1056,12 @@ Now we have the first 2 PCs for each wing stored with species information and ar
 
 There are several methods available to comparative biologist to estimate the rates of morphological evolution over a phylogenetic tree. We'll be using @o2006testing's method, the so-called "noncensored test" which uses the entire varian-cecovariance matrix (established by the a phylogeny) to calculate the likelihood of rates accross the tree. In this approach, one ancestral state is estimated under Brownian motion for the entire tree and the the optimal rate parameter values are estimated numerically until the likelihood of the model is maximized. This method is captured in the R package `phytools` with the function `brownie.lite()`. 
 
-`brownie.lite()` takes two important arguments, a tree and the phenotypic values for each tip in the tree. Let's take our tree and drop any tips that don't occur in our PCA data.
+`brownie.lite()` takes two important arguments, a tree and the phenotypic values for each tip in the tree. ~~Let's take our tree and drop any tips that don't occur in our PCA data.~~ Let's take our tree and keep only the tips are in our PCA data and PCA data that are in the tree.
 
 ```{r, tree2}
-drops <- c(
-  setdiff(unique(out.data$species),lep.tree$tip.label), #sp in tree not in data
-setdiff(lep.tree$tip.label,unique(out.data$species)) #sp in data, not in tree
-)
-  
-lep.tree2 <- drop.tip(lep.tree,drops)
+keep <- intersect(unique(out.data$species),lep.tree$tip.label) #sp in both tree and data
+
+lep.tree2 <- keep.tip(lep.tree,keep)
 
 plot(lep.tree2,cex=0.1)
 ```
