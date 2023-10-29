@@ -801,7 +801,7 @@ You can begin the full analysis on data collected by the whole class by [downloa
 library(tidyverse)
 library(Momocs)
 
-f <- list.files("class_out_data_f23",full.names=T)
+f <- list.files("data/class_out_data_f23",full.names=T)
 
 out <- read_csv(f[1]) %>% 
   as.matrix()
@@ -961,13 +961,10 @@ We can visualize the PCA with `plot_PCA()`, which will, by default produce a bip
 
 ```{r plotpca,message=F}
 forewing.pca %>% 
-  plot_PCA(title = "forewings",morphospace_position="circle")
+  plot_PCA(title = "forewings")
 
 hindwing.pca %>% 
   plot_PCA(title = "hindwings")
-
-plot(hindwing.pca$x[,1],hindwing.pca$x[,2])
-
 
 ```
 
@@ -1017,7 +1014,7 @@ Have a look at the column "identifier".
 head(lep.sp$identifier)
 ```
 
-This is the vector of the image file names minus the extension (.jpg, .png, etc.). Notice that our outline names, rather than species, contain this information~~you saved the FIJI results as "XY_filename_hingwing.txt" or "XY_filename_forewing.txt". That is, this very same identifier in the species table is buried in the names of our outline data. So let's make a new tibble that strips the same identifier from the outline names and join the species data to this new tibble.
+This is the vector of the image file names minus the extension (.jpg, .png, etc.). Notice that our outline names, rather than species, contain this information--you saved the FIJI results as "XY_filename_hindwing.txt" or "XY_filename_forewing.txt". That is, this very same identifier in the species table is buried in the names of our outline data. So let's make a new tibble that strips the same identifier from the outline names and join the species data to this new tibble.
 
 **NOTE**: We've now added `.csv` to the gsub command.
 
