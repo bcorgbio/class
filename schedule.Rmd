@@ -486,7 +486,7 @@ Upon completion of this week and module, students will be able to:
 ### Do
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
   + Complete and commit Module 7 Project report
-  + Upload force-angle data to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing) by Sunday, November 12th
+  + Upload force-angle data to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing) by Sunday, November 13th
 
 
 
@@ -500,11 +500,11 @@ Upon completion of this week and module, students will be able to:
 
 All assignments are due at 11:59 on the specified date.
 
-|| Monday <br> 11/6 |  Tuesday <br>11/7   | Wednesday<br>  11/8 | Thursday <br> 11/9 | Friday <br> 11/10 |Saturday<br> 11/11 | Sunday<br> 11/12
+|| Monday <br> 10/30 |  Tuesday <br>10/31   | Wednesday<br>  11/1 | Thursday <br> 11/2 | Friday <br> 11/3 |Saturday<br> 11/4 | Sunday<br> 11/5
 |--------|-------- |--------|-------- |--------|--------|--------|--------    
-**Assignment due** | | | Post question to discussion board <br> <br> [WCR 9](WCRs/WCR_9.html)| Answer a question on discussion board | | |Upload team data files to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing)
+**Assignment due** |[slides](lect\3140_f23_10-30.html) | | Post question to discussion board <br> <br> [WCR 9](WCRs/WCR_9.html)| Answer a question on discussion board | | |Upload team data files to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing)
 
- || Monday <br> 11/13 |  Tuesday <br>11/14    | Wednesday<br>  11/15 | Thursday <br> 11/16 | Friday <br> 11/17 |Saturday<br> 11/18 | Sunday<br> 11/19
+ || Monday <br> 11/6 |  Tuesday <br>11/7    | Wednesday<br>  11/8 | Thursday <br> 11/9 | Friday <br> 11/10 |Saturday<br> 11/12 | Sunday<br> 11/13
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 
 **Assignment due** | | | <br> <br> [WCR 10](WCRs/WCR_10.html) Post question to discussion board | Answer a question on discussion board  | | | Commit Module 8 Project Report
 ||||||||

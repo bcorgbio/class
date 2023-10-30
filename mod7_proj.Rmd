@@ -13,7 +13,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 Any student steeped in the mechanics of muscle understands that force produced by this tissue is governed by two important parameters: speed and length. In this project, we'll explore the effect of length on muscle force generation and evaluate how fatigue affects this force-length (FL) relationship. 
 
-The FL relationship is governed by several important biophysical aspects of muscle architecture. At the fiber level, the force produced is largely mediated by the number of crossbridges that can be formed. Crossbridges are small and have a limited attachment range. Therefore, crossbridge attachments only occur in the actin-myosin overlap zone of a sarcomere. Together with the assumptions underlying the crossbridge theory, this limitation implies that the maximal isometric force of a sarcomere is directly related to the amount of actin-myosin overlap (Fig. 1).
+The FL relationship is governed by several important biophysical aspects of muscle architecture. At the fiber level, the force produced is largely mediated by the number of crossbridges that can be formed. Crossbridges are small and have a limited attachment range. Therefore, crossbridge attachments only occur in the actin-myosin overlap zone of a sarcomere. Together, with the assumptions underlying the crossbridge theory, this limitation implies that the maximal isometric force of a sarcomere is directly related to the amount of actin-myosin overlap (Fig. 1).
 
 <center>
 ![](https://journals.physiology.org/cms/10.1152/jappl.1999.86.5.1445/asset/images/medium/japp05516002x.jpeg)
@@ -130,7 +130,7 @@ To assess the affect of eccentric fatigue of elbow flexor muscles, we'll be meas
 
 ## DAQ Design Components
 
-1. 40-kg Load Cell with HX711 amplifier
+1. 100-kg S-type Load Cell with HX711 amplifier
 2. Arduino Uno microcontroller
 
 ## DAQ Assembly and Programming
@@ -199,7 +199,7 @@ To perform your isokinetic eccentric drops, grab the book bag with the hand not 
 
 After you fatigue your flexors, wait 2 min. Then repeat the experiment exactly as you did for the control data.
 
-Once you complete your experiments, upload your 24 data files to [this Google directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing). Be sure to name your files according to the following convention: "team_subject_angle_control/fatigue.csv". Please stick to all lower case.
+Once you complete your experiments, upload your 24 data files to [this Google directory](https://drive.google.com/drive/folders/1ytk-m3l1nvZ5HWw1kVVwBXWn1deNOT5K?usp=sharing). Be sure to name your files according to the following convention: "team_subject_angle_control/fatigue.csv". **Please stick to all lower case.**
 
 ## Summary of Experimental Protocol
   
