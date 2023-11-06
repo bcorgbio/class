@@ -135,13 +135,13 @@ To assess the affect of eccentric fatigue of elbow flexor muscles, we'll be meas
 
 ## DAQ Assembly and Programming
 
-Assembly for this force logger is almost entirely captured in [this tutorial](https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/). 
+Assembly for this force logger is almost entirely captured in [this tutorial](https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/). And, Prof. K has wired the load cell to the amplifier, so y'all just need to wire up the ampflifier to the Arduino
 
-You'll see that the sketch in the tutorial requires a calibration step to output appropriate force or mass units. **Don't worry about calibration.** We'll be looking a normalized force, so units don't matter. 
+~~You'll see that the sketch in the tutorial requires a calibration step to output appropriate force or mass units.~~ **Don't worry about calibration.** We'll be looking at normalized force, so units don't matter. 
 
 <!-- As for your SD storage integration, make sure your sketch writes one column data to the SD card with the header "force". -->
 
-For each experiment, you'll be recording 12 bouts of MVC force, each corresponding to a different elbow angle, for 30 s.  For each arm angle, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking force data. So as not to confuse from where your data came, it's a good idea to change the name of the text file being saved to for each experiment, e.g., "Subject1_control.csv" and "Subject1_fatigue.csv".
+For each experiment, you'll be recording 12 bouts of MVC force, each corresponding to a different elbow angle, for 30 s.  For each arm angle, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking force data. So as not to confuse from where your data came, it's a good idea to change the name of the text file being saved to for each experiment, e.g., "Team_subject1_control.csv" and "Team_subject1_fatigue.csv".
 
 ## Data Collection
 
@@ -178,7 +178,7 @@ As the elbow flexes or extends, you should be able to peak at the ganiometer to 
 
 ### Isometric MVCs
 
-We will collect isometric force data from MVCs over 12 arm angles, 45-157.5$^o$ at 11.25$^o$ (call it 11$^o$) intervals. Your load-cell is affixed to two hooks. Attach one hook to the dowel in your DAQ pack and the other to something that won't move under the torque of your forearm. This could be a table, chair, bench, etc. Hold the dowel in your hand as shown in Fig. 6. Make sure your elbow is supported by something rigid (i.e. the top of a chair back, etc.). 
+We will collect isometric force data from MVCs over 12 arm angles, 45-157.5$^o$ at 11.25$^o$ (call it 11$^o$) intervals. Your load-cell is affixed to a wooden or plastic dowel with a zip tie at one end and has a looped zip tie attached to the other. Pass the looped zip tie around the provided C-clamp and fasten the clamp to something that won't move under the torque of your forearm. This could be  table, desk, ect. Hold the dowel in your hand as shown in Fig. 6. Make sure your elbow is supported by something rigid (i.e. the top of a chair back, etc.). 
 
 <center>
 ![](grip.jpg){width=50%}
@@ -199,7 +199,43 @@ To perform your isokinetic eccentric drops, grab the book bag with the hand not 
 
 After you fatigue your flexors, wait 2 min. Then repeat the experiment exactly as you did for the control data.
 
-Once you complete your experiments, upload your 24 data files to [this Google directory](https://drive.google.com/drive/folders/1ytk-m3l1nvZ5HWw1kVVwBXWn1deNOT5K?usp=sharing). Be sure to name your files according to the following convention: "team_subject_angle_control/fatigue.csv". **Please stick to all lower case.**
+Once you complete your experiments, upload your 24 data files to [this Google directory](https://drive.google.com/drive/folders/1ncojVtzbQaZWKNdFgWtkK5CeJ_PmAbq0?usp=sharing). Be sure to name your files according to the following convention: "team_subject_angle_control/fatigue.csv". **Please stick to all lower case.**
+
+## Software and Coding the Arduino
+
+The sketch needed for this experiment could be quite simple. It does, however, require you to download the HX711 library. 
+
+As a primer, this would work:
+
+```{c eval=F}
+
+#include "HX711.h" // include the appropriate library for `scale` functions
+
+
+HX711 scale; //invoke scale functions
+    
+void setup() {
+
+ Serial.begin(115200); //set baud rate
+   scale.begin(6, 7); //set digital pins 6 and 7 as the data and clock pins
+  scale.tare(); //zero the measurements
+
+}
+
+
+void loop() {
+
+  float newReading= scale.get_units(10); //establish new variable from load cel
+
+   Serial.println(newReading); //print load cell value
+
+}
+
+```
+
+
+  **NOTE:*** You may find it handy to work with a [previous release of Arduino IDE](https://www.arduino.cc/en/software/OldSoftwareReleases) because the current version does not allow copying data from the serial monitory
+
 
 ## Summary of Experimental Protocol
   
@@ -209,7 +245,10 @@ Once you complete your experiments, upload your 24 data files to [this Google di
   + Eccentrically fatigue your flexors.
   + Wait 2 minutes.
   + Repeat recording isometric MVCs at the same 12 distinct elbow angles.
-  + Upload data to [this directory](https://drive.google.com/drive/folders/17KPrL6-LNnpwaA6o7fOHIMLUjbY8mcnT?usp=sharing).
+  + Upload data to [this directory](https://drive.google.com/drive/folders/1ncojVtzbQaZWKNdFgWtkK5CeJ_PmAbq0?usp=sharing).
+  
+  
+  Pleas upload your data by Monday, November 13th.
 
  
 ## Data Analysis
@@ -401,7 +440,7 @@ The answers and narrative in your .Rmd should include the following components:
       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here.
       + Author contributions: Briefly outline what each team member contributed to the project.
 
-Project reports should be uploaded by 11:59 PM on Sunday, November 14th.
+Project reports should be uploaded by 11:59 PM on Thursday, November 16th.
 
 <div class = "green">
 <div class="row">
