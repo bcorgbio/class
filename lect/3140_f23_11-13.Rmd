@@ -1,0 +1,209 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 8: Birds of a Feather"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2021/10/30"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE}
+
+library(rgbif)
+library(tidyverse)
+library(MuMIn)
+library(rnoaa)
+library(data.table)
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Kick off Module 8
+
+- Discuss migration patterns and climate
+
+- Introduce the logistic curve
+
+]
+
+.pull-right[
+![](https://www.allaboutbirds.org/news/wp-content/uploads/2016/04/RideWaveBIG.jpg)   
+]
+
+
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Module 8: Birds of feather
+
+.pull-left[
+
+Why migrate?
+
+
+]
+
+.pull-right[
+![](https://d2vlcm61l7u1fs.cloudfront.net/media%2F072%2F0722f685-cbc5-42e6-ae4a-3eddb6ca88b9%2FphpXfYmbT.png)
+]
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+
+## Module 8: Birds of a feather
+
+.pull-left[
+
+### Data and questions 
+  
+  * What determines temporal patterns, i.e., phenology?
+  * Where do we get our data?
+]
+
+.pull-right[
+
+![](https://media.springernature.com/full/springer-static/image/art%3A10.1007%2Fs00442-004-1725-x/MediaObjects/s00442-004-1725-xflb3.gif?as=webp){height=300px}
+
+]
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+
+## Module 7: Bird of a feather
+
+.pull-left[
+
+### Data and questions 
+  
+  * What determines temporal patterns, i.e., phenology?
+  * Where do we get our data?
+  
+ ![](https://docs.ropensci.org/rgbif/logo.png)
+]
+
+
+.pull-right[
+
+![](https://data-blog.gbif.org/post/2020-10-09-issues-and-flags_files/workflow1.png)
+<br>
+
+ ![](https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/48059747418/original/MdlFGFHDXSlH6KYSyi0rac0U4s6m9wIF4A.png?1600439615)
+)
+]
+
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+
+## Module 8: Birds of a feather
+
+.pull-left[
+
+### Data and questions 
+  
+  * What determines temporal patterns, i.e., phenology?
+  * Where do we get our data?
+  
+ ![](https://opengraph.githubassets.com/c1946f0758377ecb266b220d681deba065b8e2887a95b889c10e094993e8b6ac/ropensci/rnoaa)
+]
+
+
+.pull-right[
+
+![](https://i.stack.imgur.com/4rQRa.png)
+<br>
+]
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+
+## Module 8: Birds of a feather
+
+.pull-left[
+
+### Data and questions 
+  
+  * Occurrence data from eBird using `rgbif` API
+  * How do we get to arrival time?
+
+
+`occ_data()`
+]
+
+.pull-right[
+
+![](https://data-blog.gbif.org/post/2020-10-09-issues-and-flags_files/workflow1.png)
+<br>
+
+ ![](https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/48059747418/original/MdlFGFHDXSlH6KYSyi0rac0U4s6m9wIF4A.png?1600439615)
+)
+]
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Module 8: Birds of a feather
+
+
+  
+   ![](https://www.allaboutbirds.org/guide/assets/photo/297046671-720px.jpg){width=150px}
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Module 8: Birds of a feather
+
+
+```{r}
+yw <-  occ_data(scientificName = "Setophaga petechia",
+                year=2021,
+                month="3,6",
+                limit=500,
+                country="US",
+                basisOfRecord = "HUMAN_OBSERVATION",
+                stateProvince="Massachusetts")[[2]]
+ 
+```
+
+
+
+
+
+
+

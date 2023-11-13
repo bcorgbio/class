@@ -559,7 +559,7 @@ All assignments are due at 11:59 on the specified date.
 
  || Monday <br> 11/13 |  Tuesday <br>11/14    | Wednesday<br>  11/15 | Thursday <br> 11/16 | Friday <br> 11/17 |Saturday<br> 11/18 | Sunday<br> 11/19
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 
-**Assignment due** | | Post question to discussion board* <br> <br> [WCR 11](WCRs/WCR_11.html)| Answer a question on discussion board* | | | | 
+**Assignment due** |[slides](lect\3140_f23_11-13.html)  | Post question to discussion board* <br> <br> [WCR 11](WCRs/WCR_11.html)| Answer a question on discussion board* | | | | 
 
  || Monday <br> 11/20 |  Tuesday <br>11/21    | Wednesday<br>  11/22 | Thursday <br> 11/23 | Friday <br> 11/24 |Saturday<br> 11/25 | Sunday<br> 11/26
  |--------|-------- |--------|-------- |--------|--------|--------|-------- 
