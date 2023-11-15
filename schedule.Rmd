@@ -509,7 +509,7 @@ All assignments are due at 11:59 on the specified date.
 **Assignment due** | | | <br> <br> [WCR 10](WCRs/WCR_10.html) Post question to discussion board | Answer a question on discussion board  | | | 
 ||||||||
 
-**NOTE** We'll shift data upload and project submission. Upload team data files to [this directory](https://drive.google.com/drive/folders/1ncojVtzbQaZWKNdFgWtkK5CeJ_PmAbq0?usp=sharing) by Monday 11/13. Please commit your Module 8 Project Report By Thursday 11/16.
+**NOTE** We'll shift data upload and project submission. Upload team data files to [this directory](https://drive.google.com/drive/folders/1ncojVtzbQaZWKNdFgWtkK5CeJ_PmAbq0?usp=sharing) by Monday 11/13. Please commit your Module 8 Project Report By Sunday 11/19.
 
 
 ## Module 8:   Birds of a Feather Migrate Together . . . Sometimes: Using EBird data to Explore the Phenology of Passerine Migration (data driven)
