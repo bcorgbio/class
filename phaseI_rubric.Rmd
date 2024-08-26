@@ -1,15 +1,19 @@
 ---
-title: "Phase I Project Report Rubric"
+title: "Phase I Project Report Guidelines"
 ---
 
 # General Guidelines
 
-Phase I is meant to bring you up to speed on the ins and outs of intrument prototyping and data analysis in the context of organismal biology. The project reports for this initial stage are not meant to be burdensome, however they will require some diligent work and a consistent effort to seek help. The following rubric represents how the 15 points for each of the project reports for Phase I will be assessed.
+Phase I is meant to bring you up to speed on the ins and outs of intrument prototyping and data analysis in the context of organismal biology. The project reports for this initial stage are not meant to be burdensome, however they will require some diligent work and a consistent effort to seek help. The following rubric represents how the 25 points for each of the project reports for Phase I will be assessed.
 
 # Rubric
- |Component| **Spot On (5 pts)** |  **Pretty Good (3 pts)** | **Needs Work (1 pt)**  
-|--------|-------- |-------- |--------
-| Tasks | Completes all tasks fully; meets all deadlines | Completes a majority but not all tasks fully; submission meets the deadline  | Completes few required tasks or submits few required matrials; submission missed the deadline
-| Outputs | Project outputs contain all necessary components and none that are unnecessary| Outputs contain most but not all necessary components or some  that are unnecessary  | Few components are submitted
-| Effort and Engagement | Individual or team asks questions or seeks help regularly|  Individual or team asks questions or seek help sometimes, but not regularly  |  Individual or team does not seem help
+ |Component| **Spot On ** |  **Pretty Good ** | **Needs Work **  
+|:--------|:--------|:--------|:--------
+| Tasks | Completes all tasks fully; meets all deadlines (10 pts) | Completes a majority but not all tasks fully; submission meets the deadline (6 pts) | Completes few required tasks or submits few required materials; submission missed the deadline (1 pt)
+| Outputs | Project outputs contain all necessary components and none that are unnecessary (10 pts) | Outputs contain most but not all necessary components or some  that are unnecessary  (6 pts) | Few components are submitted (1 pts)
+| Effort and Engagement | Individual or team asks questions or seeks help regularly (5 pts) |  Individual or team asks questions or seek help sometimes, but not regularly (3 pts) |  Individual or team does not seem help (1 pt)
 ||||
+
+# Peer evaluations
+
+Each team member must complete a [peer contribution evaluatation](peer_contributions.html) before the project report deadline. This is an important task that will be included under the rubric.

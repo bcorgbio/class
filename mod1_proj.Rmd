@@ -286,7 +286,7 @@ The goal of this project report is to submit an R script that runs the code pres
   5. Code that produces a summary of the number of specimens sampled for each species.
   6. Code that produces a PDF file containing 6 figures, one for each species that includes a boxplot of puncture force verus quadrant. 
     
-**Each team member must submit their own report.** Make sure each commits their code and PDF to your team's repo, appropriately named, e.g., "Jane_Doe_script.R", "Jane_Doe_species_quandrant.pdf". Submissions are due by 11:59 PM on Sunday, September 11th.
+**Each team member must submit their own report.** Make sure each commits their code and PDF to your team's repo, appropriately named, e.g., "Jane_Doe_script.R", "Jane_Doe_species_quandrant.pdf". Submissions are due by 11:59 PM on Sunday, September 9th.
 
 <div class = "green">
 <div class="row">

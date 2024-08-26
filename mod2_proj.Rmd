@@ -422,4 +422,4 @@ pseed.met.kin%>%
   
 ```
 
-Submissions are due by 11:59 PM on Sunday, September 18th.
+Submissions are due by 11:59 PM on Sunday, September 15th.

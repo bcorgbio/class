@@ -1,5 +1,5 @@
 ---
-title: "Phase III Project Report Rubric"
+title: "Phase III Project Guidilines"
 ---
 
 # General Guidelines
@@ -18,3 +18,8 @@ Phase III is devoted to a single independent project that uses the data analysis
 | Writing and Style | The writing is concise, clear, avoids passive constructions, and is in the past tense; grammar is appropriate <br>**(10 pts)**|   The writing is unclear or rambling in spots or uses passive constructions and future tense; grammar is shaky in spots <br>**(6 pts)** |   The writing is unclear, and/or uses passive constructions or future tense throughout; grammar is shaky for the most part <br>**(2 pt)**
 | Sources and References | The report contains 3 references to primary research pieces that support statements of fact; references are contained in a [BibTex bibliography and inserted with `@` tags](mod4_proj.html#Inserting_References)  <br>**(10 pts)**| Report contains fewer than 3 references; some statements of scientific findings and fact are not supported by references; some references are not contained in a BibTex bibliography or inserted with `@` tags <br>**(6 pts)** |   Most statements of scientific findings and fact are not supported by references; references are not contained in a BibTex bibliography nor inserted with `@` tags <br>**(2 pt)**
 ||||
+
+
+# Peer evaluations
+
+Each team member must complete a [peer contribution evaluatation](peer_contributions.html) before the project report deadline. This is an important task that will be included under the rubric.

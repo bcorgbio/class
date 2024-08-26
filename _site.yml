@@ -1,10 +1,9 @@
-name: "Experimental Methods in Experimental Biology--Fall '22"
+name: "Research Methods in Organismal Biology--Fall '24"
 output_dir: "."
 output:  
   html_document:  
-    self_contained: no  
-    theme: sandstone
-    highlight: tango
+    self_contained: no 
+    theme: flatly
     toc: true # adds a table of content
     toc_float: true
     number_sections: FALSE
@@ -16,10 +15,14 @@ navbar:
       href: index.html
     - text: "Schedule"
       href: schedule.html
+    - text: "Calendar"
+      href: at_a_glance.html
+    - text: "WCRs"
+      href: WCRS.html
     - text: "Projects"
       menu:
         - text: "Phase I"
-        - text: "Phase I report rubric"
+        - text: "Phase I report guidlines"
           href: phaseI_rubric.html
         - text: "Module 1 Project"
           href: mod1_proj.html
@@ -29,29 +32,31 @@ navbar:
           href: mod3_proj.html
         - text: "Module 4 Project"
           href: mod4_proj.html
+        - text: "Phase II"
+        - text: "Phase II report guidlines"
+          href: phaseII_rubric.html
         - text: "Module 5 Project"
           href: mod5_proj.html
-        - text: "Phase II"
-        - text: "Phase II report rubric"
-          href: phaseII_rubric.html
         - text: "Module 6 Project"
           href: mod6_proj.html
         - text: "Module 7 Project"
           href: mod7_proj.html
-        - text: "Module 8 Project"
-          href: mod8_proj.html
         - text: "Phase III"
-        - text: "Phase III report rubric"
+        - text: "Phase III report guidlines"
           href: phaseIII_rubric.html
         - text: "Final Project"
           href: final_proj.html
-        - text: "DaqPacks"
-        - text: "DaqPack Item List"
-          href: daqpack.html
     - text: "BIOL 3140 Discussion"
       href: https://github.com/orgs/bcorgbio/discussions
     - text: "Grades on Canvas"
-      href: https://bostoncollege.instructure.com/courses/1647043/gradebook
+      href: https://bostoncollege.instructure.com/courses/1659476/gradebook
+    - text: "Peer Contribution Evaluations"
+      menu:
+      - text: "Peer Contribution Evaluation Guidelines"
+        href: peer_contributions.html
+      - text: "Author Contribution Evaluation Form"
+        href: https://forms.gle/ATeFa9wsV1t4g27g6
+      
      
  
     

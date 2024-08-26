@@ -1,0 +1,120 @@
+---
+title: "Course Schedule"
+---
+
+All assignments are due at 11:59 on the specified date.
+
+## Phase I
+
+### Module 1
+ 
+
+|| Monday <br> 8/26 |  Tuesday <br>8/27    | Wednesday<br>  8/28 | Thursday <br> 8/29 | Friday <br> 8/30 |Saturday<br> 8/31 | Sunday<br> 9/1
+|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:    
+**Week1**  | [slides](lect\3140_f23_8-28.html) ||Teams for Module 1 assigned <br><br> Establish GitHub account and add your handle to [this form](https://forms.gle/zfoADunTt9E951Bt8) | | [slides](lect\3140_f23_8-30.html) <br> | | | |
+
+
+|| Monday <br> 9/2 |  Tuesday <br>9/3    | Wednesday<br>  9/4 | Thursday <br> 9/5 | Friday <br> 9/6 |Saturday<br> 9/7 | Sunday<br> 9/8
+|:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------:    
+**Week 2**|||  Post question to discussion board  <br> <br> [WCR 1](WCRs/WCR_1.html)| | Answer a question on discussion board | | commit Module 1 project report
+ |||||||
+
+---
+
+### Module 2
+
+|| Monday <br> 9/9 |  Tuesday <br>9/10 | Wednesday<br>  9/11 | Thursday <br> 9/12 | Friday <br> 9/13 |Saturday<br> 9/14 | Sunday<br> 9/115
+|:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------:
+**Week 3** | [slides](lect\3140_f23_9-11.html)  | | Post question to discussion board <br> <br> [WCR 2](WCRs/WCR_2.html)|| Answer a question on discussion board  |  | commit Module 2 Project Report
+  ||||||||
+
+---
+
+### Module 3
+
+|| Monday <br> 9/16 |  Tuesday <br>9/17    | Wednesday<br>  9/18 | Thursday <br> 9/19 | Friday <br> 9/20 |Saturday<br> 9/21 | Sunday<br> 9/22
+  |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------:
+  **Week 4** |[slides](lect\3140_f23_9-23.html) | | Post question to discussion board <br> <br> [WCR 3](WCRs/WCR_3.html) ||  [slides](lect\3140_f23_9-23.html)<br> Answer a question on discussion board | | commit Module 3 Project Report
+  ||||||||
+  
+---
+
+### Module 4
+
+ || Monday <br> 9/23 |  Tuesday <br>9/24    | Wednesday<br>  9/25 | Thursday <br> 9/26 | Friday <br> 9/27 |Saturday<br> 9/28 | Sunday<br> 9/29
+  |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------:
+  **Week 5** | [slides](lect\3140_f23_9-25.html) <br> <br> | | Post question to discussion board  <br> <br> [WCR 4](WCRs/WCR_4.html)| |Answer a question on discussion board  | | commit Module 4 Project Report
+  ||||||||
+
+---
+
+## Phase II
+
+### Module 5
+
+|| Monday <br> 9/30 |  Tuesday <br>10/1    | Wednesday<br>  10/2 | Thursday <br> 10/3 | Friday <br> 10/4 |Saturday<br> 10/5 | Sunday<br> 10/6 
+|:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------:    
+**Week 6** |[slides](lect\3140_f23_10-2.html)| | Post question to discussion board <br> <br> [WCR 5](WCRs/WCR_5.html) | |Answer a question on discussion board | | 
+  ||||||||
+
+ || Monday <br> 10/7 |  Tuesday <br>10/8    | Wednesday<br>  10/9 | Thursday <br> 10/10 | Friday <br> 10/11 |Saturday<br> 10/12 | Sunday<br> 10/13
+ |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 
+**Week 7** | |[slides](lect\3140_f23_10-10.html) | [slides](lect\3140_f23_10-11.html) <br>Post question to discussion board <br> <br> [WCR 6](WCRs/WCR_6.html)| Upload data shape data |Answer a question on discussion board  |   |
+ 
+|| Monday <br> 10/14*  |  Tuesday <br>10/15    | Wednesday<br>  10/16 | Thursday <br> 10/17 | Friday <br> 10/18|Saturday<br> 10/19 | Sunday<br> 10/20
+ |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 
+ **Week 8** | | | Post question to discussion board <br> <br> [WCR 7](WCRs/WCR_7.html)| |Answer a question on discussion board <br>  | |Commit Module 5 Project Report| 
+ 
+*No class, holiday
+
+
+---
+
+### Module 6
+
+ || Monday <br> 10/21 |  Tuesday <br>10/22    | Wednesday<br>  10/23 | Thursday <br> 10/24 | Friday <br> 10/25 |Saturday<br> 10/26 | Sunday<br> 10/27
+ |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 
+ **Week 9** | | | Post question to discussion board  <br> <br> [WCR 8](WCRs/WCR_8.html)|| Answer a question on discussion board <br>  | | | 
+
+|| Monday <br> 10/28 |  Tuesday <br>10/29   | Wednesday<br>  10/30 | Thursday <br> 11/31 | Friday <br> 11/1| Saturday<br> 11/2 | Sunday<br> 11/3
+|:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------:    
+**Week 10** |[slides](lect\3140_f23_10-30.html) | | Post question to discussion board <br> <br> [WCR 9](WCRs/WCR_9.html)| |Answer a question on discussion board | | |
+
+|| Monday <br> 11/4 |  Tuesday <br>11/5    | Wednesday<br>  11/6 | Thursday <br> 11/7 | Friday <br> 11/8 |Saturday<br> 11/9 | Sunday<br> 11/10
+ |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 
+**Week 11** | | | <br> <br> [WCR 10](WCRs/WCR_10.html) Post question to discussion board | |Answer a question on discussion board  | | Commit Module 6 Project Report| 
+||||||||
+
+<!-- **NOTE** We'll shift data upload and project submission. Upload team data files to [this directory](https://drive.google.com/drive/folders/1ncojVtzbQaZWKNdFgWtkK5CeJ_PmAbq0?usp=sharing) by Monday 11/13. Please commit your Module 8 Project Report By Sunday 11/19. -->
+
+---
+
+### Module 7
+
+|| Monday <br> 11/11 |  Tuesday <br>11/12    | Wednesday<br>  11/13 | Thursday <br> 11/14 | Friday <br> 11/15 |Saturday<br> 11/16 | Sunday<br> 11/17
+ |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 
+**Week 12** |[slides](lect\3140_f23_11-13.html) | | Post question to discussion board* <br> <br> [WCR 11](WCRs/WCR_11.html)|| Answer a question on discussion board* | | |
+
+|| Monday <br> 11/18 |  Tuesday <br>11/19    | Wednesday<br>  11/20 | Thursday <br> 11/21 | Friday <br> 11/22 |Saturday<br> 11/23 | Sunday<br> 11/24
+  |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 
+**Week 13** | | |  [WCR 12](WCRs/WCR_12.html) Post question to discussion board || Answer a question on discussion board  | | Commit Module 7 Project Report
+||||||||
+
+|| Monday <br> 11/25 |  Tuesday <br>11/26    | Wednesday<br>  11/27 | Thursday <br> 11/28| Friday <br> 11/29 |Saturday<br> 11/30 | Sunday<br> 12/1
+ |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 
+**Week 14** | | | Thanksgiving Break <br> <br>| Thanksgiving Break | Thanksgiving Break <br> <br>| | 
+||||||||
+
+---
+
+## Phase III 
+
+|| Monday <br> 12/2 |  Tuesday <br>12/3    | Wednesday<br>  12/4 | Thursday <br> 12/5 | Friday <br> 12/6 |Saturday<br> 12/7| Sunday<br> 12/8
+|:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------:    
+**Week 15** |  | | Post question to discussion board<br>Meet with Prof. K to discuss project ideas (by appt) || Answer a question on discussion board | Meet with Prof. K to discuss project ideas (by appt)| |
+
+|| Monday <br> 12/9 |  Tuesday <br>12/10   | Wednesday<br>  12/11 | Thursday <br> 12/12 | Friday <br> 12/13 |Saturday<br> 12/14| Sunday<br> 12/15
+|:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------:    
+**Week 16** |  | || | | |
+
+Commit final project report by Wednesday, December 16th

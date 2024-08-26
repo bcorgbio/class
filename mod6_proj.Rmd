@@ -1,5 +1,5 @@
 ---
-title: "Module 6 Project"
+title: "Module 7 Project"
 bibliography: class.bib
 ---
 <style>
@@ -9,1924 +9,447 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
 
 
-
-```{r images, include=FALSE,eval=FALSE}
-library(tidyverse)
-library(ape)
-library(treeio)
-library(rgbif)
-library(data.table)
-library(phytools)
-
-
-#read in lepidoptera tree from Akito et al.
-
-#super family names changed to repflect phylogeny
-lep.tree <- read.mcmctree("lepidoptera_tree.tre")
-
-write.tree(lep.tree@phylo,"lep_tree.tre")
-
-lep.tree <- lep.tree.or <- read.tree("lep_tree.tre")
-
-
-
-#plot(lep.tree)
-
-
-#retrieve tips
-tips <- sapply(lep.tree$tip.label,function(x) strsplit(x,"_"))
-
-
-#adjust tips to Genus species
-tips2 <- lapply(tips,function(x){
-  r <- x[grep("inae$",x)+1:2]
-if(length(r)==0){
-  r <- x[grep("idae$",x)+1:2]
-}
-  return(paste(r,collapse=" "))
-}
-
-) %>% unlist
-
-
-#fix Polygonia problem
-tips2[grep("Polygonia",tips2)] <- "Polygonia c-album"
-
-
-hi.taxa <- tibble(higher_taxon=lapply(tips,function(x) x[1]) %>% unlist,species=tips2) 
-
-common_names <- c(
-         "Caddisflies caddisflies",
-         "Mandibulate archaic moths",
-         "Kauri moths",
-         "Valdivian archaic moths",
-         "Sparkling archaic sun moths",
-         "Archaic bell moths",
-         "Australian archaic moths",
-         "Ghost moths",
-         "Pygmy leafminer moths",
-         "Andean endemic moths",
-         "Primitive monotrysian moths",
-         "Gondwanaland moths",
-         "Trumpet leaf miner moths",
-         "Clothes moths",
-         "Cocoon-maker/leaf blotch miner moths",
-         "Ermine moths",
-         "False burnet moths",
-         "Metalmark moths",
-         "Pantropical moths",
-         "Tortrix moths",
-         "Clearwing moths",
-         "Burnet moths",
-         "Carpenter moths",
-         "Papilionoid butterflies",
-         "Curved-horn moths",
-         "Many-plumed moths",
-         "Plume moths",
-         "Old World butterfly moths",
-         "Picture-winged leaf moths",
-         "Snout moths",
-         "Sack-bearer moths",
-         "Hook-tip moths",
-         "Owlet moths",
-         "Geometrid moths",
-         "Eggars/Tent moths",
-         "Sphynx/Silk moths"
-       )
-
-common.names <- tibble(higher_taxon=hi.taxa$higher_taxon %>% unique()) %>% 
-  left_join(hi.taxa)
-
-##for labelling trees
-ht <-unique(hi.taxa$higher_taxon)
-
-
-Angiospermivora<- tibble(major_clade="Angiospermivora",higher_taxon=unique(ht)[!ht%in% c("Trichoptera","Micropterigoidea","Agathiphagoidea")])
-
-Glossata <- tibble(major_clade="Glossata",higher_taxon=Angiospermivora %>% filter(!higher_taxon%in%c("Heterobathmioidea")) %>% pull(higher_taxon))
-
-Heteroneura <- tibble(major_clade="Heteroneura",higher_taxon=Glossata %>% filter(!higher_taxon%in%c("Lophocoronoidea","Hepialoidea","Eriocranioidea","Neopseustoidea" )) %>% pull(higher_taxon))
-
-Ditrysia <- tibble(major_clade="Ditrysia",higher_taxon=Heteroneura %>% filter(!higher_taxon%in%c("Nepticuloidea","Andesianoidea","Adeloidea","Palaephatoidea-2","Tischerioidea","Palaephatoidea-1" )) %>% pull(higher_taxon))
-
-Apoditrysia <- tibble(major_clade="Apodytrisia",higher_taxon=Ditrysia %>% filter(!higher_taxon%in%c("Tineoidea","Tineoidea-Stem2","Tineoidea-Stem1","Gracillarioidea/Yponomeutoidea")) %>% pull(higher_taxon))
-
-Obtectomera <- tibble(major_clade="Obtectomera",higher_taxon=Apoditrysia %>% filter(!higher_taxon%in%c("Urodoidea","Choreutoidea","Immoidea","Sesioidea", "Tortricoidea","Zygaenoidea","Cossoidea")) %>% pull(higher_taxon))
-
-Macrohetercera <- tibble(major_clade="Macroheterocera",higher_taxon=Obtectomera %>% filter(!higher_taxon%in%c("Papilionoidea","Gelechioidea","Alucitoidea","Pterophoroidea", "Calliduloidea","Thyridoidea","Pyraloidea","Pyraloidea","Mimallonoidea")) %>% pull(higher_taxon))
-
-
-ht.largeclades <- list(Angiospermivora,Glossata,Heteroneura,Ditrysia,Apoditrysia,Obtectomera,Macrohetercera)
-
-largeclades.sp <- lapply(ht.largeclades, function(x){z <- common.names %>% filter(higher_taxon%in%x$higher_taxon) %>% pull(species);names(z) <- NULL;return(z)})
-
-names(largeclades.sp) <- lapply(ht.largeclades,function(x) x %>% pull(major_clade) %>% unique)
-
-superfams <- lapply(unique(common.names$higher_taxon), function(x) {z <- common.names %>% filter(higher_taxon==x) %>% pull(species);names(z) <- NULL;return(z)})
-
-names(superfams) <- common.names$higher_taxon %>% unique
-
-lep.tax <- c(superfams,largeclades.sp)
-
-
-
-saveRDS(lep.tax,"Lep_classification.RDS")
-
-
-lep.tree
-
-###PROBLEM: polygonia c-album was retrieved in gbif as 5 sepearate species. must combine.
-
-common.names <- common.names %>% 
-  mutate(species=ifelse(grepl("Polygonia",species),"Polygonia c-album",species))
-
-
-common.names$species[grepl("Polygonia",common.names$species)]
-#fix name problem viz Polygonia
-tips2[grep("Polygonia",tips2)] <- "Polygonia c-album"
-      
-lep.tree$tip.label <- sp <- tips2
-
-
-## add node clade info
-lep.tree$node.label <- rep(NA,(Ntip(lep.tree)+Nnode(lep.tree)))
-
-hi.taxa %>% filter(grepl("Telchin",species))
-dys <- NULL
-mono <- NULL
-for(i in names(lep.tax)){
-  t.i <- lep.tax[[i]]
-  
- 
-  is.mono <- is.monophyletic(lep.tree,tips = t.i)
-  
-  #extract.clade(lep.tree.or,n.i)$tip.label
-  mono[i] <- is.mono
-  if(is.mono){
-  if(length(t.i)>1){
-  n.i <- getMRCA(lep.tree,t.i)
-
-  d.i <- phytools::getDescendants(lep.tree,n.i)
-  lep.tree$node.label[c(n.i,d.i)] <-  i
-  
-}else{
-  n.i <- which(lep.tree$tip.label==t.i)
-  lep.tree$node.label[c(n.i)] <-  i
-}
-  
-  }
-  dys[i] <- "Ditrysia" %in% lep.tree$node.label
-}
-
-
-which(!dys)
-which(!mono)
-
-
-# lep.tree$node.label <- NULL
-# lep.tree$node.label <- rep("test",Nnode(lep.tree))
-# 
-# plot(lep.tree,cex=0.001)
-# nodelabels(lep.tree$node.label,196:389)
-
-drops <- which(duplicated(lep.tree$tip.label))
-
-lep.tree <- drop.tip(lep.tree,drops)
-
-write.tree(lep.tree,"lep_tree2.tre")
-
-#species from tree
-tree.sp <- tibble(species=sp,sp=gsub("\\w+ (\\w+)","\\1",sp)) %>% arrange(sp) %>% left_join(common.names)
-
-#save
-tree.sp %>% write_csv("lep_tree_species.csv")
-
- 
-if(FALSE){
-#query gbif for images for spp in tree
- dat.l <-list()
- media.l <- list()
-
- #last.sp=1
- 
- sp <- tree.sp$species[which(tree.sp$species==last.sp):length(tree.sp$species)]
-for(s in sp){
-  
-
-dat.l[[paste0(s)]] <- m <- occ_search(scientificName = s,basisOfRecord="PRESERVED_SPECIMEN",
-mediaType="StillImage")
-
-if(length(m$media)==0) media.l[[paste0(s)]] <- tibble(species=s,key=NA,identifier= NA)
-
-if(length(m$media)>0) media.l[[paste0(s)]] <- lapply(1:length(m$media),function(x) tibble(species=s,key=m$media[[x]][[1]]$key,identifier= m$media[[x]][[1]][[1]]$identifier)) %>% rbindlist()
-
-last.sp <- s
-}
-
- dat <- lapply(dat.l,function(x) x$data)
- 
- dat <- rbindlist(dat,fill=T)
- 
- dat <- dat %>% 
-   dplyr::select(genus,species,family,rightsHolder,collectionCode,catalogNumber,institutionCode,references,key) %>% left_join(tree.sp)
- 
- 
- 
- media <- do.call(rbind,media.l)
- 
- all.dat <- dat%>%
-   left_join(media)
-
-
-
-saveRDS(all.dat,"lep_gbif.RDS")
-}
-
-all.dat <- readRDS("lep_gbif.RDS")
-#write.csv(all.dat,"lep_gbif.csv")
- 
-#nulls from gbif
-all.dat%>%
-   filter(is.na(identifier)&is.na(references)) %>% 
-  count(species)
-
-
-
-if(FALSE){
-
-gbif.nulls <- rbind(media%>%
-   filter(is.na(identifier)) %>% count(species),
-   all.dat%>%
-   filter(is.na(identifier)&is.na(references)) %>% 
-  count(species)
-) %>% arrange(species)
-
-all.dat %>% 
-  filter(is.na(species))
-
-
-   setdiff(media %>% filter(is.na(identifier)) %>% count(species) %>% pull(species),
-   all.dat%>%
-   filter(is.na(identifier)&is.na(references)) %>% pull(species)
-   )
-   
-   setdiff(
-   all.dat%>%
-   filter(is.na(references)) %>% pull(species),
-   media %>% filter(is.na(identifier)) %>% count(species) %>% pull(species)
-   )
-
-gbif.nulls%>%
-    write_csv("lep_gbif_null.csv")
-
-found.gbif <- read_csv("lep_gbif_null_found.csv")
-}
-
-img.download <- function(urls,dir="lep_photos/",res=200000,ask=FALSE){
-  
-  
-  res.l <- list()
-  for(i in urls){
-   
-    z <- tempdir()
-    f <- paste0(z,"/",basename(i))
-    if(!grepl(".jpg|.jpeg|.tiff|.TIFF|.JPG|.JPEF|.png|.PNG",basename(f)))f <- paste0(f,".jpg")
-    z.i <- try({ 
-      download.file(i,f,quiet = T)
-      pic <- readImage(f)
-    })
-    
-    res.i <- dim(pic)[1]*dim(pic)[2]
-    
-    if(!inherits(z.i,"try-error") & res.i>res){
-      display(pic,method = "raster")
-       n1 <- "y"
-      if(ask) n1<-readline(prompt="keep?")
-     
-      if(n1=="y"|n1=="Y") {res.l[[i]] <- tibble(identifier=i,keep= "keep")
-      save.f <- basename(f)
-      if(save.f=="default.jpg") save.f <- paste0(gsub(".+(ypm\\:.+)\\/full.+","\\1",i),".jpg")
-      file.copy(f,paste0(dir,"/",save.f))}
-    }else{
-      
-      if(inherits(z.i,"try-error")) res.l[[i]] <- tibble(identifier=i,keep= "error")
-      
-      if(res.i<res) res.l[[i]] <- tibble(identifier=i,keep= "too small")
-    }
-    print(paste0("image ", which(urls==i), " of ",length(urls)))
-    file.remove(f)
-  }
-  r <- do.call(rbind,res.l)
-  return(r)
-  
-}
-
-img.res <- list()
-
-sp <-  all.dat%>%
-   filter(!is.na(identifier)) %>% pull(species) %>% unique()
-
-all.dat %>% 
-  filter(species==sp[51]) %>% 
-  select(species,identifier)
-
-run.img <- function(n=NULL,...){
-sp.n <- n
-  print(sp[sp.n])
-urls <- all.dat %>% filter(!is.na(identifier)& species==sp[sp.n]) %>% pull(identifier)
-
-sp.dir <- paste0("lep_photos/",sp[sp.n])
-dir.create(sp.dir)
-img.r <- img.download(urls = urls[sample(1:length(urls))],dir=sp.dir,...)
-
-return(img.r)
-}
-
-sp <- found.gbif$species %>% unique()
-run.img.nulls <- function(n=NULL,...){
-sp.n <- n
-  print(sp[sp.n])
-urls <- found.gbif %>% filter(!is.na(new_identifier)& species==sp[sp.n]) %>% pull(new_identifier)
-
-sp.dir <- paste0("lep_photos/",sp[sp.n])
-dir.create(sp.dir)
-img.r <- img.download(urls = urls[sample(1:length(urls))],dir=sp.dir,...)
-
-return(img.r)
-}
-
-run.img.nulls(n=1)
-
-
-### download all YPM images, show V and D views (write script to do so)
-
-
- 
-found.gbif2 <- found.gbif %>% 
-  select(-careful,-new_comments) %>% 
-  left_join(common.names) %>% 
-  mutate(genus=gsub("(\\w+) .+$","\\1",species),
-         family=NA,key=NA,
-         references=NA,
-         sp=gsub("(\\w+) (.+$)","\\2",species)
-         ) %>% 
-  dplyr::rename(identifier=new_identifier,catalogNumber=catalog,collectionCode=new_collection_code)
- 
-all.dat2 <- rbind(all.dat %>% mutate(source="gbif"),
-      found.gbif2 %>% mutate(source="search/BOLDS"),fill=T) %>% mutate(filename=basename(identifier))
-
-
-```
-
-
-
-
-```{r include=FALSE, eval=FALSE}
-
-
-#find the id that matches the data
-image.f <- list.files("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/lep_photos",recursive = TRUE,include.dirs = FALSE,full.names = TRUE)
-
-images <- tibble(
-  path=image.f,
-  identifier2=basename(image.f),
-  species=gsub(".+lep_photos\\/(.+)\\/.+$","\\1",image.f)
-) %>% 
-  mutate(dup=duplicated(identifier2)) %>% 
-  mutate(filename=ifelse(dup==TRUE,paste0(species,"_",basename(identifier2)),basename(identifier2)),filename2=gsub("\\..+$","",filename))
-
-images %>% select(species,filename) %>% left_join(common.names) %>% 
-  write_csv("lep_image_data.csv")
-
-
-#are file names duplicate? and fix
-all.dat2 <- all.dat2 %>% 
-  arrange(species) %>% 
-    mutate(dup=duplicated(filename)) %>% 
-    mutate(filename=ifelse(dup==TRUE,paste0(species,"_",basename(identifier)),basename(identifier))) %>% 
-  select(-dup)
-
-
-
-images2 <- images %>%
-  
-  left_join(all.dat2) 
-
-
-
-# rename <- images2 %>%
-#   filter(dup==TRUE) %>%
-#   mutate(file.rename(path,to =gsub("(lep_photos\\/)(.+)\\/(.+)$","\\1\\2\\/\\2_\\3",path)))
-
-### will have to come back to this to make a table of museum numbers ^^^^
-
-images2 <- images%>% left_join(common.names)
-
-images2 %>% write_csv("lep_image_data.csv")
- 
-```
-
-
-
-
-
-
-
-
-```{r eval=FALSE, include=FALSE}
-#the images
-
-images <- tibble(filename=list.files("lep_photos",full.names = TRUE,recursive = TRUE))
-
-sp.dirs <- list.dirs("lep_photos")
-
-
-
-# diff.n=100
-# while(diff.n>4){
-# spec.sample <-  tibble(species=gsub("lep_photos\\/","",list.dirs("lep_photos")[-1])) %>% 
-#   mutate(group=rep(sample(1:10,replace = T,length(species))))
-# 
-# diff.n <- diff(range(spec.sample %>% 
-#   group_by(group) %>% 
-#   count %>%
-#     pull(n)))
-#   }
-# 
-# spec.sample %>% 
-#   group_by(group) %>% 
-#   count
-
-spec.sample %>% select(group,species) %>% arrange(group,species) %>%  kableExtra::kable(format = "html")
-
-
-dir.create("group_photos")
-grp.dirs <- paste0("group_photos/Group",spec.sample$group)
-lep.dirs <- paste0("lep_photos/",spec.sample$species)
-sapply(unique(grp.dirs),dir.create)
-
-
-spec.sample <- spec.sample %>% 
-  mutate(from=lep.dirs,to=paste0(grp.dirs,"/",species)) 
-
-
-%>% 
-  mutate(dir.create(path=to,recursive = T))
-  
-
-sapply(spec.sample$to,dir.create)
-
-images %>% 
-  mutate(species=gsub("lep_photos\\/","",dirname(filename))) %>% 
-  left_join(spec.sample %>% 
-  mutate(from=lep.dirs,to=paste0(grp.dirs,"/",species)) %>% 
-  mutate(to=paste0(to,"/",basename(filename))) %>% 
-  mutate(file.copy(filename,to))
-
-  
-  f.grp <- list.files("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/group_photos",recursive=TRUE)
-  
-   f.lep <- list.files("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/lep_photos",recursive=TRUE)
-   
-
-   length(f.grp)
-   length(f.lep)
-   
-  lep.dirs <-  list.dirs("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/lep_photos")
-  grp.dirs <-  list.dirs("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/group_photos")
-  
-  lep.f <- sapply(lep.dirs,list.files)
-  grp.f <- sapply(grp.dirs,list.files)
-   
-  lep.l <- lapply(lep.f, length)
- grp.l <- lapply(grp.f, length)
-  
-  which(grp.l<1)
-  
-  lep.dirs <- basename(lep.dirs)
-  
-  common.names$species[!common.names$species%in%lep.dirs]
-
-  common.names$species[grepl("Bicyclus",common.names$species)]
-  
-  tips2[grepl("Striacosta",tips2)]
-  
-  
-  lep.dirs[grepl("Striacosta",lep.dirs)]
-  
-  
-```
-
-
-
-```{r,eval=FALSE,include=FALSE}
-### store image information
-
-  image.f <- list.files("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/lep_photos",recursive = TRUE,include.dirs = FALSE,full.names = TRUE)
-
-images <- tibble(
-  filename=basename(image.f),
-  species=gsub(".+lep_photos\\/(.+)\\/.+$","\\1",image.f)
-) %>% 
-  mutate(identifier=gsub("(.+)\\..+$","\\1",filename)) %>% 
-  mutate(species=ifelse(grepl("Polygonia",species),"Polygonia c-album",species))
-
-images %>% 
-  filter(grepl("Polygonia",species))
-
-images %>% select(species,identifier) %>% left_join(common.names) %>% 
-  write_csv("lep_image_data.csv")
-```
-
-
-                       
-```{r outline, include=FALSE, eval=FALSE}
-f <- list.files("lep_examples",pattern = ".txt",full.names = TRUE)
-
-d.l <- list()
-outs.l <- list()
-id.l <- list()
-wing.l <- list()
-hi.tax <- list()
-
-for(i in f){
-  
-  wing.i <- gsub(".+_(.+)\\.txt$","\\1",basename(i))
-  id.i <- basename(gsub("XY_|_forewing|_hindwing|.txt","",i))
-    wing.l[[basename(i)]] <- gsub(".+_(.+)\\.txt$","\\1",basename(i))
-  id.l[[basename(i)]] <- basename(gsub("XY_|_forewing|_hindwing|.txt","",i))
-   
-  
-  xy <- read_delim(i,delim = "\t") %>% 
-    mutate(identifier2=id.l[[basename(i)]],wing=wing.l[[basename(i)]])
-  colnames(xy[,1:2]) <- c("x","y")
-  
-   outs.l[[basename(i)]] <- coo_sample(as.matrix(xy[,1:2]),100)
-  
-   d.l[[basename(i)]] <- xy
-   
- 
-}
-
-xy.dat <- do.call(rbind,d.l)
-
-images2
-library(Momocs)
-
-xy.data <- tibble(
-  indentier2=id.l %>% unlist
-)
-
-wings <- Out(outs.l,fac=list(indentier2=id.l %>% unlist,wing=wing.l %>% unlist)) 
-
-
-all.dat[sapply(id.l %>% unlist,function(x) grep(x,all.dat$identifier)),]
-all.dat %>% 
-  mutate(grepl())
-
-hwings.pca <- wings %>%  
-Momocs::filter(wing=="hindwing")%T>%  
-  stack() %>%
-  fgProcrustes()%>%
-  coo_aligncalliper() %T>%
-  stack() %>%
-  efourier(norm=T) %>%  # Elliptical Fourier Transforms
-  PCA() 
-
-fwings.pca <- wings %>%  
-Momocs::filter(wing=="forewing")%T>%  
-  stack() %>%
-  fgProcrustes()%>%
-  coo_aligncalliper() %T>%
-  stack() %>%
-  efourier(norm=T) %>%  # Elliptical Fourier Transforms
-  PCA()
-
-plot(hwings.pca)
-plot(fwings.pca)
-
-hwings.pcs <- hwings.pca$x[,1:2]%>%
-  as.data.frame()%>%
-  mutate(filename=rownames(hwings.pca$x),
-         indentifier2=hwings.pca$fac$indentier2 %>% unlist)
-
-plot(wings.pca)
-
-vert2.pcs.long <- verts2.pcs%>%
-  pivot_longer(cols=c("PC1","PC2")
-
-```
-
-```{r outlinedat,eval=FALSE,include=FALSE}
-library(stringdist)
-
-#movw
-# out.f <-  list.files("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/outline_data",full.names=T,recursive=T)
-# 
-# sapply(out.f,function(x) file.copy(x,paste0("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/","out_data/",basename(x))))
-
-img.f <- list.files("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/lep_photos",recursive=T)
-
-newout.f <-list.files("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/cpk_out_data/",full.names=T,recursive=T)
-
-#ids that don't match
-tibble(xy.file=basename(newout.f)) %>% 
-  mutate(identifier=gsub("XY_|_hindwing|_forewing|.txt|\\.csv","",xy.file)) %>% 
-  left_join(lep.sp) %>% 
-  filter(is.na(species)) %>% 
-  view
-
-
-probs <- tibble(xy.file=basename(newout.f)) %>% 
-  mutate(identifier=gsub("XY_|_hindwing|_forewing|.txt|\\.csv","",xy.file)) %>% 
-  left_join(lep.sp) %>% 
-  filter(is.na(species)) %>% 
-  mutate(filename=basename(xy.file),wing=gsub("^.+_(.+)\\.\\w+$","\\1",basename(xy.file))) %>%
-  mutate(img_dir=dirname(img.f)[amatch(identifier,basename(img.f),maxDist=10)],good_filename=basename(img.f[amatch(identifier,basename(img.f),maxDist=10)])) %>% 
-  mutate(id2=gsub("(^.+)\\.\\w+$","\\1",good_filename)) %>% 
-  mutate(old_filename=paste0("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/out_data/",xy.file),new_filename=paste0("~/Dropbox/Documents/bc (1)/3140.f22/other_stuff/out_data/","XY_",id2,"_",wing,".txt")) 
-
-probs%>% 
-  mutate(file.rename(old_filename,new_filename))
-
-
-probs %>% select(old_filename,new_filename) %>% view
-
-```
-
 # Introduction
-Butterflies and moths (the Lepidoptera) are an exceptional [radiation](https://en.wikipedia.org/wiki/Evolutionary_radiation) of insects, comprising nearly 160,000 described extant
-species. (For context, the vertebrates comprise just 70,000 species or so.) The Lepidoptera play a fundamental role in almost every terrestrial ecosystem. These ecologically important species use paired wings to power flight in search of places to lay eggs, feed on nectar and other resources, and find mates. The airy  environment in which moths and butterflies fly undoubtedly exerts natural selective pressure on wing size and shape.  However, it appears as if the hind- and forewings have different roles to play in powered flight and the ecology of the Lepidoptera. If hindwings are removed from butterflies, they are able to fly, but at the cost of speed and maneuverability (Jantzen and Eisner 2008). Therefore, it has been proposed that  forewing shape and size may be the result of stabilizing selection imposed by the physical and fluid requirements of flight and hindwing shape and size may be determined more by neutral selection, sexual selection, or selection due to predator avoidance (Sourakov 2013, Barber et al. 2015, Willmott et al. 2017, Rubin et al. 2018, Chazot et al. 2016).
+
+Any student steeped in the mechanics of muscle understands that force produced by this tissue is governed by two important parameters: speed and length. In this project, we'll explore the effect of length on muscle force generation and evaluate how fatigue affects this force-length (FL) relationship. 
+
+The FL relationship is governed by several important biophysical aspects of muscle architecture. At the fiber level, the force produced is largely mediated by the number of crossbridges that can be formed. Crossbridges are small and have a limited attachment range. Therefore, crossbridge attachments only occur in the actin-myosin overlap zone of a sarcomere. Together, with the assumptions underlying the crossbridge theory, this limitation implies that the maximal isometric force of a sarcomere is directly related to the amount of actin-myosin overlap (Fig. 1).
 
 <center>
-![](https://3.bp.blogspot.com/-0ZJtpbcAlWo/W9R6ek_sNPI/AAAAAAAAUj0/ncYRT0nN9MctC-x60-boMe8bodGXNM2LQCLcBGAs/s450/ButterflyWing3a.jpg){width=50%}
-
+![](https://journals.physiology.org/cms/10.1152/jappl.1999.86.5.1445/asset/images/medium/japp05516002x.jpeg)
 <br>
-*The anotomy of a butterfly or moth.* 
-</center>
-<br>
-<br>
-
-
-Studies based on experimental manipulations like those of @jantzen2008hindwings, important as they are, are limited in their ability to characterize shape variables and the ecological roles of fore- and hind wings over evolutionary time scales and across lepidopteran lineages. Comparative analysis of shape data from natural history collections has helped bridge the gap between experimental studies and macroevolutionary patterns. If there is, in fact, different constraints on the evolution of fore- and hindwing morphology, we would expect to find a consistent patterns of different fore- and hindwing shape across the lepidoptera. Indeed, a number of studies have investigated whether for- and hindwing shape and size differs in several isolated groups of butterflies. Strauss (1990) found the shape of hindwings were much more variable than forewings in heliconiine and ithomiine butterflies. In contrast, Chazot et al. (2016) found a strong correlation between forewing and hindwing shapes in the famous morpho group of butterflies. Therefore, the limited research on this topic does not resolve whether fore- and hindwing shape differ consistently across the Lepidoptera. Each of these studies was limited in their phylogenetic scope, encompassing very few species spanning few families of butterflies. Addressing whether fore- and hindwing shape varies independently, a much broader phylogenetic sample should be analyzed, one that includes not just representatives of the butterfly lineage, but also moths.
-
-
-<center>
-![](https://d3i71xaburhd42.cloudfront.net/bb0cd297955c4ec58bd60777dc345f7c1d5d93bd/3-Figure1-1.png){width=50%}
-
-<br>
-*Several species of Heliconiinae butterflies, demonstrating the variability in wingshape. From @penz2003phylogenetic.* 
-</center>
-<br>
-<br>
-
-The goal of this project is to study wing-shape evolution across the lepidoptera, including hundreds of species from both the moths (a [paraphyletic group](https://en.wikipedia.org/wiki/Paraphyly)) and butterflies. To do this, we'll take a morphometric approach, characterizing the shape outline of fore- and hindwings from about 200 species of Lepidoptera. The specific questions we'll answer with our morphometric data are:
-
-1. Do hind- and forewings vary in their evolutionary rates?
-
-2. Does the "evolvability" of the hind- and forewings vary significantly among major lineages of moths and butterflies?
-
-3. Is hindwing and forewing shape correlated?
-
-# Methods
-
-## Image acquisition
-
-A few decades ago, a morphometric project like this would require visiting museums collections from around the world to take images of the specimens and species of interest. In fact, this was a major part of Prof. Kenaley's PhD thesis, which included trips to natural history collections in France, Denmark, Great Britain, Taiwan, Japan, Monaco, New Zealand, and Australia. Ahhhhhh, the good ol' days. Fortunately (or unfortunately), travel to such wonderful places may be avoided as collections have made major efforts to photograph their specimens. Now that most museums around the world have their holdings cataloged in databases, researchers can search their collections for records that have digital images. 
-
-Until very recently, amassing a data set of images for morphometric work  would require querying individual databases, one at a time. However, most natural history museums share their data with the Global Biodiversity Information Facility (GBIF), a clearing house of collections and species information. In the context of a comparative project like ours, one could search the GBIF database online for moth and butterfly records that have images. Fortunately for use, the folks at GBIF have created and R package, [`rgif`](https://www.gbif.org/tool/81747/rgbif), that permits access to GBIF's application programming interface (API), rendering their records searchable from the command line.
-
-Prof. Kenaley used this package, `rgbif`, to query museum records with images. This resulted in a cache of about 180 images of the the 200 species included in the @kawahara2019phylogenomics phylogeny. For the remainder, he scoured the interwebs for reputable sources of images. The images
-## Species list and phylogeny
-
-Because we'll be comparing wing shape across species of the Lepidoptera, this project is by definition a comparative one and we'll need a phylogeny for the group. Fortunately a recent phylogenomic analysis for 200 species of Lepidotera by @kawahara2019phylogenomics resolved the relationships of the major groups of this order. We've used the taxa studied in this paper to find images in GBIF and we'll use [a tree file](lep_tree2.tre) representing phylogeny for our comparative analsyis. 
-
-<center>
-<br>
-![](https://www.pnas.org/cms/10.1073/pnas.1907847116/asset/075c8ff7-6363-462d-a528-f2b13710804d/assets/graphic/pnas.1907847116fig01.jpeg){width=50%}
-<br>
-
-The phylogenetic relationships of the Lepidoptera according the @kawahara2019phylogenomics.
+**Fig. 1.** The force-length relationship of a sarcomere as predicted by cross-bridge theory.
 </center>
 <br>
 
-## Digitization
+Of course, many muscles transect a lever system composed of a few bones articulating at a joint. For our subject, the human upper limb, the forearm flexors originate on the pectoral girdle above the humerus and insert on the radius and ulna, spanning the elbow joint. Simply put, the arm is a 3rd order lever (Fig 2). If we are to consider the force transmitted to the hand (or any other part along the antebrachium), we must also consider this lever configuration. As a lever, this system has a mechanical advantage that predicts the amount of output force transmitted by the input force. Mechanical advantage is defined by the following:
 
-Our shape analysis will be based on the outline of the hind- and fore-wings of ~200 species of Lepidoptera. To outline the wings, we'll follow this generalize workflow below in the image analysis program FIJI (FIJI is just imageJ). 
+$$MA=\frac{L_i}{L_o}$$,
 
-<br>
+where $L_i$ is the in-lever and $L_o$ the output leaver. For the human upper limb, the inlever is the distance between the flexor insertion and elbow joint and the out-lever is the length of the antebrachium and hand (or the distance between the elbow and the load). This ratio generally accords to 0.2 in this system. What this predicts is that any force applied to the in-lever results in 20% of that force at the end of the out-lever (i.e., the palm).
+
+What makes this more complicated is that the effective in-lever, the input moment arm, changes as the forearm flexes. This is due to the fact that the insertion angle changes as the forearm rotates (Fig. 3). Because the force produced by an input is variable with respect to insertion angle, the output isn't necessarily predicted by MA alone.
+
 <center>
-![](lep_workflow.jpeg){width=70%}
-<br>
+![](https://openoregon.pressbooks.pub/app/uploads/sites/42/2018/07/Range-300x262.png)
+
+**Fig. 2** The 3rd-order level system of the human upper limb.
 </center>
 <br>
 
-You and your team should will be assigned about 20 of the ~200 species to outline. Images of these species can be accessed through [this directory](https://drive.google.com/drive/folders/1TYAzcMcH0u64OEqsuc61W97zIL7qLGWU?usp=sharing). First choose one of your species to work on. For each species, start with what you think is the best image, that is, it has a scale bar, the wings are not damaged, and the hindwing is most exposed. Open that best image in Fiji.
-
-After opening the photo, follow the steps above.
-
-1. If there's a scale bar, [set the scale](https://imagejdocu.list.lu/gui/analyze/set_scale). Please set the scale in mm.
-
-2. If the right wing pair is damaged, flip the image horizontally. Select "Image" $\rightarrow$ "Transform" $\rightarrow$ "Flip horizontally". **Note:** you may have to do this only for the fore- or hindwing.
-
-3. Select the [polygon selection tool](https://imagej.nih.gov/ij/docs/guide/146-19.html).
-
-4. Trace the wing by placing the first point on the polygon on the anterior margin of the wing where it meets the thorax. Like so . . 
-
-<center>
-
-![](firstpoint.png){width=40%}
-<br>
-</center>
-<br>
-
-Continue to trace the outline of the wing being sure to include enough points to capture more complex areas. For instance, in this swallowtail hindwing, it may require 30 or more points to outline the interesting projections along the posterior margin.
-
-<br>
-<center>
-![](hindwing.png){width=40%}
-<br>
-</center>
-<br>
-
-You may also find it easier to get an acurate outline if you zoom in (`crtl+` or `command+`).
-
-5. Run the following macro in imageJ.
-
-```{}
-run("Fit Spline");
-run("Properties... ", "list");
-```
-
-
-This script [fits a spline](https://en.wikipedia.org/wiki/Spline_interpolation) through the selected points and produces a list of the x,y coordinates.
-
-**Note:** For the first image you outline, you will have to open the macro editor ("Plugins" $\rightarrow$ "New" $\Macro$). Paste the script command from above into the editor and save this new macro to an appropriate directory, perhaps you cloned repo. You'll want to access this later ("Plugins" $\rightarrow$ "Edit") so that you automate this process.
-
-6. Save the results table that pops up and be sure to append either "_hindwing" or "_forewing" to the file name and make sure this is before the ".txt" file extension. `command+s` or `ctrl+s` works. **This is super important!!** 
-
-For some species there may be only one image. For others there may be 10 or more. If you can, aim to outline the wing of *three specimens per species*.
-
-
-After your team has completed outlining the assigned species, upload your text files to [this directory](https://drive.google.com/drive/u/1/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Glk5).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the outlines and do some post-processing if required (i.e., file-name checks, outline quality, etc.). You can then download [these evaluated data](data/class_out_data_f23.zip) for shape analysis.
-
-## Shape analysis
-
-As we learned in class and you've been reading, researchers interested in comparing shape change between species can use one of two methods: landmark- or outline-base shape analysis. We'll use the latter. 
-
-Outline analysis involves breaking the shapes down into a mathematical description of the points that constitute the shapes. The most popular approach for fitting functions is elliptical Fourier analysis (EFA) in which the shapes in a data set are described as a series of ellipses. EFA attempts to align a number of ellipses to the outline of shapes and the scale of the major and minor axes of the ellipses are then used as the descriptor of the shapes. Of course, one could fit a lot of ellipses and describe the shape perfectly, i.e., with 100% power; however practitioners usually stop short of this and choose some lower lever of lower, say 99%. The number of ellipses is referred to as the number of harmonics. In the figure below, you see the a higher number of harmonics describe the shape in question more perfectly.
-
-<br>
-<center>
-![](https://www.researchgate.net/profile/Ryan-Felice/publication/260448082/figure/fig4/AS:297032695730198@1447829521359/Outline-reconstruction-using-Elliptical-Fourier-Descriptors-Black-contours-represent-the.png
-){width=60%}
-<br>
-<br>
-Elliptical Fourier analysis of the pygostyle, the fused plate of caudal vertebrae that support tail feathers in birds.
-</center>
-<br>
-<br>
-
-Once EFA is used to describe the shapes in a data set, one is left with many variables to consider including all the descriptors of all the ellipses that form the outlines. This could be many hundreds of variables in a data set like ours. This is a serious [multivariate problem](https://en.wikipedia.org/wiki/Multivariate_statistics).
-
-For such a problem, researchers usually turn to Principal Components Analysis (PCA) whereby the very complicated suite of variables is distilled into a set of fewer variables that describe the important variance among the original variables. In a sense, PCA produces a series of regressions, or vectors, that pass through the values of the original variables. This operation is performed iteratively, with the first vector (the first principal component, PC1), drawn through the variable space that accounts for the most variance in the data set. After the combination of variables forming PC1 is removed, a subsequent vector (PC2) is drawn through another unique variable space that describes the second most amount of variance. This continues until most of the variance is captured, resulting in scores of PCs. The first two or three, however, are usually enough to describe a health amount of variance, say 90% or more.
-
-To perform EFA and then PCA, we need only to turn to one R package, `Momocs`. Let's load this package and begin with an example analysis that we can scale up on our full data set. 
-
-We can begin by reading in one of the outline text files, Prof. Kenaley has already produced for 10 species of butterflies and moths. Please [download these](lep_examples.zip) to follow along. You can unzip this directory and place it your project directory
-
-You can begin the full analysis on data collected by the whole class by [downloading this zipped directory](data/class_out_data_f23.zip), unzipping it, and placing it in your project directory
-
-```{r momocexp1,message=F}
-library(tidyverse)
-library(Momocs)
-
-f <- list.files("data/class_out_data_f23",full.names=T)
-
-out <- read_csv(f[1]) %>% 
-  as.matrix()
-
-out %>% 
-  list() %>% 
-  Out() %>% 
-  coo_flipx() %>% 
-  stack()
-
-```
-
-Notice that we've found all the files in the "lep_examples" directory with `list.files()`, searching for the patter ".txt" and using the full filepath to make a loading the data in the directory possible. Next, we use `read_delim()` with `delim=\t` rather than `read_csv()` because FIJI outputs tab-delimited data. We save this outline as `out` after tranforming it to a matrix, the prefer format for `Momocs`.
-
-In the next operation, we transform this matrix into an `Momocs` outline using `Out()`; however, `Out()` must take a list of matrices and therefore we pipe in the `list()` function first. Next, `coo_flipx()` is invoked to flip the outline about the x axis--remember that the origin of the image field is the upper left, not the lower left in the usual graphical representation. Lastly, `stack()` is invoked to visualize the outline. And here we have a forewing visualized.
-
-Now, we will of course have hundreds of files to load and analyze with PCA. For this challenge we will the `vroom()` function in the `vroom` package. It can read in all our data, regardless of whether the data are tab- or comma-separated, an issue identified in class. We have the file paths stored in `f`, which can be passed through this function.
-
-As was mentioned above, the `Out()` function prefers a list, so ~~we can work on the list established here to visualize our outlines.~~ we'll have to construct a list a little differently.
-
-
-```{r datlist2, results=FALSE,message=FALSE}
-#make a large df with vroom
-out.df <- vroom::vroom(f, id = "filename",progress=F)
-
-#make list
-outs.l <- sapply(f,function(x) out.df %>% filter(filename==x) %>% select(X,Y) %>% as.matrix)
-
-outs.l %>% 
-  Out() %>% 
-  stack()
-```
-
-Wonderful! Fore- and hindwings loaded for the 10 examples species. However, notice we have a few problems. First, both fore- and hindwing are included in the same data set. This confounds analyzing and comparing shape in fore- and hindwing separately, a major goal of this project. Second, the outlines are of arbitrary size due to how much of the pixel field they spanned in the photos and whether or not a scale in mm was set. Thus, this arbitrary size scale would confound shape analysis from the start. Let's take on fixing the hindwing-forewing issue first and, later, we'll tackle the size issue.
-
-Fortunately, we know whether each outline comes from either a fore- or hindwing because we added these metadata to the file name. ~~Thus, we merely need to strip this information from the file name when loading the data in our `for` loop. Let's do that by modified the loop.~~ The `vroom()` function  stores filename data in a column as a way to identify data (we specified the name of this column with `id = `filename`.
-
-```{r datlist3, results=FALSE,message=FALSE}
-#make a large df with vroom
-out.df <- vroom::vroom(f, id = "filename",progress=F)
-
-#add wing info
-out.df <- out.df %>% 
-  mutate(wing=gsub("XY_.+_(hindwing|forewing)\\..+","\\1",basename(filename))) %>% 
-  na.omit()
-
-#make list
-outs.l <- sapply(f,function(x) out.df %>% filter(filename==x) %>% select(X,Y) %>% as.matrix)
-
-#extract wing info
-wings <- gsub("XY_.+_(hindwing|forewing)\\..+","\\1",basename(names(outs.l)))
-```
+Fortunately for us, physiologists have found that studying the force (or torque) produced by a biomechanical system can still be useful in uncovering the FL relationships of the input muscles [@rassier1999length]. For this project, we take this assumption to mean that the force we measure at the hand as the muscle produces isometric force at various lengths is a reasonable reflection of the FL relationship governing force at the fiber level.
 
 
 ```{r eval=FALSE,include=FALSE}
-saveRDS(outs.l,"lep_outline_data.RDS")
-```
 
-Here, we use a general regular expression function `gsub()`, which [finds a character string within a fuller string](https://www.programmingr.com/tutorial/gsub-in-r/) and replaces it. In this case, we've asked `gsub()` to find either "hindwing" or "forewing" by using "|" for the or part. We've also specified that these two strings will be after any string (`grep` ".") of any length (`grep` "+") and after the "_". They'll also appear before ".txt". Each wing descriptor is saved to a unique position in the list `wing.l`.
-
-To store our wing descriptors within our outlines, we can access the `fac` option in `Out()` when transforming our list of matrices into a list of `Momocs` outlines. This `fac` option takes a list of named one-dimensional vectors, so we make a list with a name "wing" that has the unlisted values of `wing.l`. Let's save this newly labeled list of outlines as `outs`.
-
-```{r fac}
-outs <-  outs.l %>% 
-  Out(fac=list(wing=wings)) %>% 
-  coo_flipx()
-```
-
-
-Now we can invoke `Momocs` `tidy`-like `filter()` function to parse the outlines according to their wing. Let's do that and visualize each group with `stack()`.
-
-```{r wingfilter,message=FALSE}
-forewings <- outs %>% 
-  filter(wing=="forewing")
-
-hindwings <- outs %>% 
-  filter(wing=="hindwing")
-
-forewings %>% 
-  stack()
-
-hindwings %>% 
-  stack()
-```
-
-
-Now that we have two lists of outlines ready for analysis, let's come back to our size issue. If we ran and EFA analysis on these outlines, most of the variance would be due to their arbitrary size differences. To address this, practitioners of shape analysis transform their shapes into a common coordinate space that removes size altogether. The method of choice for this is the [Procrustes transformation](https://en.wikipedia.org/wiki/Procrustes_analysis). This method superimposes the shapes by optimally translating, rotating and uniformly scaling the objects. That is, both the placement in space and the size of the shapes are freely adjusted so that they are the same size and the distance between the positions of the points constituting the shape is reduced. To align the shapes, the can be compared to an arbitrarily selected reference shape (referred to as ordinary Procrustes analysis) or the shapes can be aligned to an optimally determined mean shape (referred to as generalized Procrustes analysis). We'll perform the latter.
-
-Fortunately, `Momocs` has just a function for generalize Procrustes superimposition, `fgProcrustes()`. Let's use this and visualize our results. But before we do, we must tackle another problem: our outlines have a variable number of coordinates, making it impossible for `fgProcrustes()` to minimize the distance between points in each outline (which would it choose?). So we'll just sample 100 of the points in each outline using `Momocs`'s `coo_interpolate()`. This function fits a spline with high resolution to all the shapes and extracts a determined number of points at equal intervals. We can easily find the number of coordinates in each each set of wings and use the minimum value as the number we'll sample with `coo_interpolate()`. this will minimize the amount of information we lose.
-
-```{r proc, results=FALSE,message=FALSE}
-
-
-fore.min <- forewings %>% 
-  coo_nb() %>% 
-  min()
-
-forewings %>%
-  coo_interpolate(fore.min) %>% 
-  fgProcrustes() %>% 
-  stack()
-
-hind.min <- hindwings %>% 
-  coo_nb() %>% 
-  min()
-
-hindwings %>% 
-   coo_interpolate(hind.min) %>% 
-  coo_slide(id=1) %>% 
-   coo_align()  %>%
-  fgProcrustes() %>%
-  stack()
-```
-
-Now all that's left to do is perform the EFA and then we can move on to PC analysis. For this, all we have to do is pipe in the `Momocs` EFA function, `efourier()`. We'll do this and specify `norm=FALSE` for these [very arcane reasons](https://momx.github.io/Momocs/reference/efourier.html#details).
-
-```{r efour, results=FALSE,message=FALSE}
-forewings %>%
-  coo_interpolate(fore.min) %>% 
-   coo_align()  %>%
-  fgProcrustes() %>% 
-  efourier(norm=FALSE) 
-
-hindwings %>% 
-   coo_interpolate(hind.min) %>% 
-   coo_align()  %>%
-  fgProcrustes() %>% 
-  efourier(norm=FALSE) 
-
-```
-
-Performing the PCA is just as easy. We just finally add `PCA()` with the pipe. We'll have the results in appropriately name variables.
-
-```{r PCA, message=FALSE, results=FALSE}
-
-forewing.pca <- forewings %>%
-  coo_interpolate(fore.min) %>%
-   coo_align()  %>%
-  coo_slide(id=1) %>% 
-  fgProcrustes() %>% 
-  efourier(norm=T) %>% 
-  PCA()
-
-hindwing.pca <-hindwings %>% 
-   coo_interpolate(hind.min) %>% 
-   coo_align()  %>%
-   coo_slide(id=1) %>% 
-  fgProcrustes() %>% 
-  efourier(norm=FALSE) %>% 
-  PCA()
-
+library(tidyverse)
+library(data.table)
+library(gganimate)
+library(emojifont)
+ #return coord for a point r away at angle=ang
+  point.ang.r <- function(p,r,theta){x.2 <-p[1]+r*cos(theta); y.2 <- p[2]+r*sin(theta);return(list(x.2,y.2))}
   
+  #set up angle and arm data
+  pos <- seq(157.5,0,-22.5)-90
+  pos.rad <- pos * pi/180 
+  humerus <- 1
+  distal.arm <- 1
+  elb.x <- 0
+  elb.y <- 0
+  hum.x <- 0
+  hum.y <- 1
+  
+  #make a data.table for easy calculation for new columns
+  arm <- data.table(pos,pos.rad,elb.x,elb.y,hum.x,hum.y)
+  
+  #columns for hand and inlever position
+  arm[,c("hand.x","hand.y"):=point.ang.r(c(elb.x,elb.y),r=humerus,theta=pos.rad),by=pos]
+  arm[,c("inlever.x","inlever.y"):=point.ang.r(c(elb.x,elb.y),r=humerus*0.2,theta=pos.rad),by=pos]
+  
+ arm.m <-  arm%>%
+   pivot_longer(col=-c(pos,pos.rad))%>%
+   mutate(part=gsub("(.+)\\..","\\1",name),x.y=gsub("(.+)\\.(.)","\\2",name))%>%
+   pivot_wider(-name,names_from = c(x.y),values_from=value)%>%
+   mutate(pos2 =90-pos) #rotate angle 90 
+ 
+
+#add bones
+ p <- ggplot()+geom_segment(data=arm.m%>%filter(part!="hum"),aes(x = 0, y = 0, xend = x, yend = y),size=3,col="gray")+geom_segment(data=arm.m%>%filter(part=="hum"),aes(x = 0, y = 0, xend = 0, yend = 1), col = "black",size=4)
+ 
+ #add points
+ p <- p+geom_point(dat=arm.m%>%filter(part!="hand"),aes(x,y,col=part),size=4)+xlim(c(-.5,1.5))+ylim(c(-1.2,1.2)) 
+ 
+ #add muscle lines
+ p <- p+geom_curve(data=arm.m%>%filter(part=="inlever"),aes(x = 0, y = 1, xend = x, yend = y),curvature = -0.3,col="red")+geom_curve(data=arm.m%>%filter(part=="inlever"),aes(x = 0, y = 1, xend = x, yend = y),curvature = 0.0,col="red")
+ 
+ #add emoji hand
+ p <- p+geom_text(data=arm.m%>%filter(part=="hand"),aes(x,y,label=emoji("hand"),angle=pos2*-1),family="EmojiOne", size=20,vjust=0,hjust=.4)
+ 
+ print(p)
+ 
+ #get rid of axes and background
+p<- p+theme_void()
+ 
+
+#transition according to arm position and make pretty
+ anim <- p + transition_states(pos,transition_length = 10,state_length = 70)+shadow_wake(.01)+enter_fade()+exit_fade()
+  
+anim_save("arm.gif", anim)
+
+
+
+https://www.researchgate.net/profile/Ella_Yeung/publication/6223955_Shift_of_Peak_Torque_Angle_After_Eccentric_Exercise/links/53e1a0f60cf2235f352bd385/Shift-of-Peak-Torque-Angle-After-Eccentric-Exercise.pdf
+
+
+#good summary
+https://journals.physiology.org/doi/full/10.1152/jappl.1999.86.5.1445
+```
+
+<center>
+![](arm.gif)
+<br>
+**Fig. 4.** Rotation of the forearm through its typical range of motion. Notice that the insertion angle of the biceps changes. (This was of course produced with R . . . have a look at [this gist on github](https://gist.github.com/ckenaley/924171571a73874384a6aaaef93e372b) if you'd like the code.)
+</center>
+<br>
+
+Keeping all this mind mind, we'll study the FL relationship of the human upper limb and how this relationship responds to fatigue. Eccentric fatigue, whereby the muscle has been asked to do a lot of negative work (producing tension while lengthening) has been a particular interested to muscle physiologists [@yeung2008shift]. That is, this research has shown that the force/torque-length/angle relationship shifts soon after and long after eccentric fatigue. Specifically, the peak normalized isometric force shifts over the typical range of angles for a biomechanical system.   
+
+The specific goals of this project are to:
+
+  1. Produce isometric force-angle curves for the human forearm flexors undertaking maximum voluntary contractions (MVCs).
+  2. Compare the angle at which maximum isometric force ($F_{max}$) occurs ($\theta_{max}$) between non-fatigued (i.e., control) and eccentrically fatigued forearm flexors.
+  3. Discuss the underlying mechanisms resulting in a shift of $\theta_{max}$ after eccentric fatigue.
+
+
+# Methods
+
+## Experimental Design
+
+To assess the affect of eccentric fatigue of elbow flexor muscles, we'll be measuring the isometric force over the range of motion of the forearm produced by MVC. To capture MVC data, you must design and construct a portable Arduino-based force-data acquisition system (DAQ). Your device should record force data over the course of 30s. 
+
+
+## DAQ Design Components
+
+1. 100-kg S-type Load Cell with HX711 amplifier
+2. Arduino Uno microcontroller
+
+## DAQ Assembly and Programming
+
+Assembly for this force logger is almost entirely captured in [this tutorial](https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/). And, Prof. K has wired the load cell to the amplifier, so y'all just need to wire up the ampflifier to the Arduino
+
+~~You'll see that the sketch in the tutorial requires a calibration step to output appropriate force or mass units.~~ **Don't worry about calibration.** We'll be looking at normalized force, so units don't matter. 
+
+<!-- As for your SD storage integration, make sure your sketch writes one column data to the SD card with the header "force". -->
+
+For each experiment, you'll be recording 12 bouts of MVC force, each corresponding to a different elbow angle, for 30 s.  For each arm angle, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking force data. So as not to confuse from where your data came, it's a good idea to change the name of the text file being saved to for each experiment, e.g., "Team_subject1_control.csv" and "Team_subject1_fatigue.csv".
+
+## Data Collection
+
+### Elbow Angle
+
+You'll first need to construct a ganiometer, a simple device that measures the angle between the upper and lower arm (i.e., the elbow angle). One approach is to use the outline of a small plate to cut a disc out of cardboard and then bisect the diameter and then continue to bisect this semicircle into equal segments (Fig. 4.)
+
+<center>
+![](gan.jpg){width=50%}
+<br>
+**Fig. 4** A simple ganiometer made of cardboard.
+</center>
+<br>
+
+To use the ganiometer, find the center of the elbow joint in lateral view and mark this position with a marker. From this point, mark a line along the lateral margin of the radius. (Fig. 5). Then, poke a hole through the center of the ganiometer and affix it to the upper arm so its center aligns with your mark at the elbow joint and the 0-180$^o$ axis aligns with the long axis of the humerus (Fig. 6).You can affix the ganiometer to the upper arm by passing a strip of surgical tape through two tabs cut out on either side of the 0-180$^o$ axis (Fig. 6).
+
+<center>
+![](joint.jpg){width=50%}
+<br>
+**Fig. 4** The elbow joint on a tiny human and the lateral margin of the radius marked with a dark line. Thanks, Zo!
+</center>
+<br>
+
+
+<center>
+![](90deg.jpg){width=50%}
+<br>
+**Fig. 5** The ganiometer affixed to the upper arm with surgical tape with its center placed over the elbow joint. Note how the marked line on the radius indicates an elbow angle of about 90$^o$.
+</center>
+<br>
+
+As the elbow flexes or extends, you should be able to peak at the ganiometer to assess elbow angle.
+
+
+### Isometric MVCs
+
+We will collect isometric force data from MVCs over 12 arm angles, 45-157.5$^o$ at 11.25$^o$ (call it 11$^o$) intervals. Your load-cell is affixed to a wooden or plastic dowel with a zip tie at one end and has a looped zip tie attached to the other. Pass the looped zip tie around the provided C-clamp and fasten the clamp to something that won't move under the torque of your forearm. This could be  table, desk, ect. Hold the dowel in your hand as shown in Fig. 6. Make sure your elbow is supported by something rigid (i.e. the top of a chair back, etc.). 
+
+<center>
+![](grip.jpg){width=50%}
+<br>
+**Fig. 6** How to grip the the load-cell.
+</center>
+<br>
+
+
+
+First collect your control (i.e., non-fatigued) data by starting at the largest arm angle, 157.5$^o$. You can move through the 12 arm angles by rotating your body about your hips. That is, at the high elbow angles, you'll be more upright, at lower angles, more bent over. At each angle, flex your elbow as hard as you can to produce a MVC, resetting your DAQ system each time. Make sure the load-cell forms a right angle with reference to your hand (Fig. 6). You might want to practice a few times to get a sense of how this will proceed.
+
+### MVCs after Eccentric Fatigue
+
+To eccentrically fatigue your forearm flexors, you'll perform isokinetic controlled drops of a heavy object weighing 1/3 your maximum isometric force recorded in the control experiments. A book bag or back pack full of heavy items (ahhh. . .  books) should do just fine. 
+
+To perform your isokinetic eccentric drops, grab the book bag with the hand not involved in the experiment and pass it to the other as its forearm is fully flexed. With the bag now in your study hand, lower the bag slowly and at a constant speed. When the arm is fully extended, grab the book bag with the free hand and then flex the study forearm. Repeat by passing the bag to your study hand. Continue repeating this exercise for 3 min. Keep the cycles uniformly frequent by monitoring the duration (probably 3-4 s each cycle). At the end of the 3 mins, your forearm flexors should feel tired.
+
+After you fatigue your flexors, wait 2 min. Then repeat the experiment exactly as you did for the control data.
+
+Once you complete your experiments, upload your 24 data files to [this Google directory](https://drive.google.com/drive/folders/1ncojVtzbQaZWKNdFgWtkK5CeJ_PmAbq0?usp=sharing). Be sure to name your files according to the following convention: "team_subject_angle_control/fatigue.csv". **Please stick to all lower case.**
+
+## Software and Coding the Arduino
+
+The sketch needed for this experiment could be quite simple. It does, however, require you to download the HX711 library. 
+
+As a primer, this would work:
+
+```{c eval=F}
+
+#include "HX711.h" // include the appropriate library for `scale` functions
+
+
+HX711 scale; //invoke scale functions
+    
+void setup() {
+
+ Serial.begin(115200); //set baud rate
+   scale.begin(6, 7); //set digital pins 6 and 7 as the data and clock pins
+  scale.tare(); //zero the measurements
+
+}
+
+
+void loop() {
+
+  float newReading= scale.get_units(10); //establish new variable from load cel
+
+   Serial.println(newReading); //print load cell value
+
+}
 
 ```
 
-We can visualize the PCA with `plot_PCA()`, which will, by default produce a biplot of the first two PCs, the amount of variance explained by each, and a representation of the morphoshape described by the PCs (the outlines in the background).
 
-```{r plotpca,message=F}
-forewing.pca %>% 
-  plot_PCA(title = "forewings")
+  **NOTE:*** You may find it handy to work with a [previous release of Arduino IDE](https://www.arduino.cc/en/software/OldSoftwareReleases) because the current version does not allow copying data from the serial monitory
 
-hindwing.pca %>% 
-  plot_PCA(title = "hindwings")
 
-```
+## Summary of Experimental Protocol
+  
+  + Fabricate and program a load-cell data acquisition system.
+  + Make a ganiometer.
+  + Record isometric MVCs at 12 distinct elbow angles.
+  + Eccentrically fatigue your flexors.
+  + Wait 2 minutes.
+  + Repeat recording isometric MVCs at the same 12 distinct elbow angles.
+  + Upload data to [this directory](https://drive.google.com/drive/folders/1ncojVtzbQaZWKNdFgWtkK5CeJ_PmAbq0?usp=sharing).
+  
+  
+  Pleas upload your data by Monday, November 13th.
 
-Now we can move on to the comparative analysis.
+ 
+## Data Analysis
 
-## Comparative analysis
+For each experiment, we'll stick to a convention within the muscle physiology world by considering maximum normalized force. That is:
 
-Before we begin, Let's remind ourselves of the questions we're attempting to answer so that we can figure out exactly how to answer then. First, do hind- and forewings vary in their evolutionary rates? Second, do major groups of the Lepidoptera vary in their hind- and forewing evolvability?
+  1. Find maximum force for each recording (don't worry about the specific values or units because you'll. . .).
+  2. Find maximum force ($F_{max}$) across all angles for each experiment (control or fatigued) for each individual and then divide all maximum values for that experiment by $F_{max}$. Your values will now be normalize, i.e., scaled 0-1 with a value of 1 representing the highest force recorded during an experiment.
+  
+Using the normalized force data from the control and fatigued experiments, we'll consider shifts at which angle $F_{max}$ occurred, the difference in $\theta_{max}$. To assess any shift in $\theta_{max}$ with our limited elbow angle samples, we could simply look at the angle at which the flexors produce the most force. For instance, for the these data:
 
-For this first question, we can simply evaluate the evolutionary rate of our PC scores for the hind and forewings using a method of choice. For the second question, we can look at the evolutionary rates of our PC scores across our Lepidopteran tree.
 
-First of all, as mentioned previously, we need a tree and fortunately we have one for these species. Indeed, the species choice for this project was based on those sampled in the @kawahara2019phylogenomics study. So let's load the tree you can [download here](lep_tree2.tre). Make sure it's in your project's directory. We'll use `read.tree()` from the `ape` package and plot it just to check things out. Notice `cex=0.1` to keep the tip labels small in the relatively large tree.
+```{r,message=FALSE}
+library(ggplot2)
+ang <- seq(45,168.75,length.out = 12) #elbow angle
 
-```{r, tree}
-library(ape)
+normF <- c(0.71, 0.77, 0.83, 0.91, 0.97, 1.00, 0.96, 0.94, 0.89, 0.84, 0.77, 0.74) #you'll get this by reading in data and calculating normalized values
 
-lep.tree <- ape::read.tree("lep_tree2.tre")
 
-plot(lep.tree,cex=0.1)
-```
+qplot(ang,normF)+geom_point(aes(x=ang[which.max(normF)],y=normF[which.max(normF)]),col="red",size=4)
 
-Looks great; however, the convention is for the root of the tree to be positioned in the upper left. This is easy to fix with `ape`'s `laddersize()` function. We'll also remove the pesky underscore between names in the tip labels. This will help with joining the tree data with our species data.
-
-```{r treefix}
-lep.tree <- ladderize(lep.tree)
-plot(lep.tree,cex=0.1)
-
-lep.tree$tip.label <- gsub("_"," ",lep.tree$tip.label)
-```
-
-Now that we have our PCA data and a tree of species, we need to a add species information (e.g., the species, higher taxonomic information, etc.) to the shape data so the tree and shape data can work together. Notice that each species is represented in the `outs` list (from whence our PCA is derived) by the file name that belongs to its outline. Let's look at their names.
-
-```{r names}
-basename(names(outs))[1:5]
-```
-
-Not a bit of species data. However, Prof. Kenaley has stored the filenames of each species in a table you can [download here](lep_image_data.csv). Have a look.
-
-```{r sptab}
-lep.sp <- read_csv("lep_image_data.csv")
-
-head(lep.sp)
-```
-Have a look at the column "identifier".
-
-```{r ident}
-head(lep.sp$identifier)
-```
-
-This is the vector of the image file names minus the extension (.jpg, .png, etc.). Notice that our outline names, rather than species, contain this information--you saved the FIJI results as "XY_filename_hindwing.txt" or "XY_filename_forewing.txt". That is, this very same identifier in the species table is buried in the names of our outline data. So let's make a new tibble that strips the same identifier from the outline names and join the species data to this new tibble.
-
-**NOTE**: We've now added `.csv` to the gsub command.
-
-```{r, outdata}
-out.data <- tibble(xy.file=basename(names(outs))) %>% 
-  mutate(identifier=gsub("XY_|_hindwing|_forewing|.txt|.csv","",xy.file)) %>% 
-  left_join(lep.sp)
-
-head(out.data)
-```
-
-With this tibble in place, we can now add species information to our PCA data. The PC scores are stored in the the variable `x`, so we can summon them this way. Notice that the row names correspond to the outline file names, a column in out `out.data` tibble. 
-
-```{r pcsores}
-
-head(hindwing.pca$x,1)
-head(forewing.pca$x,1)
+ang[which.max(normF)] #Find angle for Fmax, theta_max
 
 ```
 
-Let's now join the species information in our `out.data` tibble to the PCA data, storing these in new variables. 
+So, of the 12 angles that we sampled (45--157.5$^o$), the maximum isometric force occurred at angle ($\theta_{max}$=) 101.25$^o$. Simply doing this overlooks the fact that the maximum force could have occurred between any two of the sampled angles. Given the trend in the figure above, $\theta_{max}$ could have been an angle either greater and less than 101.25$^o$. To estimate the trend and find a perhaps more refined estimation of $F_{max}$ we'll resort to (wait for it) . . . modeling. In this case, a series of [polynomial models](https://en.wikipedia.org/wiki/Polynomial_regression) should work. Polynomial models are great for fitting parabolic data like those we have here, but are tricky in that one can keep adding monomial terms very quickly to achieve a better fit. This requires the practitioner to make sure that they are not overfitting the model. Fortunately, we have the tools to prevent such a thing using AIC, as we have learned. 
 
-```{r pca2}
-hindwing.pca2 <-  tibble(xy.file=basename(rownames(hindwing.pca$x)),PC1=hindwing.pca$x[,1],PC2=hindwing.pca$x[,2]) %>% 
-  left_join(out.data)
-
-forewing.pca2 <-  tibble(xy.file=basename(rownames(forewing.pca$x)),PC1=forewing.pca$x[,1],PC2=forewing.pca$x[,2])%>% 
-  left_join(out.data)
+Therefore, let's fit some polynomial models to our example data with a different number of monomial terms (i.e., orders) and tease apart the fit and penalty for including more terms using AICc. Fortunately, we can use the `lm()` and `poly()` functions from the base package to fit the models and use `AICc()` from the `MuMIn` package for AICc fitting. 
 
 
-```
+```{r,message=FALSE}
+library(MuMIn)
 
-Now we have the first 2 PCs for each wing stored with species information and are now ready for comparative analysis.
+poly.m2 <- lm(normF~poly(ang,2)) #second order
+poly.m3 <- lm(normF~poly(ang,3)) #third order
+poly.m4 <- lm(normF~poly(ang,4)) #fourth order
 
-## Evolutionary rates
+AICc(poly.m2,poly.m3,poly.m4) #the second order model fits best
 
-There are several methods available to comparative biologist to estimate the rates of morphological evolution over a phylogenetic tree. We'll be using @o2006testing's method, the so-called "noncensored test" which uses the entire varian-cecovariance matrix (established by the a phylogeny) to calculate the likelihood of rates accross the tree. In this approach, one ancestral state is estimated under Brownian motion for the entire tree and the the optimal rate parameter values are estimated numerically until the likelihood of the model is maximized. This method is captured in the R package `phytools` with the function `brownie.lite()`. 
+x.pred <- seq(45,157.5,length.out = 1000) #define 1000 angles from our range
 
-`brownie.lite()` takes two important arguments, a tree and the phenotypic values for each tip in the tree. ~~Let's take our tree and drop any tips that don't occur in our PCA data.~~ Let's take our tree and keep only the tips are in our PCA data and PCA data that are in the tree.
+normF.pred <- predict(poly.m4,newdata = data.frame(ang=x.pred)) #predict the force using 1000 angles
 
-```{r, tree2}
-keep <- intersect(unique(out.data$species),lep.tree$tip.label) #sp in both tree and data
+qplot(ang,normF)+geom_point(aes(x=x.pred,y=normF.pred),col="red")+geom_point(aes(x=x.pred[which.max(normF.pred)],y=normF.pred[which.max(normF.pred)]),size=5,col="blue")
 
-lep.tree2 <- keep.tip(lep.tree,keep)
-
-plot(lep.tree2,cex=0.1)
-```
-
-Here we only include `lep.tree` tip labels that are in the unique species values of our `out.data` variable. Then we use `ape`'s `drop.tip()` function to drop the tips in our tree that don't occur in our `out.data` tibble.
-
-
-The phenotypic data passed to the `x` argument must be a named vector of values, so let's establish that for PCs 1 and 2, for both the hind- and forewings.
-
-```{r brownie1}
-
-#PC1s
-hind.pc1 <- hindwing.pca2 %>% 
-    filter(species%in% lep.tree2$tip.label) %>% 
-  group_by(species) %>% 
-  summarize(PC1=mean(PC1)) %>% 
-  pull
-
-names(hind.pc1) <-  hindwing.pca2%>% 
-    filter(species%in% lep.tree2$tip.label) %>% 
-  group_by(species) %>% 
-  summarize(PC1=mean(PC1)) %>% 
-  pull(species)
-
-fore.pc1 <- forewing.pca2 %>% 
-    filter(species%in% lep.tree2$tip.label) %>% 
-   group_by(species) %>% 
-  summarize(PC1=mean(PC1)) %>% 
-  pull(PC1)
-
-names(fore.pc1) <-  forewing.pca2 %>% 
-  filter(species%in% lep.tree2$tip.label) %>% 
-     group_by(species) %>% 
-  summarize(PC1=mean(PC1)) %>% 
-  pull(species)
-
-#PC2s
-hind.pc2 <- hindwing.pca2 %>% 
-    filter(species%in% lep.tree2$tip.label) %>% 
-  group_by(species) %>% 
-  summarize(PC2=mean(PC2)) %>% 
-  pull(PC2)
-
-names(hind.pc2) <-  hindwing.pca2%>% 
-    filter(species%in% lep.tree2$tip.label) %>% 
-  group_by(species) %>%
-  summarize(PC2=mean(PC2)) %>% 
-  pull(species)
-
-fore.pc2 <- forewing.pca2 %>% 
-    filter(species%in% lep.tree2$tip.label) %>% 
-   group_by(species) %>% 
-  summarize(PC2=mean(PC2)) %>% 
-  pull(PC2)
-
-names(fore.pc2) <-  forewing.pca2 %>% 
-  filter(species%in% lep.tree2$tip.label) %>% 
-     group_by(species) %>% 
-  summarize(PC2=mean(PC2)) %>% 
-  pull(species)
+x.pred[which.max(normF.pred)] #theta_max
 
 ```
 
 
-Notice here that we filtered the PCA data to include only species that occur in our new, pruned tree. That is, tree species may be in the the PCA data, but species in the PCA data may not be in the tree. This is because some species queried in GBIF were returned as [synonyms](https://en.wikipedia.org/wiki/Synonym_(taxonomy)) under different valid taxonomic names. We won't worry about this now except to exclude these species as we have above and forge ahead. 
+In this example we constructed 3 polynomial models of the 2nd, 3rd, 4th variety and then used AICc to find the lowest AICc score. The 4th order model fits best, so we then produced 1000 discrete values within our range with `seq()` to pass to`predict()` to predict force over this range using our best fitting model (producing `normF.pred`). We then found the max of `normF.pred` (the $F_{max}$) and plotted that, along with our predictions. Lastly, we found $\theta_{max}$, a value of 104.9.
 
-```{r brownie2}
-library(phytools)
 
-forePC1.BM<-brownie.lite(lep.tree2,fore.pc1*10)
-hindPC1.BM<-brownie.lite(lep.tree2,hind.pc1*10)
+A goal of this project is to detect shifts in $F_{max}$ with respect to angle. If we had two data sets, one control and one produced after fatigue, we merely need to compare the two $\theta_{max}$, that is, the shift in angle for $F_{max}$ predicted by two polynomial models. This would look something like this:
 
-forePC2.BM<-brownie.lite(lep.tree2,fore.pc2*10)
-hindPC2.BM<-brownie.lite(lep.tree2,hind.pc2*10)
+```{r,message=FALSE}
+
+normF.fat <- c(0.65, 0.71, 0.81, 0.89,0.92, 0.96, 0.99, 1, 0.96, 0.92, 0.84, 0.77) #fatigue data, you'll get this by reading in data and calculating normalized values
+
+
+qplot(ang,normF.fat)+geom_point(aes(x=ang[which.max(normF.fat)],y=normF.fat[which.max(normF.fat)]),col="red",size=4)
+
+ang[which.max(normF.fat)] #Find angle for Fmax for fatigue data
+
+poly.m2.fat <- lm(normF.fat~poly(ang,2)) #second order
+poly.m3.fat <- lm(normF.fat~poly(ang,3)) #third order
+poly.m4.fat <- lm(normF.fat~poly(ang,4)) #fourth order
+
+AICc(poly.m2.fat,poly.m3.fat,poly.m4.fat) #the second order model fits best
+
+normF.pred.fat <- predict(poly.m2.fat,newdata = data.frame(ang=x.pred)) #predict the force using 1000 angles
+
+qplot(ang,normF)+geom_point(aes(x=x.pred,y=normF.pred.fat),col="red")+geom_point(aes(x=x.pred[which.max(normF.pred.fat)],y=normF.pred.fat[which.max(normF.pred.fat)]),size=5,col="blue")
+
+
+x.pred[which.max(normF.pred.fat)]-x.pred[which.max(normF.pred)] #shift in angle for Fmax, theta_max
 
 ```
 
-Also notice here that we multiplied our tip values by an arbitrary 10 units. This is because this [algorithm stumbles](http://blog.phytools.org/2011/12/error-message-from-brownielite-and.html) when tip branches are short and tip values are small. Great, now we have evolutionary rate estimates of wing shape stored in each variable under `sig2.single`.
+Looks as if there's a 10.3$^o$ shift in $\theta_{max}$. 
 
-```{r singlerate}
-forePC1.BM$sig2.single
+Say we had a bunch of data (from only 10 subjects) and you wanted to compare the control against fatigued data graphically, you could do the following. First we'll simulate some control and fatigue data, adding random noise drawn form a normal distribution and plot the data with a color according to experiment to quickly assess the pattern.
+
+```{r}
+library(tidyverse)
+
+set.seed(1234) #to keep random noise the same
+
+sub <- 1:10 #ten subjects
+dat.l <- list() #empty list
+
+#loop to run through subjects and simulate data based on noise added to data above
+for(i in sub){
+  noise <- rnorm(length(ang),mean = 0.02,sd = 0.01)
+  noise2 <- rnorm(length(ang),mean = 0.02,sd = 0.01)
+  dat.l[[i]] <- tibble(
+    rbind(
+      data.frame(ang,force=normF+noise,subject=i,exp="control"),
+      data.frame(ang,force=normF.fat+noise2,subject=i,exp="fatigue")
+  )  
+  )%>%
+    group_by(subject,exp)%>%
+    mutate(force=force/max(force))
+  
+}
+
+dat <- do.call(rbind,dat.l) #get data into one tibble
+
+dat%>%
+  ggplot(aes(ang,force,col=exp))+geom_point()
 ```
 
-```{r singlerate2, include=FALSE, eval=FALSE}
-hindPC1.BM$sig2.single/forePC1.BM$sig2.single
+Now let's take our data and get AICc scores for our three polynomial models. We'll group the data by subject and experiment and retrieve AICc from each model (`m2`, `m3`, and `m4`). Then, we'll pivot the tibble to a longer format so that we have a single column for AICc values.
+
+```{r, message=FALSE}
+AICs <- dat%>%
+  group_by(subject,exp)%>%
+  summarize(
+    m2=AICc(lm(force~poly(ang,2))), #second order
+    m3=AICc(lm(force~poly(ang,3))), #third order
+    m4=AICc(lm(force~poly(ang,4))) #fourth order
+  )%>%
+  pivot_longer(m2:m4,names_to="model",values_to="AICc")%>%
+  print()
+
 ```
 
-With these values stored we can compare the evolutionary rate for the first and second PCs between fore- and hindwings, something you should do in your report.
-
-
-<!-- ## Shifts in evolutionary rates -->
-
-<!-- We are also seeking to answer whether major groups of the Lepidoptera have undergone significant changes in the rate of wing-shape evolution. `brownie.lite()` can do this, but this method tells the practitioner nothing about the sign of the rate shife, i.e, whether the shift was to a slower or faster rate. For this, we'll use another method, phylogenetic ridge regression [@kratsch2014ridgerace]. This approach  takes a tree and a vector of tip data phenotypes, calculates the ancestral states at each node in the tree, and produces a regression line through each path in the tree, from root to tip including from each deeper node to a daugter node. The regressions are based on the phenotype values at each node vs. time between nodes and along path. The value of the slope parameter of these regressions is the rate. From this, we have rate vectors, i.e, changes in rate.  -->
-
-<!-- To implement ridge regression, we'll turn to the `RRphylo` package written by @castiglione2018new.  Like, `brownie.lite()` the function `RRphylo()` takes a tree and tip data as argurment. For instance, here we compute the rates along the branches for hingwing PC1. -->
-
-
-<!-- ```{r RR} -->
-<!-- library(RRphylo) -->
-
-<!-- hindPC1.RR <- RRphylo(tree=lep.tree2,y=hind.pc1) -->
-
-<!-- ``` -->
-
-<!-- ```{r duptips,eval=FALSE,include=FALSE} -->
-<!-- tibble(sp=names(fore.pc1)) %>%  -->
-<!--   mutate(in.tree=sp%in%lep.tree2$tip.label) %>%  -->
-<!--   filter(!in.tree) -->
-<!-- tibble(sp=lep.tree3$tip.label) %>%  -->
-<!--   mutate(in.tree=sp%in%names(fore.pc1)) %>%  -->
-<!--   filter(!in.tree) -->
-
-<!-- all(!duplicated(lep.tree2$tip.label)) -->
-
-
-<!-- ``` -->
-
-<!-- The output of `RRphylo()` is massive, including the rates computed for each branch in the tree. -->
-
-<!-- ```{r} -->
-<!-- hindPC1.RR$rates -->
-<!-- ``` -->
-
-<!-- Because we're interested in rate shifts, we use the rates from `RRphylo()` to tests whether individual clades evolve at different rates as compared to the rest of the tree. This is performed with `RRphylo`'s `search.shift()`. Here we specify that we want to know if any clades/lineages have exceptional rate shifts with `status.type="clade"`. The singles clades with exception shifts are stored in `single.clade`, only the p value of the shift. Large rates are significantly larger than the rest of the tree (at alpha = 0.05), when the probability is > 0.975; and small rates are significantly small for p < 0.025. -->
-
-<!-- ```{r} -->
-<!-- hindPC1.SS<- search.shift(RR=hindPC1.RR,status.type="clade") -->
-
-<!-- hindPC1.SS$single.clades -->
-<!-- ``` -->
-<!-- With this information we could visualize the nodes with exceptional shifts using `ape`'s `nodelabels` function. We merely need to plot the tree and take the numeric values of the row names returned in `single.clades`. -->
-
-<!-- ```{r viznodes} -->
-<!-- plot(lep.tree2) -->
-<!-- nodelabels(node = as.numeric(rownames(hindPC1.SS$single.clades)),text = rownames(hindPC1.SS$single.clades)) -->
-<!-- ``` -->
-
-<!-- This is fine, but `RRphylo`'s `plotShift()` does this for us. It's a little odd, but this function stores a plot in `plotClades()`, rather than produce a plot. -->
-
-<!-- ```{r plotshifts} -->
-<!-- hindPC1.plot <- plotShift(RR=hindPC1.RR,SS=hindPC1.SS) -->
-
-<!-- forePC1.plot <- plotShift(RR=hindPC1.RR,SS=hindPC1.SS) -->
-<!-- hindPC1.plot$plotClades() -->
-<!-- ``` -->
-
-<!-- From the `single.clades` output and the tree labeled with `nodelabels`, we see that clade 36 represents a signifcant slow down, shifting -0.0034 units, but in clade 33 there's a signifant increase of 0.0053 units.  -->
-
-<!-- Seems we've answer part of the question at least as it pertains to hindwing PC1 and our limited sample of species, "Have there been shifts in wing shape evolution in Lepidopteran lineages?" -->
-<!-- But, which lineage have shifted? We know which species belong to these lineages, but not the lineage name. -->
-
-<!-- To extract this information and view it on the tree, let's use a custom function, one written by Prof. Kenaley. For this, we'll need `ggtree`, a tree annotation package written to work with trees like `ggplot2` works with data and standard plots. We'll have to download `ggtree` rom the `Bioconductor` repository, another place where packages are stored, much like `CRAN`. To do this, run the following only **ONCE**: -->
-
-
-<!-- ```{r ggtree, eval=FALSE} -->
-<!-- if (!require("BiocManager", quietly = TRUE)) -->
-<!--     install.packages("BiocManager") -->
-
-<!-- BiocManager::install("ggtree") -->
-<!-- ``` -->
-
-<!-- We'll also need the `wesanderson` package for nice colors which can be downloaded from `CRAN`. -->
-
-<!-- ```{r ggtre, message=FALSE} -->
-<!-- library(ggtree) -->
-<!-- library(wesanderson) -->
-
-<!-- plot_SS <- function(tre=NULL,SS=NULL,tax=NULL){ -->
-
-
-<!--   nodes <- as.numeric(rownames(SS$single.clades)) -->
-
-<!--   pal <- wes_palette("Zissou1",n=length(nodes)) -->
-<!--   sp <- list() -->
-<!--   for(i in nodes){ -->
-<!--     sp.i <- extract.clade(tre,i)$tip.label -->
-
-<!--     #print(head(tax)) -->
-<!--     sub.names <- lapply(tax,function(x) x[x%in%sp.i])  -->
-
-<!--     in.clades <- lapply(sub.names,function(x) length(x)>0)  -->
-<!--     all.of.clade <- lapply(sub.names,function(x) all(sapply(sp.i,function(z) z%in%x)))  -->
-
-<!--     high.clade <- names(sub.names)[last(which(all.of.clade==T))] -->
-<!--     all.clades <- names(sub.names)[which(in.clades==T)] -->
-<!--     crown <- "" -->
-<!--     if(high.clade!=last(names(sub.names))) crown <- "crown-" -->
-
-<!--     sub.clades <- NULL -->
-<!--     if(length(grepl("oidea",all.clades))>0) sub.clades <- all.clades[grepl("oidea",all.clades)] -->
-
-<!--     high.clade2 <- paste0(crown,high.clade,": ",paste0(sub.clades,collapse = "+")) -->
-<!--     sp[[paste0(i)]] <- tibble(n=i,species=sp.i,clade=high.clade2) -->
-
-<!--   } -->
-
-
-<!--   d <- do.call(rbind,sp)%>%  -->
-<!--     rename(label=species)  -->
-
-<!--   d2<- d %>% rename(clade_name=clade)  -->
-
-<!--   p <- ggtree(tre)+ scale_y_reverse() -->
-
-<!--   p$data <- p$data %>% left_join(d) %>% left_join(tibble(node=nodes,SS$single.clades) %>% mutate(shift=ifelse(rate.difference>0,"+","-"))) -->
-
-<!--   p <-  p+geom_tiplab(aes(col=clade),geom="text",size=1.2)+ -->
-<!--     geom_cladelab(data=d2,mapping=aes(node=n,col=clade_name,label=clade_name),offset=1,size=1.5)+ -->
-<!--     geom_hilight(data=d2,mapping = aes(node = n,fill=clade_name),alpha = 0.01)+ -->
-<!--     scale_fill_manual(values = pal)+ -->
-<!--     scale_color_manual(values = pal)+ -->
-<!--     theme(legend.position = "none")+geom_nodepoint(mapping=aes(subset = shift =="-"), size=5, shape=25,fill='blue',color='blue',alpha=0.7)+ -->
-<!--     geom_nodepoint(mapping=aes(subset = shift =="+"), size=5, shape=24, fill='red',color='red',alpha=0.7) -->
-<!--   p <- p+xlim(NA,6) -->
-<!--   res <- tibble(n=nodes,SS$single.clades) %>% left_join(d %>% select(n,clade) %>% unique) -->
-
-<!--   return(list(plot=p,res=res)) -->
-
-<!-- } -->
-
-
-<!-- ``` -->
-
-<!-- This custom function `plot_SS()` takes three arguments, `tre` (a tree variable of class `phy`), `SS` (output from `search.shift()`), and `tax` (a ~~tibble/data.frame~~ a list, containing ~~the column `species` and `higher_taxon`)~~ clade/lineage names and their species. ~~We have the higher taxon names stored in our PCA tibbles (`hindwing.pca2`, etc.)~~. Please load the taxon name list by downloading [this R data file](Lep_classification.RDS). -->
-
-<!-- The function returns a plot under `$plot` and the `search.shift()` results under `$res`. -->
-
-<!-- Let's try it out by first loading the taxon names with `readRDS()`. -->
-
-
-
-<!-- ```{r newplot} -->
-<!-- tax.names <- readRDS("Lep_classification.RDS") -->
-
-<!-- hindPC1.res <- plot_SS(lep.tree2,hindPC1.SS,tax = tax.names) -->
-
-<!-- hindPC1.res$plot -->
-<!-- hindPC1.res$res -->
-
-<!-- ``` -->
-
-<!-- Notice that the clades and their taxa are color coded and the exceptional shifts are indicated by triangles (blue and down for low shifts, red and up for high shifts). Now we have a method of indicating what clades/lineages underwent a shift and the scale of the shift. -->
-
-
-
-<!-- ```{r comp,eval=FALSE,include=FALSE} -->
-
-
-<!-- forePC1.RR <- RRphylo(tree=lep.tree2,y=fore.pc1) -->
-<!-- forePC1.SS<- search.shift(RR=forePC1.RR,status.type="clade") -->
-<!-- forePC1.plot <- plotShift(RR=forePC1.RR,SS=forePC1.SS) -->
-<!-- forePC1.plot$plotClades() -->
-
-
-<!-- forePC1.res <- plot_SS(lep.tree2,SS=forePC1.SS,tax = tax.names) -->
-
-<!-- forePC1.res$plot -->
-<!-- forePC1.res$res -->
-
-<!-- forePC2.RR <- RRphylo(tree=lep.tree2,y=fore.pc2) -->
-<!-- forePC2.SS<- search.shift(RR=forePC2.RR,status.type="clade") -->
-<!-- forePC2.plot <- plotShift(RR=forePC2.RR,SS=forePC2.SS) -->
-<!-- forePC2.plot$plotClades() -->
-
-
-<!-- forePC2.res <- plot_SS(lep.tree2,SS=forePC2.SS,tax = tax.names) -->
-
-<!-- forePC2.res$plot -->
-<!-- forePC2.res$res -->
-
-
-<!-- hindPC2.RR <- RRphylo(tree=lep.tree2,y=hind.pc2) -->
-<!-- hindPC2.SS<- search.shift(RR=hindPC2.RR,status.type="clade") -->
-<!-- hindPC2.plot <- plotShift(RR=hindPC2.RR,SS=hindPC2.SS) -->
-<!-- hindPC2.plot$plotClades() -->
-
-
-<!-- hindPC2.res <- plot_SS(lep.tree2,SS=hindPC2.SS,tax = tax.names) -->
-
-<!-- hindPC2.res$plot -->
-<!-- hindPC2.res$res -->
-
-<!-- ``` -->
-
-<!-- ```{r comps,eval=FALSE,include=FALSE} -->
-<!-- ### had relative wing size shifted -->
-
-<!-- forewing.gp <- forewings %>% -->
-<!--   coo_interpolate(fore.min) %>% -->
-<!--    coo_align()  %>% -->
-<!--   coo_slide(id=1) %>%  -->
-<!--   fgProcrustes() %>%  -->
-<!--   coo_flipy() -->
-
-<!-- hindwing.gp <-hindwings %>%  -->
-<!--    coo_interpolate(hind.min) %>%  -->
-<!--    coo_align()  %>% -->
-<!--    coo_slide(id=1) %>%  -->
-<!--   fgProcrustes() %>%  -->
-<!--   coo_flipy() -->
-
-<!-- hind.area <- hindwing.gp %>%  -->
-<!--   coo_trans(10,10) %>%  -->
-<!--   coo_area() -->
-
-<!-- fore.area <- forewing.gp %>%  -->
-<!--   coo_trans(10,10) %>%  -->
-<!--   coo_area() -->
-
-<!-- area.prop <- fore.area/hind.area -->
-
-<!-- area.dat <- tibble(FH=area.prop,xy.file=basename(names(area.prop)))%>%  -->
-<!--   left_join(out.data) %>%  -->
-<!--   filter(species%in% lep.tree2$tip.label) %>%  -->
-<!--   group_by(species) %>%  -->
-<!--   summarize(FH=mean(FH)) -->
-
-<!-- area <- area.dat$FH -->
-<!-- names(area) <- area.dat$species -->
-
-<!-- area.RR <- RRphylo(tree=lep.tree2,y=area) -->
-<!-- area.SS<- search.shift(RR=area.RR,status.type="clade") -->
-<!-- area.plot <- plotShift(RR=area.RR,SS=area.SS) -->
-<!-- area.plot$plotClades() -->
-
-<!-- area.res <- plot_SS(lep.tree2,SS=area.SS,tax = tax.names) -->
-
-<!-- area.res$plot -->
-
-<!-- #AR -->
-
-<!-- hind.w <- hindwing.gp %>%  -->
-<!--   coo_length() -->
-
-<!-- hindwing.AR <- hind.w^2/hind.area -->
-
-<!-- fore.w <- forewing.gp %>%  -->
-<!--   coo_length() -->
-
-<!-- forewing.AR <- fore.w^2/fore.area -->
-
-<!-- fore.AR <- tibble(AR=forewing.AR,xy.file=basename(names(forewing.AR)),wing="fore")%>%  -->
-<!--   left_join(out.data) %>%  -->
-<!--    filter(species%in% lep.tree2$tip.label) %>%  -->
-<!-- group_by(species) %>%  -->
-<!--   summarize(AR=mean(log(AR)),wing="fore") -->
-
-<!-- hind.AR <- tibble(AR=hindwing.AR,xy.file=basename(names(hindwing.AR)),wing="hind")%>%  -->
-<!--   left_join(out.data)%>%  -->
-<!--    filter(species%in% lep.tree2$tip.label) %>%  -->
-<!-- group_by(species) %>%  -->
-<!--   summarize(AR=mean(log(AR)),wing="hind") -->
-
-<!-- ar.dat <- rbind(hind.AR,fore.AR) -->
-
-<!-- ar.dat %>% pivot_wider(names_from = wing, -->
-<!--     values_from = AR) %>%  -->
-<!--   filter(species%in% lep.tree2$tip.label) %>%  -->
-<!--   summarize(fore=pic(fore,lep.tree2),hind=pic(hind,lep.tree2)) %>%  -->
-<!--   ggplot(aes(fore,hind))+geom_point() -->
-
-<!-- fore.ar <- fore.AR$AR -->
-<!-- names(fore.ar) <- fore.AR$species -->
-
-
-<!-- hind.ar <- hind.AR$AR -->
-<!-- names(hind.ar) <- hind.AR$species -->
-
-
-<!-- fore.ar.RR <- RRphylo(tree=lep.tree2,y=fore.ar) -->
-<!-- fore.ar.SS<- search.shift(RR=fore.ar.RR,status.type="clade") -->
-<!-- fore.ar.plot <- plotShift(RR=fore.ar.RR,SS=fore.ar.SS) -->
-<!-- fore.ar.plot$plotClades() -->
-
-<!-- fore.ar.res <- plot_SS(lep.tree2,SS=fore.ar.SS,tax = tax.names) -->
-<!-- fore.ar.res$plot -->
-<!-- fore.ar.res$res -->
-
-<!-- hind.ar.RR <- RRphylo(tree=lep.tree2,y=hind.ar) -->
-<!-- hind.ar.SS<- search.shift(RR=hind.ar.RR,status.type="clade") -->
-<!-- hind.ar.plot <- plotShift(RR=hind.ar.RR,SS=hind.ar.SS) -->
-<!-- hind.ar.plot$plotClades() -->
-
-<!-- hind.ar.res <- plot_SS(lep.tree2,SS=hind.ar.SS,tax = tax.names) -->
-<!-- hind.ar.res$plot -->
-<!-- hind.ar.res$res -->
-
-<!-- library(data.table) -->
-<!-- Ix <- function(x,y,axes=F){ -->
-<!--   dt <- data.table(x=x,y=y) -->
-<!--   if(axes) dt[,x:=x-mean(range(x))]; dt[,y:=y-mean(range(y))] -->
-<!--   dt[,products:=(y^2+y*lead(y)+lead(y)^2)*(x*lead(y)-lead(x)*y)] -->
-<!--   I <- dt[,.((1/12)*sum(products,na.rm = T))] -->
-<!--   names(I) <- "I.x" -->
-<!--   return(I) -->
-<!-- } -->
-
-
-<!-- fore.I <- sapply(1:length(forewing.gp),function(x) forewing.gp[x]) -->
-<!-- fore.I  <- lapply(fore.I, function(x) as.matrix(data.frame(x=c(x[,1]-min(x[,1])),y=c(x[,2])))) -->
-<!-- fore.I <- sapply(fore.I, function(x) Ix(x[,2],x[,1])) %>% unlist -->
-
-<!-- forewing.gp[[1]] -->
-
-
-
-<!-- fore.I <- tibble(I=fore.I,xy.file=basename(names(forewing.AR)),wing="fore")%>%  -->
-<!--   left_join(out.data) %>%  -->
-<!--    filter(species%in% lep.tree2$tip.label) %>%  -->
-<!-- group_by(species) %>%  -->
-<!--   summarize(I=mean(I),wing="fore") -->
-
-
-<!-- hind.I <- sapply(1:length(hindwing.gp),function(x) hindwing.gp[x])  -->
-<!-- hind.I  <- lapply(hind.I, function(x) as.matrix(data.frame(x=c(x[,1]-min(x[,1])),y=c(x[,2])))) -->
-<!-- hind.I <- sapply(hind.I, function(x) Ix(x[,2],x[,1])) %>% unlist -->
-
-
-<!-- hind.I <- tibble(I=hind.I,xy.file=basename(names(hindwing.AR)),wing="hind")%>%  -->
-<!--   left_join(out.data) %>%  -->
-<!--    filter(species%in% lep.tree2$tip.label) %>%  -->
-<!-- group_by(species) %>%  -->
-<!--   summarize(I=mean(I),wing="hind") -->
-
-
-<!-- I.dat <- rbind(hind.I,fore.I) -->
-
-<!-- I.dat %>% pivot_wider(names_from = wing, -->
-<!--     values_from = I) %>%  -->
-<!--   filter(species%in% lep.tree2$tip.label) %>%  -->
-<!--   summarize(fore=pic(fore,lep.tree2),hind=pic(hind,lep.tree2)) %>%  -->
-<!--   ggplot(aes(fore,hind))+geom_point() -->
-
-<!-- hind.I2 <- hind.I %>% pull(I) -->
-<!-- names(hind.I2) <- hind.I %>% pull(species) -->
-<!-- hind.I.RR <- RRphylo(tree=lep.tree2,y=hind.I2) -->
-<!-- hind.I.SS<- search.shift(RR=hind.I.RR,status.type="clade") -->
-<!-- hind.I.plot <- plotShift(RR=hind.I.RR,SS=hind.I.SS) -->
-<!-- hind.ar.plot$plotClades() -->
-
-
-<!-- hind.I.res <- plot_SS(lep.tree2,SS=hind.I.SS,tax = tax.names) -->
-<!-- hind.I.res$plot -->
-<!-- hind.I.res$res -->
-
-
-<!-- fore.I2 <- fore.I %>% pull(I) -->
-<!-- names(fore.I2) <- fore.I %>% pull(species) -->
-<!-- fore.I.RR <- RRphylo(tree=lep.tree2,y=fore.I2) -->
-<!-- fore.I.SS<- search.shift(RR=fore.I.RR,status.type="clade") -->
-<!-- fore.I.plot <- plotShift(RR=fore.I.RR,SS=fore.I.SS) -->
-<!-- fore.ar.plot$plotClades() -->
-
-
-<!-- fore.I.res <- plot_SS(lep.tree2,SS=fore.I.SS,tax = tax.names) -->
-<!-- fore.I.res$plot -->
-<!-- fore.I.res$res -->
-
-<!-- fore.ARI <- fore.I %>% left_join(fore.AR) -->
-
-<!-- fore.ARI %>%  -->
-<!--   ggplot(aes(AR,I))+geom_point() -->
-
-<!-- fore.ARI %>% filter(AR>1.25) %>% pull(species) -->
-<!-- hind.ARPC %>%  -->
-<!--   ggplot(aes(AR,I))+geom_point() -->
-
-<!-- hind.ARPC %>%  -->
-<!--   ggplot(aes(I,PC1))+geom_point() -->
-
-
-<!-- ARI.dat <- ar.dat %>% left_join(I.dat) %>%  -->
-<!--   pivot_wider(names_from=c(wing),values_from=c(I,AR)) %>%  -->
-<!--   left_join(out.data %>% select(species,identifier,higher_taxon) %>% unique) -->
-
-
-<!-- ARI.dat %>%  -->
-<!--   ggplot(aes(higher_taxon,I_fore/I_hind))+geom_boxplot()+ylim(c(-1,-0.5)) -->
-
-<!-- obj<-contMap(lep.tree2,log(hind.I2*1e10),plot=FALSE) -->
-<!-- plot(obj,fsize=c(0.4,1),cex=0.1,lwd=2,res=200) -->
-
-<!-- #so cool!!!! VVVV -->
-
-<!-- img.f <- list.files("/Users/Chris/Dropbox/Documents/bc (1)/3140.f22/other_stuff/lep_photos",recursive=T,full.names=T) -->
-<!-- hi.AR <- ARI.dat %>% filter(AR_fore>1.5) %>% -->
-<!--   group_by(species) %>%  -->
-<!--   mutate(img.f=img.f[grep(identifier,img.f)]) -->
-
-
-
-<!-- img1 <- hi.AR %>% ungroup %>% filter(AR_fore==max(AR_fore)) %>% pull(img.f) %>% readJPEG(.,native = TRUE) -->
-<!-- p1 <- ARI.dat %>%  -->
-<!--   ggplot(aes(AR_fore,I_fore))+geom_point() -->
-
-<!-- library(ggimage) -->
-<!-- library(patchwork) -->
-<!-- p1 +  -->
-<!--   geom_image(data=hi.AR,aes(image=img.f),size=.1)+geom_point(data=hi.AR,col="red") -->
-
-<!-- hi.AR %>%  -->
-<!--   ggplot(aes(x=AR_fore,y=1))+geom_image(data=hi.AR,aes(image=img.f))+theme_classic() -->
-
-
-
-
-<!-- ``` -->
-
-<!-- ```{r comp0,eval=FALSE,include=FALSE} -->
-
-<!-- forewing.nogp<- forewings %>% -->
-<!--   coo_interpolate(fore.min) %>% -->
-<!--   coo_align()  %>% -->
-<!--   coo_slide(id=1) -->
-
-<!-- hindwing.nogp<- hindwings %>% -->
-<!--   coo_interpolate(hind.min) %>% -->
-<!--   coo_align()  %>% -->
-<!--   coo_slide(id=1) -->
-
-<!-- l <- forewing.nogp %>%  -->
-<!--   coo_length() -->
-
-<!-- range(l) -->
-
-<!-- hist(l,breaks=seq(0,2100,10)) -->
-
-<!-- forewing.sc <- forewing.nogp %>%  -->
-<!--   mutate(scale=l<120,l=coo_length(.),xy.file=names(.)) %>% -->
-<!--   mutate(xy.file=basename(xy.file)) %>%  -->
-<!--   filter(scale==T) -->
-
-<!-- forewing.sc <- forewing.sc$fac %>% left_join(out.data) %>% select(species,l,wing) %>%  -->
-<!--   group_by(species,wing) %>%  -->
-<!--   summarize(l=mean(l)) -->
-
-
-
-<!-- hindwing.sc <- hindwing.nogp %>%  -->
-<!--   mutate(scale=l<120,l=coo_length(.),xy.file=names(.)) %>% -->
-<!--   mutate(xy.file=basename(xy.file)) %>%  -->
-<!--   filter(scale==T) -->
-
-<!-- hindwing.sc <- hindwing.sc$fac  %>% left_join(out.data) %>% select(species,l,wing) %>%  -->
-<!--   group_by(species,wing) %>%  -->
-<!--   summarize(l=mean(l)) -->
-
-<!-- #second moment in real terms -->
-
-<!-- fw.outs <- sapply(1:length(forewing.nogp),function(x) forewing.nogp[x]) -->
-<!-- fw.outs  <- lapply(fw.outs, function(x) as.matrix(data.frame(x=c(x[,1]-x[1,1]),y=c(x[,2]-x[1,2]))) %>% coo_flipy()) -->
-
-<!-- fore.I <- sapply(fw.outs, function(x) Ix(x[,2],x[,1])) %>% unlist -->
-
-
-<!-- fore.I <- tibble(I=fore.I,xy.file=basename(names(forewing.nogp)),wing="fore")%>%  -->
-<!--   left_join(out.data) %>%  -->
-<!--    filter(species%in% lep.tree2$tip.label) %>%  -->
-<!-- group_by(species) %>%  -->
-<!--   summarize(I=mean(I),wing="fore") -->
-
-
-
-
-<!-- hw.outs <- sapply(1:length(hindwing.nogp),function(x) hindwing.nogp[x]) -->
-<!-- hw.outs  <- lapply(hw.outs, function(x) as.matrix(data.frame(x=c(x[,1]-x[1,1]),y=c(x[,2]-x[1,2])))%>% coo_flipy()) -->
-
-<!-- hind.Isc <- sapply(hw.outs, function(x) Ix(x[,2],x[,1])) %>% unlist -->
-
-
-<!-- hind.I <- tibble(I=hind.Isc,xy.file=basename(names(hindwing.nogp)),wing="hind")%>%  -->
-<!--   left_join(out.data) %>%  -->
-<!--    filter(species%in% lep.tree2$tip.label) %>%  -->
-<!-- group_by(species) %>%  -->
-<!--   summarize(I=mean(I),wing="hind") -->
-
-
-<!-- I.dat <- rbind(hind.I,fore.I) %>%  -->
-<!--   pivot_wider(names_from=wing, values_from=I,names_prefix="I_") -->
-
-<!-- I.dat %>%  -->
-<!--   ggplot(aes(I_fore,I_hind))+geom_point()+geom_smooth(method="lm") -->
-
-
-<!-- sc.dat <- rbind(hindwing.sc,forewing.sc) %>%  -->
-<!--   pivot_wider(names_from=wing,values_from=l,names_prefix="L_") %>%  -->
-<!--   left_join(ARI.dat %>% select(-I_fore,-I_hind)) %>%  -->
-<!--   left_join(I.dat) %>%  -->
-<!--   filter(I_hind<1e4,I_fore<1e4) -->
-
-<!-- lep.tree3 <- keep.tip(lep.tree2,sc.dat$species) -->
-
-<!-- sc.dat %>%  -->
-<!--   ggplot(aes(I_fore,I_hind))+geom_point()+geom_smooth(method="lm") -->
-
-<!-- sc.dat %>%  -->
-<!--   ggplot(aes(log(L_hindwing),log(I_hind), col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-
-<!-- sc.dat %>%  -->
-<!--   ggplot(aes(AR_fore,I_fore, col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-
-<!-- sc.dat %>%  -->
-<!--   ggplot(aes(AR_hind,I_hind, col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-
-<!-- sc.dat %>%  -->
-<!--   ggplot(aes(AR_hind,AR_fore, col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-<!-- sc.dat %>%  -->
-<!--   ggplot(aes(I_hind,I_fore, col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-
-<!-- ###PIC (HERE) -->
-
-<!-- pic2 <- function(x=.,sp=species,t=lep.tree3){ -->
-<!--   names(x) <- sp -->
-<!--   pic(x,t) -->
-<!-- } -->
-
-<!-- length(lep.tree3$tip.label) -->
-
-<!-- pic2(x=sc.dat$AR_hind,sp=sc.dat$species) -->
-<!-- sc.dat %>% -->
-<!--   ungroup() %>%  -->
-<!--   dplyr::mutate_at(c("AR_hind","AR_fore","I_fore","I_hind"),pic2(x=.,sp=.$species)) -->
-<!-- ``` -->
-
-<!-- ```{r comp4,eval=FALSE,include=FALSE} -->
-<!-- library(mvMORPH) -->
-
-
-<!-- #for.ar.sim <- make.simmap(lep.tree3, area, model="ER", nsim=1) -->
-<!-- #fore.ar.ou <- mvOU(for.ar.sim, area, model="OU1", diagnostic=FALSE, echo=FALSE) -->
-<!-- #plot(for.ar.sim) -->
-
-<!-- library(geiger) -->
-
-<!-- fore.I.dtt <- dtt(lep.tree2,fore.I2,nsim=1000, plot=TRUE,calculateMDIp=T) -->
-<!-- hind.I.dtt <- dtt(lep.tree2,hind.I2,nsim=1000, plot=TRUE,calculateMDIp=T) -->
-<!-- fore.ar.dtt <- dtt(lep.tree2,fore.ar,nsim=1000, plot=TRUE,calculateMDIp=T) -->
-<!-- hind.ar.dtt <- dtt(lep.tree2,hind.ar,nsim=1000, plot=TRUE,calculateMDIp=T) -->
-
-
-<!-- library(OUwie) -->
-
-<!-- n.tip <- seq(1,Ntip(lep.tree2),by=4) -->
-<!-- lep.tree3 <- keep.tip(lep.tree2,n.tip) -->
-
-<!-- hind.ar2 <- data.frame(species=names(hind.ar),Reg=1,AR=hind.ar) %>%  -->
-<!--   filter(species%in%lep.tree3$tip.label) -->
-<!-- hind.ar.BM1 <- OUwie(lep.tree3,hind.ar2,model=c("BM1")) -->
-<!-- hind.ar.BMS <- OUwie(lep.tree3,hind.ar2,model=c("BMS")) -->
-<!-- hind.ar.OU1 <- OUwie(lep.tree3,hind.ar2,model=c("OU1")) -->
-<!-- hind.ar.OUM <- OUwie(lep.tree3,hind.ar2,model=c("OUM")) -->
-<!-- hind.ar.OUMV <- OUwie(lep.tree3,hind.ar2,model=c("OUMV")) -->
-<!-- hind.ar.OUMA <- OUwie(lep.tree3,hind.ar2,model=c("OUMA")) -->
-
-<!-- fits <- list(hind.ar.BM1, -->
-<!-- hind.ar.BMS, -->
-<!-- hind.ar.OU1, -->
-<!-- hind.ar.OUM, -->
-<!-- hind.ar.OUMV, -->
-<!-- hind.ar.OUMA -->
-<!-- ) -->
-
-<!-- aics <- sapply(fits,function(x) x$"AICc") -->
-<!-- fits[[which.min(aics)]] -->
-<!-- all(!duplicated(names(hind.ar))) -->
-
-<!-- hindwing.pc3 <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>% select(PC1,PC2) %>% as.matrix -->
-<!-- rownames(hindwing.pc3) <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>%pull(species) -->
-
-<!-- sfs <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>% pull(higher_taxon) %>% as.factor -->
-
-
-<!-- library(geomorph) -->
-
-
-
-<!-- hind.Ppca <- gm.prcomp(hindwing.pc3,phy=lep.tree3,GLS = TRUE) -->
-
-<!-- grps <- as.numeric(sfs) -->
-<!-- names(grps) <- sfs -->
-
-<!-- g.pal <- viridis_pal()(length(levels(sfs))) -->
-<!-- plot(hind.Ppca,phylo=T,phylo.par = list(tip.labels = TRUE, tip.txt.cex = .75, edge.width = 2,node.labels = FALSE),time.plot=T,bg=sfs,pch=22) -->
-<!-- shapeHulls(hind.p,groups =,group.cols=1:23) -->
-
-
-
-<!-- plot(stom.Ppca,axis1 = 1,axis2=2,phylo = T,tip.tex.cex=0.1,phylo.par = list(tip.labels = TRUE, tip.txt.cex = .75, edge.width = 2,node.labels = FALSE),bg=diet2,pch=22) -->
-<!-- legend("topleft", pch=22, pt.bg = unique(diet2), legend = rev(levels(diet2))) -->
-<!-- shapeHulls(p12,groups = grps,group.cols = c("red","black"),group.lwd=c(2,2),group.lty = c(2, 2)) -->
-<!-- dev.off() -->
-
-<!-- nrow(hindwing.pc3) -->
-<!-- Ntip(lep.tree2) -->
-<!-- #https://onlinelibrary.wiley.com/doi/full/10.1111/evo.14238 -->
-
-<!-- td <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>% select(species,PC1,PC2,higher_taxon) %>% rename(tip=species) %>% as.matrix -->
-<!-- rownames(td) <-  hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>%pull(species) -->
-<!-- phylomorphospace.gg(lep.tree3,hindwing.pc3,tip.aes=aes(x,y,col=higher_taxon),tip.dat=td) -->
-<!--   phylomorphospace.gg <- function (tree, X, A = NULL, control = list(), tip.dat=NULL,tip.aes=NULL,cont.disc="cont",...)  -->
-<!-- { -->
-<!--   if (class(tree) != "phylo")  -->
-<!--     stop("tree object must be of class 'phylo.'") -->
-<!--   if (nrow(X) != length(tree$tip))  -->
-<!--     stop("X must contain the same number of rows as species in tree.") -->
-<!--   if (is.null(rownames(X))) { -->
-<!--     warning("X is missing row names; assuming order of tip labels.") -->
-<!--     rownames(X) <- tree$tip.label -->
-<!--   } -->
-<!--   if (ncol(X) != 2) { -->
-<!--     warning("X has more than 2 columns.  Using only the first 2 columns.") -->
-<!--     X <- X[, 1:2] -->
-<!--   } -->
-<!--   if (is.null(A))  -->
-<!--     A <- apply(X, 2, fastAnc, tree = tree) -->
-<!--   con = list(col.edge = setNames(rep("black", nrow(tree$edge)),  -->
-<!--                                  as.character(tree$edge[, 2])), col.node = setNames(rep("black",  -->
-<!--                                                                                         max(tree$edge)), as.character(1:max(tree$edge)))) -->
-<!--   con[(namc <- names(control))] <- control -->
-<!--   if (hasArg(node.by.map))  -->
-<!--     node.by.map <- list(...)$node.by.map -->
-<!--   else node.by.map <- FALSE -->
-<!--   if (hasArg(node.size)) { -->
-<!--     node.size <- list(...)$node.size -->
-<!--     if (length(node.size) == 1)  -->
-<!--       node.size <- c(node.size, node.size) -->
-<!--   } -->
-<!--   else node.size <- c(1, 1.3) -->
-<!--   if (hasArg(xlab))  -->
-<!--     xlab <- list(...)$xlab -->
-<!--   else xlab <- colnames(X)[1] -->
-<!--   if (hasArg(ylab))  -->
-<!--     ylab <- list(...)$ylab -->
-<!--   else ylab <- colnames(X)[2] -->
-<!--   if (hasArg(fsize))  -->
-<!--     fsize <- 0.75 * list(...)$fsize -->
-<!--   else fsize <- 0.75 -->
-<!--   if (hasArg(colors))  -->
-<!--     colors <- list(...)$colors -->
-<!--   else if (!is.null(tree$maps))  -->
-<!--     colors <- setNames(palette()[1:ncol(tree$mapped.edge)],  -->
-<!--                        sort(colnames(tree$mapped.edge))) -->
-<!--   if (hasArg(lwd))  -->
-<!--     lwd <- list(...)$lwd -->
-<!--   else lwd <- if (is.null(tree$maps))  -->
-<!--     1 -->
-<!--   else 2 -->
-<!--   if (hasArg(axes))  -->
-<!--     axes <- list(...)$axes -->
-<!--   else axes <- TRUE -->
-<!--   if (hasArg(add))  -->
-<!--     add <- list(...)$add -->
-<!--   else add <- FALSE -->
-<!--   aa <- setNames(c(X[tree$tip.label, 1], A[, 1]), c(1:length(tree$tip.label),  -->
-<!--                                                     rownames(A))) -->
-<!--   bb <- setNames(c(X[tree$tip.label, 2], A[, 2]), c(1:length(tree$tip.label),  -->
-<!--                                                     rownames(A))) -->
-<!--   XX <- matrix(aa[as.character(tree$edge)], nrow(tree$edge),  -->
-<!--                2) -->
-<!--   YY <- matrix(bb[as.character(tree$edge)], nrow(tree$edge),  -->
-<!--                2) -->
-<!--   if (!add)  -->
-
-<!--     A.df <- as.data.frame(A) -->
-
-<!--   edge.path<- data.frame(x.beg=XX[,1],x.end=XX[,2],y.beg=YY[,1],y.end=YY[,2]) -->
-
-<!--   zz <- c(tree$edge[1, 1], tree$edge[tree$edge[, 2] > length(tree$tip.label),2]) -->
-<!--   node.df <- data.frame(x=c(XX[1, 1], XX[tree$edge[, 2] > length(tree$tip.label),2]), y=c(YY[1, 1], YY[tree$edge[, 2] > length(tree$tip.label),2])) -->
-
-<!--   tip.df <- data.frame(x=XX[tree$edge[, 2] <= length(tree$tip.label), 2], y=YY[tree$edge[,2] <= length(tree$tip.label), 2],tip=tree$tip.label) -->
-
-<!--   #print(tip.df) -->
-
-<!--   #expand plot array -->
-<!--   px <- 1.2*(tip.df$x) -->
-<!--   py <- 1.2*(tip.df$y) -->
-<!--   x.range <- max(px)-min(px) -->
-<!--   y.range <- max(py)-min(py) -->
-
-<!--   tip.df <- data.frame(x=XX[tree$edge[, 2] <= length(tree$tip.label), 2], y=YY[tree$edge[,2] <= length(tree$tip.label), 2],tip=tree$tip.label,angle=(tip.df$x)/range(tip.df$x)*90,vjust=(tip.df$x/x.range)*2,hjust=(tip.df$y/y.range)) -->
-
-
-<!--   if(!is.null(tip.dat)) tip.df <- merge(tip.df,tip.dat,by="tip") -->
-<!--   print(tip.df) -->
-<!--   if(is.null(tip.aes)) tip.aes <- aes(x,y) -->
-
-<!--   print(tip.aes) -->
-
-<!--   gg.p <- ggplot(data=edge.path)+geom_segment(aes(x=x.beg,y=y.beg,xend=x.end,yend=y.end),alpha=0.5)+geom_point(data=node.df,aes(x=x,y=y),alpha=0.5,size=5)+geom_point(data=tip.df,tip.aes,size=7,inherit.aes = F)+geom_text(data=tip.df,aes(x=x,y=y,label=tip,fontface=3,angle=angle,vjust=vjust),size=5)+scale_x_continuous(limits=range(px))+scale_y_continuous(limits=range(py))+xlab(label = "PC1")+ylab(label="PC2") -->
-
-
-<!--   return(gg.p+theme_bw(30)+theme(panel.grid=element_blank(),axis.title.x = element_text(vjust=-0.5),axis.title.y = element_text(vjust=0.25)) -->
-<!--   ) -->
-
-<!--   } -->
-
-
-<!--   Betts, C.R. and Wootton, R.J., 1988. Wing shape and flight behaviour in butterflies (Lepidoptera: Papilionoidea and Hesperioidea): a preliminary analysis. Journal of experimental biology, 138(1), pp.271-288. -->
-<!--   Le Roy, C., Debat, V. and Llaurens, V., 2019. Adaptive evolution of butterfly wing shape: from morphology to behaviour. Biological Reviews, 94(4), pp.1261-1281. -->
-<!-- ``` -->
-
-## Shape evolution correlation
-
-To say something about whether hing- and forewing shape evolution is correlated we could undertake phylogenetic least squares analysis like we have in previous projects. But, we've done a ton already. So, let's make this simple and just perform [phylogenetic independent contrasts (PIC)](https://en.wikipedia.org/wiki/Phylogenetic_comparative_methods#:~:text=Phylogenetically%20independent%20contrasts,-The%20standardized%20contrasts&text=The%20logic%20of%20the%20method,statistically%20independent%20and%20identically%20distributed.) analysis. First proposed by @felsenstein1985phylogenies in his seminal paper, he proposed using phylogenetic information (under a Brownian-motion like model) to transform the original tip data into values that are statistically independent of one another. This method is captured in the `ape` function `pic()` For hindwing and forewing PC1, such analysis would look like this.
-
-
-```{r pic1}
-hindPC1.pic <- pic(hind.pc1,phy = lep.tree2)
-forePC1.pic <- pic(fore.pc1,phy = lep.tree2)
+Now we'll do something very similar, predicting values for 1000 discrete angles across our range of elbow positions. Notice that we've summarized the data by subject, experiment and model to find the angle (`x.pred`) which matches the max force value.
+```{r, message=FALSE}
+
+fits <- dat%>%
+  group_by(subject,exp)%>%
+  summarize(
+    m2=predict(lm(force~poly(ang,2)),newdata=data.frame(ang=x.pred)), #second order
+    m3=predict(lm(force~poly(ang,3)),newdata=data.frame(ang=x.pred)), #third order
+    m4=predict(lm(force~poly(ang,4)),newdata=data.frame(ang=x.pred)) #fourth order
+  )%>%
+   pivot_longer(m2:m4,names_to="model")%>%
+   group_by(subject,exp,model)%>%
+   summarize(theta_max=x.pred[which.max(value)])%>%
+   print()
 ```
 
-```{r pic, include=FALSE,eval=FALSE}
-hindPC2.pic <- pic(hind.pc2,phy = lep.tree2)
-forePC2.pic <- pic(fore.pc2,phy = lep.tree2)
+Now let's join these the `AICs` and `fits` tables so that we can filter the model predictions by which model fits best. Note `filter(best==TRUE)` after constructing a `best` column according to the minimum AICc score using `mutate()`.
 
-PC2.pic <- tibble(
-  hind=hindPC2.pic,
-  fore=forePC2.pic
-)
-
-PC2.pic %>% 
-  ggplot(aes(x=fore,y=hind))+geom_point()+geom_smooth(method="lm")
+```{r, message=TRUE}
+best.models <- fits%>%
+  left_join(AICs)%>%
+  group_by(subject,exp)%>%
+  mutate(best=AICc==min(AICc))%>%
+  filter(best==TRUE)%>%
+  dplyr::select(-best)%>%
+  print()
 ```
 
-
-Here we just inputed our stored PC vectors we used in the rate analysis and our tree of course. Now we have transformed values we can regress against one another. Let's first plot them and see what we get.
-
-```{r picplot}
-PC1.pic <- tibble(
-  hind=hindPC1.pic,
-  fore=forePC1.pic
-)
-
-PC1.pic %>% 
-  ggplot(aes(x=fore,y=hind))+geom_point()+geom_smooth(method="lm")
+To investigate whether a shift if $\theta_{max}$ is different between the control and fatigue experiments, we can run the following ANOVA.
+```{r, message=TRUE}
+anova(lm(theta_max~exp,best.models))
 ```
 
-Wow! These PC1s Look pretty correlated! Let's see what the r-squared value is and if there is a significant relationship. For this, we need simply to create a linear model and retrieve these values with `summary()`.
+Lastly, we should calculate the mean shift with SEM. To find the shift, we can pivot the `best.models` tibble to a wider format so we can have $\theta_{max}$ for each experiment in separate columns and find the difference with `mutate()`. Then, `summarise()` can be used to find the mean and SEM.
 
+```{r, message=TRUE}
+best.models%>%
+  pivot_wider(id_cols=subject,names_from = exp,values_from=theta_max)%>%
+  mutate(shift=fatigue-control)%>%
+  ungroup()%>%
+  summarise(mean.shift=mean(shift),se.shift=sd(shift)/sqrt(length(shift)))
 
-```{r picmod}
-summary(lm(hind~fore,PC1.pic))
 ```
 
 
 # Project Report
 
-Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following:
-  
-  * Are the rates of wing-shape evolution different between the hind- and forewing? By how much? 
-  <!-- * Have major lineages of the Lepidoptera undergone significant shifts in evolutionary rate?  -->
-  * Are hind- and forewing shapes correlated?
-  * What inferences can you make based on shape correlations and flight control?
-  
-Please be sure to answer these questions based on both PC1 and PC2 shape scores.
-  
-In answering your question, your .Rmd should include the following components:
+Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following questions:
 
-   * A YAML header that specifies HTML output, the authors, and a bibliograph named "BIOL3140.bib". **Submit this bibliography as well!**
-   * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially:
+  * Do class-wide force-angle data for isometric MVC accord to a typical FL relationship both under control and fatigued conditions?
+  * Is there a significant shift between $\theta_{max}$ between the control and fatigue FL relationships?
+  
+In answering these questions, be sure to use the visualization, modeling, and model-assessments tools we've used in the course so far.
+  
+The answers and narrative in your .Rmd should include the following components:
+
+   * A YAML header that specifies HTML output, the authors, and a bibliography named "BIOL3140.bib". **Submit this bibliography as well!**
+   * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifically:
       + Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. **Please include at least one reference to support the summary of previous work.** Note: this can be done easily by refiguring the introduction to this project report.
-      + Methods: Explicitly state how you answered the questions, including a narrative of all the anlyses both qualitative and quantitative.
+      + Methods: Explicitly state how you answered the questions, including a narrative of all the analyses both qualitative and quantitative.
       + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.
       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here.
       + Author contributions: Briefly outline what each team member contributed to the project.
 
-Project reports should be uploaded by 11:59 PM on Sunday, October 29th.
+Project reports should be uploaded by 11:59 PM on Thursday, November 16th.
+
+<div class = "green">
+<div class="row">
+  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
+  <div class="col-sm-9">
+Please have a look at out [Phase II report rubric](phaseII_rubric.html) to get a sense of how this and other Phase II reports will be grade.
+</div>
+</div>
+</div>
+<br>
 
 # References
-

@@ -2,3 +2,42 @@ h1, .h1, h2, .h2, h3, .h3,h4,.h4 {
     margin-top: 20px;
      margin-bottom: 10px;
 }
+
+a {
+color: #2C3E50
+}
+
+
+/* visited link */
+a:visited {
+  color: #6e859c;
+}
+
+/* mouse over link */
+a:hover {
+  color: #6e859c;
+  font-weight:bold;
+text-decoration:underline;
+
+}
+
+/* selected link */
+a:active {
+  color: #6e859c;
+}
+
+/* visited link */
+li:visited {
+  color: #6e859c;
+}
+
+/* mouse over link */
+li:hover {
+  color: #6e859c;
+
+}
+
+li:active {
+  color: #6e859c;
+}
+

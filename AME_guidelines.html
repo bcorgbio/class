@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Analysis and Modeling Exercises</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">BIOL 5380</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="schedule.html">Schedule</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Assignments
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">AMEs</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="AME_guidelines.html">AME Guidelines</a>
+        </li>
+        <li>
+          <a href="AMEs/AME1.html">AME1</a>
+        </li>
+        <li>
+          <a href="AMEs/AME2.html">AME2</a>
+        </li>
+        <li>
+          <a href="AMEs/AME3.html">AME3</a>
+        </li>
+        <li>
+          <a href="AMEs/AME4.html">AME4</a>
+        </li>
+        <li>
+          <a href="AMEs/AME5.html">AME5</a>
+        </li>
+        <li>
+          <a href="AMEs/AME6.html">AME6</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">AME Solutions</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="AMEs/AME1_solution.html">AME1</a>
+        </li>
+        <li>
+          <a href="AMEs/AME2_solution.html">AME2</a>
+        </li>
+        <li>
+          <a href="AMEs/AME3_solution.html">AME3</a>
+        </li>
+        <li>
+          <a href="AMEs/AME4_solution.html">AME4</a>
+        </li>
+        <li>
+          <a href="AMEs/AME5_solution.html">AME5</a>
+        </li>
+        <li>
+          <a href="AMEs/AME6_solution.html">AME6</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mini-Projects</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="mini_projects.html">Mini-Projects Overview</a>
+        </li>
+        <li>
+          <a href="MP1.html">MP1 Description</a>
+        </li>
+        <li>
+          <a href="MP2.html">MP2 Description</a>
+        </li>
+        <li>
+          <a href="MP3.html">MP3 Description</a>
+        </li>
+        <li>
+          <a href="MP4.html">MP4 Description</a>
+        </li>
+        <li>
+          <a href="MP5.html">MP5 Description</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Final Project</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="final_project.html">FP Overview</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="https://topicsinbiomechanics.slack.com/">Discussion Board</a>
+</li>
+<li>
+  <a href="https://bostoncollege.instructure.com/courses/1652556">Course Canvas Page</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Author Contribution Evaluations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="author_contributions.html">Author Contribution Evaluation Guidelines</a>
+    </li>
+    <li>
+      <a href="https://forms.gle/1CMXtch2feruGxoX9">Author Contribution Evaluation Form</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Analysis and Modeling Exercises</h1>
+
+</div>
+
+
+<div id="ame-guidelines" class="section level2">
+<h2>AME Guidelines</h2>
+<p>We’ll engage in 5 analysis and modeling exercises (AMEs). These
+exercises address a major goal of the course: developing skills in
+quantitative inference in the context biological sciences.</p>
+<p>Some specific themes we’ll explore include:</p>
+<ul>
+<li>Building and applying predictive models to biological
+phenomena.</li>
+<li>Effective visualization of trends in research data.</li>
+<li>Qualitative and statistical inference of biological data.</li>
+</ul>
+<p>Every 2-3 weeks or so, we’ll introduce the concepts and task taken up
+by each AME. Unlike the mini-projects, AMEs are focused mainly on
+quantitative approaches to biomechanical research, not the bio-physical
+concepts that we explore elsewhere.</p>
+<p>AMEs will take about a week to complete. At least initially, these
+exercises will be self-assessed. That is, after completion and
+submission of each AME, solutions will be issued and students will have
+about another week to compare their submitted work to the solution and
+resubmit a revised AEM with a self-assessed preliminary score. The
+original submission, revised submission, and self-assessed score will
+then be review by Prof. K, who will, in short order, return the
+self-assessed AEM with some feedback and a final score.</p>
+<p>A hypothetical example of an AME can be found at <a
+href="AME_example.html">this link</a>.</p>
+</div>
+<div id="initial-submissions" class="section level2">
+<h2>Initial submissions</h2>
+<p>AMEs will be released on <strong>Tuesdays</strong> and are due the
+<strong>following Tuesday</strong>. Each AEM will include a list of
+objectives with a total point value of 8–9 points. An interpretation
+section in each AEM will be worth 1–2 points.</p>
+<p>AMEs are meant to be short, concise explorations of quantitative
+topics relevant to our experimental work. Initial submissions should
+should be contained in an R markdown file and follow this format:</p>
+<ol style="list-style-type: decimal">
+<li>The following section headers that organize your submission.
+<ul>
+<li><p>Analysis: A list of objectives and the relevant analysis to
+address them. This section can be established from pasting the
+objectives put forth in AME assignment description. Each objective
+should be accompanied by a code chunk that meets that specific
+objective. This may include, among other things, loading data,
+implementing models, and producing illuminating visualizations.
+<strong>NB:</strong> Each code chunk must be given a name that
+corresponds its objective, e.g., “objective 1”.</p></li>
+<li><p>Interpretation: A brief statement as to what the analysis means
+with reference to the objectives. This should be no longer than three
+short sentences.</p></li>
+</ul></li>
+</ol>
+<p>Initial AME markdowns should be submitted through a Google form, the
+link to which will be provided in the AME assignment description.</p>
+<p><a href="AME_example_submission.html">This link</a> leads to a
+hypothetical submission for our <a href="AME_example.html">hypothetical
+AME</a>.</p>
+</div>
+<div id="self-assessment-and-revision-procedure" class="section level2">
+<h2>Self-Assessment and Revision Procedure</h2>
+<p>Immediately following the deadline for initial submission, Prof. K
+will release the analytical solution. Students will then have one week
+to compare their initial submission with the solution, make a
+self-assessment, and prepare a revised markdown.</p>
+<p>A solution to our hypothetical AEM can be found <a
+href="AME_example_solution.html">here</a></p>
+<div id="self-assessment" class="section level3">
+<h3>Self-Assessment</h3>
+<p>The solution released by Prof. K will contain a link to a
+self-assessment form where students can enter marks for each objective
+and the interpretation section.</p>
+<p>Answering most objectives in the AME will require code to analyze,
+visualize, or summarize data. In self-assessing these objectives,
+students should consider the following:</p>
+<p>Compared to the solution . . .</p>
+<ol style="list-style-type: decimal">
+<li>Does the submission address the objective?</li>
+<li>Is it concise?</li>
+</ol>
+<p>In self-assessing the interpretation section, students should
+consider if their submission—as compared to the solution—was a
+good-faith effort to contextualized the questions or points raised by
+the objective.</p>
+<p>The following rubric codifies this advice and should be used to
+assess points for each objectived and the interpretation section.</p>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Componnt</th>
+<th><strong>Full points</strong></th>
+<th><strong>Partial points</strong><span
+class="math inline">\(^*\)</span></th>
+<th><strong>0 points</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>For each objective in the Analysis section</td>
+<td>Addresses or completes all aspects of the objective as outlined. If
+this requires a code chunk, the code within it is concise, avoiding
+unneeded operations, and runs successfully</td>
+<td>Addresses or completes some, but not all, parts of the objective. If
+this requires a code chunk, the chunk contains code that may not be
+concise nor runs successfully.</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Assesses or completes few questions or required tasks or submits few
+required materials. Code doesn’t run.</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Interpretation section</td>
+<td>Makes a good-faith effort to address the objectives in the context
+of the the outcomes of the analysis</td>
+<td>Addresses some, but not all of these points or questions</td>
+<td>Addresses none of the points or questions</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(^*\)</span>Partial points should be
+awarded proportionally. For example, say an objective is worth 3 points
+and two aspects of the objective were completed fully. The self-assessed
+score for this objective should be 2 points. Some subjectivity may be
+involved, especially if an objective partially met. Please use your
+discretion and award points in increments of 0.5.</p>
+<p>Sum all the points for the Analysis and Interpretation sections to
+give yourself a final score.</p>
+<p>Prof. K will evaluate each self-assessment and, if needed, adjust the
+individual marks, either up or down.</p>
+</div>
+<div id="aem-revisions" class="section level3">
+<h3>AEM Revisions</h3>
+<p>Students will have the opportunity to revise their initial AEM
+submissions and include this revision by uploading it through the
+self-assessment Google form. The revised AEM submission should include
+the following:</p>
+<ol style="list-style-type: decimal">
+<li><p>For each objective in the analysis section which full marks were
+not given, a revised code chunk or chunks that integrate the solution
+and original submission. This integration must include comments as to
+the differences between the initial and solution code. See below for an
+example. If an objective did receive full marks, please include it just
+the same.</p></li>
+<li><p>For an interpretation section that did not receive full marks or
+for one where it must change given the solution, provide a brief
+statement as to how the original interpretation has changed once the
+solution is integrated.</p></li>
+</ol>
+<p>If the revised objective sections produce the same results as the
+solution and, if needed, the interpretation section is sufficiently
+modified, then the student earns half of the missing points back. For
+example, if a student gave themselves a score of 7 and Prof. K agreed
+with this score, then the revised score would be an 8.5.</p>
+</div>
+</div>
+<div id="asssement-and-revision-example" class="section level2">
+<h2>Asssement and Revision Example</h2>
+<div id="assemment-example" class="section level3">
+<h3>Assemment Example</h3>
+<p>As we run through and assessment and revision, let’s compare the
+hypothetical submission to a <a
+href="AME_example_solution.html">hyopthetical solution</a>.</p>
+<p>If you recall from our hypothetical AME, we’re studying the bite
+force of the eastern gray squirrel (<em>Sciurus carolinensis</em>).</p>
+<center>
+<div class="float">
+<img
+src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Squirrel_closeup_profile.gk.jpg/500px-Squirrel_closeup_profile.gk.jpg"
+alt="The study species, Sciurus carolinensis. Image by grendel|khan, CC BY-SA 3.0" />
+<div class="figcaption">The study species, <em>Sciurus
+carolinensis</em>. Image by grendel|khan, CC BY-SA 3.0</div>
+</div>
+</center>
+<p><br></p>
+<p>Let’s first begin with looking at an objective that should receive
+full marks. For objective 3, students were asked to do the following, a
+task worth 3 points.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Please download the data you see above by accessing <a
+href="data/bite_force.csv">this link</a>. Read it in as CSV data and
+save it to an object named <code>dat</code>. [3]</li>
+</ol>
+<p>For this, the solution included the following:</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Please download the data you see above by accessing <a
+href="data/bite_force.csv">this link</a>. Read it in as CSV data and
+save it to an object named <code>dat</code>. [3]</li>
+</ol>
+<pre>
+<code>```{r objective 3}
+dat <- read_csv("data/bite_force.csv")
+```</code>
+</pre>
+<p>For this, the hypothetical student included the following in their
+submission:</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Please download the data you see above by accessing <a
+href="data/bite_force.csv">this link</a>. Read it in as CSV data and
+save it to an object named <code>dat</code>. [3]</li>
+</ol>
+<pre>
+<code>```{r objective 3}
+dat <- read_csv("data/bite_force.csv")
+```</code>
+</pre>
+<p>Note here that the student produced what is identical to the
+solution. They used the appropriate functions to load the data, and
+assuming the code chunk ran successfully (i.e., the data were downloaded
+and placed the in same directory as the .Rmd), it was saved to the
+object <code>dat</code>. In addition, the name of this chunk reflects
+the objective it satisfies. So, according to our rubric, the objective
+was fully met: the code ran, the object <code>dat</code> contains the
+data, and the chunk has the correct name. Thus, this student should
+award themselves all three points.</p>
+<p>Let’s now look at <a href="AME_example_submission.html">a
+submission</a> that should receive partial marks. For objective 4,
+students were asked to do the following:</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Produce an illustrative visualization of the relationship between
+squirrel maximum bite force and mass and how this relationship may vary
+by sex. [3]</li>
+</ol>
+<p>For this, the solution included the following (output included):</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Produce an illustrative visualization of the relationship between
+squirrel maximum bite force and mass and how this relationship may vary
+by sex. [3]</li>
+</ol>
+<pre>
+<code>```{r objective 4}
+dat %>% 
+  ggplot(aes(mass,Fmax,col=sex))+geom_point()
+```</code>
+</pre>
+<p><img src="AME_guidelines_files/figure-html/objective_ex%204-1.png" width="672" /></p>
+<p>For this, the hypothetical student included the following in their
+submission (output also included):</p>
+<pre>
+<code>```{r objective 4}
+dat_F <- dat %>% filter(sex=="Female")
+dat_M <- dat %>% filter(sex=="Male")
+dat_F %>% 
+  ggplot(aes(mass,Fmax))+geom_point()
+dat_M %>% 
+  ggplot(aes(mass,Fmax))+geom_point()
+
+```</code>
+</pre>
+<p><img src="AME_guidelines_files/figure-html/objective_ex2%204-1.png" width="672" /><img src="AME_guidelines_files/figure-html/objective_ex2%204-2.png" width="672" /></p>
+<p>This part of the submission does well in that the code to address the
+objective runs successfully. But, note that this part of the submission
+misses the mark with regards to two important rubric metrics:</p>
+<ol style="list-style-type: decimal">
+<li>Does it address the objective?</li>
+<li>Is it concise?</li>
+</ol>
+<p>In assessing whether this submission addresses the objective, we see
+that two separate plots are produced and, thus, it’s hard to compare the
+sexes. This addresses the objective only partially. In addition,
+filtering by sex and producing two separate plots is not concise. So, as
+compared to the solution, the submission does not fully address the
+objective, isn’t as concise. This sits squarely in the partial-points
+column according to our rubric. A fair score for this part of a
+submission might be 1.5.</p>
+</div>
+<div id="revision-example" class="section level3">
+<h3>Revision Example</h3>
+<p>Now the we have a framework for self-assessment, let’s turn to
+revising the original submission.As mentioned earlier, a revised AEM
+submission should include an integration of the solution with the
+original submission. For code chunks, this must include comments as to
+the differences between the initial and solution co de. Likewise, for an
+interpretation section that did not receive full marks or for one where
+it must change given the solution, provide a brief statement as to how
+the original interpretation has changed once the solution is
+integrated.</p>
+<p>Let’s focus on the same hypothetical submission that received partial
+points as a result of the self assessments. As a reminder, the student
+submitted the following . . .</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Produce an illustrative visualization of the relationship between
+squirrel maximum bite force and mass and how this relationship may vary
+by sex. [3]</li>
+</ol>
+<pre>
+<code>```{r objective 4}
+dat_F <- dat %>% filter(sex=="Female")
+dat_M <- dat %>% filter(sex=="Male")
+dat_F %>% 
+  ggplot(aes(mass,Fmax))+geom_point()
+dat_M %>% 
+  ggplot(aes(mass,Fmax))+geom_point()
+
+```</code>
+</pre>
+<p>And the solution included . . .</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Produce an illustrative visualization of the relationship between
+squirrel maximum bite force and mass and how this relationship may vary
+by sex. [3]</li>
+</ol>
+<pre>
+<code>```{r objective 4}
+dat %>% 
+  ggplot(aes(mass,Fmax,col=sex))+geom_point()
+```</code>
+</pre>
+<p>Using comments (i.e., <code>#</code>) in the code chunk, a revised
+submission might look something like this.</p>
+<pre>
+<code>```{r objective 4}
+#Remove the redundant filtering that splits the data and the plot that plots males and females separately
+#dat_F <- dat %>% filter(sex=="Female") 
+#dat_M <- dat %>% filter(sex=="Male")
+#dat_F %>% 
+  #ggplot(aes(mass,Fmax))+geom_point()
+#dat_M %>% 
+ # ggplot(aes(mass,Fmax))+geom_point()
+
+#plot with all data and color by sex
+dat %>% 
+  ggplot(aes(mass,Fmax,col=sex))+geom_point()
+
+```</code>
+</pre>
+<p>Note the use of the <code>#</code> to “turn off” the code we don’t
+want and to add descriptive comments on how the chunk addresses the
+objective.</p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

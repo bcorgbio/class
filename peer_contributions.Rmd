@@ -1,0 +1,41 @@
+
+---
+title: "Peer Contribution Evaluations"
+---
+
+Our Projects will be pursued in randomly assigned groups. Group-work is an excellent model for the collaborative process of scientific inquiry. When all team members of a group are a making good-faith, substantive effort to complete the requirements of project work, these exercises go swimmingly. Alas, it is rarely the case that some team members let others lead the charge and their contributions are minimal. 
+
+As a way of keeping all team members of a group accountable and more likely to be important contributors to all aspects each project, students will be asked to evaluate the contributions of their teammates. 
+
+## Evaluation Process
+
+For you and each of your peers, please fill out a contribution evaluation using [this form](https://forms.gle/ATeFa9wsV1t4g27g6) before all project deadlines.
+
+The form includes evaluation prompts for you and up to 3 team members: one each for contributions to logistics and planning, analysis, and writing. For each prompt, please consider the following:
+
+1. For contributions to logistics and planning, did you or the team member . . . 
+    + Make good-faith efforts to retrieve the required equipment from Prof. K?
+    + Make efforts to initiate or respond promptly to messages (e.g., texts, emails, etc.) that plan meetings or set aside time for analysis and writing?
+  <br>
+2. For contributions to analysis, did you or the team member . . . 
+   + Make a reasonably equitable contribution to analysis, including conceptional or written contributions to code that loads, visualizes, or models data? 
+3. For contributions to writing, did you or the team member . . .
+    + Make a reasonably equitable contribution to create or edit the team's Markdown document, including adding or editing text?
+    
+
+Evaluations for each of these prompts will be made on a scale of 1 to 5, with 1 indicating no contribution and 5 a major contribution. Remember, you should focus on whether contributions were equitable and major. Perhaps you or a peer contributed to some, but not all code, or even a comment about some code, that moved the analysis forward. This is a major contribution.
+
+Lastly, student's are asked to enter some comments concerning their own and their peer's contributions. This is a good place to add some important context. For example, perhaps one peer received a 2 for analysis, but made really important contributions to writing and planning or the was peer sick and did their best despite this.
+
+## Use of Evaluations in Assessment 
+
+All team members will receive a preliminary grade for each report according to the content. Head over to the [Phase I](phaseI_rubric.html), [Phase II](phaseII_rubric.html) and [Final project](final_proj.html) pages for details. Prof. K will then review the author contribution evaluations and comments for each student and adjust the preliminary grade accordingly. Generally, the total evaluation points will be divided by 15 and this percentage will be used to adjust the preliminary grade. Say a peer receives 12 total points (80%) and the team received a preliminary grade of 50 for a module project report. This peer would then receive a final grade of 40. However, say a different peer receives 12 evaluation points for the same report (5 each for planning and analysis, but 2 for writing), **but** other team members indicate in their comments that this peer's contributions to planning and analysis were exceptional, this peer may receive the full 50 points.
+
+Also keep in mind that initial points could be adjusted upwards. For example, say a group submits a module project that initially earns 40 points. If, through the peer evaluations, it's clear one or or more students lead the way and made most of the substantial contributions, then such students may have their initial score adjusted upwards. 
+
+## Advice
+
+Take it from a professor, assessing effort and contributions can be difficult. It's probably best to apply this rule: be honest, but not harsh. Remember, Prof. K will make a determination as to whether to final project grade for any student should be adjusted according the these evaluations, incorporating both the evaluation scores and comments.
+
+
+

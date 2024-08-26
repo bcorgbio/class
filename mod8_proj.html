@@ -13,10 +13,10 @@
 
 <title>Module 8 Project</title>
 
-<script src="site_libs/header-attrs-2.22/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -33,6 +33,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -45,109 +47,18 @@
   ul.task-list{list-style: none;}
     </style>
 
-
-
-<style type="text/css">
-  code {
-    white-space: pre;
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
   }
-  .sourceCode {
-    overflow: visible;
-  }
-</style>
-<style type="text/css" data-origin="pandoc">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  background-color: #f8f8f8; }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ef2929; } /* Alert */
-code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #204a87; } /* Attribute */
-code span.bn { color: #0000cf; } /* BaseN */
-code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #8f5902; } /* Constant */
-code span.co { color: #8f5902; font-style: italic; } /* Comment */
-code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code span.dt { color: #204a87; } /* DataType */
-code span.dv { color: #0000cf; } /* DecVal */
-code span.er { color: #a40000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #204a87; font-weight: bold; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code span.ot { color: #8f5902; } /* Other */
-code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
-code span.ss { color: #4e9a06; } /* SpecialString */
-code span.st { color: #4e9a06; } /* String */
-code span.va { color: #000000; } /* Variable */
-code span.vs { color: #4e9a06; } /* VerbatimString */
-code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    var j = 0;
-    while (j < rules.length) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
-        j++;
-        continue;
-      }
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') {
-        j++;
-        continue;
-      }
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
 </script>
+
+
 
 
 
@@ -438,6 +349,9 @@ div.tocify {
 <li>
   <a href="schedule.html">Schedule</a>
 </li>
+<li>
+  <a href="schedule.html#wk1">Schedule</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Projects
@@ -484,10 +398,6 @@ div.tocify {
     <li>
       <a href="final_proj.html">Final Project</a>
     </li>
-    <li class="dropdown-header">DaqPacks</li>
-    <li>
-      <a href="daqpack.html">DaqPack Item List</a>
-    </li>
   </ul>
 </li>
 <li>
@@ -495,6 +405,21 @@ div.tocify {
 </li>
 <li>
   <a href="https://bostoncollege.instructure.com/courses/1647043/gradebook">Grades on Canvas</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Peer Contribution Evaluations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="peer_contributions.html">Peer Contribution Evaluation Guidelines</a>
+    </li>
+    <li>
+      <a href="https://forms.gle/ATeFa9wsV1t4g27g6">Author Contribution Evaluation Form</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -520,18 +445,19 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Each northern hemisphere spring, many neotropical passerines
-undertake long-distance migrations from Central and South America to
-temperate latitudes to forage and breed. Many of these species fly
-non-stop over the Gulf of Mexico and arrived on land between Texas and
-Florida. These species are therefore described as trans-Gulf migrants
-(TGMs). The date when any individual migrant arrives on its breeding
-grounds has important fitness consequences and the evolution of this
-phenological event is likely the result of balancing important
-tradeoffs. For instance, arriving early increases the chances of finding
-a mate and breeding multiple times, however later arrival ensures higher
-food availability in these temperate and seasonal ecosystems <span
-class="citation">(Smith and Moore 2005; Newton 2008)</span>.</p>
+<p>Each spring in the northwesterern hemisphere (the Neartic), many
+neotropical passerines undertake long-distance migrations from Central
+and South America to temperate latitudes to forage and breed. Many of
+these species fly non-stop over the Gulf of Mexico and arrive on land
+between Texas and Florida. These species are therefore described as
+trans-Gulf migrants (TGMs). The date when any individual migrant arrives
+on its breeding grounds has important fitness consequences and the
+evolution of this phenological event is likely the result of balancing
+important tradeoffs. For instance, arriving early increases the chances
+of finding a mate and breeding multiple times, however later arrival
+ensures higher food availability in these temperate and seasonal
+ecosystems <span class="citation">(Smith and Moore 2005; Newton
+2008)</span>.</p>
 <p>In the context of a changing climate, failure of TGMs to shift
 arrival date at breeding areas in response to warmer spring temperatures
 may result in population declines <span class="citation">(Both et al.
@@ -611,32 +537,32 @@ and plot the occurrence lat/lon on a map of that state using
 the <code>occ_data()</code> search by specifying the scientific name
 (<em>Corvus corax</em>), the state/province to Maine, the year as 2018,
 and a limit of 200 records.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rgbif)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(MuMIn)</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(rnoaa)</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(ggmap)</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(usmap)</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">library</span>(magick)<span class="co">#for examples</span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="fu">library</span>(cowplot)<span class="co">#for examples</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="fu">library</span>(lme4) <span class="co">#for linear mixed effect models</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="fu">library</span>(car) <span class="co">#for LME anova testing</span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="fu">library</span>(data.table) <span class="co">#for frollmean function (and others)</span></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>raven <span class="ot">&lt;-</span> <span class="fu">occ_data</span>(<span class="at">scientificName =</span> <span class="st">&quot;Corvus corax&quot;</span>, <span class="at">stateProvince=</span><span class="st">&quot;Maine&quot;</span>, <span class="at">limit=</span><span class="dv">200</span>,<span class="at">year=</span><span class="dv">2018</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#get the state of ME from ggmaps map data</span></span>
-<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>ME<span class="ot">&lt;-</span> <span class="fu">map_data</span>(<span class="st">&#39;state&#39;</span>, <span class="st">&#39;maine&#39;</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>raven.p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ME, <span class="fu">aes</span>(long,lat,<span class="at">group=</span>subregion) )<span class="sc">+</span></span>
-<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>  <span class="fu">geom_polygon</span>(<span class="at">colour =</span> <span class="st">&quot;gray&quot;</span>,<span class="at">fill=</span><span class="st">&quot;gray90&quot;</span>)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">data=</span>raven[[<span class="dv">2</span>]],<span class="fu">aes</span>(<span class="at">x=</span>decimalLongitude,<span class="at">y=</span>decimalLatitude,<span class="at">size=</span>individualCount),<span class="at">alpha=</span><span class="fl">0.3</span>,<span class="at">inherit.aes =</span> F)<span class="sc">+</span> <span class="fu">coord_quickmap</span>()<span class="sc">+</span><span class="fu">theme_void</span>()</span>
-<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co">#and add image to the map with cowplot</span></span>
-<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>raven.p2 <span class="ot">&lt;-</span> <span class="fu">ggdraw</span>() <span class="sc">+</span></span>
-<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>  <span class="fu">draw_image</span>(<span class="st">&quot;https://www.allaboutbirds.org/guide/assets/photo/63739491-480px.jpg&quot;</span>,<span class="at">scale =</span> <span class="fl">0.3</span>,<span class="at">halign=</span><span class="dv">0</span>,<span class="at">valign=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>  <span class="fu">draw_plot</span>(raven.p)</span>
-<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="fu">print</span>(raven.p2)</span></code></pre></div>
+<pre class="r"><code>library(rgbif)
+library(tidyverse)
+library(MuMIn)
+library(rnoaa)
+library(data.table)
+library(ggmap)
+library(usmap)
+library(magick)#for examples
+library(cowplot)#for examples
+library(lme4) #for linear mixed effect models
+library(car) #for LME anova testing
+library(data.table) #for frollmean function (and others)
+
+raven &lt;- occ_data(scientificName = &quot;Corvus corax&quot;, stateProvince=&quot;Maine&quot;, limit=200,year=2018)
+
+#get the state of ME from ggmaps map data
+ME&lt;- map_data(&#39;state&#39;, &#39;maine&#39;)
+
+raven.p &lt;- ggplot(ME, aes(long,lat,group=subregion) )+
+  geom_polygon(colour = &quot;gray&quot;,fill=&quot;gray90&quot;)+geom_point(data=raven[[2]],aes(x=decimalLongitude,y=decimalLatitude,size=individualCount),alpha=0.3,inherit.aes = F)+ coord_quickmap()+theme_void()
+
+#and add image to the map with cowplot
+raven.p2 &lt;- ggdraw() +
+  draw_image(&quot;https://www.allaboutbirds.org/guide/assets/photo/63739491-480px.jpg&quot;,scale = 0.3,halign=0,valign=1) +
+  draw_plot(raven.p)
+print(raven.p2)</code></pre>
 <div class="figure">
 <img src="mod8_proj_files/figure-html/unnamed-chunk-1-1.png" alt="Fig. 1. Records for common raven in Maine, 2018." width="672" />
 <p class="caption">
@@ -645,9 +571,9 @@ Fig. 1. Records for common raven in Maine, 2018.
 </div>
 <p>Notice how <code>occ_data()</code> returns records as a list of
 different data types. See . . .</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">names</span>(raven)</span></code></pre></div>
+<pre class="r"><code>names(raven)</code></pre>
 <pre><code>## [1] &quot;meta&quot; &quot;data&quot;</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">lapply</span>(raven,head)</span></code></pre></div>
+<pre class="r"><code>lapply(raven,head)</code></pre>
 <pre><code>## $meta
 ## $meta$offset
 ## [1] 0
@@ -659,11 +585,11 @@ different data types. See . . .</p>
 ## [1] FALSE
 ## 
 ## $meta$count
-## [1] 7700
+## [1] 7706
 ## 
 ## 
 ## $data
-## # A tibble: 6 × 78
+## # A tibble: 6 × 83
 ##   key        scientificName   decimalLatitude decimalLongitude issues datasetKey
 ##   &lt;chr&gt;      &lt;chr&gt;                      &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;     
 ## 1 1831187345 Corvus corax Li…            44.4            -68.1 cdc,c… 50c9509d-…
@@ -672,7 +598,7 @@ different data types. See . . .</p>
 ## 4 2115013038 Corvus corax Li…            44.5            -68.3 cdc    4fa7b334-…
 ## 5 2124675461 Corvus corax Li…            44.3            -69.2 cdc    4fa7b334-…
 ## 6 2124744825 Corvus corax Li…            44.7            -69.5 cdc    4fa7b334-…
-## # ℹ 72 more variables: publishingOrgKey &lt;chr&gt;, installationKey &lt;chr&gt;,
+## # ℹ 77 more variables: publishingOrgKey &lt;chr&gt;, installationKey &lt;chr&gt;,
 ## #   hostingOrganizationKey &lt;chr&gt;, publishingCountry &lt;chr&gt;, protocol &lt;chr&gt;,
 ## #   lastCrawled &lt;chr&gt;, lastParsed &lt;chr&gt;, crawlId &lt;int&gt;, basisOfRecord &lt;chr&gt;,
 ## #   occurrenceStatus &lt;chr&gt;, taxonKey &lt;int&gt;, kingdomKey &lt;int&gt;, phylumKey &lt;int&gt;,
@@ -692,10 +618,10 @@ rose-breasted grossbeak, yellow-billed cuckoo, and black-throated blue
 warbler. We also want to restrict the search to spring arrival time in
 years of interest (i.e., those with decent eBird data . . . &gt;1990 or
 so). Let’s store those values, too.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>species <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Myiarchus crinitus&quot;</span>,<span class="st">&quot;Icterus galbula&quot;</span>,<span class="st">&quot;Pheucticus ludovicianus&quot;</span>,<span class="st">&quot;Coccyzus americanus&quot;</span>,<span class="st">&quot;Setophaga caerulescens&quot;</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;1990&quot;</span>,<span class="st">&quot;,&quot;</span>,<span class="st">&quot;2019&quot;</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;3&quot;</span>,<span class="st">&quot;,&quot;</span>,<span class="st">&quot;6&quot;</span>)</span></code></pre></div>
+<pre class="r"><code>species &lt;- c(&quot;Myiarchus crinitus&quot;,&quot;Icterus galbula&quot;,&quot;Pheucticus ludovicianus&quot;,&quot;Coccyzus americanus&quot;,&quot;Setophaga caerulescens&quot;)
+
+y &lt;- paste0(&quot;1990&quot;,&quot;,&quot;,&quot;2019&quot;)
+m &lt;- paste0(&quot;3&quot;,&quot;,&quot;,&quot;6&quot;)</code></pre>
 <p>Notice how the year and month vectors, <code>y</code> and
 <code>m</code>, respectively, are each a character string with two
 values separated by a comma. This is how we’ll constrain the search with
@@ -728,27 +654,27 @@ But, this is nothing like the hours one would spend working with
 twitter feed. After that, we should have a many thousands of MA eBird
 records loaded to the list.</p>
 <p>To get get you started, here’s what could be done . . .</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>dat.l <span class="ot">&lt;-</span><span class="fu">list</span>()</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="cf">for</span>(s <span class="cf">in</span> species){</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  </span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="do">## setting the limit=0 returns no records but can give you the number of observations if you access the meta data</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>n.obs <span class="ot">&lt;-</span>  <span class="fu">occ_data</span>(<span class="at">scientificName =</span> s,<span class="at">year=</span>y,<span class="at">month=</span>m,<span class="at">limit=</span><span class="dv">0</span>,<span class="at">country=</span><span class="st">&quot;US&quot;</span>,<span class="at">basisOfRecord =</span> <span class="st">&quot;HUMAN_OBSERVATION&quot;</span>,<span class="at">stateProvince=</span><span class="st">&quot;Massachusetts&quot;</span>)<span class="sc">$</span>meta<span class="sc">$</span>count </span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="fu">print</span>(n.obs)</span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>dat.l[[<span class="fu">paste0</span>(s)]] <span class="ot">&lt;-</span> <span class="fu">occ_data</span>(<span class="at">scientificName =</span> s,<span class="at">year=</span>y,<span class="at">month=</span>m,</span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>                               <span class="at">limit=</span>n.obs,<span class="at">country=</span><span class="st">&quot;US&quot;</span>,</span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>                               <span class="at">basisOfRecord =</span> <span class="st">&quot;HUMAN_OBSERVATION&quot;</span>,</span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>                               <span class="at">stateProvince=</span><span class="st">&quot;Massachusetts&quot;</span>)[[<span class="dv">2</span>]]</span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>}</span>
-<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">rbindlist</span>(dat.l,<span class="at">fill=</span>T)</span>
-<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code></pre></div>
+<pre class="r"><code>dat.l &lt;-list()
+
+for(s in species){
+  
+  ## setting the limit=0 returns no records but can give you the number of observations if you access the meta data
+n.obs &lt;-  occ_data(scientificName = s,year=y,month=m,limit=0,country=&quot;US&quot;,basisOfRecord = &quot;HUMAN_OBSERVATION&quot;,stateProvince=&quot;Massachusetts&quot;)$meta$count 
+
+print(n.obs)
+
+
+dat.l[[paste0(s)]] &lt;- occ_data(scientificName = s,year=y,month=m,
+                               limit=n.obs,country=&quot;US&quot;,
+                               basisOfRecord = &quot;HUMAN_OBSERVATION&quot;,
+                               stateProvince=&quot;Massachusetts&quot;)[[2]]
+
+
+}
+
+dat &lt;- rbindlist(dat.l,fill=T)
+
+head(dat)</code></pre>
 <p>Note that we store the number of observations for each species,
 ripped from the meta data using <code>occ_data()</code> with
 <code>limit=0</code>. This won’t return records, but will return the
@@ -780,20 +706,20 @@ in the R world prefer that large data objects be stored as serialized
 files. The <code>saveRDS()</code> function is exactly what we need for
 this. The following will save data as an R serialized file with the name
 “mass.bird.data.RDS”.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">saveRDS</span>(data,<span class="st">&quot;massbird.data.RDS&quot;</span>)</span></code></pre></div>
+<pre class="r"><code>saveRDS(data,&quot;massbird.data.RDS&quot;)</code></pre>
 <p>Now, if your script or markdown should be interrupted (e.g., a crash,
 freeze, etc.), you can access your data with <code>readRDS()</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;massbird.data.RDS&quot;</span>)</span></code></pre></div>
+<pre class="r"><code>library(tidyverse)
+dat &lt;- readRDS(&quot;massbird.data.RDS&quot;)</code></pre>
 <p>With a sense of how the bird data will be downloaded, let’s see what
 sort of numbers we’ll be dealing with. These are year-by-year totals
 from <code>occ_data()</code> searches for the 5 species above . . .</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>dat<span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">group_by</span>(year,species)<span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count=</span><span class="fu">sum</span>(individualCount,<span class="at">na.rm =</span> T))<span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>year,<span class="at">y=</span>count,<span class="at">col=</span>species))<span class="sc">+</span><span class="fu">geom_point</span>()</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override
-## using the `.groups` argument.</code></pre>
+<pre class="r"><code>dat%&gt;%
+  group_by(year,species)%&gt;%
+  summarise(count=sum(individualCount,na.rm = T))%&gt;%
+  ggplot(aes(x=year,y=count,col=species))+geom_point()</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using
+## the `.groups` argument.</code></pre>
 <p><img src="mod8_proj_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>It looks like there’s not much data before 2000 for all species.
 We’ll keep this in mind as we move forward. Now let’s move on to
@@ -831,30 +757,30 @@ site</a> to retrieve a token. It will require entering an email address,
 to which the token will be sent. Copy the token (a string of random
 letters and numbers) and paste it into the following where “token” is
 indicated.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">options</span>(<span class="at">noaakey =</span> <span class="st">&quot;token&quot;</span>)</span></code></pre></div>
+<pre class="r"><code>options(noaakey = &quot;token&quot;)</code></pre>
 <p>The R function <code>options()</code> sets global parameter values
 for your R session. With <code>noaakey="token"</code>, you’re telling R
 to pass this token string to any function that asks for
 <code>noaakey</code>, that is, all the <code>rnoaa</code> query
 functions.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>sts <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="st">&quot;GHCND:USW00013894&quot;</span>, <span class="co">#Mobible, AL 2k away about 10 days away @200 km/day</span></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="st">&quot;GHCND:USW00013881&quot;</span>, <span class="co">#Charlotte, NC 1000 km away about 6 days away @200 km/day</span></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  <span class="st">&quot;GHCND:USW00014739&quot;</span> <span class="co">#Boston</span></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>)</span></code></pre></div>
+<pre class="r"><code>sts &lt;- c(
+  &quot;GHCND:USW00013894&quot;, #Mobible, AL 2k away about 10 days away @200 km/day
+  &quot;GHCND:USW00013881&quot;, #Charlotte, NC 1000 km away about 6 days away @200 km/day
+  &quot;GHCND:USW00014739&quot; #Boston
+)</code></pre>
 <p>Now that we have the station codes identified and a token key
 established, let’s query the the NCDC API with
 <code>ncdc_stations()</code> to retrieve their exact location. Let’s
 first see what this function returns using our Boston station ID.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>bos <span class="ot">&lt;-</span> <span class="fu">ncdc_stations</span>(<span class="at">stationid =</span> <span class="st">&quot;GHCND:USW00014739&quot;</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="fu">print</span>(bos)</span></code></pre></div>
+<pre class="r"><code>bos &lt;- ncdc_stations(stationid = &quot;GHCND:USW00014739&quot;)
+
+print(bos)</code></pre>
 <pre><code>## $meta
 ## NULL
 ## 
 ## $data
 ##   elevation    mindate    maxdate latitude
-## 1       3.2 1936-01-01 2023-09-10 42.36057
+## 1       3.2 1936-01-01 2024-08-22 42.36057
 ##                                        name datacoverage                id
 ## 1 BOSTON LOGAN INTERNATIONAL AIRPORT, MA US            1 GHCND:USW00014739
 ##   elevationUnit longitude
@@ -870,14 +796,14 @@ these data to map the station locations to visualize our weather
 sampling locations. Let’s do that using <code>lapply()</code> and a few
 other tricks to prepare the station data for mapping and use with other
 <code>ncdc</code> functions.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>sta.d <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>( <span class="co">#bind the rows</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="fu">lapply</span>(sts,<span class="cf">function</span>(x) <span class="fu">ncdc_stations</span>(<span class="at">stationid =</span> x)<span class="sc">$</span>data ) <span class="co">#use lapply to run through stations</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">usmap_transform</span>(.,<span class="at">input_names =</span> <span class="fu">c</span>(<span class="st">&quot;longitude&quot;</span>,<span class="st">&quot;latitude&quot;</span>),<span class="at">output_names =</span> <span class="fu">c</span>(<span class="st">&quot;longitude.1&quot;</span>, <span class="st">&quot;latitude.1&quot;</span>)))<span class="sc">%&gt;%</span> <span class="co">#join transformation of lat/long for projection with usmap</span></span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name=</span><span class="fu">str_sub</span>(name, <span class="sc">-</span><span class="dv">5</span>,<span class="sc">-</span><span class="dv">4</span>))<span class="sc">%&gt;%</span><span class="co">#simplify the name column, grab just the state</span></span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">migr.day=</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">0</span>))<span class="sc">%&gt;%</span> <span class="co">#so we can look at wind speed 0, 5 or 10 days before arrive in boston</span></span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>  <span class="fu">separate</span>(id,<span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;station.type&quot;</span>,<span class="st">&quot;id&quot;</span>))<span class="sc">%&gt;%</span><span class="co">#need to cut station type out from station id number</span></span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>        <span class="fu">print</span>()</span></code></pre></div>
+<pre class="r"><code>sta.d &lt;- bind_rows( #bind the rows
+  lapply(sts,function(x) ncdc_stations(stationid = x)$data ) #use lapply to run through stations
+  )%&gt;%
+  mutate(usmap_transform(.,input_names = c(&quot;longitude&quot;,&quot;latitude&quot;),output_names = c(&quot;longitude.1&quot;, &quot;latitude.1&quot;)))%&gt;% #join transformation of lat/long for projection with usmap
+  mutate(name=str_sub(name, -5,-4))%&gt;%#simplify the name column, grab just the state
+  mutate(migr.day=c(10,5,0))%&gt;% #so we can look at wind speed 0, 5 or 10 days before arrive in boston
+  separate(id,into = c(&quot;station.type&quot;,&quot;id&quot;))%&gt;%#need to cut station type out from station id number
+        print()</code></pre>
 <pre><code>##   elevation    mindate    maxdate latitude name datacoverage station.type
 ## 1      65.5 1948-01-01 2022-11-12 30.68819   AL            1        GHCND
 ## 2     222.6 1939-01-01 2022-11-12 35.22254   NC            1        GHCND
@@ -922,9 +848,9 @@ Let’s make the points big and color them by name (i.e., state). Then,
 let’s add a label using the same color scheme and nudge the position of
 the lable closer to the points. Lastly, we removed the legend because,
 duh, the points are labeled</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">plot_usmap</span>(</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  <span class="at">include =</span> <span class="fu">c</span>(.northeast_region,.south_region,.east_north_central)</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>)<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">data=</span>sta.d,<span class="fu">aes</span>(<span class="at">x=</span>longitude<span class="fl">.1</span>,<span class="at">y=</span>latitude<span class="fl">.1</span>,<span class="at">col=</span>name),<span class="at">size=</span><span class="dv">5</span>)<span class="sc">+</span><span class="fu">geom_label</span>(<span class="at">data=</span>sta.d,<span class="fu">aes</span>(<span class="at">x=</span>longitude<span class="fl">.1</span>,<span class="at">y=</span>latitude<span class="fl">.1</span>,<span class="at">col=</span>name,<span class="at">label=</span>name),<span class="at">size=</span><span class="dv">5</span>,<span class="at">nudge_x =</span> <span class="fl">1e6</span><span class="sc">*</span><span class="fl">0.25</span>)<span class="sc">+</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<pre class="r"><code>plot_usmap(
+  include = c(.northeast_region,.south_region,.east_north_central)
+)+geom_point(data=sta.d,aes(x=longitude.1,y=latitude.1,col=name),size=5)+geom_label(data=sta.d,aes(x=longitude.1,y=latitude.1,col=name,label=name),size=5,nudge_x = 1e6*0.25)+theme(legend.position = &quot;none&quot;)</code></pre>
 <div class="figure">
 <img src="mod8_proj_files/figure-html/unnamed-chunk-13-1.png" alt="Fig. 2. Weather sampling locations for this project." width="672" />
 <p class="caption">
@@ -938,7 +864,7 @@ when we see an uptick in eBird data. For this we’ll use
 <code>meteo_pull_monitors()</code> which returns a tidy tibble. Notice
 we pass the <code>sta.d$id</code> column to this function and it
 contains the station ID without the prefix.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>weather.d <span class="ot">&lt;-</span> <span class="fu">meteo_pull_monitors</span>(sta.d<span class="sc">$</span>id,<span class="at">date_min =</span> <span class="st">&quot;2000-01-01&quot;</span>)</span></code></pre></div>
+<pre class="r"><code>weather.d &lt;- meteo_pull_monitors(sta.d$id,date_min = &quot;2000-01-01&quot;)</code></pre>
 <pre><code>## using cached file: ~/Library/Caches/R/noaa_ghcnd/USW00013894.dly</code></pre>
 <pre><code>## date created (size, mb): 2022-09-07 15:21:38 (7.831)</code></pre>
 <pre><code>## file min/max dates: 1948-01-01 / 2022-09-30</code></pre>
@@ -948,7 +874,7 @@ contains the station ID without the prefix.</p>
 <pre><code>## using cached file: ~/Library/Caches/R/noaa_ghcnd/USW00014739.dly</code></pre>
 <pre><code>## date created (size, mb): 2022-09-07 15:22:00 (9.255)</code></pre>
 <pre><code>## file min/max dates: 1936-01-01 / 2022-09-30</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">head</span>(weather.d)</span></code></pre></div>
+<pre class="r"><code>head(weather.d)</code></pre>
 <pre><code>## # A tibble: 6 × 46
 ##   id      date        adpt  aslp  astp  awbt  awnd  fmtm  pgtm  prcp  rhav  rhmn
 ##   &lt;chr&gt;   &lt;date&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;
@@ -994,21 +920,21 @@ one species, <em>“Myiarchus crinitus</em>, in previously a developed
 data set. For this and all our species we’ll use Julian day as the time
 variable, simply the day of the year. Let’s compute that and then . . .
 .</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>mc<span class="ot">&lt;-</span> dat<span class="sc">%&gt;%</span></span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>  <span class="fu">filter</span>(species<span class="sc">==</span><span class="st">&quot;Setophaga caerulescens&quot;</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>  <span class="fu">group_by</span>(year)<span class="sc">%&gt;%</span></span>
-<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date=</span><span class="fu">as.Date</span>(<span class="fu">paste0</span>(year,<span class="st">&quot;-&quot;</span>,month,<span class="st">&quot;-&quot;</span>,day)),</span>
-<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a>         <span class="at">j.day=</span><span class="fu">julian</span>(date,<span class="at">origin=</span><span class="fu">as.Date</span>(<span class="fu">paste0</span>(<span class="fu">unique</span>(year),<span class="st">&quot;-01-01&quot;</span>)))</span>
-<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
-<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a>  <span class="fu">group_by</span>(species,year,j.day,date)<span class="sc">%&gt;%</span></span>
-<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">day.tot=</span><span class="fu">sum</span>(individualCount,<span class="at">na.rm=</span>T))<span class="sc">%&gt;%</span></span>
-<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a>  <span class="fu">group_by</span>(species,year)<span class="sc">%&gt;%</span></span>
-<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop=</span><span class="fu">cumsum</span>(day.tot<span class="sc">/</span><span class="fu">sum</span>(day.tot,<span class="at">na.rm =</span> T)))<span class="sc">%&gt;%</span></span>
-<span id="cb31-11"><a href="#cb31-11" tabindex="-1"></a>  <span class="fu">filter</span>(year<span class="sc">&gt;</span><span class="dv">1999</span>)</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;species&#39;, &#39;year&#39;, &#39;j.day&#39;.
-## You can override using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>mc<span class="sc">%&gt;%</span></span>
-<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(j.day,prop))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">facet_wrap</span>(year<span class="sc">~</span>.)</span></code></pre></div>
+<pre class="r"><code>mc&lt;- dat%&gt;%
+  filter(species==&quot;Setophaga caerulescens&quot;)%&gt;%
+  group_by(year)%&gt;%
+  mutate(date=as.Date(paste0(year,&quot;-&quot;,month,&quot;-&quot;,day)),
+         j.day=julian(date,origin=as.Date(paste0(unique(year),&quot;-01-01&quot;)))
+  )%&gt;%
+  group_by(species,year,j.day,date)%&gt;%
+  summarise(day.tot=sum(individualCount,na.rm=T))%&gt;%
+  group_by(species,year)%&gt;%
+  mutate(prop=cumsum(day.tot/sum(day.tot,na.rm = T)))%&gt;%
+  filter(year&gt;1999)</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;species&#39;, &#39;year&#39;, &#39;j.day&#39;. You
+## can override using the `.groups` argument.</code></pre>
+<pre class="r"><code>mc%&gt;%
+  ggplot(aes(j.day,prop))+geom_point()+facet_wrap(year~.)</code></pre>
 <p><img src="mod8_proj_files/figure-html/mc-1.png" width="672" /></p>
 <p>So as we can see, arrival of these migrants follows a logistic
 process when we consider the proportion of the population that has
@@ -1025,44 +951,44 @@ model that creates initial estimates of the parameters. After modeling
 the logistic curves, let’s add the date back to the tibble (it’ll be
 important later) and then plot the predictions along with the original
 data.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>mc.pred <span class="ot">&lt;-</span> mc<span class="sc">%&gt;%</span></span>
-<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>  <span class="fu">group_by</span>(year)<span class="sc">%&gt;%</span></span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a> <span class="fu">summarize</span>(</span>
-<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>   <span class="at">pred=</span><span class="fu">predict</span>(<span class="fu">nls</span>(prop<span class="sc">~</span><span class="fu">SSlogis</span>(j.day,Asym, xmid, scal)),<span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">j.day=</span><span class="fu">min</span>(j.day)<span class="sc">:</span><span class="fu">max</span>(j.day))),<span class="co">#predict the logistic curve for each species</span></span>
-<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a>   <span class="at">j.day=</span><span class="fu">min</span>(j.day)<span class="sc">:</span><span class="fu">max</span>(j.day),</span>
-<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a>  )<span class="sc">%&gt;%</span></span>
-<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>  <span class="fu">left_join</span>(mc<span class="sc">%&gt;%</span>dplyr<span class="sc">::</span><span class="fu">select</span>(j.day,date)) <span class="do">## add date back to tibble</span></span></code></pre></div>
+<pre class="r"><code>mc.pred &lt;- mc%&gt;%
+  group_by(year)%&gt;%
+ summarize(
+   pred=predict(nls(prop~SSlogis(j.day,Asym, xmid, scal)),newdata=data.frame(j.day=min(j.day):max(j.day))),#predict the logistic curve for each species
+   j.day=min(j.day):max(j.day),
+  )%&gt;%
+  left_join(mc%&gt;%dplyr::select(j.day,date)) ## add date back to tibble</code></pre>
 <pre><code>## Warning: Returning more (or less) than 1 row per `summarise()` group was
 ## deprecated in dplyr 1.1.0.
 ## ℹ Please use `reframe()` instead.
 ## ℹ When switching from `summarise()` to `reframe()`, remember that
 ##   `reframe()` always returns an ungrouped data frame and adjust
 ##   accordingly.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this
-## warning was generated.</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override
-## using the `.groups` argument.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning
+## was generated.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using
+## the `.groups` argument.
 ## Adding missing grouping variables: `species`, `year`
 ## Joining with `by = join_by(year, j.day)`</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>mc<span class="sc">%&gt;%</span></span>
-<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(j.day,prop))<span class="sc">+</span><span class="fu">geom_point</span>(<span class="at">aes=</span><span class="fl">0.3</span>)<span class="sc">+</span><span class="fu">geom_line</span>(<span class="at">data=</span>mc.pred,<span class="fu">aes</span>(<span class="at">x=</span>j.day,<span class="at">y=</span>pred),<span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">facet_wrap</span>(year<span class="sc">~</span>.)</span></code></pre></div>
+<pre class="r"><code>mc%&gt;%
+  ggplot(aes(j.day,prop))+geom_point(aes=0.3)+geom_line(data=mc.pred,aes(x=j.day,y=pred),col=&quot;blue&quot;,size=2)+facet_wrap(year~.)</code></pre>
 <pre><code>## Warning in geom_point(aes = 0.3): Ignoring unknown parameters: `aes`</code></pre>
 <pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ## ℹ Please use `linewidth` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this
-## warning was generated.</code></pre>
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning
+## was generated.</code></pre>
 <p><img src="mod8_proj_files/figure-html/logistic%20model-1.png" width="672" /></p>
 <p>Seems our logistic models for arrival of this species estimate the
 arrival function really well. Now we’ll find the Julian day each year
 that is closest to 0.25 of the population arriving. Let’s also plot how
 this arrival day varies with year.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>mc.arrive.date <span class="ot">&lt;-</span>mc.pred<span class="sc">%&gt;%</span></span>
-<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a>  <span class="fu">group_by</span>(year)<span class="sc">%&gt;%</span></span>
-<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a>  <span class="fu">filter</span>(j.day<span class="sc">==</span>j.day[<span class="fu">which.min</span>(<span class="fu">abs</span>(pred<span class="fl">-0.25</span>))])</span>
-<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a>mc.arrive.date<span class="sc">%&gt;%</span></span>
-<span id="cb40-6"><a href="#cb40-6" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year,j.day))<span class="sc">+</span><span class="fu">geom_point</span>()</span></code></pre></div>
+<pre class="r"><code>mc.arrive.date &lt;-mc.pred%&gt;%
+  group_by(year)%&gt;%
+  filter(j.day==j.day[which.min(abs(pred-0.25))])
+
+mc.arrive.date%&gt;%
+  ggplot(aes(year,j.day))+geom_point()</code></pre>
 <p><img src="mod8_proj_files/figure-html/mc%20arrive-1.png" width="672" /></p>
 <p>Pretty variable, so maybe weather can explain this. This is but just
 one of five species. We’ll come back to running a similar analysis for
@@ -1105,18 +1031,18 @@ Notice, using this value in another mutate, we change <code>j.day</code>
 to reflect this shift. That is, <code>j.day</code> for AL and NC weather
 will be 10 and 5 days behind the original <code>j.day</code> (the Julian
 day of bird arrival, too.).</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>weather.d <span class="ot">&lt;-</span> weather.d<span class="sc">%&gt;%</span></span>
-<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">as.integer</span>(<span class="fu">str_sub</span>(date,<span class="dv">1</span>,<span class="dv">4</span>)), <span class="co">#add year</span></span>
-<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>         <span class="at">date=</span><span class="fu">as.Date</span>(date))<span class="sc">%&gt;%</span></span>
-<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>  <span class="fu">group_by</span>(year)<span class="sc">%&gt;%</span> <span class="co">#group by year so we can compute julian day</span></span>
-<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a> <span class="fu">mutate</span>(<span class="at">j.day=</span><span class="fu">julian</span>(date,<span class="at">origin=</span><span class="fu">as.Date</span>(<span class="fu">paste0</span>(<span class="fu">unique</span>(year),<span class="st">&quot;-01-01&quot;</span>))), <span class="co">#add julian day</span></span>
-<span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a>  <span class="at">date2=</span>date,</span>
-<span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a>  <span class="at">wdir.rad=</span>(<span class="dv">180</span><span class="sc">-</span><span class="fu">abs</span>(wdf2<span class="dv">-180</span>))<span class="sc">*</span>pi<span class="sc">/</span><span class="dv">180</span>, <span class="co">#radians so we can use a trig function to compute wind vector, scale degrees first to 180 scale to 2x pi and subtract from 180 (wind comes out of a direction)</span></span>
-<span id="cb41-8"><a href="#cb41-8" tabindex="-1"></a>  <span class="at">wvec=</span><span class="fu">cos</span>(wdir.rad)<span class="sc">*-</span><span class="dv">1</span><span class="sc">*</span>awnd <span class="co"># we want a negative value for positive value for 2x pi</span></span>
-<span id="cb41-9"><a href="#cb41-9" tabindex="-1"></a>  )<span class="sc">%&gt;%</span> <span class="co">#store day in new column</span></span>
-<span id="cb41-10"><a href="#cb41-10" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(id,year,date2,j.day,tmin,tmax,wvec)<span class="sc">%&gt;%</span> <span class="co">#select the rows we need</span></span>
-<span id="cb41-11"><a href="#cb41-11" tabindex="-1"></a>  <span class="fu">left_join</span>(sta.d<span class="sc">%&gt;%</span><span class="fu">select</span>(id,name,migr.day))<span class="sc">%&gt;%</span> <span class="co">#add the station id info (ie. name)</span></span>
-<span id="cb41-12"><a href="#cb41-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">j.day=</span>j.day<span class="sc">+</span>migr.day)<span class="co">#make j.day ahead of BOS according to the migration days away so we can join weather along path</span></span></code></pre></div>
+<pre class="r"><code>weather.d &lt;- weather.d%&gt;%
+  mutate(year=as.integer(str_sub(date,1,4)), #add year
+         date=as.Date(date))%&gt;%
+  group_by(year)%&gt;% #group by year so we can compute julian day
+ mutate(j.day=julian(date,origin=as.Date(paste0(unique(year),&quot;-01-01&quot;))), #add julian day
+  date2=date,
+  wdir.rad=(180-abs(wdf2-180))*pi/180, #radians so we can use a trig function to compute wind vector, scale degrees first to 180 scale to 2x pi and subtract from 180 (wind comes out of a direction)
+  wvec=cos(wdir.rad)*-1*awnd # we want a negative value for positive value for 2x pi
+  )%&gt;% #store day in new column
+  dplyr::select(id,year,date2,j.day,tmin,tmax,wvec)%&gt;% #select the rows we need
+  left_join(sta.d%&gt;%select(id,name,migr.day))%&gt;% #add the station id info (ie. name)
+  mutate(j.day=j.day+migr.day)#make j.day ahead of BOS according to the migration days away so we can join weather along path</code></pre>
 <pre><code>## Joining with `by = join_by(id)`</code></pre>
 <div class="green">
 <div class="row">
@@ -1260,13 +1186,13 @@ crinitis</em> with our weather data. To this tibble, we’ll also join the
 <code>date</code> column from the original bird data so we can see if
 the weather data is the right number of days behind the bird arrive
 date.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>mc.arr.weath <span class="ot">&lt;-</span> mc.arrive.date<span class="sc">%&gt;%</span></span>
-<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>  <span class="fu">left_join</span>(weather.d)<span class="sc">%&gt;%</span></span>
-<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a>  <span class="fu">left_join</span>(mc<span class="sc">%&gt;%</span>dplyr<span class="sc">::</span><span class="fu">select</span>(year,date,j.day))</span></code></pre></div>
+<pre class="r"><code>mc.arr.weath &lt;- mc.arrive.date%&gt;%
+  left_join(weather.d)%&gt;%
+  left_join(mc%&gt;%dplyr::select(year,date,j.day))</code></pre>
 <pre><code>## Joining with `by = join_by(year, j.day)`
 ## Adding missing grouping variables: `species`
 ## Joining with `by = join_by(year, j.day, species, date)`</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a><span class="fu">head</span>(mc.arr.weath)</span></code></pre></div>
+<pre class="r"><code>head(mc.arr.weath)</code></pre>
 <pre><code>## # A tibble: 6 × 12
 ## # Groups:   year [2]
 ##    year  pred j.day species    date       id    date2       tmin  tmax      wvec
@@ -1302,18 +1228,18 @@ two weeks preceding each Julian day. then join this weekly data tibble
 to our arrival data for subsequent analysis. When we use
 <code>left_join()</code>, only the Julian days in the weekly average
 tibble matching those in the arrival data will be kept.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a>weather.wk <span class="ot">&lt;-</span>weather.d <span class="sc">%&gt;%</span> </span>
-<span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a>  <span class="fu">group_by</span>(year,name) <span class="sc">%&gt;%</span> </span>
-<span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wk.tmin =</span> <span class="fu">frollmean</span>(tmin, <span class="at">n=</span><span class="dv">14</span>,<span class="at">align=</span><span class="st">&quot;right&quot;</span>),</span>
-<span id="cb47-4"><a href="#cb47-4" tabindex="-1"></a>         <span class="at">wk.tmax =</span> <span class="fu">frollmean</span>(tmax, <span class="at">n=</span><span class="dv">14</span>,<span class="at">align=</span><span class="st">&quot;right&quot;</span>),</span>
-<span id="cb47-5"><a href="#cb47-5" tabindex="-1"></a>         <span class="at">wk.wvec =</span> <span class="fu">frollmean</span>(wvec, <span class="at">n=</span><span class="dv">14</span>,<span class="at">align=</span><span class="st">&quot;right&quot;</span>)</span>
-<span id="cb47-6"><a href="#cb47-6" tabindex="-1"></a>         )<span class="sc">%&gt;%</span></span>
-<span id="cb47-7"><a href="#cb47-7" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(j.day,date2,name,wk.tmin,wk.tmax,wk.wvec)</span></code></pre></div>
+<pre class="r"><code>weather.wk &lt;-weather.d %&gt;% 
+  group_by(year,name) %&gt;% 
+  mutate(wk.tmin = frollmean(tmin, n=14,align=&quot;right&quot;),
+         wk.tmax = frollmean(tmax, n=14,align=&quot;right&quot;),
+         wk.wvec = frollmean(wvec, n=14,align=&quot;right&quot;)
+         )%&gt;%
+  dplyr::select(j.day,date2,name,wk.tmin,wk.tmax,wk.wvec)</code></pre>
 <pre><code>## Adding missing grouping variables: `year`</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a>mc.arr.weath2 <span class="ot">&lt;-</span> mc.arrive.date<span class="sc">%&gt;%</span></span>
-<span id="cb49-2"><a href="#cb49-2" tabindex="-1"></a>  <span class="fu">left_join</span>(weather.wk)</span></code></pre></div>
+<pre class="r"><code>mc.arr.weath2 &lt;- mc.arrive.date%&gt;%
+  left_join(weather.wk)</code></pre>
 <pre><code>## Joining with `by = join_by(year, j.day)`</code></pre>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="fu">head</span>(mc.arr.weath2)</span></code></pre></div>
+<pre class="r"><code>head(mc.arr.weath2)</code></pre>
 <pre><code>## # A tibble: 6 × 10
 ## # Groups:   year [2]
 ##    year  pred j.day species  date       date2      name  wk.tmin wk.tmax wk.wvec
@@ -1366,12 +1292,12 @@ let’s kick the tires on linear mixed-effects models using
 <code>lme()</code> with our two data tibbles, one with a single
 weather-day sample and another with a two week-average of the
 weather.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="co">#weather at 0, 5, and 10 days away from arrival</span></span>
-<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a>mc.lmer <span class="ot">&lt;-</span> <span class="fu">lmer</span>(j.day<span class="sc">~</span>tmin<span class="sc">*</span>tmax<span class="sc">*</span>wvec<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>name),mc.arr.weath,<span class="at">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</span></code></pre></div>
+<pre class="r"><code>#weather at 0, 5, and 10 days away from arrival
+mc.lmer &lt;- lmer(j.day~tmin*tmax*wvec+(1|name),mc.arr.weath,na.action = &quot;na.fail&quot;)</code></pre>
 <pre><code>## Warning: Some predictor variables are on very different scales: consider
 ## rescaling</code></pre>
 <pre><code>## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a><span class="fu">Anova</span>(mc.lmer) <span class="co">#Anova from the car package</span></span></code></pre></div>
+<pre class="r"><code>Anova(mc.lmer) #Anova from the car package</code></pre>
 <pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
 ## 
 ## Response: j.day
@@ -1385,12 +1311,12 @@ weather.</p>
 ## tmin:tmax:wvec 0.3171  1    0.57334  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a><span class="co">#0Mean two week weather preceding arrival</span></span>
-<span id="cb58-2"><a href="#cb58-2" tabindex="-1"></a>mc.lmer2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(j.day<span class="sc">~</span>wk.tmin<span class="sc">*</span>wk.tmax<span class="sc">*</span>wk.wvec<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>name),mc.arr.weath2,<span class="at">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</span></code></pre></div>
+<pre class="r"><code>#0Mean two week weather preceding arrival
+mc.lmer2 &lt;- lmer(j.day~wk.tmin*wk.tmax*wk.wvec+(1|name),mc.arr.weath2,na.action = &quot;na.fail&quot;)</code></pre>
 <pre><code>## Warning: Some predictor variables are on very different scales: consider
 ## rescaling</code></pre>
 <pre><code>## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a><span class="fu">Anova</span>(mc.lmer2) </span></code></pre></div>
+<pre class="r"><code>Anova(mc.lmer2) </code></pre>
 <pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
 ## 
 ## Response: j.day
@@ -1438,11 +1364,11 @@ class="math inline">\(\Delta\)</span>AIC, and AIC<span
 class="math inline">\(_w\)</span>). We’ll ask <code>dredge()</code> to
 consider the our weather variables only with
 <code>fixed= c("wk.tmin","wk.tmax","wk.wvec")</code>.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" tabindex="-1"></a>mc.arr.aic <span class="ot">&lt;-</span> <span class="fu">dredge</span>(mc.lmer2,<span class="at">fixed =</span> <span class="fu">c</span>(<span class="st">&quot;wk.tmin&quot;</span>,<span class="st">&quot;wk.tmax&quot;</span>,<span class="st">&quot;wk.wvec&quot;</span>),)</span>
-<span id="cb63-2"><a href="#cb63-2" tabindex="-1"></a></span>
-<span id="cb63-3"><a href="#cb63-3" tabindex="-1"></a>mc.kb <span class="ot">&lt;-</span> <span class="fu">kable</span>(mc.arr.aic[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,],<span class="at">caption =</span> <span class="st">&quot;Fit values for nested models of the most complicated lme model&quot;</span>)</span>
-<span id="cb63-4"><a href="#cb63-4" tabindex="-1"></a></span>
-<span id="cb63-5"><a href="#cb63-5" tabindex="-1"></a><span class="fu">kable_styling</span>(mc.kb)</span></code></pre></div>
+<pre class="r"><code>mc.arr.aic &lt;- dredge(mc.lmer2,fixed = c(&quot;wk.tmin&quot;,&quot;wk.tmax&quot;,&quot;wk.wvec&quot;),)
+
+mc.kb &lt;- kable(mc.arr.aic[1:4,],caption = &quot;Fit values for nested models of the most complicated lme model&quot;)
+
+kable_styling(mc.kb)</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 Fit values for nested models of the most complicated lme model
@@ -1671,9 +1597,9 @@ NA
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" tabindex="-1"></a>best.lmer <span class="ot">&lt;-</span>  <span class="fu">lmer</span>(j.day<span class="sc">~</span>wk.tmin<span class="sc">+</span>wk.tmax<span class="sc">+</span>wk.wvec<span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>name),mc.arr.weath2,<span class="at">na.action =</span> <span class="st">&quot;na.fail&quot;</span>)</span>
-<span id="cb64-2"><a href="#cb64-2" tabindex="-1"></a></span>
-<span id="cb64-3"><a href="#cb64-3" tabindex="-1"></a><span class="fu">Anova</span>(best.lmer)</span></code></pre></div>
+<pre class="r"><code>best.lmer &lt;-  lmer(j.day~wk.tmin+wk.tmax+wk.wvec+(1|name),mc.arr.weath2,na.action = &quot;na.fail&quot;)
+
+Anova(best.lmer)</code></pre>
 <pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
 ## 
 ## Response: j.day
@@ -1704,7 +1630,7 @@ analysis should include the following components:</p>
 <code>occ_data()</code> to retrieve occurrence data in MA during April
 and May in the years 2000-2019.</li>
 <li>Logistic modeling operations to predict arrival time (the Julian day
-when 25% of the population arrives) for each year and for each
+when 25% of the population has arrived) for each year and for each
 species.</li>
 <li>Operations that join offset single-day and two-week weather averages
 with your occurrence data. Both weather data sets should include minimum

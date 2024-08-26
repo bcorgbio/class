@@ -11,12 +11,12 @@
 
 
 
-<title>Phase I Project Report Rubric</title>
+<title>Phase I Project Report Guidelines</title>
 
-<script src="site_libs/header-attrs-2.22/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -33,6 +33,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -43,6 +45,16 @@
   ul.task-list{list-style: none;}
     </style>
 
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
 
 
 
@@ -313,6 +325,12 @@ div.tocify {
 <li>
   <a href="schedule.html">Schedule</a>
 </li>
+<li>
+  <a href="at_a_glance.html">Calendar</a>
+</li>
+<li>
+  <a href="WCRS.html">WCRs</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Projects
@@ -322,7 +340,7 @@ div.tocify {
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Phase I</li>
     <li>
-      <a href="phaseI_rubric.html">Phase I report rubric</a>
+      <a href="phaseI_rubric.html">Phase I report guidlines</a>
     </li>
     <li>
       <a href="mod1_proj.html">Module 1 Project</a>
@@ -336,12 +354,12 @@ div.tocify {
     <li>
       <a href="mod4_proj.html">Module 4 Project</a>
     </li>
-    <li>
-      <a href="mod5_proj.html">Module 5 Project</a>
-    </li>
     <li class="dropdown-header">Phase II</li>
     <li>
-      <a href="phaseII_rubric.html">Phase II report rubric</a>
+      <a href="phaseII_rubric.html">Phase II report guidlines</a>
+    </li>
+    <li>
+      <a href="mod5_proj.html">Module 5 Project</a>
     </li>
     <li>
       <a href="mod6_proj.html">Module 6 Project</a>
@@ -349,19 +367,12 @@ div.tocify {
     <li>
       <a href="mod7_proj.html">Module 7 Project</a>
     </li>
-    <li>
-      <a href="mod8_proj.html">Module 8 Project</a>
-    </li>
     <li class="dropdown-header">Phase III</li>
     <li>
-      <a href="phaseIII_rubric.html">Phase III report rubric</a>
+      <a href="phaseIII_rubric.html">Phase III report guidlines</a>
     </li>
     <li>
       <a href="final_proj.html">Final Project</a>
-    </li>
-    <li class="dropdown-header">DaqPacks</li>
-    <li>
-      <a href="daqpack.html">DaqPack Item List</a>
     </li>
   </ul>
 </li>
@@ -369,7 +380,22 @@ div.tocify {
   <a href="https://github.com/orgs/bcorgbio/discussions">BIOL 3140 Discussion</a>
 </li>
 <li>
-  <a href="https://bostoncollege.instructure.com/courses/1647043/gradebook">Grades on Canvas</a>
+  <a href="https://bostoncollege.instructure.com/courses/1659476/gradebook">Grades on Canvas</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Peer Contribution Evaluations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="peer_contributions.html">Peer Contribution Evaluation Guidelines</a>
+    </li>
+    <li>
+      <a href="https://forms.gle/ATeFa9wsV1t4g27g6">Author Contribution Evaluation Form</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -383,7 +409,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Phase I Project Report Rubric</h1>
+<h1 class="title toc-ignore">Phase I Project Report Guidelines</h1>
 
 </div>
 
@@ -395,7 +421,7 @@ intrument prototyping and data analysis in the context of organismal
 biology. The project reports for this initial stage are not meant to be
 burdensome, however they will require some diligent work and a
 consistent effort to seek help. The following rubric represents how the
-15 points for each of the project reports for Phase I will be
+25 points for each of the project reports for Phase I will be
 assessed.</p>
 </div>
 <div id="rubric" class="section level1">
@@ -409,44 +435,53 @@ assessed.</p>
 </colgroup>
 <thead>
 <tr class="header">
-<th>Component</th>
-<th><strong>Spot On (5 pts)</strong></th>
-<th><strong>Pretty Good (3 pts)</strong></th>
-<th><strong>Needs Work (1 pt)</strong></th>
+<th align="left">Component</th>
+<th align="left"><strong>Spot On </strong></th>
+<th align="left"><strong>Pretty Good </strong></th>
+<th align="left"><strong>Needs Work </strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Tasks</td>
-<td>Completes all tasks fully; meets all deadlines</td>
-<td>Completes a majority but not all tasks fully; submission meets the
-deadline</td>
-<td>Completes few required tasks or submits few required matrials;
-submission missed the deadline</td>
+<td align="left">Tasks</td>
+<td align="left">Completes all tasks fully; meets all deadlines (10
+pts)</td>
+<td align="left">Completes a majority but not all tasks fully;
+submission meets the deadline (6 pts)</td>
+<td align="left">Completes few required tasks or submits few required
+materials; submission missed the deadline (1 pt)</td>
 </tr>
 <tr class="even">
-<td>Outputs</td>
-<td>Project outputs contain all necessary components and none that are
-unnecessary</td>
-<td>Outputs contain most but not all necessary components or some that
-are unnecessary</td>
-<td>Few components are submitted</td>
+<td align="left">Outputs</td>
+<td align="left">Project outputs contain all necessary components and
+none that are unnecessary (10 pts)</td>
+<td align="left">Outputs contain most but not all necessary components
+or some that are unnecessary (6 pts)</td>
+<td align="left">Few components are submitted (1 pts)</td>
 </tr>
 <tr class="odd">
-<td>Effort and Engagement</td>
-<td>Individual or team asks questions or seeks help regularly</td>
-<td>Individual or team asks questions or seek help sometimes, but not
-regularly</td>
-<td>Individual or team does not seem help</td>
+<td align="left">Effort and Engagement</td>
+<td align="left">Individual or team asks questions or seeks help
+regularly (5 pts)</td>
+<td align="left">Individual or team asks questions or seek help
+sometimes, but not regularly (3 pts)</td>
+<td align="left">Individual or team does not seem help (1 pt)</td>
 </tr>
 <tr class="even">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 </tbody>
 </table>
+</div>
+<div id="peer-evaluations" class="section level1">
+<h1>Peer evaluations</h1>
+<p>Each team member must complete a <a
+href="peer_contributions.html">peer contribution evaluatation</a> before
+the project report deadline. This is an important task that will be
+included under the rubric.</p>
 </div>
 
 

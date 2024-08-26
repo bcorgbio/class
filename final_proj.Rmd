@@ -11,12 +11,9 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 # Introduction
 
-In this one and only project for Phase III, you are tasked with quickly developing a project of your own design. In developing your project, you and your team must take either one of these approaches. 
+In this one and only project for Phase III, you are tasked with quickly developing a project of your own design. In developing your project, you and your team must answer a question using existing data from previously published research or an established and vetted database. 
 
-  1. The project seeks to answer a question formulated around the fabrication of a new or modified data acquisition system.
-  2. The project seeks an answer a question using existing data from previously published research or an established and vetted database. 
-
-In either case, the project should address an important topic in organismal biology and has a scope that permits experimentation/data collection, analysis, and write up within the time frame of just a few short weeks. Furthermore, the project will require you to first delve into the the scientific literature to set the stage and then leverage your new data-analysis and report-writing skills in the synthesis of a markdown report. This final project report should follow the same format and requirements of the reports produced in Phase II, but with expanded content.
+The project should address an important topic in organismal biology and has a scope that permits data collection, analysis, and write up within the time frame of just a few short weeks. Furthermore, the project will require you to first delve into the the scientific literature to set the stage and then leverage your new data-analysis and report-writing skills in the synthesis of a markdown report. This final project report should follow the same format and requirements of the reports produced in Phase II, but with expanded content.
 
 <!-- **NOTE**: Teams may pursue [Module 9](mod9_proj.html) as their final project. All the following parameters apply. -->
 
@@ -25,7 +22,7 @@ Prof. Kenaley will work with each team to develop a timeline for preliminary del
 
 # Methods
 
-You are free to pursue any methods introduced in the course. This may include, but need not be limited to, using a temperature, force, or acceleration prototype or purely data-driven analysis. All projects should include **visualization** and **modeling** approaches that mirror those used in the course so far. 
+You are free to pursue any methods introduced in the course. All projects should include **visualization** and **modeling** approaches that mirror those used in the course so far. 
 
 # Project Report
 
@@ -43,3 +40,6 @@ The following components of the project report should be included in a markdown 
 The length of the report is expected to be longer than Phase II reports, however still concise. The focus here is on analysis and modeling. 
 
 
+# Peer evaluations
+
+Each team member must complete a [peer contribution evaluatation](peer_contributions.html) before the final project report deadline. This is an important task that will be included under the rubric.

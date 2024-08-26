@@ -13,10 +13,10 @@
 
 <title>Welcome</title>
 
-<script src="site_libs/header-attrs-2.22/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -33,6 +33,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -43,6 +45,16 @@
   ul.task-list{list-style: none;}
     </style>
 
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
 
 
 
@@ -313,6 +325,12 @@ div.tocify {
 <li>
   <a href="schedule.html">Schedule</a>
 </li>
+<li>
+  <a href="at_a_glance.html">Calendar</a>
+</li>
+<li>
+  <a href="WCRS.html">WCRs</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Projects
@@ -322,7 +340,7 @@ div.tocify {
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Phase I</li>
     <li>
-      <a href="phaseI_rubric.html">Phase I report rubric</a>
+      <a href="phaseI_rubric.html">Phase I report guidlines</a>
     </li>
     <li>
       <a href="mod1_proj.html">Module 1 Project</a>
@@ -336,12 +354,12 @@ div.tocify {
     <li>
       <a href="mod4_proj.html">Module 4 Project</a>
     </li>
-    <li>
-      <a href="mod5_proj.html">Module 5 Project</a>
-    </li>
     <li class="dropdown-header">Phase II</li>
     <li>
-      <a href="phaseII_rubric.html">Phase II report rubric</a>
+      <a href="phaseII_rubric.html">Phase II report guidlines</a>
+    </li>
+    <li>
+      <a href="mod5_proj.html">Module 5 Project</a>
     </li>
     <li>
       <a href="mod6_proj.html">Module 6 Project</a>
@@ -349,19 +367,12 @@ div.tocify {
     <li>
       <a href="mod7_proj.html">Module 7 Project</a>
     </li>
-    <li>
-      <a href="mod8_proj.html">Module 8 Project</a>
-    </li>
     <li class="dropdown-header">Phase III</li>
     <li>
-      <a href="phaseIII_rubric.html">Phase III report rubric</a>
+      <a href="phaseIII_rubric.html">Phase III report guidlines</a>
     </li>
     <li>
       <a href="final_proj.html">Final Project</a>
-    </li>
-    <li class="dropdown-header">DaqPacks</li>
-    <li>
-      <a href="daqpack.html">DaqPack Item List</a>
     </li>
   </ul>
 </li>
@@ -369,7 +380,22 @@ div.tocify {
   <a href="https://github.com/orgs/bcorgbio/discussions">BIOL 3140 Discussion</a>
 </li>
 <li>
-  <a href="https://bostoncollege.instructure.com/courses/1647043/gradebook">Grades on Canvas</a>
+  <a href="https://bostoncollege.instructure.com/courses/1659476/gradebook">Grades on Canvas</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Peer Contribution Evaluations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="peer_contributions.html">Peer Contribution Evaluation Guidelines</a>
+    </li>
+    <li>
+      <a href="https://forms.gle/ATeFa9wsV1t4g27g6">Author Contribution Evaluation Form</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -392,7 +418,7 @@ div.tocify {
 Biology!!!</p>
 <p>Organismal biology is the study of living systems of all scales that
 shape the structure, function, ecology, and evolution of individual
-organisms. Experiments that elucidate how organisms respond to biotic
+organisms. Experiments that elucidate how organisms respond todd biotic
 and abiotic environmental stimulus over broad time scales—from changes
 in behavior to adaptation—are crucial to understanding biological
 diversity. In this course we’ll explore the concepts and experimental
@@ -413,7 +439,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<a class="far fa-sticky-note fa-5x" style="color:#2C3E50"></a>
 <!-- regular style -->
 </div>
 <div class="col-sm-9">
@@ -428,8 +454,8 @@ This is where the learning happens.</p>
 <p><br></p>
 <div id="course-and-instructor-deets" class="section level1">
 <h1>Course and Instructor Deets</h1>
-<p><strong>Delivery:</strong> Flipped and <em>in-person meetings</em>
-M,W,F at 10:00 in Higgins 310.</p>
+<p><strong>Delivery:</strong> In-person (M,W,F at 10:00 in Higgins 310)
+and self-guided (readings)</p>
 <p><strong>Instructor:</strong> Christopher P. Kenaley (Prof. K)</p>
 <p><strong>email:</strong> kenaley [ahht] bc.edu</p>
 <p><strong>Office hours:</strong> By appointment</p>
@@ -440,25 +466,14 @@ class="uri">https://bccte.zoom.us/j/9533582156</a></p>
 <div id="course-materials" class="section level1">
 <h1>Course materials</h1>
 <ul>
-<li>Personal computer (with USB2/3 ports, or see below) [Required]</li>
-<li>A USB/USBc adapter for reading microSD cards <a
-href="https://www.amazon.com/dp/B07RL5L8ZL/ref=cm_sw_r_tw_dp_x_EE-oFbWCT79QA">e.g.,for
-newer macs</a> [optional]</li>
-<li>A USBc adapter for USB2 connection <a
-href="https://www.amazon.com/dp/B07RL5L8ZL/ref=cm_sw_r_tw_dp_x_EE-oFbWCT79QA">e.g.,for
-newer macs</a> [optional]</li>
-<li><a href="https://github.com/join">GitHub account</a> [Required]</li>
-<li>Course DAQpack (see blow) [Provided]</li>
+<li>Personal computer [Required]
+<!-- + A USB/USBc adapter for reading microSD cards [e.g.,for newer macs](https://www.amazon.com/dp/B07RL5L8ZL/ref=cm_sw_r_tw_dp_x_EE-oFbWCT79QA) [optional] -->
+<!-- + A USBc adapter for USB2 connection [e.g.,for newer macs](https://www.amazon.com/dp/B07RL5L8ZL/ref=cm_sw_r_tw_dp_x_EE-oFbWCT79QA) [optional] --></li>
+<li><a href="https://github.com/join">GitHub account</a> [Required]
+<!-- + Course DAQpack (see blow) [Provided] --></li>
 </ul>
-<div id="course-hardware" class="section level2">
-<h2>Course hardware</h2>
-<p>Our Arduino units require connections to a standard USB (i.e., USB2
-or 3) port on your computer. For more recent Mac and PC laptops that
-have only USBc, this will require an adapter. Similarly, to read data
-from a microSD card (required for a Phase II project), you may need an
-adapter. Fortunately, many adapter models—like the one linked
-above—include both USB2/3 and microSD interfaces.</p>
-</div>
+<!-- ## Course hardware -->
+<!-- Our Arduino units require connections to a standard USB (i.e., USB2 or 3) port on your computer. For more recent Mac and PC laptops that have only USBc, this will require an adapter. Similarly, to read data from a microSD card (required for a Phase II project), you may need an adapter. Fortunately, many adapter models---like the one linked above---include both USB2/3 and microSD interfaces. -->
 <div id="github-account" class="section level2">
 <h2>GitHub account</h2>
 <p>Why a <a href="https://github.com/join">GitHub account</a>? GitHub is
@@ -471,43 +486,30 @@ organization, create a team, and use bcorgbio discussion pages, you’ll
 need an account. Once you have an account, I’ll be able to add you to
 our <a href="https://github.com/bcorgbio">bcorgbio</a> organization and
 the class-wide team for discussion purposes.</p>
-</div>
-<div id="course-daqpack" class="section level2">
-<h2>Course DAQPack</h2>
-<p>This is pre-packaged assembly of hardware required for all the course
-instrumentation projects. Every student in the class will be issued a
-DAQPack on early in the course. <strong>Take care of these
-components!!!</strong> Put these items in a safe, dry place until you
-need to use them. All materials must be returned at the end of the
-class.</p>
+<!-- ## Course DAQPack -->
+<!-- This is pre-packaged assembly of hardware required for all the course instrumentation projects. Every student in the class will be issued a DAQPack on early in the course. **Take care of these components!!!** Put these items in a safe, dry place until you need to use them. All materials must be returned at the end of the class. -->
 </div>
 </div>
 <div id="course-scope-goals-and-objectives" class="section level1">
 <h1>Course scope, goals, and objectives</h1>
-<p>To be an effective organismal biologist, one we must prepare,
-analyze, visualize, and communicate data as we formulate answers to the
-questions we’re asking. Despite the importance of these technological
-skills to our discipline, students often see the acquisition and
-analysis of data as technological black boxes. Countless times in
-previous courses, instructors have no doubt demonstrated foundational
-principles and concepts through the presentation of data, usually
-through figures in papers or lecture slides. However, where these data
-come from and how they have answered a question often remain a mystery.
-In turn, students must rely on the authority of their instructors rather
-than their own grasp of quantitative skills and data collection to make
-meaningful connections.</p>
-<p>As a course-based research experience, BIOL 3140 is meant to develop
-and hone skills related to instrumentation and data science in the
-context of organismal biology. The thrust of this course will center
-around the development of simple sensor-data acquisition systems and the
-analysis of data collected from them. Through hands-on design and
-fabrication of sensor-based instrument prototypes representing models of
-more complex instrumentation, students will develop a direct
-relationship with the source of data in scientific research.</p>
+<p>To be an effective organismal biologist, one must prepare, analyze,
+visualize, and communicate data as we formulate answers to the questions
+we’re asking. Despite the importance of these technological skills to
+our discipline, students often see the acquisition and analysis of data
+as technological black boxes. Countless times in previous courses,
+instructors have no doubt demonstrated foundational principles and
+concepts through the presentation of data, usually through figures in
+papers or lecture slides. However, where these data come from and how
+they have answered a question often remain a mystery. In turn, students
+must rely on the authority of their instructors rather than their own
+grasp of quantitative skills and data collection to make meaningful
+connections.</p>
+<p>The thrust of BIOL 3140 is to develop and hone meaninful quantitative
+skills relevant to organismal biology.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<a class="far fa-sticky-note fa-5x" style="color:#2C3E50"></a>
 <!-- regular style -->
 </div>
 <div class="col-sm-9">
@@ -525,31 +527,15 @@ answered.</p>
 <p><br></p>
 <div id="course-goals-and-objectives" class="section level2">
 <h2>Course goals and objectives</h2>
-<p>With respect to instrumentation, the learning goals of this program
-include:</p>
-<ol style="list-style-type: decimal">
-<li>Understanding how common sensors convert physical phenomena into
-electrical signals.</li>
-<li>Familiarity with the basics of signal conditioning, amplification,
-and the conversion of sensor signals into a form that can be converted
-into digital values.</li>
-<li>Understanding the basics of analog-to-digital conversion and digital
-signal acquisition.</li>
-<li>Development of basic programming skills that permit flexible
-repurposing of a common data-acquisition system.</li>
-</ol>
-<p>The specific learning objectives of our instrumentation work
-include:</p>
-<ol style="list-style-type: decimal">
-<li>Development of 3 instruments which detect temperature, force, and
-acceleration in human subjects.</li>
-<li>Assembly and programming of an Arduino-based data-acquisition system
-to process and condition signals from a variety of sensor types.</li>
-</ol>
-<p>For students in the natural sciences, perhaps more important than
-understanding how data is acquired is understanding how to analyze data
-in the context of answering a specific question. To this end, we will
-pursue the following data science learning goals that include:</p>
+<!-- With respect to instrumentation, the learning goals of this program include: -->
+<!-- 1. Understanding how common sensors convert physical phenomena into electrical signals. -->
+<!-- 2. Familiarity with the basics of signal conditioning, amplification, and the conversion of sensor signals into a form that can be converted into digital values. -->
+<!-- 3. Understanding the basics of analog-to-digital conversion and digital signal acquisition. -->
+<!-- 4. Development of basic programming skills that permit flexible repurposing of a common data-acquisition system. -->
+<!-- The specific learning objectives of our instrumentation work include: -->
+<!-- 1. Development of 3 instruments which detect temperature, force, and acceleration in human subjects. -->
+<!-- 2. Assembly and programming of an Arduino-based data-acquisition system to process and condition signals from a variety of sensor types. -->
+<!-- For students in the natural sciences, perhaps more important than understanding how data is acquired is understanding how to analyze data in the context of answering a specific question. To this end, we will pursue the following data science learning goals that include: -->
 <ol style="list-style-type: decimal">
 <li>Learning how to import data into a computing environment.</li>
 <li>Understanding basic tidying and transforming (i.e., wrangling)
@@ -579,44 +565,47 @@ reproducible markdown capabilities.</li>
 <h1>Course format and expectations</h1>
 <div id="lectures" class="section level2">
 <h2>Lectures</h2>
-<p>Our course will be a semi-flipped experience. This will require
-students to read and explore outside of class and meet in pre-assigned
-smaller groups (i.e., teams) on their own to work through the material.
-We will use class time to tackle sticky problems and answer specific
-questions. In addition, I will be available during arranged face-to-face
-and online office hours.</p>
+<p>Our course will be a semi-flipped, partially self-guided experience.
+This will require students to read and explore outside of class and meet
+in pre-assigned smaller groups (i.e., teams) on their own to work
+through the material. We will use class time to introduce concepts,
+tackle sticky problems, and answer specific questions. In addition, I
+will be available during office hours.</p>
 </div>
 <div id="teams-and-team-responsibilities" class="section level2">
 <h2>Teams and team responsibilities</h2>
 <p>To facilitate our team approach, I’ll be assigning each student to a
-team of 4 students in the first few days of class. This team must
-establish two things:</p>
+team of 3 students for group projects. The teams will be number, i.e.,
+“Team 1”, “Team2”, etc.</p>
+<p>Upon being assigned, the team must do three things for each
+project:</p>
 <ol style="list-style-type: decimal">
-<li>A unique team name. Puns are welcome and encouraged (e.g., “R-tful
+<li>Pick a team nickname. Puns are welcome and encouraged (e.g., “R-tful
 Coders”)</li>
-<li>A team discussion on GitHub that includes me on the team (see <a
-href="https://github.com/orgs/bcorgbio/discussions">Discussion
-Board</a>).</li>
+<li>Have a single team member create a github repository titled
+ProjectNumber_TeamNumber, e.g., “Project2_Team2” (directions <a
+href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository">here</a>).
+Note: only one person in the team should create a project repo.</li>
+<li>Add Professor Kenaley (<span class="citation">@ckenaley</span>) and
+other team members as collaborator to this repository (directions <a
+href="https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository">here</a>)</li>
+<li>A team representative must submit a question to our <a
+href="https://github.com/orgs/bcorgbio/discussions">discussion board</a>
+and include the team handle in the question title.</li>
+<li>A team representative must answer a question on the discussion board
+and include the team handle in the response.</li>
 </ol>
-<p>Each week, teams should use their team discussion boards to generate
-a question to post on the the class-wide discussion board. A team
-representative must submit this question and include the team handle in
-the title surrounded by brackets, like you see below for that
-make-believe team “R-tful codes” with the handle “<span
-class="citation">@bcorgbio/r-tful-coders</span>”. The team must also
-decide which question to answer and then post their feedback or answer
-addressing the handle for the original team posters (see below)</p>
 <center>
-<div class="float">
-<img src="discexamp.jpg" alt="FigName" />
-<div class="figcaption">FigName</div>
+<div class="figure">
+<img src="discexamp.jpg" alt="" />
+<p class="caption">FigName</p>
 </div>
 </center>
 <p><br></p>
 </div>
 <div id="expectations-for-students" class="section level2">
 <h2>Expectations for Students</h2>
-<p>A flipped course, especially one of this technical nature, will
+<p>A semi-flipped course, especially one of this technical nature, will
 require sublime concentration and focus. Therefore, we must be clear
 about our expectations of one another.</p>
 <ul>
@@ -641,8 +630,8 @@ and course announcements made here and over email.</li>
 <li>I will be consistent and quick in grading assignments.</li>
 <li>I will be available to help and discuss topics during scheduled
 class time, arranged office hours, and on our class <a
-href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion
-board</a> .</li>
+href="https://github.com/orgs/bcorgbio/discussions">discussion board</a>
+.</li>
 </ul>
 </div>
 </div>
@@ -650,7 +639,7 @@ board</a> .</li>
 <h1>Discussion Board</h1>
 <p>Most weeks, a representative from your team you will be asked to
 submit at least one question and answer another on our class <a
-href="https://github.com/orgs/bcorgbio/teams/biol-3140">discussion
+href="https://github.com/orgs/bcorgbio/discussions">discussion
 board</a>. This is hosted on GitHub, just like our course site and will
 certainly be an important resource as you work through course material.
 When you post a question, you should:</p>
@@ -671,13 +660,12 @@ box), but this won’t count as an answer.</p>
 that has already been answered as long as it expands upon the previous
 answers. I’ll be moderating and commenting myself, issuing feedback at
 the end of each week.</p>
-<p>Each team is required to make their own discussion board. Please add
-me to the team as well so that I can monitor questions and provide
-feedback. This is meant to provide a means to communicate within a team
-and synthesis of a question to post each week; however any Q&amp;A on a
-team discussion board <strong>DOES NOT</strong> satisfy the general
-discussion requirement. You can learn more about making team discussion
-boards on GitHub <a
+<p>Any team for any project may create their own discussion board. If
+your team does so, please add me to the team as well so that I can
+monitor questions and provide feedback. Any Q&amp;A on a team discussion
+board <strong>DOES NOT</strong> satisfy the general discussion
+requirement. You can learn more about making team discussion boards on
+GitHub <a
 href="https://docs.github.com/en/github/building-a-strong-community/creating-a-team-discussion">here</a>.</p>
 </div>
 <div id="course-outline" class="section level1">
@@ -731,16 +719,16 @@ href="https://docs.github.com/en/github/building-a-strong-community/creating-a-t
 <p><br></p>
 <div id="phase-i-learning-the-basics" class="section level2">
 <h2>Phase I: Learning the Basics</h2>
-<p>In this phase, we’ll learn the basics of instrumentation and data
-analysis by working through 5 learning modules devoted to instrument
-design and data analysis. This will most likely be the most challenging
-part of the course in that many, if not most of you will not have ever
-designed and built instruments and data acquisition systems, let alone
-analyzed data from them. There might be a lot of head banging,
-encountering hurdle after hurdle. Rest assured, your experience will be
-curated, sticking to the bare bones of instrument design and data
-science. This introductory phase will set the groundwork for Phase II,
-the development of a prototyping and data analytics toolbox.</p>
+<p>In this phase, we’ll learn the basics of data analysis by working
+through 4 learning modules devoted to instrument design and data
+analysis. This will most likely be the most challenging part of the
+course in that many, if not most of you will not have ever designed and
+built instruments and data acquisition systems, let alone analyzed data
+from them. There might be a lot of head banging, encountering hurdle
+after hurdle. Rest assured, your experience will be curated, sticking to
+the bare bones of data science. This introductory phase will set the
+groundwork for Phase II, the development of a data analytics
+toolbox.</p>
 <p>Modules for Phase I include:</p>
 <ol style="list-style-type: decimal">
 <li><strong>Data Pirates Code with. . . .</strong> R, Introduction to
@@ -751,29 +739,26 @@ in Data Analysis</li>
 Visualization and Modeling</li>
 <li><strong>Making Messes Pretty:</strong> Leveraging Markdown to
 Produce Pleasing Reports</li>
-<li><strong>Cheap Tricks in Physiology:</strong> Designing and
-Programming Simple, Low-Cost Data Acquisition Systems</li>
 </ol>
 </div>
 <div id="phase-ii-developing-a-toolbox" class="section level2">
 <h2>Phase II: Developing a Toolbox</h2>
-<p>In Phase II, we’ll use our new-found instrument- and code-development
-skills to address key questions in organismal biology. These will be
-largely guided explorations of instrument design and use and data
-analysis meant to challenge you to put these skills to good use in
-answering how vertebrates muscles work, how size and phylogeny matters
-in physiological systems, and how a changing climate impacts the
+<p>In Phase II, we’ll use our new-found code-development skills to
+address key questions in organismal biology. These will be largely
+guided explorations of data analysis meant to challenge you to put these
+skills to good use in answering, for example, how size and phylogeny
+matters in physiological systems a changing climate impacts the
 distribution of vertebrates. Within this phase we’ll break up into teams
-of 3-4 students to focus on 5 modules, some data driven, the others both
-data and instrument driven, including:</p>
+of 3 students to focus on 3 modules devoted to semi-independent analysis
+and/or modeling.</p>
 <ol style="list-style-type: decimal">
-<li><strong>The Shape of Pretty Things:</strong> Wing Shape Evolution in
-the Lepidoptera (data driven)</li>
-<li><strong>Beach Muscles:</strong> Exploring Force-Length Relationships
-in Vertebrate Muscle (instrument and data driven)</li>
+<li><strong>Rolly Polly Fish Heads:</strong> Head shape evolution in the
+Actinopterygii</li>
+<li><strong>Spatial Awareness:</strong> Historical Changes in New
+England Mammal Distribution.</li>
 <li><strong>Birds of a Feather Migrate Together . . .
 Sometimes:</strong> Using EBird data to Explore the Phenology of
-Passerine Migration (data driven)</li>
+Passerine Migration</li>
 </ol>
 <p>For each module of Phase II, you’ll be asked to read one or two
 important topic papers to set the stage and provide crucial context and
@@ -802,8 +787,8 @@ content.</p>
 <h1>Course Assessment</h1>
 <p>Your grade will be based on five assignment components: Asking and
 answering questions on our discussion board, many in-class coding
-exercises, and series of project reports: 5 for Phase I projects, 3 for
-Phase II projects, and one for the Phase III project.</p>
+exercises, and a series of project reports: 4 for Phase I projects, 4
+for Phase II projects, and one for the Phase III project.</p>
 <hr />
 <div id="grade-breakdown" class="section level3">
 <h3>Grade Breakdown</h3>
@@ -832,7 +817,7 @@ Phase II projects, and one for the Phase III project.</p>
 <tr class="even">
 <td>Phase I Projects</td>
 <td></td>
-<td align="center">5x20</td>
+<td align="center">4x25</td>
 </tr>
 <tr class="odd">
 <td>Phase II Projects</td>
@@ -862,7 +847,7 @@ the course of the semester and post and answer 12, your discussion
 points will equal 40. A discussion assignment will be considered
 complete if and only if a question is posted AND another answered.</p>
 <p>As the name implies, on Wednesday of most weeks, we’ll have Wednesday
-Code Reviews (WCRs). These short excercises will assess your aptitude in
+Code Reviews (WCRs). These short exercises will assess your aptitude in
 scripting, data visualization, and modeling.</p>
 <p>More details about the specific requirements of Phase I, II, and III
 projects can be found under our “Projects” tab at the top of this
@@ -870,7 +855,7 @@ page.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
-<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<a class="far fa-sticky-note fa-5x" style="color:#2C3E50"></a>
 <!-- regular style -->
 </div>
 <div class="col-sm-9">
@@ -926,11 +911,9 @@ College policy on academic integrity</a> for more information.</p>
 <div id="email-and-office-hours-policy" class="section level1">
 <h1>Email and Office Hours Policy</h1>
 <p>If you write Professor Kenaley with a question, he’ll try to get back
-to you within 24 hours. If you don’t receive a response, it’s likely
-because the answer to your question is available here or on our
-discussion site. Rather than write Prof. Kenaley with questions related
-to course mechanics and expectations, please post these in our <a
-href="https://github.com/orgs/bcorgbio/discussions">discussion
+to you within 24 hours. Rather than write Prof. Kenaley with questions
+related to course mechanics and expectations, please post these in our
+<a href="https://github.com/orgs/bcorgbio/teams/orgbiof24">discussion
 board</a>, It’s probably the case that others have the same
 questions.</p>
 <p>Office hours can be arranged by appointment via email and will take
@@ -941,7 +924,7 @@ yours.</p>
  
 <hr />
 <p style="text-align: center;">
-Cobbled together by <a href="https://kenaleylab.com">Chris Kenaley</a>
+Cobbled together by <a href="https://kenaleylab.org">Chris Kenaley</a>
 </p>
 <p style="text-align: center;">
 <span style="color: #808080;"><em><a href="mailto:kenaley@bc.edu"

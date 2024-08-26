@@ -11,12 +11,12 @@
 
 
 
-<title>Module 6 Project</title>
+<title>Module 7 Project</title>
 
-<script src="site_libs/header-attrs-2.22/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -33,6 +33,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -43,109 +45,18 @@
   ul.task-list{list-style: none;}
     </style>
 
-
-
-<style type="text/css">
-  code {
-    white-space: pre;
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
   }
-  .sourceCode {
-    overflow: visible;
-  }
-</style>
-<style type="text/css" data-origin="pandoc">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  background-color: #f8f8f8; }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ef2929; } /* Alert */
-code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #204a87; } /* Attribute */
-code span.bn { color: #0000cf; } /* BaseN */
-code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4e9a06; } /* Char */
-code span.cn { color: #8f5902; } /* Constant */
-code span.co { color: #8f5902; font-style: italic; } /* Comment */
-code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
-code span.dt { color: #204a87; } /* DataType */
-code span.dv { color: #0000cf; } /* DecVal */
-code span.er { color: #a40000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #0000cf; } /* Float */
-code span.fu { color: #204a87; font-weight: bold; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
-code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
-code span.ot { color: #8f5902; } /* Other */
-code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
-code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
-code span.ss { color: #4e9a06; } /* SpecialString */
-code span.st { color: #4e9a06; } /* String */
-code span.va { color: #000000; } /* Variable */
-code span.vs { color: #4e9a06; } /* VerbatimString */
-code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
-
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    var j = 0;
-    while (j < rules.length) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
-        j++;
-        continue;
-      }
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') {
-        j++;
-        continue;
-      }
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
 </script>
+
+
 
 
 
@@ -436,6 +347,12 @@ div.tocify {
 <li>
   <a href="schedule.html">Schedule</a>
 </li>
+<li>
+  <a href="at_a_glance.html">Calendar</a>
+</li>
+<li>
+  <a href="WCRS.html">WCRs</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Projects
@@ -445,7 +362,7 @@ div.tocify {
   <ul class="dropdown-menu" role="menu">
     <li class="dropdown-header">Phase I</li>
     <li>
-      <a href="phaseI_rubric.html">Phase I report rubric</a>
+      <a href="phaseI_rubric.html">Phase I report guidlines</a>
     </li>
     <li>
       <a href="mod1_proj.html">Module 1 Project</a>
@@ -459,12 +376,12 @@ div.tocify {
     <li>
       <a href="mod4_proj.html">Module 4 Project</a>
     </li>
-    <li>
-      <a href="mod5_proj.html">Module 5 Project</a>
-    </li>
     <li class="dropdown-header">Phase II</li>
     <li>
-      <a href="phaseII_rubric.html">Phase II report rubric</a>
+      <a href="phaseII_rubric.html">Phase II report guidlines</a>
+    </li>
+    <li>
+      <a href="mod5_proj.html">Module 5 Project</a>
     </li>
     <li>
       <a href="mod6_proj.html">Module 6 Project</a>
@@ -472,19 +389,12 @@ div.tocify {
     <li>
       <a href="mod7_proj.html">Module 7 Project</a>
     </li>
-    <li>
-      <a href="mod8_proj.html">Module 8 Project</a>
-    </li>
     <li class="dropdown-header">Phase III</li>
     <li>
-      <a href="phaseIII_rubric.html">Phase III report rubric</a>
+      <a href="phaseIII_rubric.html">Phase III report guidlines</a>
     </li>
     <li>
       <a href="final_proj.html">Final Project</a>
-    </li>
-    <li class="dropdown-header">DaqPacks</li>
-    <li>
-      <a href="daqpack.html">DaqPack Item List</a>
     </li>
   </ul>
 </li>
@@ -492,7 +402,22 @@ div.tocify {
   <a href="https://github.com/orgs/bcorgbio/discussions">BIOL 3140 Discussion</a>
 </li>
 <li>
-  <a href="https://bostoncollege.instructure.com/courses/1647043/gradebook">Grades on Canvas</a>
+  <a href="https://bostoncollege.instructure.com/courses/1659476/gradebook">Grades on Canvas</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Peer Contribution Evaluations
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="peer_contributions.html">Peer Contribution Evaluation Guidelines</a>
+    </li>
+    <li>
+      <a href="https://forms.gle/ATeFa9wsV1t4g27g6">Author Contribution Evaluation Form</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -506,7 +431,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Module 6 Project</h1>
+<h1 class="title toc-ignore">Module 7 Project</h1>
 
 </div>
 
@@ -518,1416 +443,589 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Butterflies and moths (the Lepidoptera) are an exceptional <a
-href="https://en.wikipedia.org/wiki/Evolutionary_radiation">radiation</a>
-of insects, comprising nearly 160,000 described extant species. (For
-context, the vertebrates comprise just 70,000 species or so.) The
-Lepidoptera play a fundamental role in almost every terrestrial
-ecosystem. These ecologically important species use paired wings to
-power flight in search of places to lay eggs, feed on nectar and other
-resources, and find mates. The airy environment in which moths and
-butterflies fly undoubtedly exerts natural selective pressure on wing
-size and shape. However, it appears as if the hind- and forewings have
-different roles to play in powered flight and the ecology of the
-Lepidoptera. If hindwings are removed from butterflies, they are able to
-fly, but at the cost of speed and maneuverability (Jantzen and Eisner
-2008). Therefore, it has been proposed that forewing shape and size may
-be the result of stabilizing selection imposed by the physical and fluid
-requirements of flight and hindwing shape and size may be determined
-more by neutral selection, sexual selection, or selection due to
-predator avoidance (Sourakov 2013, Barber et al. 2015, Willmott et
-al. 2017, Rubin et al. 2018, Chazot et al. 2016).</p>
+<p>Any student steeped in the mechanics of muscle understands that force
+produced by this tissue is governed by two important parameters: speed
+and length. In this project, we’ll explore the effect of length on
+muscle force generation and evaluate how fatigue affects this
+force-length (FL) relationship.</p>
+<p>The FL relationship is governed by several important biophysical
+aspects of muscle architecture. At the fiber level, the force produced
+is largely mediated by the number of crossbridges that can be formed.
+Crossbridges are small and have a limited attachment range. Therefore,
+crossbridge attachments only occur in the actin-myosin overlap zone of a
+sarcomere. Together, with the assumptions underlying the crossbridge
+theory, this limitation implies that the maximal isometric force of a
+sarcomere is directly related to the amount of actin-myosin overlap
+(Fig. 1).</p>
+<center>
+<img
+src="https://journals.physiology.org/cms/10.1152/jappl.1999.86.5.1445/asset/images/medium/japp05516002x.jpeg" />
+<br> <strong>Fig. 1.</strong> The force-length relationship of a
+sarcomere as predicted by cross-bridge theory.
+</center>
+<p><br></p>
+<p>Of course, many muscles transect a lever system composed of a few
+bones articulating at a joint. For our subject, the human upper limb,
+the forearm flexors originate on the pectoral girdle above the humerus
+and insert on the radius and ulna, spanning the elbow joint. Simply put,
+the arm is a 3rd order lever (Fig 2). If we are to consider the force
+transmitted to the hand (or any other part along the antebrachium), we
+must also consider this lever configuration. As a lever, this system has
+a mechanical advantage that predicts the amount of output force
+transmitted by the input force. Mechanical advantage is defined by the
+following:</p>
+<p><span class="math display">\[MA=\frac{L_i}{L_o}\]</span>,</p>
+<p>where <span class="math inline">\(L_i\)</span> is the in-lever and
+<span class="math inline">\(L_o\)</span> the output leaver. For the
+human upper limb, the inlever is the distance between the flexor
+insertion and elbow joint and the out-lever is the length of the
+antebrachium and hand (or the distance between the elbow and the load).
+This ratio generally accords to 0.2 in this system. What this predicts
+is that any force applied to the in-lever results in 20% of that force
+at the end of the out-lever (i.e., the palm).</p>
+<p>What makes this more complicated is that the effective in-lever, the
+input moment arm, changes as the forearm flexes. This is due to the fact
+that the insertion angle changes as the forearm rotates (Fig. 3).
+Because the force produced by an input is variable with respect to
+insertion angle, the output isn’t necessarily predicted by MA alone.</p>
 <center>
 <p><img
-src="https://3.bp.blogspot.com/-0ZJtpbcAlWo/W9R6ek_sNPI/AAAAAAAAUj0/ncYRT0nN9MctC-x60-boMe8bodGXNM2LQCLcBGAs/s450/ButterflyWing3a.jpg"
-style="width:50.0%" /></p>
-<br> <em>The anotomy of a butterfly or moth.</em>
+src="https://openoregon.pressbooks.pub/app/uploads/sites/42/2018/07/Range-300x262.png" /></p>
+<strong>Fig. 2</strong> The 3rd-order level system of the human upper
+limb.
 </center>
-<p><br> <br></p>
-<p>Studies based on experimental manipulations like those of <span
-class="citation">Jantzen and Eisner (2008)</span>, important as they
-are, are limited in their ability to characterize shape variables and
-the ecological roles of fore- and hind wings over evolutionary time
-scales and across lepidopteran lineages. Comparative analysis of shape
-data from natural history collections has helped bridge the gap between
-experimental studies and macroevolutionary patterns. If there is, in
-fact, different constraints on the evolution of fore- and hindwing
-morphology, we would expect to find a consistent patterns of different
-fore- and hindwing shape across the lepidoptera. Indeed, a number of
-studies have investigated whether for- and hindwing shape and size
-differs in several isolated groups of butterflies. Strauss (1990) found
-the shape of hindwings were much more variable than forewings in
-heliconiine and ithomiine butterflies. In contrast, Chazot et al. (2016)
-found a strong correlation between forewing and hindwing shapes in the
-famous morpho group of butterflies. Therefore, the limited research on
-this topic does not resolve whether fore- and hindwing shape differ
-consistently across the Lepidoptera. Each of these studies was limited
-in their phylogenetic scope, encompassing very few species spanning few
-families of butterflies. Addressing whether fore- and hindwing shape
-varies independently, a much broader phylogenetic sample should be
-analyzed, one that includes not just representatives of the butterfly
-lineage, but also moths.</p>
+<p><br></p>
+<p>Fortunately for us, physiologists have found that studying the force
+(or torque) produced by a biomechanical system can still be useful in
+uncovering the FL relationships of the input muscles <span
+class="citation">(Rassier, MacIntosh, and Herzog 1999)</span>. For this
+project, we take this assumption to mean that the force we measure at
+the hand as the muscle produces isometric force at various lengths is a
+reasonable reflection of the FL relationship governing force at the
+fiber level.</p>
 <center>
-<p><img
-src="https://d3i71xaburhd42.cloudfront.net/bb0cd297955c4ec58bd60777dc345f7c1d5d93bd/3-Figure1-1.png"
-style="width:50.0%" /></p>
-<br> <em>Several species of Heliconiinae butterflies, demonstrating the
-variability in wingshape. From <span class="citation">Penz and Peggie
-(2003)</span>.</em>
+<img src="arm.gif" /> <br> <strong>Fig. 4.</strong> Rotation of the
+forearm through its typical range of motion. Notice that the insertion
+angle of the biceps changes. (This was of course produced with R . . .
+have a look at <a
+href="https://gist.github.com/ckenaley/924171571a73874384a6aaaef93e372b">this
+gist on github</a> if you’d like the code.)
 </center>
-<p><br> <br></p>
-<p>The goal of this project is to study wing-shape evolution across the
-lepidoptera, including hundreds of species from both the moths (a <a
-href="https://en.wikipedia.org/wiki/Paraphyly">paraphyletic group</a>)
-and butterflies. To do this, we’ll take a morphometric approach,
-characterizing the shape outline of fore- and hindwings from about 200
-species of Lepidoptera. The specific questions we’ll answer with our
-morphometric data are:</p>
+<p><br></p>
+<p>Keeping all this mind mind, we’ll study the FL relationship of the
+human upper limb and how this relationship responds to fatigue.
+Eccentric fatigue, whereby the muscle has been asked to do a lot of
+negative work (producing tension while lengthening) has been a
+particular interested to muscle physiologists <span
+class="citation">(Yeung and Yeung 2008)</span>. That is, this research
+has shown that the force/torque-length/angle relationship shifts soon
+after and long after eccentric fatigue. Specifically, the peak
+normalized isometric force shifts over the typical range of angles for a
+biomechanical system.</p>
+<p>The specific goals of this project are to:</p>
 <ol style="list-style-type: decimal">
-<li><p>Do hind- and forewings vary in their evolutionary rates?</p></li>
-<li><p>Does the “evolvability” of the hind- and forewings vary
-significantly among major lineages of moths and butterflies?</p></li>
-<li><p>Is hindwing and forewing shape correlated?</p></li>
+<li>Produce isometric force-angle curves for the human forearm flexors
+undertaking maximum voluntary contractions (MVCs).</li>
+<li>Compare the angle at which maximum isometric force (<span
+class="math inline">\(F_{max}\)</span>) occurs (<span
+class="math inline">\(\theta_{max}\)</span>) between non-fatigued (i.e.,
+control) and eccentrically fatigued forearm flexors.</li>
+<li>Discuss the underlying mechanisms resulting in a shift of <span
+class="math inline">\(\theta_{max}\)</span> after eccentric
+fatigue.</li>
 </ol>
 </div>
 <div id="methods" class="section level1">
 <h1>Methods</h1>
-<div id="image-acquisition" class="section level2">
-<h2>Image acquisition</h2>
-<p>A few decades ago, a morphometric project like this would require
-visiting museums collections from around the world to take images of the
-specimens and species of interest. In fact, this was a major part of
-Prof. Kenaley’s PhD thesis, which included trips to natural history
-collections in France, Denmark, Great Britain, Taiwan, Japan, Monaco,
-New Zealand, and Australia. Ahhhhhh, the good ol’ days. Fortunately (or
-unfortunately), travel to such wonderful places may be avoided as
-collections have made major efforts to photograph their specimens. Now
-that most museums around the world have their holdings cataloged in
-databases, researchers can search their collections for records that
-have digital images.</p>
-<p>Until very recently, amassing a data set of images for morphometric
-work would require querying individual databases, one at a time.
-However, most natural history museums share their data with the Global
-Biodiversity Information Facility (GBIF), a clearing house of
-collections and species information. In the context of a comparative
-project like ours, one could search the GBIF database online for moth
-and butterfly records that have images. Fortunately for use, the folks
-at GBIF have created and R package, <a
-href="https://www.gbif.org/tool/81747/rgbif"><code>rgif</code></a>, that
-permits access to GBIF’s application programming interface (API),
-rendering their records searchable from the command line.</p>
-<p>Prof. Kenaley used this package, <code>rgbif</code>, to query museum
-records with images. This resulted in a cache of about 180 images of the
-the 200 species included in the <span class="citation">Kawahara et al.
-(2019)</span> phylogeny. For the remainder, he scoured the interwebs for
-reputable sources of images. The images ## Species list and
-phylogeny</p>
-<p>Because we’ll be comparing wing shape across species of the
-Lepidoptera, this project is by definition a comparative one and we’ll
-need a phylogeny for the group. Fortunately a recent phylogenomic
-analysis for 200 species of Lepidotera by <span
-class="citation">Kawahara et al. (2019)</span> resolved the
-relationships of the major groups of this order. We’ve used the taxa
-studied in this paper to find images in GBIF and we’ll use <a
-href="lep_tree2.tre">a tree file</a> representing phylogeny for our
-comparative analsyis.</p>
-<center>
-<p><br> <img
-src="https://www.pnas.org/cms/10.1073/pnas.1907847116/asset/075c8ff7-6363-462d-a528-f2b13710804d/assets/graphic/pnas.1907847116fig01.jpeg"
-style="width:50.0%" /> <br></p>
-The phylogenetic relationships of the Lepidoptera according the <span
-class="citation">Kawahara et al. (2019)</span>.
-</center>
-<p><br></p>
+<div id="experimental-design" class="section level2">
+<h2>Experimental Design</h2>
+<p>To assess the affect of eccentric fatigue of elbow flexor muscles,
+we’ll be measuring the isometric force over the range of motion of the
+forearm produced by MVC. To capture MVC data, you must design and
+construct a portable Arduino-based force-data acquisition system (DAQ).
+Your device should record force data over the course of 30s.</p>
 </div>
-<div id="digitization" class="section level2">
-<h2>Digitization</h2>
-<p>Our shape analysis will be based on the outline of the hind- and
-fore-wings of ~200 species of Lepidoptera. To outline the wings, we’ll
-follow this generalize workflow below in the image analysis program FIJI
-(FIJI is just imageJ).</p>
-<br>
-<center>
-<img src="lep_workflow.jpeg" style="width:70.0%" /> <br>
-</center>
-<p><br></p>
-<p>You and your team should will be assigned about 20 of the ~200
-species to outline. Images of these species can be accessed through <a
-href="https://drive.google.com/drive/folders/1TYAzcMcH0u64OEqsuc61W97zIL7qLGWU?usp=sharing">this
-directory</a>. First choose one of your species to work on. For each
-species, start with what you think is the best image, that is, it has a
-scale bar, the wings are not damaged, and the hindwing is most exposed.
-Open that best image in Fiji.</p>
-<p>After opening the photo, follow the steps above.</p>
+<div id="daq-design-components" class="section level2">
+<h2>DAQ Design Components</h2>
 <ol style="list-style-type: decimal">
-<li><p>If there’s a scale bar, <a
-href="https://imagejdocu.list.lu/gui/analyze/set_scale">set the
-scale</a>. Please set the scale in mm.</p></li>
-<li><p>If the right wing pair is damaged, flip the image horizontally.
-Select “Image” <span class="math inline">\(\rightarrow\)</span>
-“Transform” <span class="math inline">\(\rightarrow\)</span> “Flip
-horizontally”. <strong>Note:</strong> you may have to do this only for
-the fore- or hindwing.</p></li>
-<li><p>Select the <a
-href="https://imagej.nih.gov/ij/docs/guide/146-19.html">polygon
-selection tool</a>.</p></li>
-<li><p>Trace the wing by placing the first point on the polygon on the
-anterior margin of the wing where it meets the thorax. Like so .
-.</p></li>
+<li>100-kg S-type Load Cell with HX711 amplifier</li>
+<li>Arduino Uno microcontroller</li>
 </ol>
+</div>
+<div id="daq-assembly-and-programming" class="section level2">
+<h2>DAQ Assembly and Programming</h2>
+<p>Assembly for this force logger is almost entirely captured in <a
+href="https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/">this
+tutorial</a>. And, Prof. K has wired the load cell to the amplifier, so
+y’all just need to wire up the ampflifier to the Arduino</p>
+<p><del>You’ll see that the sketch in the tutorial requires a
+calibration step to output appropriate force or mass units.</del>
+<strong>Don’t worry about calibration.</strong> We’ll be looking at
+normalized force, so units don’t matter.</p>
+<!-- As for your SD storage integration, make sure your sketch writes one column data to the SD card with the header "force". -->
+<p>For each experiment, you’ll be recording 12 bouts of MVC force, each
+corresponding to a different elbow angle, for 30 s. For each arm angle,
+one only needs to unplug the Arduino and hit the red restart button on
+the Arduino to begin taking force data. So as not to confuse from where
+your data came, it’s a good idea to change the name of the text file
+being saved to for each experiment, e.g., “Team_subject1_control.csv”
+and “Team_subject1_fatigue.csv”.</p>
+</div>
+<div id="data-collection" class="section level2">
+<h2>Data Collection</h2>
+<div id="elbow-angle" class="section level3">
+<h3>Elbow Angle</h3>
+<p>You’ll first need to construct a ganiometer, a simple device that
+measures the angle between the upper and lower arm (i.e., the elbow
+angle). One approach is to use the outline of a small plate to cut a
+disc out of cardboard and then bisect the diameter and then continue to
+bisect this semicircle into equal segments (Fig. 4.)</p>
 <center>
-<img src="firstpoint.png" style="width:40.0%" /> <br>
+<img src="gan.jpg" style="width:50.0%" /> <br> <strong>Fig. 4</strong> A
+simple ganiometer made of cardboard.
 </center>
 <p><br></p>
-<p>Continue to trace the outline of the wing being sure to include
-enough points to capture more complex areas. For instance, in this
-swallowtail hindwing, it may require 30 or more points to outline the
-interesting projections along the posterior margin.</p>
-<br>
+<p>To use the ganiometer, find the center of the elbow joint in lateral
+view and mark this position with a marker. From this point, mark a line
+along the lateral margin of the radius. (Fig. 5). Then, poke a hole
+through the center of the ganiometer and affix it to the upper arm so
+its center aligns with your mark at the elbow joint and the 0-180<span
+class="math inline">\(^o\)</span> axis aligns with the long axis of the
+humerus (Fig. 6).You can affix the ganiometer to the upper arm by
+passing a strip of surgical tape through two tabs cut out on either side
+of the 0-180<span class="math inline">\(^o\)</span> axis (Fig. 6).</p>
 <center>
-<img src="hindwing.png" style="width:40.0%" /> <br>
+<img src="joint.jpg" style="width:50.0%" /> <br> <strong>Fig. 4</strong>
+The elbow joint on a tiny human and the lateral margin of the radius
+marked with a dark line. Thanks, Zo!
 </center>
 <p><br></p>
-<p>You may also find it easier to get an acurate outline if you zoom in
-(<code>crtl+</code> or <code>command+</code>).</p>
-<ol start="5" style="list-style-type: decimal">
-<li>Run the following macro in imageJ.</li>
-</ol>
-<pre><code>run(&quot;Fit Spline&quot;);
-run(&quot;Properties... &quot;, &quot;list&quot;);</code></pre>
-<p>This script <a
-href="https://en.wikipedia.org/wiki/Spline_interpolation">fits a
-spline</a> through the selected points and produces a list of the x,y
-coordinates.</p>
-<p><strong>Note:</strong> For the first image you outline, you will have
-to open the macro editor (“Plugins” <span
-class="math inline">\(\rightarrow\)</span> “New” <span
-class="math inline">\(\Macro\)</span>). Paste the script command from
-above into the editor and save this new macro to an appropriate
-directory, perhaps you cloned repo. You’ll want to access this later
-(“Plugins” <span class="math inline">\(\rightarrow\)</span> “Edit”) so
-that you automate this process.</p>
-<ol start="6" style="list-style-type: decimal">
-<li>Save the results table that pops up and be sure to append either
-“_hindwing” or “_forewing” to the file name and make sure this is before
-the “.txt” file extension. <code>command+s</code> or <code>ctrl+s</code>
-works. <strong>This is super important!!</strong></li>
-</ol>
-<p>For some species there may be only one image. For others there may be
-10 or more. If you can, aim to outline the wing of <em>three specimens
-per species</em>.</p>
-<p>After your team has completed outlining the assigned species, upload
-your text files to <a
-href="https://drive.google.com/drive/u/1/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Glk5">this
-directory</a>. Once all the data appear here, Prof. Kenaley will
-evaluate the quality of the outlines and do some post-processing if
-required (i.e., file-name checks, outline quality, etc.). You can then
-download <a href="data/class_out_data_f23.zip">these evaluated data</a>
-for shape analysis.</p>
-</div>
-<div id="shape-analysis" class="section level2">
-<h2>Shape analysis</h2>
-<p>As we learned in class and you’ve been reading, researchers
-interested in comparing shape change between species can use one of two
-methods: landmark- or outline-base shape analysis. We’ll use the
-latter.</p>
-<p>Outline analysis involves breaking the shapes down into a
-mathematical description of the points that constitute the shapes. The
-most popular approach for fitting functions is elliptical Fourier
-analysis (EFA) in which the shapes in a data set are described as a
-series of ellipses. EFA attempts to align a number of ellipses to the
-outline of shapes and the scale of the major and minor axes of the
-ellipses are then used as the descriptor of the shapes. Of course, one
-could fit a lot of ellipses and describe the shape perfectly, i.e., with
-100% power; however practitioners usually stop short of this and choose
-some lower lever of lower, say 99%. The number of ellipses is referred
-to as the number of harmonics. In the figure below, you see the a higher
-number of harmonics describe the shape in question more perfectly.</p>
-<br>
 <center>
-<img
-src="https://www.researchgate.net/profile/Ryan-Felice/publication/260448082/figure/fig4/AS:297032695730198@1447829521359/Outline-reconstruction-using-Elliptical-Fourier-Descriptors-Black-contours-represent-the.png"
-style="width:60.0%" /> <br> <br> Elliptical Fourier analysis of the
-pygostyle, the fused plate of caudal vertebrae that support tail
-feathers in birds.
+<img src="90deg.jpg" style="width:50.0%" /> <br> <strong>Fig. 5</strong>
+The ganiometer affixed to the upper arm with surgical tape with its
+center placed over the elbow joint. Note how the marked line on the
+radius indicates an elbow angle of about 90<span
+class="math inline">\(^o\)</span>.
 </center>
-<p><br> <br></p>
-<p>Once EFA is used to describe the shapes in a data set, one is left
-with many variables to consider including all the descriptors of all the
-ellipses that form the outlines. This could be many hundreds of
-variables in a data set like ours. This is a serious <a
-href="https://en.wikipedia.org/wiki/Multivariate_statistics">multivariate
-problem</a>.</p>
-<p>For such a problem, researchers usually turn to Principal Components
-Analysis (PCA) whereby the very complicated suite of variables is
-distilled into a set of fewer variables that describe the important
-variance among the original variables. In a sense, PCA produces a series
-of regressions, or vectors, that pass through the values of the original
-variables. This operation is performed iteratively, with the first
-vector (the first principal component, PC1), drawn through the variable
-space that accounts for the most variance in the data set. After the
-combination of variables forming PC1 is removed, a subsequent vector
-(PC2) is drawn through another unique variable space that describes the
-second most amount of variance. This continues until most of the
-variance is captured, resulting in scores of PCs. The first two or
-three, however, are usually enough to describe a health amount of
-variance, say 90% or more.</p>
-<p>To perform EFA and then PCA, we need only to turn to one R package,
-<code>Momocs</code>. Let’s load this package and begin with an example
-analysis that we can scale up on our full data set.</p>
-<p>We can begin by reading in one of the outline text files,
-Prof. Kenaley has already produced for 10 species of butterflies and
-moths. Please <a href="lep_examples.zip">download these</a> to follow
-along. You can unzip this directory and place it your project
-directory</p>
-<p>You can begin the full analysis on data collected by the whole class
-by <a href="data/class_out_data_f23.zip">downloading this zipped
-directory</a>, unzipping it, and placing it in your project
-directory</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">library</span>(Momocs)</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;data/class_out_data_f23&quot;</span>,<span class="at">full.names=</span>T)</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(f[<span class="dv">1</span>]) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="fu">as.matrix</span>()</span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>out <span class="sc">%&gt;%</span> </span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>  <span class="fu">list</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>  <span class="fu">Out</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>  <span class="fu">coo_flipx</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
-<p><img src="mod6_proj_files/figure-html/momocexp1-1.png" width="672" /></p>
-<p>Notice that we’ve found all the files in the “lep_examples” directory
-with <code>list.files()</code>, searching for the patter “.txt” and
-using the full filepath to make a loading the data in the directory
-possible. Next, we use <code>read_delim()</code> with
-<code>delim=\t</code> rather than <code>read_csv()</code> because FIJI
-outputs tab-delimited data. We save this outline as <code>out</code>
-after tranforming it to a matrix, the prefer format for
-<code>Momocs</code>.</p>
-<p>In the next operation, we transform this matrix into an
-<code>Momocs</code> outline using <code>Out()</code>; however,
-<code>Out()</code> must take a list of matrices and therefore we pipe in
-the <code>list()</code> function first. Next, <code>coo_flipx()</code>
-is invoked to flip the outline about the x axis–remember that the origin
-of the image field is the upper left, not the lower left in the usual
-graphical representation. Lastly, <code>stack()</code> is invoked to
-visualize the outline. And here we have a forewing visualized.</p>
-<p>Now, we will of course have hundreds of files to load and analyze
-with PCA. For this challenge we will the <code>vroom()</code> function
-in the <code>vroom</code> package. It can read in all our data,
-regardless of whether the data are tab- or comma-separated, an issue
-identified in class. We have the file paths stored in <code>f</code>,
-which can be passed through this function.</p>
-<p>As was mentioned above, the <code>Out()</code> function prefers a
-list, so <del>we can work on the list established here to visualize our
-outlines.</del> we’ll have to construct a list a little differently.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co">#make a large df with vroom</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>out.df <span class="ot">&lt;-</span> vroom<span class="sc">::</span><span class="fu">vroom</span>(f, <span class="at">id =</span> <span class="st">&quot;filename&quot;</span>,<span class="at">progress=</span>F)</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#make list</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>outs.l <span class="ot">&lt;-</span> <span class="fu">sapply</span>(f,<span class="cf">function</span>(x) out.df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(filename<span class="sc">==</span>x) <span class="sc">%&gt;%</span> <span class="fu">select</span>(X,Y) <span class="sc">%&gt;%</span> as.matrix)</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>outs.l <span class="sc">%&gt;%</span> </span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="fu">Out</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
-<p><img src="mod6_proj_files/figure-html/datlist2-1.png" width="672" /></p>
-<p>Wonderful! Fore- and hindwings loaded for the 10 examples species.
-However, notice we have a few problems. First, both fore- and hindwing
-are included in the same data set. This confounds analyzing and
-comparing shape in fore- and hindwing separately, a major goal of this
-project. Second, the outlines are of arbitrary size due to how much of
-the pixel field they spanned in the photos and whether or not a scale in
-mm was set. Thus, this arbitrary size scale would confound shape
-analysis from the start. Let’s take on fixing the hindwing-forewing
-issue first and, later, we’ll tackle the size issue.</p>
-<p>Fortunately, we know whether each outline comes from either a fore-
-or hindwing because we added these metadata to the file name. <del>Thus,
-we merely need to strip this information from the file name when loading
-the data in our <code>for</code> loop. Let’s do that by modified the
-loop.</del> The <code>vroom()</code> function stores filename data in a
-column as a way to identify data (we specified the name of this column
-with <code>id =</code>filename`.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#make a large df with vroom</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>out.df <span class="ot">&lt;-</span> vroom<span class="sc">::</span><span class="fu">vroom</span>(f, <span class="at">id =</span> <span class="st">&quot;filename&quot;</span>,<span class="at">progress=</span>F)</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#add wing info</span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>out.df <span class="ot">&lt;-</span> out.df <span class="sc">%&gt;%</span> </span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wing=</span><span class="fu">gsub</span>(<span class="st">&quot;XY_.+_(hindwing|forewing)</span><span class="sc">\\</span><span class="st">..+&quot;</span>,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">1&quot;</span>,<span class="fu">basename</span>(filename))) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#make list</span></span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>outs.l <span class="ot">&lt;-</span> <span class="fu">sapply</span>(f,<span class="cf">function</span>(x) out.df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(filename<span class="sc">==</span>x) <span class="sc">%&gt;%</span> <span class="fu">select</span>(X,Y) <span class="sc">%&gt;%</span> as.matrix)</span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#extract wing info</span></span>
-<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>wings <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;XY_.+_(hindwing|forewing)</span><span class="sc">\\</span><span class="st">..+&quot;</span>,<span class="st">&quot;</span><span class="sc">\\</span><span class="st">1&quot;</span>,<span class="fu">basename</span>(<span class="fu">names</span>(outs.l)))</span></code></pre></div>
-<p>Here, we use a general regular expression function
-<code>gsub()</code>, which <a
-href="https://www.programmingr.com/tutorial/gsub-in-r/">finds a
-character string within a fuller string</a> and replaces it. In this
-case, we’ve asked <code>gsub()</code> to find either “hindwing” or
-“forewing” by using “|” for the or part. We’ve also specified that these
-two strings will be after any string (<code>grep</code> “.”) of any
-length (<code>grep</code> “+”) and after the “_“. They’ll also appear
-before”.txt”. Each wing descriptor is saved to a unique position in the
-list <code>wing.l</code>.</p>
-<p>To store our wing descriptors within our outlines, we can access the
-<code>fac</code> option in <code>Out()</code> when transforming our list
-of matrices into a list of <code>Momocs</code> outlines. This
-<code>fac</code> option takes a list of named one-dimensional vectors,
-so we make a list with a name “wing” that has the unlisted values of
-<code>wing.l</code>. Let’s save this newly labeled list of outlines as
-<code>outs</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>outs <span class="ot">&lt;-</span>  outs.l <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">Out</span>(<span class="at">fac=</span><span class="fu">list</span>(<span class="at">wing=</span>wings)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">coo_flipx</span>()</span></code></pre></div>
-<p>Now we can invoke <code>Momocs</code> <code>tidy</code>-like
-<code>filter()</code> function to parse the outlines according to their
-wing. Let’s do that and visualize each group with
-<code>stack()</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>forewings <span class="ot">&lt;-</span> outs <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">filter</span>(wing<span class="sc">==</span><span class="st">&quot;forewing&quot;</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>hindwings <span class="ot">&lt;-</span> outs <span class="sc">%&gt;%</span> </span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  <span class="fu">filter</span>(wing<span class="sc">==</span><span class="st">&quot;hindwing&quot;</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>forewings <span class="sc">%&gt;%</span> </span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
-<p><img src="mod6_proj_files/figure-html/wingfilter-1.png" width="672" /></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>hindwings <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
-<p><img src="mod6_proj_files/figure-html/wingfilter-2.png" width="672" /></p>
-<p>Now that we have two lists of outlines ready for analysis, let’s come
-back to our size issue. If we ran and EFA analysis on these outlines,
-most of the variance would be due to their arbitrary size differences.
-To address this, practitioners of shape analysis transform their shapes
-into a common coordinate space that removes size altogether. The method
-of choice for this is the <a
-href="https://en.wikipedia.org/wiki/Procrustes_analysis">Procrustes
-transformation</a>. This method superimposes the shapes by optimally
-translating, rotating and uniformly scaling the objects. That is, both
-the placement in space and the size of the shapes are freely adjusted so
-that they are the same size and the distance between the positions of
-the points constituting the shape is reduced. To align the shapes, the
-can be compared to an arbitrarily selected reference shape (referred to
-as ordinary Procrustes analysis) or the shapes can be aligned to an
-optimally determined mean shape (referred to as generalized Procrustes
-analysis). We’ll perform the latter.</p>
-<p>Fortunately, <code>Momocs</code> has just a function for generalize
-Procrustes superimposition, <code>fgProcrustes()</code>. Let’s use this
-and visualize our results. But before we do, we must tackle another
-problem: our outlines have a variable number of coordinates, making it
-impossible for <code>fgProcrustes()</code> to minimize the distance
-between points in each outline (which would it choose?). So we’ll just
-sample 100 of the points in each outline using <code>Momocs</code>’s
-<code>coo_interpolate()</code>. This function fits a spline with high
-resolution to all the shapes and extracts a determined number of points
-at equal intervals. We can easily find the number of coordinates in each
-each set of wings and use the minimum value as the number we’ll sample
-with <code>coo_interpolate()</code>. this will minimize the amount of
-information we lose.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>fore.min <span class="ot">&lt;-</span> forewings <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">coo_nb</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">min</span>()</span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>forewings <span class="sc">%&gt;%</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>  <span class="fu">coo_interpolate</span>(fore.min) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  <span class="fu">fgProcrustes</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
-<p><img src="mod6_proj_files/figure-html/proc-1.png" width="672" /></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>hind.min <span class="ot">&lt;-</span> hindwings <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">coo_nb</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">min</span>()</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>hindwings <span class="sc">%&gt;%</span> </span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>   <span class="fu">coo_interpolate</span>(hind.min) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  <span class="fu">coo_slide</span>(<span class="at">id=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>   <span class="fu">coo_align</span>()  <span class="sc">%&gt;%</span></span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>  <span class="fu">fgProcrustes</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>  <span class="fu">stack</span>()</span></code></pre></div>
-<p><img src="mod6_proj_files/figure-html/proc-2.png" width="672" /></p>
-<p>Now all that’s left to do is perform the EFA and then we can move on
-to PC analysis. For this, all we have to do is pipe in the
-<code>Momocs</code> EFA function, <code>efourier()</code>. We’ll do this
-and specify <code>norm=FALSE</code> for these <a
-href="https://momx.github.io/Momocs/reference/efourier.html#details">very
-arcane reasons</a>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>forewings <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">coo_interpolate</span>(fore.min) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>   <span class="fu">coo_align</span>()  <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">fgProcrustes</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="fu">efourier</span>(<span class="at">norm=</span><span class="cn">FALSE</span>) </span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>hindwings <span class="sc">%&gt;%</span> </span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>   <span class="fu">coo_interpolate</span>(hind.min) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>   <span class="fu">coo_align</span>()  <span class="sc">%&gt;%</span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>  <span class="fu">fgProcrustes</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>  <span class="fu">efourier</span>(<span class="at">norm=</span><span class="cn">FALSE</span>) </span></code></pre></div>
-<p>Performing the PCA is just as easy. We just finally add
-<code>PCA()</code> with the pipe. We’ll have the results in
-appropriately name variables.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>forewing.pca <span class="ot">&lt;-</span> forewings <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">coo_interpolate</span>(fore.min) <span class="sc">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>   <span class="fu">coo_align</span>()  <span class="sc">%&gt;%</span></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="fu">coo_slide</span>(<span class="at">id=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="fu">fgProcrustes</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="fu">efourier</span>(<span class="at">norm=</span>T) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  <span class="fu">PCA</span>()</span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>hindwing.pca <span class="ot">&lt;-</span>hindwings <span class="sc">%&gt;%</span> </span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>   <span class="fu">coo_interpolate</span>(hind.min) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>   <span class="fu">coo_align</span>()  <span class="sc">%&gt;%</span></span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>   <span class="fu">coo_slide</span>(<span class="at">id=</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>  <span class="fu">fgProcrustes</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>  <span class="fu">efourier</span>(<span class="at">norm=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>  <span class="fu">PCA</span>()</span></code></pre></div>
-<p>We can visualize the PCA with <code>plot_PCA()</code>, which will, by
-default produce a biplot of the first two PCs, the amount of variance
-explained by each, and a representation of the morphoshape described by
-the PCs (the outlines in the background).</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>forewing.pca <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">plot_PCA</span>(<span class="at">title =</span> <span class="st">&quot;forewings&quot;</span>)</span></code></pre></div>
-<p><img src="mod6_proj_files/figure-html/plotpca-1.png" width="672" /></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>hindwing.pca <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">plot_PCA</span>(<span class="at">title =</span> <span class="st">&quot;hindwings&quot;</span>)</span></code></pre></div>
-<p><img src="mod6_proj_files/figure-html/plotpca-2.png" width="672" /></p>
-<p>Now we can move on to the comparative analysis.</p>
+<p><br></p>
+<p>As the elbow flexes or extends, you should be able to peak at the
+ganiometer to assess elbow angle.</p>
 </div>
-<div id="comparative-analysis" class="section level2">
-<h2>Comparative analysis</h2>
-<p>Before we begin, Let’s remind ourselves of the questions we’re
-attempting to answer so that we can figure out exactly how to answer
-then. First, do hind- and forewings vary in their evolutionary rates?
-Second, do major groups of the Lepidoptera vary in their hind- and
-forewing evolvability?</p>
-<p>For this first question, we can simply evaluate the evolutionary rate
-of our PC scores for the hind and forewings using a method of choice.
-For the second question, we can look at the evolutionary rates of our PC
-scores across our Lepidopteran tree.</p>
-<p>First of all, as mentioned previously, we need a tree and fortunately
-we have one for these species. Indeed, the species choice for this
-project was based on those sampled in the <span
-class="citation">Kawahara et al. (2019)</span> study. So let’s load the
-tree you can <a href="lep_tree2.tre">download here</a>. Make sure it’s
-in your project’s directory. We’ll use <code>read.tree()</code> from the
-<code>ape</code> package and plot it just to check things out. Notice
-<code>cex=0.1</code> to keep the tip labels small in the relatively
-large tree.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">library</span>(ape)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;ape&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     where</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>lep.tree <span class="ot">&lt;-</span> ape<span class="sc">::</span><span class="fu">read.tree</span>(<span class="st">&quot;lep_tree2.tre&quot;</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="fu">plot</span>(lep.tree,<span class="at">cex=</span><span class="fl">0.1</span>)</span></code></pre></div>
-<p><img src="mod6_proj_files/figure-html/tree-1.png" width="672" /></p>
-<p>Looks great; however, the convention is for the root of the tree to
-be positioned in the upper left. This is easy to fix with
-<code>ape</code>’s <code>laddersize()</code> function. We’ll also remove
-the pesky underscore between names in the tip labels. This will help
-with joining the tree data with our species data.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>lep.tree <span class="ot">&lt;-</span> <span class="fu">ladderize</span>(lep.tree)</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="fu">plot</span>(lep.tree,<span class="at">cex=</span><span class="fl">0.1</span>)</span></code></pre></div>
-<p><img src="mod6_proj_files/figure-html/treefix-1.png" width="672" /></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>lep.tree<span class="sc">$</span>tip.label <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;_&quot;</span>,<span class="st">&quot; &quot;</span>,lep.tree<span class="sc">$</span>tip.label)</span></code></pre></div>
-<p>Now that we have our PCA data and a tree of species, we need to a add
-species information (e.g., the species, higher taxonomic information,
-etc.) to the shape data so the tree and shape data can work together.
-Notice that each species is represented in the <code>outs</code> list
-(from whence our PCA is derived) by the file name that belongs to its
-outline. Let’s look at their names.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">basename</span>(<span class="fu">names</span>(outs))[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code></pre></div>
-<pre><code>## [1] &quot;XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv&quot;
-## [2] &quot;XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv&quot;
-## [3] &quot;XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_forewing.txt&quot;
-## [4] &quot;XY_001FE051A037367D9317121CD75AD958605A968812F4D791E7AC11800052DEBC_hindwing.txt&quot;
-## [5] &quot;XY_002-02-Thymelicus_sylvestris_(211a)_forewing.txt&quot;</code></pre>
-<p>Not a bit of species data. However, Prof. Kenaley has stored the
-filenames of each species in a table you can <a
-href="lep_image_data.csv">download here</a>. Have a look.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>lep.sp <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;lep_image_data.csv&quot;</span>)</span></code></pre></div>
-<pre><code>## Rows: 1106 Columns: 5
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (5): species, identifier, higher_taxon, common_name, highest_common_name
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">head</span>(lep.sp)</span></code></pre></div>
-<pre><code>## # A tibble: 6 × 5
-##   species                identifier higher_taxon common_name highest_common_name
-##   &lt;chr&gt;                  &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;              
-## 1 Acanthopteroctetes un… Acanthopt… Neopseustoi… Archaic be… moths              
-## 2 Acanthopteroctetes un… MCZ-ENT00… Neopseustoi… Archaic be… moths              
-## 3 Acrocercops transecta  transecta… Gracillario… Cocoon-mak… moths              
-## 4 Actias luna            MCZ-ENT00… Bombycoidea  Sphynx/Sil… moths              
-## 5 Actias luna            MCZ-ENT00… Bombycoidea  Sphynx/Sil… moths              
-## 6 Actias luna            UDCC_TCN_… Bombycoidea  Sphynx/Sil… moths</code></pre>
-<p>Have a look at the column “identifier”.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">head</span>(lep.sp<span class="sc">$</span>identifier)</span></code></pre></div>
-<pre><code>## [1] &quot;Acanthopteroctetes_unifascia_M_1477601198_lg&quot;    
-## [2] &quot;MCZ-ENT00754647_Acanthopteroctetes_unifascia_had&quot;
-## [3] &quot;transecta_Acrocercops_A_EIHU&quot;                    
-## [4] &quot;MCZ-ENT00639291_Actias_luna_had&quot;                 
-## [5] &quot;MCZ-ENT00639295_Actias_luna_had&quot;                 
-## [6] &quot;UDCC_TCN_00062177_1487105077_lg&quot;</code></pre>
-<p>This is the vector of the image file names minus the extension (.jpg,
-.png, etc.). Notice that our outline names, rather than species, contain
-this information–you saved the FIJI results as
-“XY_filename_hindwing.txt” or “XY_filename_forewing.txt”. That is, this
-very same identifier in the species table is buried in the names of our
-outline data. So let’s make a new tibble that strips the same identifier
-from the outline names and join the species data to this new tibble.</p>
-<p><strong>NOTE</strong>: We’ve now added <code>.csv</code> to the gsub
-command.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>out.data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">xy.file=</span><span class="fu">basename</span>(<span class="fu">names</span>(outs))) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">identifier=</span><span class="fu">gsub</span>(<span class="st">&quot;XY_|_hindwing|_forewing|.txt|.csv&quot;</span>,<span class="st">&quot;&quot;</span>,xy.file)) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>  <span class="fu">left_join</span>(lep.sp)</span></code></pre></div>
-<pre><code>## Joining with `by = join_by(identifier)`</code></pre>
-<pre><code>## Warning in left_join(., lep.sp): Detected an unexpected many-to-many relationship between `x` and `y`.
-## ℹ Row 15 of `x` matches multiple rows in `y`.
-## ℹ Row 326 of `y` matches multiple rows in `x`.
-## ℹ If a many-to-many relationship is expected, set `relationship =
-##   &quot;many-to-many&quot;` to silence this warning.</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">head</span>(out.data)</span></code></pre></div>
-<pre><code>## # A tibble: 6 × 6
-##   xy.file        identifier species higher_taxon common_name highest_common_name
-##   &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;              
-## 1 XY_0017E3CDFB… 0017E3CDF… Cydia … Tortricoidea Tortrix mo… moths              
-## 2 XY_0017E3CDFB… 0017E3CDF… Cydia … Tortricoidea Tortrix mo… moths              
-## 3 XY_001FE051A0… 001FE051A… Operop… Geometroidea Geometrid … moths              
-## 4 XY_001FE051A0… 001FE051A… Operop… Geometroidea Geometrid … moths              
-## 5 XY_002-02-Thy… 002-02-Th… Thymel… Papilionoid… Papilionoi… butterflies        
-## 6 XY_002-02-Thy… 002-02-Th… Thymel… Papilionoid… Papilionoi… butterflies</code></pre>
-<p>With this tibble in place, we can now add species information to our
-PCA data. The PC scores are stored in the the variable <code>x</code>,
-so we can summon them this way. Notice that the row names correspond to
-the outline file names, a column in out <code>out.data</code>
-tibble.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">head</span>(hindwing.pca<span class="sc">$</span>x,<span class="dv">1</span>)</span></code></pre></div>
-<pre><code>##                                                                                                                   PC1
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -0.009749397
-##                                                                                                                   PC2
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -0.004405272
-##                                                                                                                    PC3
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -0.0006790754
-##                                                                                                                   PC4
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -0.002812194
-##                                                                                                                    PC5
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -0.0003271643
-##                                                                                                                  PC6
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.001611552
-##                                                                                                                   PC7
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.0004367582
-##                                                                                                                   PC8
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -0.001217882
-##                                                                                                                   PC9
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.0008586111
-##                                                                                                                  PC10
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.0002110751
-##                                                                                                                   PC11
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -0.0001936261
-##                                                                                                                 PC12
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.001006216
-##                                                                                                                  PC13
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.0002445255
-##                                                                                                                  PC14
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.0002696748
-##                                                                                                                 PC15
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.001092795
-##                                                                                                                  PC16
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.0009348485
-##                                                                                                                   PC17
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -0.0001852271
-##                                                                                                                   PC18
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -0.0001545788
-##                                                                                                                  PC19
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.0001367915
-##                                                                                                                  PC20
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.0001714855
-##                                                                                                                 PC21
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.000111864
-##                                                                                                                   PC22
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -0.0001412778
-##                                                                                                                  PC23
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.0001659326
-##                                                                                                                   PC24
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -0.0003687868
-##                                                                                                                  PC25
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.0002709988
-##                                                                                                                  PC26
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 0.0001345134
-##                                                                                                                   PC27
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -9.746819e-05
-##                                                                                                                   PC28
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -3.135054e-06
-##                                                                                                                  PC29
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 5.086098e-05
-##                                                                                                                   PC30
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -1.053566e-05
-##                                                                                                                   PC31
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv -1.362869e-05
-##                                                                                                                  PC32
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_hindwing.csv 9.606103e-06</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">head</span>(forewing.pca<span class="sc">$</span>x,<span class="dv">1</span>)</span></code></pre></div>
-<pre><code>##                                                                                                                 PC1
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv 0.04341984
-##                                                                                                                PC2
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv 0.0498336
-##                                                                                                                 PC3
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv 0.02961801
-##                                                                                                                  PC4
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv 0.005271132
-##                                                                                                                  PC5
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.02805365
-##                                                                                                                   PC6
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.002735755
-##                                                                                                                  PC7
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.01141788
-##                                                                                                                  PC8
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv 0.005008557
-##                                                                                                                  PC9
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv 0.001259624
-##                                                                                                                  PC10
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv 0.0006213773
-##                                                                                                                  PC11
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.002968573
-##                                                                                                                  PC12
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv 0.0009851697
-##                                                                                                                 PC13
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.00503917
-##                                                                                                                  PC14
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.004861609
-##                                                                                                                   PC15
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.0005302151
-##                                                                                                                  PC16
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv 0.0002888574
-##                                                                                                                  PC17
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.003140481
-##                                                                                                                   PC18
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.0006684177
-##                                                                                                                   PC19
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.0006666409
-##                                                                                                                 PC20
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv 0.002213612
-##                                                                                                                   PC21
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.0003910408
-##                                                                                                                  PC22
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.001203459
-##                                                                                                                   PC23
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.0008426452
-##                                                                                                                   PC24
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.0004734632
-##                                                                                                                   PC25
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -9.171562e-05
-##                                                                                                                   PC26
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.0004504771
-##                                                                                                                   PC27
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -0.0005462338
-##                                                                                                                  PC28
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv 3.938554e-05
-##                                                                                                                  PC29
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv 0.0001207635
-##                                                                                                                  PC30
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv 1.637871e-16
-##                                                                                                                   PC31
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -4.067731e-20
-##                                                                                                                   PC32
-## data/class_out_data_f23/XY_0017E3CDFBE01EE2D021A8ECE56FDCC50FCFD86EE3F6C4ADAD500C899F34DA60_forewing.csv -1.961596e-18</code></pre>
-<p>Let’s now join the species information in our <code>out.data</code>
-tibble to the PCA data, storing these in new variables.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>hindwing.pca2 <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(<span class="at">xy.file=</span><span class="fu">basename</span>(<span class="fu">rownames</span>(hindwing.pca<span class="sc">$</span>x)),<span class="at">PC1=</span>hindwing.pca<span class="sc">$</span>x[,<span class="dv">1</span>],<span class="at">PC2=</span>hindwing.pca<span class="sc">$</span>x[,<span class="dv">2</span>]) <span class="sc">%&gt;%</span> </span>
-<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>  <span class="fu">left_join</span>(out.data)</span></code></pre></div>
-<pre><code>## Joining with `by = join_by(xy.file)`</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>forewing.pca2 <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(<span class="at">xy.file=</span><span class="fu">basename</span>(<span class="fu">rownames</span>(forewing.pca<span class="sc">$</span>x)),<span class="at">PC1=</span>forewing.pca<span class="sc">$</span>x[,<span class="dv">1</span>],<span class="at">PC2=</span>forewing.pca<span class="sc">$</span>x[,<span class="dv">2</span>])<span class="sc">%&gt;%</span> </span>
-<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>  <span class="fu">left_join</span>(out.data)</span></code></pre></div>
-<pre><code>## Joining with `by = join_by(xy.file)`</code></pre>
-<p>Now we have the first 2 PCs for each wing stored with species
-information and are now ready for comparative analysis.</p>
+<div id="isometric-mvcs" class="section level3">
+<h3>Isometric MVCs</h3>
+<p>We will collect isometric force data from MVCs over 12 arm angles,
+45-157.5<span class="math inline">\(^o\)</span> at 11.25<span
+class="math inline">\(^o\)</span> (call it 11<span
+class="math inline">\(^o\)</span>) intervals. Your load-cell is affixed
+to a wooden or plastic dowel with a zip tie at one end and has a looped
+zip tie attached to the other. Pass the looped zip tie around the
+provided C-clamp and fasten the clamp to something that won’t move under
+the torque of your forearm. This could be table, desk, ect. Hold the
+dowel in your hand as shown in Fig. 6. Make sure your elbow is supported
+by something rigid (i.e. the top of a chair back, etc.).</p>
+<center>
+<img src="grip.jpg" style="width:50.0%" /> <br> <strong>Fig. 6</strong>
+How to grip the the load-cell.
+</center>
+<p><br></p>
+<p>First collect your control (i.e., non-fatigued) data by starting at
+the largest arm angle, 157.5<span class="math inline">\(^o\)</span>. You
+can move through the 12 arm angles by rotating your body about your
+hips. That is, at the high elbow angles, you’ll be more upright, at
+lower angles, more bent over. At each angle, flex your elbow as hard as
+you can to produce a MVC, resetting your DAQ system each time. Make sure
+the load-cell forms a right angle with reference to your hand (Fig. 6).
+You might want to practice a few times to get a sense of how this will
+proceed.</p>
 </div>
-<div id="evolutionary-rates" class="section level2">
-<h2>Evolutionary rates</h2>
-<p>There are several methods available to comparative biologist to
-estimate the rates of morphological evolution over a phylogenetic tree.
-We’ll be using <span class="citation">O’Meara et al. (2006)</span>’s
-method, the so-called “noncensored test” which uses the entire
-varian-cecovariance matrix (established by the a phylogeny) to calculate
-the likelihood of rates accross the tree. In this approach, one
-ancestral state is estimated under Brownian motion for the entire tree
-and the the optimal rate parameter values are estimated numerically
-until the likelihood of the model is maximized. This method is captured
-in the R package <code>phytools</code> with the function
-<code>brownie.lite()</code>.</p>
-<p><code>brownie.lite()</code> takes two important arguments, a tree and
-the phenotypic values for each tip in the tree. <del>Let’s take our tree
-and drop any tips that don’t occur in our PCA data.</del> Let’s take our
-tree and keep only the tips are in our PCA data and PCA data that are in
-the tree.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>keep <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">unique</span>(out.data<span class="sc">$</span>species),lep.tree<span class="sc">$</span>tip.label) <span class="co">#sp in both tree and data</span></span>
-<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a></span>
-<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>lep.tree2 <span class="ot">&lt;-</span> <span class="fu">keep.tip</span>(lep.tree,keep)</span>
-<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a></span>
-<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a><span class="fu">plot</span>(lep.tree2,<span class="at">cex=</span><span class="fl">0.1</span>)</span></code></pre></div>
-<p><img src="mod6_proj_files/figure-html/tree2-1.png" width="672" /></p>
-<p>Here we only include <code>lep.tree</code> tip labels that are in the
-unique species values of our <code>out.data</code> variable. Then we use
-<code>ape</code>’s <code>drop.tip()</code> function to drop the tips in
-our tree that don’t occur in our <code>out.data</code> tibble.</p>
-<p>The phenotypic data passed to the <code>x</code> argument must be a
-named vector of values, so let’s establish that for PCs 1 and 2, for
-both the hind- and forewings.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="co">#PC1s</span></span>
-<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a>hind.pc1 <span class="ot">&lt;-</span> hindwing.pca2 <span class="sc">%&gt;%</span> </span>
-<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC1=</span><span class="fu">mean</span>(PC1)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a>  pull</span>
-<span id="cb42-7"><a href="#cb42-7" tabindex="-1"></a></span>
-<span id="cb42-8"><a href="#cb42-8" tabindex="-1"></a><span class="fu">names</span>(hind.pc1) <span class="ot">&lt;-</span>  hindwing.pca2<span class="sc">%&gt;%</span> </span>
-<span id="cb42-9"><a href="#cb42-9" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-10"><a href="#cb42-10" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-11"><a href="#cb42-11" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC1=</span><span class="fu">mean</span>(PC1)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-12"><a href="#cb42-12" tabindex="-1"></a>  <span class="fu">pull</span>(species)</span>
-<span id="cb42-13"><a href="#cb42-13" tabindex="-1"></a></span>
-<span id="cb42-14"><a href="#cb42-14" tabindex="-1"></a>fore.pc1 <span class="ot">&lt;-</span> forewing.pca2 <span class="sc">%&gt;%</span> </span>
-<span id="cb42-15"><a href="#cb42-15" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-16"><a href="#cb42-16" tabindex="-1"></a>   <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-17"><a href="#cb42-17" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC1=</span><span class="fu">mean</span>(PC1)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-18"><a href="#cb42-18" tabindex="-1"></a>  <span class="fu">pull</span>(PC1)</span>
-<span id="cb42-19"><a href="#cb42-19" tabindex="-1"></a></span>
-<span id="cb42-20"><a href="#cb42-20" tabindex="-1"></a><span class="fu">names</span>(fore.pc1) <span class="ot">&lt;-</span>  forewing.pca2 <span class="sc">%&gt;%</span> </span>
-<span id="cb42-21"><a href="#cb42-21" tabindex="-1"></a>  <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-22"><a href="#cb42-22" tabindex="-1"></a>     <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-23"><a href="#cb42-23" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC1=</span><span class="fu">mean</span>(PC1)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-24"><a href="#cb42-24" tabindex="-1"></a>  <span class="fu">pull</span>(species)</span>
-<span id="cb42-25"><a href="#cb42-25" tabindex="-1"></a></span>
-<span id="cb42-26"><a href="#cb42-26" tabindex="-1"></a><span class="co">#PC2s</span></span>
-<span id="cb42-27"><a href="#cb42-27" tabindex="-1"></a>hind.pc2 <span class="ot">&lt;-</span> hindwing.pca2 <span class="sc">%&gt;%</span> </span>
-<span id="cb42-28"><a href="#cb42-28" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-29"><a href="#cb42-29" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-30"><a href="#cb42-30" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC2=</span><span class="fu">mean</span>(PC2)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-31"><a href="#cb42-31" tabindex="-1"></a>  <span class="fu">pull</span>(PC2)</span>
-<span id="cb42-32"><a href="#cb42-32" tabindex="-1"></a></span>
-<span id="cb42-33"><a href="#cb42-33" tabindex="-1"></a><span class="fu">names</span>(hind.pc2) <span class="ot">&lt;-</span>  hindwing.pca2<span class="sc">%&gt;%</span> </span>
-<span id="cb42-34"><a href="#cb42-34" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-35"><a href="#cb42-35" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
-<span id="cb42-36"><a href="#cb42-36" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC2=</span><span class="fu">mean</span>(PC2)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-37"><a href="#cb42-37" tabindex="-1"></a>  <span class="fu">pull</span>(species)</span>
-<span id="cb42-38"><a href="#cb42-38" tabindex="-1"></a></span>
-<span id="cb42-39"><a href="#cb42-39" tabindex="-1"></a>fore.pc2 <span class="ot">&lt;-</span> forewing.pca2 <span class="sc">%&gt;%</span> </span>
-<span id="cb42-40"><a href="#cb42-40" tabindex="-1"></a>    <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-41"><a href="#cb42-41" tabindex="-1"></a>   <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-42"><a href="#cb42-42" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC2=</span><span class="fu">mean</span>(PC2)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-43"><a href="#cb42-43" tabindex="-1"></a>  <span class="fu">pull</span>(PC2)</span>
-<span id="cb42-44"><a href="#cb42-44" tabindex="-1"></a></span>
-<span id="cb42-45"><a href="#cb42-45" tabindex="-1"></a><span class="fu">names</span>(fore.pc2) <span class="ot">&lt;-</span>  forewing.pca2 <span class="sc">%&gt;%</span> </span>
-<span id="cb42-46"><a href="#cb42-46" tabindex="-1"></a>  <span class="fu">filter</span>(species<span class="sc">%in%</span> lep.tree2<span class="sc">$</span>tip.label) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-47"><a href="#cb42-47" tabindex="-1"></a>     <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-48"><a href="#cb42-48" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">PC2=</span><span class="fu">mean</span>(PC2)) <span class="sc">%&gt;%</span> </span>
-<span id="cb42-49"><a href="#cb42-49" tabindex="-1"></a>  <span class="fu">pull</span>(species)</span></code></pre></div>
-<p>Notice here that we filtered the PCA data to include only species
-that occur in our new, pruned tree. That is, tree species may be in the
-the PCA data, but species in the PCA data may not be in the tree. This
-is because some species queried in GBIF were returned as <a
-href="https://en.wikipedia.org/wiki/Synonym_(taxonomy)">synonyms</a>
-under different valid taxonomic names. We won’t worry about this now
-except to exclude these species as we have above and forge ahead.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="fu">library</span>(phytools)</span></code></pre></div>
-<pre><code>## Loading required package: maps</code></pre>
-<pre><code>## 
-## Attaching package: &#39;maps&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     map</code></pre>
-<pre><code>## 
-## Attaching package: &#39;phytools&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:Momocs&#39;:
-## 
-##     rescale</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a>forePC1.BM<span class="ot">&lt;-</span><span class="fu">brownie.lite</span>(lep.tree2,fore.pc1<span class="sc">*</span><span class="dv">10</span>)</span>
-<span id="cb49-2"><a href="#cb49-2" tabindex="-1"></a>hindPC1.BM<span class="ot">&lt;-</span><span class="fu">brownie.lite</span>(lep.tree2,hind.pc1<span class="sc">*</span><span class="dv">10</span>)</span>
-<span id="cb49-3"><a href="#cb49-3" tabindex="-1"></a></span>
-<span id="cb49-4"><a href="#cb49-4" tabindex="-1"></a>forePC2.BM<span class="ot">&lt;-</span><span class="fu">brownie.lite</span>(lep.tree2,fore.pc2<span class="sc">*</span><span class="dv">10</span>)</span>
-<span id="cb49-5"><a href="#cb49-5" tabindex="-1"></a>hindPC2.BM<span class="ot">&lt;-</span><span class="fu">brownie.lite</span>(lep.tree2,hind.pc2<span class="sc">*</span><span class="dv">10</span>)</span></code></pre></div>
-<p>Also notice here that we multiplied our tip values by an arbitrary 10
-units. This is because this <a
-href="http://blog.phytools.org/2011/12/error-message-from-brownielite-and.html">algorithm
-stumbles</a> when tip branches are short and tip values are small.
-Great, now we have evolutionary rate estimates of wing shape stored in
-each variable under <code>sig2.single</code>.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>forePC1.BM<span class="sc">$</span>sig2.single</span></code></pre></div>
-<pre><code>## [1] 0.4753018</code></pre>
-<p>With these values stored we can compare the evolutionary rate for the
-first and second PCs between fore- and hindwings, something you should
-do in your report.</p>
-<!-- ## Shifts in evolutionary rates -->
-<!-- We are also seeking to answer whether major groups of the Lepidoptera have undergone significant changes in the rate of wing-shape evolution. `brownie.lite()` can do this, but this method tells the practitioner nothing about the sign of the rate shife, i.e, whether the shift was to a slower or faster rate. For this, we'll use another method, phylogenetic ridge regression [@kratsch2014ridgerace]. This approach  takes a tree and a vector of tip data phenotypes, calculates the ancestral states at each node in the tree, and produces a regression line through each path in the tree, from root to tip including from each deeper node to a daugter node. The regressions are based on the phenotype values at each node vs. time between nodes and along path. The value of the slope parameter of these regressions is the rate. From this, we have rate vectors, i.e, changes in rate.  -->
-<!-- To implement ridge regression, we'll turn to the `RRphylo` package written by @castiglione2018new.  Like, `brownie.lite()` the function `RRphylo()` takes a tree and tip data as argurment. For instance, here we compute the rates along the branches for hingwing PC1. -->
-<!-- ```{r RR} -->
-<!-- library(RRphylo) -->
-<!-- hindPC1.RR <- RRphylo(tree=lep.tree2,y=hind.pc1) -->
-<!-- ``` -->
-<!-- ```{r duptips,eval=FALSE,include=FALSE} -->
-<!-- tibble(sp=names(fore.pc1)) %>%  -->
-<!--   mutate(in.tree=sp%in%lep.tree2$tip.label) %>%  -->
-<!--   filter(!in.tree) -->
-<!-- tibble(sp=lep.tree3$tip.label) %>%  -->
-<!--   mutate(in.tree=sp%in%names(fore.pc1)) %>%  -->
-<!--   filter(!in.tree) -->
-<!-- all(!duplicated(lep.tree2$tip.label)) -->
-<!-- ``` -->
-<!-- The output of `RRphylo()` is massive, including the rates computed for each branch in the tree. -->
-<!-- ```{r} -->
-<!-- hindPC1.RR$rates -->
-<!-- ``` -->
-<!-- Because we're interested in rate shifts, we use the rates from `RRphylo()` to tests whether individual clades evolve at different rates as compared to the rest of the tree. This is performed with `RRphylo`'s `search.shift()`. Here we specify that we want to know if any clades/lineages have exceptional rate shifts with `status.type="clade"`. The singles clades with exception shifts are stored in `single.clade`, only the p value of the shift. Large rates are significantly larger than the rest of the tree (at alpha = 0.05), when the probability is > 0.975; and small rates are significantly small for p < 0.025. -->
-<!-- ```{r} -->
-<!-- hindPC1.SS<- search.shift(RR=hindPC1.RR,status.type="clade") -->
-<!-- hindPC1.SS$single.clades -->
-<!-- ``` -->
-<!-- With this information we could visualize the nodes with exceptional shifts using `ape`'s `nodelabels` function. We merely need to plot the tree and take the numeric values of the row names returned in `single.clades`. -->
-<!-- ```{r viznodes} -->
-<!-- plot(lep.tree2) -->
-<!-- nodelabels(node = as.numeric(rownames(hindPC1.SS$single.clades)),text = rownames(hindPC1.SS$single.clades)) -->
-<!-- ``` -->
-<!-- This is fine, but `RRphylo`'s `plotShift()` does this for us. It's a little odd, but this function stores a plot in `plotClades()`, rather than produce a plot. -->
-<!-- ```{r plotshifts} -->
-<!-- hindPC1.plot <- plotShift(RR=hindPC1.RR,SS=hindPC1.SS) -->
-<!-- forePC1.plot <- plotShift(RR=hindPC1.RR,SS=hindPC1.SS) -->
-<!-- hindPC1.plot$plotClades() -->
-<!-- ``` -->
-<!-- From the `single.clades` output and the tree labeled with `nodelabels`, we see that clade 36 represents a signifcant slow down, shifting -0.0034 units, but in clade 33 there's a signifant increase of 0.0053 units.  -->
-<!-- Seems we've answer part of the question at least as it pertains to hindwing PC1 and our limited sample of species, "Have there been shifts in wing shape evolution in Lepidopteran lineages?" -->
-<!-- But, which lineage have shifted? We know which species belong to these lineages, but not the lineage name. -->
-<!-- To extract this information and view it on the tree, let's use a custom function, one written by Prof. Kenaley. For this, we'll need `ggtree`, a tree annotation package written to work with trees like `ggplot2` works with data and standard plots. We'll have to download `ggtree` rom the `Bioconductor` repository, another place where packages are stored, much like `CRAN`. To do this, run the following only **ONCE**: -->
-<!-- ```{r ggtree, eval=FALSE} -->
-<!-- if (!require("BiocManager", quietly = TRUE)) -->
-<!--     install.packages("BiocManager") -->
-<!-- BiocManager::install("ggtree") -->
-<!-- ``` -->
-<!-- We'll also need the `wesanderson` package for nice colors which can be downloaded from `CRAN`. -->
-<!-- ```{r ggtre, message=FALSE} -->
-<!-- library(ggtree) -->
-<!-- library(wesanderson) -->
-<!-- plot_SS <- function(tre=NULL,SS=NULL,tax=NULL){ -->
-<!--   nodes <- as.numeric(rownames(SS$single.clades)) -->
-<!--   pal <- wes_palette("Zissou1",n=length(nodes)) -->
-<!--   sp <- list() -->
-<!--   for(i in nodes){ -->
-<!--     sp.i <- extract.clade(tre,i)$tip.label -->
-<!--     #print(head(tax)) -->
-<!--     sub.names <- lapply(tax,function(x) x[x%in%sp.i])  -->
-<!--     in.clades <- lapply(sub.names,function(x) length(x)>0)  -->
-<!--     all.of.clade <- lapply(sub.names,function(x) all(sapply(sp.i,function(z) z%in%x)))  -->
-<!--     high.clade <- names(sub.names)[last(which(all.of.clade==T))] -->
-<!--     all.clades <- names(sub.names)[which(in.clades==T)] -->
-<!--     crown <- "" -->
-<!--     if(high.clade!=last(names(sub.names))) crown <- "crown-" -->
-<!--     sub.clades <- NULL -->
-<!--     if(length(grepl("oidea",all.clades))>0) sub.clades <- all.clades[grepl("oidea",all.clades)] -->
-<!--     high.clade2 <- paste0(crown,high.clade,": ",paste0(sub.clades,collapse = "+")) -->
-<!--     sp[[paste0(i)]] <- tibble(n=i,species=sp.i,clade=high.clade2) -->
-<!--   } -->
-<!--   d <- do.call(rbind,sp)%>%  -->
-<!--     rename(label=species)  -->
-<!--   d2<- d %>% rename(clade_name=clade)  -->
-<!--   p <- ggtree(tre)+ scale_y_reverse() -->
-<!--   p$data <- p$data %>% left_join(d) %>% left_join(tibble(node=nodes,SS$single.clades) %>% mutate(shift=ifelse(rate.difference>0,"+","-"))) -->
-<!--   p <-  p+geom_tiplab(aes(col=clade),geom="text",size=1.2)+ -->
-<!--     geom_cladelab(data=d2,mapping=aes(node=n,col=clade_name,label=clade_name),offset=1,size=1.5)+ -->
-<!--     geom_hilight(data=d2,mapping = aes(node = n,fill=clade_name),alpha = 0.01)+ -->
-<!--     scale_fill_manual(values = pal)+ -->
-<!--     scale_color_manual(values = pal)+ -->
-<!--     theme(legend.position = "none")+geom_nodepoint(mapping=aes(subset = shift =="-"), size=5, shape=25,fill='blue',color='blue',alpha=0.7)+ -->
-<!--     geom_nodepoint(mapping=aes(subset = shift =="+"), size=5, shape=24, fill='red',color='red',alpha=0.7) -->
-<!--   p <- p+xlim(NA,6) -->
-<!--   res <- tibble(n=nodes,SS$single.clades) %>% left_join(d %>% select(n,clade) %>% unique) -->
-<!--   return(list(plot=p,res=res)) -->
-<!-- } -->
-<!-- ``` -->
-<!-- This custom function `plot_SS()` takes three arguments, `tre` (a tree variable of class `phy`), `SS` (output from `search.shift()`), and `tax` (a ~~tibble/data.frame~~ a list, containing ~~the column `species` and `higher_taxon`)~~ clade/lineage names and their species. ~~We have the higher taxon names stored in our PCA tibbles (`hindwing.pca2`, etc.)~~. Please load the taxon name list by downloading [this R data file](Lep_classification.RDS). -->
-<!-- The function returns a plot under `$plot` and the `search.shift()` results under `$res`. -->
-<!-- Let's try it out by first loading the taxon names with `readRDS()`. -->
-<!-- ```{r newplot} -->
-<!-- tax.names <- readRDS("Lep_classification.RDS") -->
-<!-- hindPC1.res <- plot_SS(lep.tree2,hindPC1.SS,tax = tax.names) -->
-<!-- hindPC1.res$plot -->
-<!-- hindPC1.res$res -->
-<!-- ``` -->
-<!-- Notice that the clades and their taxa are color coded and the exceptional shifts are indicated by triangles (blue and down for low shifts, red and up for high shifts). Now we have a method of indicating what clades/lineages underwent a shift and the scale of the shift. -->
-<!-- ```{r comp,eval=FALSE,include=FALSE} -->
-<!-- forePC1.RR <- RRphylo(tree=lep.tree2,y=fore.pc1) -->
-<!-- forePC1.SS<- search.shift(RR=forePC1.RR,status.type="clade") -->
-<!-- forePC1.plot <- plotShift(RR=forePC1.RR,SS=forePC1.SS) -->
-<!-- forePC1.plot$plotClades() -->
-<!-- forePC1.res <- plot_SS(lep.tree2,SS=forePC1.SS,tax = tax.names) -->
-<!-- forePC1.res$plot -->
-<!-- forePC1.res$res -->
-<!-- forePC2.RR <- RRphylo(tree=lep.tree2,y=fore.pc2) -->
-<!-- forePC2.SS<- search.shift(RR=forePC2.RR,status.type="clade") -->
-<!-- forePC2.plot <- plotShift(RR=forePC2.RR,SS=forePC2.SS) -->
-<!-- forePC2.plot$plotClades() -->
-<!-- forePC2.res <- plot_SS(lep.tree2,SS=forePC2.SS,tax = tax.names) -->
-<!-- forePC2.res$plot -->
-<!-- forePC2.res$res -->
-<!-- hindPC2.RR <- RRphylo(tree=lep.tree2,y=hind.pc2) -->
-<!-- hindPC2.SS<- search.shift(RR=hindPC2.RR,status.type="clade") -->
-<!-- hindPC2.plot <- plotShift(RR=hindPC2.RR,SS=hindPC2.SS) -->
-<!-- hindPC2.plot$plotClades() -->
-<!-- hindPC2.res <- plot_SS(lep.tree2,SS=hindPC2.SS,tax = tax.names) -->
-<!-- hindPC2.res$plot -->
-<!-- hindPC2.res$res -->
-<!-- ``` -->
-<!-- ```{r comps,eval=FALSE,include=FALSE} -->
-<!-- ### had relative wing size shifted -->
-<!-- forewing.gp <- forewings %>% -->
-<!--   coo_interpolate(fore.min) %>% -->
-<!--    coo_align()  %>% -->
-<!--   coo_slide(id=1) %>%  -->
-<!--   fgProcrustes() %>%  -->
-<!--   coo_flipy() -->
-<!-- hindwing.gp <-hindwings %>%  -->
-<!--    coo_interpolate(hind.min) %>%  -->
-<!--    coo_align()  %>% -->
-<!--    coo_slide(id=1) %>%  -->
-<!--   fgProcrustes() %>%  -->
-<!--   coo_flipy() -->
-<!-- hind.area <- hindwing.gp %>%  -->
-<!--   coo_trans(10,10) %>%  -->
-<!--   coo_area() -->
-<!-- fore.area <- forewing.gp %>%  -->
-<!--   coo_trans(10,10) %>%  -->
-<!--   coo_area() -->
-<!-- area.prop <- fore.area/hind.area -->
-<!-- area.dat <- tibble(FH=area.prop,xy.file=basename(names(area.prop)))%>%  -->
-<!--   left_join(out.data) %>%  -->
-<!--   filter(species%in% lep.tree2$tip.label) %>%  -->
-<!--   group_by(species) %>%  -->
-<!--   summarize(FH=mean(FH)) -->
-<!-- area <- area.dat$FH -->
-<!-- names(area) <- area.dat$species -->
-<!-- area.RR <- RRphylo(tree=lep.tree2,y=area) -->
-<!-- area.SS<- search.shift(RR=area.RR,status.type="clade") -->
-<!-- area.plot <- plotShift(RR=area.RR,SS=area.SS) -->
-<!-- area.plot$plotClades() -->
-<!-- area.res <- plot_SS(lep.tree2,SS=area.SS,tax = tax.names) -->
-<!-- area.res$plot -->
-<!-- #AR -->
-<!-- hind.w <- hindwing.gp %>%  -->
-<!--   coo_length() -->
-<!-- hindwing.AR <- hind.w^2/hind.area -->
-<!-- fore.w <- forewing.gp %>%  -->
-<!--   coo_length() -->
-<!-- forewing.AR <- fore.w^2/fore.area -->
-<!-- fore.AR <- tibble(AR=forewing.AR,xy.file=basename(names(forewing.AR)),wing="fore")%>%  -->
-<!--   left_join(out.data) %>%  -->
-<!--    filter(species%in% lep.tree2$tip.label) %>%  -->
-<!-- group_by(species) %>%  -->
-<!--   summarize(AR=mean(log(AR)),wing="fore") -->
-<!-- hind.AR <- tibble(AR=hindwing.AR,xy.file=basename(names(hindwing.AR)),wing="hind")%>%  -->
-<!--   left_join(out.data)%>%  -->
-<!--    filter(species%in% lep.tree2$tip.label) %>%  -->
-<!-- group_by(species) %>%  -->
-<!--   summarize(AR=mean(log(AR)),wing="hind") -->
-<!-- ar.dat <- rbind(hind.AR,fore.AR) -->
-<!-- ar.dat %>% pivot_wider(names_from = wing, -->
-<!--     values_from = AR) %>%  -->
-<!--   filter(species%in% lep.tree2$tip.label) %>%  -->
-<!--   summarize(fore=pic(fore,lep.tree2),hind=pic(hind,lep.tree2)) %>%  -->
-<!--   ggplot(aes(fore,hind))+geom_point() -->
-<!-- fore.ar <- fore.AR$AR -->
-<!-- names(fore.ar) <- fore.AR$species -->
-<!-- hind.ar <- hind.AR$AR -->
-<!-- names(hind.ar) <- hind.AR$species -->
-<!-- fore.ar.RR <- RRphylo(tree=lep.tree2,y=fore.ar) -->
-<!-- fore.ar.SS<- search.shift(RR=fore.ar.RR,status.type="clade") -->
-<!-- fore.ar.plot <- plotShift(RR=fore.ar.RR,SS=fore.ar.SS) -->
-<!-- fore.ar.plot$plotClades() -->
-<!-- fore.ar.res <- plot_SS(lep.tree2,SS=fore.ar.SS,tax = tax.names) -->
-<!-- fore.ar.res$plot -->
-<!-- fore.ar.res$res -->
-<!-- hind.ar.RR <- RRphylo(tree=lep.tree2,y=hind.ar) -->
-<!-- hind.ar.SS<- search.shift(RR=hind.ar.RR,status.type="clade") -->
-<!-- hind.ar.plot <- plotShift(RR=hind.ar.RR,SS=hind.ar.SS) -->
-<!-- hind.ar.plot$plotClades() -->
-<!-- hind.ar.res <- plot_SS(lep.tree2,SS=hind.ar.SS,tax = tax.names) -->
-<!-- hind.ar.res$plot -->
-<!-- hind.ar.res$res -->
-<!-- library(data.table) -->
-<!-- Ix <- function(x,y,axes=F){ -->
-<!--   dt <- data.table(x=x,y=y) -->
-<!--   if(axes) dt[,x:=x-mean(range(x))]; dt[,y:=y-mean(range(y))] -->
-<!--   dt[,products:=(y^2+y*lead(y)+lead(y)^2)*(x*lead(y)-lead(x)*y)] -->
-<!--   I <- dt[,.((1/12)*sum(products,na.rm = T))] -->
-<!--   names(I) <- "I.x" -->
-<!--   return(I) -->
-<!-- } -->
-<!-- fore.I <- sapply(1:length(forewing.gp),function(x) forewing.gp[x]) -->
-<!-- fore.I  <- lapply(fore.I, function(x) as.matrix(data.frame(x=c(x[,1]-min(x[,1])),y=c(x[,2])))) -->
-<!-- fore.I <- sapply(fore.I, function(x) Ix(x[,2],x[,1])) %>% unlist -->
-<!-- forewing.gp[[1]] -->
-<!-- fore.I <- tibble(I=fore.I,xy.file=basename(names(forewing.AR)),wing="fore")%>%  -->
-<!--   left_join(out.data) %>%  -->
-<!--    filter(species%in% lep.tree2$tip.label) %>%  -->
-<!-- group_by(species) %>%  -->
-<!--   summarize(I=mean(I),wing="fore") -->
-<!-- hind.I <- sapply(1:length(hindwing.gp),function(x) hindwing.gp[x])  -->
-<!-- hind.I  <- lapply(hind.I, function(x) as.matrix(data.frame(x=c(x[,1]-min(x[,1])),y=c(x[,2])))) -->
-<!-- hind.I <- sapply(hind.I, function(x) Ix(x[,2],x[,1])) %>% unlist -->
-<!-- hind.I <- tibble(I=hind.I,xy.file=basename(names(hindwing.AR)),wing="hind")%>%  -->
-<!--   left_join(out.data) %>%  -->
-<!--    filter(species%in% lep.tree2$tip.label) %>%  -->
-<!-- group_by(species) %>%  -->
-<!--   summarize(I=mean(I),wing="hind") -->
-<!-- I.dat <- rbind(hind.I,fore.I) -->
-<!-- I.dat %>% pivot_wider(names_from = wing, -->
-<!--     values_from = I) %>%  -->
-<!--   filter(species%in% lep.tree2$tip.label) %>%  -->
-<!--   summarize(fore=pic(fore,lep.tree2),hind=pic(hind,lep.tree2)) %>%  -->
-<!--   ggplot(aes(fore,hind))+geom_point() -->
-<!-- hind.I2 <- hind.I %>% pull(I) -->
-<!-- names(hind.I2) <- hind.I %>% pull(species) -->
-<!-- hind.I.RR <- RRphylo(tree=lep.tree2,y=hind.I2) -->
-<!-- hind.I.SS<- search.shift(RR=hind.I.RR,status.type="clade") -->
-<!-- hind.I.plot <- plotShift(RR=hind.I.RR,SS=hind.I.SS) -->
-<!-- hind.ar.plot$plotClades() -->
-<!-- hind.I.res <- plot_SS(lep.tree2,SS=hind.I.SS,tax = tax.names) -->
-<!-- hind.I.res$plot -->
-<!-- hind.I.res$res -->
-<!-- fore.I2 <- fore.I %>% pull(I) -->
-<!-- names(fore.I2) <- fore.I %>% pull(species) -->
-<!-- fore.I.RR <- RRphylo(tree=lep.tree2,y=fore.I2) -->
-<!-- fore.I.SS<- search.shift(RR=fore.I.RR,status.type="clade") -->
-<!-- fore.I.plot <- plotShift(RR=fore.I.RR,SS=fore.I.SS) -->
-<!-- fore.ar.plot$plotClades() -->
-<!-- fore.I.res <- plot_SS(lep.tree2,SS=fore.I.SS,tax = tax.names) -->
-<!-- fore.I.res$plot -->
-<!-- fore.I.res$res -->
-<!-- fore.ARI <- fore.I %>% left_join(fore.AR) -->
-<!-- fore.ARI %>%  -->
-<!--   ggplot(aes(AR,I))+geom_point() -->
-<!-- fore.ARI %>% filter(AR>1.25) %>% pull(species) -->
-<!-- hind.ARPC %>%  -->
-<!--   ggplot(aes(AR,I))+geom_point() -->
-<!-- hind.ARPC %>%  -->
-<!--   ggplot(aes(I,PC1))+geom_point() -->
-<!-- ARI.dat <- ar.dat %>% left_join(I.dat) %>%  -->
-<!--   pivot_wider(names_from=c(wing),values_from=c(I,AR)) %>%  -->
-<!--   left_join(out.data %>% select(species,identifier,higher_taxon) %>% unique) -->
-<!-- ARI.dat %>%  -->
-<!--   ggplot(aes(higher_taxon,I_fore/I_hind))+geom_boxplot()+ylim(c(-1,-0.5)) -->
-<!-- obj<-contMap(lep.tree2,log(hind.I2*1e10),plot=FALSE) -->
-<!-- plot(obj,fsize=c(0.4,1),cex=0.1,lwd=2,res=200) -->
-<!-- #so cool!!!! VVVV -->
-<!-- img.f <- list.files("/Users/Chris/Dropbox/Documents/bc (1)/3140.f22/other_stuff/lep_photos",recursive=T,full.names=T) -->
-<!-- hi.AR <- ARI.dat %>% filter(AR_fore>1.5) %>% -->
-<!--   group_by(species) %>%  -->
-<!--   mutate(img.f=img.f[grep(identifier,img.f)]) -->
-<!-- img1 <- hi.AR %>% ungroup %>% filter(AR_fore==max(AR_fore)) %>% pull(img.f) %>% readJPEG(.,native = TRUE) -->
-<!-- p1 <- ARI.dat %>%  -->
-<!--   ggplot(aes(AR_fore,I_fore))+geom_point() -->
-<!-- library(ggimage) -->
-<!-- library(patchwork) -->
-<!-- p1 +  -->
-<!--   geom_image(data=hi.AR,aes(image=img.f),size=.1)+geom_point(data=hi.AR,col="red") -->
-<!-- hi.AR %>%  -->
-<!--   ggplot(aes(x=AR_fore,y=1))+geom_image(data=hi.AR,aes(image=img.f))+theme_classic() -->
-<!-- ``` -->
-<!-- ```{r comp0,eval=FALSE,include=FALSE} -->
-<!-- forewing.nogp<- forewings %>% -->
-<!--   coo_interpolate(fore.min) %>% -->
-<!--   coo_align()  %>% -->
-<!--   coo_slide(id=1) -->
-<!-- hindwing.nogp<- hindwings %>% -->
-<!--   coo_interpolate(hind.min) %>% -->
-<!--   coo_align()  %>% -->
-<!--   coo_slide(id=1) -->
-<!-- l <- forewing.nogp %>%  -->
-<!--   coo_length() -->
-<!-- range(l) -->
-<!-- hist(l,breaks=seq(0,2100,10)) -->
-<!-- forewing.sc <- forewing.nogp %>%  -->
-<!--   mutate(scale=l<120,l=coo_length(.),xy.file=names(.)) %>% -->
-<!--   mutate(xy.file=basename(xy.file)) %>%  -->
-<!--   filter(scale==T) -->
-<!-- forewing.sc <- forewing.sc$fac %>% left_join(out.data) %>% select(species,l,wing) %>%  -->
-<!--   group_by(species,wing) %>%  -->
-<!--   summarize(l=mean(l)) -->
-<!-- hindwing.sc <- hindwing.nogp %>%  -->
-<!--   mutate(scale=l<120,l=coo_length(.),xy.file=names(.)) %>% -->
-<!--   mutate(xy.file=basename(xy.file)) %>%  -->
-<!--   filter(scale==T) -->
-<!-- hindwing.sc <- hindwing.sc$fac  %>% left_join(out.data) %>% select(species,l,wing) %>%  -->
-<!--   group_by(species,wing) %>%  -->
-<!--   summarize(l=mean(l)) -->
-<!-- #second moment in real terms -->
-<!-- fw.outs <- sapply(1:length(forewing.nogp),function(x) forewing.nogp[x]) -->
-<!-- fw.outs  <- lapply(fw.outs, function(x) as.matrix(data.frame(x=c(x[,1]-x[1,1]),y=c(x[,2]-x[1,2]))) %>% coo_flipy()) -->
-<!-- fore.I <- sapply(fw.outs, function(x) Ix(x[,2],x[,1])) %>% unlist -->
-<!-- fore.I <- tibble(I=fore.I,xy.file=basename(names(forewing.nogp)),wing="fore")%>%  -->
-<!--   left_join(out.data) %>%  -->
-<!--    filter(species%in% lep.tree2$tip.label) %>%  -->
-<!-- group_by(species) %>%  -->
-<!--   summarize(I=mean(I),wing="fore") -->
-<!-- hw.outs <- sapply(1:length(hindwing.nogp),function(x) hindwing.nogp[x]) -->
-<!-- hw.outs  <- lapply(hw.outs, function(x) as.matrix(data.frame(x=c(x[,1]-x[1,1]),y=c(x[,2]-x[1,2])))%>% coo_flipy()) -->
-<!-- hind.Isc <- sapply(hw.outs, function(x) Ix(x[,2],x[,1])) %>% unlist -->
-<!-- hind.I <- tibble(I=hind.Isc,xy.file=basename(names(hindwing.nogp)),wing="hind")%>%  -->
-<!--   left_join(out.data) %>%  -->
-<!--    filter(species%in% lep.tree2$tip.label) %>%  -->
-<!-- group_by(species) %>%  -->
-<!--   summarize(I=mean(I),wing="hind") -->
-<!-- I.dat <- rbind(hind.I,fore.I) %>%  -->
-<!--   pivot_wider(names_from=wing, values_from=I,names_prefix="I_") -->
-<!-- I.dat %>%  -->
-<!--   ggplot(aes(I_fore,I_hind))+geom_point()+geom_smooth(method="lm") -->
-<!-- sc.dat <- rbind(hindwing.sc,forewing.sc) %>%  -->
-<!--   pivot_wider(names_from=wing,values_from=l,names_prefix="L_") %>%  -->
-<!--   left_join(ARI.dat %>% select(-I_fore,-I_hind)) %>%  -->
-<!--   left_join(I.dat) %>%  -->
-<!--   filter(I_hind<1e4,I_fore<1e4) -->
-<!-- lep.tree3 <- keep.tip(lep.tree2,sc.dat$species) -->
-<!-- sc.dat %>%  -->
-<!--   ggplot(aes(I_fore,I_hind))+geom_point()+geom_smooth(method="lm") -->
-<!-- sc.dat %>%  -->
-<!--   ggplot(aes(log(L_hindwing),log(I_hind), col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-<!-- sc.dat %>%  -->
-<!--   ggplot(aes(AR_fore,I_fore, col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-<!-- sc.dat %>%  -->
-<!--   ggplot(aes(AR_hind,I_hind, col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-<!-- sc.dat %>%  -->
-<!--   ggplot(aes(AR_hind,AR_fore, col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-<!-- sc.dat %>%  -->
-<!--   ggplot(aes(I_hind,I_fore, col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-<!-- ###PIC (HERE) -->
-<!-- pic2 <- function(x=.,sp=species,t=lep.tree3){ -->
-<!--   names(x) <- sp -->
-<!--   pic(x,t) -->
-<!-- } -->
-<!-- length(lep.tree3$tip.label) -->
-<!-- pic2(x=sc.dat$AR_hind,sp=sc.dat$species) -->
-<!-- sc.dat %>% -->
-<!--   ungroup() %>%  -->
-<!--   dplyr::mutate_at(c("AR_hind","AR_fore","I_fore","I_hind"),pic2(x=.,sp=.$species)) -->
-<!-- ``` -->
-<!-- ```{r comp4,eval=FALSE,include=FALSE} -->
-<!-- library(mvMORPH) -->
-<!-- #for.ar.sim <- make.simmap(lep.tree3, area, model="ER", nsim=1) -->
-<!-- #fore.ar.ou <- mvOU(for.ar.sim, area, model="OU1", diagnostic=FALSE, echo=FALSE) -->
-<!-- #plot(for.ar.sim) -->
-<!-- library(geiger) -->
-<!-- fore.I.dtt <- dtt(lep.tree2,fore.I2,nsim=1000, plot=TRUE,calculateMDIp=T) -->
-<!-- hind.I.dtt <- dtt(lep.tree2,hind.I2,nsim=1000, plot=TRUE,calculateMDIp=T) -->
-<!-- fore.ar.dtt <- dtt(lep.tree2,fore.ar,nsim=1000, plot=TRUE,calculateMDIp=T) -->
-<!-- hind.ar.dtt <- dtt(lep.tree2,hind.ar,nsim=1000, plot=TRUE,calculateMDIp=T) -->
-<!-- library(OUwie) -->
-<!-- n.tip <- seq(1,Ntip(lep.tree2),by=4) -->
-<!-- lep.tree3 <- keep.tip(lep.tree2,n.tip) -->
-<!-- hind.ar2 <- data.frame(species=names(hind.ar),Reg=1,AR=hind.ar) %>%  -->
-<!--   filter(species%in%lep.tree3$tip.label) -->
-<!-- hind.ar.BM1 <- OUwie(lep.tree3,hind.ar2,model=c("BM1")) -->
-<!-- hind.ar.BMS <- OUwie(lep.tree3,hind.ar2,model=c("BMS")) -->
-<!-- hind.ar.OU1 <- OUwie(lep.tree3,hind.ar2,model=c("OU1")) -->
-<!-- hind.ar.OUM <- OUwie(lep.tree3,hind.ar2,model=c("OUM")) -->
-<!-- hind.ar.OUMV <- OUwie(lep.tree3,hind.ar2,model=c("OUMV")) -->
-<!-- hind.ar.OUMA <- OUwie(lep.tree3,hind.ar2,model=c("OUMA")) -->
-<!-- fits <- list(hind.ar.BM1, -->
-<!-- hind.ar.BMS, -->
-<!-- hind.ar.OU1, -->
-<!-- hind.ar.OUM, -->
-<!-- hind.ar.OUMV, -->
-<!-- hind.ar.OUMA -->
-<!-- ) -->
-<!-- aics <- sapply(fits,function(x) x$"AICc") -->
-<!-- fits[[which.min(aics)]] -->
-<!-- all(!duplicated(names(hind.ar))) -->
-<!-- hindwing.pc3 <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>% select(PC1,PC2) %>% as.matrix -->
-<!-- rownames(hindwing.pc3) <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>%pull(species) -->
-<!-- sfs <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>% pull(higher_taxon) %>% as.factor -->
-<!-- library(geomorph) -->
-<!-- hind.Ppca <- gm.prcomp(hindwing.pc3,phy=lep.tree3,GLS = TRUE) -->
-<!-- grps <- as.numeric(sfs) -->
-<!-- names(grps) <- sfs -->
-<!-- g.pal <- viridis_pal()(length(levels(sfs))) -->
-<!-- plot(hind.Ppca,phylo=T,phylo.par = list(tip.labels = TRUE, tip.txt.cex = .75, edge.width = 2,node.labels = FALSE),time.plot=T,bg=sfs,pch=22) -->
-<!-- shapeHulls(hind.p,groups =,group.cols=1:23) -->
-<!-- plot(stom.Ppca,axis1 = 1,axis2=2,phylo = T,tip.tex.cex=0.1,phylo.par = list(tip.labels = TRUE, tip.txt.cex = .75, edge.width = 2,node.labels = FALSE),bg=diet2,pch=22) -->
-<!-- legend("topleft", pch=22, pt.bg = unique(diet2), legend = rev(levels(diet2))) -->
-<!-- shapeHulls(p12,groups = grps,group.cols = c("red","black"),group.lwd=c(2,2),group.lty = c(2, 2)) -->
-<!-- dev.off() -->
-<!-- nrow(hindwing.pc3) -->
-<!-- Ntip(lep.tree2) -->
-<!-- #https://onlinelibrary.wiley.com/doi/full/10.1111/evo.14238 -->
-<!-- td <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>% select(species,PC1,PC2,higher_taxon) %>% rename(tip=species) %>% as.matrix -->
-<!-- rownames(td) <-  hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>%pull(species) -->
-<!-- phylomorphospace.gg(lep.tree3,hindwing.pc3,tip.aes=aes(x,y,col=higher_taxon),tip.dat=td) -->
-<!--   phylomorphospace.gg <- function (tree, X, A = NULL, control = list(), tip.dat=NULL,tip.aes=NULL,cont.disc="cont",...)  -->
-<!-- { -->
-<!--   if (class(tree) != "phylo")  -->
-<!--     stop("tree object must be of class 'phylo.'") -->
-<!--   if (nrow(X) != length(tree$tip))  -->
-<!--     stop("X must contain the same number of rows as species in tree.") -->
-<!--   if (is.null(rownames(X))) { -->
-<!--     warning("X is missing row names; assuming order of tip labels.") -->
-<!--     rownames(X) <- tree$tip.label -->
-<!--   } -->
-<!--   if (ncol(X) != 2) { -->
-<!--     warning("X has more than 2 columns.  Using only the first 2 columns.") -->
-<!--     X <- X[, 1:2] -->
-<!--   } -->
-<!--   if (is.null(A))  -->
-<!--     A <- apply(X, 2, fastAnc, tree = tree) -->
-<!--   con = list(col.edge = setNames(rep("black", nrow(tree$edge)),  -->
-<!--                                  as.character(tree$edge[, 2])), col.node = setNames(rep("black",  -->
-<!--                                                                                         max(tree$edge)), as.character(1:max(tree$edge)))) -->
-<!--   con[(namc <- names(control))] <- control -->
-<!--   if (hasArg(node.by.map))  -->
-<!--     node.by.map <- list(...)$node.by.map -->
-<!--   else node.by.map <- FALSE -->
-<!--   if (hasArg(node.size)) { -->
-<!--     node.size <- list(...)$node.size -->
-<!--     if (length(node.size) == 1)  -->
-<!--       node.size <- c(node.size, node.size) -->
-<!--   } -->
-<!--   else node.size <- c(1, 1.3) -->
-<!--   if (hasArg(xlab))  -->
-<!--     xlab <- list(...)$xlab -->
-<!--   else xlab <- colnames(X)[1] -->
-<!--   if (hasArg(ylab))  -->
-<!--     ylab <- list(...)$ylab -->
-<!--   else ylab <- colnames(X)[2] -->
-<!--   if (hasArg(fsize))  -->
-<!--     fsize <- 0.75 * list(...)$fsize -->
-<!--   else fsize <- 0.75 -->
-<!--   if (hasArg(colors))  -->
-<!--     colors <- list(...)$colors -->
-<!--   else if (!is.null(tree$maps))  -->
-<!--     colors <- setNames(palette()[1:ncol(tree$mapped.edge)],  -->
-<!--                        sort(colnames(tree$mapped.edge))) -->
-<!--   if (hasArg(lwd))  -->
-<!--     lwd <- list(...)$lwd -->
-<!--   else lwd <- if (is.null(tree$maps))  -->
-<!--     1 -->
-<!--   else 2 -->
-<!--   if (hasArg(axes))  -->
-<!--     axes <- list(...)$axes -->
-<!--   else axes <- TRUE -->
-<!--   if (hasArg(add))  -->
-<!--     add <- list(...)$add -->
-<!--   else add <- FALSE -->
-<!--   aa <- setNames(c(X[tree$tip.label, 1], A[, 1]), c(1:length(tree$tip.label),  -->
-<!--                                                     rownames(A))) -->
-<!--   bb <- setNames(c(X[tree$tip.label, 2], A[, 2]), c(1:length(tree$tip.label),  -->
-<!--                                                     rownames(A))) -->
-<!--   XX <- matrix(aa[as.character(tree$edge)], nrow(tree$edge),  -->
-<!--                2) -->
-<!--   YY <- matrix(bb[as.character(tree$edge)], nrow(tree$edge),  -->
-<!--                2) -->
-<!--   if (!add)  -->
-<!--     A.df <- as.data.frame(A) -->
-<!--   edge.path<- data.frame(x.beg=XX[,1],x.end=XX[,2],y.beg=YY[,1],y.end=YY[,2]) -->
-<!--   zz <- c(tree$edge[1, 1], tree$edge[tree$edge[, 2] > length(tree$tip.label),2]) -->
-<!--   node.df <- data.frame(x=c(XX[1, 1], XX[tree$edge[, 2] > length(tree$tip.label),2]), y=c(YY[1, 1], YY[tree$edge[, 2] > length(tree$tip.label),2])) -->
-<!--   tip.df <- data.frame(x=XX[tree$edge[, 2] <= length(tree$tip.label), 2], y=YY[tree$edge[,2] <= length(tree$tip.label), 2],tip=tree$tip.label) -->
-<!--   #print(tip.df) -->
-<!--   #expand plot array -->
-<!--   px <- 1.2*(tip.df$x) -->
-<!--   py <- 1.2*(tip.df$y) -->
-<!--   x.range <- max(px)-min(px) -->
-<!--   y.range <- max(py)-min(py) -->
-<!--   tip.df <- data.frame(x=XX[tree$edge[, 2] <= length(tree$tip.label), 2], y=YY[tree$edge[,2] <= length(tree$tip.label), 2],tip=tree$tip.label,angle=(tip.df$x)/range(tip.df$x)*90,vjust=(tip.df$x/x.range)*2,hjust=(tip.df$y/y.range)) -->
-<!--   if(!is.null(tip.dat)) tip.df <- merge(tip.df,tip.dat,by="tip") -->
-<!--   print(tip.df) -->
-<!--   if(is.null(tip.aes)) tip.aes <- aes(x,y) -->
-<!--   print(tip.aes) -->
-<!--   gg.p <- ggplot(data=edge.path)+geom_segment(aes(x=x.beg,y=y.beg,xend=x.end,yend=y.end),alpha=0.5)+geom_point(data=node.df,aes(x=x,y=y),alpha=0.5,size=5)+geom_point(data=tip.df,tip.aes,size=7,inherit.aes = F)+geom_text(data=tip.df,aes(x=x,y=y,label=tip,fontface=3,angle=angle,vjust=vjust),size=5)+scale_x_continuous(limits=range(px))+scale_y_continuous(limits=range(py))+xlab(label = "PC1")+ylab(label="PC2") -->
-<!--   return(gg.p+theme_bw(30)+theme(panel.grid=element_blank(),axis.title.x = element_text(vjust=-0.5),axis.title.y = element_text(vjust=0.25)) -->
-<!--   ) -->
-<!--   } -->
-<!--   Betts, C.R. and Wootton, R.J., 1988. Wing shape and flight behaviour in butterflies (Lepidoptera: Papilionoidea and Hesperioidea): a preliminary analysis. Journal of experimental biology, 138(1), pp.271-288. -->
-<!--   Le Roy, C., Debat, V. and Llaurens, V., 2019. Adaptive evolution of butterfly wing shape: from morphology to behaviour. Biological Reviews, 94(4), pp.1261-1281. -->
-<!-- ``` -->
+<div id="mvcs-after-eccentric-fatigue" class="section level3">
+<h3>MVCs after Eccentric Fatigue</h3>
+<p>To eccentrically fatigue your forearm flexors, you’ll perform
+isokinetic controlled drops of a heavy object weighing 1/3 your maximum
+isometric force recorded in the control experiments. A book bag or back
+pack full of heavy items (ahhh. . . books) should do just fine.</p>
+<p>To perform your isokinetic eccentric drops, grab the book bag with
+the hand not involved in the experiment and pass it to the other as its
+forearm is fully flexed. With the bag now in your study hand, lower the
+bag slowly and at a constant speed. When the arm is fully extended, grab
+the book bag with the free hand and then flex the study forearm. Repeat
+by passing the bag to your study hand. Continue repeating this exercise
+for 3 min. Keep the cycles uniformly frequent by monitoring the duration
+(probably 3-4 s each cycle). At the end of the 3 mins, your forearm
+flexors should feel tired.</p>
+<p>After you fatigue your flexors, wait 2 min. Then repeat the
+experiment exactly as you did for the control data.</p>
+<p>Once you complete your experiments, upload your 24 data files to <a
+href="https://drive.google.com/drive/folders/1ncojVtzbQaZWKNdFgWtkK5CeJ_PmAbq0?usp=sharing">this
+Google directory</a>. Be sure to name your files according to the
+following convention: “team_subject_angle_control/fatigue.csv”.
+<strong>Please stick to all lower case.</strong></p>
 </div>
-<div id="shape-evolution-correlation" class="section level2">
-<h2>Shape evolution correlation</h2>
-<p>To say something about whether hing- and forewing shape evolution is
-correlated we could undertake phylogenetic least squares analysis like
-we have in previous projects. But, we’ve done a ton already. So, let’s
-make this simple and just perform <a
-href="https://en.wikipedia.org/wiki/Phylogenetic_comparative_methods#:~:text=Phylogenetically%20independent%20contrasts,-The%20standardized%20contrasts&amp;text=The%20logic%20of%20the%20method,statistically%20independent%20and%20identically%20distributed.">phylogenetic
-independent contrasts (PIC)</a> analysis. First proposed by <span
-class="citation">Felsenstein (1985)</span> in his seminal paper, he
-proposed using phylogenetic information (under a Brownian-motion like
-model) to transform the original tip data into values that are
-statistically independent of one another. This method is captured in the
-<code>ape</code> function <code>pic()</code> For hindwing and forewing
-PC1, such analysis would look like this.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a>hindPC1.pic <span class="ot">&lt;-</span> <span class="fu">pic</span>(hind.pc1,<span class="at">phy =</span> lep.tree2)</span>
-<span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a>forePC1.pic <span class="ot">&lt;-</span> <span class="fu">pic</span>(fore.pc1,<span class="at">phy =</span> lep.tree2)</span></code></pre></div>
-<p>Here we just inputed our stored PC vectors we used in the rate
-analysis and our tree of course. Now we have transformed values we can
-regress against one another. Let’s first plot them and see what we
-get.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a>PC1.pic <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb53-2"><a href="#cb53-2" tabindex="-1"></a>  <span class="at">hind=</span>hindPC1.pic,</span>
-<span id="cb53-3"><a href="#cb53-3" tabindex="-1"></a>  <span class="at">fore=</span>forePC1.pic</span>
-<span id="cb53-4"><a href="#cb53-4" tabindex="-1"></a>)</span>
-<span id="cb53-5"><a href="#cb53-5" tabindex="-1"></a></span>
-<span id="cb53-6"><a href="#cb53-6" tabindex="-1"></a>PC1.pic <span class="sc">%&gt;%</span> </span>
-<span id="cb53-7"><a href="#cb53-7" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>fore,<span class="at">y=</span>hind))<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
-<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="mod6_proj_files/figure-html/picplot-1.png" width="672" /></p>
-<p>Wow! These PC1s Look pretty correlated! Let’s see what the r-squared
-value is and if there is a significant relationship. For this, we need
-simply to create a linear model and retrieve these values with
-<code>summary()</code>.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(hind<span class="sc">~</span>fore,PC1.pic))</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = hind ~ fore, data = PC1.pic)
+</div>
+<div id="software-and-coding-the-arduino" class="section level2">
+<h2>Software and Coding the Arduino</h2>
+<p>The sketch needed for this experiment could be quite simple. It does,
+however, require you to download the HX711 library.</p>
+<p>As a primer, this would work:</p>
+<pre class="c"><code>
+#include &quot;HX711.h&quot; // include the appropriate library for `scale` functions
+
+
+HX711 scale; //invoke scale functions
+    
+void setup() {
+
+ Serial.begin(115200); //set baud rate
+   scale.begin(6, 7); //set digital pins 6 and 7 as the data and clock pins
+  scale.tare(); //zero the measurements
+
+}
+
+
+void loop() {
+
+  float newReading= scale.get_units(10); //establish new variable from load cel
+
+   Serial.println(newReading); //print load cell value
+
+}
+</code></pre>
+<p><strong>NOTE:</strong>* You may find it handy to work with a <a
+href="https://www.arduino.cc/en/software/OldSoftwareReleases">previous
+release of Arduino IDE</a> because the current version does not allow
+copying data from the serial monitory</p>
+</div>
+<div id="summary-of-experimental-protocol" class="section level2">
+<h2>Summary of Experimental Protocol</h2>
+<ul>
+<li>Fabricate and program a load-cell data acquisition system.</li>
+<li>Make a ganiometer.</li>
+<li>Record isometric MVCs at 12 distinct elbow angles.</li>
+<li>Eccentrically fatigue your flexors.</li>
+<li>Wait 2 minutes.</li>
+<li>Repeat recording isometric MVCs at the same 12 distinct elbow
+angles.</li>
+<li>Upload data to <a
+href="https://drive.google.com/drive/folders/1ncojVtzbQaZWKNdFgWtkK5CeJ_PmAbq0?usp=sharing">this
+directory</a>.</li>
+</ul>
+<p>Pleas upload your data by Monday, November 13th.</p>
+</div>
+<div id="data-analysis" class="section level2">
+<h2>Data Analysis</h2>
+<p>For each experiment, we’ll stick to a convention within the muscle
+physiology world by considering maximum normalized force. That is:</p>
+<ol style="list-style-type: decimal">
+<li>Find maximum force for each recording (don’t worry about the
+specific values or units because you’ll. . .).</li>
+<li>Find maximum force (<span class="math inline">\(F_{max}\)</span>)
+across all angles for each experiment (control or fatigued) for each
+individual and then divide all maximum values for that experiment by
+<span class="math inline">\(F_{max}\)</span>. Your values will now be
+normalize, i.e., scaled 0-1 with a value of 1 representing the highest
+force recorded during an experiment.</li>
+</ol>
+<p>Using the normalized force data from the control and fatigued
+experiments, we’ll consider shifts at which angle <span
+class="math inline">\(F_{max}\)</span> occurred, the difference in <span
+class="math inline">\(\theta_{max}\)</span>. To assess any shift in
+<span class="math inline">\(\theta_{max}\)</span> with our limited elbow
+angle samples, we could simply look at the angle at which the flexors
+produce the most force. For instance, for the these data:</p>
+<pre class="r"><code>library(ggplot2)
+ang &lt;- seq(45,168.75,length.out = 12) #elbow angle
+
+normF &lt;- c(0.71, 0.77, 0.83, 0.91, 0.97, 1.00, 0.96, 0.94, 0.89, 0.84, 0.77, 0.74) #you&#39;ll get this by reading in data and calculating normalized values
+
+
+qplot(ang,normF)+geom_point(aes(x=ang[which.max(normF)],y=normF[which.max(normF)]),col=&quot;red&quot;,size=4)</code></pre>
+<pre><code>## Warning: `qplot()` was deprecated in ggplot2
+## 3.4.0.
+## This warning is displayed once every 8
+## hours.
+## Call
+## `lifecycle::last_lifecycle_warnings()`
+## to see where this warning was generated.</code></pre>
+<p><img src="mod6_proj_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>ang[which.max(normF)] #Find angle for Fmax, theta_max</code></pre>
+<pre><code>## [1] 101.25</code></pre>
+<p>So, of the 12 angles that we sampled (45–157.5<span
+class="math inline">\(^o\)</span>), the maximum isometric force occurred
+at angle (<span class="math inline">\(\theta_{max}\)</span>=)
+101.25<span class="math inline">\(^o\)</span>. Simply doing this
+overlooks the fact that the maximum force could have occurred between
+any two of the sampled angles. Given the trend in the figure above,
+<span class="math inline">\(\theta_{max}\)</span> could have been an
+angle either greater and less than 101.25<span
+class="math inline">\(^o\)</span>. To estimate the trend and find a
+perhaps more refined estimation of <span
+class="math inline">\(F_{max}\)</span> we’ll resort to (wait for it) . .
+. modeling. In this case, a series of <a
+href="https://en.wikipedia.org/wiki/Polynomial_regression">polynomial
+models</a> should work. Polynomial models are great for fitting
+parabolic data like those we have here, but are tricky in that one can
+keep adding monomial terms very quickly to achieve a better fit. This
+requires the practitioner to make sure that they are not overfitting the
+model. Fortunately, we have the tools to prevent such a thing using AIC,
+as we have learned.</p>
+<p>Therefore, let’s fit some polynomial models to our example data with
+a different number of monomial terms (i.e., orders) and tease apart the
+fit and penalty for including more terms using AICc. Fortunately, we can
+use the <code>lm()</code> and <code>poly()</code> functions from the
+base package to fit the models and use <code>AICc()</code> from the
+<code>MuMIn</code> package for AICc fitting.</p>
+<pre class="r"><code>library(MuMIn)
+
+poly.m2 &lt;- lm(normF~poly(ang,2)) #second order
+poly.m3 &lt;- lm(normF~poly(ang,3)) #third order
+poly.m4 &lt;- lm(normF~poly(ang,4)) #fourth order
+
+AICc(poly.m2,poly.m3,poly.m4) #the second order model fits best</code></pre>
+<pre><code>##         df      AICc
+## poly.m2  4 -43.90316
+## poly.m3  5 -39.60496
+## poly.m4  6 -49.47748</code></pre>
+<pre class="r"><code>x.pred &lt;- seq(45,157.5,length.out = 1000) #define 1000 angles from our range
+
+normF.pred &lt;- predict(poly.m4,newdata = data.frame(ang=x.pred)) #predict the force using 1000 angles
+
+qplot(ang,normF)+geom_point(aes(x=x.pred,y=normF.pred),col=&quot;red&quot;)+geom_point(aes(x=x.pred[which.max(normF.pred)],y=normF.pred[which.max(normF.pred)]),size=5,col=&quot;blue&quot;)</code></pre>
+<p><img src="mod6_proj_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>x.pred[which.max(normF.pred)] #theta_max</code></pre>
+<pre><code>## [1] 104.9099</code></pre>
+<p>In this example we constructed 3 polynomial models of the 2nd, 3rd,
+4th variety and then used AICc to find the lowest AICc score. The 4th
+order model fits best, so we then produced 1000 discrete values within
+our range with <code>seq()</code> to pass to<code>predict()</code> to
+predict force over this range using our best fitting model (producing
+<code>normF.pred</code>). We then found the max of
+<code>normF.pred</code> (the <span
+class="math inline">\(F_{max}\)</span>) and plotted that, along with our
+predictions. Lastly, we found <span
+class="math inline">\(\theta_{max}\)</span>, a value of 104.9.</p>
+<p>A goal of this project is to detect shifts in <span
+class="math inline">\(F_{max}\)</span> with respect to angle. If we had
+two data sets, one control and one produced after fatigue, we merely
+need to compare the two <span
+class="math inline">\(\theta_{max}\)</span>, that is, the shift in angle
+for <span class="math inline">\(F_{max}\)</span> predicted by two
+polynomial models. This would look something like this:</p>
+<pre class="r"><code>normF.fat &lt;- c(0.65, 0.71, 0.81, 0.89,0.92, 0.96, 0.99, 1, 0.96, 0.92, 0.84, 0.77) #fatigue data, you&#39;ll get this by reading in data and calculating normalized values
+
+
+qplot(ang,normF.fat)+geom_point(aes(x=ang[which.max(normF.fat)],y=normF.fat[which.max(normF.fat)]),col=&quot;red&quot;,size=4)</code></pre>
+<p><img src="mod6_proj_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>ang[which.max(normF.fat)] #Find angle for Fmax for fatigue data</code></pre>
+<pre><code>## [1] 123.75</code></pre>
+<pre class="r"><code>poly.m2.fat &lt;- lm(normF.fat~poly(ang,2)) #second order
+poly.m3.fat &lt;- lm(normF.fat~poly(ang,3)) #third order
+poly.m4.fat &lt;- lm(normF.fat~poly(ang,4)) #fourth order
+
+AICc(poly.m2.fat,poly.m3.fat,poly.m4.fat) #the second order model fits best</code></pre>
+<pre><code>##             df      AICc
+## poly.m2.fat  4 -54.91075
+## poly.m3.fat  5 -55.05750
+## poly.m4.fat  6 -49.10034</code></pre>
+<pre class="r"><code>normF.pred.fat &lt;- predict(poly.m2.fat,newdata = data.frame(ang=x.pred)) #predict the force using 1000 angles
+
+qplot(ang,normF)+geom_point(aes(x=x.pred,y=normF.pred.fat),col=&quot;red&quot;)+geom_point(aes(x=x.pred[which.max(normF.pred.fat)],y=normF.pred.fat[which.max(normF.pred.fat)]),size=5,col=&quot;blue&quot;)</code></pre>
+<p><img src="mod6_proj_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<pre class="r"><code>x.pred[which.max(normF.pred.fat)]-x.pred[which.max(normF.pred)] #shift in angle for Fmax, theta_max</code></pre>
+<pre><code>## [1] 10.24775</code></pre>
+<p>Looks as if there’s a 10.3<span class="math inline">\(^o\)</span>
+shift in <span class="math inline">\(\theta_{max}\)</span>.</p>
+<p>Say we had a bunch of data (from only 10 subjects) and you wanted to
+compare the control against fatigued data graphically, you could do the
+following. First we’ll simulate some control and fatigue data, adding
+random noise drawn form a normal distribution and plot the data with a
+color according to experiment to quickly assess the pattern.</p>
+<pre class="r"><code>library(tidyverse)
+
+set.seed(1234) #to keep random noise the same
+
+sub &lt;- 1:10 #ten subjects
+dat.l &lt;- list() #empty list
+
+#loop to run through subjects and simulate data based on noise added to data above
+for(i in sub){
+  noise &lt;- rnorm(length(ang),mean = 0.02,sd = 0.01)
+  noise2 &lt;- rnorm(length(ang),mean = 0.02,sd = 0.01)
+  dat.l[[i]] &lt;- tibble(
+    rbind(
+      data.frame(ang,force=normF+noise,subject=i,exp=&quot;control&quot;),
+      data.frame(ang,force=normF.fat+noise2,subject=i,exp=&quot;fatigue&quot;)
+  )  
+  )%&gt;%
+    group_by(subject,exp)%&gt;%
+    mutate(force=force/max(force))
+  
+}
+
+dat &lt;- do.call(rbind,dat.l) #get data into one tibble
+
+dat%&gt;%
+  ggplot(aes(ang,force,col=exp))+geom_point()</code></pre>
+<p><img src="mod6_proj_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Now let’s take our data and get AICc scores for our three polynomial
+models. We’ll group the data by subject and experiment and retrieve AICc
+from each model (<code>m2</code>, <code>m3</code>, and <code>m4</code>).
+Then, we’ll pivot the tibble to a longer format so that we have a single
+column for AICc values.</p>
+<pre class="r"><code>AICs &lt;- dat%&gt;%
+  group_by(subject,exp)%&gt;%
+  summarize(
+    m2=AICc(lm(force~poly(ang,2))), #second order
+    m3=AICc(lm(force~poly(ang,3))), #third order
+    m4=AICc(lm(force~poly(ang,4))) #fourth order
+  )%&gt;%
+  pivot_longer(m2:m4,names_to=&quot;model&quot;,values_to=&quot;AICc&quot;)%&gt;%
+  print()</code></pre>
+<pre><code>## # A tibble: 60 × 4
+## # Groups:   subject [10]
+##    subject exp     model  AICc
+##      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;
+##  1       1 control m2    -43.2
+##  2       1 control m3    -39.3
+##  3       1 control m4    -42.5
+##  4       1 fatigue m2    -49.3
+##  5       1 fatigue m3    -46.0
+##  6       1 fatigue m4    -37.7
+##  7       2 control m2    -43.8
+##  8       2 control m3    -39.4
+##  9       2 control m4    -55.2
+## 10       2 fatigue m2    -57.6
+## # ℹ 50 more rows</code></pre>
+<p>Now we’ll do something very similar, predicting values for 1000
+discrete angles across our range of elbow positions. Notice that we’ve
+summarized the data by subject, experiment and model to find the angle
+(<code>x.pred</code>) which matches the max force value.</p>
+<pre class="r"><code>fits &lt;- dat%&gt;%
+  group_by(subject,exp)%&gt;%
+  summarize(
+    m2=predict(lm(force~poly(ang,2)),newdata=data.frame(ang=x.pred)), #second order
+    m3=predict(lm(force~poly(ang,3)),newdata=data.frame(ang=x.pred)), #third order
+    m4=predict(lm(force~poly(ang,4)),newdata=data.frame(ang=x.pred)) #fourth order
+  )%&gt;%
+   pivot_longer(m2:m4,names_to=&quot;model&quot;)%&gt;%
+   group_by(subject,exp,model)%&gt;%
+   summarize(theta_max=x.pred[which.max(value)])%&gt;%
+   print()</code></pre>
+<pre><code>## Warning: Returning more (or less) than 1 row per
+## `summarise()` group was deprecated in
+## dplyr 1.1.0.
+## ℹ Please use `reframe()` instead.
+## ℹ When switching from `summarise()` to
+##   `reframe()`, remember that `reframe()`
+##   always returns an ungrouped data frame
+##   and adjust accordingly.
+## Call
+## `lifecycle::last_lifecycle_warnings()`
+## to see where this warning was generated.</code></pre>
+<pre><code>## # A tibble: 60 × 4
+## # Groups:   subject, exp [20]
+##    subject exp     model theta_max
+##      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;
+##  1       1 control m2         107.
+##  2       1 control m3         103.
+##  3       1 control m4         104.
+##  4       1 fatigue m2         115.
+##  5       1 fatigue m3         118.
+##  6       1 fatigue m4         117.
+##  7       2 control m2         107.
+##  8       2 control m3         103.
+##  9       2 control m4         105.
+## 10       2 fatigue m2         115.
+## # ℹ 50 more rows</code></pre>
+<p>Now let’s join these the <code>AICs</code> and <code>fits</code>
+tables so that we can filter the model predictions by which model fits
+best. Note <code>filter(best==TRUE)</code> after constructing a
+<code>best</code> column according to the minimum AICc score using
+<code>mutate()</code>.</p>
+<pre class="r"><code>best.models &lt;- fits%&gt;%
+  left_join(AICs)%&gt;%
+  group_by(subject,exp)%&gt;%
+  mutate(best=AICc==min(AICc))%&gt;%
+  filter(best==TRUE)%&gt;%
+  dplyr::select(-best)%&gt;%
+  print()</code></pre>
+<pre><code>## Joining with `by = join_by(subject, exp,
+## model)`</code></pre>
+<pre><code>## # A tibble: 20 × 5
+## # Groups:   subject, exp [20]
+##    subject exp     model theta_max  AICc
+##      &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;
+##  1       1 control m2         107. -43.2
+##  2       1 fatigue m2         115. -49.3
+##  3       2 control m4         105. -55.2
+##  4       2 fatigue m2         115. -57.6
+##  5       3 control m4         107. -47.7
+##  6       3 fatigue m3         119. -57.2
+##  7       4 control m4         104. -55.4
+##  8       4 fatigue m3         120. -51.9
+##  9       5 control m4         103. -48.9
+## 10       5 fatigue m2         115. -51.3
+## 11       6 control m4         103. -41.7
+## 12       6 fatigue m3         120. -53.7
+## 13       7 control m4         104. -48.0
+## 14       7 fatigue m3         120. -55.9
+## 15       8 control m2         107. -48.5
+## 16       8 fatigue m3         116. -65.9
+## 17       9 control m4         103. -48.3
+## 18       9 fatigue m2         115. -52.3
+## 19      10 control m4         105. -49.3
+## 20      10 fatigue m2         115. -55.0</code></pre>
+<p>To investigate whether a shift if <span
+class="math inline">\(\theta_{max}\)</span> is different between the
+control and fatigue experiments, we can run the following ANOVA.</p>
+<pre class="r"><code>anova(lm(theta_max~exp,best.models))</code></pre>
+<pre><code>## Analysis of Variance Table
 ## 
-## Residuals:
-##        Min         1Q     Median         3Q        Max 
-## -0.0178678 -0.0048356  0.0007163  0.0048027  0.0202446 
-## 
-## Coefficients:
-##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  0.0002967  0.0005564   0.533    0.595    
-## fore        -0.0859716  0.0080432 -10.689   &lt;2e-16 ***
+## Response: theta_max
+##           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## exp        1 749.21  749.21  180.18 8.144e-11 ***
+## Residuals 18  74.85    4.16                      
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 0.006784 on 147 degrees of freedom
-## Multiple R-squared:  0.4373, Adjusted R-squared:  0.4335 
-## F-statistic: 114.2 on 1 and 147 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Lastly, we should calculate the mean shift with SEM. To find the
+shift, we can pivot the <code>best.models</code> tibble to a wider
+format so we can have <span class="math inline">\(\theta_{max}\)</span>
+for each experiment in separate columns and find the difference with
+<code>mutate()</code>. Then, <code>summarise()</code> can be used to
+find the mean and SEM.</p>
+<pre class="r"><code>best.models%&gt;%
+  pivot_wider(id_cols=subject,names_from = exp,values_from=theta_max)%&gt;%
+  mutate(shift=fatigue-control)%&gt;%
+  ungroup()%&gt;%
+  summarise(mean.shift=mean(shift),se.shift=sd(shift)/sqrt(length(shift)))</code></pre>
+<pre><code>## # A tibble: 1 × 2
+##   mean.shift se.shift
+##        &lt;dbl&gt;    &lt;dbl&gt;
+## 1       12.2    0.960</code></pre>
 </div>
 </div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
 <p>Please submit your report to your team GitHub repository as an .Rmd
-document with HTML output that addresses the following:</p>
+document with HTML output that addresses the following questions:</p>
 <ul>
-<li>Are the rates of wing-shape evolution different between the hind-
-and forewing? By how much?
-<!-- * Have major lineages of the Lepidoptera undergone significant shifts in evolutionary rate?  --></li>
-<li>Are hind- and forewing shapes correlated?</li>
-<li>What inferences can you make based on shape correlations and flight
-control?</li>
+<li>Do class-wide force-angle data for isometric MVC accord to a typical
+FL relationship both under control and fatigued conditions?</li>
+<li>Is there a significant shift between <span
+class="math inline">\(\theta_{max}\)</span> between the control and
+fatigue FL relationships?</li>
 </ul>
-<p>Please be sure to answer these questions based on both PC1 and PC2
-shape scores.</p>
-<p>In answering your question, your .Rmd should include the following
+<p>In answering these questions, be sure to use the visualization,
+modeling, and model-assessments tools we’ve used in the course so
+far.</p>
+<p>The answers and narrative in your .Rmd should include the following
 components:</p>
 <ul>
 <li>A YAML header that specifies HTML output, the authors, and a
-bibliograph named “BIOL3140.bib”. <strong>Submit this bibliography as
+bibliography named “BIOL3140.bib”. <strong>Submit this bibliography as
 well!</strong></li>
 <li>Sections including an introduction, methods, results, discussion,
 author contributions, and references. Make sure that each, aside from
-the references, includes one to two short paragraphs. Specifially:
+the references, includes one to two short paragraphs. Specifically:
 <ul>
 <li>Introduction: Frame the questions, indicating why they are
 important, what background work has been done in this realm, and how you
@@ -1935,7 +1033,7 @@ will answer them. <strong>Please include at least one reference to
 support the summary of previous work.</strong> Note: this can be done
 easily by refiguring the introduction to this project report.</li>
 <li>Methods: Explicitly state how you answered the questions, including
-a narrative of all the anlyses both qualitative and quantitative.</li>
+a narrative of all the analyses both qualitative and quantitative.</li>
 <li>Results: Include any appropriate figures or tables and a narrative
 of the main results that are important to answering the questions.</li>
 <li>Discussion: Succinctly declare how the results relate to the
@@ -1949,39 +1047,35 @@ helpful here.</li>
 contributed to the project.</li>
 </ul></li>
 </ul>
-<p>Project reports should be uploaded by 11:59 PM on Sunday, October
-29th.</p>
+<p>Project reports should be uploaded by 11:59 PM on Thursday, November
+16th.</p>
+<div class="green">
+<div class="row">
+<div class="col-sm-2">
+<a class="far fa-sticky-note fa-5x" style="color:#939681"></a>
+<!-- regular style -->
+</div>
+<div class="col-sm-9">
+<p>Please have a look at out <a href="phaseII_rubric.html">Phase II
+report rubric</a> to get a sense of how this and other Phase II reports
+will be grade.</p>
+</div>
+</div>
+</div>
+<p><br></p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-felsenstein1985phylogenies" class="csl-entry">
-Felsenstein, Joseph. 1985. <span>“Phylogenies and the Comparative
-Method.”</span> <em>The American Naturalist</em> 125 (1): 1–15.
+<div id="ref-rassier1999length" class="csl-entry">
+Rassier, Dilson E, BR MacIntosh, and W Herzog. 1999. <span>“Length
+Dependence of Active Force Production in Skeletal Muscle.”</span>
+<em>Journal of Applied Physiology</em> 86 (5): 1445–57.
 </div>
-<div id="ref-jantzen2008hindwings" class="csl-entry">
-Jantzen, Benjamin, and Thomas Eisner. 2008. <span>“Hindwings Are
-Unnecessary for Flight but Essential for Execution of Normal Evasive
-Flight in Lepidoptera.”</span> <em>Proceedings of the National Academy
-of Sciences</em> 105 (43): 16636–40.
-</div>
-<div id="ref-kawahara2019phylogenomics" class="csl-entry">
-Kawahara, Akito Y, David Plotkin, Marianne Espeland, Karen Meusemann,
-Emmanuel FA Toussaint, Alexander Donath, France Gimnich, et al. 2019.
-<span>“Phylogenomics Reveals the Evolutionary Timing and Pattern of
-Butterflies and Moths.”</span> <em>Proceedings of the National Academy
-of Sciences</em> 116 (45): 22657–63.
-</div>
-<div id="ref-o2006testing" class="csl-entry">
-O’Meara, Brian C, Cécile Ané, Michael J Sanderson, and Peter C
-Wainwright. 2006. <span>“Testing for Different Rates of Continuous Trait
-Evolution Using Likelihood.”</span> <em>Evolution</em> 60 (5): 922–33.
-</div>
-<div id="ref-penz2003phylogenetic" class="csl-entry">
-Penz, Carla M, and Djunijanti Peggie. 2003. <span>“Phylogenetic
-Relationships Among Heliconiinae Genera Based on Morphology
-(Lepidoptera: Nymphalidae).”</span> <em>Systematic Entomology</em> 28
-(4): 451–79.
+<div id="ref-yeung2008shift" class="csl-entry">
+Yeung, SS, and EW Yeung. 2008. <span>“Shift of Peak Torque Angle After
+Eccentric Exercise.”</span> <em>International Journal of Sports
+Medicine</em> 29 (03): 251–56.
 </div>
 </div>
 </div>

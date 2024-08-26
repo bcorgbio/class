@@ -1,0 +1,24 @@
+---
+title: "Wednesday Code Reviews"
+---
+
+## WCR Details
+```{r setup, echo=F,warning=F,message=F}
+library(tidyverse)
+```
+We'll have 12 Wednesday Code Reviews (WCRs). These exercises address a major goal of the course: developing skills in quantitative inference in the context organismal biology.
+
+Some specific themes we'll explore include:
+
+* Building and applying predictive models to biological phenomena.
+* Effective visualization of trends in research data.
+* Qualitative and statistical inference of biological data.
+
+Each week, after we've introduced new concepts in the areas mentioned above, we'll work through an in-class exercise that should take 15-30 minutes. Unlike team project work, each WCR is completed by individual students.
+
+There will be 12 WCRs, each worth 10 points. Only 10 will be tallied for the WCR portion of the final course grade (i.e., the two lowest scoring WCRs will be dropped).
+
+Submissions will take the form of scripts or markdown documents and will be collected over Google forms. 
+
+
+
