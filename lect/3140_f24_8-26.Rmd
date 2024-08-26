@@ -171,6 +171,8 @@ class:  top
 
 - Learning the basics
 - Small projects
+- [Peer evaluations](peer_contributions.htmls)
+- Commit to team repo on GitHub
 
 ]
 
@@ -183,6 +185,7 @@ class:  top
 - Reports due on Sundays
 - Report written in R Markdown
 - Commit to team repo on GitHub
+- Peer evaluations
 ]
 
 
@@ -196,7 +199,7 @@ class:  top
 
 - Team-based
 - Topic of your choice (build off of Phase II)
-- Same report guidelines as Phase II (.Rmd, format, etc.)
+- Same report guidelines as Phase II (.Rmd, format, etc.,peer evalutions)
 
 ]
 
@@ -205,6 +208,7 @@ class:  top
 ## Timeline
 - ~2 weeks to develop, execute
 - Start end of November
+- Commit to team repo on GitHub
 ]
 
 
@@ -263,6 +267,9 @@ class:  top
 ]
 
 
+
+
+
 ---
 class:  top
 # Phase III topics
@@ -282,6 +289,26 @@ class:  top
 
 
 
+---
+class:  top
+# Wednesday Code Reviews (WCRs)
+
+.pull-left[
+
+- In class
+
+- Posted on [class calendar](at_a_glance.html)
+
+- Submit over google forms
+
+- 12x10 pts (2 lowest dropped)
+
+]
+
+.pull-right[
+![](https://argoshare.is.ed.ac.uk/healthyr_book/images/chapter01/example_script.png)
+
+]
 
 ---
 

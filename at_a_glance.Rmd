@@ -11,7 +11,7 @@ All assignments are due at 11:59 on the specified date.
 
 || Monday <br> 8/26 |  Tuesday <br>8/27    | Wednesday<br>  8/28 | Thursday <br> 8/29 | Friday <br> 8/30 |Saturday<br> 8/31 | Sunday<br> 9/1
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:    
-**Week1**  | [slides](lect\3140_f23_8-28.html) ||Teams for Module 1 assigned <br><br> Establish GitHub account and add your handle to [this form](https://forms.gle/zfoADunTt9E951Bt8) | | [slides](lect\3140_f23_8-30.html) <br> | | | |
+**Week1**  | [slides](lect\3140_f24_8-26.html) ||Teams for Module 1 assigned <br><br> Establish GitHub account and add your handle to [this form](https://forms.gle/zfoADunTt9E951Bt8) | | [slides](lect\3140_f23_8-30.html) <br> | | | |
 
 
 || Monday <br> 9/2 |  Tuesday <br>9/3    | Wednesday<br>  9/4 | Thursday <br> 9/5 | Friday <br> 9/6 |Saturday<br> 9/7 | Sunday<br> 9/8
