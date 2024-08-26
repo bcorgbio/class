@@ -353,7 +353,7 @@ div.tocify {
   <a href="at_a_glance.html">Calendar</a>
 </li>
 <li>
-  <a href="WCRS.html">WCRs</a>
+  <a href="WCRs.html">WCRs</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -718,9 +718,9 @@ from <code>occ_data()</code> searches for the 5 species above . . .</p>
   group_by(year,species)%&gt;%
   summarise(count=sum(individualCount,na.rm = T))%&gt;%
   ggplot(aes(x=year,y=count,col=species))+geom_point()</code></pre>
-<pre><code>## `summarise()` has grouped output by
-## &#39;year&#39;. You can override using the
-## `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;.
+## You can override using the `.groups`
+## argument.</code></pre>
 <p><img src="mod7_proj_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>It looks like there’s not much data before 2000 for all species.
 We’ll keep this in mind as we move forward. Now let’s move on to
@@ -933,8 +933,8 @@ variable, simply the day of the year. Let’s compute that and then . . .
   mutate(prop=cumsum(day.tot/sum(day.tot,na.rm = T)))%&gt;%
   filter(year&gt;1999)</code></pre>
 <pre><code>## `summarise()` has grouped output by
-## &#39;species&#39;, &#39;year&#39;, &#39;j.day&#39;. You can
-## override using the `.groups` argument.</code></pre>
+## &#39;species&#39;, &#39;year&#39;, &#39;j.day&#39;. You can override
+## using the `.groups` argument.</code></pre>
 <pre class="r"><code>mc%&gt;%
   ggplot(aes(j.day,prop))+geom_point()+facet_wrap(year~.)</code></pre>
 <p><img src="mod7_proj_files/figure-html/mc-1.png" width="672" /></p>
@@ -961,19 +961,18 @@ data.</p>
   )%&gt;%
   left_join(mc%&gt;%dplyr::select(j.day,date)) ## add date back to tibble</code></pre>
 <pre><code>## Warning: Returning more (or less) than 1 row per
-## `summarise()` group was deprecated in
-## dplyr 1.1.0.
+## `summarise()` group was deprecated in dplyr
+## 1.1.0.
 ## ℹ Please use `reframe()` instead.
 ## ℹ When switching from `summarise()` to
 ##   `reframe()`, remember that `reframe()`
-##   always returns an ungrouped data frame
-##   and adjust accordingly.
-## Call
-## `lifecycle::last_lifecycle_warnings()`
+##   always returns an ungrouped data frame and
+##   adjust accordingly.
+## Call `lifecycle::last_lifecycle_warnings()`
 ## to see where this warning was generated.</code></pre>
-<pre><code>## `summarise()` has grouped output by
-## &#39;year&#39;. You can override using the
-## `.groups` argument.
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;.
+## You can override using the `.groups`
+## argument.
 ## Adding missing grouping variables:
 ## `species`, `year`
 ## Joining with `by = join_by(year, j.day)`</code></pre>
@@ -985,8 +984,7 @@ data.</p>
 ## ℹ Please use `linewidth` instead.
 ## This warning is displayed once every 8
 ## hours.
-## Call
-## `lifecycle::last_lifecycle_warnings()`
+## Call `lifecycle::last_lifecycle_warnings()`
 ## to see where this warning was generated.</code></pre>
 <p><img src="mod7_proj_files/figure-html/logistic%20model-1.png" width="672" /></p>
 <p>Seems our logistic models for arrival of this species estimate the
@@ -1200,8 +1198,7 @@ date.</p>
   left_join(weather.d)%&gt;%
   left_join(mc%&gt;%dplyr::select(year,date,j.day))</code></pre>
 <pre><code>## Joining with `by = join_by(year, j.day)`
-## Adding missing grouping variables:
-## `species`
+## Adding missing grouping variables: `species`
 ## Joining with `by = join_by(year, j.day,
 ## species, date)`</code></pre>
 <pre class="r"><code>head(mc.arr.weath)</code></pre>
@@ -1247,8 +1244,7 @@ tibble matching those in the arrival data will be kept.</p>
          wk.wvec = frollmean(wvec, n=14,align=&quot;right&quot;)
          )%&gt;%
   dplyr::select(j.day,date2,name,wk.tmin,wk.tmax,wk.wvec)</code></pre>
-<pre><code>## Adding missing grouping variables:
-## `year`</code></pre>
+<pre><code>## Adding missing grouping variables: `year`</code></pre>
 <pre class="r"><code>mc.arr.weath2 &lt;- mc.arrive.date%&gt;%
   left_join(weather.wk)</code></pre>
 <pre><code>## Joining with `by = join_by(year, j.day)`</code></pre>

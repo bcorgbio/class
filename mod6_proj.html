@@ -351,7 +351,7 @@ div.tocify {
   <a href="at_a_glance.html">Calendar</a>
 </li>
 <li>
-  <a href="WCRS.html">WCRs</a>
+  <a href="WCRs.html">WCRs</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -739,12 +739,10 @@ normF &lt;- c(0.71, 0.77, 0.83, 0.91, 0.97, 1.00, 0.96, 0.94, 0.89, 0.84, 0.77, 
 
 
 qplot(ang,normF)+geom_point(aes(x=ang[which.max(normF)],y=normF[which.max(normF)]),col=&quot;red&quot;,size=4)</code></pre>
-<pre><code>## Warning: `qplot()` was deprecated in ggplot2
-## 3.4.0.
+<pre><code>## Warning: `qplot()` was deprecated in ggplot2 3.4.0.
 ## This warning is displayed once every 8
 ## hours.
-## Call
-## `lifecycle::last_lifecycle_warnings()`
+## Call `lifecycle::last_lifecycle_warnings()`
 ## to see where this warning was generated.</code></pre>
 <p><img src="mod6_proj_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <pre class="r"><code>ang[which.max(normF)] #Find angle for Fmax, theta_max</code></pre>
@@ -911,15 +909,14 @@ summarized the data by subject, experiment and model to find the angle
    summarize(theta_max=x.pred[which.max(value)])%&gt;%
    print()</code></pre>
 <pre><code>## Warning: Returning more (or less) than 1 row per
-## `summarise()` group was deprecated in
-## dplyr 1.1.0.
+## `summarise()` group was deprecated in dplyr
+## 1.1.0.
 ## ℹ Please use `reframe()` instead.
 ## ℹ When switching from `summarise()` to
 ##   `reframe()`, remember that `reframe()`
-##   always returns an ungrouped data frame
-##   and adjust accordingly.
-## Call
-## `lifecycle::last_lifecycle_warnings()`
+##   always returns an ungrouped data frame and
+##   adjust accordingly.
+## Call `lifecycle::last_lifecycle_warnings()`
 ## to see where this warning was generated.</code></pre>
 <pre><code>## # A tibble: 60 × 4
 ## # Groups:   subject, exp [20]

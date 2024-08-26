@@ -351,7 +351,7 @@ div.tocify {
   <a href="at_a_glance.html">Calendar</a>
 </li>
 <li>
-  <a href="WCRS.html">WCRs</a>
+  <a href="WCRs.html">WCRs</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -971,7 +971,7 @@ filenames of each species in a table you can <a
 href="lep_image_data.csv">download here</a>. Have a look.</p>
 <pre class="r"><code>lep.sp &lt;- read_csv(&quot;lep_image_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 1106 Columns: 5
-## ── Column specification ─────────────────
+## ── Column specification ─────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (5): species, identifier, higher_taxon, common_name, highest_common_name
 ## 
@@ -1012,12 +1012,11 @@ command.</p>
 ## relationship between `x` and `y`.
 ## ℹ Row 15 of `x` matches multiple rows in
 ##   `y`.
-## ℹ Row 326 of `y` matches multiple rows
-##   in `x`.
+## ℹ Row 326 of `y` matches multiple rows in
+##   `x`.
 ## ℹ If a many-to-many relationship is
 ##   expected, set `relationship =
-##   &quot;many-to-many&quot;` to silence this
-##   warning.</code></pre>
+##   &quot;many-to-many&quot;` to silence this warning.</code></pre>
 <pre class="r"><code>head(out.data)</code></pre>
 <pre><code>## # A tibble: 6 × 6
 ##   xy.file        identifier species higher_taxon common_name highest_common_name

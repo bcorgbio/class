@@ -18,7 +18,7 @@ navbar:
     - text: "Calendar"
       href: at_a_glance.html
     - text: "WCRs"
-      href: WCRS.html
+      href: WCRs.html
     - text: "Projects"
       menu:
         - text: "Phase I"
