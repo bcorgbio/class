@@ -96,6 +96,12 @@ library(tidyverse)
 ```
 
 
+-Get help
+
+```{r,eval=FALSE}
+?log
+```
+
 
 
 
