@@ -77,7 +77,7 @@ foo <- 1:10
 mean(foo)
 ```
 
--Basic object classes
+- Basic object classes
 
 ```{r}
 class(foo)
@@ -96,12 +96,20 @@ library(tidyverse)
 ```
 
 
--Get help
+- Get help
 
 ```{r,eval=FALSE}
 ?log
 ```
 
+---
+class: inverse, top
+<!-- slide 1 -->
+# GitHub
 
+- Accept my invite to our team ("orgbiof24")
+- Watch our team repo:
+  - https://github.com/bcorgbio/orgbiof24
+  - enables notifications re discussion
 
 
