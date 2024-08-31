@@ -7,7 +7,7 @@ All assignments are due at 11:59 on the specified date.
 ## Phase I
 
 ### Module 1
- 
+
 
 || Monday <br> 8/26 |  Tuesday <br>8/27    | Wednesday<br>  8/28 | Thursday <br> 8/29 | Friday <br> 8/30 |Saturday<br> 8/31 | Sunday<br> 9/1
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:    
