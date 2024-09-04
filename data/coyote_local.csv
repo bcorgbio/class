@@ -1,0 +1,428 @@
+﻿id,species,Region,state,County,Town,Locality,Lat,Long,Year
+adk2706,Canis latrans,northeast,New York,,,,43.76892512,-75.03562171,2007
+adk2798,Canis latrans,northeast,New York,,,,43.90153901,-74.67316508,
+adk2801,Canis latrans,northeast,New York,,,,43.90129677,-74.67346526,
+adk2833,Canis latrans,northeast,New York,,,,43.93775995,-74.76875792,
+adk2845,Canis latrans,northeast,New York,,,,42.79413159,-73.78896444,
+adk2853,Canis latrans,northeast,New York,Herkmier,Lost Creek,Lost Creek,43.7806245,-75.02236888,2002
+adk2868,Canis latrans,northeast,New York,Herkmier,Lost Creek,Lost Creek,43.78931307,-75.02311786,2002
+adk439,Canis latrans,northeast,New York,,,,43.93741496,-74.10040644,
+adk483,Canis latrans,northeast,New York,,,,44.70434536,-73.9888616,2006
+adk597,Canis latrans,northeast,New York,,,,44.69818744,-73.98173651,
+mcz63140,Canis latrans,northeast,Massachusetts,Barnstable,,,41.7307072,-70.474642,2000
+mcz63145,Canis latrans,northeast,Massachusetts,Barnstable,"Cummiquid, Route 6A",,41.687129,-70.270606,1999
+mcz63343,Canis latrans,northeast,Massachusetts,Essex,Andover,"Andover, 235 Salem St.",42.632525,-71.10982,1999
+mcz63344,Canis latrans,northeast,Massachusetts,Barnstable,Barnstable,"Barnstable, Rte. 6 near Exit 5",41.696603,-70.384444,2002
+mcz63683,Canis latrans,northeast,Massachusetts,Barnstable,Centerville,"Centerville, Rte 28, 1/4mi. E. of Lumbert Mill Rd.",41.653054,-70.36686,2001
+zm13499,Canis latrans,northeast,New York,Otsego,,Within 10 mi. of West Burlington,42.7075,-75.18806,2001
+zm13514,Canis latrans,northeast,New York,Columbia,Ghent,"I-87, 1mi SOUTH OF EXIT 8",42.25,-73.5833,2000
+zm13580,Canis latrans,northeast,New York,Otsego,,Within 10 mi. of West Burlington,42.7075,-75.18806,2001
+zm13615,Canis latrans,northeast,New York,Franklin,Brighton,intersection of Rt. 86 and Rt. 30 at Paul Smith College,44.438048,-74.251511,2001
+zm13616,Canis latrans,northeast,New York,Franklin,Santa Clara,Ross Park,44.45343,-74.37572,2000
+zm13642,Canis latrans,northeast,New York,Franklin,Santa Clara,"Blue Mt. Road, Ross Park",44.45343,-74.37572,2000
+zm13657,Canis latrans,northeast,New York,Washington,,,43.2678,-73.4287,2001
+zm13971,Canis latrans,northeast,New York,Otsego,Burlington,West Burlington,42.7075,-75.18806,2001
+zm13979,Canis latrans,northeast,New York,Otsego,,Within 10 mi. of West Burlington,42.7075,-75.18806,2001
+zm13982,Canis latrans,northeast,New York,Washington,,,43.2678,-73.4287,2001
+zm13984,Canis latrans,northeast,New York,Washington,,,43.2678,-73.4287,2001
+zm13986,Canis latrans,northeast,New York,Washington,,,43.2678,-73.4287,2001
+zm14206,Canis latrans,northeast,New York,Schenectady,Rotterdam,"I-90 Westbound, mile marker 157.5, UTM 582004 4736582",42.779322,-73.997531,2003
+zm14207,Canis latrans,northeast,New York,Albany,Guilderland,"Albany Pine Bush Preserve off of Willow St., UTM 589797 4728658",42.7052,-73.9035,2002
+zm14276,Canis lupus,northeast,New York,Saratoga,Edinburg,,43.227991,-74.056693,2001
+zm14487,Canis latrans,northeast,New York,Saratoga,Greenfield,Greenfield,43.135811,-73.874623,2003
+zm14503,Canis latrans,northeast,New York,Saratoga,Greenfield,,43.135811,-73.874623,2003
+zm14595,Canis latrans,northeast,New York,Rensselaer,,"I-90 Eastbound before Exit 9, at mile marker 9.2",42.579983,-73.678142,2004
+zm14623,Canis latrans,northeast,New York,Clinton,Clinton,,44.833333,-73.833333,2005
+zm14624,Canis latrans,northeast,New York,Clinton,Clinton,,44.833333,-73.833333,2005
+zm14627,Canis latrans,northeast,New York,St. Lawrence,Lisbon,,44.733333,-75.266667,2005
+zm14633,Canis latrans,northeast,New York,Franklin,,Northwest of Malone,44.932691,-74.216065,2005
+zm14634,Canis latrans,northeast,New York,Franklin,,Northwest of Malone,44.932691,-74.216065,2005
+zm14636,Canis latrans,northeast,New York,Franklin,,Northwest of Malone,44.932691,-74.216065,2005
+zm14638,Canis latrans,northeast,New York,Franklin,Malone,,44.805067,-74.290459,2005
+zm14639,Canis latrans,northeast,New York,Franklin,,Northwest of Malone,44.932691,-74.216065,2005
+zm14640,Canis latrans,northeast,New York,Franklin,,Northwest of Malone,44.932691,-74.216065,2005
+zm14663,Canis latrans,northeast,Vermont,Orleans,Orleans,,44.827403,-72.24437,2006
+zm14665,Canis latrans,Ohio,Ohio,Hardin,,,40.672553,-83.667515,
+zm14666,Canis latrans,Ohio,Ohio,"Williams, Fulton, Defiance, Henry",,Northwest Ohio,41.461747,-84.318357,2006
+zm14667,Canis latrans,Ohio,Ohio,"Williams, Fulton, Defiance, Henry",,Northwest Ohio,41.461747,-84.318357,
+zm14671,Canis latrans,Ohio,Ohio,Hardin,,,40.672553,-83.667515,
+zm14672,Canis latrans,Ohio,Ohio,Hardin,,,40.672553,-83.667515,
+zm14673,Canis latrans,Ohio,Ohio,"Williams, Fulton, Defiance, Henry",,Northwest Ohio,41.461747,-84.318357,
+zm14674,Canis latrans,Ohio,Ohio,"Williams, Fulton, Defiance, Henry",,Northwest Ohio,41.461747,-84.318357,
+zm14700,Canis latrans,Ohio,Ohio,"Williams, Fulton, Defiance, Henry",,Northwest Ohio,41.461747,-84.318357,
+zm14701,Canis latrans,northeast,Connecticut,,,,41.595,-72.70667,
+zm14702,Canis latrans,northeast,Connecticut,Litchfield,Barkhamsted,,41.913101,-72.989443,2006
+zm14704,Canis latrans,northeast,Connecticut,Hartford,New Britain,,41.66111,-72.78,2006
+zm14705,Canis latrans,northeast,Connecticut,Litchfield,Barkhamsted,,41.913101,-72.989443,2006
+zm14706,Canis latrans,northeast,Connecticut,New Haven,North Haven,,41.3903,-72.86,2006
+zm14754,Canis latrans,northeast,Vermont,Orleans,Orleans,,44.827403,-72.24437,2006
+zm14769,Canis latrans,northeast,New York,Saratoga,Ballston Lake,Sweet Rd,42.939353,-73.838391,2006
+zm14781,Canis latrans,northeast,Vermont,Orleans,Orleans,,44.827403,-72.24437,2006
+zm14782,Canis latrans,Ohio,Ohio,Hardin,,,40.672553,-83.667515,2006
+zm14801,Canis latrans,Ohio,Ohio,Hardin,,,40.672553,-83.667515,2006
+zm14807,Canis latrans,northeast,Connecticut,Tolland,,,41.812778,-72.31,2006
+zm14817,Canis latrans,Ohio,Ohio,Wayne,Smithville,,40.86222,-81.86194,2006
+zm14818,Canis latrans,Ohio,Ohio,Monroe,,,39.725864,-81.077399,
+zm14819,Canis latrans,Ohio,Ohio,Belmont,,,40.04929,-81.18505,
+zm14820,Canis latrans,Ohio,Ohio,Belmont,,,40.05131,-81.22302,
+zm14823,Canis latrans,Ohio,Ohio,Belmont,,,40.012731,-80.995232,
+zm14827,Canis latrans,Ohio,Ohio,Clark,Springfield,,39.92417,-83.80889,
+zm14981,Canis latrans,northeast,Vermont,"Essex, Caledonia, Orleans",,Northeastern Vermont,44.911934,-71.915399,2006
+zm15077,Canis latrans,contact,New York,Ontario,West Bloomfield,Fields at south end of Cannan Rd.,42.881691,-77.473576,2007
+zm15083,Canis lupus,northeast,Vermont,Orleans,Newport Center,,44.95083,-72.30694,2006
+zm15120,Canis latrans,northeast,New York,Putnam,Philipstown,,41.467753,-73.904014,
+zm15124,Canis latrans,northeast,New York,Westchester,Yorktown,,41.274455,-73.8107,
+zm15126,Canis latrans,northeast,New York,Westchester,Purchase,,41.034685,-73.736235,
+zm15130,Canis latrans,Ohio,Ohio,Hardin,,,40.672553,-83.667515,
+zm15131,Canis latrans,Ohio,Ohio,Hardin,,,40.672553,-83.667515,
+zm15132,Canis latrans,Ohio,Ohio,Hardin,,,40.672553,-83.667515,
+zm15135,Canis latrans,Ohio,Ohio,Hardin,,,40.672553,-83.667515,
+zm15136,Canis latrans,Ohio,Ohio,Hancock,,,40.992966,-83.683031,
+zm15139,Canis latrans,northeast,Vermont,"Essex, Caledonia, Orleans",,,44.911934,-71.915399,
+zm15142,Canis latrans,northeast,Vermont,"Essex, Caledonia, Orleans",,,44.911934,-71.915399,2006
+zm15143,Canis latrans,northeast,Vermont,"Essex, Caledonia, Orleans",,,44.911934,-71.915399,2006
+zm15144,Canis latrans,northeast,Vermont,"Essex, Caledonia, Orleans",,,44.911934,-71.915399,2006
+zm15145,Canis latrans,northeast,Vermont,Orleans,Orleans,,44.827403,-72.24437,2006
+zm15146,Canis latrans,northeast,Vermont,Orleans,Orleans,,44.827403,-72.24437,2006
+zm15147,Canis latrans,northeast,Connecticut,Middlesex,,,41.595,-72.64583,
+zm15149,Canis latrans,Ohio,Ohio,Hardin,,,40.672553,-83.667515,
+zm15151,Canis latrans,northeast,Vermont,Bennington,Bennington,,43.141182,-73.271536,
+zm15171,Canis latrans,northeast,New Hampshire,Coos,,,44.642705,-71.207068,
+zm15172,Canis latrans,northeast,New Hampshire,Coos,,,44.642705,-71.207068,
+zm15173,Canis latrans,northeast,New Hampshire,Coos,,,44.642705,-71.207068,
+zm15180,Canis latrans,northeast,New Hampshire,Coos,,,44.642705,-71.207068,
+zm15194,Canis latrans,northeast,New Hampshire,Coos,,,44.642705,-71.207068,
+zm15197,Canis latrans,northeast,New York,Franklin or St. Lawrence,,,44.547502,-74.801027,2005
+zm15198,Canis latrans,northeast,New York,Franklin or St. Lawrence,,,44.547502,-74.801027,2005
+zm15199,Canis latrans,northeast,New York,Franklin or St. Lawrence,,,44.547502,-74.801027,2005
+zm15285,Canis latrans,contact,New York,Genesee,Batavia,,42.99806,-78.18778,
+zm15286,Canis latrans,contact,New York,Chautauqua,Gerry,,42.19333,-79.24889,
+zm15287,Canis latrans,contact,New York,Cattaraugus,Otto,,42.35611,-78.83194,
+zm15292,Canis latrans,northeast,Quebec,La Region-Sherbrookoise,,south,45.39083333,-72.037,
+zm15293,Canis latrans,northeast,Quebec,L'Erable,,south,46.28333333,-71.35,
+zm15305,Canis latrans,northeast,Quebec,La Nouvelle-Beauce,,south,46.43566667,-71.0205,
+zm15306,Canis latrans,northeast,Quebec,Desjardins,,south,46.804353,-71.177816,
+zm15310,Canis latrans,northeast,Quebec,Lotbiniere,,south,46.53333333,-71.63333333,
+zm15311,Canis latrans,northeast,Quebec,Lotbiniere,,south,46.568,-71.8355,
+zm15313,Canis latrans,northeast,Quebec,Montmagny,,south,46.82233333,-70.3895,
+zm15316,Canis latrans,northeast,Quebec,L'Erable,,south,46.36666667,-71.61666667,
+zm15317,Canis latrans,northeast,Quebec,La Region-Sherbrookoise,,south,45.39083333,-72.037,
+zm15318,Canis latrans,northeast,Quebec,Montmagny,,south,46.82233333,-70.3895,
+zm15319,Canis latrans,northeast,Quebec,Montmagny,,south,46.82233333,-70.3895,
+zm15321,Canis latrans,northeast,Quebec,L'Islet,,south,47.05566667,-69.72366667,
+zm15373,Canis latrans,northeast,Quebec,Montmagny,,south,46.82233333,-70.3895,
+zm15374,Canis latrans,northeast,Quebec,Lotbiniere,,south,46.45983333,-71.526,
+zm15376,Canis latrans,northeast,Quebec,Lotbiniere,,south,46.55733333,-71.43566667,
+zm15377,Canis latrans,northeast,Quebec,Lotbiniere,,south,46.568,-71.8355,
+zm15379,Canis latrans,northeast,Quebec,L'Erable,,south,46.23333333,-71.75,
+zm15411,Canis latrans,northeast,Quebec,Kamouraska,,south,47.43333333,-69.7,
+zm15508,Canis latrans,northeast,Quebec,Robert-Cliché,,south,46.14083333,-70.90483333,
+zm15512,Canis latrans,northeast,Quebec,L'Erable,,south,46.36666667,-71.61666667,
+zm15520,Canis latrans,northeast,Quebec,Robert-Cliché,,south,46.2,-70.783413,
+zm15525,Canis latrans,northeast,New York,Sullivan,Fremont,,41.886714,-74.976887,
+zm15526,Canis latrans,contact,New York,Chautauqua,,,42.299242,-79.118138,
+zm15531,Canis latrans,northeast,New York,Sullivan,Fremont,,41.886714,-74.976887,
+zm15536,Canis latrans,northeast,New York,Sullivan,Fremont,,41.886714,-74.976887,
+zm15537,Canis latrans,northeast,New York,Sullivan,Fremont,,41.886714,-74.976887,
+zm15541,Canis latrans,Ohio,Ohio,Pickaway,,,39.687369,-82.991969,
+zm15544,Canis latrans,northeast,New York,Sullivan,Fremont,,41.886714,-74.976887,
+zm15576,Canis latrans,northeast,New Jersey,Ocean,,,39.966934,-74.308535,
+zm15582,Canis latrans,northeast,New Jersey,Hunterdon,Tewksbury,oldwick and hill and dale road,40.683863,-74.753411,
+zm15583,Canis latrans,northeast,New Jersey,Hunterdon,Tewksbury,oldwick and hill and dale road,40.683863,-74.753411,
+zm15584,Canis latrans,northeast,New Jersey,Atlantic,,,39.536561,-74.690225,
+zm15585,Canis latrans,northeast,New Jersey,Sussex,,,41.128848,-74.687549,
+zm15586,Canis latrans,northeast,New Jersey,Atlantic,,,39.536561,-74.690225,
+zm15589,Canis latrans,northeast,New Jersey,,,,40.1416398,-74.7306135,
+zm15590,Canis latrans,northeast,New Jersey,Sussex,,,41.128848,-74.687549,
+zm15609,Canis latrans,northeast,New Jersey,Hunterdon,,,40.566022,-74.919654,
+zm15610,Canis latrans,northeast,New Jersey,Hunterdon,,,40.566022,-74.919654,
+zm15611,Canis latrans,northeast,New Jersey,Hunterdon,,,40.566022,-74.919654,
+zm15612,Canis latrans,northeast,New Jersey,Hunterdon,,,40.566022,-74.919654,
+zm15613,Canis latrans,northeast,New Jersey,Hunterdon,,,40.566022,-74.919654,
+zm15614,Canis latrans,northeast,New Jersey,Hunterdon,,,40.566022,-74.919654,
+zm15615,Canis latrans,contact,Pennsylvania,Potter,,,41.783562,-77.912106,
+zm15616,Canis latrans,contact,Pennsylvania,Lycoming,,,41.33215,-77.019737,2008
+zm15617,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,2008
+zm15619,Canis latrans,contact,Pennsylvania,Tioga,,,41.792053,-77.25374,2008
+zm15620,Canis latrans,contact,Pennsylvania,Erie,,,42.004316,-80.068469,
+zm15621,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,2008
+zm15622,Canis latrans,northeast,Pennsylvania,Dauphin,,,40.392431,-76.80982,2008
+zm15623,Canis latrans,northeast,Pennsylvania,Susquehanna,,,41.814024,-75.788693,2008
+zm15624,Canis latrans,contact,Pennsylvania,Tioga,,,41.792053,-77.25374,2008
+zm15625,Canis latrans,contact,Pennsylvania,Bradford,,,41.76406,-76.471893,2008
+zm15626,Canis latrans,northeast,Pennsylvania,Wyoming,,,41.516888,-75.989637,2008
+zm15627,Canis latrans,northeast,Pennsylvania,Wyoming,,,41.516888,-75.989637,
+zm15628,Canis latrans,contact,Pennsylvania,Centre,,,40.908869,-77.808908,
+zm15629,Canis latrans,northeast,Pennsylvania,Wayne,,,41.608559,-75.296495,2008
+zm15635,Canis latrans,northeast,Maine,Somerset,Pittston,,45.893547,-69.990258,
+zm15637,Canis latrans,northeast,Maine,Somerset,T3R4 BKP WKR,,45.254268,-70.258498,
+zm15652,Canis latrans,northeast,Maine,Washington,Marion,,44.830191,-67.332561,
+zm15661,Canis latrans,northeast,Maine,Washington,Whiting,,44.761704,-67.261568,
+zm15669,Canis latrans,northeast,Maine,Aroostook,T13R7,,46.78867,-68.610528,
+zm15679,Canis latrans,northeast,Maine,Aroostook,T12R6,,46.783367,-68.499135,
+zm15681,Canis latrans,northeast,Maine,Piscataquis,T7R9,,46.262019,-68.875396,
+zm15682,Canis latrans,northeast,Maine,Washington,Marshfield,,44.736321,-67.481982,
+zm15686,Canis latrans,northeast,Maine,Washington,Marion,,44.830191,-67.332561,
+zm15688,Canis latrans,northeast,Maine,Somerset,Pittston,,45.893547,-69.990258,
+zm15689,Canis latrans,northeast,Maine,Aroostook,Haynesville,,45.812965,-67.973783,
+zm15691,Canis latrans,northeast,Maine,Aroostook,Glenwood,,45.774935,-68.117878,
+zm15692,Canis latrans,northeast,Maine,Penobscot,Drew,,45.584535,-68.097409,
+zm15705,Canis latrans,northeast,Maine,Somerset,Pittston,,45.893547,-69.990258,
+zm15711,Canis latrans,northeast,Maine,Piscataquis,Little Squaw,,45.436914,-69.6821,
+zm15715,Canis latrans,northeast,Maine,Aroostook,T2R4,,45.803316,-68.239401,
+zm15721,Canis latrans,northeast,Maine,Penobscot,T7R8,,46.29083,-68.829082,
+zm15724,Canis latrans,northeast,Maine,York ,Dayton,,43.680616,-70.727366,
+zm15729,Canis latrans,northeast,Maine,Washington,Marion,,44.830191,-67.332561,
+zm15753,Canis latrans,northeast,Maine,Penobscot,Clifton,,44.8167686,-68.5111771,
+zm15861,Canis latrans,northeast,Rhode Island,Washington,Town of Hopkington,Arcadia Rd. ,41.53046,-71.700365,2008
+zm15884,Canis latrans,northeast,Rhode Island,all RI counties,,,41.673491,-71.524881,2009
+zm15951,Canis latrans,northeast,Massachusetts, Suffolk,, Logan Airport ,42.364619,-71.005515,2009
+zm15952,Canis latrans,northeast,Rhode Island,Washington,Town of Richmond,First Ave,41.493326,-71.668087,2007
+zm15953,Canis latrans,northeast,Massachusetts,Worcester,, Spencer ,42.338635,-72.095355,2009
+zm15973,Canis latrans,northeast,Pennsylvania, Lackawanna,, ,41.432665,-75.631598,2009
+zm15974,Canis latrans,northeast,Pennsylvania, Lackawanna,, ,41.432665,-75.631598,2009
+zm15976,Canis latrans,northeast,Pennsylvania, Luzerne ,,,41.147462,-75.969372,2009
+zm15977,Canis latrans,northeast,Pennsylvania,Luzerne ,,Sweet Valley   ,41.2822,-76.145015,2009
+zm15978,Canis latrans,northeast,Pennsylvania, Lackawanna,, ,41.432665,-75.631598,2009
+zm15979,Canis latrans,northeast,Pennsylvania, Lackawanna,, ,41.432665,-75.631598,2009
+zm15980,Canis latrans,northeast,Pennsylvania,Luzerne,,,41.147462,-75.969372,
+zm15981,Canis latrans,northeast,Pennsylvania,Wayne,,Hawley,41.475927,-75.182098,2009
+zm15985,Canis latrans,northeast,Rhode Island,Newport,,Jamestown,41.497105,-71.367396,2007
+zm15987,Canis latrans,northeast,Pennsylvania, Lehigh,,,40.608019,-75.590547,2009
+zt1,Canis latrans,northeast,Vermont,Orleans,Coventry,,44.867161,-72.26096,2006
+zt11,Canis latrans,northeast,Vermont,Orleans,Bloomfield,,44.753679,-71.63029,2006
+zt12,Canis latrans,northeast,Vermont,Orleans,Morgan,,44.911789,-72.016683,2006
+zt13,Canis latrans,northeast,Vermont,Orleans,Troy,,44.903998,-72.405752,2006
+zt140,Canis latrans,northeast,New York,Westchester,Greenburgh,,41.041034,-73.78789,
+zt169,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt170,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt171,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt172,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt173,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt174,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt175,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt176,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt177,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt178,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt179,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt181,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt182,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt183,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt184,Canis latrans,contact,New York,Onondaga,,,42.96746866,-75.91561672,2007
+zt188,Canis latrans,contact,New York,Oneida,,Southern Oneida Co.,42.93419341,-75.4445842,2007
+zt19,Canis latrans,northeast,Vermont,Orleans,Newport,,44.93224,-72.21889,2006
+zt190,Canis latrans,contact,New York,Oneida,,Southern Oneida Co.,42.93419341,-75.4445842,2007
+zt192,Canis latrans,contact,New York,Oneida,,Southern Oneida Co.,42.93419341,-75.4445842,2007
+zt194,Canis latrans,contact,New York,Oneida,,Southern Oneida Co.,42.93419341,-75.4445842,2007
+zt196,Canis latrans,contact,New York,Oneida,,Southern Oneida Co.,42.93419341,-75.4445842,2007
+zt2,Canis latrans,northeast,Vermont,Essex,Norton,,44.983534,-71.79439,2006
+zt200,Canis latrans,contact,New York,Oneida,,Southern Oneida Co.,42.93419341,-75.4445842,2007
+zt206,Canis latrans,northeast,New York,Herkimer,,,43.11762363,-74.78627634,2007
+zt210,Canis latrans,northeast,New York,Herkimer,,,43.11762363,-74.78627634,2007
+zt213,Canis latrans,northeast,New York,Herkimer,,,43.06692343,-75.08404586,2007
+zt220,Canis latrans,northeast,New York,Herkimer,,,43.06692343,-75.08404586,2007
+zt221,Canis latrans,northeast,New York,Herkimer,,,43.06692343,-75.08404586,2007
+zt222,Canis latrans,contact,New York,Madison,,,43.04363486,-75.87392558,2007
+zt225,Canis latrans,contact,New York,Madison,,,42.85086864,-75.34812946,2007
+zt226,Canis latrans,contact,New York,Cortland,,,42.60256014,-75.93606119,2007
+zt227,Canis latrans,northeast,New York,Mongomery,,,42.93756976,-74.29816992,2007
+zt228,Canis latrans,northeast,New York,Mongomery,,,42.93756976,-74.29816992,2007
+zt232,Canis latrans,northeast,New York,Mongomery,,,42.93756976,-74.29816992,2007
+zt234,Canis latrans,northeast,New York,Fulton,,,43.09951294,-74.300624,2007
+zt238,Canis latrans,northeast,New York,"Renssalear, Columbia, Greene",,,42.47442084,-73.77329947,2007
+zt239,Canis latrans,northeast,New York,"Renssalear, Columbia, Greene",,,42.47442084,-73.77329947,2007
+zt240,Canis latrans,northeast,New York,"Renssalear, Columbia, Greene",,,42.47442084,-73.77329947,2007
+zt241,Canis latrans,northeast,New York,"Renssalear, Columbia, Greene",,,42.47442084,-73.77329947,2007
+zt242,Canis latrans,contact,New York,Oneida,,,43.20654342,-75.51850882,2007
+zt244,Canis latrans,contact,New York,Oneida,,,43.20654342,-75.51850882,2007
+zt246,Canis latrans,northeast,New York,Lewis,,Southern Lewis Co.,43.56991161,-75.35532681,2007
+zt247,Canis latrans,contact,New York,Madison,,,43.08709609,-75.9138091,2007
+zt249,Canis latrans,contact,New York,Madison,,,43.08709609,-75.9138091,2007
+zt250,Canis latrans,northeast,Pennsylvania,Susquehanna,,,41.94859006,-75.75648635,2007
+zt251,Canis latrans,northeast,Pennsylvania,Susquehanna,,,41.94859006,-75.75648635,2007
+zt253,Canis latrans,northeast,Pennsylvania,Susquehanna,,,41.94859006,-75.75648635,2007
+zt254,Canis latrans,northeast,Pennsylvania,Susquehanna,,,41.94859006,-75.75648635,2007
+zt258,Canis latrans,northeast,New York,Washington,,,42.9831072,-73.27525674,2007
+zt260,Canis latrans,contact,New York,Monroe,,,43.22796542,-77.74361085,2007
+zt261,Canis latrans,contact,New York,Monroe,,,43.22796542,-77.74361085,2007
+zt262,Canis latrans,contact,New York,Monroe,,,43.22796542,-77.74361085,2007
+zt263,Canis latrans,contact,New York,Monroe,,,43.22796542,-77.74361085,2007
+zt264,Canis latrans,contact,New York,Monroe,,,43.22796542,-77.74361085,2007
+zt267,Canis latrans,contact,New York,Monroe,,,43.22796542,-77.74361085,2007
+zt268,Canis latrans,contact,New York,Monroe,,,43.22796542,-77.74361085,2007
+zt273,Canis latrans,northeast,New York,Delaware,,,41.98746685,-74.84234228,2007
+zt275,Canis latrans,northeast,New York,Delaware,,,41.98746685,-74.84234228,2007
+zt280,Canis latrans,northeast,New York,Jefferson,,,43.70031131,-76.10994938,2007
+zt281,Canis latrans,northeast,New York,Jefferson,,,43.70031131,-76.10994938,2007
+zt282,Canis latrans,northeast,New York,Jefferson,,,43.70031131,-76.10994938,2007
+zt284,Canis latrans,northeast,New York,Jefferson,,,43.70031131,-76.10994938,2007
+zt285,Canis latrans,northeast,New York,Jefferson,,,43.70031131,-76.10994938,2007
+zt288,Canis latrans,northeast,New York,Jefferson,,,43.70031131,-76.10994938,2007
+zt289,Canis latrans,northeast,New York,Jefferson,,,43.70031131,-76.10994938,2007
+zt290,Canis latrans,northeast,New York,Jefferson,,,43.70031131,-76.10994938,2007
+zt292,Canis latrans,northeast,New York,St. Lawrence,,,44.42203264,-75.42543637,2007
+zt293,Canis latrans,northeast,New York,Lewis,,,44.42203264,-75.42543637,2007
+zt295,Canis latrans,northeast,New York,Lewis,,,43.86620199,-75.40609502,2007
+zt298,Canis latrans,northeast,New York,Lewis,,,43.86620199,-75.40609502,2007
+zt299,Canis latrans,contact,New York,Wayne,,,43.14440967,-76.88835139,2007
+zt3,Canis latrans,northeast,Vermont,Orleans,Irasburg,,44.802368,-72.280098,2006
+zt300,Canis latrans,contact,New York,Ontario,,,43.14440967,-76.88835139,2007
+zt301,Canis latrans,contact,New York,Ontario,,,43.14440967,-76.88835139,2007
+zt302,Canis latrans,contact,New York,Ontario,,,43.14440967,-76.88835139,2007
+zt303,Canis latrans,contact,New York,Ontario,,,42.91871212,-77.14230345,2007
+zt306,Canis latrans,contact,New York,Ontario,,,42.91871212,-77.14230345,2007
+zt317,Canis latrans,contact,New York,Steuben,,,42.38877348,-77.24356045,2007
+zt318,Canis latrans,contact,New York,Steuben,,,42.38877348,-77.24356045,2007
+zt319,Canis latrans,contact,New York,Steuben,,,42.38877348,-77.24356045,2007
+zt320,Canis latrans,contact,New York,Steuben,,,42.38877348,-77.24356045,2007
+zt323,Canis latrans,contact,New York,"Livinston, Alleghany",,,42.51579496,-78.00566688,2007
+zt324,Canis latrans,contact,New York,"Livinston, Alleghany",,,42.51579496,-78.00566688,2007
+zt325,Canis latrans,contact,New York,"Livinston, Alleghany",,,42.51579496,-78.00566688,2007
+zt326,Canis latrans,contact,New York,Wayne,,,43.14440967,-76.88835139,2007
+zt327,Canis latrans,contact,New York,Wayne,,,43.14440967,-76.88835139,2007
+zt329,Canis latrans,contact,New York,Wayne,,,43.14440967,-76.88835139,2007
+zt330,Canis latrans,contact,New York,Wayne,,,43.14440967,-76.88835139,2007
+zt331,Canis latrans,contact,New York,Wayne,,,43.14440967,-76.88835139,2007
+zt332,Canis latrans,contact,New York,Yates,,,42.68416524,-77.22218042,2007
+zt333,Canis latrans,contact,New York,Chemung,,,42.2052702,-76.955346,2007
+zt334,Canis latrans,contact,New York,Steuben,,,42.4974676,-77.54640004,2007
+zt337,Canis latrans,contact,New York,Genesee,,,42.95534491,-78.00289656,2007
+zt338,Canis latrans,contact,New York,Ontario,,,42.6774954,-77.40583264,2007
+zt341,Canis latrans,contact,New York,Livingston,,,42.49493355,-77.7814625,2007
+zt342,Canis latrans,contact,New York,Livingston,,,42.49493355,-77.7814625,2007
+zt360,Canis latrans,northeast,New York,Otsego,Burlington,,42.727,-75.1485,2007
+zt361,Canis latrans,northeast,New York,Otsego,Burlington,,42.727,-75.1485,2007
+zt362,Canis latrans,northeast,New York,Otsego,Burlington,,42.727,-75.1485,2007
+zt380,Canis latrans,northeast,New York,Otsego,Richfield,Monticello,42.857,-74.9973,2007
+zt381,Canis latrans,northeast,New York,Otsego,Town of Otsego,Keys Rd,42.777,-74.928,2007
+zt382,Canis latrans,northeast,New York,Otsego,Richfield,Monticello,42.857,-74.9973,2007
+zt383,Canis latrans,northeast,New York,Greene,Windham,Mitchell Hollow,42.344,-74.2452,2007
+zt384,Canis latrans,northeast,New York,Schoharie,Sharon,Staleyville,42.815,-74.5968,2007
+zt385,Canis latrans,northeast,New York,Schoharie,Sharon,Staleyville,42.815,-74.5968,2007
+zt387,Canis latrans,northeast,New York,Schoharie,Sharon,Staleyville,42.815,-74.5968,2007
+zt388,Canis latrans,northeast,New York,Schoharie,Sharon,Staleyville,42.815,-74.5968,2007
+zt389,Canis latrans,northeast,New York,Schoharie,Sharon,Staleyville,42.815,-74.5968,2007
+zt390,Canis latrans,northeast,New York,Schoharie,Sharon,Staleyville,42.815,-74.5968,2007
+zt391,Canis latrans,northeast,New York,Schoharie,Sharon,Staleyville,42.815,-74.5968,2007
+zt393,Canis latrans,northeast,New York,Otsego,Town of Otsego,Keys Rd,42.777,-74.928,2007
+zt394,Canis latrans,northeast,New York,Otsego,Town of Otsego,Keys Rd,42.777,-74.928,2007
+zt395,Canis latrans,northeast,New York,Otsego,Oneonta,Town line at State hwy 7,42.457,-75.1025,2007
+zt396,Canis latrans,northeast,New York,Otsego,Oneonta,Town line at State hwy 7,42.457,-75.1025,2007
+zt399,Canis latrans,northeast,New York,Delaware,Roxbury,Polli Rd,42.359,-74.5205,2007
+zt4,Canis latrans,northeast,Vermont,Orleans,Coventry,,44.867161,-72.26096,2006
+zt40,Canis latrans,northeast,New York,Herkimer,Little Falls,,43.044879,-74.858965,
+zt400,Canis latrans,northeast,New York,Delaware,Roxbury,Polli Rd,42.359,-74.5205,2007
+zt401,Canis latrans,northeast,New York,Delaware,Kortright,Roberts Rd,42.384,-74.8129,2007
+zt402,Canis latrans,northeast,New York,Delaware,Kortright,Roberts Rd,42.384,-74.8129,2007
+zt403,Canis latrans,northeast,New York,Delaware,Kortright,Roberts Rd,42.384,-74.8129,2007
+zt404,Canis latrans,contact,New York,"Steuben, Schuyler",,,42.344,-77.1237,2007
+zt406,Canis latrans,contact,New York,"Steuben, Schuyler",,,42.344,-77.1237,2007
+zt409,Canis latrans,contact,New York,"Steuben, Schuyler",,,42.344,-77.1237,2007
+zt41,Canis latrans,contact,New York,Madison,Earlville,,42.743931,-75.546151,
+zt410,Canis latrans,contact,New York,"Steuben, Schuyler",,,42.344,-77.1237,2007
+zt411,Canis latrans,contact,New York,"Steuben, Schuyler",,,42.344,-77.1237,2007
+zt412,Canis latrans,contact,New York,"Steuben, Schuyler",,,42.344,-77.1237,2007
+zt413,Canis latrans,contact,New York,"Steuben, Schuyler",,,42.344,-77.1237,2007
+zt414,Canis latrans,contact,New York,"Steuben, Schuyler",,,42.344,-77.1237,2007
+zt415,Canis latrans,contact,New York,"Steuben, Schuyler",,,42.344,-77.1237,2007
+zt416,Canis latrans,contact,New York,"Steuben, Schuyler",,,42.344,-77.1237,2007
+zt417,Canis latrans,contact,New York,"Steuben, Schuyler",,,42.344,-77.1237,2007
+zt418,Canis latrans,contact,New York,"Steuben, Schuyler",,,42.344,-77.1237,2007
+zt419,Canis latrans,contact,New York,"Steuben, Schuyler",,,42.344,-77.1237,2007
+zt421,Canis latrans,northeast,New York,Albany,Guilderland,,42.712955,-73.878361,2005
+zt43,Canis latrans,northeast,New York,Herkimer,Little Falls,,43.043429,-74.858993,
+zt446,Canis latrans,contact,Pennsylvania,Clearfield,,,40.992599,-78.469614,
+zt449,Canis latrans,contact,Pennsylvania,Clearfield,,,40.992599,-78.469614,
+zt450,Canis latrans,contact,Pennsylvania,Clearfield,,,40.992599,-78.469614,
+zt451,Canis latrans,contact,Pennsylvania,Armstrong,,,40.829959,-79.423361,
+zt452,Canis latrans,contact,Pennsylvania,Centre,,,40.908869,-77.808908,
+zt454,Canis latrans,contact,Pennsylvania,Tioga,,,41.792053,-77.25374,
+zt455,Canis latrans,contact,Pennsylvania,Elk,,,41.418126,-78.660232,
+zt456,Canis latrans,contact,Pennsylvania,Clinton,,,41.232543,-77.652679,
+zt457,Canis latrans,contact,Pennsylvania,Elk,,,41.418126,-78.660232,
+zt458,Canis latrans,contact,Pennsylvania,Jefferson,,,41.127334,-79.002202,
+zt459,Canis latrans,contact,Pennsylvania,Jefferson,,,41.127334,-79.002202,
+zt460,Canis latrans,contact,Pennsylvania,Erie,,,42.004316,-80.068469,
+zt462,Canis latrans,contact,Pennsylvania,Snyder,,,40.769358,-77.060296,
+zt463,Canis latrans,contact,Pennsylvania,Clearfield,,,40.992599,-78.469614,
+zt465,Canis latrans,northeast,Pennsylvania,Susquehanna,,,41.94859006,-75.75648635,
+zt466,Canis latrans,contact,Pennsylvania,Clearfield,,,40.992599,-78.469614,
+zt468,Canis latrans,contact,Pennsylvania,Cambria,,,40.506598,-78.701545,
+zt469,Canis latrans,contact,Pennsylvania,Juniata,,,40.530297,-77.447552,
+zt471,Canis latrans,contact,Pennsylvania,Bradford,,,41.76406,-76.471893,
+zt472,Canis latrans,contact,Pennsylvania,Bradford,,,41.76406,-76.471893,
+zt475,Canis latrans,contact,Pennsylvania,Bradford,,,41.76406,-76.471893,
+zt476,Canis latrans,contact,Pennsylvania,Bradford,,,41.76406,-76.471893,
+zt478,Canis latrans,contact,Pennsylvania,Elk,,,41.418126,-78.660232,
+zt479,Canis latrans,contact,Pennsylvania,Warren,,,41.805013,-79.294353,
+zt480,Canis latrans,contact,Pennsylvania,Cambria,,,40.506598,-78.701545,
+zt482,Canis latrans,contact,Pennsylvania,Clearfield,,,40.992599,-78.469614,
+zt484,Canis latrans,contact,Pennsylvania,Clearfield,,,40.992599,-78.469614,
+zt486,Canis latrans,contact,Pennsylvania,Warren,,,41.805013,-79.294353,
+zt492,Canis latrans,contact,Pennsylvania,Clearfield,,,40.992599,-78.469614,
+zt5,Canis latrans,northeast,Vermont,Orleans,Morgan,,44.911789,-72.016683,2006
+zt6,Canis latrans,northeast,Vermont,Orleans,Glover,,44.707634,-72.18894,2006
+zt600,Canis latrans,contact,Pennsylvania,Clearfield,,,40.992599,-78.469614,
+zt601,Canis latrans,contact,Pennsylvania,Huntingdon,,,40.413412,-77.979075,
+zt602,Canis latrans,contact,Pennsylvania,Huntingdon,,,40.413412,-77.979075,
+zt603,Canis latrans,contact,Pennsylvania,Centre,,,40.908869,-77.808908,
+zt604,Canis latrans,contact,Pennsylvania,Greene,,,39.854611,-80.230327,
+zt605,Canis latrans,contact,Pennsylvania,Greene,,,39.854611,-80.230327,
+zt606,Canis latrans,contact,Pennsylvania,McKean,,,41.804634,-78.565332,
+zt607,Canis latrans,contact,Pennsylvania,McKean,,,41.804634,-78.565332,
+zt608,Canis latrans,contact,Pennsylvania,McKean,,,41.804634,-78.565332,
+zt609,Canis latrans,contact,Pennsylvania,Greene,,,39.854611,-80.230327,
+zt610,Canis latrans,contact,Pennsylvania,Greene,,,39.854611,-80.230327,
+zt614,Canis latrans,northeast,Pennsylvania,Monroe,,,41.053932,-75.34324,
+zt623,Canis latrans,contact,Pennsylvania,Venango,,,41.383852,-79.732481,
+zt625,Canis latrans,contact,Pennsylvania,Crawford,,,41.680868,-80.068469,
+zt627,Canis latrans,contact,Pennsylvania,Lawrence,,,40.988623,-80.336807,
+zt629,Canis latrans,contact,Pennsylvania,Fayette,,,39.935608,-79.657802,
+zt630,Canis latrans,northeast,Pennsylvania,Northhampton,,,40.7658,-75.324697,
+zt631,Canis latrans,contact,Pennsylvania,Elk,,,41.418126,-78.660232,
+zt632,Canis latrans,contact,Pennsylvania,Fayette,,,39.935608,-79.657802,
+zt633,Canis latrans,contact,Pennsylvania,Centre,,,40.908869,-77.808908,
+zt634,Canis latrans,contact,Pennsylvania,Cambria,,,40.506598,-78.701545,
+zt636,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,
+zt637,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,
+zt638,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,
+zt639,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,
+zt640,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,
+zt641,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,
+zt642,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,
+zt643,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,
+zt646,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,
+zt650,Canis latrans,contact,Pennsylvania,Indiana,,,40.6520,-79.0880,
+zt651,Canis latrans,contact,Pennsylvania,Cambria,,,40.506598,-78.701545,
+zt653,Canis latrans,contact,Pennsylvania,Westmoreland,,,40.3110,-79.4670,
+zt657,Canis latrans,northeast,Pennsylvania,Columbia,,,41.061168,-76.422792,
+zt660,Canis latrans,contact,Pennsylvania,Erie,,,42.004316,-80.068469,
+zt661,Canis latrans,contact,Pennsylvania,Erie,,,42.004316,-80.068469,2008
+zt671,Canis latrans,contact,Pennsylvania,Centre,,,40.908869,-77.808908,
+zt672,Canis latrans,contact,Pennsylvania,Tioga,,,41.792053,-77.25374,
+zt675,Canis latrans,contact,Pennsylvania,Elk,,,41.418126,-78.660232,
+zt676,Canis latrans,contact,Pennsylvania,Clearfield,,,40.992599,-78.469614,
+zt677,Canis latrans,contact,Pennsylvania,Warren,,,41.805013,-79.294353,
+zt678,Canis latrans,northeast,Pennsylvania,Dauphin,,,40.392431,-76.80982,
+zt679,Canis latrans,contact,Pennsylvania,Sullivan,,,41.427386,-76.517451,
+zt690,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,
+zt691,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,
+zt692,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,
+zt693,Canis latrans,contact,Pennsylvania,Mercer,,,41.296773,-80.2423,
+zt694,Canis latrans,contact,Pennsylvania,Crawford,,,41.680868,-80.068469,
+zt695,Canis latrans,contact,Pennsylvania,Crawford,,,41.680868,-80.068469,
+zt697,Canis latrans,northeast,Pennsylvania,Susquehanna,,,41.94859006,-75.75648635,
+zt698,Canis latrans,northeast,Pennsylvania,Susquehanna,,,41.94859006,-75.75648635,
+zt699,Canis latrans,contact,Pennsylvania,Lycoming,,,41.33215,-77.019737,2008
+zt7,Canis latrans,northeast,Vermont,Orleans,Holland,,44.9602,-71.99982,2006
+zt700,Canis latrans,contact,Pennsylvania,Lycoming,,,41.33215,-77.019737,2008
+zt701,Canis latrans,contact,Pennsylvania,Lycoming,,,41.33215,-77.019737,2008
+zt702,Canis latrans,contact,Pennsylvania,Lycoming,,,41.33215,-77.019737,2008
+zt703,Canis latrans,contact,Pennsylvania,Lycoming,,,41.33215,-77.019737,2008
+zt704,Canis latrans,contact,Pennsylvania,Lycoming,,,41.33215,-77.019737,2008
+zt9,Canis latrans,northeast,Vermont,Essex,Norton,,44.983534,-71.79439,2006
+ztpb10,Canis latrans,northeast,New York,Albany,Guilderland,Pine Bush,42.712955,-73.878361,
+ztpb13,Canis latrans,northeast,New York,Albany,Guilderland,Pine Bush,42.712955,-73.878361,
+ztpb150.664,Canis latrans,northeast,New York,Albany,Guilderland,Pine Bush,42.712955,-73.878361,
+ztpb2,Canis latrans,northeast,New York,Albany,Guilderland,Pine Bush,42.712955,-73.878361,
+ztpb6,Canis latrans,northeast,New York,Albany,Guilderland,Pine Bush,42.712955,-73.878361,

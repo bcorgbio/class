@@ -11,115 +11,102 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 # Introduction
 
-Any student steeped in the mechanics of muscle understands that force produced by this tissue is governed by two important parameters: speed and length. In this project, we'll explore the effect of length on muscle force generation and evaluate how fatigue affects this force-length (FL) relationship. 
-
-The FL relationship is governed by several important biophysical aspects of muscle architecture. At the fiber level, the force produced is largely mediated by the number of crossbridges that can be formed. Crossbridges are small and have a limited attachment range. Therefore, crossbridge attachments only occur in the actin-myosin overlap zone of a sarcomere. Together, with the assumptions underlying the crossbridge theory, this limitation implies that the maximal isometric force of a sarcomere is directly related to the amount of actin-myosin overlap (Fig. 1).
-
-<center>
-![](https://journals.physiology.org/cms/10.1152/jappl.1999.86.5.1445/asset/images/medium/japp05516002x.jpeg)
-<br>
-**Fig. 1.** The force-length relationship of a sarcomere as predicted by cross-bridge theory.
-</center>
-<br>
-
-Of course, many muscles transect a lever system composed of a few bones articulating at a joint. For our subject, the human upper limb, the forearm flexors originate on the pectoral girdle above the humerus and insert on the radius and ulna, spanning the elbow joint. Simply put, the arm is a 3rd order lever (Fig 2). If we are to consider the force transmitted to the hand (or any other part along the antebrachium), we must also consider this lever configuration. As a lever, this system has a mechanical advantage that predicts the amount of output force transmitted by the input force. Mechanical advantage is defined by the following:
-
-$$MA=\frac{L_i}{L_o}$$,
-
-where $L_i$ is the in-lever and $L_o$ the output leaver. For the human upper limb, the inlever is the distance between the flexor insertion and elbow joint and the out-lever is the length of the antebrachium and hand (or the distance between the elbow and the load). This ratio generally accords to 0.2 in this system. What this predicts is that any force applied to the in-lever results in 20% of that force at the end of the out-lever (i.e., the palm).
-
-What makes this more complicated is that the effective in-lever, the input moment arm, changes as the forearm flexes. This is due to the fact that the insertion angle changes as the forearm rotates (Fig. 3). Because the force produced by an input is variable with respect to insertion angle, the output isn't necessarily predicted by MA alone.
-
-<center>
-![](https://openoregon.pressbooks.pub/app/uploads/sites/42/2018/07/Range-300x262.png)
-
-**Fig. 2** The 3rd-order level system of the human upper limb.
-</center>
-<br>
-
-Fortunately for us, physiologists have found that studying the force (or torque) produced by a biomechanical system can still be useful in uncovering the FL relationships of the input muscles [@rassier1999length]. For this project, we take this assumption to mean that the force we measure at the hand as the muscle produces isometric force at various lengths is a reasonable reflection of the FL relationship governing force at the fiber level.
+![](https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=2817252_rsbl20090575f01.jpg)
 
 
-```{r eval=FALSE,include=FALSE}
+https://onlinelibrary.wiley.com/doi/full/10.1111/mec.12570
 
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3899836/
+
+```{r}
 library(tidyverse)
-library(data.table)
-library(gganimate)
-library(emojifont)
- #return coord for a point r away at angle=ang
-  point.ang.r <- function(p,r,theta){x.2 <-p[1]+r*cos(theta); y.2 <- p[2]+r*sin(theta);return(list(x.2,y.2))}
-  
-  #set up angle and arm data
-  pos <- seq(157.5,0,-22.5)-90
-  pos.rad <- pos * pi/180 
-  humerus <- 1
-  distal.arm <- 1
-  elb.x <- 0
-  elb.y <- 0
-  hum.x <- 0
-  hum.y <- 1
-  
-  #make a data.table for easy calculation for new columns
-  arm <- data.table(pos,pos.rad,elb.x,elb.y,hum.x,hum.y)
-  
-  #columns for hand and inlever position
-  arm[,c("hand.x","hand.y"):=point.ang.r(c(elb.x,elb.y),r=humerus,theta=pos.rad),by=pos]
-  arm[,c("inlever.x","inlever.y"):=point.ang.r(c(elb.x,elb.y),r=humerus*0.2,theta=pos.rad),by=pos]
-  
- arm.m <-  arm%>%
-   pivot_longer(col=-c(pos,pos.rad))%>%
-   mutate(part=gsub("(.+)\\..","\\1",name),x.y=gsub("(.+)\\.(.)","\\2",name))%>%
-   pivot_wider(-name,names_from = c(x.y),values_from=value)%>%
-   mutate(pos2 =90-pos) #rotate angle 90 
+library(rinat)
+library(sf)
+library(rgbif)
+library(parallel)
+library(foreach)
+library(doParallel)
+library(smartsnp)
+library(SNPassoc)
+
+data.table
+cowplot
+rnaturalearth
+dplyr
+ggspatial
+gganimate
+png
+leaflet
+rnaturalearthdata with devtools::install_github("ropensci/rnaturalearthdata")
+
+states <- c("Maine","New Hampshire","Vermont","Massachusetts")
+basis <- c("OBSERVATION","PRESERVED_SPECIMEN","HUMAN_OBSERVATION")
+species <- c("Canis latrans","Sciurus carolinensis")
+
+args <- expand_grid(species,states,basis)
+gbif_args <- list()
+
+for(i in 1:nrow(args)){
+  name_i <- paste0(args[i,1],args[i,2],args[i,3])
+  gbif_args[[name_i]] <- list()
+  gbif_args[[name_i]]$scientificName <- args[i,]$species
+  gbif_args[[name_i]]$stateProvince <- args[i,]$states
+  gbif_args[[name_i]]$basisOfRecord <- args[i,]$basis
+   gbif_args[[name_i]]$limit <- 10000
+   gbif_args[[name_i]]$hasCoordinate <- TRUE
+}
+
+get_gbif <- function(i) do.call(rgbif::occ_data,args = gbif_args[[i]])
  
 
-#add bones
- p <- ggplot()+geom_segment(data=arm.m%>%filter(part!="hum"),aes(x = 0, y = 0, xend = x, yend = y),size=3,col="gray")+geom_segment(data=arm.m%>%filter(part=="hum"),aes(x = 0, y = 0, xend = 0, yend = 1), col = "black",size=4)
- 
- #add points
- p <- p+geom_point(dat=arm.m%>%filter(part!="hand"),aes(x,y,col=part),size=4)+xlim(c(-.5,1.5))+ylim(c(-1.2,1.2)) 
- 
- #add muscle lines
- p <- p+geom_curve(data=arm.m%>%filter(part=="inlever"),aes(x = 0, y = 1, xend = x, yend = y),curvature = -0.3,col="red")+geom_curve(data=arm.m%>%filter(part=="inlever"),aes(x = 0, y = 1, xend = x, yend = y),curvature = 0.0,col="red")
- 
- #add emoji hand
- p <- p+geom_text(data=arm.m%>%filter(part=="hand"),aes(x,y,label=emoji("hand"),angle=pos2*-1),family="EmojiOne", size=20,vjust=0,hjust=.4)
- 
- print(p)
- 
- #get rid of axes and background
-p<- p+theme_void()
- 
+file.copy(pathToGenoFile,paste0("data/",basename(pathToGenoFile)))
 
-#transition according to arm position and make pretty
- anim <- p + transition_states(pos,transition_length = 10,state_length = 70)+shadow_wake(.01)+enter_fade()+exit_fade()
-  
-anim_save("arm.gif", anim)
+cl <- makePSOCKcluster(detectCores()-2) # leave two cores for background processes
+# cl <- makePSOCKcluster(1) # if old PC use only 1 core
+registerDoParallel(cl) # register parallel backend
+
+t <- system.time(
+  gbif_res <- foreach(i=1:length(gbif_args),.verbose=T, .packages = c( "rgbif")) %dopar% {
+      get_gbif(i)
+  }
+)
 
 
+lapply(gbif_res, function(x) x[][[1]]$count)
+cols_ <- c("species","decimalLongitude","decimalLatitude","basisOfRecord","stateProvince","year","month")
+ nulls <- lapply(gbif_res,function(x) is.null(x$data)) %>% unlist
+gbif_rec <- lapply(gbif_res[!nulls], function(x) x$data[,cols_]) %>% do.call(rbind,.) 
 
-https://www.researchgate.net/profile/Ella_Yeung/publication/6223955_Shift_of_Peak_Torque_Angle_After_Eccentric_Exercise/links/53e1a0f60cf2235f352bd385/Shift-of-Peak-Torque-Angle-After-Eccentric-Exercise.pdf
+gbif_rec %>% 
+  group_by(species,year,stateProvince) %>%
+  summarize(n=n()) %>% 
+  ggplot(aes(year,log(n),col=species))+geom_point()
 
 
-#good summary
-https://journals.physiology.org/doi/full/10.1152/jappl.1999.86.5.1445
+data("SNPs")
+d <- SNPs[,-c(1:5)]
+myDat<-setupSNP(d,1:ncol(d),sep="")
+mydatnum <- apply(myDat,2,additive)
+
+cl_snps <- read_csv("data/coyote_snps.csv")
+cl_local <- read_csv("data/coyote_local.csv")
+
+snps <- setupSNP(cl_snps,2:ncol(cl_snps),sep="",)
+
+snps <- apply(snps[,-1],2,additive) %>% data.frame() %>% na.omit()
+
+rownames(snps) <- cl_snps %>% na.omit %>% pull(id)
+
+pc <- prcomp(snps)
+
+cl_pc <- pc$x[,1:5] %>% data.frame() %>% mutate(id=rownames(pc$x)) %>% left_join(cl_local)
+
+cl_pc %>% 
+  ggplot(aes(Long,Lat,col=PC2))+geom_point()
 ```
 
-<center>
-![](arm.gif)
-<br>
-**Fig. 4.** Rotation of the forearm through its typical range of motion. Notice that the insertion angle of the biceps changes. (This was of course produced with R . . . have a look at [this gist on github](https://gist.github.com/ckenaley/924171571a73874384a6aaaef93e372b) if you'd like the code.)
-</center>
-<br>
-
-Keeping all this mind mind, we'll study the FL relationship of the human upper limb and how this relationship responds to fatigue. Eccentric fatigue, whereby the muscle has been asked to do a lot of negative work (producing tension while lengthening) has been a particular interested to muscle physiologists [@yeung2008shift]. That is, this research has shown that the force/torque-length/angle relationship shifts soon after and long after eccentric fatigue. Specifically, the peak normalized isometric force shifts over the typical range of angles for a biomechanical system.   
-
-The specific goals of this project are to:
-
-  1. Produce isometric force-angle curves for the human forearm flexors undertaking maximum voluntary contractions (MVCs).
-  2. Compare the angle at which maximum isometric force ($F_{max}$) occurs ($\theta_{max}$) between non-fatigued (i.e., control) and eccentrically fatigued forearm flexors.
-  3. Discuss the underlying mechanisms resulting in a shift of $\theta_{max}$ after eccentric fatigue.
-
+#
+https://royalsocietypublishing.org/doi/abs/10.1098/rsbl.2009.0575
 
 # Methods
 

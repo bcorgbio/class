@@ -1,0 +1,38 @@
+---
+title: "Module 1: The Basics"
+subtitle: "Gitting and Subsetting"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2024/09/04"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# Today we'll .....
+```{r,echo=FALSE,message=FALSE,warning=F}
+library(tidyverse)
+library(kableExtra)
+```
+
+.pull-left[
+
+- Review WCR
+
+  - Subsetting data
+
+  - `for` loops
+
+- Peak under the hood of Module Project 1 (finally)
+
+
+]
+
+
+
+
+
