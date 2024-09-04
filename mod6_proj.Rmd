@@ -93,16 +93,35 @@ cl_local <- read_csv("data/coyote_local.csv")
 
 snps <- setupSNP(cl_snps,2:ncol(cl_snps),sep="",)
 
-snps <- apply(snps[,-1],2,additive) %>% data.frame() %>% na.omit()
+snps <- apply(snps[,-1],2,additive) %>% data.frame()
 
-rownames(snps) <- cl_snps %>% na.omit %>% pull(id)
+rownames(snps) <- cl_snps %>% pull(id)
 
-pc <- prcomp(snps)
 
-cl_pc <- pc$x[,1:5] %>% data.frame() %>% mutate(id=rownames(pc$x)) %>% left_join(cl_local)
+wolf <- read_csv("data/wolf_snps.csv") %>% 
+  select(starts_with("Canis")|starts_with("snp")) %>% 
+  pivot_longer(cols = contains("Canis"))
+mds <- snps %>%
+  dist() %>%          
+  cmdscale() %>%
+  as_tibble()
 
-cl_pc %>% 
-  ggplot(aes(Long,Lat,col=PC2))+geom_point()
+colnames(mds) <- c("Dim1", "Dim2")
+
+wolf <- cl_mds %>% 
+  filter(species=="Canis lupus")%>%
+  select()
+  summarize(Dim1=mean(Dim1),Dim2=mean(Dim2))
+
+cl_mds <- mds %>% mutate(id=rownames(snps)) %>% left_join(cl_local)
+cl_mds %>% 
+  group_by(state,species,id) %>%
+  mutate(dist=sum(c(abs(Dim1-wolf$Dim1),abs(Dim2-wolf$Dim2)))) %>% 
+  ggplot(aes(state,dist))+geom_boxplot()
+  
+  ggplot(aes(Dim1,Dim2,col=species,shape=Region))+geom_point()
+
+
 ```
 
 #
