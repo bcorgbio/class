@@ -90,14 +90,90 @@ mydatnum <- apply(myDat,2,additive)
 cl_snps <- read_csv("data/coyote_snps.csv")
 cl_local <- read_csv("data/coyote_local.csv")
 
-snps <- setupSNP(cl_snps,2:ncol(cl_snps),sep="",)
 
-snps <- apply(snps[,-1],2,additive) %>% data.frame()
+wolf <- read_csv("data/wolf_snps.csv") 
 
-rownames(snps) <- cl_snps %>% pull(id)
+wolf2 <- rbind(
+wolf[,1:3] %>% 
+  pivot_longer(starts_with("Canis")) %>% 
+  rename(snp=snp_1),
+wolf[,5:7] %>% 
+  pivot_longer(starts_with("Canis")) %>% 
+  rename(snp=snp_2),
+wolf[,9:11] %>% 
+  pivot_longer(starts_with("Canis")) %>% 
+  rename(snp=snp_3)
+) %>% 
+  rename(species=name) %>%
+  mutate(value=paste0(value,value)) %>% 
+  mutate(species=gsub("(\\w*)_(\\w*)_.*","\\1 \\2",species),
+         Region=ifelse(grepl("lycaon",species),"Eastern","Western")) %>% 
+  group_by(species) %>% 
+  mutate(id=paste0(gsub("(\\w).* (\\w.).*","\\1\\2",species),1:n()))
+  
+
+common_snps <- base::intersect(colnames(cl_snps),wolf2$snp)
+cl_snps <- cl_snps %>% 
+  pivot_longer(-id,names_to = "snp") %>% 
+    mutate(species="Canis latrans",Region="Eastern") %>%
+    select(species,Region,id,snp,value)
+
+rbind(
+  cl_snps,
+wolf2 %>% 
+  select(species,Region,id,snp,value)  %>%
+  filter(snp%in%common_snps,!is.na(value))
+) %>% write_csv("data/wolf_coyote_snps.csv")
+
+wolf_coy  <- read_csv("data/wolf_coyote_snps.csv") 
+
+all(wolf_coy$value %>% str_count(".")==2)
+any(wolf_coy$value %>% str_count("ang"))
 
 
-wolf <- read_csv("data/wolf_snps.csv") %>% 
+bad_snps <- wolf_coy %>% group_by(snp) %>% 
+  summarize(n=length(unique(value))) %>%
+  filter(n>3) %>% pull(snp)
+
+
+snps <-  wolf_coy %>%
+  filter(!snp%in%bad_snps) %>% 
+  select(-c(Region,species)) %>% 
+   pivot_wider(names_from = snp,values_from = value)
+
+snps_ <-wolf_coy %>% select(id,species) %>% 
+  left_join(snps)
+
+snps <- setupSNP(snps_,3:ncol(snps),sep="")
+snps <- apply(snps[,-c(1:2)],2,additive) %>% data.frame()
+
+mds <- snps %>%
+  dist() %>%          
+  cmdscale() %>%
+  as_tibble()
+
+
+
+
+colnames(mds) <- c("Dim.1", "Dim.2")
+# Plot MDS
+ggscatter(mds, x = "Dim.1", y = "Dim.2", 
+          label = rownames(swiss),
+          size = 1,
+          repel = TRUE)
+
+
+ data(SNPs)
+ SNPs[,4]
+ myDat<-setupSNP(w,5,sep="")
+ 
+ 
+```
+
+
+
+
+
   select(starts_with("Canis")|starts_with("snp")) %>% 
   pivot_longer(cols = contains("Canis"))
 mds <- snps %>%
