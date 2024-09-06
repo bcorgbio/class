@@ -17,9 +17,52 @@ library(treeio)
 library(rgbif)
 library(data.table)
 library(phytools)
+library(fishtree)
+library(rgbif)
+library(doParallel)
+library(foreach)
+library(parallel)
+
+#limit tree to cypriniformes
+cyp <- fishtree_taxonomy(ranks = "Cypriniformes")$Cypriniformes$sampled_species
 
 
-#read in lepidoptera tree from Akito et al.
+
+gbif_args <- list()
+
+for(i in cyp){
+  gbif_args[[i]] <- list()
+  gbif_args[[i]]$scientificName <- i
+  gbif_args[[i]]$continent="north_america"
+  gbif_args[[i]]$basisOfRecord <- "PRESERVED_SPECIMEN"
+   gbif_args[[i]]$limit <- 10000
+   gbif_args[[i]]$hasCoordinate <- TRUE
+}
+
+get_gbif <- function(i) do.call(rgbif::occ_data,args = gbif_args[[i]])
+ 
+cl <- makePSOCKcluster(detectCores()-2) # leave two cores for background processes
+# cl <- makePSOCKcluster(1) # if old PC use only 1 core
+registerDoParallel(cl) # register parallel backend
+
+t <- system.time(
+  gbif_res <- foreach(i=1:length(gbif_args),.verbose=T, .packages = c( "rgbif")) %dopar% {
+      get_gbif(i)
+  }
+)
+
+
+saveRDS(gbif_res,"data/Rob_cypriniforms_gbif.RDS")
+#limit tree to cypriniformes
+cyp <- fishtree_taxonomy(ranks = "Cypriniformes")$Cypriniformes$sampled_species
+
+
+
+
+phy <- fishtree_phylogeny()
+phy$tip.label <- gsub("_"," ",phy$tip.label)
+phy <- keep.tip(phy,cyp)
+phy <- force.ultrametric(phy)
 
 #super family names changed to repflect phylogeny
 lep.tree <- read.mcmctree("lepidoptera_tree.tre")
