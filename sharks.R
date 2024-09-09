@@ -205,8 +205,8 @@ plotRefToTarget(M, fit1$GM$fitted[,,20], mag = 1)
 gp.so <- as.numeric(as.factor(PCA$superorder))-1
 names(gp.so) <- PCA$sp
 
-PCA$superorder[which(gp.so==0)]
-PCA$superorder[which(gp.so==1)]
+so_names <- c(PCA$superorder[which(gp.so==0)] %>% unique,
+PCA$superorder[which(gp.so==1)]%>% unique)
 
 PCA$habit[which(gp.hab==0)]
 PCA$habitat[which(gp.hab==1)]
@@ -215,15 +215,51 @@ dimnames(ldk_al$coords)[[3]] <- PCA$sp
 gp.hab <- as.numeric(as.factor(PCA$habitat))-1
 names(gp.hab) <- PCA$sp
 
-so_er <- list()
+hab_names <- c(PCA$habit[which(gp.hab==0)] %>% unique,
+               PCA$habit[which(gp.hab==1)]%>% unique)
+
+
+so_er_fit <- list()
 
 for(i in 1:length(phy2)){
-  so_er[[i]] <-compare.evol.rates(A=ldk_al$coords, phy=phy2[[i]],
-                       method="simulation",gp=gp.so,iter=999)
+  so_er_fit[[i]] <-compare.evol.rates(A=ldk_al$coords, phy=phy2[[i]],
+                       method="simulation",gp=gp.so,iter=999,print.progress = F)
 }
 
-so_er_fit <- lapply(so_er,summary)
-funcion(x) x$sigma.d.gp
+so_er <- lapply(so_er_fit,summary)
+
+so_er <- lapply(so_er,function(x) {
+  er <- c(x$sigma.d.gp,x$sigma.d.ratio)
+  names(er) <- c(so_names,"ratio")
+  return(er)
+}) %>% do.call(rbind,.) %>% data.frame
+
+
+so_er %>% 
+  pivot_longer(Galeomorphii:Squalomorphii) %>% 
+  ggplot(aes(value,fill=name)) + geom_histogram()
+
+
+hab_er_fit <- list()
+
+for(i in 1:length(phy2)){
+  hab_er_fit[[i]] <-compare.evol.rates(A=ldk_al$coords, phy=phy2[[i]],
+                                      method="simulation",gp=gp.hab,iter=999,print.progress = F)
+}
+
+hab_er <- lapply(hab_er_fit,summary)
+
+hab_er <- lapply(hab_er,function(x) {
+  er <- c(x$sigma.d.gp,x$sigma.d.ratio)
+  names(er) <- c(hab_names,"ratio")
+  return(er)
+}) %>% do.call(rbind,.) %>% data.frame
+
+
+hab_er %>% 
+  pivot_longer(benthic:pelagic) %>% 
+  ggplot(aes(value,fill=name)) + geom_histogram()
+
 
 ER<-compare.evol.rates(A=ldk_al$coords, phy=phy2[[1]],
                        method="simulation",gp=gp.hab,iter=999)
