@@ -115,19 +115,28 @@ iris%>%
 
 - `read_csv()` most handy
 
-```{r,fig.height=3,eval=FALSE}
+```{r,fig.height=3,message=FALSE}
 d <- read_csv("https://bcorgbio.github.io/class/data/coyote.csv")
-
+head(d)
 ```
 
+---
+
+## Loading data
 
 
 ```{r,fig.height=3}
-iris%>%
-  group_by(Species)%>%
-  summarize(mean_length=mean(Sepal.Length))%>%
-  ggplot(aes(x=Species,y=mean_length))+geom_bar(stat="identity")
+d%>%
+  group_by(state)%>%
+  dplyr::summarize(n=n())%>%
+  ggplot(aes(x=state,y=n))+geom_bar(stat="identity")+coord_flip()
   
 ```
+
+
+
+
+
+
 
 

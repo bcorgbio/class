@@ -158,19 +158,41 @@ iris%&gt;%
 
 ``` r
 d &lt;- read_csv("https://bcorgbio.github.io/class/data/coyote.csv")
+head(d)
 ```
 
+```
+## # A tibble: 6 × 10
+##   id      species       Region    state  County Town  Locality   Lat  Long  Year
+##   &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 adk2706 Canis latrans northeast New Y… &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;      43.8 -75.0  2007
+## 2 adk2798 Canis latrans northeast New Y… &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;      43.9 -74.7    NA
+## 3 adk2801 Canis latrans northeast New Y… &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;      43.9 -74.7    NA
+## 4 adk2833 Canis latrans northeast New Y… &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;      43.9 -74.8    NA
+## 5 adk2845 Canis latrans northeast New Y… &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;      42.8 -73.8    NA
+## 6 adk2853 Canis latrans northeast New Y… Herkm… Lost… Lost Cr…  43.8 -75.0  2002
+```
+
+---
+
+## Loading data
 
 
 
 ``` r
-iris%&gt;%
-  group_by(Species)%&gt;%
-  summarize(mean_length=mean(Sepal.Length))%&gt;%
-  ggplot(aes(x=Species,y=mean_length))+geom_bar(stat="identity")
+d%&gt;%
+  group_by(state)%&gt;%
+  dplyr::summarize(n=n())%&gt;%
+  ggplot(aes(x=state,y=n))+geom_bar(stat="identity")+coord_flip()
 ```
 
 ![](3140_f24_9-9_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+
+
+
+
+
+
 
 
     </textarea>
