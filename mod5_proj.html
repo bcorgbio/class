@@ -441,184 +441,370 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 </style>
 <!-- Add icon library -->
 <p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>Butterflies and moths (the Lepidoptera) are an exceptional <a
-href="https://en.wikipedia.org/wiki/Evolutionary_radiation">radiation</a>
-of insects, comprising nearly 160,000 described extant species. (For
-context, the vertebrates comprise just 70,000 species or so.) The
-Lepidoptera play a fundamental role in almost every terrestrial
-ecosystem. These ecologically important species use paired wings to
-power flight in search of places to lay eggs, feed on nectar and other
-resources, and find mates. The airy environment in which moths and
-butterflies fly undoubtedly exerts natural selective pressure on wing
-size and shape. However, it appears as if the hind- and forewings have
-different roles to play in powered flight and the ecology of the
-Lepidoptera. If hindwings are removed from butterflies, they are able to
-fly, but at the cost of speed and maneuverability (Jantzen and Eisner
-2008). Therefore, it has been proposed that forewing shape and size may
-be the result of stabilizing selection imposed by the physical and fluid
-requirements of flight and hindwing shape and size may be determined
-more by neutral selection, sexual selection, or selection due to
-predator avoidance (Sourakov 2013, Barber et al. 2015, Willmott et
-al. 2017, Rubin et al. 2018, Chazot et al. 2016).</p>
-<center>
-<p><img
-src="https://3.bp.blogspot.com/-0ZJtpbcAlWo/W9R6ek_sNPI/AAAAAAAAUj0/ncYRT0nN9MctC-x60-boMe8bodGXNM2LQCLcBGAs/s450/ButterflyWing3a.jpg"
-style="width:50.0%" /></p>
-<br> <em>The anotomy of a butterfly or moth.</em>
-</center>
-<p><br> <br></p>
-<p>Studies based on experimental manipulations like those of <span
-class="citation">Jantzen and Eisner (2008)</span>, important as they
-are, are limited in their ability to characterize shape variables and
-the ecological roles of fore- and hind wings over evolutionary time
-scales and across lepidopteran lineages. Comparative analysis of shape
-data from natural history collections has helped bridge the gap between
-experimental studies and macroevolutionary patterns. If there is, in
-fact, different constraints on the evolution of fore- and hindwing
-morphology, we would expect to find a consistent patterns of different
-fore- and hindwing shape across the lepidoptera. Indeed, a number of
-studies have investigated whether for- and hindwing shape and size
-differs in several isolated groups of butterflies. Strauss (1990) found
-the shape of hindwings were much more variable than forewings in
-heliconiine and ithomiine butterflies. In contrast, Chazot et al. (2016)
-found a strong correlation between forewing and hindwing shapes in the
-famous morpho group of butterflies. Therefore, the limited research on
-this topic does not resolve whether fore- and hindwing shape differ
-consistently across the Lepidoptera. Each of these studies was limited
-in their phylogenetic scope, encompassing very few species spanning few
-families of butterflies. Addressing whether fore- and hindwing shape
-varies independently, a much broader phylogenetic sample should be
-analyzed, one that includes not just representatives of the butterfly
-lineage, but also moths.</p>
-<center>
-<p><img
-src="https://d3i71xaburhd42.cloudfront.net/bb0cd297955c4ec58bd60777dc345f7c1d5d93bd/3-Figure1-1.png"
-style="width:50.0%" /></p>
-<br> <em>Several species of Heliconiinae butterflies, demonstrating the
-variability in wingshape. From <span class="citation">Penz and Peggie
-(2003)</span>.</em>
-</center>
-<p><br> <br></p>
-<p>The goal of this project is to study wing-shape evolution across the
-lepidoptera, including hundreds of species from both the moths (a <a
-href="https://en.wikipedia.org/wiki/Paraphyly">paraphyletic group</a>)
-and butterflies. To do this, we’ll take a morphometric approach,
-characterizing the shape outline of fore- and hindwings from about 200
-species of Lepidoptera. The specific questions we’ll answer with our
-morphometric data are:</p>
-<ol style="list-style-type: decimal">
-<li><p>Do hind- and forewings vary in their evolutionary rates?</p></li>
-<li><p>Does the “evolvability” of the hind- and forewings vary
-significantly among major lineages of moths and butterflies?</p></li>
-<li><p>Is hindwing and forewing shape correlated?</p></li>
-</ol>
+<p>saveRDS(gbif_res,“data/Rob_cypriniforms_gbif.RDS”) #limit tree to
+cypriniformes cyp &lt;- fishtree_taxonomy(ranks = “Cypriniformes”)<span
+class="math inline">\(Cypriniformes\)</span>sampled_species</p>
+<p>phy &lt;- fishtree_phylogeny() phy<span
+class="math inline">\(tip.label &lt;- gsub(&quot;_&quot;,&quot;
+&quot;,phy\)</span>tip.label) phy &lt;- keep.tip(phy,cyp) phy &lt;-
+force.ultrametric(phy)</p>
+<p>#super family names changed to repflect phylogeny lep.tree &lt;-
+read.mcmctree(“lepidoptera_tree.tre”)</p>
+<p>write.tree(<a href="mailto:lep.tree@phylo"
+class="email">lep.tree@phylo</a>,“lep_tree.tre”)</p>
+<p>lep.tree &lt;- lep.tree.or &lt;- read.tree(“lep_tree.tre”)</p>
+<p>#plot(lep.tree)</p>
+<p>#retrieve tips tips &lt;- sapply(lep.tree$tip.label,function(x)
+strsplit(x,“_“))</p>
+<p>#adjust tips to Genus species tips2 &lt;- lapply(tips,function(x){ r
+&lt;- x[grep(“inae<span class="math inline">\(&quot;,x)+1:2]
+if(length(r)==0){  r &lt;- x[grep(&quot;idae\)</span>”,x)+1:2] }
+return(paste(r,collapse=” “)) }</p>
+<p>) %&gt;% unlist</p>
+<p>#fix Polygonia problem tips2[grep(“Polygonia”,tips2)] &lt;-
+“Polygonia c-album”</p>
+<p>hi.taxa &lt;- tibble(higher_taxon=lapply(tips,function(x) x[1])
+%&gt;% unlist,species=tips2)</p>
+<p>common_names &lt;- c( “Caddisflies caddisflies”, “Mandibulate archaic
+moths”, “Kauri moths”, “Valdivian archaic moths”, “Sparkling archaic sun
+moths”, “Archaic bell moths”, “Australian archaic moths”, “Ghost moths”,
+“Pygmy leafminer moths”, “Andean endemic moths”, “Primitive monotrysian
+moths”, “Gondwanaland moths”, “Trumpet leaf miner moths”, “Clothes
+moths”, “Cocoon-maker/leaf blotch miner moths”, “Ermine moths”, “False
+burnet moths”, “Metalmark moths”, “Pantropical moths”, “Tortrix moths”,
+“Clearwing moths”, “Burnet moths”, “Carpenter moths”, “Papilionoid
+butterflies”, “Curved-horn moths”, “Many-plumed moths”, “Plume moths”,
+“Old World butterfly moths”, “Picture-winged leaf moths”, “Snout moths”,
+“Sack-bearer moths”, “Hook-tip moths”, “Owlet moths”, “Geometrid moths”,
+“Eggars/Tent moths”, “Sphynx/Silk moths” )</p>
+<p>common.names &lt;- tibble(higher_taxon=hi.taxa$higher_taxon %&gt;%
+unique()) %&gt;% left_join(hi.taxa)</p>
+<p>##for labelling trees ht &lt;-unique(hi.taxa$higher_taxon)</p>
+<p>Angiospermivora&lt;-
+tibble(major_clade=“Angiospermivora”,higher_taxon=unique(ht)[!ht%in%
+c(“Trichoptera”,“Micropterigoidea”,“Agathiphagoidea”)])</p>
+<p>Glossata &lt;-
+tibble(major_clade=“Glossata”,higher_taxon=Angiospermivora %&gt;%
+filter(!higher_taxon%in%c(“Heterobathmioidea”)) %&gt;%
+pull(higher_taxon))</p>
+<p>Heteroneura &lt;-
+tibble(major_clade=“Heteroneura”,higher_taxon=Glossata %&gt;%
+filter(!higher_taxon%in%c(“Lophocoronoidea”,“Hepialoidea”,“Eriocranioidea”,“Neopseustoidea”
+)) %&gt;% pull(higher_taxon))</p>
+<p>Ditrysia &lt;- tibble(major_clade=“Ditrysia”,higher_taxon=Heteroneura
+%&gt;%
+filter(!higher_taxon%in%c(“Nepticuloidea”,“Andesianoidea”,“Adeloidea”,“Palaephatoidea-2”,“Tischerioidea”,“Palaephatoidea-1”
+)) %&gt;% pull(higher_taxon))</p>
+<p>Apoditrysia &lt;-
+tibble(major_clade=“Apodytrisia”,higher_taxon=Ditrysia %&gt;%
+filter(!higher_taxon%in%c(“Tineoidea”,“Tineoidea-Stem2”,“Tineoidea-Stem1”,“Gracillarioidea/Yponomeutoidea”))
+%&gt;% pull(higher_taxon))</p>
+<p>Obtectomera &lt;-
+tibble(major_clade=“Obtectomera”,higher_taxon=Apoditrysia %&gt;%
+filter(!higher_taxon%in%c(“Urodoidea”,“Choreutoidea”,“Immoidea”,“Sesioidea”,
+“Tortricoidea”,“Zygaenoidea”,“Cossoidea”)) %&gt;%
+pull(higher_taxon))</p>
+<p>Macrohetercera &lt;-
+tibble(major_clade=“Macroheterocera”,higher_taxon=Obtectomera %&gt;%
+filter(!higher_taxon%in%c(“Papilionoidea”,“Gelechioidea”,“Alucitoidea”,“Pterophoroidea”,
+“Calliduloidea”,“Thyridoidea”,“Pyraloidea”,“Pyraloidea”,“Mimallonoidea”))
+%&gt;% pull(higher_taxon))</p>
+<p>ht.largeclades &lt;-
+list(Angiospermivora,Glossata,Heteroneura,Ditrysia,Apoditrysia,Obtectomera,Macrohetercera)</p>
+<p>largeclades.sp &lt;- lapply(ht.largeclades, function(x){z &lt;-
+common.names %&gt;% filter(higher_taxon%in%x$higher_taxon) %&gt;%
+pull(species);names(z) &lt;- NULL;return(z)})</p>
+<p>names(largeclades.sp) &lt;- lapply(ht.largeclades,function(x) x
+%&gt;% pull(major_clade) %&gt;% unique)</p>
+<p>superfams &lt;- lapply(unique(common.names$higher_taxon), function(x)
+{z &lt;- common.names %&gt;% filter(higher_taxon==x) %&gt;%
+pull(species);names(z) &lt;- NULL;return(z)})</p>
+<p>names(superfams) &lt;- common.names$higher_taxon %&gt;% unique</p>
+<p>lep.tax &lt;- c(superfams,largeclades.sp)</p>
+<p>saveRDS(lep.tax,“Lep_classification.RDS”)</p>
+<p>lep.tree</p>
+<p>###PROBLEM: polygonia c-album was retrieved in gbif as 5 sepearate
+species. must combine.</p>
+<p>common.names &lt;- common.names %&gt;%
+mutate(species=ifelse(grepl(“Polygonia”,species),“Polygonia
+c-album”,species))</p>
+<p>common.names<span
+class="math inline">\(species[grepl(&quot;Polygonia&quot;,common.names\)</span>species)]
+#fix name problem viz Polygonia tips2[grep(“Polygonia”,tips2)] &lt;-
+“Polygonia c-album”</p>
+<p>lep.tree$tip.label &lt;- sp &lt;- tips2</p>
+<div id="add-node-clade-info" class="section level2">
+<h2>add node clade info</h2>
+<p>lep.tree$node.label &lt;-
+rep(NA,(Ntip(lep.tree)+Nnode(lep.tree)))</p>
+<p>hi.taxa %&gt;% filter(grepl(“Telchin”,species)) dys &lt;- NULL mono
+&lt;- NULL for(i in names(lep.tax)){ t.i &lt;- lep.tax[[i]]</p>
+<p>is.mono &lt;- is.monophyletic(lep.tree,tips = t.i)</p>
+<p>#extract.clade(lep.tree.or,n.i)$tip.label mono[i] &lt;- is.mono
+if(is.mono){ if(length(t.i)&gt;1){ n.i &lt;- getMRCA(lep.tree,t.i)</p>
+<p>d.i &lt;- phytools::getDescendants(lep.tree,n.i)
+lep.tree$node.label[c(n.i,d.i)] &lt;- i</p>
+<p>}else{ n.i &lt;- which(lep.tree<span
+class="math inline">\(tip.label==t.i)  lep.tree\)</span>node.label[c(n.i)]
+&lt;- i }</p>
+<p>} dys[i] &lt;- “Ditrysia” %in% lep.tree$node.label }</p>
+<p>which(!dys) which(!mono)</p>
 </div>
-<div id="methods" class="section level1">
-<h1>Methods</h1>
-<div id="image-acquisition" class="section level2">
-<h2>Image acquisition</h2>
-<p>A few decades ago, a morphometric project like this would require
-visiting museums collections from around the world to take images of the
-specimens and species of interest. In fact, this was a major part of
-Prof. Kenaley’s PhD thesis, which included trips to natural history
-collections in France, Denmark, Great Britain, Taiwan, Japan, Monaco,
-New Zealand, and Australia. Ahhhhhh, the good ol’ days. Fortunately (or
-unfortunately), travel to such wonderful places may be avoided as
-collections have made major efforts to photograph their specimens. Now
-that most museums around the world have their holdings cataloged in
-databases, researchers can search their collections for records that
-have digital images.</p>
-<p>Until very recently, amassing a data set of images for morphometric
-work would require querying individual databases, one at a time.
-However, most natural history museums share their data with the Global
-Biodiversity Information Facility (GBIF), a clearing house of
-collections and species information. In the context of a comparative
-project like ours, one could search the GBIF database online for moth
-and butterfly records that have images. Fortunately for use, the folks
-at GBIF have created and R package, <a
-href="https://www.gbif.org/tool/81747/rgbif"><code>rgif</code></a>, that
-permits access to GBIF’s application programming interface (API),
-rendering their records searchable from the command line.</p>
-<p>Prof. Kenaley used this package, <code>rgbif</code>, to query museum
-records with images. This resulted in a cache of about 180 images of the
-the 200 species included in the <span class="citation">Kawahara et al.
-(2019)</span> phylogeny. For the remainder, he scoured the interwebs for
-reputable sources of images. The images ## Species list and
-phylogeny</p>
-<p>Because we’ll be comparing wing shape across species of the
-Lepidoptera, this project is by definition a comparative one and we’ll
-need a phylogeny for the group. Fortunately a recent phylogenomic
-analysis for 200 species of Lepidotera by <span
-class="citation">Kawahara et al. (2019)</span> resolved the
-relationships of the major groups of this order. We’ve used the taxa
-studied in this paper to find images in GBIF and we’ll use <a
-href="lep_tree2.tre">a tree file</a> representing phylogeny for our
-comparative analsyis.</p>
-<center>
-<p><br> <img
-src="https://www.pnas.org/cms/10.1073/pnas.1907847116/asset/075c8ff7-6363-462d-a528-f2b13710804d/assets/graphic/pnas.1907847116fig01.jpeg"
-style="width:50.0%" /> <br></p>
-The phylogenetic relationships of the Lepidoptera according the <span
-class="citation">Kawahara et al. (2019)</span>.
-</center>
-<p><br></p>
+<div
+id="lep.treenode.label---null-lep.treenode.label---reptestnnodelep.tree"
+class="section level1">
+<h1>lep.tree<span class="math inline">\(node.label &lt;- NULL #
+lep.tree\)</span>node.label &lt;- rep(“test”,Nnode(lep.tree))</h1>
 </div>
-<div id="digitization" class="section level2">
-<h2>Digitization</h2>
-<p>Our shape analysis will be based on the outline of the hind- and
-fore-wings of ~200 species of Lepidoptera. To outline the wings, we’ll
-follow this generalize workflow below in the image analysis program FIJI
-(FIJI is just imageJ).</p>
-<br>
-<center>
-<img src="lep_workflow.jpeg" style="width:70.0%" /> <br>
-</center>
-<p><br></p>
-<p>You and your team should will be assigned about 20 of the ~200
-species to outline. Images of these species can be accessed through <a
-href="https://drive.google.com/drive/folders/1TYAzcMcH0u64OEqsuc61W97zIL7qLGWU?usp=sharing">this
-directory</a>. First choose one of your species to work on. For each
-species, start with what you think is the best image, that is, it has a
-scale bar, the wings are not damaged, and the hindwing is most exposed.
-Open that best image in Fiji.</p>
-<p>After opening the photo, follow the steps above.</p>
-<ol style="list-style-type: decimal">
-<li><p>If there’s a scale bar, <a
-href="https://imagejdocu.list.lu/gui/analyze/set_scale">set the
-scale</a>. Please set the scale in mm.</p></li>
-<li><p>If the right wing pair is damaged, flip the image horizontally.
-Select “Image” <span class="math inline">\(\rightarrow\)</span>
-“Transform” <span class="math inline">\(\rightarrow\)</span> “Flip
-horizontally”. <strong>Note:</strong> you may have to do this only for
-the fore- or hindwing.</p></li>
-<li><p>Select the <a
-href="https://imagej.nih.gov/ij/docs/guide/146-19.html">polygon
-selection tool</a>.</p></li>
-<li><p>Trace the wing by placing the first point on the polygon on the
-anterior margin of the wing where it meets the thorax. Like so .
-.</p></li>
-</ol>
-<center>
-<img src="firstpoint.png" style="width:40.0%" /> <br>
-</center>
-<p><br></p>
-<p>Continue to trace the outline of the wing being sure to include
-enough points to capture more complex areas. For instance, in this
-swallowtail hindwing, it may require 30 or more points to outline the
-interesting projections along the posterior margin.</p>
-<br>
-<center>
-<img src="hindwing.png" style="width:40.0%" /> <br>
-</center>
-<p><br></p>
-<p>You may also find it easier to get an acurate outline if you zoom in
-(<code>crtl+</code> or <code>command+</code>).</p>
-<ol start="5" style="list-style-type: decimal">
-<li>Run the following macro in imageJ.</li>
-</ol>
-<pre><code>run(&quot;Fit Spline&quot;);
+<div id="section" class="section level1">
+<h1></h1>
+</div>
+<div id="plotlep.treecex0.001" class="section level1">
+<h1>plot(lep.tree,cex=0.001)</h1>
+</div>
+<div id="nodelabelslep.treenode.label196389" class="section level1">
+<h1>nodelabels(lep.tree$node.label,196:389)</h1>
+<p>drops &lt;- which(duplicated(lep.tree$tip.label))</p>
+<p>lep.tree &lt;- drop.tip(lep.tree,drops)</p>
+<p>write.tree(lep.tree,“lep_tree2.tre”)</p>
+<p>#species from tree tree.sp &lt;- tibble(species=sp,sp=gsub(“\w+
+(\w+)”,“\1”,sp)) %&gt;% arrange(sp) %&gt;% left_join(common.names)</p>
+<p>#save tree.sp %&gt;% write_csv(“lep_tree_species.csv”)</p>
+<p>if(FALSE){ #query gbif for images for spp in tree dat.l &lt;-list()
+media.l &lt;- list()</p>
+<p>#last.sp=1</p>
+<p>sp &lt;- tree.sp<span
+class="math inline">\(species[which(tree.sp\)</span>species==last.sp):length(tree.sp$species)]
+for(s in sp){</p>
+<p>dat.l[[paste0(s)]] &lt;- m &lt;- occ_search(scientificName =
+s,basisOfRecord=“PRESERVED_SPECIMEN”, mediaType=“StillImage”)</p>
+<p>if(length(m$media)==0) media.l[[paste0(s)]] &lt;-
+tibble(species=s,key=NA,identifier= NA)</p>
+<p>if(length(m<span class="math inline">\(media)&gt;0)
+media.l[[paste0(s)]] &lt;- lapply(1:length(m\)</span>media),function(x)
+tibble(species=s,key=m<span
+class="math inline">\(media[[x]][[1]]\)</span>key,identifier= m<span
+class="math inline">\(media[[x]][[1]][[1]]\)</span>identifier)) %&gt;%
+rbindlist()</p>
+<p>last.sp &lt;- s }</p>
+<p>dat &lt;- lapply(dat.l,function(x) x$data)</p>
+<p>dat &lt;- rbindlist(dat,fill=T)</p>
+<p>dat &lt;- dat %&gt;%
+dplyr::select(genus,species,family,rightsHolder,collectionCode,catalogNumber,institutionCode,references,key)
+%&gt;% left_join(tree.sp)</p>
+<p>media &lt;- do.call(rbind,media.l)</p>
+<p>all.dat &lt;- dat%&gt;% left_join(media)</p>
+<p>saveRDS(all.dat,“lep_gbif.RDS”) }</p>
+<p>all.dat &lt;- readRDS(“lep_gbif.RDS”)
+#write.csv(all.dat,“lep_gbif.csv”)</p>
+<p>#nulls from gbif all.dat%&gt;%
+filter(is.na(identifier)&amp;is.na(references)) %&gt;%
+count(species)</p>
+<p>if(FALSE){</p>
+<p>gbif.nulls &lt;- rbind(media%&gt;% filter(is.na(identifier)) %&gt;%
+count(species), all.dat%&gt;%
+filter(is.na(identifier)&amp;is.na(references)) %&gt;% count(species) )
+%&gt;% arrange(species)</p>
+<p>all.dat %&gt;% filter(is.na(species))</p>
+<p>setdiff(media %&gt;% filter(is.na(identifier)) %&gt;% count(species)
+%&gt;% pull(species), all.dat%&gt;%
+filter(is.na(identifier)&amp;is.na(references)) %&gt;% pull(species)
+)</p>
+<p>setdiff( all.dat%&gt;% filter(is.na(references)) %&gt;%
+pull(species), media %&gt;% filter(is.na(identifier)) %&gt;%
+count(species) %&gt;% pull(species) )</p>
+<p>gbif.nulls%&gt;% write_csv(“lep_gbif_null.csv”)</p>
+<p>found.gbif &lt;- read_csv(“lep_gbif_null_found.csv”) }</p>
+<p>img.download &lt;-
+function(urls,dir=“lep_photos/”,res=200000,ask=FALSE){</p>
+<p>res.l &lt;- list() for(i in urls){</p>
+<pre><code>z &lt;- tempdir()
+f &lt;- paste0(z,&quot;/&quot;,basename(i))
+if(!grepl(&quot;.jpg|.jpeg|.tiff|.TIFF|.JPG|.JPEF|.png|.PNG&quot;,basename(f)))f &lt;- paste0(f,&quot;.jpg&quot;)
+z.i &lt;- try({ 
+  download.file(i,f,quiet = T)
+  pic &lt;- readImage(f)
+})
+
+res.i &lt;- dim(pic)[1]*dim(pic)[2]
+
+if(!inherits(z.i,&quot;try-error&quot;) &amp; res.i&gt;res){
+  display(pic,method = &quot;raster&quot;)
+   n1 &lt;- &quot;y&quot;
+  if(ask) n1&lt;-readline(prompt=&quot;keep?&quot;)
+ 
+  if(n1==&quot;y&quot;|n1==&quot;Y&quot;) {res.l[[i]] &lt;- tibble(identifier=i,keep= &quot;keep&quot;)
+  save.f &lt;- basename(f)
+  if(save.f==&quot;default.jpg&quot;) save.f &lt;- paste0(gsub(&quot;.+(ypm\\:.+)\\/full.+&quot;,&quot;\\1&quot;,i),&quot;.jpg&quot;)
+  file.copy(f,paste0(dir,&quot;/&quot;,save.f))}
+}else{
+  
+  if(inherits(z.i,&quot;try-error&quot;)) res.l[[i]] &lt;- tibble(identifier=i,keep= &quot;error&quot;)
+  
+  if(res.i&lt;res) res.l[[i]] &lt;- tibble(identifier=i,keep= &quot;too small&quot;)
+}
+print(paste0(&quot;image &quot;, which(urls==i), &quot; of &quot;,length(urls)))
+file.remove(f)</code></pre>
+<p>} r &lt;- do.call(rbind,res.l) return(r)</p>
+<p>}</p>
+<p>img.res &lt;- list()</p>
+<p>sp &lt;- all.dat%&gt;% filter(!is.na(identifier)) %&gt;%
+pull(species) %&gt;% unique()</p>
+<p>all.dat %&gt;% filter(species==sp[51]) %&gt;%
+select(species,identifier)</p>
+<p>run.img &lt;- function(n=NULL,…){ sp.n &lt;- n print(sp[sp.n]) urls
+&lt;- all.dat %&gt;% filter(!is.na(identifier)&amp; species==sp[sp.n])
+%&gt;% pull(identifier)</p>
+<p>sp.dir &lt;- paste0(“lep_photos/”,sp[sp.n]) dir.create(sp.dir) img.r
+&lt;- img.download(urls = urls[sample(1:length(urls))],dir=sp.dir,…)</p>
+<p>return(img.r) }</p>
+<p>sp &lt;- found.gbif$species %&gt;% unique() run.img.nulls &lt;-
+function(n=NULL,…){ sp.n &lt;- n print(sp[sp.n]) urls &lt;- found.gbif
+%&gt;% filter(!is.na(new_identifier)&amp; species==sp[sp.n]) %&gt;%
+pull(new_identifier)</p>
+<p>sp.dir &lt;- paste0(“lep_photos/”,sp[sp.n]) dir.create(sp.dir) img.r
+&lt;- img.download(urls = urls[sample(1:length(urls))],dir=sp.dir,…)</p>
+<p>return(img.r) }</p>
+<p>run.img.nulls(n=1)</p>
+<div
+id="download-all-ypm-images-show-v-and-d-views-write-script-to-do-so"
+class="section level3">
+<h3>download all YPM images, show V and D views (write script to do
+so)</h3>
+<p>found.gbif2 &lt;- found.gbif %&gt;% select(-careful,-new_comments)
+%&gt;% left_join(common.names) %&gt;% mutate(genus=gsub(“(\w+) .+<span
+class="math inline">\(&quot;,&quot;\\1&quot;,species),  family=NA,key=NA,  references=NA,  sp=gsub(&quot;(\\w+)
+(.+\)</span>)”,“\2”,species) ) %&gt;%
+dplyr::rename(identifier=new_identifier,catalogNumber=catalog,collectionCode=new_collection_code)</p>
+<p>all.dat2 &lt;- rbind(all.dat %&gt;% mutate(source=“gbif”),
+found.gbif2 %&gt;% mutate(source=“search/BOLDS”),fill=T) %&gt;%
+mutate(filename=basename(identifier))</p>
+<pre><code>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                       
+
+
+
+
+# Introduction
+Butterflies and moths (the Lepidoptera) are an exceptional [radiation](https://en.wikipedia.org/wiki/Evolutionary_radiation) of insects, comprising nearly 160,000 described extant
+species. (For context, the vertebrates comprise just 70,000 species or so.) The Lepidoptera play a fundamental role in almost every terrestrial ecosystem. These ecologically important species use paired wings to power flight in search of places to lay eggs, feed on nectar and other resources, and find mates. The airy  environment in which moths and butterflies fly undoubtedly exerts natural selective pressure on wing size and shape.  However, it appears as if the hind- and forewings have different roles to play in powered flight and the ecology of the Lepidoptera. If hindwings are removed from butterflies, they are able to fly, but at the cost of speed and maneuverability (Jantzen and Eisner 2008). Therefore, it has been proposed that  forewing shape and size may be the result of stabilizing selection imposed by the physical and fluid requirements of flight and hindwing shape and size may be determined more by neutral selection, sexual selection, or selection due to predator avoidance (Sourakov 2013, Barber et al. 2015, Willmott et al. 2017, Rubin et al. 2018, Chazot et al. 2016).
+
+&lt;center&gt;
+![](https://3.bp.blogspot.com/-0ZJtpbcAlWo/W9R6ek_sNPI/AAAAAAAAUj0/ncYRT0nN9MctC-x60-boMe8bodGXNM2LQCLcBGAs/s450/ButterflyWing3a.jpg){width=50%}
+
+&lt;br&gt;
+*The anotomy of a butterfly or moth.* 
+&lt;/center&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+
+Studies based on experimental manipulations like those of @jantzen2008hindwings, important as they are, are limited in their ability to characterize shape variables and the ecological roles of fore- and hind wings over evolutionary time scales and across lepidopteran lineages. Comparative analysis of shape data from natural history collections has helped bridge the gap between experimental studies and macroevolutionary patterns. If there is, in fact, different constraints on the evolution of fore- and hindwing morphology, we would expect to find a consistent patterns of different fore- and hindwing shape across the lepidoptera. Indeed, a number of studies have investigated whether for- and hindwing shape and size differs in several isolated groups of butterflies. Strauss (1990) found the shape of hindwings were much more variable than forewings in heliconiine and ithomiine butterflies. In contrast, Chazot et al. (2016) found a strong correlation between forewing and hindwing shapes in the famous morpho group of butterflies. Therefore, the limited research on this topic does not resolve whether fore- and hindwing shape differ consistently across the Lepidoptera. Each of these studies was limited in their phylogenetic scope, encompassing very few species spanning few families of butterflies. Addressing whether fore- and hindwing shape varies independently, a much broader phylogenetic sample should be analyzed, one that includes not just representatives of the butterfly lineage, but also moths.
+
+
+&lt;center&gt;
+![](https://d3i71xaburhd42.cloudfront.net/bb0cd297955c4ec58bd60777dc345f7c1d5d93bd/3-Figure1-1.png){width=50%}
+
+&lt;br&gt;
+*Several species of Heliconiinae butterflies, demonstrating the variability in wingshape. From @penz2003phylogenetic.* 
+&lt;/center&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+The goal of this project is to study wing-shape evolution across the lepidoptera, including hundreds of species from both the moths (a [paraphyletic group](https://en.wikipedia.org/wiki/Paraphyly)) and butterflies. To do this, we&#39;ll take a morphometric approach, characterizing the shape outline of fore- and hindwings from about 200 species of Lepidoptera. The specific questions we&#39;ll answer with our morphometric data are:
+
+1. Do hind- and forewings vary in their evolutionary rates?
+
+2. Does the &quot;evolvability&quot; of the hind- and forewings vary significantly among major lineages of moths and butterflies?
+
+3. Is hindwing and forewing shape correlated?
+
+# Methods
+
+## Image acquisition
+
+A few decades ago, a morphometric project like this would require visiting museums collections from around the world to take images of the specimens and species of interest. In fact, this was a major part of Prof. Kenaley&#39;s PhD thesis, which included trips to natural history collections in France, Denmark, Great Britain, Taiwan, Japan, Monaco, New Zealand, and Australia. Ahhhhhh, the good ol&#39; days. Fortunately (or unfortunately), travel to such wonderful places may be avoided as collections have made major efforts to photograph their specimens. Now that most museums around the world have their holdings cataloged in databases, researchers can search their collections for records that have digital images. 
+
+Until very recently, amassing a data set of images for morphometric work  would require querying individual databases, one at a time. However, most natural history museums share their data with the Global Biodiversity Information Facility (GBIF), a clearing house of collections and species information. In the context of a comparative project like ours, one could search the GBIF database online for moth and butterfly records that have images. Fortunately for use, the folks at GBIF have created and R package, [`rgif`](https://www.gbif.org/tool/81747/rgbif), that permits access to GBIF&#39;s application programming interface (API), rendering their records searchable from the command line.
+
+Prof. Kenaley used this package, `rgbif`, to query museum records with images. This resulted in a cache of about 180 images of the the 200 species included in the @kawahara2019phylogenomics phylogeny. For the remainder, he scoured the interwebs for reputable sources of images. The images
+## Species list and phylogeny
+
+Because we&#39;ll be comparing wing shape across species of the Lepidoptera, this project is by definition a comparative one and we&#39;ll need a phylogeny for the group. Fortunately a recent phylogenomic analysis for 200 species of Lepidotera by @kawahara2019phylogenomics resolved the relationships of the major groups of this order. We&#39;ve used the taxa studied in this paper to find images in GBIF and we&#39;ll use [a tree file](lep_tree2.tre) representing phylogeny for our comparative analsyis. 
+
+&lt;center&gt;
+&lt;br&gt;
+![](https://www.pnas.org/cms/10.1073/pnas.1907847116/asset/075c8ff7-6363-462d-a528-f2b13710804d/assets/graphic/pnas.1907847116fig01.jpeg){width=50%}
+&lt;br&gt;
+
+The phylogenetic relationships of the Lepidoptera according the @kawahara2019phylogenomics.
+&lt;/center&gt;
+&lt;br&gt;
+
+## Digitization
+
+Our shape analysis will be based on the outline of the hind- and fore-wings of ~200 species of Lepidoptera. To outline the wings, we&#39;ll follow this generalize workflow below in the image analysis program FIJI (FIJI is just imageJ). 
+
+&lt;br&gt;
+&lt;center&gt;
+![](lep_workflow.jpeg){width=70%}
+&lt;br&gt;
+&lt;/center&gt;
+&lt;br&gt;
+
+You and your team should will be assigned about 20 of the ~200 species to outline. Images of these species can be accessed through [this directory](https://drive.google.com/drive/folders/1TYAzcMcH0u64OEqsuc61W97zIL7qLGWU?usp=sharing). First choose one of your species to work on. For each species, start with what you think is the best image, that is, it has a scale bar, the wings are not damaged, and the hindwing is most exposed. Open that best image in Fiji.
+
+After opening the photo, follow the steps above.
+
+1. If there&#39;s a scale bar, [set the scale](https://imagejdocu.list.lu/gui/analyze/set_scale). Please set the scale in mm.
+
+2. If the right wing pair is damaged, flip the image horizontally. Select &quot;Image&quot; $\rightarrow$ &quot;Transform&quot; $\rightarrow$ &quot;Flip horizontally&quot;. **Note:** you may have to do this only for the fore- or hindwing.
+
+3. Select the [polygon selection tool](https://imagej.nih.gov/ij/docs/guide/146-19.html).
+
+4. Trace the wing by placing the first point on the polygon on the anterior margin of the wing where it meets the thorax. Like so . . 
+
+&lt;center&gt;
+
+![](firstpoint.png){width=40%}
+&lt;br&gt;
+&lt;/center&gt;
+&lt;br&gt;
+
+Continue to trace the outline of the wing being sure to include enough points to capture more complex areas. For instance, in this swallowtail hindwing, it may require 30 or more points to outline the interesting projections along the posterior margin.
+
+&lt;br&gt;
+&lt;center&gt;
+![](hindwing.png){width=40%}
+&lt;br&gt;
+&lt;/center&gt;
+&lt;br&gt;
+
+You may also find it easier to get an acurate outline if you zoom in (`crtl+` or `command+`).
+
+5. Run the following macro in imageJ.
+
+```{}
+run(&quot;Fit Spline&quot;);
 run(&quot;Properties... &quot;, &quot;list&quot;);</code></pre>
 <p>This script <a
 href="https://en.wikipedia.org/wiki/Spline_interpolation">fits a
@@ -971,7 +1157,7 @@ filenames of each species in a table you can <a
 href="lep_image_data.csv">download here</a>. Have a look.</p>
 <pre class="r"><code>lep.sp &lt;- read_csv(&quot;lep_image_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 1106 Columns: 5
-## ── Column specification ─────────────────────
+## ── Column specification ───────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (5): species, identifier, higher_taxon, common_name, highest_common_name
 ## 
@@ -1008,15 +1194,13 @@ command.</p>
   mutate(identifier=gsub(&quot;XY_|_hindwing|_forewing|.txt|.csv&quot;,&quot;&quot;,xy.file)) %&gt;% 
   left_join(lep.sp)</code></pre>
 <pre><code>## Joining with `by = join_by(identifier)`</code></pre>
-<pre><code>## Warning in left_join(., lep.sp): Detected an unexpected many-to-many
-## relationship between `x` and `y`.
-## ℹ Row 15 of `x` matches multiple rows in
-##   `y`.
-## ℹ Row 326 of `y` matches multiple rows in
-##   `x`.
-## ℹ If a many-to-many relationship is
-##   expected, set `relationship =
-##   &quot;many-to-many&quot;` to silence this warning.</code></pre>
+<pre><code>## Warning in left_join(., lep.sp): Detected an unexpected many-to-many relationship
+## between `x` and `y`.
+## ℹ Row 15 of `x` matches multiple rows in `y`.
+## ℹ Row 326 of `y` matches multiple rows in `x`.
+## ℹ If a many-to-many relationship is expected, set
+##   `relationship = &quot;many-to-many&quot;` to silence this
+##   warning.</code></pre>
 <pre class="r"><code>head(out.data)</code></pre>
 <pre><code>## # A tibble: 6 × 6
 ##   xy.file        identifier species higher_taxon common_name highest_common_name
@@ -1874,12 +2058,6 @@ contributed to the project.</li>
 Felsenstein, Joseph. 1985. <span>“Phylogenies and the Comparative
 Method.”</span> <em>The American Naturalist</em> 125 (1): 1–15.
 </div>
-<div id="ref-jantzen2008hindwings" class="csl-entry">
-Jantzen, Benjamin, and Thomas Eisner. 2008. <span>“Hindwings Are
-Unnecessary for Flight but Essential for Execution of Normal Evasive
-Flight in Lepidoptera.”</span> <em>Proceedings of the National Academy
-of Sciences</em> 105 (43): 16636–40.
-</div>
 <div id="ref-kawahara2019phylogenomics" class="csl-entry">
 Kawahara, Akito Y, David Plotkin, Marianne Espeland, Karen Meusemann,
 Emmanuel FA Toussaint, Alexander Donath, France Gimnich, et al. 2019.
@@ -1891,12 +2069,6 @@ of Sciences</em> 116 (45): 22657–63.
 O’Meara, Brian C, Cécile Ané, Michael J Sanderson, and Peter C
 Wainwright. 2006. <span>“Testing for Different Rates of Continuous Trait
 Evolution Using Likelihood.”</span> <em>Evolution</em> 60 (5): 922–33.
-</div>
-<div id="ref-penz2003phylogenetic" class="csl-entry">
-Penz, Carla M, and Djunijanti Peggie. 2003. <span>“Phylogenetic
-Relationships Among Heliconiinae Genera Based on Morphology
-(Lepidoptera: Nymphalidae).”</span> <em>Systematic Entomology</em> 28
-(4): 451–79.
 </div>
 </div>
 </div>

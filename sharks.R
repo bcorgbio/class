@@ -27,6 +27,8 @@ library(worms)
 
 #https://vertlife.org/sharktree/)
 
+# ? https://cran.r-project.org/web/packages/evolvability/index.html
+
 phy <- readNexus("data/shark_mol_trees.nex")
 
 phy$tree_1$tip.label
@@ -93,9 +95,16 @@ all(fb_no%in%shark_fb_res$id)
 
 #shark taxonomy
 
-tax <- wormsbynames(shark_fb_res$sp %>% unique)
+so <- rbind(tibble(superorder="Galeomorphii",order=c("Carcharhiniformes","Heterodontiformes","Orectolobiformes","Lamniformes")),
+tibble(superorder="Squalomorphii",order=c("Hexanchiformes","Pristiophoriformes","Squaliformes","Squatiniformes","Echinorhiniformes")))
 
-tax %>% select(valid_name,order,family)
+
+tax <- wormsbynames((shark_fb_res$sp %>% unique)) %>% 
+  left_join(so) %>% 
+  dplyr::rename(sp=valid_name) %>% 
+  select(sp,genus,family,order,superorder)
+
+
 
 
 ### SHAPE
@@ -131,7 +140,8 @@ pca <- gm.prcomp(ldk_al$coords)
 PCA <- pca$x %>% 
   data.frame %>% 
   mutate(file_name=gsub("*_.csv","",basename(f))) %>% 
-  left_join(shark_fb_res %>% select(sp,file_name)) 
+  left_join(shark_fb_res %>% select(sp,file_name)) %>% 
+  left_join(tax)
 
 
 PCA %>% 
@@ -145,8 +155,8 @@ hab <- read_csv("data/shark_hab_added.csv") %>%
          depth_max=str_split_i(depth,"-",2) %>% as.numeric,
          habitat=ifelse(habitat=="demersal","benthic",habitat))
 
-#hab %>% add_row(sp=PCA %>% filter(!sp%in% hab$sp) %>% pull(sp)) %>% 
- # write_csv("data/shark_hab_added.csv")
+# hab %>% add_row(sp=PCA %>% filter(!sp%in% hab$sp) %>% pull(sp)) %>%
+# write_csv("data/shark_hab_added.csv")
 
 PCA <- PCA %>% left_join(hab)
 PCA %>% 
@@ -157,7 +167,7 @@ PCA %>%
 
 library(ggbeeswarm)
 PCA %>% 
-  ggplot(aes(habitat,Comp1))+geom_beeswarm()
+  ggplot(aes(habitat,Comp1,col=superorder))+geom_beeswarm()
 
 PCA %>% 
   ggplot(aes(habitat,Comp2))+geom_beeswarm()
@@ -165,20 +175,21 @@ PCA %>%
 phy2 <- keep.tip(phy,PCA$sp)
 X=PCA[,1:2]
 rownames(X) <- PCA$sp
-phylomorphospace(phy2[[1]],X)
+phylomorphospace(phy2[[1]],X,cex=0.2)
 
-
+dimnames(ldk_al$coords)[[3]] <- PCA$sp
 
 gdf <- geomorph.data.frame(ldk_al,
-                           species = gsub("*_.csv","",basename(f)),
-                            habitat=hab$habitat,
-                           depth=hab$depth_max,
-                           length=hab$size
+                           species = PCA$sp,
+                            habitat=PCA$habitat,
+                           depth=PCA$depth_max,
+                           length=PCA$size,
+                           phy=phy2[[1]]
                             )
 
-fit1 <- procD.lm(coords ~ habitat*depth*length, 
-                 data = gdf, iter = 999, turbo = TRUE,
-                 RRPP = FALSE, print.progress = FALSE)
+fit1 <- procD.pgls(coords ~ habitat*depth, 
+                 data = gdf, phy=phy,iter = 999, turbo = TRUE,
+               print.progress = FALSE)
 pc.plot <- plot(fit1, type = "PC", pch = 19)
 
 pc.plot$PC.points
@@ -188,9 +199,37 @@ plotRefToTarget(M, fit1$GM$fitted[,,1], mag = 1)
 plotRefToTarget(M, fit1$GM$fitted[,,20], mag = 1)
 
 
-t <- fb_tbl(tbl="species",server="fishbase") 
 
-t <- worms::
+#evo rates
+
+gp.so <- as.numeric(as.factor(PCA$superorder))-1
+names(gp.so) <- PCA$sp
+
+PCA$superorder[which(gp.so==0)]
+PCA$superorder[which(gp.so==1)]
+
+PCA$habit[which(gp.hab==0)]
+PCA$habitat[which(gp.hab==1)]
+dimnames(ldk_al$coords)[[3]] <- PCA$sp
+
+gp.hab <- as.numeric(as.factor(PCA$habitat))-1
+names(gp.hab) <- PCA$sp
+
+so_er <- list()
+
+for(i in 1:length(phy2)){
+  so_er[[i]] <-compare.evol.rates(A=ldk_al$coords, phy=phy2[[i]],
+                       method="simulation",gp=gp.so,iter=999)
+}
+
+so_er_fit <- lapply(so_er,summary)
+funcion(x) x$sigma.d.gp
+
+ER<-compare.evol.rates(A=ldk_al$coords, phy=phy2[[1]],
+                       method="simulation",gp=gp.hab,iter=999)
+summary(ER)
+plot(ER)
+
 fb_img_data <- function(x,type=c("museum","collaborator")){
 
   url<- paste0("https://fishbase.mnhn.fr/photos/ThumbnailsSummary.php?ID=",x)

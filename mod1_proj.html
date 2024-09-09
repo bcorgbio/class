@@ -464,12 +464,12 @@ and working with HOPR. These initial lines of code would look like
 this:</p>
 <pre class="r"><code>library(ggplot2)
 library(tidyverse)</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ────────
+<pre><code>## ── Attaching core tidyverse packages ──────────────────
 ## ✔ dplyr     1.1.1     ✔ readr     2.1.4
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.0
 ## ✔ lubridate 1.9.2     ✔ tibble    3.2.1
 ## ✔ purrr     1.0.1     ✔ tidyr     1.3.0
-## ── Conflicts ─────── tidyverse_conflicts() ──
+## ── Conflicts ───────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
@@ -951,7 +951,7 @@ dev.off()</code></pre>
 ##                 2</code></pre>
 <pre class="r"><code>list.files(pattern=&quot;.pdf&quot;)</code></pre>
 <pre><code>## [1] &quot;BIOL3140_syllabus.pdf&quot;  &quot;DeVries_etal_20210.pdf&quot; &quot;Mortolaetal.pdf&quot;       
-## [4] &quot;Rplots.pdf&quot;             &quot;species_quadrant.pdf&quot;   &quot;species.quadrant.pdf&quot;</code></pre>
+## [4] &quot;species_quadrant.pdf&quot;   &quot;species.quadrant.pdf&quot;</code></pre>
 <p>The wrapping function <code>pdf()</code> prints graphic output to a
 file, in this case one named “species_quadrant.pdf”. Any plot printed
 with <code>p()</code> after <code>pdf()</code> and before

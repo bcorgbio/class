@@ -82,6 +82,8 @@ shark_n <- tibble(sp=names(gbif_res),
   filter(rank<11)
 
 
+
+
 ```
 
 

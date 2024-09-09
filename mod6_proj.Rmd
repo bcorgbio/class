@@ -65,7 +65,7 @@ cl <- makePSOCKcluster(detectCores()-2) # leave two cores for background process
 registerDoParallel(cl) # register parallel backend
 
 t <- system.time(
-  gbif_res <- foreach(i=1:length(gbif_args),.verbose=T, .packages = c( "rgbif")) %dopar% {
+  gbif_res <- foreach(i=sample(1:length(cyp),20),.verbose=T, .packages = c( "rgbif")) %dopar% {
       get_gbif(i)
   }
 )
