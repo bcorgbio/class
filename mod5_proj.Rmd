@@ -22,34 +22,68 @@ library(rgbif)
 library(doParallel)
 library(foreach)
 library(parallel)
+library(dataRetrieval)
 
-#limit tree to cypriniformes
-cyp <- fishtree_taxonomy(ranks = "Cypriniformes")$Cypriniformes$sampled_species
 
 
 
 gbif_args <- list()
 
-for(i in cyp){
-  gbif_args[[i]] <- list()
-  gbif_args[[i]]$scientificName <- i
-  gbif_args[[i]]$continent="north_america"
-  gbif_args[[i]]$basisOfRecord <- "PRESERVED_SPECIMEN"
-   gbif_args[[i]]$limit <- 10000
-   gbif_args[[i]]$hasCoordinate <- TRUE
+lapply(gbif_res, function(x) x[][[1]]$count)
+cols_ <- c("species","decimalLongitude","decimalLatitude","basisOfRecord","stateProvince","year","month")
+ nulls <- lapply(gbif_res,function(x) is.null(x$data)) %>% unlist
+gbif_rec <- lapply(gbif_res[!nulls], function(x) x$data[,cols_]) %>% do.call(rbind,.) 
+
+### sharks!!
+
+#https://www.iucnssg.org/uploads/5/4/1/2/54120303/fao_species_catalogue_for_fishery_purposes_-_2001_-_sharks_of_the_world_-_an_annotated_and_illustrated_catalogue_of_shark_species_known_to_date_-_volume_2_-_bullhead_mackerel_and_carpet_sharks.pdf#page=10.07
+
+#https://vertlife.org/sharktree/)
+
+phy <- readNexus("data/shark_mol_trees.nex")
+
+phy$tree_1$tip.label
+
+mrca <- lapply(phy,function(x) getMRCA(x,c("Chlamydoselachus_anguineus","Carcharhinus_leucas")))
+
+all(mrca==929)
+
+phy2 <- lapply(phy,function(x) extract.clade(x,929)
+               
+labs <-  lapply(phy2,function(x) gsub("_"," ",x$tip.label))
+
+for(i in 1:length(phy2)){
+  phy2[[i]]$tip.label <- labs[[i]]
 }
 
-get_gbif <- function(i) do.call(rgbif::occ_data,args = gbif_args[[i]])
- 
-cl <- makePSOCKcluster(detectCores()-2) # leave two cores for background processes
-# cl <- makePSOCKcluster(1) # if old PC use only 1 core
-registerDoParallel(cl) # register parallel backend
+class(phy2) <- "multiPhylo"
+phytools::writeNexus(phy2,"data/shark_trees.nex")
 
-t <- system.time(
-  gbif_res <- foreach(i=1:length(gbif_args),.verbose=T, .packages = c( "rgbif")) %dopar% {
-      get_gbif(i)
+
+phy <- readNexus("data/shark_trees.nex")
+
+sp <- phy[[1]]$tip.label
+
+ gbif_res <- list()
+for(i in sp) {
+      gbif_res[[i]] <-  occ_search(scientificName=i,limit = 0)
+  message('\r', i, appendLF = FALSE)
   }
-)
+
+saveRDS(gbif_res,"data/shark_gbif.RDS")
+
+#no more than 10 species
+shark_n <- tibble(sp=names(gbif_res),
+         n=lapply(gbif_res, function(x) x$meta$count) %>% unlist()
+  ) %>% mutate(genus=gsub("(\\w*) \\w*","\\1",sp)) %>% 
+  group_by(genus) %>% 
+  arrange(genus,-n) %>% 
+  mutate(rank=1:n()) %>% 
+  filter(rank<11)
+
+
+```
+
 
 
 saveRDS(gbif_res,"data/Rob_cypriniforms_gbif.RDS")
@@ -171,7 +205,7 @@ names(superfams) <- common.names$higher_taxon %>% unique
 
 lep.tax <- c(superfams,largeclades.sp)
 
-
+  
 
 saveRDS(lep.tax,"Lep_classification.RDS")
 
