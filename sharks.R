@@ -336,23 +336,17 @@ anova(fit_dist)
 args_df <- expand_grid(discrete_model=c("ER","ARD"),
                        continuous_model=c("BM1", "BMV", "OU1", "OUM", "OUA", "OUV", "OUMV", "OUMA", "OUVA", "OUMVA"),
                        var=unique(dist_ldk_long$name)) %>% 
-  mutate(n=1:n(),
-         nSim=25,
+  mutate(nSim=25,
          n_starts=5,
          rate.cat=1) %>% 
-  arrange(var)
+  arrange(var) %>% 
+  mutate(n=1:n())
 
-
-   
 
 args <- args_df %>% 
   group_by(n) %>% 
   group_split(.keep=F)
 
-data_l <- dist_ldk_long %>% 
-  select(sp,habitat,value,name) %>% 
-  group_by(name) %>% 
-  group_split(.keep=F)
 
 args<-lapply(args, FUN=append,
           list(phy=phy2[[1]]),
@@ -360,23 +354,77 @@ args<-lapply(args, FUN=append,
 
 for(i in 1:length(args)){
   args[[i]]$data <- dist_ldk_long %>% filter(name==args[[i]]$var) %>% select(sp,habitat,value) %>% data.frame()
-  args[[i]]$var <- NULL
 }
-               
+     
+names(args) <- paste(args_df$var,args_df$discrete_model,args_df$continuous_model,sep = "_") 
+lapply(X=args, `[[`, "data")
 run_hOUwie <- function(x) do.call(hOUwie,args[[x]])
+
+
 
 hOUwie_res<- mclapply(X=1:length(args),FUN = run_hOUwie,mc.cores = detectCores()-2)
 
-hOUwie_res_eval <- getModelTable(hOUwie_res) %>% tibble() %>% 
-  tibble(args_df %>% select(var,discrete_model,continuous_model))
+names(hOUwie_res) <- paste(args_df$var,args_df$discrete_model,args_df$continuous_model,sep = "_") 
+saveRDS(hOUwie_res,"hOUwie_res.RDS")
+hOUwie_res_split <- list(hOUwie_res[grep("inter",names(hOUwie_res))],
+                        hOUwie_res[grep("predor",names(hOUwie_res))],
+                        hOUwie_res[grep("prepect",names(hOUwie_res))],
+                        hOUwie_res[grep("prepel",names(hOUwie_res))]
+)
 
+hOUwie_res_eval <- lapply(hOUwie_res_split,getModelTable)
+                                      
+                               
+hOUwie_mod_avg <- lapply(hOUwie_res_split, getModelAvgParams)     
+ 
+hOUwie_plot_d <- lapply(hOUwie_mod_avg, function(x) x %>%tibble %>%  pivot_longer(rates:expected_var))  
+hOUwie_plot_d[[1]] %>% 
+  ggplot(aes(x = tip_state, y = value, color = tip_state)) +
+  geom_point(size = 5, shape = 21) +
+  stat_summary(fun=mean,geom="point",aes(group=1, size = 2)) +
+  stat_summary(fun.data = "mean_se", geom = "errorbar", aes(group=1), width = 0.15, color = "black") +
+  theme_classic() +
+  facet_wrap(~name, scales = "free")
+
+hOUwie_plot_d[[2]] %>% 
+  ggplot(aes(x = tip_state, y = value, color = tip_state)) +
+  geom_point(size = 5, shape = 21) +
+  stat_summary(fun=mean,geom="point",aes(group=1, size = 2)) +
+  stat_summary(fun.data = "mean_se", geom = "errorbar", aes(group=1), width = 0.15, color = "black") +
+  theme_classic() +
+  facet_wrap(~name, scales = "free")
+
+hOUwie_plot_d[[3]] %>% 
+  ggplot(aes(x = tip_state, y = value, color = tip_state)) +
+  geom_point(size = 5, shape = 21) +
+  stat_summary(fun=mean,geom="point",aes(group=1, size = 2)) +
+  stat_summary(fun.data = "mean_se", geom = "errorbar", aes(group=1), width = 0.15, color = "black") +
+  theme_classic() +
+  facet_wrap(~name, scales = "free")
+
+hOUwie_plot_d[[4]] %>% 
+  ggplot(aes(x = tip_state, y = value, color = tip_state)) +
+  geom_point(size = 5, shape = 21) +
+  stat_summary(fun=mean,geom="point",aes(group=1, size = 2)) +
+  stat_summary(fun.data = "mean_se", geom = "errorbar", aes(group=1), width = 0.15, color = "black") +
+  theme_classic() +
+  facet_wrap(~name, scales = "free")
+
+hOUwie_mod_avg[[1]]$rates
+hOUwie_mod_avg[[1]]$tip_state
 hOUwie_res_eval %>% 
   group_by(var) %>% 
   filter(BIC==min(BIC))
 
+hOUwie_res_eval %>% group_by(var) %>% arrange(-BIC) %>% view
 
-sapply(X=q, `[[`, "root.p")
-sapply(X=q, `[[`, "node.states")
+hOUwie_res_eval %>% 
+  group_by(var) %>% 
+  mutate(BICwt=MuMIn::Weights())
+  arrange(var,BIC)
+
+
+getModelAvgParams(model_set)
 sapply(X=q, `[[`, "get.tip.states")
 hOUwie_res_inter <- mclapply(X=1:15,FUN = run_hOUwie,mc.cores = detectCores()-2)
 hOUwie_res_preD <- mclapply(X=16:30,FUN = run_hOUwie,mc.cores = detectCores()-2)
