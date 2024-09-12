@@ -332,6 +332,8 @@ fit_dist <- lm(value~habitat,data=dist_ldk_long %>% filter(name=="prepelvic"))
 anova(fit_dist)
 
 
+saveRDS(list(dat=dist_ldk_long,phy=phy2),"shark_data.RDS")
+
 ##houwei
 args_df <- expand_grid(discrete_model=c("ER","ARD"),
                        continuous_model=c("BM1", "BMV", "OU1", "OUM", "OUA", "OUV", "OUMV", "OUMA", "OUVA", "OUMVA"),
@@ -354,13 +356,13 @@ args<-lapply(args, FUN=append,
 
 for(i in 1:length(args)){
   args[[i]]$data <- dist_ldk_long %>% filter(name==args[[i]]$var) %>% select(sp,habitat,value) %>% data.frame()
+  args[[i]]$var <- NULL
 }
      
 names(args) <- paste(args_df$var,args_df$discrete_model,args_df$continuous_model,sep = "_") 
-lapply(X=args, `[[`, "data")
+lapply(X=args[1:10], `[[`, "data")
+
 run_hOUwie <- function(x) do.call(hOUwie,args[[x]])
-
-
 
 hOUwie_res<- mclapply(X=1:length(args),FUN = run_hOUwie,mc.cores = detectCores()-2)
 
