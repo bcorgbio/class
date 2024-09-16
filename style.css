@@ -4,18 +4,20 @@ h1, .h1, h2, .h2, h3, .h3,h4,.h4 {
 }
 
 a {
-color: #2C3E50
+color: #000000;
+font-weight:bold;
+
 }
 
 
 /* visited link */
 a:visited {
-  color: #6e859c;
+  color: #000000;
 }
 
 /* mouse over link */
 a:hover {
-  color: #6e859c;
+  color: #000000;
   font-weight:bold;
 text-decoration:underline;
 
@@ -23,7 +25,8 @@ text-decoration:underline;
 
 /* selected link */
 a:active {
-  color: #6e859c;
+  color: #000000;
+  font-weight:bold;
 }
 
 /* visited link */
@@ -34,6 +37,7 @@ li:visited {
 /* mouse over link */
 li:hover {
   color: #6e859c;
+    font-weight:bold;
 
 }
 

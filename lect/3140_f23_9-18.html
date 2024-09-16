@@ -4,7 +4,7 @@
     <title>The Whiz and Viz Bang of Data</title>
     <meta charset="utf-8" />
     <meta name="author" content="Dr. Christopher Kenaley" />
-    <script src="libs/header-attrs-2.22/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.28/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -25,7 +25,7 @@ class: center, middle, inverse, title-slide
 ### Boston College
 ]
 .date[
-### 2023/9/18
+### 2024/9/16
 ]
 
 ---
@@ -90,7 +90,7 @@ class: inverse, top
 ## What is a model?
 
 
-```r
+``` r
 set.seed(123)
 x.A=1:50
 y.A=x.A*2+runif(50,1,200)
@@ -115,7 +115,7 @@ class: inverse, top
 ## Are models accurate descriptions of the process/system?
 
 
-```r
+``` r
 spec.lm1 &lt;- lm(y~x+species,data=d)
 
 anova(spec.lm1)
@@ -140,7 +140,7 @@ class: inverse, top
 
 
 
-```r
+``` r
 summary(spec.lm1)
 ```
 
@@ -175,7 +175,7 @@ class: inverse, top
 
 .pull-left[
 
-```r
+``` r
 spec.lm2 &lt;- lm(y~x*species,d)
 anova(spec.lm2)
 ```
@@ -203,7 +203,7 @@ class: inverse, top
 
 .pull-left[
 
-```r
+``` r
 AIC(spec.lm1,spec.lm2)
 ```
 

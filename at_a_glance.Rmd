@@ -33,7 +33,7 @@ All assignments are due at 11:59 on the specified date.
 
 || Monday <br> 9/16 |  Tuesday <br>9/17    | Wednesday<br>  9/18 | Thursday <br> 9/19 | Friday <br> 9/20 |Saturday<br> 9/21 | Sunday<br> 9/22
   |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------:
-  **Week 4** |[slides](lect\3140_f23_9-23.html) | | Post question to discussion board <br> <br> [WCR 3](WCRs/WCR_3.html) ||  [slides](lect\3140_f23_9-23.html)<br> Answer a question on discussion board | | commit Module 3 Project Report
+  **Week 4** |[slides](lect\3140_f24_9-16.html) | | Post question to discussion board <br> <br> [WCR 3](WCRs/WCR_3.html) ||  [slides](lect\3140_f23_9-23.html)<br> Answer a question on discussion board | | commit Module 3 Project Report
   ||||||||
   
 ---

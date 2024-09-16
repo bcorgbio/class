@@ -3,7 +3,7 @@ title: "The Whiz and Viz Bang of Data"
 subtitle: "The Basics of Visualizaiton and Modeling"
 author: "Dr. Christopher Kenaley"
 institute: "Boston College"
-date: "2023/9/18"
+date: "2024/9/16"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -15,7 +15,7 @@ output:
 class: inverse, top
 # In class today 
 
-```{r,echo=FALSE,message=FALSE}
+```{r,echo=FALSE,message=FALSE, warning=F}
 library(tidyverse)
 library(kableExtra)
 library(ape)

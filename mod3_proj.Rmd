@@ -513,6 +513,6 @@ lm.PD <- lm(HL~PD,dat)
 ```
 
 
-Submissions are due by 11:59 PM on Sunday, September 24th.
+Submissions are due by 11:59 PM on Sunday, September 22nd.
 
 # References

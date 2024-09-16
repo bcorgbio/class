@@ -77,8 +77,13 @@ run_hOUwie <- function(x) {
   }
 
 
-hOUwie_res<- mclapply(X=150,FUN = run_hOUwie,mc.cores =40)
+hOUwie_res<- mclapply(X=1:length(args),FUN = run_hOUwie,mc.cores =40)
 
 saveRDS(hOUwie_res,"hOUwie_res.RDS")
 
 
+#hOUwie_res <- readRDS("data/sharks/hOUwie_res.RDS")
+
+getModelTable(hOUwie_res[[1]])
+
+ lapply(hOUwie_res[[1]], getModelTable)   
