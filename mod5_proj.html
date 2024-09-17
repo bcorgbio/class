@@ -563,8 +563,8 @@ anteriorly place dorsal fins, and a less swept caudal fin.
 <p><br> <br></p>
 <p>Although the work of <span class="citation">Thomson and Simanek
 (1977)</span> and later <span class="citation">Sternes and Shimada
-(2020)</span> point to interesting patterns in shark body-shape, neither
-study explicitly studied the role habitat—that is, pelagic or
+(2020)</span> points to interesting patterns in shark body-shape,
+neither study explicitly studied the role habitat—that is, pelagic or
 benthic—had in influencing the evolution body-shape evolution. In
 particular, <span class="citation">Sternes and Shimada (2020)</span>
 merely observed that their two groups with different body shapes often
@@ -572,8 +572,10 @@ varied in their habitat preference. In addition, <span
 class="citation">Sternes and Shimada (2020)</span> made no explicit,
 quantitative phylogenetic test of their patterns. This leaves open an
 important question: <strong>Do pelagic and benthic sharks have
-significantly different body shape?</strong> This is the question we
-will take on in this project.</p>
+significantly different body shape?</strong> Subsequently, we might also
+ask, <strong>Has the morphology of pelagic and benthic sharks evolveed
+at the same rate?</strong> These are the questions we will take on in
+this project.</p>
 <p>To answer such a question requires that we essentially recapitulate
 the <span class="citation">Sternes and Shimada (2020)</span> body-shape
 data set using landmark-based <a
@@ -584,7 +586,10 @@ you’ll digitize 14 homologous landmarks on images of some 270 species of
 sharks. Using the best practices in the field of geometric morphometrics
 to align our landlandmakrs and extract shape information, we’ll assess
 morphological disparity in a phylogenetic frame work between pelagic and
-benthic sharks. # Methods</p>
+benthic sharks.</p>
+</div>
+<div id="methods" class="section level1">
+<h1>Methods</h1>
 <div id="image-acquisition" class="section level2">
 <h2>Image acquisition</h2>
 <p>A few decades ago, a morphometric project like this would require
@@ -601,10 +606,8 @@ href="https://www.fishbase.us/">FishBase</a> catalog: a clearing house
 of all things fish that has amassed tons of data from the scientific
 literature. Prof. Kenaley used the <code>rfishbase</code> package to rip
 images of scientific drawings of sharks. This resulted in a cache of
-about XXX images of the 200 species included in the <span
-class="citation">Kawahara et al. (2019)</span> phylogeny. For the
-remainder, he scoured the interwebs for reputable sources of images. The
-images</p>
+images for the ~200 species included in a recent phylogeny of the
+elasmobranchs (<span class="citation">Stein et al. (2018)</span>).</p>
 </div>
 <div id="species-list-and-phylogeny" class="section level2">
 <h2>Species list and phylogeny</h2>
@@ -628,8 +631,8 @@ uncertainty—and this was the case for the <span class="citation">Stein
 et al. (2018)</span> study. We’ll have to account for this in our
 analysis. But, more later on . . .</p>
 <p>In any case, we’ve used the taxa studied in this paper to find images
-in FishBase and we’ll use <a href="lep_tree2.tre">a tree file</a>
-representing phylogeny for our comparative analsyis.</p>
+in FishBase and we’ll use <a href="data/shark_trees.nex">a tree file</a>
+representing phylogeny for our comparative analysis.</p>
 <center>
 <p><br> <img
 src="https://media.springernature.com/lw685/springer-static/image/art%3A10.1038%2Fs41559-017-0448-4/MediaObjects/41559_2017_448_Fig1_HTML.jpg?as=webp"
@@ -639,13 +642,26 @@ class="citation">Stein et al. (2018)</span>.
 </center>
 <p><br></p>
 </div>
-</div>
-<div id="methods" class="section level1">
-<h1>Methods</h1>
-<div id="digitization" class="section level2">
-<h2>Digitization</h2>
+<div id="geometric-morphometrics" class="section level2">
+<h2>Geometric morphometrics</h2>
+<p>As we learned in class and what you’ve been reading, researchers
+interested in comparing shape change between species often use
+landmark-based geometric morphometrics. A geometric morphometric study
+such as ours generally follow these steps:</p>
+<ol style="list-style-type: decimal">
+<li>Data collection: select landmarks of interest, usually through
+digitization of specimen images.</li>
+<li>Data standardization: Make landmarks comparable across all
+specimens, usually through superimposition.</li>
+<li>Analysis: choose a statistical approach appropriate to the
+questions.</li>
+<li>Interpretation: use the outcome of the statistical analysis to
+assess the original questions.</li>
+</ol>
+<div id="digitization-and-landmarking" class="section level3">
+<h3>Digitization and landmarking</h3>
 <p>Our shape analysis will be based on 14 landmarks placed on images of
-shark bodies of ~200 species. To landmarks on the body, we’ll follow
+shark bodies of our ~200 species. To landmarks on the body, we’ll follow
 this generalize workflow below in the image analysis program FIJI (FIJI
 is just imageJ).</p>
 <br>
@@ -660,99 +676,69 @@ directory</a>. First choose one of your species to work on. For each
 species, start with what you think is the best image, that is, it has a
 scale bar, the wings are not damaged, and the hindwing is most exposed.
 Open that best image in Fiji.</p>
-<p>After opening the photo, follow the steps above.</p>
+<p>After opening the photo, follow the steps below</p>
 <ol style="list-style-type: decimal">
-<li><p>If there’s a scale bar, <a
-href="https://imagejdocu.list.lu/gui/analyze/set_scale">set the
-scale</a>. Please set the scale in mm.</p></li>
-<li><p>If the right wing pair is damaged, flip the image horizontally.
-Select “Image” <span class="math inline">\(\rightarrow\)</span>
-“Transform” <span class="math inline">\(\rightarrow\)</span> “Flip
-horizontally”. <strong>Note:</strong> you may have to do this only for
-the fore- or hindwing.</p></li>
-<li><p>Select the <a
-href="https://imagej.nih.gov/ij/docs/guide/146-19.html">polygon
-selection tool</a>.</p></li>
-<li><p>Trace the wing by placing the first point on the polygon on the
-anterior margin of the wing where it meets the thorax. Like so .
-.</p></li>
+<li><p>Open a image.</p></li>
+<li><p>Select the multipoint tool.</p></li>
+<li><p>Digitize the 14 landmarks you see above.</p></li>
+<li><p>Measure the XY positions of these points
+(<code>cmd/ctrl+m</code>).</p></li>
+<li><p>Select the macro tab and run the macro
+(<code>cmd/ctrl+r</code>).</p></li>
+<li><p>Save the results to the appropriate directory.</p></li>
+<li><p>Close the results and image tab (don’t save the image).</p></li>
 </ol>
+This process is demonstrated here. <br> <br> <br>
 <center>
-<img src="firstpoint.png" style="width:40.0%" /> <br>
+<iframe width="460" height="315" src="https://www.youtube.com/embed/-yZu3FkJLzU" frameborder="0" allowfullscreen>
+</iframe>
 </center>
 <p><br></p>
-<p>Continue to trace the outline of the wing being sure to include
-enough points to capture more complex areas. For instance, in this
-swallowtail hindwing, it may require 30 or more points to outline the
-interesting projections along the posterior margin.</p>
-<br>
-<center>
-<img src="hindwing.png" style="width:40.0%" /> <br>
-</center>
-<p><br></p>
-<p>You may also find it easier to get an acurate outline if you zoom in
-(<code>crtl+</code> or <code>command+</code>).</p>
-<ol start="5" style="list-style-type: decimal">
-<li>Run the following macro in imageJ.</li>
-</ol>
-<pre><code>run(&quot;Fit Spline&quot;);
-run(&quot;Properties... &quot;, &quot;list&quot;);</code></pre>
-<p>This script <a
-href="https://en.wikipedia.org/wiki/Spline_interpolation">fits a
-spline</a> through the selected points and produces a list of the x,y
-coordinates.</p>
 <p><strong>Note:</strong> For the first image you outline, you will have
 to open the macro editor (“Plugins” <span
 class="math inline">\(\rightarrow\)</span> “New” <span
 class="math inline">\(\Macro\)</span>). Paste the script command from
-above into the editor and save this new macro to an appropriate
-directory, perhaps you cloned repo. You’ll want to access this later
+below into the editor and save this new macro to an appropriate
+directory, perhaps your cloned repo. You’ll want to access this later
 (“Plugins” <span class="math inline">\(\rightarrow\)</span> “Edit”) so
 that you automate this process.</p>
-<ol start="6" style="list-style-type: decimal">
-<li>Save the results table that pops up and be sure to append either
-“_hindwing” or “_forewing” to the file name and make sure this is before
-the “.txt” file extension. <code>command+s</code> or <code>ctrl+s</code>
-works. <strong>This is super important!!</strong></li>
-</ol>
-<p>For some species there may be only one image. For others there may be
-10 or more. If you can, aim to outline the wing of <em>three specimens
-per species</em>.</p>
+<pre><code>f = getTitle();
+dir=getDirectory(&quot;Choose where to save data &quot;);
+selectWindow(&quot;Results&quot;);
+saveAs(&quot;Results&quot;, dir+f+&quot;_.csv&quot;);</code></pre>
+<p>This script saves the results as a <em>tab-separated</em> text file
+with filname as the image file name. <strong>This is super
+important!!</strong> and how we’ll link the landmarks to a species.</p>
 <p>After your team has completed landmarking the assigned species,
 upload your text files to <a
 href="https://drive.google.com/drive/u/1/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Glk5">this
 directory</a>. Once all the data appear here, Prof. Kenaley will
-evaluate the quality of the outlines and do some post-processing if
-required (i.e., file-name checks, outline quality, etc.). You can then
-download <a href="data/class_out_data_f23.zip">these evaluated data</a>
-for shape analysis.</p>
+evaluate the quality of the landmarks and do some post-processing if
+required (i.e., file-name checks, quality, etc.). You can then download
+<a href="data/class_out_data_f23.zip">these evaluated data</a> for shape
+analysis.</p>
 </div>
-<div id="shape-analysis" class="section level2">
-<h2>Shape analysis</h2>
-<p>As we learned in class and what you’ve been reading, researchers
-interested in comparing shape change between species often use
-landmark-based geometric morphometrics.</p>
-<p>Landkmark analysis involves aligning breaking the shapes down into a
-mathematical description of the points that constitute the shapes. The
-most popular approach for fitting functions is elliptical Fourier
-analysis (EFA) in which the shapes in a data set are described as a
-series of ellipses. EFA attempts to align a number of ellipses to the
-outline of shapes and the scale of the major and minor axes of the
-ellipses are then used as the descriptor of the shapes. Of course, one
-could fit a lot of ellipses and describe the shape perfectly, i.e., with
-100% power; however practitioners usually stop short of this and choose
-some lower lever of lower, say 99%. The number of ellipses is referred
-to as the number of harmonics. In the figure below, you see the a higher
-number of harmonics describe the shape in question more perfectly.</p>
-<br>
-<center>
-<img
-src="https://www.researchgate.net/profile/Ryan-Felice/publication/260448082/figure/fig4/AS:297032695730198@1447829521359/Outline-reconstruction-using-Elliptical-Fourier-Descriptors-Black-contours-represent-the.png"
-style="width:60.0%" /> <br> <br> Elliptical Fourier analysis of the
-pygostyle, the fused plate of caudal vertebrae that support tail
-feathers in birds.
-</center>
-<p><br> <br></p>
+<div id="superimposition" class="section level3">
+<h3>Superimposition</h3>
+<p>After digitizing landmarks, we must remove the distracting variations
+of size, orientation, and position that can vary between specimens and
+thus add noisey variables in analysis of shape. This can be mitigated by
+using a superimposition method. Generalized procrustes analysis (GPA) is
+the superimposition method of choice nowadays. GPA removes the variation
+of size, orientation, and position by superimposing the landmarks in a
+common coordinate system. The landmarks for all specimens are optimally
+translated, rotated, and scaled based on a least-squared estimation. The
+first step is translation and rotation to minimize the squared and
+summed differences (squared Procrustes distance) between landmarks on
+each specimen. Then the landmarks are individually scaled to the same
+units of centroid size. Centroid size is the square root of the sum of
+squared distances of the landmarks in configuration to their mean
+location. The translation, rotation, and scaling bring the landmark
+configurations for all specimens into a common coordinate system so that
+the only differing variables are based on shape alone. The new
+superimposed landmarks can now be analyzed in multivariate statistical
+analyses</p>
+<p><img src="gpa.png" /></p>
 <p>Once EFA is used to describe the shapes in a data set, one is left
 with many variables to consider including all the descriptors of all the
 ellipses that form the outlines. This could be many hundreds of
@@ -760,8 +746,9 @@ variables in a data set like ours. This is a serious <a
 href="https://en.wikipedia.org/wiki/Multivariate_statistics">multivariate
 problem</a>.</p>
 </div>
-<div id="establishing-a-morphospace" class="section level2">
-<h2>Establishing a Morphospace</h2>
+</div>
+<div id="analysis-part-i" class="section level2">
+<h2>Analysis: Part I</h2>
 <p>For such a problem, researchers usually turn to Principal Components
 Analysis (PCA) whereby the very complicated suite of variables is
 distilled into a set of fewer variables that describe the important
@@ -801,6 +788,14 @@ out %&gt;%
   Out() %&gt;%
   coo_flipx() %&gt;%
   stack()</code></pre>
+</div>
+<div id="analysis-part-ii" class="section level2">
+<h2>Analysis: Part II</h2>
+<p>Morphologival disparity</p>
+</div>
+<div id="analysis-part-iii" class="section level2">
+<h2>Analysis: Part III</h2>
+<p>Evolutionary rates</p>
 <!-- Notice that we've found all the files in the "lep_examples" directory with `list.files()`, searching for the patter ".txt" and using the full filepath to make a loading the data in the directory possible. Next, we use `read_delim()` with `delim=\t` rather than `read_csv()` because FIJI outputs tab-delimited data. We save this outline as `out` after tranforming it to a matrix, the prefer format for `Momocs`. -->
 <!-- In the next operation, we transform this matrix into an `Momocs` outline using `Out()`; however, `Out()` must take a list of matrices and therefore we pipe in the `list()` function first. Next, `coo_flipx()` is invoked to flip the outline about the x axis--remember that the origin of the image field is the upper left, not the lower left in the usual graphical representation. Lastly, `stack()` is invoked to visualize the outline. And here we have a forewing visualized. -->
 <!-- Now, we will of course have hundreds of files to load and analyze with PCA. For this challenge we will the `vroom()` function in the `vroom` package. It can read in all our data, regardless of whether the data are tab- or comma-separated, an issue identified in class. We have the file paths stored in `f`, which can be passed through this function. -->
@@ -1723,13 +1718,6 @@ out %&gt;%
 Grogan, Eileen D, Richard Lund, and Emily Greenfest-Allen. 2012.
 <span>“The Origin and Relationships of Early Chondrichthyans.”</span>
 <em>Biology of Sharks and Their Relatives</em> 2: 3–29.
-</div>
-<div id="ref-kawahara2019phylogenomics" class="csl-entry">
-Kawahara, Akito Y, David Plotkin, Marianne Espeland, Karen Meusemann,
-Emmanuel FA Toussaint, Alexander Donath, France Gimnich, et al. 2019.
-<span>“Phylogenomics Reveals the Evolutionary Timing and Pattern of
-Butterflies and Moths.”</span> <em>Proceedings of the National Academy
-of Sciences</em> 116 (45): 22657–63.
 </div>
 <div id="ref-lauder2015swimming" class="csl-entry">
 Lauder, George V, and Valentina Di Santo. 2015. <span>“Swimming

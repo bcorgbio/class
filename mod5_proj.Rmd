@@ -131,22 +131,23 @@ From @sternes2020body who found sharks could be assigned two morphotype groups: 
 <br>
 <br>
 
-Although the work of @thomson1977body and later @sternes2020body point to interesting patterns in shark body-shape, neither study explicitly studied the role habitat---that is, pelagic or benthic---had in influencing the evolution body-shape evolution. In particular, @sternes2020body merely observed that their two groups with different body shapes often varied in their habitat preference. In addition, @sternes2020body made no explicit, quantitative phylogenetic test of their patterns. This leaves open an important question: **Do pelagic and benthic sharks have significantly different body shape?** This is the question we will take on in this project.
+Although the work of @thomson1977body and later @sternes2020body points to interesting patterns in shark body-shape, neither study explicitly studied the role habitat---that is, pelagic or benthic---had in influencing the evolution body-shape evolution. In particular, @sternes2020body merely observed that their two groups with different body shapes often varied in their habitat preference. In addition, @sternes2020body made no explicit, quantitative phylogenetic test of their patterns. This leaves open an important question: **Do pelagic and benthic sharks have significantly different body shape?** Subsequently, we might also ask, **Has the morphology of pelagic and benthic sharks evolveed at the same rate?** These are the questions we will take on in this project.
 
 To answer such a question requires that we essentially recapitulate the @sternes2020body body-shape data set using landmark-based [geometric morphometrics](https://en.wikipedia.org/wiki/Morphometrics#Landmark-based_geometric_morphometrics). This is a relatively straightforward, if tedious, method of capturing shape variation in a group of interest. For this, you'll digitize 14 homologous landmarks on images of some 270 species of sharks. Using the best practices in the field of geometric morphometrics to align our landlandmakrs and extract shape information, we'll assess morphological disparity in a phylogenetic frame work between pelagic and benthic sharks. 
+
 # Methods
 
 ## Image acquisition
 
 A few decades ago, a morphometric project like this would require visiting museums collections from around the world to take images of the specimens and species of interest. In fact, this was a major part of Prof. Kenaley's PhD thesis, which included trips to natural history collections in France, Denmark, Great Britain, Taiwan, Japan, Monaco, New Zealand, and Australia. Ahhhhhh, the good ol' days. Fortunately (or unfortunately), travel to such wonderful places may be avoided several resources exist that contain a trove of images of fish-like vertebrates. 
 
-We'll make use of shark images in the [FishBase](https://www.fishbase.us/) catalog: a clearing house of all things fish that has amassed tons of data from the scientific literature. Prof. Kenaley used the `rfishbase` package to rip images of scientific drawings of sharks. This resulted in a cache of about XXX images of the 200 species included in the @kawahara2019phylogenomics phylogeny. For the remainder, he scoured the interwebs for reputable sources of images. The images
+We'll make use of shark images in the [FishBase](https://www.fishbase.us/) catalog: a clearing house of all things fish that has amassed tons of data from the scientific literature. Prof. Kenaley used the `rfishbase` package to rip images of scientific drawings of sharks. This resulted in a cache of images for the ~200 species included in a recent phylogeny of the elasmobranchs (@stein2018global).
 
 ## Species list and phylogeny
 
 Because we'll be comparing body shape in sharks, this project is by definition a comparative one and we'll need a phylogeny for the group. Fortunately a relatviely recent phylogenomic analysis of over 500 species of elasmobranchs (sharks + batoids) has been published by @stein2018global. Unfortunately, there is some phylogenetic discordance in this study. Specifically, when researchers analyze phylogenetic relationships, they typically repeat their analysis in a process known as [bootstrapping](https://en.wikipedia.org/wiki/Computational_phylogenetics#Evaluating_tree_support). In phylogenetics, bootstrapping is conducted using the columns of the character matrix. Each pseudoreplicate contains the same number of species (rows) and characters (columns) randomly sampled from the original matrix, with replacement. A phylogeny is reconstructed from each pseudoreplicate, with the same methods used to reconstruct the phylogeny from the original data. This often results in a data set of trees that have conflicting relationships---that is, phylogenetic uncertainty---and this was the case for the @stein2018global study. We'll have to account for this in our analysis. But, more later on . . .
 
-In any case, we've used the taxa studied in this paper to find images in FishBase and we'll use [a tree file](lep_tree2.tre) representing phylogeny for our comparative analsyis. 
+In any case, we've used the taxa studied in this paper to find images in FishBase and we'll use [a tree file](data/shark_trees.nex) representing phylogeny for our comparative analysis. 
 
 <center>
 <br>
@@ -157,11 +158,20 @@ The phylogenetic relationships of the elasmobranchs according the @stein2018glob
 </center>
 <br>
 
-# Methods
+## Geometric morphometrics
 
-## Digitization
+As we learned in class and what you've been reading, researchers interested in comparing shape change between species often use landmark-based geometric morphometrics. A geometric morphometric study such as ours generally follow these steps:
 
-Our shape analysis will be based on 14 landmarks placed on images of shark bodies of ~200 species. To landmarks on the body, we'll follow this generalize workflow below in the image analysis program FIJI (FIJI is just imageJ). 
+1. Data collection: select landmarks of interest, usually through digitization of specimen images. 
+2. Data standardization: Make landmarks comparable across all specimens, usually through superimposition.
+3. Analysis: choose a statistical approach appropriate to the questions.
+4. Interpretation: use the outcome of the statistical analysis to assess the original questions.
+
+
+
+### Digitization and landmarking
+
+Our shape analysis will be based on 14 landmarks placed on images of shark bodies of our ~200 species. To landmarks on the body, we'll follow this generalize workflow below in the image analysis program FIJI (FIJI is just imageJ). 
 
 <br>
 <center>
@@ -172,74 +182,66 @@ Our shape analysis will be based on 14 landmarks placed on images of shark bodie
 
 You and your team should will be assigned about 20 of the ~200 species to outline. Images of these species can be accessed through [this directory](https://drive.google.com/drive/folders/1TYAzcMcH0u64OEqsuc61W97zIL7qLGWU?usp=sharing). First choose one of your species to work on. For each species, start with what you think is the best image, that is, it has a scale bar, the wings are not damaged, and the hindwing is most exposed. Open that best image in Fiji.
 
-After opening the photo, follow the steps above.
+After opening the photo, follow the steps below
 
-1. If there's a scale bar, [set the scale](https://imagejdocu.list.lu/gui/analyze/set_scale). Please set the scale in mm.
+1. Open a image.
 
-2. If the right wing pair is damaged, flip the image horizontally. Select "Image" $\rightarrow$ "Transform" $\rightarrow$ "Flip horizontally". **Note:** you may have to do this only for the fore- or hindwing.
+2. Select the multipoint tool.
 
-3. Select the [polygon selection tool](https://imagej.nih.gov/ij/docs/guide/146-19.html).
+3. Digitize the 14 landmarks you see above.
 
-4. Trace the wing by placing the first point on the polygon on the anterior margin of the wing where it meets the thorax. Like so . . 
+4. Measure the XY positions of these points (`cmd/ctrl+m`). 
 
-<center>
+5. Select the macro tab and run the macro (`cmd/ctrl+r`).
 
-![](firstpoint.png){width=40%}
+6. Save the results to the appropriate directory.
+
+7. Close the results and image tab (don't save the image).
+
+This process is demonstrated here.
 <br>
+<br>
+<br>
+<center>
+<iframe width="460" height="315" src="https://www.youtube.com/embed/-yZu3FkJLzU" frameborder="0" allowfullscreen></iframe>
 </center>
 <br>
 
-Continue to trace the outline of the wing being sure to include enough points to capture more complex areas. For instance, in this swallowtail hindwing, it may require 30 or more points to outline the interesting projections along the posterior margin.
 
-<br>
-<center>
-![](hindwing.png){width=40%}
-<br>
-</center>
-<br>
 
-You may also find it easier to get an acurate outline if you zoom in (`crtl+` or `command+`).
+**Note:** For the first image you outline, you will have to open the macro editor ("Plugins" $\rightarrow$ "New" $\Macro$). Paste the script command from below into the editor and save this new macro to an appropriate directory, perhaps your cloned repo. You'll want to access this later ("Plugins" $\rightarrow$ "Edit") so that you automate this process.
 
-5. Run the following macro in imageJ.
+
 
 ```{}
-run("Fit Spline");
-run("Properties... ", "list");
+f = getTitle();
+dir=getDirectory("Choose where to save data ");
+selectWindow("Results");
+saveAs("Results", dir+f+"_.csv");
 ```
 
 
-This script [fits a spline](https://en.wikipedia.org/wiki/Spline_interpolation) through the selected points and produces a list of the x,y coordinates.
-
-**Note:** For the first image you outline, you will have to open the macro editor ("Plugins" $\rightarrow$ "New" $\Macro$). Paste the script command from above into the editor and save this new macro to an appropriate directory, perhaps you cloned repo. You'll want to access this later ("Plugins" $\rightarrow$ "Edit") so that you automate this process.
-
-6. Save the results table that pops up and be sure to append either "_hindwing" or "_forewing" to the file name and make sure this is before the ".txt" file extension. `command+s` or `ctrl+s` works. **This is super important!!**
-
-For some species there may be only one image. For others there may be 10 or more. If you can, aim to outline the wing of *three specimens per species*.
+This script saves the results as a *tab-separated* text file with filname as the image file name. 
+ **This is super important!!** and how we'll link the landmarks to a species.
 
 
-After your team has completed landmarking the assigned species, upload your text files to [this directory](https://drive.google.com/drive/u/1/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Glk5).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the outlines and do some post-processing if required (i.e., file-name checks, outline quality, etc.). You can then download [these evaluated data](data/class_out_data_f23.zip) for shape analysis.
 
-## Shape analysis
+After your team has completed landmarking the assigned species, upload your text files to [this directory](https://drive.google.com/drive/u/1/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Glk5).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required (i.e., file-name checks, quality, etc.). You can then download [these evaluated data](data/class_out_data_f23.zip) for shape analysis.
 
-As we learned in class and what you've been reading, researchers interested in comparing shape change between species often use landmark-based geometric morphometrics.
+### Superimposition
 
-Landkmark analysis involves aligning  breaking the shapes down into a mathematical description of the points that constitute the shapes. The most popular approach for fitting functions is elliptical Fourier analysis (EFA) in which the shapes in a data set are described as a series of ellipses. EFA attempts to align a number of ellipses to the outline of shapes and the scale of the major and minor axes of the ellipses are then used as the descriptor of the shapes. Of course, one could fit a lot of ellipses and describe the shape perfectly, i.e., with 100% power; however practitioners usually stop short of this and choose some lower lever of lower, say 99%. The number of ellipses is referred to as the number of harmonics. In the figure below, you see the a higher number of harmonics describe the shape in question more perfectly.
+After digitizing landmarks, we must remove the distracting variations of size, orientation, and position that can vary between specimens and thus add noisey variables in analysis of shape. This can be mitigated by using a superimposition method. Generalized procrustes analysis (GPA) is the superimposition method of choice nowadays. GPA removes the variation of size, orientation, and position by superimposing the landmarks in a common coordinate system. The landmarks for all specimens are optimally translated, rotated, and scaled based on a least-squared estimation. The first step is translation and rotation to minimize the squared and summed differences (squared Procrustes distance) between landmarks on each specimen. Then the landmarks are individually scaled to the same units of centroid size. Centroid size is the square root of the sum of squared distances of the landmarks in configuration to their mean location. The translation, rotation, and scaling bring the landmark configurations for all specimens into a common coordinate system so that the only differing variables are based on shape alone. The new superimposed landmarks can now be analyzed in multivariate statistical analyses
 
-<br>
-<center>
-![](https://www.researchgate.net/profile/Ryan-Felice/publication/260448082/figure/fig4/AS:297032695730198@1447829521359/Outline-reconstruction-using-Elliptical-Fourier-Descriptors-Black-contours-represent-the.png
-){width=60%}
-<br>
-<br>
-Elliptical Fourier analysis of the pygostyle, the fused plate of caudal vertebrae that support tail feathers in birds.
-</center>
-<br>
-<br>
+
+![](gpa.png)
+
+
 
 Once EFA is used to describe the shapes in a data set, one is left with many variables to consider including all the descriptors of all the ellipses that form the outlines. This could be many hundreds of variables in a data set like ours. This is a serious [multivariate problem](https://en.wikipedia.org/wiki/Multivariate_statistics).
 
-## Establishing a Morphospace
-For such a problem, researchers usually turn to Principal Components Analysis (PCA) whereby the very complicated suite of variables is distilled into a set of fewer variables that describe the important variance among the original variables. In a sense, PCA produces a series of regressions, or vectors, that pass through the values of the original variables. This operation is performed iteratively, with the first vector (the first principal component, PC1), drawn through the variable space that accounts for the most variance in the data set. After the combination of variables forming PC1 is removed, a subsequent vector (PC2) is drawn through another unique variable space that describes the second most amount of variance. This continues until most of the variance is captured, resulting in scores of PCs. The first two or three, however, are usually enough to describe a health amount of variance, say 90% or more.
+### Analysis: Part I, a morphospace
+
+In geometric morphometric, researchers first turn to describing the axis of shape variation. usually turn to Principal Components Analysis (PCA) whereby the very complicated suite of variables is distilled into a set of fewer variables that describe the important variance among the original variables. In a sense, PCA produces a series of regressions, or vectors, that pass through the values of the original variables. This operation is performed iteratively, with the first vector (the first principal component, PC1), drawn through the variable space that accounts for the most variance in the data set. After the combination of variables forming PC1 is removed, a subsequent vector (PC2) is drawn through another unique variable space that describes the second most amount of variance. This continues until most of the variance is captured, resulting in scores of PCs. The first two or three, however, are usually enough to describe a health amount of variance, say 90% or more.
 
 To perform EFA and then PCA, we need only to turn to one R package, `Momocs`. Let's load this package and begin with an example analysis that we can scale up on our full data set.
 
@@ -263,6 +265,16 @@ out %>%
   stack()
 
 ```
+
+
+## Analysis: Part II
+
+Morphologival disparity
+
+## Analysis: Part III
+
+Evolutionary rates
+
 
 <!-- Notice that we've found all the files in the "lep_examples" directory with `list.files()`, searching for the patter ".txt" and using the full filepath to make a loading the data in the directory possible. Next, we use `read_delim()` with `delim=\t` rather than `read_csv()` because FIJI outputs tab-delimited data. We save this outline as `out` after tranforming it to a matrix, the prefer format for `Momocs`. -->
 

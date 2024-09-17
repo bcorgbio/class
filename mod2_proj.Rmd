@@ -398,26 +398,66 @@ For this project report, perform the following tasks.
 **What's in the "pseed.met.rate.csv" file?** This file represents the active metabolic rate while swimming (the swim tunnel is both a treadmill for fishes and a closed metabolic chamber). You'll notice many of the same columns as our kinematic data and one new one: `met.rate`, the metabolic power output in W$\cdot$kg$^{-1}$.
 
 ```{r,include=FALSE}
-pseed.met <- read_csv("pseed.met.rate.csv")
+library(tidyverse)
+library(features)
+#CPK: read in data
+pseed <- read_csv("pseed.fin.amps.csv")
+pseed.bl <- read_csv("pseed.lengths.csv")
+speeds <- read_csv("pseed.calibration.csv")
+
+
+#make function to find peaks
+
+find.peaks <- function(x,y,mult=100){ 
+f <- fget(features(x = x,y=y*mult))[2:3]%>% 
+  as_tibble()%>% 
+  filter(curvature<0)%>%
+  mutate(peaks=round(crit.pts,0))
+ return(f$peaks)
+}
+
+#Objective 1
+
+pseed2 <- pseed %>% 
+  left_join(speeds,by=c("speed"="vol"))%>%
+  left_join(pseed.bl,by="fish")%>%
+  mutate(bl.s=cm.s/bl)
+
+pseed.wide <- pseed2 %>%
+  select(-amp)%>%
+  pivot_wider(names_from = fin,values_from = amp.bl) %>%
+  mutate(amp.sum=L+R)
+
+#Objective 2 
+
+se <- function(x){sd(x)/sqrt(length(x))}
+
+#Objective # 3, 4
 
 pseed.sum.max <- pseed.wide%>%
   group_by(date,fish)%>%
   mutate(peak=frame %in% find.peaks(frame,amp.sum))%>%
-  filter(peak==T) #new filter
-  
-pseed.met.kin <- pseed.sum.max%>%
-   group_by(fish,bl.s)%>%
-   summarize(
-     amp.sum.mean=mean(amp.sum),
-     amp.sum.se=sd(amp.sum)/sqrt(length(amp.sum))
-     ) %>%
-   left_join(pseed.met%>%select(fish,bl.s,met.rate),by=c("fish","bl.s"))
+  filter(peak==T) %>% 
+  group_by(fish, bl.s) %>%
+  dplyr::summarize(amp.sum.mean=mean(amp.sum),
+            amp.sum.se=se(amp.sum))
+#Objective 5
 
-pseed.met.kin%>%
- ggplot(aes(x=bl.s,y=amp.sum.mean,col=fish))+geom_point()+geom_smooth(method="lm")+geom_errorbar(aes(ymin=amp.sum.mean-amp.sum.se,ymax=amp.sum.mean+amp.sum.se))
+pseed.sum.max %>%
+ ggplot(aes(x=bl.s,y=amp.sum.mean,col=fish))+
+  geom_point()+geom_smooth(method="lm")+
+  geom_errorbar(aes(ymin=amp.sum.mean-amp.sum.se,ymax=amp.sum.mean+amp.sum.se))
 
-pseed.met.kin%>%
-   ggplot(aes(x=amp.sum.mean,y=met.rate,col=fish))+geom_point()+geom_smooth(method="lm")
+
+#Objective 6, 7
+
+pseed.met <- read_csv("pseed.met.rate.csv")
+
+pseed.sum.max %>%
+   left_join(pseed.met%>%select(fish,bl.s,met.rate)) %>% 
+ ggplot(aes(x=amp.sum.mean,y=met.rate,col=fish))+
+  geom_point()+geom_smooth(method="lm")
+
 
   
 ```
