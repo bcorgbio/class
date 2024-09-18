@@ -132,7 +132,7 @@ From @sternes2020body who found sharks could be assigned two morphotype groups: 
 <br>
 <br>
 
-Although the work of @thomson1977body and later @sternes2020body points to interesting patterns in shark body-shape, neither study explicitly studied the role habitat---that is, pelagic or benthic---had in influencing the evolution body-shape evolution. In particular, @sternes2020body merely observed that their two groups with different body shapes often varied in their habitat preference. In addition, @sternes2020body made no explicit, quantitative phylogenetic test of their patterns. This leaves open an important question: **Do pelagic and benthic sharks have significantly different body shape?** Subsequently, we might also ask, **Has the morphology of pelagic and benthic sharks evolveed at the same rate?** These are the questions we will take on in this project.
+Although the work of @thomson1977body and later @sternes2020body points to interesting patterns in shark body-shape, neither study explicitly studied the role habitat---that is, pelagic or benthic---had in influencing the evolution body-shape evolution. In particular, @sternes2020body merely observed that their two groups with different body shapes often varied in their habitat preference. In addition, @sternes2020body made no explicit, quantitative phylogenetic test of their patterns. This leaves open an important question: **Do pelagic and benthic sharks have significantly different body shape?** Subsequently, we might also ask, **Has the morphology of pelagic and benthic sharks evolved at the same rate?** These are the questions we will take on in this project.
 
 To answer such a question requires that we essentially recapitulate the @sternes2020body body-shape data set using landmark-based [geometric morphometrics](https://en.wikipedia.org/wiki/Morphometrics#Landmark-based_geometric_morphometrics). This is a relatively straightforward, if tedious, method of capturing shape variation in a group of interest. For this, you'll digitize 14 homologous landmarks on images of some 270 species of sharks. Using the best practices in the field of geometric morphometrics to align our landlandmakrs and extract shape information, we'll assess morphological disparity in a phylogenetic frame work between pelagic and benthic sharks. 
 
@@ -407,25 +407,35 @@ title("max PC3 warp",cex=0.6)
 
 ### Analysis: Part II
 
-Morphological disparity
+Our PCA analysis reveals an interesting pattern. This, however, is not quantitative assessment *per se*, merely a visual and qualitative result and not dissimilar to the qualitative results reported by @sternes2020body. Several quantitative frameworks for assessing differences in shape exist. The `geomorph` package contains several, but we'll use just one: morphological disparity. The function `morphol.disparity()` will do this for us by making pairwise comparisons of residuals of a linear fit to identify differences among groups. It's essentially an ANOVA for shape. The statistical significance of the calculated Procrustes variances between the different growth stages is assessed using a randomized residual permutation, that is random set residuals from all groups are chosen in each iteration.
+
+`morphol.disparity()` requires a special data structure, a `geomorph` `data.frame` and this can be constructed using the `geomorph.data.frame()` function. It takes the landmark data and other variables of interest (i.e., in our case, habitat). First, we'll establish the special data frame using our aligned landmarks and habitat data from the `PCA` tibble.
 
 ```{r morphdis,eval=T}
-library(ape)
-library(phytools)
-phy <- readNexus("data/shark_trees.nex")
 
-phy2 <- keep.tip(phy,PCA$sp)
 
 gdf <- geomorph.data.frame(ldk_al,
-                             species = PCA$sp,
                              habitat=PCA$habitat
 )
+```
 
+To you use the `morphol.disparity()` function, we then need to establish a formula describing the  model to use and tell the function which groups the model should include. This is encoded with `coords ~ 1` which indicates we'll look at the differences in means and  `groups= ~ habitat`, indicating that we'll evaluate means between the habitat groups. `data = gdf` indicates we'll use the `gdf` data frame we established above, while `iter = 10000` indicates we'll be perform 10,000 radom permutations. Lastly, we just summarize the `md` object to return the results
 
+```{r morphdis2}
 md <- morphol.disparity(coords ~ 1, groups= ~ habitat, data = gdf, iter = 10000, print.progress = FALSE)
 
 summary(md)
 
+```
+
+Notice the the pairwise differences are returned both for the Procrustes shape variance and the absolute differences along with the p values. As it turns out, at least for this limited data set of ~90 species, there's no significant morphological disparity between groups.
+
+We have a preliminary answer to our first question, "Does habitat use predict different body shape?". But this of course could change with a larger sample of species. 
+
+```{r phy}
+phy <- readNexus("data/shark_trees.nex")
+
+phy2 <- keep.tip(phy,PCA$sp)
 
   gdf <- geomorph.data.frame(ldk_al,
                              species = PCA$sp,
@@ -442,12 +452,42 @@ iter = 10000)
 summary(shark_pgls)
 ```
 
-### Analysis: Part III
+### Analysis Part III: Evolution in Parallel
+
+Our secondary question was, if you remember, was, "**Has the body shape of pelagic and benthic sharks evolved at the same rate?**". This is a much different question than the first. We want to know, overall, if the shape of lineages that invaded a particular habitat has evolved faster or slower than those invading another habitat. For this we'll turn to the `geomorph` package once again, in particular, its `compare.evol.rates()` function. This function calculates net rates of shape evolution for groups of species on a phylogeny from a set of aligned landmarks. The approach is based between-species differences in morphospace after phylogenetic transformation. In other words, after correcting for phylogenetic relatedness, it compares relative rates of shape evolution.
+
+Because we're correcting for phylogeny in this analysis, we need the [tree from @stein2018global mentioned above](data/shark_trees.nex). Once this tree file is downloaded, let's load read it in and store it to an object named `phy`. Notice you'll need the phytools package and the function `readNexus()`.
+
 
 ```{r}
+library(phytools)
+phy <- readNexus("data/shark_trees.nex")
+length(phy)
+```
 
-gp_hab <- as.numeric(as.factor(PCA$habitat))-1
+Next let's, restrict our tree file to those species in our data set. For this, we'll used `ape`'s `keep.tip()` which keeps only the tips in a vector, in this case, the species in our PCA and landmakr analysis.
+
+```{r phydrop}
+phy2 <- keep.tip(phy,PCA$sp)
+```
+
+
+To undertake the analysis with `compare.evol.rates()`, we must specify `A`, the aligned coordinates in a lankmark array (`ldk_al$coord`), a tree (more in just a bit), and a named vector of groups descriping to which group each species in the array belongs.
+
+Let's establish the grouping vector by passing the `habitat` values in our `PCA` tibble to an object named `gp_hab` and then give the names of this vector the `species` values. Then we run the function.
+
+
+```{r evolrate}
+
+
+gp_hab <- PCA$habitat
 names(gp_hab) <- PCA$sp
+
+ 
+er <- compare.evol.rates(A=ldk_al$coords, phy=phy2[[1]], method="simulation",gp=gp_hab,print.progress = F)
+
+print(er)
+```
 
 hab_names <- c(PCA$habit[which(gp_hab==0)] %>% unique,
                PCA$habit[which(gp_hab==1)]%>% unique)
@@ -458,6 +498,45 @@ er_fit <- list()
 for(i in 1:length(phy2)){
  er_fit[[i]] <-compare.evol.rates(A=ldk_al$coords, phy=phy2[[i]], method="simulation",gp=gp_hab,print.progress = F)
 }
+
+plot(er_l[[1]])
+er <- lapply(er_fit,summary)
+
+er <- lapply(er,function(x) {
+  er <- c(x$sigma.d.gp,x$sigma.d.ratio)
+  names(er) <- c(hab_names,"ratio")
+  return(er)
+}) %>% do.call(rbind,.) %>% data.frame
+
+
+er %>% 
+  pivot_longer(benthic:pelagic) %>% 
+  ggplot(aes(value,fill=name)) + geom_histogram()
+
+
+library(parallel)
+
+er_fun <- function(x){compare.evol.rates(A=ldk_al$coords, phy=x, method="simulation",gp=gp_hab,print.progress = F)}
+
+er_l <- mclapply(phy2,er_fun,mc.cores = detectCores()-2)
+
+er <- lapply(er_fit,summary)
+
+er <- lapply(er,function(x) {
+  er <- c(x$sigma.d.gp,x$sigma.d.ratio)
+  names(er) <- c(hab_names,"ratio")
+  return(er)
+}) %>% do.call(rbind,.) %>% data.frame
+
+
+er %>% 
+  pivot_longer(benthic:pelagic) %>% 
+  ggplot(aes(value,fill=name)) + geom_histogram()
+
+t.test(value~name,
+er %>% 
+  pivot_longer(benthic:pelagic) 
+)
 
 ```
 
