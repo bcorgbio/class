@@ -123,7 +123,7 @@ tax <- wormsbynames((shark_fb_res$sp %>% unique)) %>%
 
 shark_fb_res %>% filter(sp=="Cephaloscyllium variegatum")
 
-f <- list.files("data/shark_points",full.names = T,pattern=".csv")
+f <- list.files("data/sharks/shark_points",full.names = T,pattern=".csv")
 ldk <- read_csv(f,id="file") %>% select(file,X,Y)
 
 ldk_l <- ldk %>% 

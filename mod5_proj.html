@@ -739,62 +739,363 @@ the only differing variables are based on shape alone. The new
 superimposed landmarks can now be analyzed in multivariate statistical
 analyses</p>
 <p><img src="gpa.png" /></p>
-<p>Once EFA is used to describe the shapes in a data set, one is left
-with many variables to consider including all the descriptors of all the
-ellipses that form the outlines. This could be many hundreds of
-variables in a data set like ours. This is a serious <a
+<p>To perform a Procrustes superimposition on our landmark data—along
+with many other analyses—we will turn the the <code>geomorph</code>
+package. Please install and load <code>geomorph</code>. But, before we
+do, let’s download and read in about 90 or so landmark files that
+Prof. Kenaley produceds ahead of this project. You can find these
+example files <a href="data/sharks/shark_points.zip">here</a>. You’ll
+have to download this compressed directory and unzip it to your project
+directory. You’ll also have to download and install the
+<code>abind</code> package as well.</p>
+<p>To get started with superimposition, let’s load the packages
+<code>geomorph</code> and <code>abind</code>. When you unzip the
+<code>shark_points.zip</code> directory to you project directory, you
+have a folder named <code>shark_points</code>. Our first operation will
+be to list the files in that directory and then read them in, all at
+once.</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.1     ✔ readr     2.1.4
+## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+## ✔ ggplot2   3.4.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+## ✔ purrr     1.0.1     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;)</code></pre>
+<pre><code>## Rows: 89 Columns: 3
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): sp, file_name, habitat
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>library(geomorph)</code></pre>
+<pre><code>## Loading required package: RRPP</code></pre>
+<pre><code>## Loading required package: rgl</code></pre>
+<pre><code>## Loading required package: Matrix</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Matrix&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:tidyr&#39;:
+## 
+##     expand, pack, unpack</code></pre>
+<pre class="r"><code>library(abind)
+
+f &lt;- list.files(&quot;shark_points&quot;,full.names = T,pattern=&quot;.csv&quot;)
+
+xy &lt;- read_csv(f,id=&quot;file&quot;) %&gt;% 
+  select(file,X,Y) %&gt;% 
+  mutate(file_name=gsub(&quot;*_.csv&quot;,&quot;&quot;,basename(file))) %&gt;% 
+  left_join(shark_dat) </code></pre>
+<pre><code>## New names:
+## • `` -&gt; `...1`</code></pre>
+<pre><code>## Rows: 1246 Columns: 15
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## dbl (14): ...1, Area, Mean, Mode, X, Y, XM, YM, Perim., Circ., Slice, AR, Ro...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## Joining with `by = join_by(file_name)`</code></pre>
+<p>Here we used <code>list.files()</code> with
+<code>pattern=pattern=".csv"</code> to find all the files in the
+<code>shark_points</code> directory. We also set
+<code>full.names = T</code> so that the full file path is saved to the
+object <code>f</code>.</p>
+<pre class="r"><code>head(f)</code></pre>
+<pre><code>## [1] &quot;shark_points/Acnig_u0.gif_.csv&quot; &quot;shark_points/Alpel_u0.gif_.csv&quot;
+## [3] &quot;shark_points/Alsup_u0.gif_.csv&quot; &quot;shark_points/Alvul_u0.gif_.csv&quot;
+## [5] &quot;shark_points/Apbru_u1.gif_.csv&quot; &quot;shark_points/Aplau_u0.gif_.csv&quot;</code></pre>
+<p>This made reading all the files and adding them to one tibble in a
+single operation possible with <code>read_csv()</code>. Notice we added
+a <code>file</code> column to the tibble with <code>id="file"</code> and
+then selected only the columns <code>file</code>, <code>X</code>,
+<code>Y</code>. This operation is saved to an object logically named
+<code>xy</code>.</p>
+<p>For landmarks to used in <code>geomorph</code>, they must be stored
+as a 3-dimensional array, that is, essentially a list of 2D data.frames,
+where the position the <span class="math inline">\(i^{th}\)</span>
+matrix is in the <span class="math inline">\(i^{th}\)</span> index of
+the third dimension, i.e., <code>array[,,i]</code>. To massage our large
+tibble into such an array, we have to split the tibble into a bunch of
+lists using <code>dplyr</code>’s <code>group_split()</code> function.
+Notice how we use a <a
+href="https://www.nbshare.io/notebook/429754141/How-To-Use-Grep-In-R/"><code>gsub()</code>
+operation</a> to create a new column <code>file_name</code> that removes
+“.csv” from the file name data. Splitting by this, will leave used with
+a list of lists as long as all our files. We then use
+<code>abind</code>’s <code>abind()</code> function to bind the list of
+data.frames in <code>ldk_l</code> into an array, with each data.frame
+taking a position in the third dimension. This array is saved in the
+object <code>ldk</code>. Lastly, we’ll specify that the names of this
+third dimension should be the <code>file_name</code> minus the “.csv”
+extension. <strong>Note: this is how we’ll retrieve species
+information.</strong></p>
+<pre class="r"><code>ldk_l &lt;- list()
+
+shark_sp &lt;- xy$sp %&gt;% unique
+
+for(i in shark_sp){
+  ldk_l[[i]] &lt;- xy %&gt;% 
+    filter(sp==i) %&gt;% 
+    select(X,Y)
+    data.frame
+}
+
+
+ldk &lt;-  abind(ldk_l, along=3)
+
+dimnames(ldk)[[3]] &lt;-names(ldk_l)
+
+ldk[,,1:3] #the first few </code></pre>
+<pre><code>## , , Aculeola nigra
+## 
+##           X     Y
+##  [1,]  39.5 185.5
+##  [2,] 260.0 141.5
+##  [3,] 292.0 136.5
+##  [4,] 293.5 160.0
+##  [5,] 464.0 172.5
+##  [6,] 596.0 162.5
+##  [7,] 522.0 222.0
+##  [8,] 454.5 194.5
+##  [9,] 380.0 198.5
+## [10,] 341.0 214.5
+## [11,] 209.0 202.5
+## [12,] 180.0 194.5
+## [13,] 100.5 202.5
+## [14,]  74.5 209.0
+## 
+## , , Alopias pelagicus
+## 
+##           X       Y
+##  [1,]  38.0 166.000
+##  [2,] 162.5 141.500
+##  [3,] 186.5 101.500
+##  [4,] 192.5 138.500
+##  [5,] 295.5 152.500
+##  [6,] 606.5  94.500
+##  [7,] 321.5 206.500
+##  [8,] 300.5 181.500
+##  [9,] 249.5 183.500
+## [10,] 228.5 187.500
+## [11,] 135.5 185.500
+## [12,] 103.5 188.500
+## [13,]  69.0 179.833
+## [14,]  59.5 180.333
+## 
+## , , Alopias superciliosus
+## 
+##           X     Y
+##  [1,]  38.5 173.5
+##  [2,] 221.5 135.0
+##  [3,] 257.0  89.5
+##  [4,] 261.5 136.0
+##  [5,] 364.0 152.0
+##  [6,] 604.5  71.5
+##  [7,] 389.5 205.5
+##  [8,] 363.0 177.5
+##  [9,] 310.0 184.0
+## [10,] 282.5 197.0
+## [11,] 168.5 194.0
+## [12,] 138.5 196.5
+## [13,]  82.5 190.5
+## [14,]  67.5 189.0</code></pre>
+<p>With a proper array in place as <code>ldk</code>, we’re now free to
+move on the superimposition with the <code>geomorph</code> function
+<code>gpagen()</code>. We’ll do this saving the output to
+<code>ldk_al</code> (for landmark alignment) and plot the the 14 aligned
+and superimposed landmarks for all the example specimens.</p>
+<pre class="r"><code>ldk_al &lt;- gpagen(ldk)</code></pre>
+<pre><code>## 
+## Performing GPA
+##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%
+## 
+## Making projections... Finished!</code></pre>
+<pre class="r"><code>plot(ldk_al)</code></pre>
+<p><img src="mod5_proj_files/figure-html/gpa-1.png" width="672" /></p>
+</div>
+<div id="analysis-part-i-a-morphospace" class="section level3">
+<h3>Analysis: Part I, a morphospace</h3>
+<p>In geometric morphometric analysis, researchers first turn to
+describing the axes of shape variation.Indeed, this is what <span
+class="citation">Sternes and Shimada (2020)</span> did to produce the
+figure above. This and what we’re after is often termed a <a
+href="https://en.wiktionary.org/wiki/morphospace">morphospace</a>, a
+representation of shape the study group does and does not have.</p>
+<p>To develop such a thing, biologist usually turn to Principal
+Components Analysis (PCA) whereby the very complicated suite of
+variables is distilled into a set of fewer variables that describe the
+important variance among the original variables. The coordinates
+contained in our <code>ldk_al</code> object describe dozens of
+variables: scaled distances between all the landmarks. So we have many
+variable to consider and this becomes, very quickly, a serious <a
 href="https://en.wikipedia.org/wiki/Multivariate_statistics">multivariate
-problem</a>.</p>
-</div>
-</div>
-<div id="analysis-part-i" class="section level2">
-<h2>Analysis: Part I</h2>
-<p>For such a problem, researchers usually turn to Principal Components
-Analysis (PCA) whereby the very complicated suite of variables is
-distilled into a set of fewer variables that describe the important
-variance among the original variables. In a sense, PCA produces a series
-of regressions, or vectors, that pass through the values of the original
-variables. This operation is performed iteratively, with the first
-vector (the first principal component, PC1), drawn through the variable
-space that accounts for the most variance in the data set. After the
-combination of variables forming PC1 is removed, a subsequent vector
-(PC2) is drawn through another unique variable space that describes the
-second most amount of variance. This continues until most of the
-variance is captured, resulting in scores of PCs. The first two or
-three, however, are usually enough to describe a health amount of
-variance, say 90% or more.</p>
-<p>To perform EFA and then PCA, we need only to turn to one R package,
-<code>Momocs</code>. Let’s load this package and begin with an example
-analysis that we can scale up on our full data set.</p>
-<p>We can begin by reading in one of the outline text files,
-Prof. Kenaley has already produced for 10 species of butterflies and
-moths. Please <a href="lep_examples.zip">download these</a> to follow
-along. You can unzip this directory and place it your project
-directory</p>
-<p>You can begin the full analysis on data collected by the whole class
-by <a href="data/class_out_data_f23.zip">downloading this zipped
-directory</a>, unzipping it, and placing it in your project
-directory</p>
-<pre class="r"><code>library(tidyverse)
-library(Momocs)
+problem</a>. PCA is suited to multivariate analysis because it reduces
+the complexity of the data, taking many variables and distilling the
+into just a few. At its core, PCA produces a series of regressions, or
+vectors, that pass through the values of the original variables. This
+operation is performed iteratively, with the first vector (the first
+principal component, PC1), drawn through the variable space that
+accounts for the most variance in the data set. After the combination of
+variables forming PC1 is removed, a subsequent vector (PC2) is drawn
+through another unique variable space that describes the second most
+amount of variance. This continues until most of the variance is
+captured, resulting in scores of PCs. The first two or three, however,
+are usually enough to describe a health amount of variance, say 90% or
+more.</p>
+<p>To perform PCA, we’ll use <code>geomorph</code>s
+<code>gm.prcomp()</code> function like so. Plotting reveals our first
+result.</p>
+<pre class="r"><code>pca &lt;- gm.prcomp(ldk_al$coords)
+plot(pca)</code></pre>
+<p><img src="mod5_proj_files/figure-html/pca-1.png" width="672" /></p>
+<p>Wow, now we’re getting close to the <span class="citation">Sternes
+and Shimada (2020)</span> results and answering, at least in part, one
+of our questions: <strong>Does habitat result in different body
+shapes</strong>. But let’s break down what this plot means first. By
+default, when we plot a PCA object, the first two PCs are plotted, PC1
+on the x axis, PC2 on the y. Each point represents the PC scores for a
+specimen in the data set. Notice that the amount of variance explained
+by our PCs is given and, as expected, PC1 contains most of the variance
+(54%) and PC2 considerably less less (19%). If we plot again, but
+specify a different combination of PCs, say 1 and 3, we get a different
+plot, of course. Notice the variance explained by PC3 is predictably
+less than that of PC2.</p>
+<pre class="r"><code>plot(pca,1,3)</code></pre>
+<p><img src="mod5_proj_files/figure-html/pc2-1.png" width="672" /></p>
+<p>OK, so based on our PC plots, it looks as if we have two groupings,
+just like <span class="citation">Sternes and Shimada (2020)</span>. But,
+do these groups correspond to largely pelagic vs. benthic species? It’s
+hard to tell. We don’t really know because we don’t know which species
+belong to each point in our plots, nor their habitat.</p>
+<p>Notice, however, that the names of the coordinates in
+<code>ldk</code> were pegged in a previous operation to the image file
+names.</p>
+<pre class="r"><code>head(dimnames(ldk)[[3]])</code></pre>
+<pre><code>## [1] &quot;Aculeola nigra&quot;         &quot;Alopias pelagicus&quot;      &quot;Alopias superciliosus&quot; 
+## [4] &quot;Alopias vulpinus&quot;       &quot;Apristurus brunneus&quot;    &quot;Apristurus laurussonii&quot;</code></pre>
+<p>These values were maintained throughout the superimpositon step and
+in the PCA operation. The coordinates plotted in the in PCA plots are
+contained in a matrix named <code>x</code> in our <code>pca</code>
+object. Notice the row names:</p>
+<pre class="r"><code>pca$x %&gt;% data.frame %&gt;% select(Comp1,Comp2) %&gt;% head</code></pre>
+<pre><code>##                              Comp1       Comp2
+## Aculeola nigra          0.05844921  0.03217813
+## Alopias pelagicus       0.07242735 -0.31245808
+## Alopias superciliosus   0.01513342 -0.17090354
+## Alopias vulpinus        0.07868014 -0.31153641
+## Apristurus brunneus    -0.13808874  0.00307793
+## Apristurus laurussonii -0.13393379 -0.04949571</code></pre>
+<p>So, we have the image file names from whence the data, both land mark
+and PCA, came from. Fortunately, professor Kenaley assembled a table
+containin of all the the file names used for landmarking, and the
+species and habitat for each. You can download <a
+href="shark_data.csv">this file</a> and read in the data.</p>
+<pre class="r"><code>shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;)</code></pre>
+<pre><code>## Rows: 89 Columns: 3
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): sp, file_name, habitat
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p>What’s left to do in exploring if benthic and pelagic sharks occupy
+different morphospace is to combine this information with the PC scores
+in <code>pca$x</code>. This can be done thusly:</p>
+<pre class="r"><code>PCA &lt;- pca$x %&gt;% 
+  data.frame %&gt;% 
+  select(Comp1:Comp4) %&gt;% 
+  mutate(sp=rownames(pca$x)) %&gt;% 
+  left_join(shark_dat)</code></pre>
+<pre><code>## Joining with `by = join_by(sp)`</code></pre>
+<pre class="r"><code>head(PCA)</code></pre>
+<pre><code>##         Comp1       Comp2      Comp3        Comp4                     sp
+## 1  0.05844921  0.03217813 0.03313839 -0.018461267         Aculeola nigra
+## 2  0.07242735 -0.31245808 0.12037744 -0.025605227      Alopias pelagicus
+## 3  0.01513342 -0.17090354 0.13645281  0.014632816  Alopias superciliosus
+## 4  0.07868014 -0.31153641 0.08396053 -0.006664429       Alopias vulpinus
+## 5 -0.13808874  0.00307793 0.21400019 -0.049243871    Apristurus brunneus
+## 6 -0.13393379 -0.04949571 0.01343577  0.007815099 Apristurus laurussonii
+##      file_name habitat
+## 1 Acnig_u0.gif benthic
+## 2 Alpel_u0.gif pelagic
+## 3 Alsup_u0.gif pelagic
+## 4 Alvul_u0.gif pelagic
+## 5 Apbru_u1.gif benthic
+## 6 Aplau_u0.gif benthic</code></pre>
+<p>With that over with, we can dispence with the ugly PCA plots above
+and use <code>ggplot</code> to visualize our results with repsect to
+habitat.</p>
+<pre class="r"><code>PCA %&gt;% 
+  ggplot(aes(Comp1,Comp2,col=habitat))+geom_point()</code></pre>
+<p><img src="mod5_proj_files/figure-html/ggpca-1.png" width="672" /></p>
+<pre class="r"><code>PCA %&gt;% 
+  ggplot(aes(Comp1,Comp3,col=habitat))+geom_point()</code></pre>
+<p><img src="mod5_proj_files/figure-html/ggpca-2.png" width="672" /></p>
+<p>Voila! For morphospace described by PCs 1, 2, and 3, it appeears that
+pelagic species inhabit a high PC1 score and never a low PC1 score.</p>
+<p>This is wonderful, but you may be asking, “What is PC1 (or any other)
+describing?” Our PCs points are abstractions of shape, but they don’t
+represent explicitly what shape that is. To get a sense of what our PCs
+represent in terms of shape values, we can turn to thin-plate spline
+analysis.</p>
+<pre class="r"><code>max_PC1 &lt;- which.max(pca$x[,1])
+min_PC1 &lt;- which.min(pca$x[,1])
+max_PC2 &lt;- which.max(pca$x[,2])
+min_PC2 &lt;- which.min(pca$x[,2])
+M &lt;- ldk_al$consensus
 
-f &lt;- list.files(&quot;data/class_out_data_f23&quot;,full.names=T)
+par(mfrow=c(2,2))
+plotRefToTarget(M, ldk_al$coords[,,min_PC1], mag = 1,method=&quot;vector&quot;,label = T)
+title(&quot;min PC1 warp&quot;,cex=0.6)
 
-out &lt;- read_csv(f[1]) %&gt;%
-  as.matrix()
+plotRefToTarget(M, ldk_al$coords[,,max_PC1], mag = 1,method=&quot;vector&quot;,label = T)
+title(&quot;max PC1 warp&quot;,cex=0.6)
 
-out %&gt;%
-  list() %&gt;%
-  Out() %&gt;%
-  coo_flipx() %&gt;%
-  stack()</code></pre>
+plotRefToTarget(M, ldk_al$coords[,,min_PC2], mag = 1,method=&quot;vector&quot;,label = T)
+title(&quot;min PC2 warp&quot;,cex=0.6)
+
+plotRefToTarget(M, ldk_al$coords[,,max_PC2], mag = 1,method=&quot;vector&quot;,label = T)
+title(&quot;max PC3 warp&quot;,cex=0.6)</code></pre>
+<p><img src="mod5_proj_files/figure-html/rw-1.png" width="672" /></p>
 </div>
-<div id="analysis-part-ii" class="section level2">
-<h2>Analysis: Part II</h2>
-<p>Morphologival disparity</p>
+<div id="analysis-part-ii" class="section level3">
+<h3>Analysis: Part II</h3>
+<p>Morphological disparity</p>
+<pre class="r"><code>library(ape)
+library(phytools)
+phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
+
+phy2 &lt;- keep.tip(phy,PCA$sp)
+
+gdf &lt;- geomorph.data.frame(ldk_al,
+                             species = PCA$sp,
+                             habitat=PCA$habitat
+)
+
+
+md &lt;- morphol.disparity(coords ~ 1, groups= ~ habitat, data = gdf, iter = 10000, print.progress = FALSE)
+
+summary(md)
+
+
+  gdf &lt;- geomorph.data.frame(ldk_al,
+                             species = PCA$sp,
+                             habitat=PCA$habitat,
+                             phy=phy2[[1]]
+  )
+  
+  setdiff(phy2[[1]]$tip.label,PCA$sp)
+  
+shark_pgls &lt;- procD.pgls(coords ~ habitat, phy = phy, data = gdf, 
+iter = 999)</code></pre>
 </div>
-<div id="analysis-part-iii" class="section level2">
-<h2>Analysis: Part III</h2>
+<div id="analysis-part-iii" class="section level3">
+<h3>Analysis: Part III</h3>
 <p>Evolutionary rates</p>
 <!-- Notice that we've found all the files in the "lep_examples" directory with `list.files()`, searching for the patter ".txt" and using the full filepath to make a loading the data in the directory possible. Next, we use `read_delim()` with `delim=\t` rather than `read_csv()` because FIJI outputs tab-delimited data. We save this outline as `out` after tranforming it to a matrix, the prefer format for `Momocs`. -->
 <!-- In the next operation, we transform this matrix into an `Momocs` outline using `Out()`; however, `Out()` must take a list of matrices and therefore we pipe in the `list()` function first. Next, `coo_flipx()` is invoked to flip the outline about the x axis--remember that the origin of the image field is the upper left, not the lower left in the usual graphical representation. Lastly, `stack()` is invoked to visualize the outline. And here we have a forewing visualized. -->
@@ -1750,6 +2051,7 @@ Locomotion in Sharks.”</span> <em>American Zoologist</em> 17 (2):
 Wilga, Cheryl AD, and George V Lauder. 2004. <span>“Biomechanics of
 Locomotion in Sharks, Rays, and Chimeras.”</span> <em>Biology of Sharks
 and Their Relatives</em> 5: 139–64.
+</div>
 </div>
 </div>
 </div>
