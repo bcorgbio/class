@@ -84,6 +84,8 @@ saveRDS(hOUwie_res,"hOUwie_res.RDS")
 
 #hOUwie_res <- readRDS("data/sharks/hOUwie_res.RDS")
 
-getModelTable(hOUwie_res[[1]])
 
- lapply(hOUwie_res[[1]], getModelTable)   
+hOUwie.recon(hOUwie_res[[1]][1])
+
+
+

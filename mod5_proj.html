@@ -573,9 +573,9 @@ class="citation">Sternes and Shimada (2020)</span> made no explicit,
 quantitative phylogenetic test of their patterns. This leaves open an
 important question: <strong>Do pelagic and benthic sharks have
 significantly different body shape?</strong> Subsequently, we might also
-ask, <strong>Has the morphology of pelagic and benthic sharks evolveed
-at the same rate?</strong> These are the questions we will take on in
-this project.</p>
+ask, <strong>Has the morphology of pelagic and benthic sharks evolved at
+the same rate?</strong> These are the questions we will take on in this
+project.</p>
 <p>To answer such a question requires that we essentially recapitulate
 the <span class="citation">Sternes and Shimada (2020)</span> body-shape
 data set using landmark-based <a
@@ -606,11 +606,37 @@ href="https://www.fishbase.us/">FishBase</a> catalog: a clearing house
 of all things fish that has amassed tons of data from the scientific
 literature. Prof. Kenaley used the <code>rfishbase</code> package to rip
 images of scientific drawings of sharks. This resulted in a cache of
-images for the ~200 species included in a recent phylogeny of the
+images for the ~220 species included in a recent phylogeny of the
 elasmobranchs (<span class="citation">Stein et al. (2018)</span>).</p>
 </div>
 <div id="species-list-and-phylogeny" class="section level2">
 <h2>Species list and phylogeny</h2>
+<p>The 200+ species we’ll analyze in the study were chosen because they
+had decent images on FishBase and cover the nooks and crannies of the
+<span class="citation">Stein et al. (2018)</span> phylogeny, giving a
+broad sample of the group. As we move on, we’ll use <a
+href="data/shark_data.csv">this table</a> to keep track of images we
+need to landmark, the species the images belongs to, and the habitat for
+each. Let’s load these data now so we have it handy.</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.1     ✔ readr     2.1.4
+## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+## ✔ ggplot2   3.4.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+## ✔ purrr     1.0.1     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;)</code></pre>
+<pre><code>## Rows: 91 Columns: 3
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): sp, file_name, habitat
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p>Because we’ll be comparing body shape in sharks, this project is by
 definition a comparative one and we’ll need a phylogeny for the group.
 Fortunately a relatviely recent phylogenomic analysis of over 500
@@ -661,7 +687,7 @@ assess the original questions.</li>
 <div id="digitization-and-landmarking" class="section level3">
 <h3>Digitization and landmarking</h3>
 <p>Our shape analysis will be based on 14 landmarks placed on images of
-shark bodies of our ~200 species. To landmarks on the body, we’ll follow
+shark bodies of our ~220 species. To landmarks on the body, we’ll follow
 this generalize workflow below in the image analysis program FIJI (FIJI
 is just imageJ).</p>
 <br>
@@ -669,7 +695,7 @@ is just imageJ).</p>
 <img src="shark_points.png" style="width:70.0%" /> <br>
 </center>
 <p><br></p>
-<p>You and your team should will be assigned about 20 of the ~200
+<p>You and your team should will be assigned about 20 of the ~220
 species to outline. Images of these species can be accessed through <a
 href="https://drive.google.com/drive/folders/1TYAzcMcH0u64OEqsuc61W97zIL7qLGWU?usp=sharing">this
 directory</a>. First choose one of your species to work on. For each
@@ -754,25 +780,6 @@ directory. You’ll also have to download and install the
 have a folder named <code>shark_points</code>. Our first operation will
 be to list the files in that directory and then read them in, all at
 once.</p>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.1     ✔ readr     2.1.4
-## ✔ forcats   1.0.0     ✔ stringr   1.5.0
-## ✔ ggplot2   3.4.1     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-## ✔ purrr     1.0.1     
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;)</code></pre>
-<pre><code>## Rows: 89 Columns: 3
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (3): sp, file_name, habitat
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>library(geomorph)</code></pre>
 <pre><code>## Loading required package: RRPP</code></pre>
 <pre><code>## Loading required package: rgl</code></pre>
@@ -792,7 +799,7 @@ xy &lt;- read_csv(f,id=&quot;file&quot;) %&gt;%
   left_join(shark_dat) </code></pre>
 <pre><code>## New names:
 ## • `` -&gt; `...1`</code></pre>
-<pre><code>## Rows: 1246 Columns: 15
+<pre><code>## Rows: 1274 Columns: 15
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (14): ...1, Area, Mean, Mode, X, Y, XM, YM, Perim., Circ., Slice, AR, Ro...
@@ -821,8 +828,9 @@ where the position the <span class="math inline">\(i^{th}\)</span>
 matrix is in the <span class="math inline">\(i^{th}\)</span> index of
 the third dimension, i.e., <code>array[,,i]</code>. To massage our large
 tibble into such an array, we have to split the tibble into a bunch of
-lists using <code>dplyr</code>’s <code>group_split()</code> function.
-Notice how we use a <a
+lists for this, we can simply run a <code>for</code> loop, breaking the
+data up into a list of data frames according to species. Notice how we
+use a <a
 href="https://www.nbshare.io/notebook/429754141/How-To-Use-Grep-In-R/"><code>gsub()</code>
 operation</a> to create a new column <code>file_name</code> that removes
 “.csv” from the file name data. Splitting by this, will leave used with
@@ -919,7 +927,7 @@ and superimposed landmarks for all the example specimens.</p>
 <p><img src="mod5_proj_files/figure-html/gpa-1.png" width="672" /></p>
 </div>
 <div id="analysis-part-i-a-morphospace" class="section level3">
-<h3>Analysis: Part I, a morphospace</h3>
+<h3>Analysis Part I: A Morphospace</h3>
 <p>In geometric morphometric analysis, researchers first turn to
 describing the axes of shape variation.Indeed, this is what <span
 class="citation">Sternes and Shimada (2020)</span> did to produce the
@@ -973,7 +981,7 @@ do these groups correspond to largely pelagic vs. benthic species? It’s
 hard to tell. We don’t really know because we don’t know which species
 belong to each point in our plots, nor their habitat.</p>
 <p>Notice, however, that the names of the coordinates in
-<code>ldk</code> were pegged in a previous operation to the image file
+<code>ldk</code> were pegged in a previous operation to the species
 names.</p>
 <pre class="r"><code>head(dimnames(ldk)[[3]])</code></pre>
 <pre><code>## [1] &quot;Aculeola nigra&quot;         &quot;Alopias pelagicus&quot;      &quot;Alopias superciliosus&quot; 
@@ -984,25 +992,17 @@ contained in a matrix named <code>x</code> in our <code>pca</code>
 object. Notice the row names:</p>
 <pre class="r"><code>pca$x %&gt;% data.frame %&gt;% select(Comp1,Comp2) %&gt;% head</code></pre>
 <pre><code>##                              Comp1       Comp2
-## Aculeola nigra          0.05844921  0.03217813
-## Alopias pelagicus       0.07242735 -0.31245808
-## Alopias superciliosus   0.01513342 -0.17090354
-## Alopias vulpinus        0.07868014 -0.31153641
-## Apristurus brunneus    -0.13808874  0.00307793
-## Apristurus laurussonii -0.13393379 -0.04949571</code></pre>
-<p>So, we have the image file names from whence the data, both land mark
-and PCA, came from. Fortunately, professor Kenaley assembled a table
-containin of all the the file names used for landmarking, and the
-species and habitat for each. You can download <a
-href="shark_data.csv">this file</a> and read in the data.</p>
-<pre class="r"><code>shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;)</code></pre>
-<pre><code>## Rows: 89 Columns: 3
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (3): sp, file_name, habitat
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+## Aculeola nigra          0.06258856  0.03252442
+## Alopias pelagicus       0.10109723 -0.31064490
+## Alopias superciliosus   0.03327460 -0.17242372
+## Alopias vulpinus        0.10639978 -0.30795668
+## Apristurus brunneus    -0.13126591 -0.01146547
+## Apristurus laurussonii -0.12314775 -0.06309869</code></pre>
+<p>So, we have the species names from whence the data, both land mark
+and PCA, came from. Fortunately, Professor Kenaley assembled a table
+containing of all the the species for landmarking, and the species and
+habitat for each. You can download <a href="shark_data.csv">this
+file</a> and read in the data.</p>
 <p>What’s left to do in exploring if benthic and pelagic sharks occupy
 different morphospace is to combine this information with the PC scores
 in <code>pca$x</code>. This can be done thusly:</p>
@@ -1014,12 +1014,12 @@ in <code>pca$x</code>. This can be done thusly:</p>
 <pre><code>## Joining with `by = join_by(sp)`</code></pre>
 <pre class="r"><code>head(PCA)</code></pre>
 <pre><code>##         Comp1       Comp2      Comp3        Comp4                     sp
-## 1  0.05844921  0.03217813 0.03313839 -0.018461267         Aculeola nigra
-## 2  0.07242735 -0.31245808 0.12037744 -0.025605227      Alopias pelagicus
-## 3  0.01513342 -0.17090354 0.13645281  0.014632816  Alopias superciliosus
-## 4  0.07868014 -0.31153641 0.08396053 -0.006664429       Alopias vulpinus
-## 5 -0.13808874  0.00307793 0.21400019 -0.049243871    Apristurus brunneus
-## 6 -0.13393379 -0.04949571 0.01343577  0.007815099 Apristurus laurussonii
+## 1  0.06258856  0.03252442 0.03356723 -0.019825631         Aculeola nigra
+## 2  0.10109723 -0.31064490 0.11745778 -0.016213252      Alopias pelagicus
+## 3  0.03327460 -0.17242372 0.13482941  0.020733446  Alopias superciliosus
+## 4  0.10639978 -0.30795668 0.08076650  0.003565676       Alopias vulpinus
+## 5 -0.13126591 -0.01146547 0.21487943 -0.048498099    Apristurus brunneus
+## 6 -0.12314775 -0.06309869 0.01389941  0.003318482 Apristurus laurussonii
 ##      file_name habitat
 ## 1 Acnig_u0.gif benthic
 ## 2 Alpel_u0.gif pelagic
@@ -1065,23 +1065,80 @@ title(&quot;max PC3 warp&quot;,cex=0.6)</code></pre>
 </div>
 <div id="analysis-part-ii" class="section level3">
 <h3>Analysis: Part II</h3>
-<p>Morphological disparity</p>
-<pre class="r"><code>library(ape)
-library(phytools)
-phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
+<p>Our PCA analysis reveals an interesting pattern. This, however, is
+not quantitative assessment <em>per se</em>, merely a visual and
+qualitative result and not dissimilar to the qualitative results
+reported by <span class="citation">Sternes and Shimada (2020)</span>.
+Several quantitative frameworks for assessing differences in shape
+exist. The <code>geomorph</code> package contains several, but we’ll use
+just one: morphological disparity. The function
+<code>morphol.disparity()</code> will do this for us by making pairwise
+comparisons of residuals of a linear fit to identify differences among
+groups. It’s essentially an ANOVA for shape. The statistical
+significance of the calculated Procrustes variances between the
+different growth stages is assessed using a randomized residual
+permutation, that is random set residuals from all groups are chosen in
+each iteration.</p>
+<p><code>morphol.disparity()</code> requires a special data structure, a
+<code>geomorph</code> <code>data.frame</code> and this can be
+constructed using the <code>geomorph.data.frame()</code> function. It
+takes the landmark data and other variables of interest (i.e., in our
+case, habitat). First, we’ll establish the special data frame using our
+aligned landmarks and habitat data from the <code>PCA</code> tibble.</p>
+<pre class="r"><code>gdf &lt;- geomorph.data.frame(ldk_al,
+                             habitat=PCA$habitat
+)</code></pre>
+<p>To you use the <code>morphol.disparity()</code> function, we then
+need to establish a formula describing the model to use and tell the
+function which groups the model should include. This is encoded with
+<code>coords ~ 1</code> which indicates we’ll look at the differences in
+means and <code>groups= ~ habitat</code>, indicating that we’ll evaluate
+means between the habitat groups. <code>data = gdf</code> indicates
+we’ll use the <code>gdf</code> data frame we established above, while
+<code>iter = 10000</code> indicates we’ll be perform 10,000 radom
+permutations. Lastly, we just summarize the <code>md</code> object to
+return the results</p>
+<pre class="r"><code>md &lt;- morphol.disparity(coords ~ 1, groups= ~ habitat, data = gdf, iter = 10000, print.progress = FALSE)
+
+summary(md)</code></pre>
+<pre><code>## 
+## Call:
+## morphol.disparity(f1 = coords ~ 1, groups = ~habitat, iter = 10000,  
+##     data = gdf, print.progress = FALSE) 
+## 
+## 
+## 
+## Randomized Residual Permutation Procedure Used
+## 10001 Permutations
+## 
+## Procrustes variances for defined groups
+##    benthic    pelagic 
+## 0.03218948 0.02885998 
+## 
+## 
+## Pairwise absolute differences between variances
+##             benthic     pelagic
+## benthic 0.000000000 0.003329492
+## pelagic 0.003329492 0.000000000
+## 
+## 
+## P-Values
+##           benthic   pelagic
+## benthic 1.0000000 0.5694431
+## pelagic 0.5694431 1.0000000</code></pre>
+<p>Notice the the pairwise differences are returned both for the
+Procrustes shape variance and the absolute differences along with the p
+values. As it turns out, at least for this limited data set of ~90
+species, there’s no significant morphological disparity between
+groups.</p>
+<p>We have a preliminary answer to our first question, “Does habitat use
+predict different body shape?”. But this of course could change with a
+larger sample of species.</p>
+<pre class="r"><code>library(phytools)</code></pre>
+<pre><code>## Warning: package &#39;ape&#39; was built under R version 4.2.3</code></pre>
+<pre class="r"><code>phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
 
 phy2 &lt;- keep.tip(phy,PCA$sp)
-
-gdf &lt;- geomorph.data.frame(ldk_al,
-                             species = PCA$sp,
-                             habitat=PCA$habitat
-)
-
-
-md &lt;- morphol.disparity(coords ~ 1, groups= ~ habitat, data = gdf, iter = 10000, print.progress = FALSE)
-
-summary(md)
-
 
   gdf &lt;- geomorph.data.frame(ldk_al,
                              species = PCA$sp,
@@ -1089,914 +1146,395 @@ summary(md)
                              phy=phy2[[1]]
   )
   
-  setdiff(phy2[[1]]$tip.label,PCA$sp)
-  
+
+library(parallel)  
 shark_pgls &lt;- procD.pgls(coords ~ habitat, phy = phy, data = gdf, 
-iter = 999)</code></pre>
+iter = 10000,print.progress = F)
+
+
+summary(shark_pgls)</code></pre>
+<pre><code>## 
+## Analysis of Variance, using Residual Randomization
+## Permutation procedure: Randomization of null model residuals 
+## Number of permutations: 10001 
+## Estimation method: Generalized Least-Squares (via OLS projection) 
+## Sums of Squares and Cross-products: Type I 
+## Effect sizes (Z) based on F distributions
+## 
+##           Df       SS         MS     Rsq      F        Z Pr(&gt;F)
+## habitat    1 0.000129 0.00012941 0.00405 0.3621 -0.83632  0.806
+## Residuals 89 0.031805 0.00035736 0.99595                       
+## Total     90 0.031935                                          
+## 
+## Call: procD.lm(f1 = coords ~ habitat, iter = iter, seed = seed, RRPP = TRUE,  
+##     SS.type = SS.type, effect.type = effect.type, int.first = int.first,  
+##     Cov = Cov, data = data, print.progress = print.progress)</code></pre>
 </div>
-<div id="analysis-part-iii" class="section level3">
-<h3>Analysis: Part III</h3>
-<p>Evolutionary rates</p>
-<!-- Notice that we've found all the files in the "lep_examples" directory with `list.files()`, searching for the patter ".txt" and using the full filepath to make a loading the data in the directory possible. Next, we use `read_delim()` with `delim=\t` rather than `read_csv()` because FIJI outputs tab-delimited data. We save this outline as `out` after tranforming it to a matrix, the prefer format for `Momocs`. -->
-<!-- In the next operation, we transform this matrix into an `Momocs` outline using `Out()`; however, `Out()` must take a list of matrices and therefore we pipe in the `list()` function first. Next, `coo_flipx()` is invoked to flip the outline about the x axis--remember that the origin of the image field is the upper left, not the lower left in the usual graphical representation. Lastly, `stack()` is invoked to visualize the outline. And here we have a forewing visualized. -->
-<!-- Now, we will of course have hundreds of files to load and analyze with PCA. For this challenge we will the `vroom()` function in the `vroom` package. It can read in all our data, regardless of whether the data are tab- or comma-separated, an issue identified in class. We have the file paths stored in `f`, which can be passed through this function. -->
-<!-- As was mentioned above, the `Out()` function prefers a list, so ~~we can work on the list established here to visualize our outlines.~~ we'll have to construct a list a little differently. -->
-<!-- ```{r datlist2, results=FALSE,message=FALSE,eval=F} -->
-<!-- #make a large df with vroom -->
-<!-- out.df <- vroom::vroom(f, id = "filename",progress=F) -->
-<!-- #make list -->
-<!-- outs.l <- sapply(f,function(x) out.df %>% filter(filename==x) %>% select(X,Y) %>% as.matrix) -->
-<!-- outs.l %>%  -->
-<!--   Out() %>%  -->
-<!--   stack() -->
-<!-- ``` -->
-<!-- Wonderful! Fore- and hindwings loaded for the 10 examples species. However, notice we have a few problems. First, both fore- and hindwing are included in the same data set. This confounds analyzing and comparing shape in fore- and hindwing separately, a major goal of this project. Second, the outlines are of arbitrary size due to how much of the pixel field they spanned in the photos and whether or not a scale in mm was set. Thus, this arbitrary size scale would confound shape analysis from the start. Let's take on fixing the hindwing-forewing issue first and, later, we'll tackle the size issue. -->
-<!-- Fortunately, we know whether each outline comes from either a fore- or hindwing because we added these metadata to the file name. ~~Thus, we merely need to strip this information from the file name when loading the data in our `for` loop. Let's do that by modified the loop.~~ The `vroom()` function  stores filename data in a column as a way to identify data (we specified the name of this column with `id = `filename`. -->
-<!-- ```{r datlist3, results=FALSE,message=FALSE,eval=F} -->
-<!-- #make a large df with vroom -->
-<!-- out.df <- vroom::vroom(f, id = "filename",progress=F) -->
-<!-- #add wing info -->
-<!-- out.df <- out.df %>%  -->
-<!--   mutate(wing=gsub("XY_.+_(hindwing|forewing)\\..+","\\1",basename(filename))) %>%  -->
-<!--   na.omit() -->
-<!-- #make list -->
-<!-- outs.l <- sapply(f,function(x) out.df %>% filter(filename==x) %>% select(X,Y) %>% as.matrix) -->
-<!-- #extract wing info -->
-<!-- wings <- gsub("XY_.+_(hindwing|forewing)\\..+","\\1",basename(names(outs.l))) -->
-<!-- ``` -->
-<!-- ```{r eval=FALSE,include=FALSE,eval=F} -->
-<!-- saveRDS(outs.l,"lep_outline_data.RDS") -->
-<!-- ``` -->
-<!-- Here, we use a general regular expression function `gsub()`, which [finds a character string within a fuller string](https://www.programmingr.com/tutorial/gsub-in-r/) and replaces it. In this case, we've asked `gsub()` to find either "hindwing" or "forewing" by using "|" for the or part. We've also specified that these two strings will be after any string (`grep` ".") of any length (`grep` "+") and after the "_". They'll also appear before ".txt". Each wing descriptor is saved to a unique position in the list `wing.l`. -->
-<!-- To store our wing descriptors within our outlines, we can access the `fac` option in `Out()` when transforming our list of matrices into a list of `Momocs` outlines. This `fac` option takes a list of named one-dimensional vectors, so we make a list with a name "wing" that has the unlisted values of `wing.l`. Let's save this newly labeled list of outlines as `outs`. -->
-<!-- ```{r fac,eval=F} -->
-<!-- outs <-  outs.l %>%  -->
-<!--   Out(fac=list(wing=wings)) %>%  -->
-<!--   coo_flipx() -->
-<!-- ``` -->
-<!-- Now we can invoke `Momocs` `tidy`-like `filter()` function to parse the outlines according to their wing. Let's do that and visualize each group with `stack()`. -->
-<!-- ```{r wingfilter,message=FALSE,eval=F} -->
-<!-- forewings <- outs %>%  -->
-<!--   filter(wing=="forewing") -->
-<!-- hindwings <- outs %>%  -->
-<!--   filter(wing=="hindwing") -->
-<!-- forewings %>%  -->
-<!--   stack() -->
-<!-- hindwings %>%  -->
-<!--   stack() -->
-<!-- ``` -->
-<!-- Now that we have two lists of outlines ready for analysis, let's come back to our size issue. If we ran and EFA analysis on these outlines, most of the variance would be due to their arbitrary size differences. To address this, practitioners of shape analysis transform their shapes into a common coordinate space that removes size altogether. The method of choice for this is the [Procrustes transformation](https://en.wikipedia.org/wiki/Procrustes_analysis). This method superimposes the shapes by optimally translating, rotating and uniformly scaling the objects. That is, both the placement in space and the size of the shapes are freely adjusted so that they are the same size and the distance between the positions of the points constituting the shape is reduced. To align the shapes, the can be compared to an arbitrarily selected reference shape (referred to as ordinary Procrustes analysis) or the shapes can be aligned to an optimally determined mean shape (referred to as generalized Procrustes analysis). We'll perform the latter. -->
-<!-- Fortunately, `Momocs` has just a function for generalize Procrustes superimposition, `fgProcrustes()`. Let's use this and visualize our results. But before we do, we must tackle another problem: our outlines have a variable number of coordinates, making it impossible for `fgProcrustes()` to minimize the distance between points in each outline (which would it choose?). So we'll just sample 100 of the points in each outline using `Momocs`'s `coo_interpolate()`. This function fits a spline with high resolution to all the shapes and extracts a determined number of points at equal intervals. We can easily find the number of coordinates in each each set of wings and use the minimum value as the number we'll sample with `coo_interpolate()`. this will minimize the amount of information we lose. -->
-<!-- ```{r proc, results=FALSE,message=FALSE,eval=F} -->
-<!-- fore.min <- forewings %>%  -->
-<!--   coo_nb() %>%  -->
-<!--   min() -->
-<!-- forewings %>% -->
-<!--   coo_interpolate(fore.min) %>%  -->
-<!--   fgProcrustes() %>%  -->
-<!--   stack() -->
-<!-- hind.min <- hindwings %>%  -->
-<!--   coo_nb() %>%  -->
-<!--   min() -->
-<!-- hindwings %>%  -->
-<!--    coo_interpolate(hind.min) %>%  -->
-<!--   coo_slide(id=1) %>%  -->
-<!--    coo_align()  %>% -->
-<!--   fgProcrustes() %>% -->
-<!--   stack() -->
-<!-- ``` -->
-<!-- Now all that's left to do is perform the EFA and then we can move on to PC analysis. For this, all we have to do is pipe in the `Momocs` EFA function, `efourier()`. We'll do this and specify `norm=FALSE` for these [very arcane reasons](https://momx.github.io/Momocs/reference/efourier.html#details). -->
-<!-- ```{r efour, results=FALSE,message=FALSE,eval=F} -->
-<!-- forewings %>% -->
-<!--   coo_interpolate(fore.min) %>%  -->
-<!--    coo_align()  %>% -->
-<!--   fgProcrustes() %>%  -->
-<!--   efourier(norm=FALSE)  -->
-<!-- hindwings %>%  -->
-<!--    coo_interpolate(hind.min) %>%  -->
-<!--    coo_align()  %>% -->
-<!--   fgProcrustes() %>%  -->
-<!--   efourier(norm=FALSE)  -->
-<!-- ``` -->
-<!-- Performing the PCA is just as easy. We just finally add `PCA()` with the pipe. We'll have the results in appropriately name variables. -->
-<!-- ```{r PCA, message=FALSE, results=FALSE} -->
-<!-- forewing.pca <- forewings %>% -->
-<!--   coo_interpolate(fore.min) %>% -->
-<!--    coo_align()  %>% -->
-<!--   coo_slide(id=1) %>%  -->
-<!--   fgProcrustes() %>%  -->
-<!--   efourier(norm=T) %>%  -->
-<!--   PCA() -->
-<!-- hindwing.pca <-hindwings %>%  -->
-<!--    coo_interpolate(hind.min) %>%  -->
-<!--    coo_align()  %>% -->
-<!--    coo_slide(id=1) %>%  -->
-<!--   fgProcrustes() %>%  -->
-<!--   efourier(norm=FALSE) %>%  -->
-<!--   PCA() -->
-<!-- ``` -->
-<!-- We can visualize the PCA with `plot_PCA()`, which will, by default produce a biplot of the first two PCs, the amount of variance explained by each, and a representation of the morphoshape described by the PCs (the outlines in the background). -->
-<!-- ```{r plotpca,message=F,eval=F} -->
-<!-- forewing.pca %>%  -->
-<!--   plot_PCA(title = "forewings") -->
-<!-- hindwing.pca %>%  -->
-<!--   plot_PCA(title = "hindwings") -->
-<!-- ``` -->
-<!-- Now we can move on to the comparative analysis. -->
-<!-- ## Comparative analysis -->
-<!-- Before we begin, Let's remind ourselves of the questions we're attempting to answer so that we can figure out exactly how to answer then. First, do hind- and forewings vary in their evolutionary rates? Second, do major groups of the Lepidoptera vary in their hind- and forewing evolvability? -->
-<!-- For this first question, we can simply evaluate the evolutionary rate of our PC scores for the hind and forewings using a method of choice. For the second question, we can look at the evolutionary rates of our PC scores across our Lepidopteran tree. -->
-<!-- First of all, as mentioned previously, we need a tree and fortunately we have one for these species. Indeed, the species choice for this project was based on those sampled in the @kawahara2019phylogenomics study. So let's load the tree you can [download here](lep_tree2.tre). Make sure it's in your project's directory. We'll use `read.tree()` from the `ape` package and plot it just to check things out. Notice `cex=0.1` to keep the tip labels small in the relatively large tree. -->
-<!-- ```{r, tree,eval=F} -->
-<!-- library(ape) -->
-<!-- lep.tree <- ape::read.tree("lep_tree2.tre") -->
-<!-- plot(lep.tree,cex=0.1) -->
-<!-- ``` -->
-<!-- Looks great; however, the convention is for the root of the tree to be positioned in the upper left. This is easy to fix with `ape`'s `laddersize()` function. We'll also remove the pesky underscore between names in the tip labels. This will help with joining the tree data with our species data. -->
-<!-- ```{r treefix,eval=F} -->
-<!-- lep.tree <- ladderize(lep.tree) -->
-<!-- plot(lep.tree,cex=0.1) -->
-<!-- lep.tree$tip.label <- gsub("_"," ",lep.tree$tip.label) -->
-<!-- ``` -->
-<!-- Now that we have our PCA data and a tree of species, we need to a add species information (e.g., the species, higher taxonomic information, etc.) to the shape data so the tree and shape data can work together. Notice that each species is represented in the `outs` list (from whence our PCA is derived) by the file name that belongs to its outline. Let's look at their names. -->
-<!-- ```{r names,eval=F} -->
-<!-- basename(names(outs))[1:5] -->
-<!-- ``` -->
-<!-- Not a bit of species data. However, Prof. Kenaley has stored the filenames of each species in a table you can [download here](lep_image_data.csv). Have a look. -->
-<!-- ```{r sptab,eval=F} -->
-<!-- lep.sp <- read_csv("lep_image_data.csv") -->
-<!-- head(lep.sp) -->
-<!-- ``` -->
-<!-- Have a look at the column "identifier". -->
-<!-- ```{r ident,eval=F} -->
-<!-- head(lep.sp$identifier) -->
-<!-- ``` -->
-<!-- This is the vector of the image file names minus the extension (.jpg, .png, etc.). Notice that our outline names, rather than species, contain this information--you saved the FIJI results as "XY_filename_hindwing.txt" or "XY_filename_forewing.txt". That is, this very same identifier in the species table is buried in the names of our outline data. So let's make a new tibble that strips the same identifier from the outline names and join the species data to this new tibble. -->
-<!-- **NOTE**: We've now added `.csv` to the gsub command. -->
-<!-- ```{r, outdata,eval=F} -->
-<!-- out.data <- tibble(xy.file=basename(names(outs))) %>%  -->
-<!--   mutate(identifier=gsub("XY_|_hindwing|_forewing|.txt|.csv","",xy.file)) %>%  -->
-<!--   left_join(lep.sp) -->
-<!-- head(out.data) -->
-<!-- ``` -->
-<!-- With this tibble in place, we can now add species information to our PCA data. The PC scores are stored in the the variable `x`, so we can summon them this way. Notice that the row names correspond to the outline file names, a column in out `out.data` tibble.  -->
-<!-- ```{r pcsores,eval=F} -->
-<!-- head(hindwing.pca$x,1) -->
-<!-- head(forewing.pca$x,1) -->
-<!-- ``` -->
-<!-- Let's now join the species information in our `out.data` tibble to the PCA data, storing these in new variables.  -->
-<!-- ```{r pca2,eval=F} -->
-<!-- hindwing.pca2 <-  tibble(xy.file=basename(rownames(hindwing.pca$x)),PC1=hindwing.pca$x[,1],PC2=hindwing.pca$x[,2]) %>%  -->
-<!--   left_join(out.data) -->
-<!-- forewing.pca2 <-  tibble(xy.file=basename(rownames(forewing.pca$x)),PC1=forewing.pca$x[,1],PC2=forewing.pca$x[,2])%>%  -->
-<!--   left_join(out.data) -->
-<!-- ``` -->
-<!-- Now we have the first 2 PCs for each wing stored with species information and are now ready for comparative analysis. -->
-<!-- ## Evolutionary rates -->
-<!-- There are several methods available to comparative biologist to estimate the rates of morphological evolution over a phylogenetic tree. We'll be using @o2006testing's method, the so-called "noncensored test" which uses the entire varian-cecovariance matrix (established by the a phylogeny) to calculate the likelihood of rates accross the tree. In this approach, one ancestral state is estimated under Brownian motion for the entire tree and the the optimal rate parameter values are estimated numerically until the likelihood of the model is maximized. This method is captured in the R package `phytools` with the function `brownie.lite()`.  -->
-<!-- `brownie.lite()` takes two important arguments, a tree and the phenotypic values for each tip in the tree. ~~Let's take our tree and drop any tips that don't occur in our PCA data.~~ Let's take our tree and keep only the tips are in our PCA data and PCA data that are in the tree. -->
-<!-- ```{r, tree2,eval=F} -->
-<!-- keep <- intersect(unique(out.data$species),lep.tree$tip.label) #sp in both tree and data -->
-<!-- lep.tree2 <- keep.tip(lep.tree,keep) -->
-<!-- plot(lep.tree2,cex=0.1) -->
-<!-- ``` -->
-<!-- Here we only include `lep.tree` tip labels that are in the unique species values of our `out.data` variable. Then we use `ape`'s `drop.tip()` function to drop the tips in our tree that don't occur in our `out.data` tibble. -->
-<!-- The phenotypic data passed to the `x` argument must be a named vector of values, so let's establish that for PCs 1 and 2, for both the hind- and forewings. -->
-<!-- ```{r brownie1,eval=F} -->
-<!-- #PC1s -->
-<!-- hind.pc1 <- hindwing.pca2 %>%  -->
-<!--     filter(species%in% lep.tree2$tip.label) %>%  -->
-<!--   group_by(species) %>%  -->
-<!--   summarize(PC1=mean(PC1)) %>%  -->
-<!--   pull -->
-<!-- names(hind.pc1) <-  hindwing.pca2%>%  -->
-<!--     filter(species%in% lep.tree2$tip.label) %>%  -->
-<!--   group_by(species) %>%  -->
-<!--   summarize(PC1=mean(PC1)) %>%  -->
-<!--   pull(species) -->
-<!-- fore.pc1 <- forewing.pca2 %>%  -->
-<!--     filter(species%in% lep.tree2$tip.label) %>%  -->
-<!--    group_by(species) %>%  -->
-<!--   summarize(PC1=mean(PC1)) %>%  -->
-<!--   pull(PC1) -->
-<!-- names(fore.pc1) <-  forewing.pca2 %>%  -->
-<!--   filter(species%in% lep.tree2$tip.label) %>%  -->
-<!--      group_by(species) %>%  -->
-<!--   summarize(PC1=mean(PC1)) %>%  -->
-<!--   pull(species) -->
-<!-- #PC2s -->
-<!-- hind.pc2 <- hindwing.pca2 %>%  -->
-<!--     filter(species%in% lep.tree2$tip.label) %>%  -->
-<!--   group_by(species) %>%  -->
-<!--   summarize(PC2=mean(PC2)) %>%  -->
-<!--   pull(PC2) -->
-<!-- names(hind.pc2) <-  hindwing.pca2%>%  -->
-<!--     filter(species%in% lep.tree2$tip.label) %>%  -->
-<!--   group_by(species) %>% -->
-<!--   summarize(PC2=mean(PC2)) %>%  -->
-<!--   pull(species) -->
-<!-- fore.pc2 <- forewing.pca2 %>%  -->
-<!--     filter(species%in% lep.tree2$tip.label) %>%  -->
-<!--    group_by(species) %>%  -->
-<!--   summarize(PC2=mean(PC2)) %>%  -->
-<!--   pull(PC2) -->
-<!-- names(fore.pc2) <-  forewing.pca2 %>%  -->
-<!--   filter(species%in% lep.tree2$tip.label) %>%  -->
-<!--      group_by(species) %>%  -->
-<!--   summarize(PC2=mean(PC2)) %>%  -->
-<!--   pull(species) -->
-<!-- ``` -->
-<!-- Notice here that we filtered the PCA data to include only species that occur in our new, pruned tree. That is, tree species may be in the the PCA data, but species in the PCA data may not be in the tree. This is because some species queried in GBIF were returned as [synonyms](https://en.wikipedia.org/wiki/Synonym_(taxonomy)) under different valid taxonomic names. We won't worry about this now except to exclude these species as we have above and forge ahead.  -->
-<!-- ```{r brownie2,eval=F} -->
-<!-- library(phytools) -->
-<!-- forePC1.BM<-brownie.lite(lep.tree2,fore.pc1*10) -->
-<!-- hindPC1.BM<-brownie.lite(lep.tree2,hind.pc1*10) -->
-<!-- forePC2.BM<-brownie.lite(lep.tree2,fore.pc2*10) -->
-<!-- hindPC2.BM<-brownie.lite(lep.tree2,hind.pc2*10) -->
-<!-- ``` -->
-<!-- Also notice here that we multiplied our tip values by an arbitrary 10 units. This is because this [algorithm stumbles](http://blog.phytools.org/2011/12/error-message-from-brownielite-and.html) when tip branches are short and tip values are small. Great, now we have evolutionary rate estimates of wing shape stored in each variable under `sig2.single`. -->
-<!-- ```{r singlerate,eval=F} -->
-<!-- forePC1.BM$sig2.single -->
-<!-- ``` -->
-<!-- ```{r singlerate2, include=FALSE, eval=FALSE,eval=F} -->
-<!-- hindPC1.BM$sig2.single/forePC1.BM$sig2.single -->
-<!-- ``` -->
-<!-- With these values stored we can compare the evolutionary rate for the first and second PCs between fore- and hindwings, something you should do in your report. -->
-<!-- <!-- ## Shifts in evolutionary rates -->
-<p>–&gt;</p>
-<!-- <!-- We are also seeking to answer whether major groups of the Lepidoptera have undergone significant changes in the rate of wing-shape evolution. `brownie.lite()` can do this, but this method tells the practitioner nothing about the sign of the rate shife, i.e, whether the shift was to a slower or faster rate. For this, we'll use another method, phylogenetic ridge regression [@kratsch2014ridgerace]. This approach  takes a tree and a vector of tip data phenotypes, calculates the ancestral states at each node in the tree, and produces a regression line through each path in the tree, from root to tip including from each deeper node to a daugter node. The regressions are based on the phenotype values at each node vs. time between nodes and along path. The value of the slope parameter of these regressions is the rate. From this, we have rate vectors, i.e, changes in rate.  -->
-<p>–&gt;</p>
-<!-- <!-- To implement ridge regression, we'll turn to the `RRphylo` package written by @castiglione2018new.  Like, `brownie.lite()` the function `RRphylo()` takes a tree and tip data as argurment. For instance, here we compute the rates along the branches for hingwing PC1. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r RR} -->
-<p>–&gt; <!-- <!-- library(RRphylo) --> –&gt;</p>
-<!-- <!-- hindPC1.RR <- RRphylo(tree=lep.tree2,y=hind.pc1) -->
-<p>–&gt;</p>
-<!-- <!-- ``` -->
-<p>–&gt;</p>
-<!-- <!-- ```{r duptips,eval=FALSE,include=FALSE} -->
-<p>–&gt; <!-- <!-- tibble(sp=names(fore.pc1)) %>%  --> –&gt;
-<!-- <!--   mutate(in.tree=sp%in%lep.tree2$tip.label) %>%  --> –&gt;
-<!-- <!--   filter(!in.tree) --> –&gt;
-<!-- <!-- tibble(sp=lep.tree3$tip.label) %>%  --> –&gt;
-<!-- <!--   mutate(in.tree=sp%in%names(fore.pc1)) %>%  --> –&gt;
-<!-- <!--   filter(!in.tree) --> –&gt;</p>
-<!-- <!-- all(!duplicated(lep.tree2$tip.label)) -->
-<p>–&gt;</p>
-<!-- <!-- ``` -->
-<p>–&gt;</p>
-<!-- <!-- The output of `RRphylo()` is massive, including the rates computed for each branch in the tree. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt; <!-- <!-- hindPC1.RR$rates --> –&gt; <!-- <!-- ``` -->
-–&gt;</p>
-<!-- <!-- Because we're interested in rate shifts, we use the rates from `RRphylo()` to tests whether individual clades evolve at different rates as compared to the rest of the tree. This is performed with `RRphylo`'s `search.shift()`. Here we specify that we want to know if any clades/lineages have exceptional rate shifts with `status.type="clade"`. The singles clades with exception shifts are stored in `single.clade`, only the p value of the shift. Large rates are significantly larger than the rest of the tree (at alpha = 0.05), when the probability is > 0.975; and small rates are significantly small for p < 0.025. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r} -->
-<p>–&gt;
-<!-- <!-- hindPC1.SS<- search.shift(RR=hindPC1.RR,status.type="clade") -->
-–&gt;</p>
-<!-- <!-- hindPC1.SS$single.clades -->
-<p>–&gt; <!-- <!-- ``` --> –&gt;
-<!-- <!-- With this information we could visualize the nodes with exceptional shifts using `ape`'s `nodelabels` function. We merely need to plot the tree and take the numeric values of the row names returned in `single.clades`. -->
-–&gt;</p>
-<!-- <!-- ```{r viznodes} -->
-<p>–&gt; <!-- <!-- plot(lep.tree2) --> –&gt;
-<!-- <!-- nodelabels(node = as.numeric(rownames(hindPC1.SS$single.clades)),text = rownames(hindPC1.SS$single.clades)) -->
-–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- This is fine, but `RRphylo`'s `plotShift()` does this for us. It's a little odd, but this function stores a plot in `plotClades()`, rather than produce a plot. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r plotshifts} -->
-<p>–&gt;
-<!-- <!-- hindPC1.plot <- plotShift(RR=hindPC1.RR,SS=hindPC1.SS) -->
-–&gt;</p>
-<!-- <!-- forePC1.plot <- plotShift(RR=hindPC1.RR,SS=hindPC1.SS) -->
-<p>–&gt; <!-- <!-- hindPC1.plot$plotClades() --> –&gt; <!-- <!-- ``` -->
-–&gt;</p>
-<!-- <!-- From the `single.clades` output and the tree labeled with `nodelabels`, we see that clade 36 represents a signifcant slow down, shifting -0.0034 units, but in clade 33 there's a signifant increase of 0.0053 units.  -->
-<p>–&gt;</p>
-<!-- <!-- Seems we've answer part of the question at least as it pertains to hindwing PC1 and our limited sample of species, "Have there been shifts in wing shape evolution in Lepidopteran lineages?" -->
-<p>–&gt;
-<!-- <!-- But, which lineage have shifted? We know which species belong to these lineages, but not the lineage name. -->
-–&gt;</p>
-<!-- <!-- To extract this information and view it on the tree, let's use a custom function, one written by Prof. Kenaley. For this, we'll need `ggtree`, a tree annotation package written to work with trees like `ggplot2` works with data and standard plots. We'll have to download `ggtree` rom the `Bioconductor` repository, another place where packages are stored, much like `CRAN`. To do this, run the following only **ONCE**: -->
-<p>–&gt;</p>
-<!-- <!-- ```{r ggtree, eval=FALSE} -->
-<p>–&gt; <!-- <!-- if (!require("BiocManager", quietly = TRUE)) -->
-–&gt; <!-- <!--     install.packages("BiocManager") --> –&gt;</p>
-<!-- <!-- BiocManager::install("ggtree") -->
-<p>–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- We'll also need the `wesanderson` package for nice colors which can be downloaded from `CRAN`. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r ggtre, message=FALSE} -->
-<p>–&gt; <!-- <!-- library(ggtree) --> –&gt;
-<!-- <!-- library(wesanderson) --> –&gt;</p>
-<!-- <!-- plot_SS <- function(tre=NULL,SS=NULL,tax=NULL){ -->
-<p>–&gt;</p>
-<!-- <!--   nodes <- as.numeric(rownames(SS$single.clades)) -->
-<p>–&gt;</p>
-<!-- <!--   pal <- wes_palette("Zissou1",n=length(nodes)) -->
-<p>–&gt; <!-- <!--   sp <- list() --> –&gt;
-<!-- <!--   for(i in nodes){ --> –&gt;
-<!-- <!--     sp.i <- extract.clade(tre,i)$tip.label --> –&gt;</p>
-<!-- <!--     #print(head(tax)) -->
-<p>–&gt;
-<!-- <!--     sub.names <- lapply(tax,function(x) x[x%in%sp.i])  -->
-–&gt;</p>
-<!-- <!--     in.clades <- lapply(sub.names,function(x) length(x)>0)  -->
-<p>–&gt;
-<!-- <!--     all.of.clade <- lapply(sub.names,function(x) all(sapply(sp.i,function(z) z%in%x)))  -->
-–&gt;</p>
-<!-- <!--     high.clade <- names(sub.names)[last(which(all.of.clade==T))] -->
-<p>–&gt;
-<!-- <!--     all.clades <- names(sub.names)[which(in.clades==T)] -->
-–&gt; <!-- <!--     crown <- "" --> –&gt;
-<!-- <!--     if(high.clade!=last(names(sub.names))) crown <- "crown-" -->
-–&gt;</p>
-<!-- <!--     sub.clades <- NULL -->
-<p>–&gt;
-<!-- <!--     if(length(grepl("oidea",all.clades))>0) sub.clades <- all.clades[grepl("oidea",all.clades)] -->
-–&gt;</p>
-<!-- <!--     high.clade2 <- paste0(crown,high.clade,": ",paste0(sub.clades,collapse = "+")) -->
-<p>–&gt;
-<!-- <!--     sp[[paste0(i)]] <- tibble(n=i,species=sp.i,clade=high.clade2) -->
-–&gt;</p>
-<!-- <!--   } -->
-<p>–&gt;</p>
-<!-- <!--   d <- do.call(rbind,sp)%>%  -->
-<p>–&gt; <!-- <!--     rename(label=species)  --> –&gt;</p>
-<!-- <!--   d2<- d %>% rename(clade_name=clade)  -->
-<p>–&gt;</p>
-<!-- <!--   p <- ggtree(tre)+ scale_y_reverse() -->
-<p>–&gt;</p>
-<!-- <!--   p$data <- p$data %>% left_join(d) %>% left_join(tibble(node=nodes,SS$single.clades) %>% mutate(shift=ifelse(rate.difference>0,"+","-"))) -->
-<p>–&gt;</p>
-<!-- <!--   p <-  p+geom_tiplab(aes(col=clade),geom="text",size=1.2)+ -->
-<p>–&gt;
-<!-- <!--     geom_cladelab(data=d2,mapping=aes(node=n,col=clade_name,label=clade_name),offset=1,size=1.5)+ -->
-–&gt;
-<!-- <!--     geom_hilight(data=d2,mapping = aes(node = n,fill=clade_name),alpha = 0.01)+ -->
-–&gt; <!-- <!--     scale_fill_manual(values = pal)+ --> –&gt;
-<!-- <!--     scale_color_manual(values = pal)+ --> –&gt;
-<!-- <!--     theme(legend.position = "none")+geom_nodepoint(mapping=aes(subset = shift =="-"), size=5, shape=25,fill='blue',color='blue',alpha=0.7)+ -->
-–&gt;
-<!-- <!--     geom_nodepoint(mapping=aes(subset = shift =="+"), size=5, shape=24, fill='red',color='red',alpha=0.7) -->
-–&gt; <!-- <!--   p <- p+xlim(NA,6) --> –&gt;
-<!-- <!--   res <- tibble(n=nodes,SS$single.clades) %>% left_join(d %>% select(n,clade) %>% unique) -->
-–&gt;</p>
-<!-- <!--   return(list(plot=p,res=res)) -->
-<p>–&gt;</p>
-<!-- <!-- } -->
-<p>–&gt;</p>
-<!-- <!-- ``` -->
-<p>–&gt;</p>
-<!-- <!-- This custom function `plot_SS()` takes three arguments, `tre` (a tree variable of class `phy`), `SS` (output from `search.shift()`), and `tax` (a ~~tibble/data.frame~~ a list, containing ~~the column `species` and `higher_taxon`)~~ clade/lineage names and their species. ~~We have the higher taxon names stored in our PCA tibbles (`hindwing.pca2`, etc.)~~. Please load the taxon name list by downloading [this R data file](Lep_classification.RDS). -->
-<p>–&gt;</p>
-<!-- <!-- The function returns a plot under `$plot` and the `search.shift()` results under `$res`. -->
-<p>–&gt;</p>
-<!-- <!-- Let's try it out by first loading the taxon names with `readRDS()`. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r newplot} -->
-<p>–&gt; <!-- <!-- tax.names <- readRDS("Lep_classification.RDS") -->
-–&gt;</p>
-<!-- <!-- hindPC1.res <- plot_SS(lep.tree2,hindPC1.SS,tax = tax.names) -->
-<p>–&gt;</p>
-<!-- <!-- hindPC1.res$plot -->
-<p>–&gt; <!-- <!-- hindPC1.res$res --> –&gt;</p>
-<!-- <!-- ``` -->
-<p>–&gt;</p>
-<!-- <!-- Notice that the clades and their taxa are color coded and the exceptional shifts are indicated by triangles (blue and down for low shifts, red and up for high shifts). Now we have a method of indicating what clades/lineages underwent a shift and the scale of the shift. -->
-<p>–&gt;</p>
-<!-- <!-- ```{r comp,eval=FALSE,include=FALSE} -->
-<p>–&gt;</p>
-<!-- <!-- forePC1.RR <- RRphylo(tree=lep.tree2,y=fore.pc1) -->
-<p>–&gt;
-<!-- <!-- forePC1.SS<- search.shift(RR=forePC1.RR,status.type="clade") -->
-–&gt;
-<!-- <!-- forePC1.plot <- plotShift(RR=forePC1.RR,SS=forePC1.SS) -->
-–&gt; <!-- <!-- forePC1.plot$plotClades() --> –&gt;</p>
-<!-- <!-- forePC1.res <- plot_SS(lep.tree2,SS=forePC1.SS,tax = tax.names) -->
-<p>–&gt;</p>
-<!-- <!-- forePC1.res$plot -->
-<p>–&gt; <!-- <!-- forePC1.res$res --> –&gt;</p>
-<!-- <!-- forePC2.RR <- RRphylo(tree=lep.tree2,y=fore.pc2) -->
-<p>–&gt;
-<!-- <!-- forePC2.SS<- search.shift(RR=forePC2.RR,status.type="clade") -->
-–&gt;
-<!-- <!-- forePC2.plot <- plotShift(RR=forePC2.RR,SS=forePC2.SS) -->
-–&gt; <!-- <!-- forePC2.plot$plotClades() --> –&gt;</p>
-<!-- <!-- forePC2.res <- plot_SS(lep.tree2,SS=forePC2.SS,tax = tax.names) -->
-<p>–&gt;</p>
-<!-- <!-- forePC2.res$plot -->
-<p>–&gt; <!-- <!-- forePC2.res$res --> –&gt;</p>
-<!-- <!-- hindPC2.RR <- RRphylo(tree=lep.tree2,y=hind.pc2) -->
-<p>–&gt;
-<!-- <!-- hindPC2.SS<- search.shift(RR=hindPC2.RR,status.type="clade") -->
-–&gt;
-<!-- <!-- hindPC2.plot <- plotShift(RR=hindPC2.RR,SS=hindPC2.SS) -->
-–&gt; <!-- <!-- hindPC2.plot$plotClades() --> –&gt;</p>
-<!-- <!-- hindPC2.res <- plot_SS(lep.tree2,SS=hindPC2.SS,tax = tax.names) -->
-<p>–&gt;</p>
-<!-- <!-- hindPC2.res$plot -->
-<p>–&gt; <!-- <!-- hindPC2.res$res --> –&gt;</p>
-<!-- <!-- ``` -->
-<p>–&gt;</p>
-<!-- <!-- ```{r comps,eval=FALSE,include=FALSE} -->
-<p>–&gt; <!-- <!-- ### had relative wing size shifted --> –&gt;</p>
-<!-- <!-- forewing.gp <- forewings %>% -->
-<p>–&gt; <!-- <!--   coo_interpolate(fore.min) %>% --> –&gt;
-<!-- <!--    coo_align()  %>% --> –&gt;
-<!-- <!--   coo_slide(id=1) %>%  --> –&gt;
-<!-- <!--   fgProcrustes() %>%  --> –&gt; <!-- <!--   coo_flipy() -->
-–&gt;</p>
-<!-- <!-- hindwing.gp <-hindwings %>%  -->
-<p>–&gt; <!-- <!--    coo_interpolate(hind.min) %>%  --> –&gt;
-<!-- <!--    coo_align()  %>% --> –&gt;
-<!-- <!--    coo_slide(id=1) %>%  --> –&gt;
-<!-- <!--   fgProcrustes() %>%  --> –&gt; <!-- <!--   coo_flipy() -->
-–&gt;</p>
-<!-- <!-- hind.area <- hindwing.gp %>%  -->
-<p>–&gt; <!-- <!--   coo_trans(10,10) %>%  --> –&gt;
-<!-- <!--   coo_area() --> –&gt;</p>
-<!-- <!-- fore.area <- forewing.gp %>%  -->
-<p>–&gt; <!-- <!--   coo_trans(10,10) %>%  --> –&gt;
-<!-- <!--   coo_area() --> –&gt;</p>
-<!-- <!-- area.prop <- fore.area/hind.area -->
-<p>–&gt;</p>
-<!-- <!-- area.dat <- tibble(FH=area.prop,xy.file=basename(names(area.prop)))%>%  -->
-<p>–&gt; <!-- <!--   left_join(out.data) %>%  --> –&gt;
-<!-- <!--   filter(species%in% lep.tree2$tip.label) %>%  --> –&gt;
-<!-- <!--   group_by(species) %>%  --> –&gt;
-<!-- <!--   summarize(FH=mean(FH)) --> –&gt;</p>
-<!-- <!-- area <- area.dat$FH -->
-<p>–&gt; <!-- <!-- names(area) <- area.dat$species --> –&gt;</p>
-<!-- <!-- area.RR <- RRphylo(tree=lep.tree2,y=area) -->
-<p>–&gt;
-<!-- <!-- area.SS<- search.shift(RR=area.RR,status.type="clade") -->
-–&gt; <!-- <!-- area.plot <- plotShift(RR=area.RR,SS=area.SS) --> –&gt;
-<!-- <!-- area.plot$plotClades() --> –&gt;</p>
-<!-- <!-- area.res <- plot_SS(lep.tree2,SS=area.SS,tax = tax.names) -->
-<p>–&gt;</p>
-<!-- <!-- area.res$plot -->
-<p>–&gt;</p>
-<!-- <!-- #AR -->
-<p>–&gt;</p>
-<!-- <!-- hind.w <- hindwing.gp %>%  -->
-<p>–&gt; <!-- <!--   coo_length() --> –&gt;</p>
-<!-- <!-- hindwing.AR <- hind.w^2/hind.area -->
-<p>–&gt;</p>
-<!-- <!-- fore.w <- forewing.gp %>%  -->
-<p>–&gt; <!-- <!--   coo_length() --> –&gt;</p>
-<!-- <!-- forewing.AR <- fore.w^2/fore.area -->
-<p>–&gt;</p>
-<!-- <!-- fore.AR <- tibble(AR=forewing.AR,xy.file=basename(names(forewing.AR)),wing="fore")%>%  -->
-<p>–&gt; <!-- <!--   left_join(out.data) %>%  --> –&gt;
-<!-- <!--    filter(species%in% lep.tree2$tip.label) %>%  --> –&gt;
-<!-- <!-- group_by(species) %>%  --> –&gt;
-<!-- <!--   summarize(AR=mean(log(AR)),wing="fore") --> –&gt;</p>
-<!-- <!-- hind.AR <- tibble(AR=hindwing.AR,xy.file=basename(names(hindwing.AR)),wing="hind")%>%  -->
-<p>–&gt; <!-- <!--   left_join(out.data)%>%  --> –&gt;
-<!-- <!--    filter(species%in% lep.tree2$tip.label) %>%  --> –&gt;
-<!-- <!-- group_by(species) %>%  --> –&gt;
-<!-- <!--   summarize(AR=mean(log(AR)),wing="hind") --> –&gt;</p>
-<!-- <!-- ar.dat <- rbind(hind.AR,fore.AR) -->
-<p>–&gt;</p>
-<!-- <!-- ar.dat %>% pivot_wider(names_from = wing, -->
-<p>–&gt; <!-- <!--     values_from = AR) %>%  --> –&gt;
-<!-- <!--   filter(species%in% lep.tree2$tip.label) %>%  --> –&gt;
-<!-- <!--   summarize(fore=pic(fore,lep.tree2),hind=pic(hind,lep.tree2)) %>%  -->
-–&gt; <!-- <!--   ggplot(aes(fore,hind))+geom_point() --> –&gt;</p>
-<!-- <!-- fore.ar <- fore.AR$AR -->
-<p>–&gt; <!-- <!-- names(fore.ar) <- fore.AR$species --> –&gt;</p>
-<!-- <!-- hind.ar <- hind.AR$AR -->
-<p>–&gt; <!-- <!-- names(hind.ar) <- hind.AR$species --> –&gt;</p>
-<!-- <!-- fore.ar.RR <- RRphylo(tree=lep.tree2,y=fore.ar) -->
-<p>–&gt;
-<!-- <!-- fore.ar.SS<- search.shift(RR=fore.ar.RR,status.type="clade") -->
-–&gt;
-<!-- <!-- fore.ar.plot <- plotShift(RR=fore.ar.RR,SS=fore.ar.SS) -->
-–&gt; <!-- <!-- fore.ar.plot$plotClades() --> –&gt;</p>
-<!-- <!-- fore.ar.res <- plot_SS(lep.tree2,SS=fore.ar.SS,tax = tax.names) -->
-<p>–&gt; <!-- <!-- fore.ar.res$plot --> –&gt;
-<!-- <!-- fore.ar.res$res --> –&gt;</p>
-<!-- <!-- hind.ar.RR <- RRphylo(tree=lep.tree2,y=hind.ar) -->
-<p>–&gt;
-<!-- <!-- hind.ar.SS<- search.shift(RR=hind.ar.RR,status.type="clade") -->
-–&gt;
-<!-- <!-- hind.ar.plot <- plotShift(RR=hind.ar.RR,SS=hind.ar.SS) -->
-–&gt; <!-- <!-- hind.ar.plot$plotClades() --> –&gt;</p>
-<!-- <!-- hind.ar.res <- plot_SS(lep.tree2,SS=hind.ar.SS,tax = tax.names) -->
-<p>–&gt; <!-- <!-- hind.ar.res$plot --> –&gt;
-<!-- <!-- hind.ar.res$res --> –&gt;</p>
-<!-- <!-- library(data.table) -->
-<p>–&gt; <!-- <!-- Ix <- function(x,y,axes=F){ --> –&gt;
-<!-- <!--   dt <- data.table(x=x,y=y) --> –&gt;
-<!-- <!--   if(axes) dt[,x:=x-mean(range(x))]; dt[,y:=y-mean(range(y))] -->
-–&gt;
-<!-- <!--   dt[,products:=(y^2+y*lead(y)+lead(y)^2)*(x*lead(y)-lead(x)*y)] -->
-–&gt; <!-- <!--   I <- dt[,.((1/12)*sum(products,na.rm = T))] --> –&gt;
-<!-- <!--   names(I) <- "I.x" --> –&gt; <!-- <!--   return(I) --> –&gt;
-<!-- <!-- } --> –&gt;</p>
-<!-- <!-- fore.I <- sapply(1:length(forewing.gp),function(x) forewing.gp[x]) -->
-<p>–&gt;
-<!-- <!-- fore.I  <- lapply(fore.I, function(x) as.matrix(data.frame(x=c(x[,1]-min(x[,1])),y=c(x[,2])))) -->
-–&gt;
-<!-- <!-- fore.I <- sapply(fore.I, function(x) Ix(x[,2],x[,1])) %>% unlist -->
-–&gt;</p>
-<!-- <!-- forewing.gp[[1]] -->
-<p>–&gt;</p>
-<!-- <!-- fore.I <- tibble(I=fore.I,xy.file=basename(names(forewing.AR)),wing="fore")%>%  -->
-<p>–&gt; <!-- <!--   left_join(out.data) %>%  --> –&gt;
-<!-- <!--    filter(species%in% lep.tree2$tip.label) %>%  --> –&gt;
-<!-- <!-- group_by(species) %>%  --> –&gt;
-<!-- <!--   summarize(I=mean(I),wing="fore") --> –&gt;</p>
-<!-- <!-- hind.I <- sapply(1:length(hindwing.gp),function(x) hindwing.gp[x])  -->
-<p>–&gt;
-<!-- <!-- hind.I  <- lapply(hind.I, function(x) as.matrix(data.frame(x=c(x[,1]-min(x[,1])),y=c(x[,2])))) -->
-–&gt;
-<!-- <!-- hind.I <- sapply(hind.I, function(x) Ix(x[,2],x[,1])) %>% unlist -->
-–&gt;</p>
-<!-- <!-- hind.I <- tibble(I=hind.I,xy.file=basename(names(hindwing.AR)),wing="hind")%>%  -->
-<p>–&gt; <!-- <!--   left_join(out.data) %>%  --> –&gt;
-<!-- <!--    filter(species%in% lep.tree2$tip.label) %>%  --> –&gt;
-<!-- <!-- group_by(species) %>%  --> –&gt;
-<!-- <!--   summarize(I=mean(I),wing="hind") --> –&gt;</p>
-<!-- <!-- I.dat <- rbind(hind.I,fore.I) -->
-<p>–&gt;</p>
-<!-- <!-- I.dat %>% pivot_wider(names_from = wing, -->
-<p>–&gt; <!-- <!--     values_from = I) %>%  --> –&gt;
-<!-- <!--   filter(species%in% lep.tree2$tip.label) %>%  --> –&gt;
-<!-- <!--   summarize(fore=pic(fore,lep.tree2),hind=pic(hind,lep.tree2)) %>%  -->
-–&gt; <!-- <!--   ggplot(aes(fore,hind))+geom_point() --> –&gt;</p>
-<!-- <!-- hind.I2 <- hind.I %>% pull(I) -->
-<p>–&gt; <!-- <!-- names(hind.I2) <- hind.I %>% pull(species) --> –&gt;
-<!-- <!-- hind.I.RR <- RRphylo(tree=lep.tree2,y=hind.I2) --> –&gt;
-<!-- <!-- hind.I.SS<- search.shift(RR=hind.I.RR,status.type="clade") -->
-–&gt; <!-- <!-- hind.I.plot <- plotShift(RR=hind.I.RR,SS=hind.I.SS) -->
-–&gt; <!-- <!-- hind.ar.plot$plotClades() --> –&gt;</p>
-<!-- <!-- hind.I.res <- plot_SS(lep.tree2,SS=hind.I.SS,tax = tax.names) -->
-<p>–&gt; <!-- <!-- hind.I.res$plot --> –&gt;
-<!-- <!-- hind.I.res$res --> –&gt;</p>
-<!-- <!-- fore.I2 <- fore.I %>% pull(I) -->
-<p>–&gt; <!-- <!-- names(fore.I2) <- fore.I %>% pull(species) --> –&gt;
-<!-- <!-- fore.I.RR <- RRphylo(tree=lep.tree2,y=fore.I2) --> –&gt;
-<!-- <!-- fore.I.SS<- search.shift(RR=fore.I.RR,status.type="clade") -->
-–&gt; <!-- <!-- fore.I.plot <- plotShift(RR=fore.I.RR,SS=fore.I.SS) -->
-–&gt; <!-- <!-- fore.ar.plot$plotClades() --> –&gt;</p>
-<!-- <!-- fore.I.res <- plot_SS(lep.tree2,SS=fore.I.SS,tax = tax.names) -->
-<p>–&gt; <!-- <!-- fore.I.res$plot --> –&gt;
-<!-- <!-- fore.I.res$res --> –&gt;</p>
-<!-- <!-- fore.ARI <- fore.I %>% left_join(fore.AR) -->
-<p>–&gt;</p>
-<!-- <!-- fore.ARI %>%  -->
-<p>–&gt; <!-- <!--   ggplot(aes(AR,I))+geom_point() --> –&gt;</p>
-<!-- <!-- fore.ARI %>% filter(AR>1.25) %>% pull(species) -->
-<p>–&gt; <!-- <!-- hind.ARPC %>%  --> –&gt;
-<!-- <!--   ggplot(aes(AR,I))+geom_point() --> –&gt;</p>
-<!-- <!-- hind.ARPC %>%  -->
-<p>–&gt; <!-- <!--   ggplot(aes(I,PC1))+geom_point() --> –&gt;</p>
-<!-- <!-- ARI.dat <- ar.dat %>% left_join(I.dat) %>%  -->
-<p>–&gt;
-<!-- <!--   pivot_wider(names_from=c(wing),values_from=c(I,AR)) %>%  -->
-–&gt;
-<!-- <!--   left_join(out.data %>% select(species,identifier,higher_taxon) %>% unique) -->
-–&gt;</p>
-<!-- <!-- ARI.dat %>%  -->
-<p>–&gt;
-<!-- <!--   ggplot(aes(higher_taxon,I_fore/I_hind))+geom_boxplot()+ylim(c(-1,-0.5)) -->
-–&gt;</p>
-<!-- <!-- obj<-contMap(lep.tree2,log(hind.I2*1e10),plot=FALSE) -->
-<p>–&gt; <!-- <!-- plot(obj,fsize=c(0.4,1),cex=0.1,lwd=2,res=200) -->
-–&gt;</p>
-<!-- <!-- #so cool!!!! VVVV -->
-<p>–&gt;</p>
-<!-- <!-- img.f <- list.files("/Users/Chris/Dropbox/Documents/bc (1)/3140.f22/other_stuff/lep_photos",recursive=T,full.names=T) -->
-<p>–&gt; <!-- <!-- hi.AR <- ARI.dat %>% filter(AR_fore>1.5) %>% -->
-–&gt; <!-- <!--   group_by(species) %>%  --> –&gt;
-<!-- <!--   mutate(img.f=img.f[grep(identifier,img.f)]) --> –&gt;</p>
-<!-- <!-- img1 <- hi.AR %>% ungroup %>% filter(AR_fore==max(AR_fore)) %>% pull(img.f) %>% readJPEG(.,native = TRUE) -->
-<p>–&gt; <!-- <!-- p1 <- ARI.dat %>%  --> –&gt;
-<!-- <!--   ggplot(aes(AR_fore,I_fore))+geom_point() --> –&gt;</p>
-<!-- <!-- library(ggimage) -->
-<p>–&gt; <!-- <!-- library(patchwork) --> –&gt; <!-- <!-- p1 +  -->
-–&gt;
-<!-- <!--   geom_image(data=hi.AR,aes(image=img.f),size=.1)+geom_point(data=hi.AR,col="red") -->
-–&gt;</p>
-<!-- <!-- hi.AR %>%  -->
-<p>–&gt;
-<!-- <!--   ggplot(aes(x=AR_fore,y=1))+geom_image(data=hi.AR,aes(image=img.f))+theme_classic() -->
-–&gt;</p>
-<!-- <!-- ``` -->
-<p>–&gt;</p>
-<!-- <!-- ```{r comp0,eval=FALSE,include=FALSE} -->
-<p>–&gt;</p>
-<!-- <!-- forewing.nogp<- forewings %>% -->
-<p>–&gt; <!-- <!--   coo_interpolate(fore.min) %>% --> –&gt;
-<!-- <!--   coo_align()  %>% --> –&gt; <!-- <!--   coo_slide(id=1) -->
-–&gt;</p>
-<!-- <!-- hindwing.nogp<- hindwings %>% -->
-<p>–&gt; <!-- <!--   coo_interpolate(hind.min) %>% --> –&gt;
-<!-- <!--   coo_align()  %>% --> –&gt; <!-- <!--   coo_slide(id=1) -->
-–&gt;</p>
-<!-- <!-- l <- forewing.nogp %>%  -->
-<p>–&gt; <!-- <!--   coo_length() --> –&gt;</p>
-<!-- <!-- range(l) -->
-<p>–&gt;</p>
-<!-- <!-- hist(l,breaks=seq(0,2100,10)) -->
-<p>–&gt;</p>
-<!-- <!-- forewing.sc <- forewing.nogp %>%  -->
-<p>–&gt;
-<!-- <!--   mutate(scale=l<120,l=coo_length(.),xy.file=names(.)) %>% -->
-–&gt; <!-- <!--   mutate(xy.file=basename(xy.file)) %>%  --> –&gt;
-<!-- <!--   filter(scale==T) --> –&gt;</p>
-<!-- <!-- forewing.sc <- forewing.sc$fac %>% left_join(out.data) %>% select(species,l,wing) %>%  -->
-<p>–&gt; <!-- <!--   group_by(species,wing) %>%  --> –&gt;
-<!-- <!--   summarize(l=mean(l)) --> –&gt;</p>
-<!-- <!-- hindwing.sc <- hindwing.nogp %>%  -->
-<p>–&gt;
-<!-- <!--   mutate(scale=l<120,l=coo_length(.),xy.file=names(.)) %>% -->
-–&gt; <!-- <!--   mutate(xy.file=basename(xy.file)) %>%  --> –&gt;
-<!-- <!--   filter(scale==T) --> –&gt;</p>
-<!-- <!-- hindwing.sc <- hindwing.sc$fac  %>% left_join(out.data) %>% select(species,l,wing) %>%  -->
-<p>–&gt; <!-- <!--   group_by(species,wing) %>%  --> –&gt;
-<!-- <!--   summarize(l=mean(l)) --> –&gt;</p>
-<!-- <!-- #second moment in real terms -->
-<p>–&gt;</p>
-<!-- <!-- fw.outs <- sapply(1:length(forewing.nogp),function(x) forewing.nogp[x]) -->
-<p>–&gt;
-<!-- <!-- fw.outs  <- lapply(fw.outs, function(x) as.matrix(data.frame(x=c(x[,1]-x[1,1]),y=c(x[,2]-x[1,2]))) %>% coo_flipy()) -->
-–&gt;</p>
-<!-- <!-- fore.I <- sapply(fw.outs, function(x) Ix(x[,2],x[,1])) %>% unlist -->
-<p>–&gt;</p>
-<!-- <!-- fore.I <- tibble(I=fore.I,xy.file=basename(names(forewing.nogp)),wing="fore")%>%  -->
-<p>–&gt; <!-- <!--   left_join(out.data) %>%  --> –&gt;
-<!-- <!--    filter(species%in% lep.tree2$tip.label) %>%  --> –&gt;
-<!-- <!-- group_by(species) %>%  --> –&gt;
-<!-- <!--   summarize(I=mean(I),wing="fore") --> –&gt;</p>
-<!-- <!-- hw.outs <- sapply(1:length(hindwing.nogp),function(x) hindwing.nogp[x]) -->
-<p>–&gt;
-<!-- <!-- hw.outs  <- lapply(hw.outs, function(x) as.matrix(data.frame(x=c(x[,1]-x[1,1]),y=c(x[,2]-x[1,2])))%>% coo_flipy()) -->
-–&gt;</p>
-<!-- <!-- hind.Isc <- sapply(hw.outs, function(x) Ix(x[,2],x[,1])) %>% unlist -->
-<p>–&gt;</p>
-<!-- <!-- hind.I <- tibble(I=hind.Isc,xy.file=basename(names(hindwing.nogp)),wing="hind")%>%  -->
-<p>–&gt; <!-- <!--   left_join(out.data) %>%  --> –&gt;
-<!-- <!--    filter(species%in% lep.tree2$tip.label) %>%  --> –&gt;
-<!-- <!-- group_by(species) %>%  --> –&gt;
-<!-- <!--   summarize(I=mean(I),wing="hind") --> –&gt;</p>
-<!-- <!-- I.dat <- rbind(hind.I,fore.I) %>%  -->
-<p>–&gt;
-<!-- <!--   pivot_wider(names_from=wing, values_from=I,names_prefix="I_") -->
-–&gt;</p>
-<!-- <!-- I.dat %>%  -->
-<p>–&gt;
-<!-- <!--   ggplot(aes(I_fore,I_hind))+geom_point()+geom_smooth(method="lm") -->
-–&gt;</p>
-<!-- <!-- sc.dat <- rbind(hindwing.sc,forewing.sc) %>%  -->
-<p>–&gt;
-<!-- <!--   pivot_wider(names_from=wing,values_from=l,names_prefix="L_") %>%  -->
-–&gt;
-<!-- <!--   left_join(ARI.dat %>% select(-I_fore,-I_hind)) %>%  -->
-–&gt; <!-- <!--   left_join(I.dat) %>%  --> –&gt;
-<!-- <!--   filter(I_hind<1e4,I_fore<1e4) --> –&gt;</p>
-<!-- <!-- lep.tree3 <- keep.tip(lep.tree2,sc.dat$species) -->
-<p>–&gt;</p>
-<!-- <!-- sc.dat %>%  -->
-<p>–&gt;
-<!-- <!--   ggplot(aes(I_fore,I_hind))+geom_point()+geom_smooth(method="lm") -->
-–&gt;</p>
-<!-- <!-- sc.dat %>%  -->
-<p>–&gt;
-<!-- <!--   ggplot(aes(log(L_hindwing),log(I_hind), col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-–&gt;</p>
-<!-- <!-- sc.dat %>%  -->
-<p>–&gt;
-<!-- <!--   ggplot(aes(AR_fore,I_fore, col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-–&gt;</p>
-<!-- <!-- sc.dat %>%  -->
-<p>–&gt;
-<!-- <!--   ggplot(aes(AR_hind,I_hind, col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-–&gt;</p>
-<!-- <!-- sc.dat %>%  -->
-<p>–&gt;
-<!-- <!--   ggplot(aes(AR_hind,AR_fore, col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-–&gt; <!-- <!-- sc.dat %>%  --> –&gt;
-<!-- <!--   ggplot(aes(I_hind,I_fore, col=AR_hind))+geom_point()+geom_smooth(method="lm") -->
-–&gt;</p>
-<!-- <!-- ###PIC (HERE) -->
-<p>–&gt;</p>
-<!-- <!-- pic2 <- function(x=.,sp=species,t=lep.tree3){ -->
-<p>–&gt; <!-- <!--   names(x) <- sp --> –&gt; <!-- <!--   pic(x,t) -->
-–&gt; <!-- <!-- } --> –&gt;</p>
-<!-- <!-- length(lep.tree3$tip.label) -->
-<p>–&gt;</p>
-<!-- <!-- pic2(x=sc.dat$AR_hind,sp=sc.dat$species) -->
-<p>–&gt; <!-- <!-- sc.dat %>% --> –&gt; <!-- <!--   ungroup() %>%  -->
-–&gt;
-<!-- <!--   dplyr::mutate_at(c("AR_hind","AR_fore","I_fore","I_hind"),pic2(x=.,sp=.$species)) -->
-–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- <!-- ```{r comp4,eval=FALSE,include=FALSE} -->
-<p>–&gt; <!-- <!-- library(mvMORPH) --> –&gt;</p>
-<!-- <!-- #for.ar.sim <- make.simmap(lep.tree3, area, model="ER", nsim=1) -->
-<p>–&gt;
-<!-- <!-- #fore.ar.ou <- mvOU(for.ar.sim, area, model="OU1", diagnostic=FALSE, echo=FALSE) -->
-–&gt; <!-- <!-- #plot(for.ar.sim) --> –&gt;</p>
-<!-- <!-- library(geiger) -->
-<p>–&gt;</p>
-<!-- <!-- fore.I.dtt <- dtt(lep.tree2,fore.I2,nsim=1000, plot=TRUE,calculateMDIp=T) -->
-<p>–&gt;
-<!-- <!-- hind.I.dtt <- dtt(lep.tree2,hind.I2,nsim=1000, plot=TRUE,calculateMDIp=T) -->
-–&gt;
-<!-- <!-- fore.ar.dtt <- dtt(lep.tree2,fore.ar,nsim=1000, plot=TRUE,calculateMDIp=T) -->
-–&gt;
-<!-- <!-- hind.ar.dtt <- dtt(lep.tree2,hind.ar,nsim=1000, plot=TRUE,calculateMDIp=T) -->
-–&gt;</p>
-<!-- <!-- library(OUwie) -->
-<p>–&gt;</p>
-<!-- <!-- n.tip <- seq(1,Ntip(lep.tree2),by=4) -->
-<p>–&gt; <!-- <!-- lep.tree3 <- keep.tip(lep.tree2,n.tip) --> –&gt;</p>
-<!-- <!-- hind.ar2 <- data.frame(species=names(hind.ar),Reg=1,AR=hind.ar) %>%  -->
-<p>–&gt; <!-- <!--   filter(species%in%lep.tree3$tip.label) --> –&gt;
-<!-- <!-- hind.ar.BM1 <- OUwie(lep.tree3,hind.ar2,model=c("BM1")) -->
-–&gt;
-<!-- <!-- hind.ar.BMS <- OUwie(lep.tree3,hind.ar2,model=c("BMS")) -->
-–&gt;
-<!-- <!-- hind.ar.OU1 <- OUwie(lep.tree3,hind.ar2,model=c("OU1")) -->
-–&gt;
-<!-- <!-- hind.ar.OUM <- OUwie(lep.tree3,hind.ar2,model=c("OUM")) -->
-–&gt;
-<!-- <!-- hind.ar.OUMV <- OUwie(lep.tree3,hind.ar2,model=c("OUMV")) -->
-–&gt;
-<!-- <!-- hind.ar.OUMA <- OUwie(lep.tree3,hind.ar2,model=c("OUMA")) -->
-–&gt;</p>
-<!-- <!-- fits <- list(hind.ar.BM1, -->
-<p>–&gt; <!-- <!-- hind.ar.BMS, --> –&gt; <!-- <!-- hind.ar.OU1, -->
-–&gt; <!-- <!-- hind.ar.OUM, --> –&gt; <!-- <!-- hind.ar.OUMV, --> –&gt;
-<!-- <!-- hind.ar.OUMA --> –&gt; <!-- <!-- ) --> –&gt;</p>
-<!-- <!-- aics <- sapply(fits,function(x) x$"AICc") -->
-<p>–&gt; <!-- <!-- fits[[which.min(aics)]] --> –&gt;
-<!-- <!-- all(!duplicated(names(hind.ar))) --> –&gt;</p>
-<!-- <!-- hindwing.pc3 <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>% select(PC1,PC2) %>% as.matrix -->
-<p>–&gt;
-<!-- <!-- rownames(hindwing.pc3) <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>%pull(species) -->
-–&gt;</p>
-<!-- <!-- sfs <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>% pull(higher_taxon) %>% as.factor -->
-<p>–&gt;</p>
-<!-- <!-- library(geomorph) -->
-<p>–&gt;</p>
-<!-- <!-- hind.Ppca <- gm.prcomp(hindwing.pc3,phy=lep.tree3,GLS = TRUE) -->
-<p>–&gt;</p>
-<!-- <!-- grps <- as.numeric(sfs) -->
-<p>–&gt; <!-- <!-- names(grps) <- sfs --> –&gt;</p>
-<!-- <!-- g.pal <- viridis_pal()(length(levels(sfs))) -->
-<p>–&gt;
-<!-- <!-- plot(hind.Ppca,phylo=T,phylo.par = list(tip.labels = TRUE, tip.txt.cex = .75, edge.width = 2,node.labels = FALSE),time.plot=T,bg=sfs,pch=22) -->
-–&gt; <!-- <!-- shapeHulls(hind.p,groups =,group.cols=1:23) -->
-–&gt;</p>
-<!-- <!-- plot(stom.Ppca,axis1 = 1,axis2=2,phylo = T,tip.tex.cex=0.1,phylo.par = list(tip.labels = TRUE, tip.txt.cex = .75, edge.width = 2,node.labels = FALSE),bg=diet2,pch=22) -->
-<p>–&gt;
-<!-- <!-- legend("topleft", pch=22, pt.bg = unique(diet2), legend = rev(levels(diet2))) -->
-–&gt;
-<!-- <!-- shapeHulls(p12,groups = grps,group.cols = c("red","black"),group.lwd=c(2,2),group.lty = c(2, 2)) -->
-–&gt; <!-- <!-- dev.off() --> –&gt;</p>
-<!-- <!-- nrow(hindwing.pc3) -->
-<p>–&gt; <!-- <!-- Ntip(lep.tree2) --> –&gt;
-<!-- <!-- #https://onlinelibrary.wiley.com/doi/full/10.1111/evo.14238 -->
-–&gt;</p>
-<!-- <!-- td <- hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>% select(species,PC1,PC2,higher_taxon) %>% rename(tip=species) %>% as.matrix -->
-<p>–&gt;
-<!-- <!-- rownames(td) <-  hindwing.pca2 %>% filter(species%in%lep.tree3$tip.label)%>%pull(species) -->
-–&gt;
-<!-- <!-- phylomorphospace.gg(lep.tree3,hindwing.pc3,tip.aes=aes(x,y,col=higher_taxon),tip.dat=td) -->
-–&gt;
-<!-- <!--   phylomorphospace.gg <- function (tree, X, A = NULL, control = list(), tip.dat=NULL,tip.aes=NULL,cont.disc="cont",...)  -->
-–&gt; <!-- <!-- { --> –&gt; <!-- <!--   if (class(tree) != "phylo")  -->
-–&gt; <!-- <!--     stop("tree object must be of class 'phylo.'") -->
-–&gt; <!-- <!--   if (nrow(X) != length(tree$tip))  --> –&gt;
-<!-- <!--     stop("X must contain the same number of rows as species in tree.") -->
-–&gt; <!-- <!--   if (is.null(rownames(X))) { --> –&gt;
-<!-- <!--     warning("X is missing row names; assuming order of tip labels.") -->
-–&gt; <!-- <!--     rownames(X) <- tree$tip.label --> –&gt;
-<!-- <!--   } --> –&gt; <!-- <!--   if (ncol(X) != 2) { --> –&gt;
-<!-- <!--     warning("X has more than 2 columns.  Using only the first 2 columns.") -->
-–&gt; <!-- <!--     X <- X[, 1:2] --> –&gt; <!-- <!--   } --> –&gt;
-<!-- <!--   if (is.null(A))  --> –&gt;
-<!-- <!--     A <- apply(X, 2, fastAnc, tree = tree) --> –&gt;
-<!-- <!--   con = list(col.edge = setNames(rep("black", nrow(tree$edge)),  -->
-–&gt;
-<!-- <!--                                  as.character(tree$edge[, 2])), col.node = setNames(rep("black",  -->
-–&gt;
-<!-- <!--                                                                                         max(tree$edge)), as.character(1:max(tree$edge)))) -->
-–&gt; <!-- <!--   con[(namc <- names(control))] <- control --> –&gt;
-<!-- <!--   if (hasArg(node.by.map))  --> –&gt;
-<!-- <!--     node.by.map <- list(...)$node.by.map --> –&gt;
-<!-- <!--   else node.by.map <- FALSE --> –&gt;
-<!-- <!--   if (hasArg(node.size)) { --> –&gt;
-<!-- <!--     node.size <- list(...)$node.size --> –&gt;
-<!-- <!--     if (length(node.size) == 1)  --> –&gt;
-<!-- <!--       node.size <- c(node.size, node.size) --> –&gt;
-<!-- <!--   } --> –&gt; <!-- <!--   else node.size <- c(1, 1.3) -->
-–&gt; <!-- <!--   if (hasArg(xlab))  --> –&gt;
-<!-- <!--     xlab <- list(...)$xlab --> –&gt;
-<!-- <!--   else xlab <- colnames(X)[1] --> –&gt;
-<!-- <!--   if (hasArg(ylab))  --> –&gt;
-<!-- <!--     ylab <- list(...)$ylab --> –&gt;
-<!-- <!--   else ylab <- colnames(X)[2] --> –&gt;
-<!-- <!--   if (hasArg(fsize))  --> –&gt;
-<!-- <!--     fsize <- 0.75 * list(...)$fsize --> –&gt;
-<!-- <!--   else fsize <- 0.75 --> –&gt;
-<!-- <!--   if (hasArg(colors))  --> –&gt;
-<!-- <!--     colors <- list(...)$colors --> –&gt;
-<!-- <!--   else if (!is.null(tree$maps))  --> –&gt;
-<!-- <!--     colors <- setNames(palette()[1:ncol(tree$mapped.edge)],  -->
-–&gt;
-<!-- <!--                        sort(colnames(tree$mapped.edge))) -->
-–&gt; <!-- <!--   if (hasArg(lwd))  --> –&gt;
-<!-- <!--     lwd <- list(...)$lwd --> –&gt;
-<!-- <!--   else lwd <- if (is.null(tree$maps))  --> –&gt;
-<!-- <!--     1 --> –&gt; <!-- <!--   else 2 --> –&gt;
-<!-- <!--   if (hasArg(axes))  --> –&gt;
-<!-- <!--     axes <- list(...)$axes --> –&gt;
-<!-- <!--   else axes <- TRUE --> –&gt;
-<!-- <!--   if (hasArg(add))  --> –&gt;
-<!-- <!--     add <- list(...)$add --> –&gt;
-<!-- <!--   else add <- FALSE --> –&gt;
-<!-- <!--   aa <- setNames(c(X[tree$tip.label, 1], A[, 1]), c(1:length(tree$tip.label),  -->
-–&gt;
-<!-- <!--                                                     rownames(A))) -->
-–&gt;
-<!-- <!--   bb <- setNames(c(X[tree$tip.label, 2], A[, 2]), c(1:length(tree$tip.label),  -->
-–&gt;
-<!-- <!--                                                     rownames(A))) -->
-–&gt;
-<!-- <!--   XX <- matrix(aa[as.character(tree$edge)], nrow(tree$edge),  -->
-–&gt; <!-- <!--                2) --> –&gt;
-<!-- <!--   YY <- matrix(bb[as.character(tree$edge)], nrow(tree$edge),  -->
-–&gt; <!-- <!--                2) --> –&gt; <!-- <!--   if (!add)  -->
-–&gt;</p>
-<!-- <!--     A.df <- as.data.frame(A) -->
-<p>–&gt;</p>
-<!-- <!--   edge.path<- data.frame(x.beg=XX[,1],x.end=XX[,2],y.beg=YY[,1],y.end=YY[,2]) -->
-<p>–&gt;</p>
-<!-- <!--   zz <- c(tree$edge[1, 1], tree$edge[tree$edge[, 2] > length(tree$tip.label),2]) -->
-<p>–&gt;
-<!-- <!--   node.df <- data.frame(x=c(XX[1, 1], XX[tree$edge[, 2] > length(tree$tip.label),2]), y=c(YY[1, 1], YY[tree$edge[, 2] > length(tree$tip.label),2])) -->
-–&gt;</p>
-<!-- <!--   tip.df <- data.frame(x=XX[tree$edge[, 2] <= length(tree$tip.label), 2], y=YY[tree$edge[,2] <= length(tree$tip.label), 2],tip=tree$tip.label) -->
-<p>–&gt;</p>
-<!-- <!--   #print(tip.df) -->
-<p>–&gt;</p>
-<!-- <!--   #expand plot array -->
-<p>–&gt; <!-- <!--   px <- 1.2*(tip.df$x) --> –&gt;
-<!-- <!--   py <- 1.2*(tip.df$y) --> –&gt;
-<!-- <!--   x.range <- max(px)-min(px) --> –&gt;
-<!-- <!--   y.range <- max(py)-min(py) --> –&gt;</p>
-<!-- <!--   tip.df <- data.frame(x=XX[tree$edge[, 2] <= length(tree$tip.label), 2], y=YY[tree$edge[,2] <= length(tree$tip.label), 2],tip=tree$tip.label,angle=(tip.df$x)/range(tip.df$x)*90,vjust=(tip.df$x/x.range)*2,hjust=(tip.df$y/y.range)) -->
-<p>–&gt;</p>
-<!-- <!--   if(!is.null(tip.dat)) tip.df <- merge(tip.df,tip.dat,by="tip") -->
-<p>–&gt; <!-- <!--   print(tip.df) --> –&gt;
-<!-- <!--   if(is.null(tip.aes)) tip.aes <- aes(x,y) --> –&gt;</p>
-<!-- <!--   print(tip.aes) -->
-<p>–&gt;</p>
-<!-- <!--   gg.p <- ggplot(data=edge.path)+geom_segment(aes(x=x.beg,y=y.beg,xend=x.end,yend=y.end),alpha=0.5)+geom_point(data=node.df,aes(x=x,y=y),alpha=0.5,size=5)+geom_point(data=tip.df,tip.aes,size=7,inherit.aes = F)+geom_text(data=tip.df,aes(x=x,y=y,label=tip,fontface=3,angle=angle,vjust=vjust),size=5)+scale_x_continuous(limits=range(px))+scale_y_continuous(limits=range(py))+xlab(label = "PC1")+ylab(label="PC2") -->
-<p>–&gt;</p>
-<!-- <!--   return(gg.p+theme_bw(30)+theme(panel.grid=element_blank(),axis.title.x = element_text(vjust=-0.5),axis.title.y = element_text(vjust=0.25)) -->
-<p>–&gt; <!-- <!--   ) --> –&gt;</p>
-<!-- <!--   } -->
-<p>–&gt;</p>
-<!-- <!--   Betts, C.R. and Wootton, R.J., 1988. Wing shape and flight behaviour in butterflies (Lepidoptera: Papilionoidea and Hesperioidea): a preliminary analysis. Journal of experimental biology, 138(1), pp.271-288. -->
-<p>–&gt;
-<!-- <!--   Le Roy, C., Debat, V. and Llaurens, V., 2019. Adaptive evolution of butterfly wing shape: from morphology to behaviour. Biological Reviews, 94(4), pp.1261-1281. -->
-–&gt; <!-- <!-- ``` --> –&gt;</p>
-<!-- ## Shape evolution correlation -->
-<!-- To say something about whether hing- and forewing shape evolution is correlated we could undertake phylogenetic least squares analysis like we have in previous projects. But, we've done a ton already. So, let's make this simple and just perform [phylogenetic independent contrasts (PIC)](https://en.wikipedia.org/wiki/Phylogenetic_comparative_methods#:~:text=Phylogenetically%20independent%20contrasts,-The%20standardized%20contrasts&text=The%20logic%20of%20the%20method,statistically%20independent%20and%20identically%20distributed.) analysis. First proposed by @felsenstein1985phylogenies in his seminal paper, he proposed using phylogenetic information (under a Brownian-motion like model) to transform the original tip data into values that are statistically independent of one another. This method is captured in the `ape` function `pic()` For hindwing and forewing PC1, such analysis would look like this. -->
-<!-- ```{r pic1,eval=F} -->
-<!-- hindPC1.pic <- pic(hind.pc1,phy = lep.tree2) -->
-<!-- forePC1.pic <- pic(fore.pc1,phy = lep.tree2) -->
-<!-- ``` -->
-<!-- ```{r pic, include=FALSE,eval=FALSE} -->
-<!-- hindPC2.pic <- pic(hind.pc2,phy = lep.tree2) -->
-<!-- forePC2.pic <- pic(fore.pc2,phy = lep.tree2) -->
-<!-- PC2.pic <- tibble( -->
-<!--   hind=hindPC2.pic, -->
-<!--   fore=forePC2.pic -->
+<div id="analysis-part-iii-evolution-in-parallel"
+class="section level3">
+<h3>Analysis Part III: Evolution in Parallel</h3>
+<p>Our secondary question was, if you remember, was, “<strong>Has the
+body shape of pelagic and benthic sharks evolved at the same
+rate?</strong>”. This is a much different question than the first. We
+want to know, overall, if the shape of lineages that invaded a
+particular habitat has evolved faster or slower than those invading
+another habitat. For this we’ll turn to the <code>geomorph</code>
+package once again, in particular, its <code>compare.evol.rates()</code>
+function. This function calculates net rates of shape evolution for
+groups of species on a phylogeny from a set of aligned landmarks. The
+approach is based between-species differences in morphospace after
+phylogenetic transformation. In other words, after correcting for
+phylogenetic relatedness, it compares relative rates of shape
+evolution.</p>
+<p>Because we’re correcting for phylogeny in this analysis, we need the
+<a href="data/shark_trees.nex">tree from <span class="citation">Stein et
+al. (2018)</span> mentioned above</a>. Once this tree file is
+downloaded, let’s load read it in and store it to an object named
+<code>phy</code>. Notice you’ll need the phytools package and the
+function <code>readNexus()</code>.</p>
+<pre class="r"><code>library(phytools)
+phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
+length(phy)</code></pre>
+<pre><code>## [1] 500</code></pre>
+<p>Next let’s, restrict our tree file to those species in our data set.
+For this, we’ll used <code>ape</code>’s <code>keep.tip()</code> which
+keeps only the tips in a vector, in this case, the species in our PCA
+and landmakr analysis.</p>
+<pre class="r"><code>phy2 &lt;- keep.tip(phy,PCA$sp)</code></pre>
+<p>To undertake the analysis with <code>compare.evol.rates()</code>, we
+must specify <code>A</code>, the aligned coordinates in a lankmark array
+(<code>ldk_al$coord</code>), a tree (more in just a bit), and a named
+vector of groups descriping to which group each species in the array
+belongs.</p>
+<p>Let’s establish the grouping vector by passing the
+<code>habitat</code> values in our <code>PCA</code> tibble to an object
+named <code>gp_hab</code> and then give the names of this vector the
+<code>species</code> values. Then we run the function.</p>
+<pre class="r"><code>gp_hab &lt;- PCA$habitat
+names(gp_hab) &lt;- PCA$sp
+
+er &lt;- compare.evol.rates(A=ldk_al$coords, phy=phy2[[1]], method=&quot;simulation&quot;,gp=gp_hab,print.progress = F)
+
+print(er)</code></pre>
+<pre><code>## 
+## Call:
+## 
+## 
+## Observed Rate Ratio: 1.5654
+## 
+## P-value: 0.002
+## 
+## Effect Size: 2.45
+## 
+## Based on 1000 random permutations
+## 
+## The rate for group benthic is 1.40377103447055e-05  
+## 
+## The rate for group pelagic is 8.96721584612147e-06</code></pre>
+<p>So it appears the benthic group body shape has evolved 1.6 times
+faster than the pelagic group and this is significant
+(<em>p=0.002</em>). But, we have a problem. You may have noticed that
+when we loaded our tree file, the length of this list of trees is 500.
+These are 500 trees produced by <span class="citation">Stein et al.
+(2018)</span> using the bootstrapping method mentioned earlier. Many of
+these trees are incongruent, that is, they represent different
+relationships for the sharks and this, in turn, represents some serious
+phylogenetic uncertainty.</p>
+<p>Also notice that in our rate analysis above, we used only one tree in
+this list (<code>phy=phy2[[1]]</code>). There are 499 other trees we
+could have used, perhaps each representing a different phylogenetic
+hypothesis. The results of a comparative analysis like this could, and
+likely will, vary according to the phylogenetic hypothesis used in it.
+So what to do?</p>
+<p>This is a common problem faced by comparative biologists and,
+fortunately, there seems to be a consensus among us to repeat our
+comparative analysis using a random sample of trees in that represent
+the phylogenetic uncertainty. By repeating an analysis, we produce a
+series of results based on new parameters to our model. In this case,
+that new parameter would be a randomly sampled tree. This establishes
+what is akin to a <a
+href="https://en.wikipedia.org/wiki/Posterior_probability">posterior
+sample</a> and from this we can extract a posterior distribution of
+estimates, in our case, a distribution of evolutionary rates.</p>
+<p>Therefore, we have before us the proposition of repeating out
+analysis, let’s say 10 times. To do this, we could randomly sample 10 of
+trees and build a posterior distribution of evolutionary rates using a
+<code>for</code> loop.</p>
+<pre class="r"><code>set.seed(1234)
+phy_sample &lt;- sample(phy2,10)
+
+er_l &lt;- list()
+
+
+t &lt;- system.time(for(i in 1:length(phy_sample)){
+ er_l[[i]] &lt;-compare.evol.rates(A=ldk_al$coords, phy=phy_sample[[i]], method=&quot;simulation&quot;,gp=gp_hab,print.progress = F) %&gt;% summary
+}
+)</code></pre>
+<pre><code>## 
+## Call:
+## 
+## 
+## Observed Rate Ratio: 1.3766
+## 
+## P-value: 0.013
+## 
+## Effect Size: 2.087
+## 
+## Based on 1000 random permutations
+## 
+## The rate for group benthic is 1.70947144489729e-05  
+## 
+## The rate for group pelagic is 1.24184241879944e-05 
+## Call:
+## 
+## 
+## Observed Rate Ratio: 1.4821
+## 
+## P-value: 0.004
+## 
+## Effect Size: 2.3
+## 
+## Based on 1000 random permutations
+## 
+## The rate for group benthic is 1.22496627992883e-05  
+## 
+## The rate for group pelagic is 8.26504653836789e-06 
+## Call:
+## 
+## 
+## Observed Rate Ratio: 1.4711
+## 
+## P-value: 0.006
+## 
+## Effect Size: 2.2689
+## 
+## Based on 1000 random permutations
+## 
+## The rate for group benthic is 1.146005595824e-05  
+## 
+## The rate for group pelagic is 7.78996757098907e-06 
+## Call:
+## 
+## 
+## Observed Rate Ratio: 1.5114
+## 
+## P-value: 0.002
+## 
+## Effect Size: 2.3659
+## 
+## Based on 1000 random permutations
+## 
+## The rate for group benthic is 1.29573966236599e-05  
+## 
+## The rate for group pelagic is 8.57288744816572e-06 
+## Call:
+## 
+## 
+## Observed Rate Ratio: 1.498
+## 
+## P-value: 0.002
+## 
+## Effect Size: 2.321
+## 
+## Based on 1000 random permutations
+## 
+## The rate for group benthic is 1.00978388979575e-05  
+## 
+## The rate for group pelagic is 6.74097338255856e-06 
+## Call:
+## 
+## 
+## Observed Rate Ratio: 1.4521
+## 
+## P-value: 0.008
+## 
+## Effect Size: 2.226
+## 
+## Based on 1000 random permutations
+## 
+## The rate for group benthic is 1.24563414926804e-05  
+## 
+## The rate for group pelagic is 8.57837163470097e-06 
+## Call:
+## 
+## 
+## Observed Rate Ratio: 1.5742
+## 
+## P-value: 0.002
+## 
+## Effect Size: 2.4468
+## 
+## Based on 1000 random permutations
+## 
+## The rate for group benthic is 1.15435009156868e-05  
+## 
+## The rate for group pelagic is 7.33290098688007e-06 
+## Call:
+## 
+## 
+## Observed Rate Ratio: 1.4472
+## 
+## P-value: 0.008
+## 
+## Effect Size: 2.2407
+## 
+## Based on 1000 random permutations
+## 
+## The rate for group benthic is 1.19807638629684e-05  
+## 
+## The rate for group pelagic is 8.27830517141801e-06 
+## Call:
+## 
+## 
+## Observed Rate Ratio: 1.5248
+## 
+## P-value: 0.002
+## 
+## Effect Size: 2.3684
+## 
+## Based on 1000 random permutations
+## 
+## The rate for group benthic is 1.16162453729596e-05  
+## 
+## The rate for group pelagic is 7.61825539324746e-06 
+## Call:
+## 
+## 
+## Observed Rate Ratio: 1.5845
+## 
+## P-value: 0.002
+## 
+## Effect Size: 2.4614
+## 
+## Based on 1000 random permutations
+## 
+## The rate for group benthic is 1.20582596828107e-05  
+## 
+## The rate for group pelagic is 7.60999305350617e-06</code></pre>
+<p>Here we used <code>seet.seed()</code> to make the
+<code>sample()</code> function randomly sample the same set of 10 trees.
+This is important so that we can all perform the same exact analyses,
+that is, our analyses are repeatable. You’ll notice that the loop uses
+each random tree to repeat the analysis and store the summary of the
+model (i.e., the rate comparisons) to the list <code>er_l</code>. Notice
+also that the entire loop is wrapped in <code>system.time()</code>. This
+is done so that, in this preliminary analysis, we can record how much
+time the loop took. Printing <code>t</code> reveals that it took 7
+seconds. Because our results are stored in a list, we can use
+<code>lapply()</code> extract the rate comparisons.
+<code>lapply()</code> takes a list and applies a function to. In our
+case, we need to encoded a custom function that extracts
+<code>sigma.d.gp</code> and <code>sigma.d.ratio</code>, the rate for
+each group and rate ratio between them, respectively. For this, we ask
+the function to work on every value of <code>er_l</code>, read in as
+<code>x</code>, then combine <code>sigma.d.gp</code> and
+<code>sigma.d.ratio</code> and store it in <code>er_</code> temporatily.
+We then apply a name to the third value “ratio”, and ruturn the vector.
+<code>lapply()</code> returns a list, so we combine all elements of it
+using <code>do.call()</code>. We apply the row-binding function
+<code>rbind()</code> to the list using the pipe and <code>.</code> and
+lastly, make the output a data frame.</p>
+<pre class="r"><code>er &lt;- lapply(er_l,function(x) {
+  er_ &lt;- c(x$sigma.d.gp,x$sigma.d.ratio)
+  names(er_)[3] &lt;-&quot;ratio&quot;
+  return(er_)
+}) %&gt;% do.call(rbind,.) %&gt;% data.frame
+
+head(er)</code></pre>
+<pre><code>##        benthic      pelagic    ratio
+## 1 1.709471e-05 1.241842e-05 1.376561
+## 2 1.224966e-05 8.265047e-06 1.482105
+## 3 1.146006e-05 7.789968e-06 1.471130
+## 4 1.295740e-05 8.572887e-06 1.511439
+## 5 1.009784e-05 6.740973e-06 1.497979
+## 6 1.245634e-05 8.578372e-06 1.452064</code></pre>
+<p>With a little massaging with <code>pivot_longer()</code>, we can plot
+the posterior distribution of rates for each habitat like so.</p>
+<pre class="r"><code>er %&gt;% 
+  pivot_longer(benthic:pelagic) %&gt;% 
+  ggplot(aes(name,value)) + geom_boxplot()</code></pre>
+<p><img src="mod5_proj_files/figure-html/ploter-1.png" width="672" /></p>
+<p>Indeed it appears that when we estimate evolutionary rates for 10
+random trees, accounting for uncertainty in species relationships,
+pelagic species evolve slower than benthic ones.</p>
+<p>Now, this is all well and good. But, most comparative biologists
+would argue 10 random trees does not a posterior make. We should
+probably sample many more or, perhaps use the entire set of trees.</p>
+<p>What’s to stop us? Well, if we shoot for the stars and use all 500
+trees in 500 separate analyses, we’d be looking running a for loop 50
+times longer than 10 trees took (roughly 350 s or 6 minutes, see figure
+below). In the world of comparative methods, this isn’t such a long
+time, but remember, this is a preliminary analysis of only 90 or so of
+the 220 we hope to include. The figure below indicates that including
+all 220 species and using all 500 trees would take ~2500 s or about 40
+minutes!!!</p>
+<p><br></p>
+<img src="mod5_proj_files/figure-html/timescale-1.png" width="672" />
+<br>
+<center>
+The polynomial relationship between time and number of taxa in
+comparative analysis, in this case computing evolutionary rates of shape
+change with <code>geomorph</code>’s <code>compare.evol.rates()</code>.
+</center
+<br>
+<p><br></p>
+<p>We should, therefore, be prepared for the long haul. But, hold on. I
+don’t know about you, but on most days, I don’t have 40 minutes to
+spare, even for very interesting comparative analyses. Fortunately, to
+avoid 100s of iterations of the same operations on different data, we
+can make use of a very common work-around in scientific computing: <a
+href="https://en.wikipedia.org/wiki/Parallel_computing">parallelization</a>,
+the simultaneous execution of different pieces of a larger computation
+across multiple computing processors or cores. If fact, this sort of
+problem is considered <a
+href="https://en.wikipedia.org/wiki/Embarrassingly_parallel">embarrassingly
+parallel</a>, that is, it is so very easy to split this task in the many
+parallel subtasks. Specifically, we have 500 identical tasks, we need
+only to break these up into subtasks that run in parallel. That’s what
+we’ll do.</p>
+<p><code>R</code> has several packages for parallel computing. Perhaps
+the most used is <code>parallel</code>, so cleverly named. Let’s work on
+an example of how a task could be parallelized using
+<code>parallel</code>’s functions.</p>
+<pre class="r"><code>x &lt;- rnorm(1e6)</code></pre>
+<!-- hab_names <- c(PCA$habit[which(gp_hab==0)] %>% unique, -->
+<!--                PCA$habit[which(gp_hab==1)]%>% unique) -->
+<!-- er_fit <- list() -->
+<!-- for(i in 1:length(phy2)){ -->
+<!--  er_fit[[i]] <-compare.evol.rates(A=ldk_al$coords, phy=phy2[[i]], method="simulation",gp=gp_hab,print.progress = F) -->
+<!-- } -->
+<!-- plot(er_l[[1]]) -->
+<!-- er <- lapply(er_fit,summary) -->
+<!-- er <- lapply(er,function(x) { -->
+<!--   er <- c(x$sigma.d.gp,x$sigma.d.ratio) -->
+<!--   names(er) <- c(hab_names,"ratio") -->
+<!--   return(er) -->
+<!-- }) %>% do.call(rbind,.) %>% data.frame -->
+<!-- er %>%  -->
+<!--   pivot_longer(benthic:pelagic) %>%  -->
+<!--   ggplot(aes(value,fill=name)) + geom_histogram() -->
+<!-- library(parallel) -->
+<!-- er_fun <- function(x){compare.evol.rates(A=ldk_al$coords, phy=x, method="simulation",gp=gp_hab,print.progress = F)} -->
+<!-- er_l <- mclapply(phy2,er_fun,mc.cores = detectCores()-2) -->
+<!-- er <- lapply(er_fit,summary) -->
+<!-- er <- lapply(er,function(x) { -->
+<!--   er <- c(x$sigma.d.gp,x$sigma.d.ratio) -->
+<!--   names(er) <- c(hab_names,"ratio") -->
+<!--   return(er) -->
+<!-- }) %>% do.call(rbind,.) %>% data.frame -->
+<!-- er %>%  -->
+<!--   pivot_longer(benthic:pelagic) %>%  -->
+<!--   ggplot(aes(value,fill=name)) + geom_histogram() -->
+<!-- t.test(value~name, -->
+<!-- er %>%  -->
+<!--   pivot_longer(benthic:pelagic)  -->
 <!-- ) -->
-<!-- PC2.pic %>%  -->
-<!--   ggplot(aes(x=fore,y=hind))+geom_point()+geom_smooth(method="lm") -->
-<!-- ``` -->
-<!-- Here we just inputed our stored PC vectors we used in the rate analysis and our tree of course. Now we have transformed values we can regress against one another. Let's first plot them and see what we get. -->
-<!-- ```{r picplot,eval=F} -->
-<!-- PC1.pic <- tibble( -->
-<!--   hind=hindPC1.pic, -->
-<!--   fore=forePC1.pic -->
-<!-- ) -->
-<!-- PC1.pic %>%  -->
-<!--   ggplot(aes(x=fore,y=hind))+geom_point()+geom_smooth(method="lm") -->
-<!-- ``` -->
-<!-- Wow! These PC1s Look pretty correlated! Let's see what the r-squared value is and if there is a significant relationship. For this, we need simply to create a linear model and retrieve these values with `summary()`. -->
-<!-- ```{r picmod} -->
-<!-- summary(lm(hind~fore,PC1.pic)) -->
-<!-- ``` -->
+</div>
+</div>
+</div>
+<div id="project-report" class="section level1">
+<h1>Project Report</h1>
+<p>t-test to posterior</p>
 <!-- # Project Report -->
 <!-- Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following: -->
 <!--   * Are the rates of wing-shape evolution different between the hind- and forewing? By how much?  -->
@@ -2051,8 +1589,6 @@ Locomotion in Sharks.”</span> <em>American Zoologist</em> 17 (2):
 Wilga, Cheryl AD, and George V Lauder. 2004. <span>“Biomechanics of
 Locomotion in Sharks, Rays, and Chimeras.”</span> <em>Biology of Sharks
 and Their Relatives</em> 5: 139–64.
-</div>
-</div>
 </div>
 </div>
 </div>

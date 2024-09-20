@@ -313,9 +313,9 @@ This module is very much learn as you go. Please dive right into the project and
 
 In Phase II, we'll use our new-found instrument- and code-development skills to address key questions in organismal biology. These will be self-guided explorations of instrument design and use and data analysis meant to challenge you to put these skills to good use in answering how vertebrates muscles work, phylogeny matters in physiological systems, and how a changing climate impacts the distribution of vertebrates. Within this phase we'll break up into our teams to focus on 4 modules, some data driven, the others both data and instrument driven.
 
-## Module 5: Rolly Polly Fish Heads: Head Shape Evolution in the Actinopterygii
+## Module 5: Shark!
 
-This module puts our newly formed data analysis and markdown skills to use in answering how head shape has evolved in the Actinopterygii (i.e., the ray-finned fishes). Specifically, we'll test head shape has evolved differently between major groups within the lineage.
+This module puts our newly formed data analysis and markdown skills to use in answering how body shape evolved in the Selachii (i.e., sharks). Specifically, we'll test whether body shape has evolved differently between sharks inhabiting different habitats.
 
 ### Important Dates:
 
@@ -323,18 +323,17 @@ Thursday, 10/10: Upload data
 Sunday, 10/20: Commit Module 5 Project Report
 
 ### Key Concepts
-  + Morphometrics
-  + Fluid mechanics
+  + Geometic Morphometrics
+  + Multivariate analysis
   + Evolutionary rate
-  + Allometric scaling
-  + Pagel's $\lambda$ and phylogenetic signal
   + Phylognetically informed regression
+  + Parallel computing
   
 ### Learning Objectives
 
 Upon completion of this module, students will be able to:
 
-  + Understand the basics of geometric and outline morphometrics.
+  + Understand the basics of geometric amorphometrics.
   + Assemble a large dataset of comparative shape information.
   + Comment on how accounting for phylogenetic relationships affects analysis in shape studies.
 
@@ -343,9 +342,10 @@ Upon completion of this module, students will be able to:
   <!-- + ~~[Temp sensor with SDcard module tutorial](http://arduinolearning.com/projects/temperature-logger.php)~~ -->
   <!-- + [Temp sensor with SDcard module tutorial](https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data) -->
   
-  + [DeVries, P.J., Penz, C.M. and Hill, R.I., 2010. Vertical distribution, flight behaviour and evolution of wing morphology in Morpho butterflies. Journal of Animal Ecology, 79(5): 1077-1085.](DeVries_etal_20210.pdf)
+  + [Sternes, P.C. and Shimada, K., 2020. Body forms in sharks (Chondrichthyes: Elasmobranchii) and their functional, ecological, and evolutionary implications. Zoology, 140, p.125799.](https://doi.org/10.1016/j.zool.2020.125799)
   + [Intoduction to Momocs](https://momx.github.io/Momocs/articles/Momocs_intro.html)
   + This [tutorial on Principal Components Analysis](https://builtin.com/data-science/step-step-explanation-principal-component-analysis).
+  + R Programming for Data Science: [Parallel-computation](https://bookdown.org/rdpeng/rprogdatascience/parallel-computation.html)
 
 ### Do
   + Download and install [FIJI (**F**iji **Is** **J**ust **i**mageJ)](https://imagej.net/software/fiji/downloads)
