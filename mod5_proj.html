@@ -1488,15 +1488,47 @@ the simultaneous execution of different pieces of a larger computation
 across multiple computing processors or cores. If fact, this sort of
 problem is considered <a
 href="https://en.wikipedia.org/wiki/Embarrassingly_parallel">embarrassingly
-parallel</a>, that is, it is so very easy to split this task in the many
+parallel</a>, that is, it is so very easy to split this task into many
 parallel subtasks. Specifically, we have 500 identical tasks, we need
 only to break these up into subtasks that run in parallel. That’s what
 we’ll do.</p>
 <p><code>R</code> has several packages for parallel computing. Perhaps
 the most used is <code>parallel</code>, so cleverly named. Let’s work on
 an example of how a task could be parallelized using
-<code>parallel</code>’s functions.</p>
-<pre class="r"><code>x &lt;- rnorm(1e6)</code></pre>
+<code>parallel</code>’s <code>mclappy()</code> function.</p>
+<p><code>mclapply</code> is simply an extension of
+<code>lapply()</code>that takes the tasks performed on each item in a
+list and spreads the tasks across multiple cores on a computer. This is
+perfect for embarrassingly parallel problems.</p>
+<p>For example, say we wanted to do something that’s simple, but takes
+just a little bit of time, like generation 10 million random values from
+a normal distribution (<code>mean=0</code>, <code>sd=1</code>) any
+number of times. Let’s encode a function that does this and allows one
+to specify how many times to do it.</p>
+<pre class="r"><code>my_fun &lt;- function(x){for(i in x) rnorm(1e7)}</code></pre>
+<p>For comparison, let’s first use the non-parallel
+<code>lapply()</code> to run the function 30 times and then use
+<code>mclapply()</code> to do the same. Notice that we’ve used
+<code>system.time()</code> to capture the duration of the operations.
+Also notice that we used <code>parallel</code>’s
+<code>detectCores()</code> to detect the number of cores on the machine
+and we subtracted 2 from this value. Must modern laptops and desktops
+have $&gt;$6 cores, but we don’t want all of them to be used by the
+operation. We should leave a few cores that the computer can use for
+operations running in the background.</p>
+<pre class="r"><code>t_nomc &lt;- system.time(lapply(1:30,my_fun))
+
+t_mc &lt;- system.time(mclapply(1:30,my_fun,mc.cores = detectCores()-2)) #8 cores
+
+print(t_nomc)</code></pre>
+<pre><code>##    user  system elapsed 
+##   7.822   0.204   8.081</code></pre>
+<pre class="r"><code>print(t_mc)</code></pre>
+<pre><code>##    user  system elapsed 
+##   6.008   0.231   1.173</code></pre>
+<p>As you can see, the parallelized operation was about 6 times faster
+than <code>lapply()</code>. This framework looks like it could really
+speed up our estimation body shape evolutionary rates.</p>
 <!-- hab_names <- c(PCA$habit[which(gp_hab==0)] %>% unique, -->
 <!--                PCA$habit[which(gp_hab==1)]%>% unique) -->
 <!-- er_fit <- list() -->

@@ -628,7 +628,7 @@ args2 <- args %>% mutate(pred="no") %>%
   mutate(al=ifelse(pred=='yes',1,0.7)) 
 
 args2 %>% 
-  ggplot(aes(sp,time,col=as.factor(ntrees),group=ntrees,shape=pred,alpha=al))+geom_point()+geom_line()+theme_classic(15)+guides(col=guide_legend(title="# of trees"))+scale_alpha(guide="none")+scale_shape(guide="none")+theme(legend.position = c(0.2,0.7))+xlab("# of species") +ylab("time (s)")+geom_text(aes(50,500,label="computed"),inherit.aes = F)+
+  ggplot(aes(sp,time,col=as.factor(ntrees),group=ntrees,shape=pred,alpha=al))+geom_point()+geom_line()+theme_classic(15)+guides(col=guide_legend(title="# of trees"))+scale_alpha(guide="none")+scale_shape(guide="none")+theme(legend.position = c(0.2,0.8))+xlab("# of species") +ylab("time (s)")+geom_text(aes(50,500,label="computed"),inherit.aes = F)+
   geom_text(aes(175,2200,label="predicted"),inherit.aes = F)+
     scale_color_aaas()
 ```
@@ -640,105 +640,63 @@ The polynomial relationship between time and number of taxa in comparative analy
 <br>
 
 
-We should, therefore, be prepared for the long haul. But, hold on. I don't know about you, but on most days, I don't have 40 minutes to spare, even for very interesting comparative analyses. Fortunately, to avoid 100s of iterations of the same operations on different data, we can make use of a very common work-around in scientific computing: [parallelization](https://en.wikipedia.org/wiki/Parallel_computing), the simultaneous execution of different pieces of a larger computation across multiple computing processors or cores. If fact, this sort of problem is considered [embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel), that is, it is so very easy to split this task in the many parallel subtasks. Specifically, we have 500 identical tasks, we need only to break these up into subtasks that run in parallel. That's what we'll do.
+We should, therefore, be prepared for the long haul. But, hold on. I don't know about you, but on most days, I don't have 40 minutes to spare, even for very interesting comparative analyses. Fortunately, to avoid 100s of iterations of the same operations on different data, we can make use of a very common work-around in scientific computing: [parallelization](https://en.wikipedia.org/wiki/Parallel_computing), the simultaneous execution of different pieces of a larger computation across multiple computing processors or cores. If fact, this sort of problem is considered [embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel), that is, it is so very easy to split this task into many parallel subtasks. Specifically, we have 500 identical tasks, we need only to break these up into subtasks that run in parallel. That's what we'll do.
 
-`R` has several packages for parallel computing. Perhaps the most used is `parallel`, so cleverly named. Let's work on an example of how a task could be parallelized using `parallel`'s functions.
+`R` has several packages for parallel computing. Perhaps the most used is `parallel`, so cleverly named. Let's work on an example of how a task could be parallelized using `parallel`'s `mclappy()` function.
 
+`mclapply` is simply an extension of `lapply()`that takes the tasks performed on each item in a list and spreads the tasks across multiple cores on a computer. This is perfect for embarrassingly parallel problems.
 
+For example, say we wanted to do something that's simple, but takes just a little bit of time, like generation 10 million random values from a normal distribution (`mean=0`, `sd=1`) any number of times. Let's encode a function that does this and allows one to specify how many times to do it. 
 
-```{r para}
+```{r parafun}
 
-my_fun <- function(x){for(i in 1:x) rnorm(1e6)}
-system.time(lapply(1:10,my_fun))
-
-system.time(mclapply(1:10,my_fun,mc.cores = detectCores()-2)) #=8 cores
+my_fun <- function(x){for(i in x) rnorm(1e7)}
 
 ```
 
+For comparison, let's first use the non-parallel `lapply()` to run the function 30 times and then use `mclapply()` to do the same. Notice that we've used `system.time()` to capture the duration of the operations. Also notice that we used `parallel`'s `detectCores()` to detect the number of cores on the machine and we subtracted 2 from this value. Must modern laptops and desktops have $>$6 cores, but we don't want all of them to be used by the operation. We should leave a few cores that the computer can use for operations running in the background.
+
+```{r para,cache=T}
+t_nomc <- system.time(lapply(1:30,my_fun))
+
+t_mc <- system.time(mclapply(1:30,my_fun,mc.cores = detectCores()-2)) #8 cores
+
+print(t_nomc)
+print(t_mc)
+```
 
 
-
-<!-- hab_names <- c(PCA$habit[which(gp_hab==0)] %>% unique, -->
-<!--                PCA$habit[which(gp_hab==1)]%>% unique) -->
-
-
-<!-- er_fit <- list() -->
-
-<!-- for(i in 1:length(phy2)){ -->
-<!--  er_fit[[i]] <-compare.evol.rates(A=ldk_al$coords, phy=phy2[[i]], method="simulation",gp=gp_hab,print.progress = F) -->
-<!-- } -->
-
-<!-- plot(er_l[[1]]) -->
-<!-- er <- lapply(er_fit,summary) -->
-
-<!-- er <- lapply(er,function(x) { -->
-<!--   er <- c(x$sigma.d.gp,x$sigma.d.ratio) -->
-<!--   names(er) <- c(hab_names,"ratio") -->
-<!--   return(er) -->
-<!-- }) %>% do.call(rbind,.) %>% data.frame -->
-
-
-<!-- er %>%  -->
-<!--   pivot_longer(benthic:pelagic) %>%  -->
-<!--   ggplot(aes(value,fill=name)) + geom_histogram() -->
-
-
-<!-- library(parallel) -->
-
-<!-- er_fun <- function(x){compare.evol.rates(A=ldk_al$coords, phy=x, method="simulation",gp=gp_hab,print.progress = F)} -->
-
-<!-- er_l <- mclapply(phy2,er_fun,mc.cores = detectCores()-2) -->
-
-<!-- er <- lapply(er_fit,summary) -->
-
-<!-- er <- lapply(er,function(x) { -->
-<!--   er <- c(x$sigma.d.gp,x$sigma.d.ratio) -->
-<!--   names(er) <- c(hab_names,"ratio") -->
-<!--   return(er) -->
-<!-- }) %>% do.call(rbind,.) %>% data.frame -->
-
-
-<!-- er %>%  -->
-<!--   pivot_longer(benthic:pelagic) %>%  -->
-<!--   ggplot(aes(value,fill=name)) + geom_histogram() -->
-
-<!-- t.test(value~name, -->
-<!-- er %>%  -->
-<!--   pivot_longer(benthic:pelagic)  -->
-<!-- ) -->
-
-
+As you can see, the parallelized operation was about 6 times faster than `lapply()`. This framework looks like it could really speed up our estimation body shape evolutionary rates. You are tasked with assessing evolutionary rates based on habitat using all species in the data set and all 500 of the phylogenetic trees from @stein2018global using a paralleled approach.
 
 
 # Project Report
 
-t-test to posterior
+Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following:
 
 
+  * Establish an array of ....
+  * Does habitat result in the occupation of a different morphospace?
+  * Is there morphological disparity between habitats?
+  * Is the rate of morphological evolution significantly different between different habitat types? Please be sure in answer this question based on a posterior distribution of rates and a simple two-sided t-test (i.e. `t.test()`)
+  
+  
+  <!-- * Have major lineages of the Lepidoptera undergone significant shifts in evolutionary rate?  -->
+  * Are hind- and forewing shapes correlated?
+  * What inferences can you make based on shape correlations and flight control?
 
+Please be sure to answer these questions based on both PC1 and PC2 shape scores.
 
-<!-- # Project Report -->
+In answering your question, your .Rmd should include the following components:
 
-<!-- Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following: -->
+   * A YAML header that specifies HTML output, the authors, and a bibliograph named "BIOL3140.bib". **Submit this bibliography as well!**
+   * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially:
+      + Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. **Please include at least one reference to support the summary of previous work.** Note: this can be done easily by refiguring the introduction to this project report.
+      + Methods: Explicitly state how you answered the questions, including a narrative of all the anlyses both qualitative and quantitative.
+      + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.
+      + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here.
+      + Author contributions: Briefly outline what each team member contributed to the project.
 
-<!--   * Are the rates of wing-shape evolution different between the hind- and forewing? By how much?  -->
-<!--   <!-- * Have major lineages of the Lepidoptera undergone significant shifts in evolutionary rate?  --> -->
-<!--   * Are hind- and forewing shapes correlated? -->
-<!--   * What inferences can you make based on shape correlations and flight control? -->
+Project reports should be uploaded by 11:59 PM on Sunday, October 29th.
 
-<!-- Please be sure to answer these questions based on both PC1 and PC2 shape scores. -->
-
-<!-- In answering your question, your .Rmd should include the following components: -->
-
-<!--    * A YAML header that specifies HTML output, the authors, and a bibliograph named "BIOL3140.bib". **Submit this bibliography as well!** -->
-<!--    * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially: -->
-<!--       + Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. **Please include at least one reference to support the summary of previous work.** Note: this can be done easily by refiguring the introduction to this project report. -->
-<!--       + Methods: Explicitly state how you answered the questions, including a narrative of all the anlyses both qualitative and quantitative. -->
-<!--       + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions. -->
-<!--       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here. -->
-<!--       + Author contributions: Briefly outline what each team member contributed to the project. -->
-
-<!-- Project reports should be uploaded by 11:59 PM on Sunday, October 29th. -->
-
-<!-- # References -->
+# References
 

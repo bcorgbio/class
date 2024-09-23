@@ -46,5 +46,23 @@ Today we'll ....
 ![](https://d33wubrfki0l68.cloudfront.net/87603549ad0d95b0071da0f9270b2f89ead3b39b/48700/lesson-images/websites-1-render.png)
 ]
 
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Let's get started
+.pull-left[
+- open new Rmd (file->New->R mardkdown ...)
+]
+
+.pull-right[
+- knitting (cmd/ctrl+shift+k)
+- markup
+- Headers
+- Code chunks
+- links (e.g., images)
+]
+
+
 
 

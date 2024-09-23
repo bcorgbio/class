@@ -1,0 +1,75 @@
+---
+title: "R Markdown Basics"
+author: "Prof. Kenaley"
+date: "2024-09-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## R Markdown basics
+
+- yaml
+- knitting (cmd/ctrl+shift+k)
+- Headers
+- Code chunks
+- links
+- markup
+
+
+- links (e.g., images)
+
+### Code chunks
+
+Embedding code that runs in Rmd
+
+```{r iris}
+iris %>% 
+  group_by(Species) %>% 
+  summarise(m=mean(Sepal.Length))
+```
+
+
+```{r data}
+iris %>% 
+   write_csv("iris_dat.csv")
+```
+
+
+```{r iris2}
+read_csv("iris_dat.csv") %>% head
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r plot, echo=FALSE}
+iris %>% 
+  ggplot(aes(Sepal.Length,Sepal.Width,col=Species)) +
+  geom_point()+
+  geom_smooth(method="lm")
+```
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Including links (images, etc.)
+
+### images
+use html 
+
+![](sharks.png)
+
+![](https://www.bc.edu/content/dam/bc1/sites/bc-news/2023/march/gasson-1050-700.jpg)
+
+### links
+
+This is a [link to our class site](https://bcorgbio.github.io/class/index.html).
+
+## Markup
+
+This is how you **markup text**.
