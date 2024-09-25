@@ -49,7 +49,7 @@ img %>%
 
 
 ```{r data, include=F,message=F,eval=F}
-shark_dat <- read_csv("data/shark_hab_added.csv") 
+shark_dat_ <- read_csv("data/shark_hab_added.csv") 
 fb_res <- readRDS("data/shark_fb_res.RDS") %>% 
    add_row(sp=c("Squatina squatina","Squatina australis"),
           file_name=c("Sqsq1.jpg","Sqaus1.jpg"))
@@ -61,7 +61,7 @@ fb_res <- readRDS("data/shark_fb_res.RDS") %>%
 f_student <- gsub("_.csv","",list.files("shark_points"))
 
 shark_dat <- fb_res %>% 
-  left_join(shark_dat) %>% 
+  left_join(shark_dat_) %>% 
   select(sp,file_name,habitat) %>% 
   filter(file_name %in% f_student) %>% 
   mutate(habitat=ifelse(habitat=="demersal","benthic",habitat))
@@ -69,13 +69,32 @@ shark_dat <- fb_res %>%
 write_csv(shark_dat,"data/shark_data.csv")
 write_csv(shark_dat,"shark_data.csv")
 
+dir.create("ignore/class_shark_images/for_upload")
+
+f_img <- list.files("ignore/class_shark_images",full.names = T)
+
+# groups <- rep(paste0("group_",1:9),each=23)
+# groups <- sample(groups,length(f_img))
+# img_dat <- tibble(file_path=f_img,file_name=basename(f_img)) %>% 
+#   left_join(fb_res) %>% 
+#   left_join(shark_dat_) %>% 
+#   mutate(group=groups)
+# 
+# sapply(groups %>% unique,function(x) dir.create(paste0("ignore/class_shark_images/for_upload/",x)))
+#   
+# for(i in 1:nrow(img_dat)){
+# file.copy(img_dat[i,]$file_path,paste0("ignore/class_shark_images/for_upload/",img_dat[i,]$group,"/",img_dat[i,]$file_name))
+# }
+
+
+
 ```
 
 
 
 # Introduction
 
-Sharks are an ancient group of cartilaginous fishes in the class Chondrichthyes, subclass Elasmobranchii, and subdivision Selachimorpha. The selachians include over 500 species that are further placed in in two superorders: Squalomorphii and Galeomorphii. Modern sharks originated nearly 200 million years ago (@grogan2012origin) and, since then, have diversified into nearly every major marine ecosystem. This evolutionary success has been attributed to the diversity of their locomotor  modes and associated body shape (@lauder2015swimming,@thomson1977body). A modest body of work devoted to the [ecomorphology](https://en.wikipedia.org/wiki/Ecomorphology) of sharks has focused largely on caudal find shape as it relates to ecology and locomotor modes (@thomson1976heterocercal,@wilga2004biomechanics). Sharks have a heterocercal tail in which the caudal part of notochord flexes dorsally and supports a large dorsal lobe of the fin, while, with more than a few exceptions, the ventral lobe is small.
+Sharks are an ancient group of cartilaginous fishes in the class Chondrichthyes, subclass Elasmobranchii, and subdivision Selachimorpha. The selachians include over 500 species that are further placed in in two superorders: Squalomorphii and Galeomorphii. Modern sharks originated nearly 200 million years ago (@grogan2012origin) and, since then, have diversified into nearly every major marine ecosystem. This evolutionary success has been attributed to the diversity of their locomotor modes and associated body shape (@lauder2015swimming,@thomson1977body). A modest body of work devoted to the [ecomorphology](https://en.wikipedia.org/wiki/Ecomorphology) of sharks has focused largely on caudal find shape as it relates to ecology and locomotor modes (@thomson1976heterocercal,@wilga2004biomechanics). Sharks have a heterocercal tails in which the caudal part of notochord flexes dorsally and supports a large dorsal lobe of the fin, while, with more than a few exceptions, the ventral lobe is small.
 
 <br>
 <br>
@@ -96,9 +115,9 @@ Sharks are an ancient group of cartilaginous fishes in the class Chondrichthyes,
 In there seminal work on shark ecomorphology, @thomson1977body put forth that there were four shark morphotypes:
 
   1. A group characterized by having a deep body, large pectoral fins, a symmetrical caudal fin with a  narrow  peduncle (ie., base to the  fin) and high-aspect ratio. A white shark represents this group.
-  2. A group characterized by a body less deep then Group 1 and cadual fin that is swept (ie., large heterocercal angle--the angle between the upper and lower lobes of the fin). This group includes most carcharhinid sharks such as the bull shark.
-  3.  A group with a large head, blunt snout, a body that has anteriorly placed pelvic fins and posteriorly placed dorsal and pelvic, and a caudal fin with a low heterocercal angle and small ventral lobe. Catsharks (family Scyliorhinidae) and dogfish (order Squaliformes) represent this group.
-  4. A group characterized by a caudal fin with a higher aspect angle similar to that of Group 2 but lacking an anal fin.
+  2. A group characterized by a body less deep then Group 1 and a cadual fin that is swept (ie., large heterocercal angle--the angle between the upper and lower lobes of the fin). This group includes most carcharhinid sharks such as the bull shark.
+  3.  A group with a large head, blunt snout, a body that has anteriorly placed pectoral fins and posteriorly placed dorsal and pelvic, and a caudal fin with a low heterocercal angle and small ventral lobe. Catsharks (family Scyliorhinidae) and dogfish (order Squaliformes) represent this group.
+  4. A group characterized by a caudal fin with a higher aspect angle similar to that of Group 2 but lacking an anal fin, e.g. the dalatiids.
   
 <center>
 <table>
@@ -175,7 +194,7 @@ From @sternes2020body who found sharks could be assigned two morphotype groups: 
 
 Although the work of @thomson1977body and later @sternes2020body points to interesting patterns in shark body-shape, neither study explicitly studied the role habitat---that is, pelagic or benthic---had in influencing the evolution body-shape evolution. In particular, @sternes2020body merely observed that their two groups with different body shapes often varied in their habitat preference. In addition, @sternes2020body made no explicit, quantitative phylogenetic test of their patterns. This leaves open an important question: **Do pelagic and benthic sharks have significantly different body shape?** Subsequently, we might also ask, **Has the morphology of pelagic and benthic sharks evolved at the same rate?** These are the questions we will take on in this project.
 
-To answer such a question requires that we essentially recapitulate the @sternes2020body body-shape data set using landmark-based [geometric morphometrics](https://en.wikipedia.org/wiki/Morphometrics#Landmark-based_geometric_morphometrics). This is a relatively straightforward, if tedious, method of capturing shape variation in a group of interest. For this, you'll digitize 14 homologous landmarks on images of some 270 species of sharks. Using the best practices in the field of geometric morphometrics to align our landlandmakrs and extract shape information, we'll assess morphological disparity in a phylogenetic frame work between pelagic and benthic sharks. 
+These questions represent two an important thrust of evolutionary research: what macroevolutionary events have contributed to a diversity in phenotype. To answer question like these requires that we essentially recapitulate the @sternes2020body body-shape data set using landmark-based [geometric morphometrics](https://en.wikipedia.org/wiki/Morphometrics#Landmark-based_geometric_morphometrics). This is a relatively straightforward, if tedious, method of capturing shape variation in a group of interest. For this, you'll digitize 14 homologous landmarks on images of some 220 species of sharks. Using the best practices in the field of geometric morphometrics to align our landlandmarks and extract shape information, we'll assess morphological disparity in a phylogenetic framework and assess the difference in rates of morphological evolution between the groups between pelagic and benthic sharks. 
 
 # Methods
 
@@ -196,7 +215,7 @@ shark_dat <- read_csv("shark_data.csv")
 ```
 
 
-Because we'll be comparing body shape in sharks, this project is by definition a comparative one and we'll need a phylogeny for the group. Fortunately a relatviely recent phylogenomic analysis of over 500 species of elasmobranchs (sharks + batoids) has been published by @stein2018global. Unfortunately, there is some phylogenetic discordance in this study. Specifically, when researchers analyze phylogenetic relationships, they typically repeat their analysis in a process known as [bootstrapping](https://en.wikipedia.org/wiki/Computational_phylogenetics#Evaluating_tree_support). In phylogenetics, bootstrapping is conducted using the columns of the character matrix. Each pseudoreplicate contains the same number of species (rows) and characters (columns) randomly sampled from the original matrix, with replacement. A phylogeny is reconstructed from each pseudoreplicate, with the same methods used to reconstruct the phylogeny from the original data. This often results in a data set of trees that have conflicting relationships---that is, phylogenetic uncertainty---and this was the case for the @stein2018global study. We'll have to account for this in our analysis. But, more later on . . .
+Because we'll be comparing body shape in sharks, this project is by definition a comparative one and we'll need a phylogeny for the group. Fortunately a relatviely recent phylogenomic analysis of over 500 species of elasmobranchs (sharks + batoids) has been published by @stein2018global. Unfortunately, there is some phylogenetic discordance in this study. Specifically, when researchers analyze phylogenetic relationships, they typically repeat their analysis in a process known as [bootstrapping](https://en.wikipedia.org/wiki/Computational_phylogenetics#Evaluating_tree_support). In phylogenetics, bootstrapping is conducted using the columns of the character matrix. Each pseudoreplicate contains the same number of species (rows) and characters (columns) randomly sampled from the original matrix, with replacement. A phylogeny is reconstructed from each pseudoreplicate, with the same methods used to reconstruct the phylogeny from the original data. This often results in a data set of trees that have conflicting relationships---that is, phylogenetic uncertainty---and this was the case for the @stein2018global study. We'll have to account for this in our analysis. But, more on that later . . .
 
 In any case, we've used the taxa studied in this paper to find images in FishBase and we'll use [a tree file](data/shark_trees.nex) representing phylogeny for our comparative analysis. 
 
@@ -231,11 +250,11 @@ Our shape analysis will be based on 14 landmarks placed on images of shark bodie
 </center>
 <br>
 
-You and your team should will be assigned about 20 of the ~220 species to outline. Images of these species can be accessed through [this directory](https://drive.google.com/drive/folders/1TYAzcMcH0u64OEqsuc61W97zIL7qLGWU?usp=sharing). First choose one of your species to work on. For each species, start with what you think is the best image, that is, it has a scale bar, the wings are not damaged, and the hindwing is most exposed. Open that best image in Fiji.
+You and your team/group should will be assigned about 20 of the ~200 species to outline. Images of these species can be accessed through [this directory](https://drive.google.com/drive/folders/1X8oHbgvaK_5-gzFtc2p2dS3nWXjFZeUc?usp=sharing). 
 
-After opening the photo, follow the steps below
+First gather your images to work on and follow the steps below for each. In FIJI:
 
-1. Open a image.
+1. Open am image.
 
 2. Select the multipoint tool.
 
@@ -260,7 +279,7 @@ This process is demonstrated here.
 
 
 
-**Note:** For the first image you outline, you will have to open the macro editor ("Plugins" $\rightarrow$ "New" $\Macro$). Paste the script command from below into the editor and save this new macro to an appropriate directory, perhaps your cloned repo. You'll want to access this later ("Plugins" $\rightarrow$ "Edit") so that you automate this process.
+**Note:** For the first image you outline, you will have to open the macro editor ("Plugins" $\rightarrow$ "New" $\Macro$). Paste the script command from below into the editor and save this new macro to an appropriate directory, perhaps your cloned repo. You'll want to access this later ("Plugins" $\rightarrow$ "Edit") so that you can automate the process of saving text files with the correct fielname.
 
 
 
@@ -272,10 +291,9 @@ saveAs("Results", dir+f+"_.csv");
 ```
 
 
-This script saves the results as a *tab-separated* text file with filname as the image file name. 
- **This is super important!!** and how we'll link the landmarks to a species.
+This script saves the results as a *tab-separated* text file with same filname as the image file name and appends "_.csv".  **This is super important!!** and how we'll link the landmarks to a species.
 
-After your team has completed landmarking the assigned species, upload your text files to [this directory](https://drive.google.com/drive/u/1/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Glk5).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required (i.e., file-name checks, quality, etc.). You can then download [these evaluated data](data/class_out_data_f23.zip) for shape analysis.
+After your team has completed landmarking the assigned species, upload your text files to [this directory](https://drive.google.com/drive/folders/1j7sod1NB1jmEiPiduYvOOIlukkMikfL5?usp=sharing).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required (i.e., file-name checks, quality, etc.). You can then download [these evaluated data](data/class_out_data_f23.zip) for shape analysis.
 
 ### Superimposition
 
@@ -284,12 +302,13 @@ After digitizing landmarks, we must remove the distracting variations of size, o
 
 ![](gpa.png)
 
-To perform a Procrustes superimposition on our landmark data---along with many other analyses---we will turn the the `geomorph` package. Please install and load `geomorph`. But, before we do, let's download and read in about 90 or so landmark files that Prof. Kenaley produceds ahead of this project. You can find these example files [here](data/sharks/shark_points.zip). You'll have to download this compressed directory and unzip it to your project directory. You'll also have to download and install the `abind` package as well. 
+To perform a Procrustes superimposition on our landmark data---along with many other analyses---we will turn the the `geomorph` package. Please install and load `geomorph`. But, before we do, let's download and read in about 90 or so landmark files that Prof. Kenaley produced ahead of this project. You can find these example files [here](data/sharks/shark_points.zip). You'll have to download this compressed directory and unzip it to your project directory.  You'll also have to download and install the `abind` package as well. 
+
+Note: **these are just examples**. You will need to download the full data set evaluated by Prof. K. form this location.
 
 To get started with superimposition, let's load the packages `geomorph` and `abind`. When you unzip the `shark_points.zip` directory to you project directory, you have a folder named `shark_points`. Our first operation will be to list the files in that directory and then read them in, all at once.
 
 ```{r exdata}
-
 library(geomorph)
 library(abind)
 
@@ -297,6 +316,7 @@ f <- list.files("shark_points",full.names = T,pattern=".csv")
 
 xy <- read_csv(f,id="file") %>% 
   select(file,X,Y) %>% 
+  mutate(Y=abs(Y-max(Y))) %>% 
   mutate(file_name=gsub("*_.csv","",basename(file))) %>% 
   left_join(shark_dat) 
 ```
@@ -310,7 +330,7 @@ head(f)
 
 This made reading all the files and adding them to one tibble in a single operation possible with `read_csv()`. Notice we added a `file` column to the tibble with `id="file"` and then selected only the columns `file`, `X`, `Y`. This operation is saved to an object logically named `xy`. 
 
-For landmarks to used in `geomorph`, they must be stored as a 3-dimensional array, that is, essentially a list of 2D data.frames, where the position the $i^{th}$ matrix is in the $i^{th}$ index of the third dimension, i.e., `array[,,i]`. To massage our large tibble into such an array, we have to split the tibble into a bunch of lists for this, we can simply run a `for` loop, breaking the data up into a list of data frames according to species. Notice how we use a [`gsub()` operation](https://www.nbshare.io/notebook/429754141/How-To-Use-Grep-In-R/) to create a new column `file_name` that removes ".csv" from the file name data. Splitting by this, will leave used with a list of lists as long as all our files. We then use `abind`'s `abind()` function to bind the list of data.frames in `ldk_l` into an array, with each data.frame taking a position in the third dimension. This array is saved in the object `ldk`. Lastly, we'll specify that the names of this third dimension should be the `file_name` minus the ".csv" extension. **Note: this is how we'll retrieve species information.**
+For landmarks to used in `geomorph`, they must be stored as a 3-dimensional array, that is, essentially a list of similarly sized 2D matrices, where the position the $i^{th}$ matrix is in the $i^{th}$ index of the third dimension, i.e., `array[,,i]`.  To massage our large tibble into such an array, we have to split the tibble into a bunch of lists for this, we can simply run a `for` loop, breaking the data up into a list of data frames according to species. Notice how we use `filter()` to split the large tibble into into small data.frames that will reside in `ldk_l`. This will leave us with a list of data.frames as long as all our files. We then use `abind`'s `abind()` function to bind the list of data.frames in `ldk_l` into an array, with each data.frame taking a position in the third dimension. This array is saved in the object `ldk`. Lastly, we'll specify that the names of this third dimension should be the unique values of `species` in the original tibble. **Note: this is how we'll retrieve species information.**
 
 
 
@@ -346,9 +366,9 @@ plot(ldk_al)
 
 ### Analysis Part I: A Morphospace
 
-In geometric morphometric analysis, researchers first turn to describing the axes of shape variation.Indeed, this is what @sternes2020body did to produce the figure above. This and what we're after is often termed a [morphospace](https://en.wiktionary.org/wiki/morphospace), a representation of shape the study group does and does not have. 
+In geometric morphometric analysis, researchers first turn to describing the axes of shape variation.Indeed, this is what @sternes2020body did to produce the figure above. This and what we're after is often termed a [morphospace](https://en.wiktionary.org/wiki/morphospace), a representation of the shape the study group does and does not have. 
 
-To develop such a thing, biologist usually turn to Principal Components Analysis (PCA) whereby the very complicated suite of variables is distilled into a set of fewer variables that describe the important variance among the original variables. The coordinates contained in our `ldk_al` object describe dozens of variables: scaled distances between all the landmarks. So we have many variable to consider and this becomes, very quickly, a serious [multivariate problem](https://en.wikipedia.org/wiki/Multivariate_statistics). PCA is suited to multivariate analysis because it reduces the complexity of the data, taking many variables and distilling the into just a few. At its core, PCA produces a series of regressions, or vectors, that pass through the values of the original variables. This operation is performed iteratively, with the first vector (the first principal component, PC1), drawn through the variable space that accounts for the most variance in the data set. After the combination of variables forming PC1 is removed, a subsequent vector (PC2) is drawn through another unique variable space that describes the second most amount of variance. This continues until most of the variance is captured, resulting in scores of PCs. The first two or three, however, are usually enough to describe a health amount of variance, say 90% or more.
+To develop such a thing, biologist usually turn to Principal Components Analysis (PCA) whereby a very complicated suite of variables is distilled into a set of fewer variables that describe the important variance among the original variables. The coordinates contained in our `ldk_al` object describe dozens of variables: scaled distances between all the landmarks. So we have many variable to consider and this becomes, very quickly, a serious [multivariate problem](https://en.wikipedia.org/wiki/Multivariate_statistics). PCA is suited to multivariate analysis because it reduces the complexity of the data, taking many variables and distilling them into just a few. At its core, PCA produces a series of regressions, or vectors, that pass through the values of the original variables. This operation is performed iteratively, with the first vector (the first principal component, PC1), drawn through the variable space that accounts for the most variance in the data set. After the combination of variables forming PC1 is removed, a subsequent vector (PC2) is drawn through another unique variable space that describes the second most amount of variance. This continues until most of the variance is captured, resulting in scores of PCs. The first two or three, however, are usually enough to describe a health amount of variance, say 90% or more.
 
 To perform PCA, we'll use `geomorph`s `gm.prcomp()` function like so. Plotting reveals our first result.
 
@@ -372,13 +392,13 @@ Notice, however, that the names of the coordinates in `ldk` were pegged in a pre
 head(dimnames(ldk)[[3]])
 ```
 
-These values were maintained throughout the superimpositon step and in the PCA operation. The coordinates plotted in the in PCA plots are contained in a matrix named `x` in our `pca` object. Notice the row names:
+These values were maintained throughout the superimpositon step and in the PCA operation. The coordinates plotted in the PCA plots are contained in a matrix named `x` in our `pca` object. Notice the row names:
 
 ```{r rownmaes}
 pca$x %>% data.frame %>% select(Comp1,Comp2) %>% head
 ```
 
-So, we have the species names from whence the data, both land mark and PCA, came from. Fortunately, Professor Kenaley assembled a table containing of all the the species  for landmarking, and the species and habitat for each. You can download [this file](shark_data.csv) and read in the data.
+So, we have the species names from whence the data, both land mark and PCA, came. Fortunately, Professor Kenaley assembled a table containing of all the the species  for landmarking, and the species and habitat for each. You can download [this file](data/shark_data.csv) and read in the data.
 
 
 What's left to do in exploring if benthic and pelagic sharks occupy different morphospace is to combine this information with the PC scores in `pca$x`. This can be done thusly:
@@ -407,29 +427,41 @@ Voila! For morphospace described by PCs 1, 2, and 3, it appeears that pelagic sp
 
 This is wonderful, but you may be asking, "What is PC1 (or any other) describing?" Our PCs points are abstractions of shape, but they don't represent explicitly what shape that is. To get a sense of what our PCs represent in terms of shape values, we can turn to thin-plate spline analysis.
 
+**Note**, you're not asked to do anything like this for the report. Prof. K just wants you show you have you can derive shape changes represented by the PC axes.
+
 ```{r rw}
+
+#find min and max of each PC
 max_PC1 <- which.max(pca$x[,1])
 min_PC1 <- which.min(pca$x[,1])
 max_PC2 <- which.max(pca$x[,2])
 min_PC2 <- which.min(pca$x[,2])
+
+#get the concesus, the mean shape of all data.
 M <- ldk_al$consensus
 
+#plot
 par(mfrow=c(2,2))
+
+#plot the change form the concensus to min of PC1
 plotRefToTarget(M, ldk_al$coords[,,min_PC1], mag = 1,method="vector",label = T)
 title("min PC1 warp",cex=0.6)
 
+#plot the change form the concensus to max of PC1
 plotRefToTarget(M, ldk_al$coords[,,max_PC1], mag = 1,method="vector",label = T)
 title("max PC1 warp",cex=0.6)
 
+#plot the change form the concensus to min of PC2
 plotRefToTarget(M, ldk_al$coords[,,min_PC2], mag = 1,method="vector",label = T)
 title("min PC2 warp",cex=0.6)
 
+#plot the change form the concensus to max of PC2
 plotRefToTarget(M, ldk_al$coords[,,max_PC2], mag = 1,method="vector",label = T)
 title("max PC3 warp",cex=0.6)
 
 ```
 
-
+So, it looks like 
 
 ### Analysis: Part II
 
@@ -674,29 +706,29 @@ As you can see, the parallelized operation was about 6 times faster than `lapply
 Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following:
 
 
-  * Establish an array of ....
-  * Does habitat result in the occupation of a different morphospace?
+  * Establish an array suitable for analysis using the `geomorph` functions outlined above. Construct this from all specimens digitized in [this directory](data/class_landmark_data.zip) and Procrustes align them.
+  * Does habitat result in the occupation of a different morphospace? Please answer this question using a `ggplot`-rendered morphospace based on the first two PCs from a principal components analysis of your alignment.
   * Is there morphological disparity between habitats?
-  * Is the rate of morphological evolution significantly different between different habitat types? Please be sure in answer this question based on a posterior distribution of rates and a simple two-sided t-test (i.e. `t.test()`)
-  
-  
-  <!-- * Have major lineages of the Lepidoptera undergone significant shifts in evolutionary rate?  -->
-  * Are hind- and forewing shapes correlated?
-  * What inferences can you make based on shape correlations and flight control?
+  * Is the rate of morphological evolution significantly different between different habitat types? Please be sure that
+    1. This question based on a posterior distribution of rates based on all 500 phylogenetic trees.
+    2. The distribution of rate estimates is create through the use of a parallelization of your analysis.
+    3. You assess the statistical significance using a simple two-sided t-test (i.e. `t.test()`).
+    
+  * What inferences with regards to ecology and behavior can you make concerning the relationship between habitat and both shape and rates of morphological evolution?
 
 Please be sure to answer these questions based on both PC1 and PC2 shape scores.
 
 In answering your question, your .Rmd should include the following components:
 
-   * A YAML header that specifies HTML output, the authors, and a bibliograph named "BIOL3140.bib". **Submit this bibliography as well!**
+   * A YAML header that specifies HTML output, the authors, and a bibliography named "BIOL3140.bib". **Submit this bibliography as well!**
    * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially:
       + Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. **Please include at least one reference to support the summary of previous work.** Note: this can be done easily by refiguring the introduction to this project report.
-      + Methods: Explicitly state how you answered the questions, including a narrative of all the anlyses both qualitative and quantitative.
+      + Methods: Explicitly state how you answered the questions, including a narrative of all the analyses both qualitative and quantitative.
       + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.
-      + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here.
+      + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description's and yours, will be helpful here.
       + Author contributions: Briefly outline what each team member contributed to the project.
 
-Project reports should be uploaded by 11:59 PM on Sunday, October 29th.
+Project reports should be uploaded by 11:59 PM on Sunday, October 20th.
 
 # References
 

@@ -33,21 +33,22 @@ iris %>%
 ```
 
 
-```{r data}
+```{r data,warning=FALSE}
+dir.create("data")
 iris %>% 
-   write_csv("iris_dat.csv")
+   write_csv("data/iris_dat.csv")
 ```
 
 
 ```{r iris2}
-read_csv("iris_dat.csv") %>% head
+read_csv("data/iris_dat.csv") %>% head
 ```
 
 ## Including Plots
 
 You can also embed plots, for example:
 
-```{r plot, echo=FALSE}
+```{r plot, echo=FALSE,fig.cap="a figure",message=F}
 iris %>% 
   ggplot(aes(Sepal.Length,Sepal.Width,col=Species)) +
   geom_point()+
@@ -60,7 +61,7 @@ Note that the `echo = FALSE` parameter was added to the code chunk to prevent pr
 ## Including links (images, etc.)
 
 ### images
-use html 
+use html
 
 ![](sharks.png)
 

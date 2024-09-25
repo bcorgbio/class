@@ -578,7 +578,7 @@ For this project report, write an .Rmd document named "TEAMNAME_Module4.Rmd     
       + Discussion: Briefly discuss the importance of the results (i.e., how they relate to the main question).
       + Author Contributions: Briefly state what the contributions of each team member to the project.
       + References: Populate a bibliography section that includes the works cited in the text.
-  3. A centered image from an online source of an *Anolis* lizard at the end of the introduction. Please make sure this is in the [creative commons](reativecommons.org).]
+  3. A centered image from an online source of an *Anolis* lizard at the end of the introduction. Please make sure this is in the [creative commons](https://creativecommons.org/).]
   4. All the code chunks included in the [Adding Code with Chunks][Adding Code with Chunks] section.
   5. An altered  "AIC" chunk that produces a table of AIC values with `kable`. Be sure to include a descriptive caption 
   6. Another chunk of code, inserted before the "plot residuals" chunk, that produces a figure of a regression plot of log-transformed `HTotal` vs `SVL` with points colored by `Ecomorph2`. Be sure to include a descriptive caption here, too. 

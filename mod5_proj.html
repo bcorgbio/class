@@ -458,7 +458,7 @@ href="https://en.wikipedia.org/wiki/Ecomorphology">ecomorphology</a> of
 sharks has focused largely on caudal find shape as it relates to ecology
 and locomotor modes (<span class="citation">Thomson (1976)</span>,<span
 class="citation">Wilga and Lauder (2004)</span>). Sharks have a
-heterocercal tail in which the caudal part of notochord flexes dorsally
+heterocercal tails in which the caudal part of notochord flexes dorsally
 and supports a large dorsal lobe of the fin, while, with more than a few
 exceptions, the ventral lobe is small.</p>
 <p><br> <br></p>
@@ -478,17 +478,18 @@ were four shark morphotypes:</p>
 <li>A group characterized by having a deep body, large pectoral fins, a
 symmetrical caudal fin with a narrow peduncle (ie., base to the fin) and
 high-aspect ratio. A white shark represents this group.</li>
-<li>A group characterized by a body less deep then Group 1 and cadual
+<li>A group characterized by a body less deep then Group 1 and a cadual
 fin that is swept (ie., large heterocercal angle–the angle between the
 upper and lower lobes of the fin). This group includes most carcharhinid
 sharks such as the bull shark.</li>
 <li>A group with a large head, blunt snout, a body that has anteriorly
-placed pelvic fins and posteriorly placed dorsal and pelvic, and a
+placed pectoral fins and posteriorly placed dorsal and pelvic, and a
 caudal fin with a low heterocercal angle and small ventral lobe.
 Catsharks (family Scyliorhinidae) and dogfish (order Squaliformes)
 represent this group.</li>
 <li>A group characterized by a caudal fin with a higher aspect angle
-similar to that of Group 2 but lacking an anal fin.</li>
+similar to that of Group 2 but lacking an anal fin, e.g. the
+dalatiids.</li>
 </ol>
 <center>
 <table>
@@ -576,17 +577,20 @@ significantly different body shape?</strong> Subsequently, we might also
 ask, <strong>Has the morphology of pelagic and benthic sharks evolved at
 the same rate?</strong> These are the questions we will take on in this
 project.</p>
-<p>To answer such a question requires that we essentially recapitulate
-the <span class="citation">Sternes and Shimada (2020)</span> body-shape
-data set using landmark-based <a
+<p>These questions represent two an important thrust of evolutionary
+research: what macroevolutionary events have contributed to a diversity
+in phenotype. To answer question like these requires that we essentially
+recapitulate the <span class="citation">Sternes and Shimada
+(2020)</span> body-shape data set using landmark-based <a
 href="https://en.wikipedia.org/wiki/Morphometrics#Landmark-based_geometric_morphometrics">geometric
 morphometrics</a>. This is a relatively straightforward, if tedious,
 method of capturing shape variation in a group of interest. For this,
-you’ll digitize 14 homologous landmarks on images of some 270 species of
+you’ll digitize 14 homologous landmarks on images of some 220 species of
 sharks. Using the best practices in the field of geometric morphometrics
-to align our landlandmakrs and extract shape information, we’ll assess
-morphological disparity in a phylogenetic frame work between pelagic and
-benthic sharks.</p>
+to align our landlandmarks and extract shape information, we’ll assess
+morphological disparity in a phylogenetic framework and assess the
+difference in rates of morphological evolution between the groups
+between pelagic and benthic sharks.</p>
 </div>
 <div id="methods" class="section level1">
 <h1>Methods</h1>
@@ -655,7 +659,7 @@ phylogeny from the original data. This often results in a data set of
 trees that have conflicting relationships—that is, phylogenetic
 uncertainty—and this was the case for the <span class="citation">Stein
 et al. (2018)</span> study. We’ll have to account for this in our
-analysis. But, more later on . . .</p>
+analysis. But, more on that later . . .</p>
 <p>In any case, we’ve used the taxa studied in this paper to find images
 in FishBase and we’ll use <a href="data/shark_trees.nex">a tree file</a>
 representing phylogeny for our comparative analysis.</p>
@@ -695,16 +699,14 @@ is just imageJ).</p>
 <img src="shark_points.png" style="width:70.0%" /> <br>
 </center>
 <p><br></p>
-<p>You and your team should will be assigned about 20 of the ~220
+<p>You and your team/group should will be assigned about 20 of the ~200
 species to outline. Images of these species can be accessed through <a
-href="https://drive.google.com/drive/folders/1TYAzcMcH0u64OEqsuc61W97zIL7qLGWU?usp=sharing">this
-directory</a>. First choose one of your species to work on. For each
-species, start with what you think is the best image, that is, it has a
-scale bar, the wings are not damaged, and the hindwing is most exposed.
-Open that best image in Fiji.</p>
-<p>After opening the photo, follow the steps below</p>
+href="https://drive.google.com/drive/folders/1X8oHbgvaK_5-gzFtc2p2dS3nWXjFZeUc?usp=sharing">this
+directory</a>.</p>
+<p>First gather your images to work on and follow the steps below for
+each. In FIJI:</p>
 <ol style="list-style-type: decimal">
-<li><p>Open a image.</p></li>
+<li><p>Open am image.</p></li>
 <li><p>Select the multipoint tool.</p></li>
 <li><p>Digitize the 14 landmarks you see above.</p></li>
 <li><p>Measure the XY positions of these points
@@ -727,17 +729,19 @@ class="math inline">\(\Macro\)</span>). Paste the script command from
 below into the editor and save this new macro to an appropriate
 directory, perhaps your cloned repo. You’ll want to access this later
 (“Plugins” <span class="math inline">\(\rightarrow\)</span> “Edit”) so
-that you automate this process.</p>
+that you can automate the process of saving text files with the correct
+fielname.</p>
 <pre><code>f = getTitle();
 dir=getDirectory(&quot;Choose where to save data &quot;);
 selectWindow(&quot;Results&quot;);
 saveAs(&quot;Results&quot;, dir+f+&quot;_.csv&quot;);</code></pre>
 <p>This script saves the results as a <em>tab-separated</em> text file
-with filname as the image file name. <strong>This is super
-important!!</strong> and how we’ll link the landmarks to a species.</p>
+with same filname as the image file name and appends “_.csv”.
+<strong>This is super important!!</strong> and how we’ll link the
+landmarks to a species.</p>
 <p>After your team has completed landmarking the assigned species,
 upload your text files to <a
-href="https://drive.google.com/drive/u/1/folders/1-vbmHBqKywxq3Wxd8iA8Awf38xz4Glk5">this
+href="https://drive.google.com/drive/folders/1j7sod1NB1jmEiPiduYvOOIlukkMikfL5?usp=sharing">this
 directory</a>. Once all the data appear here, Prof. Kenaley will
 evaluate the quality of the landmarks and do some post-processing if
 required (i.e., file-name checks, quality, etc.). You can then download
@@ -769,11 +773,13 @@ analyses</p>
 with many other analyses—we will turn the the <code>geomorph</code>
 package. Please install and load <code>geomorph</code>. But, before we
 do, let’s download and read in about 90 or so landmark files that
-Prof. Kenaley produceds ahead of this project. You can find these
-example files <a href="data/sharks/shark_points.zip">here</a>. You’ll
-have to download this compressed directory and unzip it to your project
+Prof. Kenaley produced ahead of this project. You can find these example
+files <a href="data/sharks/shark_points.zip">here</a>. You’ll have to
+download this compressed directory and unzip it to your project
 directory. You’ll also have to download and install the
 <code>abind</code> package as well.</p>
+<p>Note: <strong>these are just examples</strong>. You will need to
+download the full data set evaluated by Prof. K. form this location.</p>
 <p>To get started with superimposition, let’s load the packages
 <code>geomorph</code> and <code>abind</code>. When you unzip the
 <code>shark_points.zip</code> directory to you project directory, you
@@ -795,6 +801,7 @@ f &lt;- list.files(&quot;shark_points&quot;,full.names = T,pattern=&quot;.csv&qu
 
 xy &lt;- read_csv(f,id=&quot;file&quot;) %&gt;% 
   select(file,X,Y) %&gt;% 
+  mutate(Y=abs(Y-max(Y))) %&gt;% 
   mutate(file_name=gsub(&quot;*_.csv&quot;,&quot;&quot;,basename(file))) %&gt;% 
   left_join(shark_dat) </code></pre>
 <pre><code>## New names:
@@ -823,24 +830,23 @@ then selected only the columns <code>file</code>, <code>X</code>,
 <code>Y</code>. This operation is saved to an object logically named
 <code>xy</code>.</p>
 <p>For landmarks to used in <code>geomorph</code>, they must be stored
-as a 3-dimensional array, that is, essentially a list of 2D data.frames,
-where the position the <span class="math inline">\(i^{th}\)</span>
-matrix is in the <span class="math inline">\(i^{th}\)</span> index of
-the third dimension, i.e., <code>array[,,i]</code>. To massage our large
-tibble into such an array, we have to split the tibble into a bunch of
-lists for this, we can simply run a <code>for</code> loop, breaking the
-data up into a list of data frames according to species. Notice how we
-use a <a
-href="https://www.nbshare.io/notebook/429754141/How-To-Use-Grep-In-R/"><code>gsub()</code>
-operation</a> to create a new column <code>file_name</code> that removes
-“.csv” from the file name data. Splitting by this, will leave used with
-a list of lists as long as all our files. We then use
+as a 3-dimensional array, that is, essentially a list of similarly sized
+2D matrices, where the position the <span
+class="math inline">\(i^{th}\)</span> matrix is in the <span
+class="math inline">\(i^{th}\)</span> index of the third dimension,
+i.e., <code>array[,,i]</code>. To massage our large tibble into such an
+array, we have to split the tibble into a bunch of lists for this, we
+can simply run a <code>for</code> loop, breaking the data up into a list
+of data frames according to species. Notice how we use
+<code>filter()</code> to split the large tibble into into small
+data.frames that will reside in <code>ldk_l</code>. This will leave us
+with a list of data.frames as long as all our files. We then use
 <code>abind</code>’s <code>abind()</code> function to bind the list of
 data.frames in <code>ldk_l</code> into an array, with each data.frame
 taking a position in the third dimension. This array is saved in the
 object <code>ldk</code>. Lastly, we’ll specify that the names of this
-third dimension should be the <code>file_name</code> minus the “.csv”
-extension. <strong>Note: this is how we’ll retrieve species
+third dimension should be the unique values of <code>species</code> in
+the original tibble. <strong>Note: this is how we’ll retrieve species
 information.</strong></p>
 <pre class="r"><code>ldk_l &lt;- list()
 
@@ -861,57 +867,57 @@ dimnames(ldk)[[3]] &lt;-names(ldk_l)
 ldk[,,1:3] #the first few </code></pre>
 <pre><code>## , , Aculeola nigra
 ## 
-##           X     Y
-##  [1,]  39.5 185.5
-##  [2,] 260.0 141.5
-##  [3,] 292.0 136.5
-##  [4,] 293.5 160.0
-##  [5,] 464.0 172.5
-##  [6,] 596.0 162.5
-##  [7,] 522.0 222.0
-##  [8,] 454.5 194.5
-##  [9,] 380.0 198.5
-## [10,] 341.0 214.5
-## [11,] 209.0 202.5
-## [12,] 180.0 194.5
-## [13,] 100.5 202.5
-## [14,]  74.5 209.0
+##           X       Y
+##  [1,]  39.5 423.333
+##  [2,] 260.0 467.333
+##  [3,] 292.0 472.333
+##  [4,] 293.5 448.833
+##  [5,] 464.0 436.333
+##  [6,] 596.0 446.333
+##  [7,] 522.0 386.833
+##  [8,] 454.5 414.333
+##  [9,] 380.0 410.333
+## [10,] 341.0 394.333
+## [11,] 209.0 406.333
+## [12,] 180.0 414.333
+## [13,] 100.5 406.333
+## [14,]  74.5 399.833
 ## 
 ## , , Alopias pelagicus
 ## 
 ##           X       Y
-##  [1,]  38.0 166.000
-##  [2,] 162.5 141.500
-##  [3,] 186.5 101.500
-##  [4,] 192.5 138.500
-##  [5,] 295.5 152.500
-##  [6,] 606.5  94.500
-##  [7,] 321.5 206.500
-##  [8,] 300.5 181.500
-##  [9,] 249.5 183.500
-## [10,] 228.5 187.500
-## [11,] 135.5 185.500
-## [12,] 103.5 188.500
-## [13,]  69.0 179.833
-## [14,]  59.5 180.333
+##  [1,]  38.0 442.833
+##  [2,] 162.5 467.333
+##  [3,] 186.5 507.333
+##  [4,] 192.5 470.333
+##  [5,] 295.5 456.333
+##  [6,] 606.5 514.333
+##  [7,] 321.5 402.333
+##  [8,] 300.5 427.333
+##  [9,] 249.5 425.333
+## [10,] 228.5 421.333
+## [11,] 135.5 423.333
+## [12,] 103.5 420.333
+## [13,]  69.0 429.000
+## [14,]  59.5 428.500
 ## 
 ## , , Alopias superciliosus
 ## 
-##           X     Y
-##  [1,]  38.5 173.5
-##  [2,] 221.5 135.0
-##  [3,] 257.0  89.5
-##  [4,] 261.5 136.0
-##  [5,] 364.0 152.0
-##  [6,] 604.5  71.5
-##  [7,] 389.5 205.5
-##  [8,] 363.0 177.5
-##  [9,] 310.0 184.0
-## [10,] 282.5 197.0
-## [11,] 168.5 194.0
-## [12,] 138.5 196.5
-## [13,]  82.5 190.5
-## [14,]  67.5 189.0</code></pre>
+##           X       Y
+##  [1,]  38.5 435.333
+##  [2,] 221.5 473.833
+##  [3,] 257.0 519.333
+##  [4,] 261.5 472.833
+##  [5,] 364.0 456.833
+##  [6,] 604.5 537.333
+##  [7,] 389.5 403.333
+##  [8,] 363.0 431.333
+##  [9,] 310.0 424.833
+## [10,] 282.5 411.833
+## [11,] 168.5 414.833
+## [12,] 138.5 412.333
+## [13,]  82.5 418.333
+## [14,]  67.5 419.833</code></pre>
 <p>With a proper array in place as <code>ldk</code>, we’re now free to
 move on the superimposition with the <code>geomorph</code> function
 <code>gpagen()</code>. We’ll do this saving the output to
@@ -933,17 +939,17 @@ describing the axes of shape variation.Indeed, this is what <span
 class="citation">Sternes and Shimada (2020)</span> did to produce the
 figure above. This and what we’re after is often termed a <a
 href="https://en.wiktionary.org/wiki/morphospace">morphospace</a>, a
-representation of shape the study group does and does not have.</p>
+representation of the shape the study group does and does not have.</p>
 <p>To develop such a thing, biologist usually turn to Principal
-Components Analysis (PCA) whereby the very complicated suite of
-variables is distilled into a set of fewer variables that describe the
-important variance among the original variables. The coordinates
-contained in our <code>ldk_al</code> object describe dozens of
-variables: scaled distances between all the landmarks. So we have many
-variable to consider and this becomes, very quickly, a serious <a
+Components Analysis (PCA) whereby a very complicated suite of variables
+is distilled into a set of fewer variables that describe the important
+variance among the original variables. The coordinates contained in our
+<code>ldk_al</code> object describe dozens of variables: scaled
+distances between all the landmarks. So we have many variable to
+consider and this becomes, very quickly, a serious <a
 href="https://en.wikipedia.org/wiki/Multivariate_statistics">multivariate
 problem</a>. PCA is suited to multivariate analysis because it reduces
-the complexity of the data, taking many variables and distilling the
+the complexity of the data, taking many variables and distilling them
 into just a few. At its core, PCA produces a series of regressions, or
 vectors, that pass through the values of the original variables. This
 operation is performed iteratively, with the first vector (the first
@@ -987,7 +993,7 @@ names.</p>
 <pre><code>## [1] &quot;Aculeola nigra&quot;         &quot;Alopias pelagicus&quot;      &quot;Alopias superciliosus&quot; 
 ## [4] &quot;Alopias vulpinus&quot;       &quot;Apristurus brunneus&quot;    &quot;Apristurus laurussonii&quot;</code></pre>
 <p>These values were maintained throughout the superimpositon step and
-in the PCA operation. The coordinates plotted in the in PCA plots are
+in the PCA operation. The coordinates plotted in the PCA plots are
 contained in a matrix named <code>x</code> in our <code>pca</code>
 object. Notice the row names:</p>
 <pre class="r"><code>pca$x %&gt;% data.frame %&gt;% select(Comp1,Comp2) %&gt;% head</code></pre>
@@ -999,9 +1005,9 @@ object. Notice the row names:</p>
 ## Apristurus brunneus    -0.13126591 -0.01146547
 ## Apristurus laurussonii -0.12314775 -0.06309869</code></pre>
 <p>So, we have the species names from whence the data, both land mark
-and PCA, came from. Fortunately, Professor Kenaley assembled a table
+and PCA, came. Fortunately, Professor Kenaley assembled a table
 containing of all the the species for landmarking, and the species and
-habitat for each. You can download <a href="shark_data.csv">this
+habitat for each. You can download <a href="data/shark_data.csv">this
 file</a> and read in the data.</p>
 <p>What’s left to do in exploring if benthic and pelagic sharks occupy
 different morphospace is to combine this information with the PC scores
@@ -1043,25 +1049,38 @@ describing?” Our PCs points are abstractions of shape, but they don’t
 represent explicitly what shape that is. To get a sense of what our PCs
 represent in terms of shape values, we can turn to thin-plate spline
 analysis.</p>
-<pre class="r"><code>max_PC1 &lt;- which.max(pca$x[,1])
+<p><strong>Note</strong>, you’re not asked to do anything like this for
+the report. Prof. K just wants you show you have you can derive shape
+changes represented by the PC axes.</p>
+<pre class="r"><code>#find min and max of each PC
+max_PC1 &lt;- which.max(pca$x[,1])
 min_PC1 &lt;- which.min(pca$x[,1])
 max_PC2 &lt;- which.max(pca$x[,2])
 min_PC2 &lt;- which.min(pca$x[,2])
+
+#get the concesus, the mean shape of all data.
 M &lt;- ldk_al$consensus
 
+#plot
 par(mfrow=c(2,2))
+
+#plot the change form the concensus to min of PC1
 plotRefToTarget(M, ldk_al$coords[,,min_PC1], mag = 1,method=&quot;vector&quot;,label = T)
 title(&quot;min PC1 warp&quot;,cex=0.6)
 
+#plot the change form the concensus to max of PC1
 plotRefToTarget(M, ldk_al$coords[,,max_PC1], mag = 1,method=&quot;vector&quot;,label = T)
 title(&quot;max PC1 warp&quot;,cex=0.6)
 
+#plot the change form the concensus to min of PC2
 plotRefToTarget(M, ldk_al$coords[,,min_PC2], mag = 1,method=&quot;vector&quot;,label = T)
 title(&quot;min PC2 warp&quot;,cex=0.6)
 
+#plot the change form the concensus to max of PC2
 plotRefToTarget(M, ldk_al$coords[,,max_PC2], mag = 1,method=&quot;vector&quot;,label = T)
 title(&quot;max PC3 warp&quot;,cex=0.6)</code></pre>
 <p><img src="mod5_proj_files/figure-html/rw-1.png" width="672" /></p>
+<p>So, it looks like</p>
 </div>
 <div id="analysis-part-ii" class="section level3">
 <h3>Analysis: Part II</h3>
@@ -1230,7 +1249,7 @@ print(er)</code></pre>
 ## 
 ## The rate for group benthic is 1.40377103447055e-05  
 ## 
-## The rate for group pelagic is 8.96721584612147e-06</code></pre>
+## The rate for group pelagic is 8.96721584612148e-06</code></pre>
 <p>So it appears the benthic group body shape has evolved 1.6 times
 faster than the pelagic group and this is significant
 (<em>p=0.002</em>). But, we have a problem. You may have noticed that
@@ -1324,7 +1343,7 @@ t &lt;- system.time(for(i in 1:length(phy_sample)){
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 1.29573966236599e-05  
+## The rate for group benthic is 1.29573966236598e-05  
 ## 
 ## The rate for group pelagic is 8.57288744816572e-06 
 ## Call:
@@ -1368,7 +1387,7 @@ t &lt;- system.time(for(i in 1:length(phy_sample)){
 ## 
 ## The rate for group benthic is 1.15435009156868e-05  
 ## 
-## The rate for group pelagic is 7.33290098688007e-06 
+## The rate for group pelagic is 7.33290098688008e-06 
 ## Call:
 ## 
 ## 
@@ -1528,62 +1547,79 @@ print(t_nomc)</code></pre>
 ##   6.008   0.231   1.173</code></pre>
 <p>As you can see, the parallelized operation was about 6 times faster
 than <code>lapply()</code>. This framework looks like it could really
-speed up our estimation body shape evolutionary rates.</p>
-<!-- hab_names <- c(PCA$habit[which(gp_hab==0)] %>% unique, -->
-<!--                PCA$habit[which(gp_hab==1)]%>% unique) -->
-<!-- er_fit <- list() -->
-<!-- for(i in 1:length(phy2)){ -->
-<!--  er_fit[[i]] <-compare.evol.rates(A=ldk_al$coords, phy=phy2[[i]], method="simulation",gp=gp_hab,print.progress = F) -->
-<!-- } -->
-<!-- plot(er_l[[1]]) -->
-<!-- er <- lapply(er_fit,summary) -->
-<!-- er <- lapply(er,function(x) { -->
-<!--   er <- c(x$sigma.d.gp,x$sigma.d.ratio) -->
-<!--   names(er) <- c(hab_names,"ratio") -->
-<!--   return(er) -->
-<!-- }) %>% do.call(rbind,.) %>% data.frame -->
-<!-- er %>%  -->
-<!--   pivot_longer(benthic:pelagic) %>%  -->
-<!--   ggplot(aes(value,fill=name)) + geom_histogram() -->
-<!-- library(parallel) -->
-<!-- er_fun <- function(x){compare.evol.rates(A=ldk_al$coords, phy=x, method="simulation",gp=gp_hab,print.progress = F)} -->
-<!-- er_l <- mclapply(phy2,er_fun,mc.cores = detectCores()-2) -->
-<!-- er <- lapply(er_fit,summary) -->
-<!-- er <- lapply(er,function(x) { -->
-<!--   er <- c(x$sigma.d.gp,x$sigma.d.ratio) -->
-<!--   names(er) <- c(hab_names,"ratio") -->
-<!--   return(er) -->
-<!-- }) %>% do.call(rbind,.) %>% data.frame -->
-<!-- er %>%  -->
-<!--   pivot_longer(benthic:pelagic) %>%  -->
-<!--   ggplot(aes(value,fill=name)) + geom_histogram() -->
-<!-- t.test(value~name, -->
-<!-- er %>%  -->
-<!--   pivot_longer(benthic:pelagic)  -->
-<!-- ) -->
+speed up our estimation body shape evolutionary rates. You are tasked
+with assessing evolutionary rates based on habitat using all species in
+the data set and all 500 of the phylogenetic trees from <span
+class="citation">Stein et al. (2018)</span> using a paralleled
+approach.</p>
 </div>
 </div>
 </div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
-<p>t-test to posterior</p>
-<!-- # Project Report -->
-<!-- Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following: -->
-<!--   * Are the rates of wing-shape evolution different between the hind- and forewing? By how much?  -->
-<!--   <!-- * Have major lineages of the Lepidoptera undergone significant shifts in evolutionary rate?  -->
-<p>–&gt; <!--   * Are hind- and forewing shapes correlated? -->
-<!--   * What inferences can you make based on shape correlations and flight control? --></p>
-<!-- Please be sure to answer these questions based on both PC1 and PC2 shape scores. -->
-<!-- In answering your question, your .Rmd should include the following components: -->
-<!--    * A YAML header that specifies HTML output, the authors, and a bibliograph named "BIOL3140.bib". **Submit this bibliography as well!** -->
-<!--    * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially: -->
-<!--       + Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. **Please include at least one reference to support the summary of previous work.** Note: this can be done easily by refiguring the introduction to this project report. -->
-<!--       + Methods: Explicitly state how you answered the questions, including a narrative of all the anlyses both qualitative and quantitative. -->
-<!--       + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions. -->
-<!--       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here. -->
-<!--       + Author contributions: Briefly outline what each team member contributed to the project. -->
-<!-- Project reports should be uploaded by 11:59 PM on Sunday, October 29th. -->
-<!-- # References -->
+<p>Please submit your report to your team GitHub repository as an .Rmd
+document with HTML output that addresses the following:</p>
+<ul>
+<li>Establish an array suitable for analysis using the
+<code>geomorph</code> functions outlined above. Construct this from all
+specimens digitized in <a href="data/class_landmark_data.zip">this
+directory</a> and Procrustes align them.</li>
+<li>Does habitat result in the occupation of a different morphospace?
+Please answer this question using a <code>ggplot</code>-rendered
+morphospace based on the first two PCs from a principal components
+analysis of your alignment.</li>
+<li>Is there morphological disparity between habitats?</li>
+<li>Is the rate of morphological evolution significantly different
+between different habitat types? Please be sure that
+<ol style="list-style-type: decimal">
+<li>This question based on a posterior distribution of rates based on
+all 500 phylogenetic trees.</li>
+<li>The distribution of rate estimates is create through the use of a
+parallelization of your analysis.</li>
+<li>You assess the statistical significance using a simple two-sided
+t-test (i.e. <code>t.test()</code>).</li>
+</ol></li>
+<li>What inferences with regards to ecology and behavior can you make
+concerning the relationship between habitat and both shape and rates of
+morphological evolution?</li>
+</ul>
+<p>Please be sure to answer these questions based on both PC1 and PC2
+shape scores.</p>
+<p>In answering your question, your .Rmd should include the following
+components:</p>
+<ul>
+<li>A YAML header that specifies HTML output, the authors, and a
+bibliography named “BIOL3140.bib”. <strong>Submit this bibliography as
+well!</strong></li>
+<li>Sections including an introduction, methods, results, discussion,
+author contributions, and references. Make sure that each, aside from
+the references, includes one to two short paragraphs. Specifially:
+<ul>
+<li>Introduction: Frame the questions, indicating why they are
+important, what background work has been done in this realm, and how you
+will answer them. <strong>Please include at least one reference to
+support the summary of previous work.</strong> Note: this can be done
+easily by refiguring the introduction to this project report.</li>
+<li>Methods: Explicitly state how you answered the questions, including
+a narrative of all the analyses both qualitative and quantitative.</li>
+<li>Results: Include any appropriate figures or tables and a narrative
+of the main results that are important to answering the questions.</li>
+<li>Discussion: Succinctly declare how the results relate to the
+question and how they compare to previous work devoted to the topic. In
+addition, be sure to comment on the importance of your findings to the
+broader topic at hand. <strong>Please include at least one reference to
+another relevant study.</strong> Note: circling back to the
+introductions, both to this project description’s and yours, will be
+helpful here.</li>
+<li>Author contributions: Briefly outline what each team member
+contributed to the project.</li>
+</ul></li>
+</ul>
+<p>Project reports should be uploaded by 11:59 PM on Sunday, October
+20th.</p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-grogan2012origin" class="csl-entry">
 Grogan, Eileen D, Richard Lund, and Emily Greenfest-Allen. 2012.
