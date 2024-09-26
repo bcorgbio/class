@@ -714,9 +714,9 @@ Please submit your report to your team GitHub repository as an .Rmd document wit
     2. The distribution of rate estimates is create through the use of a parallelization of your analysis.
     3. You assess the statistical significance using a simple two-sided t-test (i.e. `t.test()`).
     
-  * What inferences with regards to ecology and behavior can you make concerning the relationship between habitat and both shape and rates of morphological evolution?
+  * What inferences with regards to ecology and behavior can you make concerning the relationship between habitat and both shape and rates of morphological evolution? Please be sure to answer these questions based on both PC1 and PC2 shape scores.
 
-Please be sure to answer these questions based on both PC1 and PC2 shape scores.
+
 
 In answering your question, your .Rmd should include the following components:
 
