@@ -1153,41 +1153,6 @@ groups.</p>
 <p>We have a preliminary answer to our first question, “Does habitat use
 predict different body shape?”. But this of course could change with a
 larger sample of species.</p>
-<pre class="r"><code>library(phytools)</code></pre>
-<pre><code>## Warning: package &#39;ape&#39; was built under R version 4.2.3</code></pre>
-<pre class="r"><code>phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
-
-phy2 &lt;- keep.tip(phy,PCA$sp)
-
-  gdf &lt;- geomorph.data.frame(ldk_al,
-                             species = PCA$sp,
-                             habitat=PCA$habitat,
-                             phy=phy2[[1]]
-  )
-  
-
-library(parallel)  
-shark_pgls &lt;- procD.pgls(coords ~ habitat, phy = phy, data = gdf, 
-iter = 10000,print.progress = F)
-
-
-summary(shark_pgls)</code></pre>
-<pre><code>## 
-## Analysis of Variance, using Residual Randomization
-## Permutation procedure: Randomization of null model residuals 
-## Number of permutations: 10001 
-## Estimation method: Generalized Least-Squares (via OLS projection) 
-## Sums of Squares and Cross-products: Type I 
-## Effect sizes (Z) based on F distributions
-## 
-##           Df       SS         MS     Rsq      F        Z Pr(&gt;F)
-## habitat    1 0.000129 0.00012941 0.00405 0.3621 -0.83632  0.806
-## Residuals 89 0.031805 0.00035736 0.99595                       
-## Total     90 0.031935                                          
-## 
-## Call: procD.lm(f1 = coords ~ habitat, iter = iter, seed = seed, RRPP = TRUE,  
-##     SS.type = SS.type, effect.type = effect.type, int.first = int.first,  
-##     Cov = Cov, data = data, print.progress = print.progress)</code></pre>
 </div>
 <div id="analysis-part-iii-evolution-in-parallel"
 class="section level3">
@@ -1201,24 +1166,37 @@ another habitat. For this we’ll turn to the <code>geomorph</code>
 package once again, in particular, its <code>compare.evol.rates()</code>
 function. This function calculates net rates of shape evolution for
 groups of species on a phylogeny from a set of aligned landmarks. The
-approach is based between-species differences in morphospace after
+approach is based on between-species differences in morphospace after
 phylogenetic transformation. In other words, after correcting for
 phylogenetic relatedness, it compares relative rates of shape
-evolution.</p>
+change.</p>
 <p>Because we’re correcting for phylogeny in this analysis, we need the
 <a href="data/shark_trees.nex">tree from <span class="citation">Stein et
 al. (2018)</span> mentioned above</a>. Once this tree file is
-downloaded, let’s load read it in and store it to an object named
-<code>phy</code>. Notice you’ll need the phytools package and the
-function <code>readNexus()</code>.</p>
-<pre class="r"><code>library(phytools)
-phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
+downloaded, let’s load, read it, in and store it to an object named
+<code>phy</code>. Notice you’ll need the <code>phytools</code> package
+and the function <code>readNexus()</code>.</p>
+<pre class="r"><code>library(phytools)</code></pre>
+<pre><code>## Loading required package: ape</code></pre>
+<pre><code>## Warning: package &#39;ape&#39; was built under R version 4.2.3</code></pre>
+<pre><code>## 
+## Attaching package: &#39;ape&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     where</code></pre>
+<pre><code>## Loading required package: maps</code></pre>
+<pre><code>## 
+## Attaching package: &#39;maps&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     map</code></pre>
+<pre class="r"><code>phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
 length(phy)</code></pre>
 <pre><code>## [1] 500</code></pre>
 <p>Next let’s, restrict our tree file to those species in our data set.
 For this, we’ll used <code>ape</code>’s <code>keep.tip()</code> which
 keeps only the tips in a vector, in this case, the species in our PCA
-and landmakr analysis.</p>
+and landmark analysis.</p>
 <pre class="r"><code>phy2 &lt;- keep.tip(phy,PCA$sp)</code></pre>
 <p>To undertake the analysis with <code>compare.evol.rates()</code>, we
 must specify <code>A</code>, the aligned coordinates in a lankmark array
@@ -1267,17 +1245,18 @@ likely will, vary according to the phylogenetic hypothesis used in it.
 So what to do?</p>
 <p>This is a common problem faced by comparative biologists and,
 fortunately, there seems to be a consensus among us to repeat our
-comparative analysis using a random sample of trees in that represent
-the phylogenetic uncertainty. By repeating an analysis, we produce a
-series of results based on new parameters to our model. In this case,
-that new parameter would be a randomly sampled tree. This establishes
-what is akin to a <a
+comparative analysis using a random sample or, ambitiouslu, all of the
+trees in that represent the phylogenetic uncertainty. By repeating an
+analysis, we produce a series of results based on new parameters (i.e.,
+phylogenetic distance) to our model. In this case, the new parameters
+would include by using any or all of the trees. This establishes what is
+akin to a <a
 href="https://en.wikipedia.org/wiki/Posterior_probability">posterior
 sample</a> and from this we can extract a posterior distribution of
 estimates, in our case, a distribution of evolutionary rates.</p>
 <p>Therefore, we have before us the proposition of repeating out
 analysis, let’s say 10 times. To do this, we could randomly sample 10 of
-trees and build a posterior distribution of evolutionary rates using a
+the and build a posterior distribution of evolutionary rates using a
 <code>for</code> loop.</p>
 <pre class="r"><code>set.seed(1234)
 phy_sample &lt;- sample(phy2,10)
@@ -1440,15 +1419,15 @@ also that the entire loop is wrapped in <code>system.time()</code>. This
 is done so that, in this preliminary analysis, we can record how much
 time the loop took. Printing <code>t</code> reveals that it took 7
 seconds. Because our results are stored in a list, we can use
-<code>lapply()</code> extract the rate comparisons.
+<code>lapply()</code> to extract the rate comparisons.
 <code>lapply()</code> takes a list and applies a function to. In our
 case, we need to encoded a custom function that extracts
 <code>sigma.d.gp</code> and <code>sigma.d.ratio</code>, the rate for
 each group and rate ratio between them, respectively. For this, we ask
-the function to work on every value of <code>er_l</code>, read in as
+the function to work on every value of <code>er_l</code>, read it as
 <code>x</code>, then combine <code>sigma.d.gp</code> and
-<code>sigma.d.ratio</code> and store it in <code>er_</code> temporatily.
-We then apply a name to the third value “ratio”, and ruturn the vector.
+<code>sigma.d.ratio</code> and store it in <code>er_</code> temporarily.
+We then apply a name to the third value “ratio”, and return the vector.
 <code>lapply()</code> returns a list, so we combine all elements of it
 using <code>do.call()</code>. We apply the row-binding function
 <code>rbind()</code> to the list using the pipe and <code>.</code> and
@@ -1480,7 +1459,7 @@ pelagic species evolve slower than benthic ones.</p>
 would argue 10 random trees does not a posterior make. We should
 probably sample many more or, perhaps use the entire set of trees.</p>
 <p>What’s to stop us? Well, if we shoot for the stars and use all 500
-trees in 500 separate analyses, we’d be looking running a for loop 50
+trees in 500 separate analyses, we’d be looking at running a for loop 50
 times longer than 10 trees took (roughly 350 s or 6 minutes, see figure
 below). In the world of comparative methods, this isn’t such a long
 time, but remember, this is a preliminary analysis of only 90 or so of
@@ -1488,7 +1467,6 @@ the 220 we hope to include. The figure below indicates that including
 all 220 species and using all 500 trees would take ~2500 s or about 40
 minutes!!!</p>
 <p><br></p>
-<img src="mod5_proj_files/figure-html/timescale-1.png" width="672" />
 <br>
 <center>
 The polynomial relationship between time and number of taxa in
@@ -1515,10 +1493,10 @@ we’ll do.</p>
 the most used is <code>parallel</code>, so cleverly named. Let’s work on
 an example of how a task could be parallelized using
 <code>parallel</code>’s <code>mclappy()</code> function.</p>
-<p><code>mclapply</code> is simply an extension of
-<code>lapply()</code>that takes the tasks performed on each item in a
-list and spreads the tasks across multiple cores on a computer. This is
-perfect for embarrassingly parallel problems.</p>
+<p><code>mclapply</code> is simply an extension of <code>lapply()</code>
+that takes the tasks performed on each item in a list and spreads the
+tasks across multiple cores on a computer. This is perfect for
+embarrassingly parallel problems.</p>
 <p>For example, say we wanted to do something that’s simple, but takes
 just a little bit of time, like generation 10 million random values from
 a normal distribution (<code>mean=0</code>, <code>sd=1</code>) any
@@ -1527,7 +1505,7 @@ to specify how many times to do it.</p>
 <pre class="r"><code>my_fun &lt;- function(x){for(i in x) rnorm(1e7)}</code></pre>
 <p>For comparison, let’s first use the non-parallel
 <code>lapply()</code> to run the function 30 times and then use
-<code>mclapply()</code> to do the same. Notice that we’ve used
+<code>mclapply()</code> to do the same. Notice that we’ve again used
 <code>system.time()</code> to capture the duration of the operations.
 Also notice that we used <code>parallel</code>’s
 <code>detectCores()</code> to detect the number of cores on the machine
@@ -1557,8 +1535,9 @@ approach.</p>
 </div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
-<p>Please submit your report to your team GitHub repository as an .Rmd
-document with HTML output that addresses the following:</p>
+<p>Please submit your report and all associated data to your team GitHub
+repository as an .Rmd document with HTML output that addresses the
+following:</p>
 <ul>
 <li>Establish an array suitable for analysis using the
 <code>geomorph</code> functions outlined above. Construct this from all
@@ -1570,22 +1549,21 @@ morphospace based on the first two PCs from a principal components
 analysis of your alignment.</li>
 <li>Is there morphological disparity between habitats?</li>
 <li>Is the rate of morphological evolution significantly different
-between different habitat types? Please be sure that
+between different habitat types?
 <ol style="list-style-type: decimal">
-<li>This question based on a posterior distribution of rates based on
-all 500 phylogenetic trees.</li>
-<li>The distribution of rate estimates is create through the use of a
-parallelization of your analysis.</li>
-<li>You assess the statistical significance using a simple two-sided
-t-test (i.e. <code>t.test()</code>).</li>
+<li>Answer this question based on a posterior distribution of rates
+based on all 500 phylogenetic trees.</li>
+<li>Make sure the distribution of rate estimates is create through the
+use of a parallelization of your analysis.</li>
+<li>Please assess the statistical significance of habitat on the
+distribution using a simple two-sided t-test
+(i.e. <code>t.test()</code>).</li>
 </ol></li>
 <li>What inferences with regards to ecology and behavior can you make
 concerning the relationship between habitat and both shape and rates of
 morphological evolution?</li>
 </ul>
-<p>Please be sure to answer these questions based on both PC1 and PC2
-shape scores.</p>
-<p>In answering your question, your .Rmd should include the following
+<p>In answering your questions, your .Rmd should include the following
 components:</p>
 <ul>
 <li>A YAML header that specifies HTML output, the authors, and a

@@ -1,9 +1,9 @@
 ---
 title: "Phase II: Using Our Toolbox"
-subtitle: "Module 6: The Shape of Pretty Things"
+subtitle: "Module 5: SHARK!"
 author: "Dr. Christopher Kenaley"
 institute: "Boston College"
-date: "2021/10/10"
+date: "2024/9/30"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -20,9 +20,8 @@ library(tidyverse)
 library(kableExtra)
 library(ape)
 library(phytools)
-library(broom)
-library(Momocs)
-
+library(geomorph)
+library(abind)
 
 
 ```
@@ -34,7 +33,7 @@ library(Momocs)
 .pull-left[
 Today we'll ....
 
-- Kick off Module 6
+- Kick off Module 5 (New Phase!!)
 
 - Introduce imageJ/FIJI
 
@@ -169,14 +168,26 @@ class: inverse, top
 
 .pull-left[
 
-- Outline shapes of each wing
+- Using multipoint tool, digitize 14 points
 - Worflow
-- Fit spline using a macro
+- Use macro to save file
 
 ]
 
 .pull-right[
-![](lep_workflow.jpeg)
+- Open am image.
+
+- Select the multipoint tool.
+
+- Digitize the 14 landmarks you see above.
+
+- Measure the XY positions of these points (cmd/ctrl+m).
+
+- Select the macro tab and run the macro (cmd/ctrl+r).
+
+- Save the results to the appropriate directory.
+
+- Close the results and image tab (don’t save the image).
 ]
 
 
@@ -189,28 +200,31 @@ class: inverse, top
 
 
 ```{r,message=F,echo=F}
+library(abind)
+f <- list.files("shark_points",full.names = T,pattern=".csv")
+ldk <- read_csv(f,id="file") %>% select(file,X,Y)
 
-f <- list.files("out_data",full.names = T)
-f <- f[sample(1:length(f),50)]
 
-#make a large df with vroom
-out.df <- vroom::vroom(f, id = "filename")
+ldk %>% select(file) %>% table
+ldk_l <- ldk %>% 
+  mutate(file_name=gsub("*_.csv","",basename(file))) %>% 
+  select(file,X,Y) %>% 
+  mutate(Y=abs(Y-max(Y))) %>% 
+  group_split(file,.keep = F) 
 
-#add wing info
-out.df <- out.df %>% 
-  mutate(wing=gsub("XY_.+_(hindwing|forewing)\\..+","\\1",basename(filename))) %>% 
-  na.omit()
+ldk_l <- lapply(ldk_l,as.data.frame)
 
-#make a large df with vroom
-out.df <- vroom::vroom(f, id = "filename")
+ldk <-  abind(ldk_l, along=3)
 
-#make list
-outs.l <- sapply(f,function(x) out.df %>% filter(filename==x) %>% select(X,Y) %>% as.matrix)
+names(ldk) <-gsub("*_.csv","",basename(f))
 
-outs.l %>% 
-  Out() %>% 
-  coo_flipx() %>% 
-  stack()
+
+
+
+#ldk <- define.sliders(teeth_sl[,,1],nsliders = 1)
+
+ldk_al <- gpagen(ldk,ProcD = F)
+plot(ldk_al)
 ```
 
 ---
@@ -224,8 +238,7 @@ class: inverse, top
 
 ```{r,message=F,echo=F}
 
-out <- outs.l %>% 
-  Out()
+
 
 
 ```
@@ -234,13 +247,7 @@ out <- outs.l %>%
 .pull-left[
 ```{r,message=F,results='hide'}
 
-min <- out %>% 
-  coo_nb() %>% 
-  min()
 
-align_out <- out %>%
-  coo_interpolate(min) %>% 
-  fgProcrustes()
 ```
 ]
 
@@ -259,8 +266,7 @@ class: inverse, top
 
 
 ```{r}
-align_out %>% 
-  stack
+
 
 ```
 

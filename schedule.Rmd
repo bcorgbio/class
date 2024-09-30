@@ -343,21 +343,21 @@ Upon completion of this module, students will be able to:
   <!-- + [Temp sensor with SDcard module tutorial](https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data) -->
   
   + [Sternes, P.C. and Shimada, K., 2020. Body forms in sharks (Chondrichthyes: Elasmobranchii) and their functional, ecological, and evolutionary implications. Zoology, 140, p.125799.](https://doi.org/10.1016/j.zool.2020.125799)
-  + [Intoduction to Momocs](https://momx.github.io/Momocs/articles/Momocs_intro.html)
+  + [The Undergraduate Student's Guide of Geometric Morphometrics](https://digitalcommons.pace.edu/cgi/viewcontent.cgi?article=1003&context=oer)
   + This [tutorial on Principal Components Analysis](https://builtin.com/data-science/step-step-explanation-principal-component-analysis).
   + R Programming for Data Science: [Parallel-computation](https://bookdown.org/rdpeng/rprogdatascience/parallel-computation.html)
 
 ### Do
   + Download and install [FIJI (**F**iji **Is** **J**ust **i**mageJ)](https://imagej.net/software/fiji/downloads)
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
-  + Upload team data files to [this directory](.) by Tuesday, October 17th
+  + Upload team data files to [this directory](https://drive.google.com/drive/folders/1j7sod1NB1jmEiPiduYvOOIlukkMikfL5?usp=drive_link) by Tuesday, October 8th
   + Complete and commit Module 6 Project report
 
 
 ### Guiding Questions
 
   + How does one acquire shape information for comparative analysis?
-  + Did shape evolve differently between the moths and butterflies?
+  + Did shape evolve differently between the pelagic and benthic sharks?
   + How does one formulate a complete .Rmd report of Phase II of the course?
 
 ---

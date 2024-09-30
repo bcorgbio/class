@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Phase II: Using Our Toolbox</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Christopher Kenaley" />
+    <script src="libs/header-attrs-2.28/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Phase II: Using Our Toolbox
+]
+.subtitle[
+## Module 5: SHARK!
+]
+.author[
+### Dr. Christopher Kenaley
+]
+.institute[
+### Boston College
+]
+.date[
+### 2024/9/30
+]
+
+---
+
+class: inverse, top
+# In class today 
+
+
+
+&lt;!-- Add icon library --&gt;
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"&gt;
+
+
+.pull-left[
+Today we'll ....
+
+- Kick off Module 5 (New Phase!!)
+
+- Introduce imageJ/FIJI
+
+- Workflow in Geometric Morphometrics
+
+]
+
+.pull-right[
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Full_Shot_of_a_Caribbean_Reef_Shark_at_Tiger_Beach_Bahamas.jpg/1600px-Full_Shot_of_a_Caribbean_Reef_Shark_at_Tiger_Beach_Bahamas.jpg)
+]
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+## Module 5: Shark!
+
+.pull-left[
+
+- The Selachii: an ancient radiation
+- Body shape: does habitat predict it?
+
+
+]
+
+.pull-right[
+![](https://ars.els-cdn.com/content/image/1-s2.0-S0944200620300581-gr1.jpg)
+]
+
+Thomson, Keith Stewart, and Dan E Simanek. 1977. “Body Form and Locomotion in Sharks.” American Zoologist 17 (2): 343–54.
+
+
+
+---
+&lt;!-- slide 1 --&gt;
+&lt;center&gt;
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;
+        &lt;center&gt;
+            &lt;img src="https://earthlife.net/wp-content/uploads/What-Is-A-Elasmobranch-1280x718-1.webp" alt="bull shark" height="150"/&gt;                   
+            &lt;br&gt;
+A white shark, &lt;i&gt;Carcharias carchardon&lt;/i&gt;, typical of Group 1.
+&lt;br&gt;
+&lt;br&gt;
+&lt;/center&gt;
+        &lt;/td&gt;
+         &lt;td&gt;
+         &lt;img style="height: 20px; width: 20px"/&gt;
+          &lt;/td&gt;
+         &lt;td&gt;
+         &lt;center&gt;
+&lt;img src="https://biogeodb.stri.si.edu/sftep/resources/img/images/species/95_8407.jpg" alt="bull shark" height="150"/&gt;                   
+&lt;br&gt;
+A bull shark, &lt;i&gt;Carcharhinus leucas&lt;/i&gt;, typical of Group 2.
+&lt;br&gt;
+&lt;br&gt;
+&lt;/center&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+    
+&lt;br&gt;
+&lt;br&gt;
+    &lt;tr&gt;
+        &lt;td&gt;
+        &lt;center&gt;
+            &lt;img src="https://www.vichighmarine.ca/wp-content/uploads/2017/03/Spiny-Dogfishy-600x321.jpg" alt="bull shark" height="150"/&gt;                   
+            &lt;br&gt;
+A dogfish of the genus &lt;i&gt;Squalus&lt;/i&gt; typical of Group 3.
+&lt;br&gt;
+&lt;/center&gt;
+        &lt;/td&gt;
+         &lt;td&gt;
+         &lt;img style="height: 20px; width: 20px"/&gt;
+         &lt;/td&gt;
+         &lt;td&gt;
+         &lt;center&gt;
+&lt;img src="https://biogeodb.stri.si.edu/caribbean/resources/img/images/species/4437_2257.jpg" alt="bull shark" height="150"/&gt;                   
+&lt;br&gt;
+A kitefin shark, &lt;i&gt;Dalatias licha&lt;/i&gt;, typical of Group 4.
+&lt;br&gt;
+&lt;/center&gt;
+        &lt;/td&gt;
+    &lt;/tr&gt;
+    
+&lt;/table&gt;
+&lt;/center&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+---
+class: inverse, top
+## Module 5: Shark!
+
+.pull-left[
+
+- The Selachii: an ancient radiation
+- Body shape: does habitat predict it?
+- Sternes &amp; Shimada (2020): only two groups, group B=many pelagic sharks
+
+
+]
+
+.pull-right[
+![](https://ars.els-cdn.com/content/image/1-s2.0-S0944200620300581-ga1_lrg.jpg)
+]
+
+Sternes, Phillip C, and Kenshu Shimada. 2020. “Body Forms in Sharks (Chondrichthyes: Elasmobranchii) and Their Functional, Ecological, and Evolutionary Implications.” Zoology 140: 125799.
+
+
+
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+## Geometric Morphometrics
+
+
+.pull-left[
+
+1. Data collection: select landmarks of interest, usually through digitization of specimen images.
+
+2. Data standardization: Make landmarks comparable across all specimens, usually through superimposition.
+
+3. Analysis: choose a statistical approach appropriate to the questions. (Friday)
+
+4. Interpretation: use the outcome of the statistical analysis to assess the original questions. (Friday)
+
+
+]
+
+.pull-right[
+![](https://bcorgbio.github.io/class/shark_points.png)
+]
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+##  Data collection: FIJI
+
+
+.pull-left[
+
+- Using multipoint tool, digitize 14 points
+- Worflow
+- Use macro to save file
+
+![](https://bcorgbio.github.io/class/shark_points.png)
+
+]
+
+.pull-right[
+- Open am image.
+
+- Select the multipoint tool.
+
+- Digitize the 14 landmarks you see above.
+
+- Measure the XY positions of these points (cmd/ctrl+m).
+
+- Select the macro tab and run the macro (cmd/ctrl+r).
+
+- Save the results to the appropriate directory.
+
+- Close the results and image tab (don’t save the image).
+]
+
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+## Data standardization: superimpositio
+
+
+
+
+
+.pull-left[
+- generalized Procrustes analaysis (GPA)
+
+![](https://bcorgbio.github.io/class/gpa.png)
+]
+.pull-right[
+![](3140_f24_9-30_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+]
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

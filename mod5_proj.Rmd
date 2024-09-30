@@ -489,7 +489,7 @@ Notice the the pairwise differences are returned both for the Procrustes shape v
 
 We have a preliminary answer to our first question, "Does habitat use predict different body shape?". But this of course could change with a larger sample of species. 
 
-```{r phy,message=FALSE}
+```{r phy,message=FALSE,eval=F,include=F}
 library(phytools)
 phy <- readNexus("data/shark_trees.nex")
 
@@ -512,18 +512,18 @@ summary(shark_pgls)
 
 ### Analysis Part III: Evolution in Parallel
 
-Our secondary question was, if you remember, was, "**Has the body shape of pelagic and benthic sharks evolved at the same rate?**". This is a much different question than the first. We want to know, overall, if the shape of lineages that invaded a particular habitat has evolved faster or slower than those invading another habitat. For this we'll turn to the `geomorph` package once again, in particular, its `compare.evol.rates()` function. This function calculates net rates of shape evolution for groups of species on a phylogeny from a set of aligned landmarks. The approach is based between-species differences in morphospace after phylogenetic transformation. In other words, after correcting for phylogenetic relatedness, it compares relative rates of shape evolution.
+Our secondary question was, if you remember, was, "**Has the body shape of pelagic and benthic sharks evolved at the same rate?**". This is a much different question than the first. We want to know, overall, if the shape of lineages that invaded a particular habitat has evolved faster or slower than those invading another habitat. For this we'll turn to the `geomorph` package once again, in particular, its `compare.evol.rates()` function. This function calculates net rates of shape evolution for groups of species on a phylogeny from a set of aligned landmarks. The approach is based on between-species differences in morphospace after phylogenetic transformation. In other words, after correcting for phylogenetic relatedness, it compares relative rates of shape change.
 
-Because we're correcting for phylogeny in this analysis, we need the [tree from @stein2018global mentioned above](data/shark_trees.nex). Once this tree file is downloaded, let's load read it in and store it to an object named `phy`. Notice you'll need the phytools package and the function `readNexus()`.
+Because we're correcting for phylogeny in this analysis, we need the [tree from @stein2018global mentioned above](data/shark_trees.nex). Once this tree file is downloaded, let's load, read it, in and store it to an object named `phy`. Notice you'll need the `phytools` package and the function `readNexus()`.
 
 
-```{r}
+```{r readphy}
 library(phytools)
 phy <- readNexus("data/shark_trees.nex")
 length(phy)
 ```
 
-Next let's, restrict our tree file to those species in our data set. For this, we'll used `ape`'s `keep.tip()` which keeps only the tips in a vector, in this case, the species in our PCA and landmakr analysis.
+Next let's, restrict our tree file to those species in our data set. For this, we'll used `ape`'s `keep.tip()` which keeps only the tips in a vector, in this case, the species in our PCA and landmark analysis.
 
 ```{r phydrop}
 phy2 <- keep.tip(phy,PCA$sp)
@@ -548,9 +548,9 @@ So it appears the benthic group body shape has evolved 1.6 times faster than the
 
 Also notice that in our rate analysis above, we used only one tree in this list (`phy=phy2[[1]]`). There are 499 other trees we could have used, perhaps each representing a different phylogenetic hypothesis. The results of a comparative analysis like this could, and likely will, vary according to the phylogenetic hypothesis used in it. So what to do? 
 
-This is a common problem faced by comparative biologists and, fortunately, there seems to be a consensus among us to repeat our comparative analysis using a random sample of trees in that represent the phylogenetic uncertainty. By repeating an analysis, we produce a series of results based on new parameters to our model. In this case, that new parameter would be a randomly sampled tree. This establishes what is akin to a [posterior sample](https://en.wikipedia.org/wiki/Posterior_probability) and from this we can extract a posterior distribution of estimates, in our case, a distribution of evolutionary rates.
+This is a common problem faced by comparative biologists and, fortunately, there seems to be a consensus among us to repeat our comparative analysis using a random sample or, ambitiouslu, all of the trees in that represent the phylogenetic uncertainty. By repeating an analysis, we produce a series of results based on new parameters (i.e., phylogenetic distance) to our model. In this case, the new parameters would include by using any or all of the trees. This establishes what is akin to a [posterior sample](https://en.wikipedia.org/wiki/Posterior_probability) and from this we can extract a posterior distribution of estimates, in our case, a distribution of evolutionary rates.
 
-Therefore, we have before us the proposition of repeating out analysis, let's say 10 times. To do this, we could randomly sample 10 of  trees and build a posterior distribution of evolutionary rates using a `for` loop. 
+Therefore, we have before us the proposition of repeating out analysis, let's say 10 times. To do this, we could randomly sample 10 of the and build a posterior distribution of evolutionary rates using a `for` loop. 
 
 ```{r loop,echo=T,message=F}
 
@@ -569,7 +569,7 @@ t <- system.time(for(i in 1:length(phy_sample)){
 ```
 
 Here we used `seet.seed()` to make the `sample()` function randomly sample the same set of 10 trees. This is important so that we can all perform the same exact analyses, that is, our analyses are repeatable. You'll notice that the loop uses each random tree to repeat the analysis and store the summary of the model (i.e., the rate comparisons) to the list `er_l`. Notice also that the entire loop is wrapped in `system.time()`. This is done so that, in this preliminary analysis, we can record how much time the loop took. Printing `t` reveals that it took 7 seconds. 
-Because our results are stored in a list, we can use `lapply()` extract the rate comparisons. `lapply()` takes a list and applies a function to. In our case, we need to encoded a custom function that extracts `sigma.d.gp` and `sigma.d.ratio`, the rate for each group and rate ratio between them, respectively. For this, we ask the function to work on every value of `er_l`, read in as `x`, then combine `sigma.d.gp` and `sigma.d.ratio` and store it in `er_` temporatily. We then apply a name to the third value "ratio", and ruturn the vector. `lapply()` returns a list, so we combine all elements of it using `do.call()`. We apply the row-binding function `rbind()` to the list using the pipe and `.` and lastly, make the output a data frame.
+Because our results are stored in a list, we can use `lapply()` to extract the rate comparisons. `lapply()` takes a list and applies a function to. In our case, we need to encoded a custom function that extracts `sigma.d.gp` and `sigma.d.ratio`, the rate for each group and rate ratio between them, respectively. For this, we ask the function to work on every value of `er_l`, read it as `x`, then combine `sigma.d.gp` and `sigma.d.ratio` and store it in `er_` temporarily. We then apply a name to the third value "ratio", and return the vector. `lapply()` returns a list, so we combine all elements of it using `do.call()`. We apply the row-binding function `rbind()` to the list using the pipe and `.` and lastly, make the output a data frame.
 
 
 ```{r erlist}
@@ -597,11 +597,11 @@ Indeed it appears that when we estimate evolutionary rates for 10 random trees, 
 
 Now, this is all well and good. But, most comparative biologists would argue 10 random trees does not a posterior make. We should probably sample many more or, perhaps use the entire set of trees. 
 
-What's to stop us? Well, if we shoot for the stars and use all 500 trees in 500 separate analyses, we'd be looking running a for loop 50 times longer than 10 trees took (roughly 350 s or 6 minutes, see figure below). In the world of comparative methods, this isn't such a long time, but remember, this is a preliminary analysis of only 90 or so of the 220 we hope to include. The figure below indicates that including all 220 species and using all 500 trees would take ~2500 s or about 40 minutes!!!
+What's to stop us? Well, if we shoot for the stars and use all 500 trees in 500 separate analyses, we'd be looking at running a for loop 50 times longer than 10 trees took (roughly 350 s or 6 minutes, see figure below). In the world of comparative methods, this isn't such a long time, but remember, this is a preliminary analysis of only 90 or so of the 220 we hope to include. The figure below indicates that including all 220 species and using all 500 trees would take ~2500 s or about 40 minutes!!!
 
 <br>
 
-```{r timescale,echo=F}
+```{r timescale,echo=F,include=F}
 library(wesanderson)
 library(ggsci)
 
@@ -676,7 +676,7 @@ We should, therefore, be prepared for the long haul. But, hold on. I don't know 
 
 `R` has several packages for parallel computing. Perhaps the most used is `parallel`, so cleverly named. Let's work on an example of how a task could be parallelized using `parallel`'s `mclappy()` function.
 
-`mclapply` is simply an extension of `lapply()`that takes the tasks performed on each item in a list and spreads the tasks across multiple cores on a computer. This is perfect for embarrassingly parallel problems.
+`mclapply` is simply an extension of `lapply()` that takes the tasks performed on each item in a list and spreads the tasks across multiple cores on a computer. This is perfect for embarrassingly parallel problems.
 
 For example, say we wanted to do something that's simple, but takes just a little bit of time, like generation 10 million random values from a normal distribution (`mean=0`, `sd=1`) any number of times. Let's encode a function that does this and allows one to specify how many times to do it. 
 
@@ -686,7 +686,7 @@ my_fun <- function(x){for(i in x) rnorm(1e7)}
 
 ```
 
-For comparison, let's first use the non-parallel `lapply()` to run the function 30 times and then use `mclapply()` to do the same. Notice that we've used `system.time()` to capture the duration of the operations. Also notice that we used `parallel`'s `detectCores()` to detect the number of cores on the machine and we subtracted 2 from this value. Must modern laptops and desktops have $>$6 cores, but we don't want all of them to be used by the operation. We should leave a few cores that the computer can use for operations running in the background.
+For comparison, let's first use the non-parallel `lapply()` to run the function 30 times and then use `mclapply()` to do the same. Notice that we've again used `system.time()` to capture the duration of the operations. Also notice that we used `parallel`'s `detectCores()` to detect the number of cores on the machine and we subtracted 2 from this value. Must modern laptops and desktops have $>$6 cores, but we don't want all of them to be used by the operation. We should leave a few cores that the computer can use for operations running in the background.
 
 ```{r para,cache=T}
 t_nomc <- system.time(lapply(1:30,my_fun))
@@ -703,22 +703,22 @@ As you can see, the parallelized operation was about 6 times faster than `lapply
 
 # Project Report
 
-Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following:
+Please submit your report and all associated data to your team GitHub repository as an .Rmd document with HTML output that addresses the following:
 
 
   * Establish an array suitable for analysis using the `geomorph` functions outlined above. Construct this from all specimens digitized in [this directory](data/class_landmark_data.zip) and Procrustes align them.
   * Does habitat result in the occupation of a different morphospace? Please answer this question using a `ggplot`-rendered morphospace based on the first two PCs from a principal components analysis of your alignment.
   * Is there morphological disparity between habitats?
-  * Is the rate of morphological evolution significantly different between different habitat types? Please be sure that
-    1. This question based on a posterior distribution of rates based on all 500 phylogenetic trees.
-    2. The distribution of rate estimates is create through the use of a parallelization of your analysis.
-    3. You assess the statistical significance using a simple two-sided t-test (i.e. `t.test()`).
+  * Is the rate of morphological evolution significantly different between different habitat types?
+    1. Answer this question based on a posterior distribution of rates based on all 500 phylogenetic trees.
+    2. Make sure the distribution of rate estimates is create through the use of a parallelization of your analysis.
+    3. Please assess the statistical significance of habitat on the distribution using a simple two-sided t-test (i.e. `t.test()`).
     
-  * What inferences with regards to ecology and behavior can you make concerning the relationship between habitat and both shape and rates of morphological evolution? Please be sure to answer these questions based on both PC1 and PC2 shape scores.
+  * What inferences with regards to ecology and behavior can you make concerning the relationship between habitat and both shape and rates of morphological evolution? 
 
 
 
-In answering your question, your .Rmd should include the following components:
+In answering your questions, your .Rmd should include the following components:
 
    * A YAML header that specifies HTML output, the authors, and a bibliography named "BIOL3140.bib". **Submit this bibliography as well!**
    * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially:

@@ -4,7 +4,7 @@
     <title>Phase II: Using Our Toolbox</title>
     <meta charset="utf-8" />
     <meta name="author" content="Dr. Christopher Kenaley" />
-    <script src="libs/header-attrs-2.22/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.28/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 # Phase II: Using Our Toolbox
 ]
 .subtitle[
-## Module 6: The Shape of Pretty Things
+## Module 5: SHARK!
 ]
 .author[
 ### Dr. Christopher Kenaley
@@ -25,7 +25,7 @@ class: center, middle, inverse, title-slide
 ### Boston College
 ]
 .date[
-### 2021/10/10
+### 2024/9/30
 ]
 
 ---
@@ -34,6 +34,13 @@ class: inverse, top
 # In class today 
 
 
+```
+## Warning: package 'kableExtra' was built under R version 4.2.3
+```
+
+```
+## Warning: package 'ape' was built under R version 4.2.3
+```
 
 &lt;!-- Add icon library --&gt;
 &lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"&gt;
@@ -42,7 +49,7 @@ class: inverse, top
 .pull-left[
 Today we'll ....
 
-- Kick off Module 6
+- Kick off Module 5 (New Phase!!)
 
 - Introduce imageJ/FIJI
 
@@ -177,14 +184,26 @@ class: inverse, top
 
 .pull-left[
 
-- Outline shapes of each wing
+- Using multipoint tool, digitize 14 points
 - Worflow
-- Fit spline using a macro
+- Use macro to save file
 
 ]
 
 .pull-right[
-![](lep_workflow.jpeg)
+- Open am image.
+
+- Select the multipoint tool.
+
+- Digitize the 14 landmarks you see above.
+
+- Measure the XY positions of these points (cmd/ctrl+m).
+
+- Select the macro tab and run the macro (cmd/ctrl+r).
+
+- Save the results to the appropriate directory.
+
+- Close the results and image tab (don’t save the image).
 ]
 
 
@@ -195,6 +214,121 @@ class: inverse, top
 ## Shape Analysis
 
 
+
+
+```
+## file
+## shark_points/Acnig_u0.gif_.csv shark_points/Alpel_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Alsup_u0.gif_.csv shark_points/Alvul_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Apbru_u1.gif_.csv shark_points/Aplau_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Apmac_u0.gif_.csv shark_points/Apman_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Apmel_m0.gif_.csv shark_points/Appla_u1.gif_.csv 
+##                             14                             14 
+## shark_points/Appro_u0.gif_.csv shark_points/Apsin_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Atbal_f0.jpg_.csv shark_points/Atfas_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Atmar_f0.jpg_.csv shark_points/Atmar_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Aulab_u0.gif_.csv shark_points/Brwad_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Caalb_u1.gif_.csv shark_points/Caamb_u2.gif_.csv 
+##                             14                             14 
+## shark_points/Cabra_u0.gif_.csv shark_points/Cacar_u1.gif_.csv 
+##                             14                             14 
+## shark_points/Cafal_u1.gif_.csv shark_points/Caleu_u1.gif_.csv 
+##                             14                             14 
+## shark_points/Calim_u1.gif_.csv shark_points/Camel_u1.gif_.csv 
+##                             14                             14 
+## shark_points/Caplu_u0.gif_.csv shark_points/Casor_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Catau_u1.gif_.csv shark_points/Catil_u1.gif_.csv 
+##                             14                             14 
+## shark_points/Ceatr_u0.gif_.csv shark_points/Cecoe_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Cecre_u0.gif_.csv shark_points/Cefab_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Cegra_u0.gif_.csv shark_points/Cegra_u1.gif_.csv 
+##                             14                             14 
+## shark_points/Cehar_u0.gif_.csv shark_points/Cehis_m0.jpg_.csv 
+##                             14                             14 
+## shark_points/Ceiso_u0.gif_.csv shark_points/Celat_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Cemax_u1.gif_.csv shark_points/Cenig_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Ceows_u0.gif_.csv shark_points/Cerit_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Cesil_u0.gif_.csv shark_points/Cesqu_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Cevar_j0.jpg_.csv shark_points/Ceven_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Chang_u0.gif_.csv shark_points/Chgri_u1.gif_.csv 
+##                             14                             14 
+## shark_points/Chhas_j0.gif_.csv shark_points/Chind_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Chmac_u5.gif_.csv shark_points/Chpla_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Chpun_u3.gif_.csv shark_points/Cibar_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Dalic_u0.gif_.csv shark_points/Dehys_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Depro_u0.gif_.csv shark_points/Dequa_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Ecbru_u0.gif_.csv shark_points/Eccoo_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Etbra_u0.gif_.csv shark_points/Etgra_u1.gif_.csv 
+##                             14                             14 
+## shark_points/Etmol_u0.gif_.csv shark_points/Etpol_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Etpri_u0.gif_.csv shark_points/Etsch_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Etspi_u0.gif_.csv shark_points/Etuni_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Eubis_u0.gif_.csv shark_points/Eublo_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Eudas_u0.gif_.csv shark_points/Fumac_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Gaboa_u0.gif_.csv shark_points/Gacuv_u1.gif_.csv 
+##                             14                             14 
+## shark_points/Gaeas_u0.gif_.csv shark_points/Gamel_u1.gif_.csv 
+##                             14                             14 
+## shark_points/Gamur_u0.gif_.csv shark_points/Gapol_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Gasau_u0.gif_.csv shark_points/Gicir_u1.gif_.csv 
+##                             14                             14 
+## shark_points/Glgan_u0.gif_.csv shark_points/Glgly_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Hacan_u0.gif_.csv shark_points/Hadaw_u0.gif_.csv 
+##                             14                             14 
+## shark_points/Hecol_u0.gif_.csv shark_points/Sqasp_u0.gif_.csv 
+##                             14                             14 
+##   shark_points/Sqaus1.jpg_.csv    shark_points/Sqsq1.jpg_.csv 
+##                             14                             14 
+## shark_points/Trscy_u0.gif_.csv 
+##                             14
+```
+
+```
+## 
+## Performing GPA
+## 
+  |                                                                            
+  |                                                                      |   0%
+  |                                                                            
+  |==================                                                    |  25%
+  |                                                                            
+  |===================================                                   |  50%
+  |                                                                            
+  |====================================================                  |  75%
+  |                                                                            
+  |======================================================================| 100%
+## 
+## Making projections... Finished!
+```
 
 ![](3140_f23_10-10_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
 
@@ -212,15 +346,6 @@ class: inverse, top
 
 .pull-left[
 
-```r
-min &lt;- out %&gt;% 
-  coo_nb() %&gt;% 
-  min()
-
-align_out &lt;- out %&gt;%
-  coo_interpolate(min) %&gt;% 
-  fgProcrustes()
-```
 ]
 
 .pull-right[
@@ -238,12 +363,6 @@ class: inverse, top
 
 
 
-```r
-align_out %&gt;% 
-  stack
-```
-
-![](3140_f23_10-10_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
 
 
 &lt;!-- https://link.springer.com/article/10.1007/s00414-017-1555-0/figures/3 --&gt;
