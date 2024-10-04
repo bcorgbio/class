@@ -1,0 +1,247 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 5: SHARK!"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2024/10/4"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE,warning=F}
+library(tidyverse)
+library(kableExtra)
+library(ape)
+library(phytools)
+library(geomorph)
+library(abind)
+
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Review WCR5 
+
+- Working in `geomorph`
+  - the good
+  - the bad
+  - the ugly
+
+- Principle Components Analyis
+
+]
+
+.pull-right[
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Full_Shot_of_a_Caribbean_Reef_Shark_at_Tiger_Beach_Bahamas.jpg/1600px-Full_Shot_of_a_Caribbean_Reef_Shark_at_Tiger_Beach_Bahamas.jpg)
+]
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## WCR5
+
+.pull-left[
+
+- Code: Copy and paste is ok, just know what it's doing
+- Staying on task
+
+
+]
+
+.pull-right[
+![](https://i0.wp.com/www.bwhneurosciences.org/wp-content/uploads/2020/06/1200px-FIJI_software_Logo.svg_.png)
+]
+
+
+---
+class: inverse, top
+## Working in `geomorph`
+
+.pull-left[
+
+- Hugely influential
+  - 2000+ citations
+  
+- One stop shopping: 
+  - digitization/landmarking
+  - superimposition (GPA)
+  - analysis (PCA, comparative methods)
+  - visualizaton (plotting)
+
+- Landmark analysis based on non-intuitive arrays ("p x k x n")
+- Functions not pipe (`%>%`) friendly
+- Graphical outputs use base graphics
+
+
+
+
+]
+
+.pull-right[
+
+```{r}
+print(plethodon$land[1:3,,1:2])
+```
+]
+
+---
+class: inverse, top
+## Working in `geomorph`
+
+.pull-left[
+
+- Hugely influential
+  - 2000+ citations
+  
+- One stop shopping: 
+  - digitization/landmarking
+  - superimposition (GPA)
+  - analysis (PCA, comparative methods)
+  - visualizaton (plotting)
+
+- Landmark analysis based on non-intuitive arrays ("p x k x n")
+- Functions mostly, but not not always pipe (`%>%`) friendly
+- Graphical outputs use base graphics
+
+
+
+
+]
+
+.pull-right[
+
+
+```{r,message=F,eval=FALSE}
+plethodon$land %>% 
+  gpagen(verbose = F) %>% 
+  plot()
+  
+```
+```{r,message=F,echo=FALSE,results="hide"}
+plethodon$land %>% 
+  gpagen(verbose = F) %>% 
+  plot()
+  
+```
+]
+
+---
+class: inverse, top
+## Working in `geomorph`
+
+.pull-left[
+
+- Hugely influential
+  - 2000+ citations
+  
+- One stop shopping: 
+  - digitization/landmarking
+  - superimposition (GPA)
+  - analysis (PCA, comparative methods)
+  - visualizaton (plotting)
+
+- Landmark analysis based on non-intuitive arrays ("p x k x n")
+- Functions mostly, but not not always pipe (`%>%`) friendly
+- Graphical outputs use base graphics
+
+
+
+
+]
+
+.pull-right[
+
+Try this . . .
+
+```{r,eval=F}
+plethodon$land %>% 
+  gpagen() %>%
+  gm.prcomp() %>% 
+  plot()
+  
+```
+]
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## PCA
+
+
+.pull-left[
+
+- Reduces dimensions of data
+  - 10s, 100s variables into components
+
+- Iterative
+  - "draws" vectors through original data
+  - each successive vector represents a component of decreasing variance
+
+
+]
+
+.pull-right[
+![](https://miro.medium.com/v2/resize:fit:1192/format:webp/1*QinDfRawRskupf4mU5bYSA.png)
+]
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## PCA
+
+
+.pull-left[
+
+- Reduces dimensions of data
+  - 10s, 100s variables into components
+
+- Iterative
+  - "draws" vectors through original data
+  - each successive vector represents a component of decreasing variance
+
+
+]
+
+.pull-right[
+![](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*LKTwaVmP4Dqxb-N3iD3CHw.png)
+]
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## PCA
+
+
+.pull-left[
+
+![](https://miro.medium.com/v2/resize:fit:1192/format:webp/1*QinDfRawRskupf4mU5bYSA.png)
+]
+
+.pull-right[
+![](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*LKTwaVmP4Dqxb-N3iD3CHw.png)
+]
+
+
+
+
+

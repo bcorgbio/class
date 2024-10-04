@@ -62,8 +62,7 @@ f_student <- gsub("_.csv","",list.files("shark_points"))
 
 shark_dat <- fb_res %>% 
   left_join(shark_dat_) %>% 
-  select(sp,file_name,habitat) %>% 
-  filter(file_name %in% f_student) %>% 
+  #filter(file_name %in% f_student) %>% 
   mutate(habitat=ifelse(habitat=="demersal","benthic",habitat))
 
 write_csv(shark_dat,"data/shark_data.csv")
@@ -194,7 +193,7 @@ From @sternes2020body who found sharks could be assigned two morphotype groups: 
 
 Although the work of @thomson1977body and later @sternes2020body points to interesting patterns in shark body-shape, neither study explicitly studied the role habitat---that is, pelagic or benthic---had in influencing the evolution body-shape evolution. In particular, @sternes2020body merely observed that their two groups with different body shapes often varied in their habitat preference. In addition, @sternes2020body made no explicit, quantitative phylogenetic test of their patterns. This leaves open an important question: **Do pelagic and benthic sharks have significantly different body shape?** Subsequently, we might also ask, **Has the morphology of pelagic and benthic sharks evolved at the same rate?** These are the questions we will take on in this project.
 
-These questions represent two an important thrust of evolutionary research: what macroevolutionary events have contributed to a diversity in phenotype. To answer question like these requires that we essentially recapitulate the @sternes2020body body-shape data set using landmark-based [geometric morphometrics](https://en.wikipedia.org/wiki/Morphometrics#Landmark-based_geometric_morphometrics). This is a relatively straightforward, if tedious, method of capturing shape variation in a group of interest. For this, you'll digitize 14 homologous landmarks on images of some 220 species of sharks. Using the best practices in the field of geometric morphometrics to align our landlandmarks and extract shape information, we'll assess morphological disparity in a phylogenetic framework and assess the difference in rates of morphological evolution between the groups between pelagic and benthic sharks. 
+These questions represent two an important thrust of evolutionary research: what macroevolutionary events have contributed to diversity, whether in species or phenotype. To answer questions like these requires that we essentially recapitulate the @sternes2020body body-shape data set using landmark-based [geometric morphometrics](https://en.wikipedia.org/wiki/Morphometrics#Landmark-based_geometric_morphometrics). This is a relatively straightforward, if tedious, method of capturing shape variation in a group of interest. For this, you'll digitize 14 homologous landmarks on images of some 220 species of sharks. Using the best practices in the field of geometric morphometrics to align our landlandmarks and extract shape information, we'll assess morphological disparity in a phylogenetic framework and assess the difference in rates of morphological evolution between the groups between pelagic and benthic sharks. 
 
 # Methods
 
@@ -204,9 +203,11 @@ A few decades ago, a morphometric project like this would require visiting museu
 
 We'll make use of shark images in the [FishBase](https://www.fishbase.us/) catalog: a clearing house of all things fish that has amassed tons of data from the scientific literature. Prof. Kenaley used the `rfishbase` package to rip images of scientific drawings of sharks. This resulted in a cache of images for the ~220 species included in a recent phylogeny of the elasmobranchs (@stein2018global).
 
-## Species list and phylogeny
+## Species list, phylogeny, and ecology
 
-The 200+ species we'll analyze in the study were chosen because they had decent images on FishBase and cover the nooks and crannies of the @stein2018global phylogeny, giving a broad sample of the group. As we move on, we'll use [this table](data/shark_data.csv) to keep track of images we need to landmark, the species the images belongs to, and the habitat for each. Let's load these data now so we have it handy.
+The 200+ species we'll analyze in the study were chosen because they had decent images on FishBase and cover the nooks and crannies of the @stein2018global phylogeny, giving a broad sample of the group. As we move on, we'll use [this table](data/shark_data.csv) to keep track of images we need to landmark, the species the images belongs to, and the habitat for each.The habitat data for our study come from @compagno1984sharks and @compagno2001sharks. Let's load these data now so we have it handy.
+
+
 
 
 ```{r sharkdat}
@@ -706,7 +707,7 @@ As you can see, the parallelized operation was about 6 times faster than `lapply
 Please submit your report and all associated data to your team GitHub repository as an .Rmd document with HTML output that addresses the following:
 
 
-  * Establish an array suitable for analysis using the `geomorph` functions outlined above. Construct this from all specimens digitized in [this directory](data/class_landmark_data.zip) and Procrustes align them.
+  * Establish an array suitable for analysis using the `geomorph` functions outlined above. Construct this from all specimens digitized in [this directory](data/class_landmark_data.zip) and Procrustes align them (**note:** this will be available soon after all landmark data is collected).
   * Does habitat result in the occupation of a different morphospace? Please answer this question using a `ggplot`-rendered morphospace based on the first two PCs from a principal components analysis of your alignment.
   * Is there morphological disparity between habitats?
   * Is the rate of morphological evolution significantly different between different habitat types?

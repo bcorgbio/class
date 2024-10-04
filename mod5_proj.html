@@ -578,10 +578,10 @@ ask, <strong>Has the morphology of pelagic and benthic sharks evolved at
 the same rate?</strong> These are the questions we will take on in this
 project.</p>
 <p>These questions represent two an important thrust of evolutionary
-research: what macroevolutionary events have contributed to a diversity
-in phenotype. To answer question like these requires that we essentially
-recapitulate the <span class="citation">Sternes and Shimada
-(2020)</span> body-shape data set using landmark-based <a
+research: what macroevolutionary events have contributed to diversity,
+whether in species or phenotype. To answer questions like these requires
+that we essentially recapitulate the <span class="citation">Sternes and
+Shimada (2020)</span> body-shape data set using landmark-based <a
 href="https://en.wikipedia.org/wiki/Morphometrics#Landmark-based_geometric_morphometrics">geometric
 morphometrics</a>. This is a relatively straightforward, if tedious,
 method of capturing shape variation in a group of interest. For this,
@@ -613,15 +613,18 @@ images of scientific drawings of sharks. This resulted in a cache of
 images for the ~220 species included in a recent phylogeny of the
 elasmobranchs (<span class="citation">Stein et al. (2018)</span>).</p>
 </div>
-<div id="species-list-and-phylogeny" class="section level2">
-<h2>Species list and phylogeny</h2>
+<div id="species-list-phylogeny-and-ecology" class="section level2">
+<h2>Species list, phylogeny, and ecology</h2>
 <p>The 200+ species we’ll analyze in the study were chosen because they
 had decent images on FishBase and cover the nooks and crannies of the
 <span class="citation">Stein et al. (2018)</span> phylogeny, giving a
 broad sample of the group. As we move on, we’ll use <a
 href="data/shark_data.csv">this table</a> to keep track of images we
 need to landmark, the species the images belongs to, and the habitat for
-each. Let’s load these data now so we have it handy.</p>
+each.The habitat data for our study come from <span
+class="citation">Compagno (1984)</span> and <span
+class="citation">Compagno (2001)</span>. Let’s load these data now so we
+have it handy.</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.1     ✔ readr     2.1.4
@@ -634,10 +637,11 @@ each. Let’s load these data now so we have it handy.</p>
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 <pre class="r"><code>shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;)</code></pre>
-<pre><code>## Rows: 91 Columns: 3
+<pre><code>## Rows: 91 Columns: 8
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr (3): sp, file_name, habitat
+## chr (5): sp, file_name, depth, habitat, ref
+## dbl (3): id, size, depth_max
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
@@ -1019,20 +1023,20 @@ in <code>pca$x</code>. This can be done thusly:</p>
   left_join(shark_dat)</code></pre>
 <pre><code>## Joining with `by = join_by(sp)`</code></pre>
 <pre class="r"><code>head(PCA)</code></pre>
-<pre><code>##         Comp1       Comp2      Comp3        Comp4                     sp
-## 1  0.06258856  0.03252442 0.03356723 -0.019825631         Aculeola nigra
-## 2  0.10109723 -0.31064490 0.11745778 -0.016213252      Alopias pelagicus
-## 3  0.03327460 -0.17242372 0.13482941  0.020733446  Alopias superciliosus
-## 4  0.10639978 -0.30795668 0.08076650  0.003565676       Alopias vulpinus
-## 5 -0.13126591 -0.01146547 0.21487943 -0.048498099    Apristurus brunneus
-## 6 -0.12314775 -0.06309869 0.01389941  0.003318482 Apristurus laurussonii
-##      file_name habitat
-## 1 Acnig_u0.gif benthic
-## 2 Alpel_u0.gif pelagic
-## 3 Alsup_u0.gif pelagic
-## 4 Alvul_u0.gif pelagic
-## 5 Apbru_u1.gif benthic
-## 6 Aplau_u0.gif benthic</code></pre>
+<pre><code>##         Comp1       Comp2      Comp3        Comp4                     sp   id
+## 1  0.06258856  0.03252442 0.03356723 -0.019825631         Aculeola nigra  644
+## 2  0.10109723 -0.31064490 0.11745778 -0.016213252      Alopias pelagicus 5891
+## 3  0.03327460 -0.17242372 0.13482941  0.020733446  Alopias superciliosus 2534
+## 4  0.10639978 -0.30795668 0.08076650  0.003565676       Alopias vulpinus 2535
+## 5 -0.13126591 -0.01146547 0.21487943 -0.048498099    Apristurus brunneus  763
+## 6 -0.12314775 -0.06309869 0.01389941  0.003318482 Apristurus laurussonii  770
+##      file_name     depth habitat size  ref depth_max
+## 1 Acnig_u0.gif   110-560 benthic   60 &lt;NA&gt;       560
+## 2 Alpel_u0.gif     0-152 pelagic  330 &lt;NA&gt;       152
+## 3 Alsup_u0.gif     0-500 pelagic  461 &lt;NA&gt;       500
+## 4 Alvul_u0.gif     0-366 pelagic  549 &lt;NA&gt;       366
+## 5 Apbru_u1.gif     0-950 benthic   68 &lt;NA&gt;       950
+## 6 Aplau_u0.gif 560 -1462 benthic   68 &lt;NA&gt;      1462</code></pre>
 <p>With that over with, we can dispence with the ugly PCA plots above
 and use <code>ggplot</code> to visualize our results with repsect to
 habitat.</p>
@@ -1542,7 +1546,8 @@ following:</p>
 <li>Establish an array suitable for analysis using the
 <code>geomorph</code> functions outlined above. Construct this from all
 specimens digitized in <a href="data/class_landmark_data.zip">this
-directory</a> and Procrustes align them.</li>
+directory</a> and Procrustes align them (<strong>note:</strong> this
+will be available soon after all landmark data is collected).</li>
 <li>Does habitat result in the occupation of a different morphospace?
 Please answer this question using a <code>ggplot</code>-rendered
 morphospace based on the first two PCs from a principal components
@@ -1599,6 +1604,16 @@ contributed to the project.</li>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-compagno1984sharks" class="csl-entry">
+Compagno, Leonard JV. 1984. <span>“Sharks of the World. An Annotated and
+Illustrated Catalogue of Sharks Species Known to Date.”</span> Food
+&amp; Agriculture Org.
+</div>
+<div id="ref-compagno2001sharks" class="csl-entry">
+———. 2001. <em>Sharks of the World: An Annotated and Illustrated
+Catalogue of Shark Species Known to Date</em>. Vol. 4–Pt 2. Food &amp;
+Agriculture Org.
+</div>
 <div id="ref-grogan2012origin" class="csl-entry">
 Grogan, Eileen D, Richard Lund, and Emily Greenfest-Allen. 2012.
 <span>“The Origin and Relationships of Early Chondrichthyans.”</span>
