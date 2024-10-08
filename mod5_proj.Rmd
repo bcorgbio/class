@@ -344,7 +344,7 @@ shark_sp <- xy$sp %>% unique
 for(i in shark_sp){
   ldk_l[[i]] <- xy %>% 
     filter(sp==i) %>% 
-    select(X,Y)
+    select(X,Y) %>% 
     data.frame
 }
 
