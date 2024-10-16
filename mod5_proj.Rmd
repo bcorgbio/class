@@ -734,4 +734,15 @@ Project reports should be uploaded by 11:59 PM on Sunday, October 20th.
 
 # References
 
+```{r,eval=F,include=F}
+er_fun <- function(x){
+  er <- compare.evol.rates(
+    A=ldk_al$coords, 
+    phy=x, 
+    method="simulation",
+    gp=gp_hab)
+}
+
+er_l <- mclapply(phy2[1:2],er_fun,mc.cores = detectCores()-2)
+```
 

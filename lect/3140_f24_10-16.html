@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Phase II: Using Our Toolbox</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Christopher Kenaley" />
+    <script src="libs/header-attrs-2.28/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Phase II: Using Our Toolbox
+]
+.subtitle[
+## Module 5: SHARK!
+]
+.author[
+### Dr. Christopher Kenaley
+]
+.institute[
+### Boston College
+]
+.date[
+### 2024/10/16
+]
+
+---
+
+class: inverse, top
+# In class today 
+
+
+
+&lt;!-- Add icon library --&gt;
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"&gt;
+
+
+.pull-left[
+Today we'll ....
+
+- Review WCR7 
+
+- Compare evolutionary rates
+
+- Break down parallel processing
+
+]
+
+.pull-right[
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Full_Shot_of_a_Caribbean_Reef_Shark_at_Tiger_Beach_Bahamas.jpg/1600px-Full_Shot_of_a_Caribbean_Reef_Shark_at_Tiger_Beach_Bahamas.jpg)
+]
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+## WCR7
+
+.pull-left[
+
+- To R studio
+
+
+]
+
+
+
+
+---
+class: inverse, top
+## Morphological disparity
+
+.pull-left[
+
+Do groups evolve at similar rates?
+  
+ `compare.evol.rates()`
+ 
+- estimated as net rates of Procrustes shape evolution:
+  - Brownian motion model
+  - GPA aligned data (`A`)
+  - names groups vector (`gp`)
+  - phylogeny (`phy`)
+  - outputs ratio
+  
+]
+
+
+
+
+
+``` r
+phy &lt;- readNexus("shark_trees.nex")
+phy2 &lt;- keep.tip(phy,PCA$sp)
+gp_hab &lt;- PCA$habitat
+names(gp_hab) &lt;- PCA$sp
+er &lt;- compare.evol.rates(
+  A=ldk_al$coords, 
+  phy=phy2[[1]], 
+  method="simulation",
+  gp=gp_hab)
+}
+```
+
+
+---
+class: inverse, top
+## Sloooooow
+
+.pull-left[
+
+
+comparative analyses can be really slow!
+  
+- we have ~200 sp
+- 500 different trees to consider
+
+
+
+.pull-right[
+
+
+![](https://bcorgbio.github.io/class/mod5_proj_files/figure-html/timescale-1.png)
+  
+
+]
+
+
+
+---
+class: inverse, top
+## Let's go parallel
+
+Many options for parallel in r
+  
+- `doParallel`
+- `parallel`*
+
+allows processing with multiple cores
+  - run a function in embarrasingly parallel way with `mcapply()`
+
+
+``` r
+my_fun &lt;- function(x) {
+    for (i in x) rnorm(1e+07)
+}
+t_nomc &lt;- system.time(lapply(1:30, my_fun))
+t_mc &lt;- system.time(mclapply(1:30, my_fun,
+    mc.cores = detectCores() - 2))  #8 cores
+print(rbind(t_nomc, t_mc))
+```
+
+```
+##        user.self sys.self elapsed user.child sys.child
+## t_nomc     7.823    0.182   8.182      0.000      0.00
+## t_mc       0.003    0.010   1.456      6.515      0.57
+```
+
+
+
+---
+class: inverse, top
+## Let's go parallel
+
+allows processing with multiple cores
+  - Need a custom function that receives `X`
+  - What should `X` be?
+  
+
+``` r
+er_fun &lt;- function(x) {
+    er &lt;- compare.evol.rates(A = ldk_al$coords,
+        phy = x, method = "simulation", gp = gp_hab)
+}
+
+er_l &lt;- mclapply(phy2[1:2], er_fun, mc.cores = detectCores() -
+    2)
+```
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

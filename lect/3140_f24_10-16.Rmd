@@ -1,0 +1,175 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 5: SHARK!"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2024/10/16"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE,warning=F}
+library(tidyverse)
+library(kableExtra)
+library(ape)
+library(phytools)
+library(geomorph)
+library(abind)
+library(parallel)
+knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 40), tidy = TRUE)
+
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Review WCR7 
+
+- Compare evolutionary rates
+
+- Break down parallel processing
+
+]
+
+.pull-right[
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Full_Shot_of_a_Caribbean_Reef_Shark_at_Tiger_Beach_Bahamas.jpg/1600px-Full_Shot_of_a_Caribbean_Reef_Shark_at_Tiger_Beach_Bahamas.jpg)
+]
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## WCR7
+
+.pull-left[
+
+- To R studio
+
+
+]
+
+
+
+
+---
+class: inverse, top
+## Morphological disparity
+
+.pull-left[
+
+Do groups evolve at similar rates?
+  
+ `compare.evol.rates()`
+ 
+- estimated as net rates of Procrustes shape evolution:
+  - Brownian motion model
+  - GPA aligned data (`A`)
+  - names groups vector (`gp`)
+  - phylogeny (`phy`)
+  - outputs ratio
+  
+]
+
+
+
+
+```{r,eval=F, tidy=TRUE}
+phy <- readNexus("shark_trees.nex")
+phy2 <- keep.tip(phy,PCA$sp)
+gp_hab <- PCA$habitat
+names(gp_hab) <- PCA$sp
+er <- compare.evol.rates(
+  A=ldk_al$coords, 
+  phy=phy2[[1]], 
+  method="simulation",
+  gp=gp_hab)
+}
+
+```
+
+
+---
+class: inverse, top
+## Sloooooow
+
+.pull-left[
+
+
+comparative analyses can be really slow!
+  
+- we have ~200 sp
+- 500 different trees to consider
+
+
+
+.pull-right[
+
+
+![](https://bcorgbio.github.io/class/mod5_proj_files/figure-html/timescale-1.png)
+  
+
+]
+
+
+
+---
+class: inverse, top
+## Let's go parallel
+
+Many options for parallel in r
+  
+- `doParallel`
+- `parallel`*
+
+allows processing with multiple cores
+  - run a function in embarrasingly parallel way with `mcapply()`
+
+```{r,eval=TRUE,cache=T}
+my_fun <- function(x){for(i in x) rnorm(1e7)}
+t_nomc <- system.time(lapply(1:30,my_fun))
+t_mc <- system.time(mclapply(1:30,my_fun,mc.cores = detectCores()-2)) #8 cores
+print(rbind(t_nomc,t_mc))
+
+```
+
+
+
+---
+class: inverse, top
+## Let's go parallel
+
+allows processing with multiple cores
+  - Need a custom function that receives `X`
+  - What should `X` be?
+  
+```{r,eval=F}
+er_fun <- function(x){
+  er <- compare.evol.rates(
+    A=ldk_al$coords, 
+    phy=x, 
+    method="simulation",
+    gp=gp_hab)
+}
+
+er_l <- mclapply(phy2[1:2],er_fun,mc.cores = detectCores()-2)
+
+```
+
+
+
+
+
+
+
