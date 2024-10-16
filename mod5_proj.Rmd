@@ -58,11 +58,11 @@ fb_res <- readRDS("data/shark_fb_res.RDS") %>%
 ###https://bilderreich.de/1634/fact-sheet-angelshark-squatina-squatina.html
 ###https://fishesofaustralia.net.au/home/species/3283
  
-f_student <- gsub("_.csv","",list.files("shark_points"))
+f_student <- gsub("_.csv","",list.files("data/shark_points"))
 
 shark_dat <- fb_res %>% 
   left_join(shark_dat_) %>% 
-  #filter(file_name %in% f_student) %>% 
+  filter(file_name %in% f_student) %>% 
   mutate(habitat=ifelse(habitat=="demersal","benthic",habitat))
 
 write_csv(shark_dat,"data/shark_data.csv")
@@ -294,7 +294,7 @@ saveAs("Results", dir+f+"_.csv");
 
 This script saves the results as a *tab-separated* text file with same filname as the image file name and appends "_.csv".  **This is super important!!** and how we'll link the landmarks to a species.
 
-After your team has completed landmarking the assigned species, upload your text files to [this directory](https://drive.google.com/drive/folders/1j7sod1NB1jmEiPiduYvOOIlukkMikfL5?usp=sharing).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required (i.e., file-name checks, quality, etc.). You can then download [these evaluated data](data/class_out_data_f23.zip) for shape analysis.
+After your team has completed landmarking the assigned species, upload your text files to [this directory](https://drive.google.com/drive/folders/1j7sod1NB1jmEiPiduYvOOIlukkMikfL5?usp=sharing).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required (i.e., file-name checks, quality, etc.). You can then download [these evaluated data](data/shark_points.zip) for shape analysis.
 
 ### Superimposition
 
@@ -309,7 +309,7 @@ Note: **these are just examples**. You will need to download the full data set e
 
 To get started with superimposition, let's load the packages `geomorph` and `abind`. When you unzip the `shark_points.zip` directory to you project directory, you have a folder named `shark_points`. Our first operation will be to list the files in that directory and then read them in, all at once.
 
-```{r exdata}
+```{r, exdata}
 library(geomorph)
 library(abind)
 
@@ -348,6 +348,7 @@ for(i in shark_sp){
     data.frame
 }
 
+names(ldk_l)
 
 ldk <-  abind(ldk_l, along=3)
 
@@ -602,7 +603,7 @@ What's to stop us? Well, if we shoot for the stars and use all 500 trees in 500 
 
 <br>
 
-```{r timescale,echo=F,include=F}
+```{r timescale,echo=F,include=T}
 library(wesanderson)
 library(ggsci)
 
@@ -707,7 +708,7 @@ As you can see, the parallelized operation was about 6 times faster than `lapply
 Please submit your report and all associated data to your team GitHub repository as an .Rmd document with HTML output that addresses the following:
 
 
-  * Establish an array suitable for analysis using the `geomorph` functions outlined above. Construct this from all specimens digitized in [this directory](data/class_landmark_data.zip) and Procrustes align them (**note:** this will be available soon after all landmark data is collected).
+  * Establish an array suitable for analysis using the `geomorph` functions outlined above. Construct this from all specimens digitized in [this compressed directory](data/shark_points.zip) and Procrustes align them (**note:** this will be available soon after all landmark data is collected).
   * Does habitat result in the occupation of a different morphospace? Please answer this question using a `ggplot`-rendered morphospace based on the first two PCs from a principal components analysis of your alignment.
   * Is there morphological disparity between habitats?
   * Is the rate of morphological evolution significantly different between different habitat types?
@@ -732,4 +733,5 @@ In answering your questions, your .Rmd should include the following components:
 Project reports should be uploaded by 11:59 PM on Sunday, October 20th.
 
 # References
+
 

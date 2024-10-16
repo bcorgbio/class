@@ -637,7 +637,7 @@ have it handy.</p>
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 <pre class="r"><code>shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;)</code></pre>
-<pre><code>## Rows: 91 Columns: 8
+<pre><code>## Rows: 188 Columns: 8
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (5): sp, file_name, depth, habitat, ref
@@ -749,7 +749,7 @@ href="https://drive.google.com/drive/folders/1j7sod1NB1jmEiPiduYvOOIlukkMikfL5?u
 directory</a>. Once all the data appear here, Prof. Kenaley will
 evaluate the quality of the landmarks and do some post-processing if
 required (i.e., file-name checks, quality, etc.). You can then download
-<a href="data/class_out_data_f23.zip">these evaluated data</a> for shape
+<a href="data/shark_points.zip">these evaluated data</a> for shape
 analysis.</p>
 </div>
 <div id="superimposition" class="section level3">
@@ -810,7 +810,7 @@ xy &lt;- read_csv(f,id=&quot;file&quot;) %&gt;%
   left_join(shark_dat) </code></pre>
 <pre><code>## New names:
 ## • `` -&gt; `...1`</code></pre>
-<pre><code>## Rows: 1274 Columns: 15
+<pre><code>## Rows: 2632 Columns: 15
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (14): ...1, Area, Mean, Mode, X, Y, XM, YM, Perim., Circ., Slice, AR, Ro...
@@ -859,12 +859,106 @@ shark_sp &lt;- xy$sp %&gt;% unique
 for(i in shark_sp){
   ldk_l[[i]] &lt;- xy %&gt;% 
     filter(sp==i) %&gt;% 
-    select(X,Y)
+    select(X,Y) %&gt;% 
     data.frame
 }
 
-
-ldk &lt;-  abind(ldk_l, along=3)
+names(ldk_l)</code></pre>
+<pre><code>##   [1] &quot;Aculeola nigra&quot;                    &quot;Alopias pelagicus&quot;                
+##   [3] &quot;Alopias superciliosus&quot;             &quot;Alopias vulpinus&quot;                 
+##   [5] &quot;Apristurus brunneus&quot;               &quot;Apristurus laurussonii&quot;           
+##   [7] &quot;Apristurus macrorhynchus&quot;          &quot;Apristurus manis&quot;                 
+##   [9] &quot;Apristurus melanoasper&quot;            &quot;Apristurus platyrhynchus&quot;         
+##  [11] &quot;Apristurus profundorum&quot;            &quot;Apristurus sinensis&quot;              
+##  [13] &quot;Atelomycterus baliensis&quot;           &quot;Atelomycterus fasciatus&quot;          
+##  [15] &quot;Atelomycterus marnkalha&quot;           &quot;Atelomycterus marmoratus&quot;         
+##  [17] &quot;Aulohalaelurus labiosus&quot;           &quot;Brachaelurus waddi&quot;               
+##  [19] &quot;Carcharhinus albimarginatus&quot;       &quot;Carcharhinus amblyrhynchos&quot;       
+##  [21] &quot;Carcharhinus brachyurus&quot;           &quot;Carcharodon carcharias&quot;           
+##  [23] &quot;Carcharhinus falciformis&quot;          &quot;Carcharhinus leucas&quot;              
+##  [25] &quot;Carcharhinus limbatus&quot;             &quot;Carcharhinus melanopterus&quot;        
+##  [27] &quot;Carcharhinus plumbeus&quot;             &quot;Carcharhinus sorrah&quot;              
+##  [29] &quot;Carcharias taurus&quot;                 &quot;Carcharhinus tilstoni&quot;            
+##  [31] &quot;Centrophorus atromarginatus&quot;       &quot;Centroscymnus coelolepis&quot;         
+##  [33] &quot;Centroselachus crepidater&quot;         &quot;Centroscyllium fabricii&quot;          
+##  [35] &quot;Centrophorus granulosus&quot;           &quot;Centroscyllium granulatum&quot;        
+##  [37] &quot;Centrophorus harrissoni&quot;           &quot;Cephaloscyllium hiscosellum&quot;      
+##  [39] &quot;Centrophorus isodon&quot;               &quot;Cephaloscyllium laticeps&quot;         
+##  [41] &quot;Cetorhinus maximus&quot;                &quot;Centroscyllium nigrum&quot;            
+##  [43] &quot;Centroscymnus owstonii&quot;            &quot;Centroscyllium ritteri&quot;           
+##  [45] &quot;Cephaloscyllium silasi&quot;            &quot;Centrophorus squamosus&quot;           
+##  [47] &quot;Cephaloscyllium variegatum&quot;        &quot;Cephaloscyllium ventriosum&quot;       
+##  [49] &quot;Chlamydoselachus anguineus&quot;        &quot;Chiloscyllium griseum&quot;            
+##  [51] &quot;Chiloscyllium hasseltii&quot;           &quot;Chiloscyllium indicum&quot;            
+##  [53] &quot;Chaenogaleus macrostoma&quot;           &quot;Chiloscyllium plagiosum&quot;          
+##  [55] &quot;Chiloscyllium punctatum&quot;           &quot;Cirrhigaleus barbifer&quot;            
+##  [57] &quot;Dalatias licha&quot;                    &quot;Deania hystricosa&quot;                
+##  [59] &quot;Deania profundorum&quot;                &quot;Deania quadrispinosa&quot;             
+##  [61] &quot;Echinorhinus brucus&quot;               &quot;Echinorhinus cookei&quot;              
+##  [63] &quot;Etmopterus brachyurus&quot;             &quot;Etmopterus granulosus&quot;            
+##  [65] &quot;Etmopterus molleri&quot;                &quot;Etmopterus polli&quot;                 
+##  [67] &quot;Etmopterus princeps&quot;               &quot;Etmopterus schultzi&quot;              
+##  [69] &quot;Etmopterus spinax&quot;                 &quot;Etmopterus unicolor&quot;              
+##  [71] &quot;Euprotomicrus bispinatus&quot;          &quot;Eusphyra blochii&quot;                 
+##  [73] &quot;Eucrossorhinus dasypogon&quot;          &quot;Furgaleus macki&quot;                  
+##  [75] &quot;Figaro boardmani&quot;                  &quot;Galeocerdo cuvier&quot;                
+##  [77] &quot;Galeus eastmani&quot;                   &quot;Galeus melastomus&quot;                
+##  [79] &quot;Galeus murinus&quot;                    &quot;Galeus polli&quot;                     
+##  [81] &quot;Galeus sauteri&quot;                    &quot;Pseudoginglymostoma brevicaudatum&quot;
+##  [83] &quot;Ginglymostoma cirratum&quot;            &quot;Glyphis gangeticus&quot;               
+##  [85] &quot;Glyphis glyphis&quot;                   &quot;Bythaelurus canescens&quot;            
+##  [87] &quot;Bythaelurus dawsoni&quot;               &quot;Haploblepharus edwardsii&quot;         
+##  [89] &quot;Brachaelurus colcloughi&quot;           &quot;Hemipristis elongata&quot;             
+##  [91] &quot;Heterodontus francisci&quot;            &quot;Heterodontus galeatus&quot;            
+##  [93] &quot;Hexanchus griseus&quot;                 &quot;Hemitriakis japanica&quot;             
+##  [95] &quot;Hemitriakis leucoperiptera&quot;        &quot;Heterodontus mexicanus&quot;           
+##  [97] &quot;Hemigaleus microstoma&quot;             &quot;Hemigaleus australiensis&quot;         
+##  [99] &quot;Hemiscyllium ocellatum&quot;            &quot;Heptranchias perlo&quot;               
+## [101] &quot;Heterodontus portusjacksoni&quot;       &quot;Heterodontus zebra&quot;               
+## [103] &quot;Holohalaelurus regani&quot;             &quot;Hypogaleus hyugaensis&quot;            
+## [105] &quot;Iago garricki&quot;                     &quot;Iago omanensis&quot;                   
+## [107] &quot;Isistius brasiliensis&quot;             &quot;Isurus oxyrinchus&quot;                
+## [109] &quot;Isurus paucus&quot;                     &quot;Lamna ditropis&quot;                   
+## [111] &quot;Lamna nasus&quot;                       &quot;Lamiopsis temminckii&quot;             
+## [113] &quot;Loxodon macrorhinus&quot;               &quot;Megachasma pelagios&quot;              
+## [115] &quot;Mitsukurina owstoni&quot;               &quot;Mustelus antarcticus&quot;             
+## [117] &quot;Mustelus asterias&quot;                 &quot;Mustelus californicus&quot;            
+## [119] &quot;Mustelus canis&quot;                    &quot;Mustelus henlei&quot;                  
+## [121] &quot;Mustelus lenticulatus&quot;             &quot;Mustelus manazo&quot;                  
+## [123] &quot;Mustelus mustelus&quot;                 &quot;Mustelus punctulatus&quot;             
+## [125] &quot;Mustelus schmitti&quot;                 &quot;Nasolamia velox&quot;                  
+## [127] &quot;Negaprion acutidens&quot;               &quot;Negaprion brevirostris&quot;           
+## [129] &quot;Nebrius ferrugineus&quot;               &quot;Notorynchus cepedianus&quot;           
+## [131] &quot;Odontaspis noronhai&quot;               &quot;Orectolobus maculatus&quot;            
+## [133] &quot;Orectolobus ornatus&quot;               &quot;Oxynotus bruniensis&quot;              
+## [135] &quot;Oxynotus centrina&quot;                 &quot;Oxynotus paradoxus&quot;               
+## [137] &quot;Parascyllium collare&quot;              &quot;Paragaleus pectoralis&quot;            
+## [139] &quot;Parmaturus xaniurus&quot;               &quot;Pliotrema warreni&quot;                
+## [141] &quot;Poroderma africanum&quot;               &quot;Poroderma pantherinum&quot;            
+## [143] &quot;Prionace glauca&quot;                   &quot;Proscyllium habereri&quot;             
+## [145] &quot;Pristiophorus japonicus&quot;           &quot;Pseudocarcharias kamoharai&quot;       
+## [147] &quot;Pseudotriakis microdon&quot;            &quot;Rhizoprionodon acutus&quot;            
+## [149] &quot;Rhizoprionodon lalandii&quot;           &quot;Rhizoprionodon longurio&quot;          
+## [151] &quot;Rhizoprionodon oligolinx&quot;          &quot;Rhizoprionodon porosus&quot;           
+## [153] &quot;Rhizoprionodon taylori&quot;            &quot;Rhizoprionodon terraenovae&quot;       
+## [155] &quot;Rhincodon typus&quot;                   &quot;Schroederichthys bivius&quot;          
+## [157] &quot;Scyliorhinus canicula&quot;             &quot;Scyliorhinus capensis&quot;            
+## [159] &quot;Scoliodon laticaudus&quot;              &quot;Zameus squamulosus&quot;               
+## [161] &quot;Scylliogaleus quecketti&quot;           &quot;Scyliorhinus retifer&quot;             
+## [163] &quot;Scymnodon ringens&quot;                 &quot;Scyliorhinus stellaris&quot;           
+## [165] &quot;Scyliorhinus torazame&quot;             &quot;Somniosus microcephalus&quot;          
+## [167] &quot;Somniosus pacificus&quot;               &quot;Somniosus rostratus&quot;              
+## [169] &quot;Sphyrna corona&quot;                    &quot;Sphyrna lewini&quot;                   
+## [171] &quot;Sphyrna media&quot;                     &quot;Sphyrna mokarran&quot;                 
+## [173] &quot;Sphyrna tiburo&quot;                    &quot;Sphyrna tudes&quot;                    
+## [175] &quot;Sphyrna zygaena&quot;                   &quot;Squalus acanthias&quot;                
+## [177] &quot;Cirrhigaleus asper&quot;                &quot;Squatina australis&quot;               
+## [179] &quot;Squalus japonicus&quot;                 &quot;Squaliolus laticaudus&quot;            
+## [181] &quot;Squalus megalops&quot;                  &quot;Squalus mitsukurii&quot;               
+## [183] &quot;Squatina squatina&quot;                 &quot;Sutorectus tentaculatus&quot;          
+## [185] &quot;Triakis megalopterus&quot;              &quot;Triaenodon obesus&quot;                
+## [187] &quot;Triakis scyllium&quot;                  &quot;Triakis semifasciata&quot;</code></pre>
+<pre class="r"><code>ldk &lt;-  abind(ldk_l, along=3)
 
 dimnames(ldk)[[3]] &lt;-names(ldk_l)
 
@@ -1001,13 +1095,13 @@ in the PCA operation. The coordinates plotted in the PCA plots are
 contained in a matrix named <code>x</code> in our <code>pca</code>
 object. Notice the row names:</p>
 <pre class="r"><code>pca$x %&gt;% data.frame %&gt;% select(Comp1,Comp2) %&gt;% head</code></pre>
-<pre><code>##                              Comp1       Comp2
-## Aculeola nigra          0.06258856  0.03252442
-## Alopias pelagicus       0.10109723 -0.31064490
-## Alopias superciliosus   0.03327460 -0.17242372
-## Alopias vulpinus        0.10639978 -0.30795668
-## Apristurus brunneus    -0.13126591 -0.01146547
-## Apristurus laurussonii -0.12314775 -0.06309869</code></pre>
+<pre><code>##                               Comp1       Comp2
+## Aculeola nigra          0.033229330  0.06321765
+## Alopias pelagicus       0.073754120 -0.15999699
+## Alopias superciliosus   0.003639515 -0.04236310
+## Alopias vulpinus        0.084399920 -0.18088863
+## Apristurus brunneus    -0.166824169  0.10883149
+## Apristurus laurussonii -0.144591823 -0.04019980</code></pre>
 <p>So, we have the species names from whence the data, both land mark
 and PCA, came. Fortunately, Professor Kenaley assembled a table
 containing of all the the species for landmarking, and the species and
@@ -1023,13 +1117,13 @@ in <code>pca$x</code>. This can be done thusly:</p>
   left_join(shark_dat)</code></pre>
 <pre><code>## Joining with `by = join_by(sp)`</code></pre>
 <pre class="r"><code>head(PCA)</code></pre>
-<pre><code>##         Comp1       Comp2      Comp3        Comp4                     sp   id
-## 1  0.06258856  0.03252442 0.03356723 -0.019825631         Aculeola nigra  644
-## 2  0.10109723 -0.31064490 0.11745778 -0.016213252      Alopias pelagicus 5891
-## 3  0.03327460 -0.17242372 0.13482941  0.020733446  Alopias superciliosus 2534
-## 4  0.10639978 -0.30795668 0.08076650  0.003565676       Alopias vulpinus 2535
-## 5 -0.13126591 -0.01146547 0.21487943 -0.048498099    Apristurus brunneus  763
-## 6 -0.12314775 -0.06309869 0.01389941  0.003318482 Apristurus laurussonii  770
+<pre><code>##          Comp1       Comp2      Comp3        Comp4                     sp   id
+## 1  0.033229330  0.06321765 0.02410686 -0.035963797         Aculeola nigra  644
+## 2  0.073754120 -0.15999699 0.28772956 -0.063594425      Alopias pelagicus 5891
+## 3  0.003639515 -0.04236310 0.22531399 -0.006848063  Alopias superciliosus 2534
+## 4  0.084399920 -0.18088863 0.25902203 -0.040036910       Alopias vulpinus 2535
+## 5 -0.166824169  0.10883149 0.17237370 -0.052693603    Apristurus brunneus  763
+## 6 -0.144591823 -0.04019980 0.06016726 -0.013332985 Apristurus laurussonii  770
 ##      file_name     depth habitat size  ref depth_max
 ## 1 Acnig_u0.gif   110-560 benthic   60 &lt;NA&gt;       560
 ## 2 Alpel_u0.gif     0-152 pelagic  330 &lt;NA&gt;       152
@@ -1135,20 +1229,22 @@ summary(md)</code></pre>
 ## 10001 Permutations
 ## 
 ## Procrustes variances for defined groups
-##    benthic    pelagic 
-## 0.03218948 0.02885998 
+##    benthic         NA    pelagic 
+## 0.02950302 0.03244622 0.02504977 
 ## 
 ## 
 ## Pairwise absolute differences between variances
-##             benthic     pelagic
-## benthic 0.000000000 0.003329492
-## pelagic 0.003329492 0.000000000
+##             benthic          NA     pelagic
+## benthic 0.000000000 0.002943198 0.004453246
+## NA      0.002943198 0.000000000 0.007396444
+## pelagic 0.004453246 0.007396444 0.000000000
 ## 
 ## 
 ## P-Values
-##           benthic   pelagic
-## benthic 1.0000000 0.5694431
-## pelagic 0.5694431 1.0000000</code></pre>
+##           benthic        NA   pelagic
+## benthic 1.0000000 0.8759124 0.2679732
+## NA      0.8759124 1.0000000 0.6607339
+## pelagic 0.2679732 0.6607339 1.0000000</code></pre>
 <p>Notice the the pairwise differences are returned both for the
 Procrustes shape variance and the absolute differences along with the p
 values. As it turns out, at least for this limited data set of ~90
@@ -1221,17 +1317,17 @@ print(er)</code></pre>
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.5654
+## Observed Rate Ratio: 1.2058
 ## 
-## P-value: 0.002
+## P-value: 0.033
 ## 
-## Effect Size: 2.45
+## Effect Size: 1.936
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 1.40377103447055e-05  
+## The rate for group benthic is 9.62278082022747e-06  
 ## 
-## The rate for group pelagic is 8.96721584612148e-06</code></pre>
+## The rate for group pelagic is 7.98043396197077e-06</code></pre>
 <p>So it appears the benthic group body shape has evolved 1.6 times
 faster than the pelagic group and this is significant
 (<em>p=0.002</em>). But, we have a problem. You may have noticed that
@@ -1276,143 +1372,143 @@ t &lt;- system.time(for(i in 1:length(phy_sample)){
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.3766
+## Observed Rate Ratio: 1.177
 ## 
-## P-value: 0.013
+## P-value: 0.054
 ## 
-## Effect Size: 2.087
+## Effect Size: 1.7463
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 1.70947144489729e-05  
+## The rate for group benthic is 1.31461646109894e-05  
 ## 
-## The rate for group pelagic is 1.24184241879944e-05 
+## The rate for group pelagic is 1.11693291558612e-05 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.4821
+## Observed Rate Ratio: 1.1956
 ## 
-## P-value: 0.004
+## P-value: 0.04
 ## 
-## Effect Size: 2.3
+## Effect Size: 1.8541
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 1.22496627992883e-05  
+## The rate for group benthic is 8.60727982114322e-06  
 ## 
-## The rate for group pelagic is 8.26504653836789e-06 
+## The rate for group pelagic is 7.1993879834897e-06 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.4711
+## Observed Rate Ratio: 1.1666
 ## 
-## P-value: 0.006
+## P-value: 0.075
 ## 
-## Effect Size: 2.2689
+## Effect Size: 1.5424
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 1.146005595824e-05  
+## The rate for group benthic is 7.95172596934326e-06  
 ## 
-## The rate for group pelagic is 7.78996757098907e-06 
+## The rate for group pelagic is 6.81606423824803e-06 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.5114
+## Observed Rate Ratio: 1.2009
 ## 
-## P-value: 0.002
+## P-value: 0.035
 ## 
-## Effect Size: 2.3659
+## Effect Size: 1.9108
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 1.29573966236598e-05  
+## The rate for group benthic is 9.0751737409071e-06  
 ## 
-## The rate for group pelagic is 8.57288744816572e-06 
+## The rate for group pelagic is 7.55671527836784e-06 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.498
+## Observed Rate Ratio: 1.1786
 ## 
-## P-value: 0.002
+## P-value: 0.056
 ## 
-## Effect Size: 2.321
+## Effect Size: 1.6672
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 1.00978388979575e-05  
+## The rate for group benthic is 6.95916367839786e-06  
 ## 
-## The rate for group pelagic is 6.74097338255856e-06 
+## The rate for group pelagic is 5.90468327891935e-06 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.4521
+## Observed Rate Ratio: 1.1594
 ## 
-## P-value: 0.008
+## P-value: 0.09
 ## 
-## Effect Size: 2.226
+## Effect Size: 1.4537
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 1.24563414926804e-05  
+## The rate for group benthic is 8.64844945414172e-06  
 ## 
-## The rate for group pelagic is 8.57837163470097e-06 
+## The rate for group pelagic is 7.45965876223785e-06 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.5742
+## Observed Rate Ratio: 1.2229
 ## 
-## P-value: 0.002
+## P-value: 0.025
 ## 
-## Effect Size: 2.4468
+## Effect Size: 2.0892
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 1.15435009156868e-05  
+## The rate for group benthic is 8.0290667736721e-06  
 ## 
-## The rate for group pelagic is 7.33290098688008e-06 
+## The rate for group pelagic is 6.56577547525828e-06 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.4472
+## Observed Rate Ratio: 1.1839
 ## 
-## P-value: 0.008
+## P-value: 0.05
 ## 
-## Effect Size: 2.2407
+## Effect Size: 1.7563
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 1.19807638629684e-05  
+## The rate for group benthic is 8.58865035249552e-06  
 ## 
-## The rate for group pelagic is 8.27830517141801e-06 
+## The rate for group pelagic is 7.25453385522528e-06 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.5248
+## Observed Rate Ratio: 1.2113
 ## 
-## P-value: 0.002
+## P-value: 0.03
 ## 
-## Effect Size: 2.3684
+## Effect Size: 1.9885
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 1.16162453729596e-05  
+## The rate for group benthic is 8.14046831722275e-06  
 ## 
-## The rate for group pelagic is 7.61825539324746e-06 
+## The rate for group pelagic is 6.7201649407581e-06 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.5845
+## Observed Rate Ratio: 1.2395
 ## 
-## P-value: 0.002
+## P-value: 0.018
 ## 
-## Effect Size: 2.4614
+## Effect Size: 2.2313
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 1.20582596828107e-05  
+## The rate for group benthic is 8.42606244272666e-06  
 ## 
-## The rate for group pelagic is 7.60999305350617e-06</code></pre>
+## The rate for group pelagic is 6.79794184918724e-06</code></pre>
 <p>Here we used <code>seet.seed()</code> to make the
 <code>sample()</code> function randomly sample the same set of 10 trees.
 This is important so that we can all perform the same exact analyses,
@@ -1444,12 +1540,12 @@ lastly, make the output a data frame.</p>
 
 head(er)</code></pre>
 <pre><code>##        benthic      pelagic    ratio
-## 1 1.709471e-05 1.241842e-05 1.376561
-## 2 1.224966e-05 8.265047e-06 1.482105
-## 3 1.146006e-05 7.789968e-06 1.471130
-## 4 1.295740e-05 8.572887e-06 1.511439
-## 5 1.009784e-05 6.740973e-06 1.497979
-## 6 1.245634e-05 8.578372e-06 1.452064</code></pre>
+## 1 1.314616e-05 1.116933e-05 1.176988
+## 2 8.607280e-06 7.199388e-06 1.195557
+## 3 7.951726e-06 6.816064e-06 1.166615
+## 4 9.075174e-06 7.556715e-06 1.200942
+## 5 6.959164e-06 5.904683e-06 1.178584
+## 6 8.648449e-06 7.459659e-06 1.159363</code></pre>
 <p>With a little massaging with <code>pivot_longer()</code>, we can plot
 the posterior distribution of rates for each habitat like so.</p>
 <pre class="r"><code>er %&gt;% 
@@ -1471,6 +1567,7 @@ the 220 we hope to include. The figure below indicates that including
 all 220 species and using all 500 trees would take ~2500 s or about 40
 minutes!!!</p>
 <p><br></p>
+<img src="mod5_proj_files/figure-html/timescale-1.png" width="672" />
 <br>
 <center>
 The polynomial relationship between time and number of taxa in
@@ -1545,7 +1642,7 @@ following:</p>
 <ul>
 <li>Establish an array suitable for analysis using the
 <code>geomorph</code> functions outlined above. Construct this from all
-specimens digitized in <a href="data/class_landmark_data.zip">this
+specimens digitized in <a href="data/shark_points.zip">this compressed
 directory</a> and Procrustes align them (<strong>note:</strong> this
 will be available soon after all landmark data is collected).</li>
 <li>Does habitat result in the occupation of a different morphospace?
