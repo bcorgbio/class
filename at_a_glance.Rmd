@@ -63,18 +63,19 @@ All assignments are due at 11:59 on the specified date.
  
 || Monday <br> 10/14*  |  Tuesday <br>10/15    | Wednesday<br>  10/16 | Thursday <br> 10/17 | Friday <br> 10/18|Saturday<br> 10/19 | Sunday<br> 10/20
  |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 
- **Week 8** | | | [slides](lect\3140_f24_10-16.html) <br>Post question to discussion board <br> <br> [WCR 7](WCRs/WCR_7.html)| | Answer a question on discussion board <br>  | |Commit Module 5 Project Report| 
+ **Week 8** | | | [slides](lect\3140_f24_10-16.html) <br>Post question to discussion board <br> <br> [WCR 7](WCRs/WCR_7.html)| | Answer a question on discussion board <br>  | || 
  
+ 
+ || Monday <br> 10/21 |  Tuesday <br>10/22    | Wednesday<br>  10/23 | Thursday <br> 10/24 | Friday <br> 10/25 |Saturday<br> 10/26 | Sunday<br> 10/27
+ |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 
+ **Week 9** | | | Post question to discussion board  <br> <br> [WCR 8](WCRs/WCR_8.html)|| Answer a question on discussion board <br>  | |Commit Module 5 Project Report | 
+
 *No class, holiday
 
 
 ---
 
 ### Module 6
-
- || Monday <br> 10/21 |  Tuesday <br>10/22    | Wednesday<br>  10/23 | Thursday <br> 10/24 | Friday <br> 10/25 |Saturday<br> 10/26 | Sunday<br> 10/27
- |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 
- **Week 9** | | | Post question to discussion board  <br> <br> [WCR 8](WCRs/WCR_8.html)|| Answer a question on discussion board <br>  | | | 
 
 || Monday <br> 10/28 |  Tuesday <br>10/29   | Wednesday<br>  10/30 | Thursday <br> 11/31 | Friday <br> 11/1| Saturday<br> 11/2 | Sunday<br> 11/3
 |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------:    

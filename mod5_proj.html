@@ -456,11 +456,11 @@ and associated body shape (<span class="citation">Lauder and Di Santo
 A modest body of work devoted to the <a
 href="https://en.wikipedia.org/wiki/Ecomorphology">ecomorphology</a> of
 sharks has focused largely on caudal find shape as it relates to ecology
-and locomotor modes (<span class="citation">Thomson (1976)</span>,<span
-class="citation">Wilga and Lauder (2004)</span>). Sharks have a
-heterocercal tails in which the caudal part of notochord flexes dorsally
-and supports a large dorsal lobe of the fin, while, with more than a few
-exceptions, the ventral lobe is small.</p>
+and locomotor modes <span class="citation">Wilga and Lauder
+(2004)</span>. Sharks have a heterocercal tails in which the caudal part
+of notochord flexes dorsally and supports a large dorsal lobe of the
+fin, while, with more than a few exceptions, the ventral lobe is
+small.</p>
 <p><br> <br></p>
 <center>
 <p><img src="https://ars.els-cdn.com/content/image/1-s2.0-S0944200620300581-gr1.jpg" alt="bull shark" width="400"/></p>
@@ -1147,8 +1147,8 @@ describing?” Our PCs points are abstractions of shape, but they don’t
 represent explicitly what shape that is. To get a sense of what our PCs
 represent in terms of shape values, we can turn to thin-plate spline
 analysis.</p>
-<p><strong>Note</strong>, you’re not asked to do anything like this for
-the report. Prof. K just wants you show you have you can derive shape
+<p><strong>Note</strong>: you’re not asked to do anything like this for
+the report. Prof. K just wants to show you how you can derive shape
 changes represented by the PC axes.</p>
 <pre class="r"><code>#find min and max of each PC
 max_PC1 &lt;- which.max(pca$x[,1])
@@ -1178,7 +1178,34 @@ title(&quot;min PC2 warp&quot;,cex=0.6)
 plotRefToTarget(M, ldk_al$coords[,,max_PC2], mag = 1,method=&quot;vector&quot;,label = T)
 title(&quot;max PC3 warp&quot;,cex=0.6)</code></pre>
 <p><img src="mod5_proj_files/figure-html/rw-1.png" width="672" /></p>
-<p>So, it looks like</p>
+<p>So, it looks like PC1 describes a shape change involving the
+placement of the dorsal fin (points 2-4) and pelvic find (points 9 and
+10). Lower values represent of PC1 represent a dorsal and pelvic fin
+that’re displaced posteriorly while higher values represent anterior
+placements. PC2 largely describes a shape change involving a the size of
+the cadual fin (points 5-8). Notice how low PC2 values represent shifts
+of points 5 and 8 (the start of the caudal fin) and 7 (the ventral lobe)
+to the anterior and a shift of point 8 (the dorsal lobe) to the
+posterior (i.e. elongation). High PC2 values represent a compression of
+the caudal fin length with point 8 (the dorsal lobe) shifted
+anteriorly.</p>
+<p>And, with a little help from the package <code>ggimage</code> we can
+plot images representing the extrema of the first two PCs. Notice the
+anterior shift of the dorsal fin along PC1 and the shortening of the
+caudal fin along PC2.</p>
+<pre class="r"><code>library(ggimage)
+PC_extremes &lt;- PCA %&gt;% 
+  filter(Comp1 %in% range(Comp1)|
+         Comp2 %in% range(Comp2)) %&gt;% 
+  select(Comp1,Comp2,sp,file_name) %&gt;% 
+  mutate(pngs =paste0(&quot;data/shark_examples_photos/&quot;,file_name %&gt;% str_replace(&quot;.gif&quot;,&quot;.png&quot;)))
+
+p1 &lt;- PCA %&gt;% 
+  ggplot(aes(Comp1,Comp2,col=habitat))+geom_point()
+
+
+p1 + geom_image(data=PC_extremes,aes(Comp1,Comp2,image=pngs), size=.30,inherit.aes = F)+theme_classic()+xlim(range(PC_extremes$Comp1)*1.5)+ylim(range(PC_extremes$Comp2)*1.25)+theme(legend.position = c(0.1,0.2))</code></pre>
+<p><img src="mod5_proj_files/figure-html/shape%20change-1.png" width="672" /></p>
 </div>
 <div id="analysis-part-ii" class="section level3">
 <h3>Analysis: Part II</h3>
@@ -1599,7 +1626,7 @@ that takes the tasks performed on each item in a list and spreads the
 tasks across multiple cores on a computer. This is perfect for
 embarrassingly parallel problems.</p>
 <p>For example, say we wanted to do something that’s simple, but takes
-just a little bit of time, like generation 10 million random values from
+just a little bit of time, like generated 10 million random values from
 a normal distribution (<code>mean=0</code>, <code>sd=1</code>) any
 number of times. Let’s encode a function that does this and allows one
 to specify how many times to do it.</p>
@@ -1696,7 +1723,7 @@ contributed to the project.</li>
 </ul></li>
 </ul>
 <p>Project reports should be uploaded by 11:59 PM on Sunday, October
-20th.</p>
+27th.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>

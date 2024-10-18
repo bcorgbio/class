@@ -93,7 +93,7 @@ f_img <- list.files("ignore/class_shark_images",full.names = T)
 
 # Introduction
 
-Sharks are an ancient group of cartilaginous fishes in the class Chondrichthyes, subclass Elasmobranchii, and subdivision Selachimorpha. The selachians include over 500 species that are further placed in in two superorders: Squalomorphii and Galeomorphii. Modern sharks originated nearly 200 million years ago (@grogan2012origin) and, since then, have diversified into nearly every major marine ecosystem. This evolutionary success has been attributed to the diversity of their locomotor modes and associated body shape (@lauder2015swimming,@thomson1977body). A modest body of work devoted to the [ecomorphology](https://en.wikipedia.org/wiki/Ecomorphology) of sharks has focused largely on caudal find shape as it relates to ecology and locomotor modes (@thomson1976heterocercal,@wilga2004biomechanics). Sharks have a heterocercal tails in which the caudal part of notochord flexes dorsally and supports a large dorsal lobe of the fin, while, with more than a few exceptions, the ventral lobe is small.
+Sharks are an ancient group of cartilaginous fishes in the class Chondrichthyes, subclass Elasmobranchii, and subdivision Selachimorpha. The selachians include over 500 species that are further placed in in two superorders: Squalomorphii and Galeomorphii. Modern sharks originated nearly 200 million years ago (@grogan2012origin) and, since then, have diversified into nearly every major marine ecosystem. This evolutionary success has been attributed to the diversity of their locomotor modes and associated body shape (@lauder2015swimming,@thomson1977body). A modest body of work devoted to the [ecomorphology](https://en.wikipedia.org/wiki/Ecomorphology) of sharks has focused largely on caudal find shape as it relates to ecology and locomotor modes [@thomson1976heterocercal,@wilga2004biomechanics]. Sharks have a heterocercal tails in which the caudal part of notochord flexes dorsally and supports a large dorsal lobe of the fin, while, with more than a few exceptions, the ventral lobe is small.
 
 <br>
 <br>
@@ -429,7 +429,7 @@ Voila! For morphospace described by PCs 1, 2, and 3, it appeears that pelagic sp
 
 This is wonderful, but you may be asking, "What is PC1 (or any other) describing?" Our PCs points are abstractions of shape, but they don't represent explicitly what shape that is. To get a sense of what our PCs represent in terms of shape values, we can turn to thin-plate spline analysis.
 
-**Note**, you're not asked to do anything like this for the report. Prof. K just wants you show you have you can derive shape changes represented by the PC axes.
+**Note**: you're not asked to do anything like this for the report. Prof. K just wants to show you how you can derive shape changes represented by the PC axes.
 
 ```{r rw}
 
@@ -463,7 +463,26 @@ title("max PC3 warp",cex=0.6)
 
 ```
 
-So, it looks like 
+So, it looks like PC1 describes a shape change involving the placement of the dorsal fin (points 2-4) and pelvic find (points 9 and 10). Lower values represent of PC1 represent a dorsal and pelvic fin that're displaced posteriorly while higher values represent anterior placements. PC2 largely describes a shape change involving a the size of the cadual fin (points 5-8). Notice how low PC2 values represent shifts of points 5 and 8 (the start of the caudal fin) and 7 (the ventral lobe) to the anterior and a shift of point 8 (the dorsal lobe) to the posterior (i.e. elongation). High PC2 values represent a compression of the caudal fin length with point 8 (the dorsal lobe) shifted anteriorly.
+
+And, with a little help from the package `ggimage` we can plot images representing the extrema of the first two PCs. Notice the anterior shift of the dorsal fin along PC1 and the shortening of the caudal fin along PC2.
+
+```{r shape change}
+
+library(ggimage)
+PC_extremes <- PCA %>% 
+  filter(Comp1 %in% range(Comp1)|
+         Comp2 %in% range(Comp2)) %>% 
+  select(Comp1,Comp2,sp,file_name) %>% 
+  mutate(pngs =paste0("data/shark_examples_photos/",file_name %>% str_replace(".gif",".png")))
+
+p1 <- PCA %>% 
+  ggplot(aes(Comp1,Comp2,col=habitat))+geom_point()
+
+
+p1 + geom_image(data=PC_extremes,aes(Comp1,Comp2,image=pngs), size=.30,inherit.aes = F)+theme_classic()+xlim(range(PC_extremes$Comp1)*1.5)+ylim(range(PC_extremes$Comp2)*1.25)+theme(legend.position = c(0.1,0.2))
+
+```
 
 ### Analysis: Part II
 
@@ -680,7 +699,7 @@ We should, therefore, be prepared for the long haul. But, hold on. I don't know 
 
 `mclapply` is simply an extension of `lapply()` that takes the tasks performed on each item in a list and spreads the tasks across multiple cores on a computer. This is perfect for embarrassingly parallel problems.
 
-For example, say we wanted to do something that's simple, but takes just a little bit of time, like generation 10 million random values from a normal distribution (`mean=0`, `sd=1`) any number of times. Let's encode a function that does this and allows one to specify how many times to do it. 
+For example, say we wanted to do something that's simple, but takes just a little bit of time, like generated 10 million random values from a normal distribution (`mean=0`, `sd=1`) any number of times. Let's encode a function that does this and allows one to specify how many times to do it. 
 
 ```{r parafun}
 
@@ -730,7 +749,7 @@ In answering your questions, your .Rmd should include the following components:
       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description's and yours, will be helpful here.
       + Author contributions: Briefly outline what each team member contributed to the project.
 
-Project reports should be uploaded by 11:59 PM on Sunday, October 20th.
+Project reports should be uploaded by 11:59 PM on Sunday, October 27th.
 
 # References
 
