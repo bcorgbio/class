@@ -481,9 +481,119 @@ p1 <- PCA %>%
 
 
 p1 + geom_image(data=PC_extremes,aes(Comp1,Comp2,image=pngs), size=.30,inherit.aes = F)+theme_classic()+xlim(range(PC_extremes$Comp1)*1.5)+ylim(range(PC_extremes$Comp2)*1.25)+theme(legend.position = c(0.1,0.2))
+```
+
+```{r, eval=F,include=F}
+library(worms)
+
+so <- rbind(tibble(superorder="Galeomorphii",order=c("Carcharhiniformes","Heterodontiformes","Orectolobiformes","Lamniformes")),
+            tibble(superorder="Squalomorphii",order=c("Hexanchiformes","Pristiophoriformes","Squaliformes","Squatiniformes","Echinorhiniformes")))
+
+
+tax <- wormsbynames((PCA$sp %>% unique)) %>% 
+  left_join(so) %>% 
+  dplyr::rename(sp=valid_name) %>% 
+  select(sp,genus,family,order,superorder)
+
+PCA <- PCA %>% 
+  left_join(tax)
+
+p1 <- PCA %>% 
+  ggplot(aes(Comp1,Comp2,shape=habitat,col=order))+geom_point()
+
+
+
+# Use map_dbl to run many models with varying value of k (centers)
+tot_withinss <- map_dbl(1:5,  function(k){
+  model <- kmeans(x = PCA %>% select(Comp1,Comp2,Comp3,Comp4), centers = k,nstart=50)
+  model$tot.withinss
+})
+# Generate a data frame containing both k and tot_withinss
+elbow_df <- data.frame(
+  k = 1:5,
+  tot_withinss = tot_withinss
+)
+# Plot the elbow plot
+ggplot(elbow_df, aes(x = k, y = tot_withinss)) +
+  geom_line() + geom_point()+
+  scale_x_continuous(breaks = 1:10)
+
+km <-  kmeans(x = PCA %>% select(Comp1,Comp2,Comp3,Comp4), centers = 2,nstart=50)
+
+PCA$group <- km$cluster
+
+
+hull <- PCA %>%
+  group_by(group) %>% 
+  slice(chull(Comp1,Comp2))
+
+p1 + geom_image(data=PC_extremes,aes(Comp1,Comp2,image=pngs), size=.30,inherit.aes = F)+theme_classic()+xlim(range(PC_extremes$Comp1)*1.5)+ylim(range(PC_extremes$Comp2)*1.25)+theme(legend.position = c(0.1,0.2))+geom_polygon(data=hull,aes(Comp1,Comp2,lty=as.factor(group)),inherit.aes = F,alpha=0.3)
+
+
+gp1 <- which(PCA$group==1)
+gp2 <- which(PCA$group==2)
+
+
+
+#get the concesus, the mean shape of all data.
+M <- ldk_al$consensus
+
+
+gp1_shp <- mshape(ldk_al$coords[,,gp1])
+gp2_shp <- mshape(ldk_al$coords[,,gp2])
+
+
+#plot the change form the concensus to min of PC1
+plotRefToTarget(gp1_shp, gp2_shp, mag = 1,method="vector",label = T)
+title("gp1 to gp2 warp",cex=0.6)
+
+plotRefToTarget(gp2_shp, gp1_shp, mag = 1,method="vector",label = T)
+title("gp2 to gp1 warp",cex=0.6)
+
+
+gdf <- geomorph.data.frame(ldk_al,
+                             morphogroup=PCA$group,
+                           so=PCA$superorder,
+                           habitat=PCA$habitat,
+                           or=PCA$order
+)
+
+md <- morphol.disparity(coords ~ 1, groups= ~ morphogroup*or*habitat, data = gdf, iter = 10000, print.progress = FALSE)
+
+order_disp <- md$PV.dist  %>% 
+  data.frame %>% 
+  mutate(from=rownames(md$PV.dist.Pval)) %>% 
+  pivot_longer(-from,names_to = "to") %>% 
+  mutate(order_fr=gsub("\\d\\.(.*)\\.\\w*","\\1",from),
+         order_to=gsub("X\\d\\.(.*)\\.\\w*","\\1",to),
+         group_fr=gsub("(\\d)\\.(.*)\\.\\w*","\\1",from),
+         group_to=gsub("X(\\d)\\.(.*)\\.\\w*","\\1",to),
+         hab_to=gsub("X(\\d)\\.(.*)\\.(\\w*)","\\3",to),
+         hab_from=gsub("(\\d)\\.(.*)\\.(\\w*)","\\3",from)
+         ) %>% 
+  mutate(order=ifelse(order_fr==order_to,order_fr,NA)) %>% 
+  filter(!is.na(order)) 
+
+order_disp %>% 
+  filter(order=="Carcharhiniformes") %>% 
+  filter(value!=1) %>% 
+  ggplot(aes(hab_to,hab_from))+
+  geom_tile(aes(fill=value))+facet_grid
+gp_morph<- PCA$group
+names(gp_morph) <- PCA$sp
+
+
+er <- compare.evol.rates(A=ldk_al$coords, phy=phy2[[1]], method="simulation",gp=gp_morph,print.progress = F)
+
+print(er)
+
+
 
 ```
 
+```{r,eval=F,include=F}
+
+```
 ### Analysis: Part II
 
 Our PCA analysis reveals an interesting pattern. This, however, is not quantitative assessment *per se*, merely a visual and qualitative result and not dissimilar to the qualitative results reported by @sternes2020body. Several quantitative frameworks for assessing differences in shape exist. The `geomorph` package contains several, but we'll use just one: morphological disparity. The function `morphol.disparity()` will do this for us by making pairwise comparisons of residuals of a linear fit to identify differences among groups. It's essentially an ANOVA for shape. The statistical significance of the calculated Procrustes variances between the different growth stages is assessed using a randomized residual permutation, that is random set residuals from all groups are chosen in each iteration.
