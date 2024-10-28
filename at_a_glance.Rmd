@@ -79,7 +79,7 @@ All assignments are due at 11:59 on the specified date.
 
 || Monday <br> 10/28 |  Tuesday <br>10/29   | Wednesday<br>  10/30 | Thursday <br> 11/31 | Friday <br> 11/1| Saturday<br> 11/2 | Sunday<br> 11/3
 |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------:    
-**Week 10** |[slides](lect\3140_f23_10-30.html) | | Post question to discussion board <br> <br> [WCR 9](WCRs/WCR_9.html)| |Answer a question on discussion board | | |
+**Week 10** |[slides](lect\3140_f24_10-28.html) | | Post question to discussion board <br> <br> [WCR 9](WCRs/WCR_9.html)| |Answer a question on discussion board | | |
 
 || Monday <br> 11/4 |  Tuesday <br>11/5    | Wednesday<br>  11/6 | Thursday <br> 11/7 | Friday <br> 11/8 |Saturday<br> 11/9 | Sunday<br> 11/10
  |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 

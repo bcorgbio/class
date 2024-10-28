@@ -1,0 +1,158 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 6: Spatial Awareness"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2024/10/28"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE,warning=F}
+library(tidyverse)
+library(kableExtra)
+library(sf)
+library(stars)
+
+knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 40), tidy = TRUE)
+
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Intro to Spatial Analysis
+
+- Plotting maps in R
+
+- Raster vs Shape Data
+
+]
+
+.pull-right[![](https://dfzljdn9uc3pi.cloudfront.net/2020/8262/1/fig-1-2x.jpg)
+]
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Spatial analysis
+
+.pull-left[
+
+- sprawling field in data science.
+  * Ecology, Natural resources, Economics, even Cell biology
+- more than longitude and latitude (X,Y coords)
+  * generally concerned with  patterns that vary with lat/long 
+- Data comes in 2 forms
+  * Raster (pixels)
+  * Shape/vector (lines, polygons, etc.)
+]
+
+
+.pull-right[
+![](https://gisinfo.hertfordshire.gov.uk/gisdata/images/VetorVSRasterFeatures_550_550.gif)
+]
+
+---
+class: inverse, top
+## Mapping: the first step
+
+.pull-left[
+
+- usually done with shape data
+
+
+```{r sfintro}
+library(rnaturalearth)
+library(sf)
+library(tidyverse)
+
+bermuda <- ne_states(country="Bermuda") %>% 
+   st_as_sf
+
+p <- bermuda %>% 
+  ggplot()+
+  geom_sf()
+ 
+```
+]
+
+.pull-right[
+  
+```{r}
+print(p)
+```
+
+  
+]
+
+
+---
+class: inverse, top
+
+## Raster data
+
+.pull-left[
+
+```{r rastintro}
+library(stars)
+bermuda_pop <- read_stars("https://data.worldpop.org/GIS/Population_Density/Global_2000_2020_1km/2020/BMU/bmu_pd_2020_1km.tif") %>% st_crop(bermuda)
+p <- ggplot()+
+  geom_stars(data=bermuda_pop)
+```
+]
+
+.pull-right[
+```{r}
+  print(p)
+  
+```
+]
+
+
+---
+class: inverse, top
+
+## Adding raster to shape map
+
+
+.pull-left[
+```{r}
+bermuda2 <-  bermuda_pop %>% 
+  setNames("population") %>% 
+  st_as_sf() %>% 
+  st_join( bermuda) %>% 
+  group_by(name) %>% 
+  summarise(
+    population=sum(population))
+
+p <- bermuda %>% 
+  ggplot() +
+  geom_sf()+
+  geom_sf(data=bermuda2,aes(fill=population))
+
+  
+```
+]
+
+.pull-right[
+
+```{r}
+print(p)
+```
+]
+
+

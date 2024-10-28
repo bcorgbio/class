@@ -10,43 +10,263 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
  
 # Introduction
 
-![](https://www.ncbi.nlm.nih.gov/core/lw/2.0/html/tileshop_pmc/tileshop_pmc_inline.html?title=Click%20on%20image%20to%20zoom&p=PMC3&id=2817252_rsbl20090575f01.jpg)
+![](https://images.ctfassets.net/pujs1b1v0165/sTnbs2M49c9AgPZxp7rDZ/15d77d1064ae1a311ce2f04298e6928b/still_hunting_deer.jpg?w=2400)
+
+White-tailed deer (WTD, *Odocoileus virginianus*) are native to much of North America and represent an ecologically important species across a diverse array of habitats, from dense mixed forest to open farm- and grasslands.  The currently estimated WTD population of 30 million in the United States is about the same as pre-colonization. Due to a combination of over hunting and poor resource management practices, the US population dipped to fewer than 2 million by about 1900, but the abundance of this species has been on a steady rebound for over the last 100 years. 
+
+However, the historical abundance of WTD in New England is largely different from the continental trend. New England marks the northern edge of the species' historical range and WTD were rare in the area, especially in northern New England. What's more, due to post-colonial land-use practices---particarly, near total deforestation for agricultural purposes--WTD were largely extirpated from the area by the late 18th century. With changes associated with a move away from an agrarian economy, reforestation, and the succession of mixed habitats, WTD abundance slowly increased through the last half of the 20th century. However, it's only recently, say within the last few decades, that New England WTD abundance has in increased sharply, particularly in suburban areas.
+
+The question of what's driven this recent sharp increase in WTD abundance is the focus of this project. In particualar, we'll ask if WTD harvest (number taken during hunting season, a proxy for abundance) is associated with land-use and population (a proxy for suburbanization). For this we'll focus on the great state of New Hampshire, Prof. Kenaley's birthplace.
+
+To answer such a question, one could,  of course, assemble harvest, land-use, and population data for the Granite State as a whole and commence with the typical statistical operations (e.g., linear modeling, a la `harvest~population*land-use`). However, NH is a rather diverse state in the two former, potentially predictive variables. In the north of the state, there are lots of forests. In the southern part of the state, there a lots more people, and a mix of developed, forested, and agricultural land. In between, we have a diversity variably populated scattered amongst forested, farmed, and forgotten (i.e., successional) areas.  That is, each of these attributes vary spatially across the landscape and focussing on this great state as a whole wouldn't account for the important variation across it. We therefore need to enter the realm of spatial analysis, specifically [spatial associate](https://en.wikipedia.org/wiki/Spatial_analysis#Spatial_association). By this, we mean the degree to which things are similarly arranged in space.
+
+![](https://dfzljdn9uc3pi.cloudfront.net/2020/8262/1/fig-1-2x.jpg)
+
+<br>  The 1982 WTD densities (A) and 2001–2005 deer densities (B) in the continental United States.
+
+![](https://milliontrees.me/wp-content/uploads/2021/07/deer-population.jpg)
+
+This species is also the most popular large game animal on the continent
 
 
-https://onlinelibrary.wiley.com/doi/full/10.1111/mec.12570
+Just a few decades ago, to assess such a spatial question would require buying extremely expensive pieces of [software](https://en.wikipedia.org/wiki/ArcGIS).
 
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3899836/
+Let's take a momentary break for the icy climes of the granite state and consider how spatial analysis might be undertaken in R. We'll consider examples from a much more beachy place, Bermuda, where, as far as I know, there are no WTD.
+
+## Spatial Analysis in R
+
+Many R packages have been developed for spatial analysis. Many are idiosyncratic, requiring one to work with particular object classes that don't work well with other data science frameworks like `tidyverse`. There are a few, namely `sf` and `stars` that do work well with the `tidyverse`. `sf` provides a table format for simple features, a spatial object class where feature geometries are stored in a list-column (i.e., each row in contains a column as a list of shapes). `stars` was written to support raster data, amongst other things (e.g., time series). The development of both packages came from the bottom up, with lots of input from the data science community that relies so much on `tidyverse`. The packages are designed to work together. Functions or methods operating on `sf` or `stars` objects start with `st_`, making it easy to recognize them as appropriate for spatial tasks in the `sf` and `stars` workflow.
+
+## The Spatial Analysis Framework 
+
+Spatial analysis is a sprawling field in data science. Although spatial data and its analysis is often simply treated as longitude and latitude and some attribute or variable that varies with it, the field is so much more. Yes, coordinates are important, but so are the patterns that emerge when we consider how attributes vary within and between spatial areas and grids.
+
+This representation of data in shape or grid format marks an important framework within spatial analysis: in addition to point (coordinate) data, attributes are often aggregated within either shapes (e.g., lines, polygons, etc.) or grids. The former is considered shape information, the later raster information, an allusion to pixels of an image. We can obtain shape or raster data from myriad sources: state and federal agencies, universities and non-profit organizations, and even `R` packages that facilitate data download. 
+
+### Working with shape data 
+
+Shape data often contain geopolitical information (e.g.,city, state, or country boundaries) and even topological data (e.g., the boundaries of rivers, lakes, and oceans, and elevation contours). For instance, let's load a shape of the beautiful country of Bermuda using the `rnauturalearth` package and kick up `sf`, the package of choice that deals in shape data, to produce a simple map:
+
+```{r sfintro}
+library(rnaturalearth)
+library(sf)
+library(tidyverse)
+
+bermuda <- ne_states(country="Bermuda") %>% 
+   st_as_sf
+
+bermuda %>% 
+  ggplot()+
+  geom_sf()
+ 
+```
+
+Notice here, that we have to convert the shape retireved from the `rnaturalearth` package (an ojbect of class "SpatialPolygonsDataFrame") to an `sf` object. This sort of conversion is perhaps the most vexing part of spatial analysis in R. That is, many spatial object classes exist depending on the `R` package used and to work with objects across functions of different origins, conversion needs to happen. Yet, we're often unsure of which conversion function to use. We'll try to keep conversion to a minimum in this project, but be ware. Fortunately, `sf` has the handy `st_as_sf()` that allows conversion of a spatial polygon data frame to an `sf` object.
+
+Because `sf` plays nice with the `tidyverse`, to plot and `sf` object, we can use the `ggplot()` framework that's become so much of the class. For this we use `sf`'s `geom_sf()`.
+
+### Working with raster data
+
+Raster data is presented in essentially pixel format. That is, each pixel in a spatial field represents 3 dimensions: some area of a particular 2D resolution (e.g., 30 x 30 m, 1 x 1 km) and some value of attribute, the color.
+
+```{r rastintro}
+library(stars)
+bermuda_pop <- read_stars("https://data.worldpop.org/GIS/Population_Density/Global_2000_2020_1km/2020/BMU/bmu_pd_2020_1km.tif") %>% st_crop(bermuda)
+
+
+  ggplot()+
+  geom_stars(data=bermuda_pop)
+  
+```
+
+
+### Combining shape and raster data
+
+
+```{r comb,eval=F,include=F}
+  
+bermuda2 <-  bermuda_pop %>% 
+  setNames("population") %>% 
+  st_as_sf() %>% 
+  st_join( bermuda) %>% 
+  group_by(name) %>% 
+  summarise(population=sum(population))
+
+home_col <- tibble(
+  name=bermuda2 %>% 
+  dplyr::pull(name),
+  population=bermuda2 %>% 
+  dplyr::pull(population)
+)
+
+
+br <- raster("https://data.worldpop.org/GIS/Population_Density/Global_2000_2020_1km/2020/BMU/bmu_pd_2020_1km.tif")
+ss <- raster(resolution=c(0.001,0.001), crs=proj4string(br), ext=extent(br),) 
+
+ss[] <- as.factor(sample(c("A","B","C","D"),ncell(ss),replace =T))
+
+ss2 <- st_as_stars(ss) %>%
+  st_crop(bermuda) 
+
+bermuda2 %>% dplyr::select(name,population) %>% 
+  st_join(ss2 %>% 
+  st_as_sf) %>% ggplot(aes(fill=population))+
+  geom_sf()
+
+berm_house <- ss2 %>% 
+  st_as_sf %>% 
+  st_join(bermuda2 %>% dplyr::select(name,population)) %>% 
+  group_by(name) %>% 
+  mutate(tot_pop=sum(population))
+
+pop_par <- bermuda2 %>% 
+  group_by(name) %>% 
+  summarize(tot_pop=sum(population)) %>% 
+  ungroup %>% 
+  arrange(-tot_pop) %>% 
+  mutate(col=c("green","green","green","blue","blue","purple","purple","pink","pink","white","white")) %>% 
+  st_drop_geometry() %>% dplyr::select(-tot_pop)
+  
+  
+berm_house <- berm_house %>% 
+  left_join(pop_par)
+
+#bar(berm_house$layer)
+
+fix_house <- function(n,favor){
+   if(is.na(favor)){col_ <- NA}else{
+  col <- c("green","white","blue","purple","pink") 
+  which_n <- which(col==favor)
+  col2 <- c(sample(col[-which_n],4),col[which_n])
+ prop <- sort( diff(c(0, sort(runif(4)), 1)))
+prop_n <- ceiling(prop*n)
+if(sum(prop_n)!=n) prop_n[5] <- prop_n[5]-diff(c(n,sum(prop_n)))
+ col_ <-  sapply(1:5, function(x) rep(col2[x],prop_n[x])) %>% unlist()
+}
+ return(col_)
+}
+
+new_col <- berm_house %>% 
+  group_by(name) %>% 
+  st_drop_geometry() %>% 
+  summarise(house_color=fix_house(n=n(),favor = col[1])) %>% 
+  mutate(n=1:n()) %>% 
+  mutate(n=sample(n,length(n)))
+
+berm_house <- berm_house %>% 
+  group_by(name) %>% 
+  mutate(n=1:n()) %>% 
+  left_join(new_col)
+
+berm_house <- berm_house %>% 
+  dplyr::select(house_color)
+
+
+
+
+  write_stars(berm_house,"data/bermudae_house_colors.tiff")
+  
+plot(berm_house)
+
+t[] <- berm_house$house_color
+bh <- st_rasterize(berm_house %>% st_as_sf(), ) 
+  write_stars(bh,"data/bermuda_house_colors.tiff")
+
+t <- read_stars("data/bermuda_house_colors.tiff")
+
+plot(t)
+
+  ggplot(aes(fill=layer))+
+  geom_sf()
+
+ plot(berm_house)
+```
+
+
+### Plotting prety maps in R
 
 ```{r}
+library(mapview)
+
+mapview(bermuda2, zcol = "population")
+
+```
+
+## Methods
+
+Back to the frozen enclace of NH.
+
+### Data source
+
+OK, let's first address the obvious. We will be using deer harvest data as a proxy for WTD abundance. Understandably, for some this may be a difficult thing with which to grapple. After all, we're considering how many times a majestic animal has been killed, to put in plainly. There are many ethical considerations here and I'm happy to discuss them all in private. But, if we can, let's just take the data at face value: a measure of abundance. 
+
+Our deer harvest data comes from New Hampshire Department of Fish and Wildlife's last three [annual harvest summaries](https://www.wildlife.nh.gov/hunting-nh/hunting-reports-harvest-summaries) from 2021-2023. These
+
+```{r deerdat}
+deer <- read_csv("data/NH_deer.txt") %>% 
+  mutate(pbpNAME=
+           str_replace(TOWN,"_"," ") %>% str_to_title(),
+         HSM=as.numeric(HSM),
+         TOTAL=as.numeric(TOTAL),
+         ) 
+
+```
+
+
+### Shape data
+
+```{r nhpol,eval=F,include=F}
+#intro:
+#https://r-spatial.org/book/07-Int/rosf.html
 
 #https://www.paulamoraga.com/book-spatial/spatial-autocorrelation.html
 
-
+library(rnaturalearth)
 
 library(sf)
 library(tidyverse)
+library(mapview)
+
 
 #change to URL
 nh <- read_sf("data/NH/New_Hampshire_Political_Boundaries.shp")
 
 ggplot() +
   geom_sf(data = nh)+theme_void()
+```
 
-f <- list.files("data",pattern = "NH_deer",full.names = T)
-deer_21 <- read_csv(f,id = "file") %>% 
-  mutate(pbpNAME=
-           str_replace(TOWN,"_"," ") %>% str_to_title(),
-         KSM=as.numeric(KSM),
-         TOTAL=as.numeric(TOTAL),
-         year=gsub("NH_deer_(.*).txt","20\\1",basename(file)) %>% as.numeric()) 
+### Raster data
+
+```{r landuse,eval=F,include=F}
+library(raster)
+#large data set, 30m resolution
+lu <- stars::read_stars("ignore/data/land_use/NLCD_2021_Land_Cover_L48_20230630_qtPZ6zMaTAibmibqfd37.tiff")
+
+nh_crs<- crs(nh)
+new_crs <-  st_crs(nh_crs)
+
+#low res for plotting
+lu2 <- lu %>% 
+ setNames("land_use") %>% 
+     st_transform_proj( new_crs) %>% 
+st_downsample(30,mean) %>% 
+  st_crop(nh)
+ 
+plot(lu2)
 
 
 
-nh_deer <- nh %>% left_join(deer_21) 
-nh_deer %>% filter(KSM==is.na(KSM)) %>% select(pbpNAME,year,KSM) 
+```
+
+### Adding custom data to shape data
+
+```{r, eval=F,eval=F,include=F}
+
+nh_deer <- nh %>% left_join(deer) 
+nh_deer %>%filter(HSM==is.na(HSM)) %>%  dplyr::select(pbpNAME,year,HSM) 
  
 ggplot() +
-  geom_sf(data=nh_deer %>% na.omit,aes(fill=KSM))+theme_void()+
+  geom_sf(data=nh_deer %>% na.omit,aes(fill=HSM))+theme_void()+
   facet_wrap(.~year)+
   scale_fill_viridis_c(option = "magma",na.value = 0)
 
@@ -64,371 +284,71 @@ nh_deer %>%
   geom_smooth(method="lm",formula=y ~ poly(x, 4, raw=TRUE)) + 
   scale_x_log10()
 
-library(spData)
-library(sf)
-library(mapview)
 
-library(terra)
 
-map <- st_read(system.file("shapes/boston_tracts.shp",
-                           package = "spData"), quiet = TRUE)
-map$vble <- map$MEDV
-mapview(nh_deer, zcol = "KSM")
+mapview(nh_deer, zcol = "HSM")
+```
+
+```{r scratch,eval=F,include=F}
 
 #https://www.paulamoraga.com/book-spatial/spatial-autocorrelation.html
 # https://r-spatial.org/book/07-Introsf.html
 #javascript:alert('Sign-in to download data')
 
-gpw_raw <- stars::read_stars("ignore/data/land_use/NLCD_2021_Land_Cover_L48_20230630_qtPZ6zMaTAibmibqfd37.tiff")
+#stars way
+lu <- stars::read_stars("ignore/data/land_use/NLCD_2021_Land_Cover_L48_20230630_qtPZ6zMaTAibmibqfd37.tiff")
 
-gpw <- st_as_sf(gpw_raw)
-plot(gpw_raw)
+nh_crs<- crs(nh)
+new_crs <-  st_crs(nh_crs)
 
-lu <- terra::rast("ignore/data/land_use/NLCD_2021_Land_Cover_L48_20230630_qtPZ6zMaTAibmibqfd37.tiff") 
 
-lu%>% plot()
 
-coords <- crds(lu, na.rm=FALSE)
-geo_coords <- project(coords, crs(lu), "+proj=longlat")
 
 
-lu2 <-lu
-res(lu) <- 100
-lu2 <- resample(lu, lu2)
 
-crs(lu)
-EPSG:3857
+plot(lu2)
 
-```
 
+lu3 <- lu2 %>% 
+   st_crop(nh) %>% 
+  as.data.frame(xy=T)  %>% 
+  na.omit() 
 
 
 
 
-  select(starts_with("Canis")|starts_with("snp")) %>% 
-  pivot_longer(cols = contains("Canis"))
-mds <- snps %>%
-  dist() %>%          
-  cmdscale() %>%
-  as_tibble()
-
-colnames(mds) <- c("Dim1", "Dim2")
-
-wolf <- cl_mds %>% 
-  filter(species=="Canis lupus")%>%
-  select()
-  summarize(Dim1=mean(Dim1),Dim2=mean(Dim2))
-
-cl_mds <- mds %>% mutate(id=rownames(snps)) %>% left_join(cl_local)
-cl_mds %>% 
-  group_by(state,species,id) %>%
-  mutate(dist=sum(c(abs(Dim1-wolf$Dim1),abs(Dim2-wolf$Dim2)))) %>% 
-  ggplot(aes(state,dist))+geom_boxplot()
-  
-  ggplot(aes(Dim1,Dim2,col=species,shape=Region))+geom_point()
-
-
-```
-
-#
-https://royalsocietypublishing.org/doi/abs/10.1098/rsbl.2009.0575
-
-# Methods
-
-## Experimental Design
-
-To assess the affect of eccentric fatigue of elbow flexor muscles, we'll be measuring the isometric force over the range of motion of the forearm produced by MVC. To capture MVC data, you must design and construct a portable Arduino-based force-data acquisition system (DAQ). Your device should record force data over the course of 30s. 
-
-
-## DAQ Design Components
-
-1. 100-kg S-type Load Cell with HX711 amplifier
-2. Arduino Uno microcontroller
-
-## DAQ Assembly and Programming
-
-Assembly for this force logger is almost entirely captured in [this tutorial](https://www.instructables.com/Arduino-Tension-Scale-With-40-Kg-Luggage-Load-Cell/). And, Prof. K has wired the load cell to the amplifier, so y'all just need to wire up the ampflifier to the Arduino
-
-~~You'll see that the sketch in the tutorial requires a calibration step to output appropriate force or mass units.~~ **Don't worry about calibration.** We'll be looking at normalized force, so units don't matter. 
-
-<!-- As for your SD storage integration, make sure your sketch writes one column data to the SD card with the header "force". -->
-
-For each experiment, you'll be recording 12 bouts of MVC force, each corresponding to a different elbow angle, for 30 s.  For each arm angle, one only needs to unplug the Arduino and hit the red restart button on the Arduino to begin taking force data. So as not to confuse from where your data came, it's a good idea to change the name of the text file being saved to for each experiment, e.g., "Team_subject1_control.csv" and "Team_subject1_fatigue.csv".
-
-## Data Collection
-
-### Elbow Angle
-
-You'll first need to construct a ganiometer, a simple device that measures the angle between the upper and lower arm (i.e., the elbow angle). One approach is to use the outline of a small plate to cut a disc out of cardboard and then bisect the diameter and then continue to bisect this semicircle into equal segments (Fig. 4.)
-
-<center>
-![](gan.jpg){width=50%}
-<br>
-**Fig. 4** A simple ganiometer made of cardboard.
-</center>
-<br>
-
-To use the ganiometer, find the center of the elbow joint in lateral view and mark this position with a marker. From this point, mark a line along the lateral margin of the radius. (Fig. 5). Then, poke a hole through the center of the ganiometer and affix it to the upper arm so its center aligns with your mark at the elbow joint and the 0-180$^o$ axis aligns with the long axis of the humerus (Fig. 6).You can affix the ganiometer to the upper arm by passing a strip of surgical tape through two tabs cut out on either side of the 0-180$^o$ axis (Fig. 6).
-
-<center>
-![](joint.jpg){width=50%}
-<br>
-**Fig. 4** The elbow joint on a tiny human and the lateral margin of the radius marked with a dark line. Thanks, Zo!
-</center>
-<br>
-
-
-<center>
-![](90deg.jpg){width=50%}
-<br>
-**Fig. 5** The ganiometer affixed to the upper arm with surgical tape with its center placed over the elbow joint. Note how the marked line on the radius indicates an elbow angle of about 90$^o$.
-</center>
-<br>
-
-As the elbow flexes or extends, you should be able to peak at the ganiometer to assess elbow angle.
-
-
-### Isometric MVCs
-
-We will collect isometric force data from MVCs over 12 arm angles, 45-157.5$^o$ at 11.25$^o$ (call it 11$^o$) intervals. Your load-cell is affixed to a wooden or plastic dowel with a zip tie at one end and has a looped zip tie attached to the other. Pass the looped zip tie around the provided C-clamp and fasten the clamp to something that won't move under the torque of your forearm. This could be  table, desk, ect. Hold the dowel in your hand as shown in Fig. 6. Make sure your elbow is supported by something rigid (i.e. the top of a chair back, etc.). 
-
-<center>
-![](grip.jpg){width=50%}
-<br>
-**Fig. 6** How to grip the the load-cell.
-</center>
-<br>
-
-
-
-First collect your control (i.e., non-fatigued) data by starting at the largest arm angle, 157.5$^o$. You can move through the 12 arm angles by rotating your body about your hips. That is, at the high elbow angles, you'll be more upright, at lower angles, more bent over. At each angle, flex your elbow as hard as you can to produce a MVC, resetting your DAQ system each time. Make sure the load-cell forms a right angle with reference to your hand (Fig. 6). You might want to practice a few times to get a sense of how this will proceed.
-
-### MVCs after Eccentric Fatigue
-
-To eccentrically fatigue your forearm flexors, you'll perform isokinetic controlled drops of a heavy object weighing 1/3 your maximum isometric force recorded in the control experiments. A book bag or back pack full of heavy items (ahhh. . .  books) should do just fine. 
-
-To perform your isokinetic eccentric drops, grab the book bag with the hand not involved in the experiment and pass it to the other as its forearm is fully flexed. With the bag now in your study hand, lower the bag slowly and at a constant speed. When the arm is fully extended, grab the book bag with the free hand and then flex the study forearm. Repeat by passing the bag to your study hand. Continue repeating this exercise for 3 min. Keep the cycles uniformly frequent by monitoring the duration (probably 3-4 s each cycle). At the end of the 3 mins, your forearm flexors should feel tired.
-
-After you fatigue your flexors, wait 2 min. Then repeat the experiment exactly as you did for the control data.
-
-Once you complete your experiments, upload your 24 data files to [this Google directory](https://drive.google.com/drive/folders/1ncojVtzbQaZWKNdFgWtkK5CeJ_PmAbq0?usp=sharing). Be sure to name your files according to the following convention: "team_subject_angle_control/fatigue.csv". **Please stick to all lower case.**
-
-## Software and Coding the Arduino
-
-The sketch needed for this experiment could be quite simple. It does, however, require you to download the HX711 library. 
-
-As a primer, this would work:
-
-```{c eval=F}
-
-#include "HX711.h" // include the appropriate library for `scale` functions
-
-
-HX711 scale; //invoke scale functions
-    
-void setup() {
-
- Serial.begin(115200); //set baud rate
-   scale.begin(6, 7); //set digital pins 6 and 7 as the data and clock pins
-  scale.tare(); //zero the measurements
-
-}
-
-
-void loop() {
-
-  float newReading= scale.get_units(10); //establish new variable from load cel
-
-   Serial.println(newReading); //print load cell value
-
-}
-
-```
-
-
-  **NOTE:*** You may find it handy to work with a [previous release of Arduino IDE](https://www.arduino.cc/en/software/OldSoftwareReleases) because the current version does not allow copying data from the serial monitory
-
-
-## Summary of Experimental Protocol
-  
-  + Fabricate and program a load-cell data acquisition system.
-  + Make a ganiometer.
-  + Record isometric MVCs at 12 distinct elbow angles.
-  + Eccentrically fatigue your flexors.
-  + Wait 2 minutes.
-  + Repeat recording isometric MVCs at the same 12 distinct elbow angles.
-  + Upload data to [this directory](https://drive.google.com/drive/folders/1ncojVtzbQaZWKNdFgWtkK5CeJ_PmAbq0?usp=sharing).
-  
-  
-  Pleas upload your data by Monday, November 13th.
-
+ deer_lu <-  lu2 %>% 
+   st_crop(nh) %>%
+  st_as_sf() %>% 
+     st_join(nh_deer)
  
-## Data Analysis
-
-For each experiment, we'll stick to a convention within the muscle physiology world by considering maximum normalized force. That is:
-
-  1. Find maximum force for each recording (don't worry about the specific values or units because you'll. . .).
-  2. Find maximum force ($F_{max}$) across all angles for each experiment (control or fatigued) for each individual and then divide all maximum values for that experiment by $F_{max}$. Your values will now be normalize, i.e., scaled 0-1 with a value of 1 representing the highest force recorded during an experiment.
+ library(units)
+ deer_lu %>% 
+   mutate(area=st_area(deer_lu)) %>% 
+   as.data.frame() %>% 
+   group_by(pbpNAME) %>% 
+   mutate(area_tot=sum(area)) %>% 
+     group_by(pbpNAME,land_use) %>% 
+   summarize(area_lu=sum(area)/area_tot) %>% 
+   ungroup %>% 
+   filter(pbpNAME=="Rochester") %>% 
+   ggplot(aes(x=land_use,area_lu,fill=land_use)) +geom_bar(stat="identity") +facet_wrap(.~pbpNAME)+coord_flip()
+   
+   
+wlu2 %>% 
+  st_crop(nh) %>% 
+  as.data.frame(xy=T)  %>% 
+  na.omit() 
   
-Using the normalized force data from the control and fatigued experiments, we'll consider shifts at which angle $F_{max}$ occurred, the difference in $\theta_{max}$. To assess any shift in $\theta_{max}$ with our limited elbow angle samples, we could simply look at the angle at which the flexors produce the most force. For instance, for the these data:
+
+ggplot()+
+  geom_stars(data=lu2 %>% st_crop(nh))+
+    theme_void()+scale_fill_viridis_d(option = "C")
 
 
-```{r,message=FALSE}
-library(ggplot2)
-ang <- seq(45,168.75,length.out = 12) #elbow angle
-
-normF <- c(0.71, 0.77, 0.83, 0.91, 0.97, 1.00, 0.96, 0.94, 0.89, 0.84, 0.77, 0.74) #you'll get this by reading in data and calculating normalized values
 
 
-qplot(ang,normF)+geom_point(aes(x=ang[which.max(normF)],y=normF[which.max(normF)]),col="red",size=4)
-
-ang[which.max(normF)] #Find angle for Fmax, theta_max
-
-```
-
-So, of the 12 angles that we sampled (45--157.5$^o$), the maximum isometric force occurred at angle ($\theta_{max}$=) 101.25$^o$. Simply doing this overlooks the fact that the maximum force could have occurred between any two of the sampled angles. Given the trend in the figure above, $\theta_{max}$ could have been an angle either greater and less than 101.25$^o$. To estimate the trend and find a perhaps more refined estimation of $F_{max}$ we'll resort to (wait for it) . . . modeling. In this case, a series of [polynomial models](https://en.wikipedia.org/wiki/Polynomial_regression) should work. Polynomial models are great for fitting parabolic data like those we have here, but are tricky in that one can keep adding monomial terms very quickly to achieve a better fit. This requires the practitioner to make sure that they are not overfitting the model. Fortunately, we have the tools to prevent such a thing using AIC, as we have learned. 
-
-Therefore, let's fit some polynomial models to our example data with a different number of monomial terms (i.e., orders) and tease apart the fit and penalty for including more terms using AICc. Fortunately, we can use the `lm()` and `poly()` functions from the base package to fit the models and use `AICc()` from the `MuMIn` package for AICc fitting. 
-
-
-```{r,message=FALSE}
-library(MuMIn)
-
-poly.m2 <- lm(normF~poly(ang,2)) #second order
-poly.m3 <- lm(normF~poly(ang,3)) #third order
-poly.m4 <- lm(normF~poly(ang,4)) #fourth order
-
-AICc(poly.m2,poly.m3,poly.m4) #the second order model fits best
-
-x.pred <- seq(45,157.5,length.out = 1000) #define 1000 angles from our range
-
-normF.pred <- predict(poly.m4,newdata = data.frame(ang=x.pred)) #predict the force using 1000 angles
-
-qplot(ang,normF)+geom_point(aes(x=x.pred,y=normF.pred),col="red")+geom_point(aes(x=x.pred[which.max(normF.pred)],y=normF.pred[which.max(normF.pred)]),size=5,col="blue")
-
-x.pred[which.max(normF.pred)] #theta_max
-
-```
-
-
-In this example we constructed 3 polynomial models of the 2nd, 3rd, 4th variety and then used AICc to find the lowest AICc score. The 4th order model fits best, so we then produced 1000 discrete values within our range with `seq()` to pass to`predict()` to predict force over this range using our best fitting model (producing `normF.pred`). We then found the max of `normF.pred` (the $F_{max}$) and plotted that, along with our predictions. Lastly, we found $\theta_{max}$, a value of 104.9.
-
-
-A goal of this project is to detect shifts in $F_{max}$ with respect to angle. If we had two data sets, one control and one produced after fatigue, we merely need to compare the two $\theta_{max}$, that is, the shift in angle for $F_{max}$ predicted by two polynomial models. This would look something like this:
-
-```{r,message=FALSE}
-
-normF.fat <- c(0.65, 0.71, 0.81, 0.89,0.92, 0.96, 0.99, 1, 0.96, 0.92, 0.84, 0.77) #fatigue data, you'll get this by reading in data and calculating normalized values
-
-
-qplot(ang,normF.fat)+geom_point(aes(x=ang[which.max(normF.fat)],y=normF.fat[which.max(normF.fat)]),col="red",size=4)
-
-ang[which.max(normF.fat)] #Find angle for Fmax for fatigue data
-
-poly.m2.fat <- lm(normF.fat~poly(ang,2)) #second order
-poly.m3.fat <- lm(normF.fat~poly(ang,3)) #third order
-poly.m4.fat <- lm(normF.fat~poly(ang,4)) #fourth order
-
-AICc(poly.m2.fat,poly.m3.fat,poly.m4.fat) #the second order model fits best
-
-normF.pred.fat <- predict(poly.m2.fat,newdata = data.frame(ang=x.pred)) #predict the force using 1000 angles
-
-qplot(ang,normF)+geom_point(aes(x=x.pred,y=normF.pred.fat),col="red")+geom_point(aes(x=x.pred[which.max(normF.pred.fat)],y=normF.pred.fat[which.max(normF.pred.fat)]),size=5,col="blue")
-
-
-x.pred[which.max(normF.pred.fat)]-x.pred[which.max(normF.pred)] #shift in angle for Fmax, theta_max
-
-```
-
-Looks as if there's a 10.3$^o$ shift in $\theta_{max}$. 
-
-Say we had a bunch of data (from only 10 subjects) and you wanted to compare the control against fatigued data graphically, you could do the following. First we'll simulate some control and fatigue data, adding random noise drawn form a normal distribution and plot the data with a color according to experiment to quickly assess the pattern.
-
-```{r}
-library(tidyverse)
-
-set.seed(1234) #to keep random noise the same
-
-sub <- 1:10 #ten subjects
-dat.l <- list() #empty list
-
-#loop to run through subjects and simulate data based on noise added to data above
-for(i in sub){
-  noise <- rnorm(length(ang),mean = 0.02,sd = 0.01)
-  noise2 <- rnorm(length(ang),mean = 0.02,sd = 0.01)
-  dat.l[[i]] <- tibble(
-    rbind(
-      data.frame(ang,force=normF+noise,subject=i,exp="control"),
-      data.frame(ang,force=normF.fat+noise2,subject=i,exp="fatigue")
-  )  
-  )%>%
-    group_by(subject,exp)%>%
-    mutate(force=force/max(force))
-  
-}
-
-dat <- do.call(rbind,dat.l) #get data into one tibble
-
-dat%>%
-  ggplot(aes(ang,force,col=exp))+geom_point()
-```
-
-Now let's take our data and get AICc scores for our three polynomial models. We'll group the data by subject and experiment and retrieve AICc from each model (`m2`, `m3`, and `m4`). Then, we'll pivot the tibble to a longer format so that we have a single column for AICc values.
-
-```{r, message=FALSE}
-AICs <- dat%>%
-  group_by(subject,exp)%>%
-  summarize(
-    m2=AICc(lm(force~poly(ang,2))), #second order
-    m3=AICc(lm(force~poly(ang,3))), #third order
-    m4=AICc(lm(force~poly(ang,4))) #fourth order
-  )%>%
-  pivot_longer(m2:m4,names_to="model",values_to="AICc")%>%
-  print()
-
-```
-
-Now we'll do something very similar, predicting values for 1000 discrete angles across our range of elbow positions. Notice that we've summarized the data by subject, experiment and model to find the angle (`x.pred`) which matches the max force value.
-```{r, message=FALSE}
-
-fits <- dat%>%
-  group_by(subject,exp)%>%
-  summarize(
-    m2=predict(lm(force~poly(ang,2)),newdata=data.frame(ang=x.pred)), #second order
-    m3=predict(lm(force~poly(ang,3)),newdata=data.frame(ang=x.pred)), #third order
-    m4=predict(lm(force~poly(ang,4)),newdata=data.frame(ang=x.pred)) #fourth order
-  )%>%
-   pivot_longer(m2:m4,names_to="model")%>%
-   group_by(subject,exp,model)%>%
-   summarize(theta_max=x.pred[which.max(value)])%>%
-   print()
-```
-
-Now let's join these the `AICs` and `fits` tables so that we can filter the model predictions by which model fits best. Note `filter(best==TRUE)` after constructing a `best` column according to the minimum AICc score using `mutate()`.
-
-```{r, message=TRUE}
-best.models <- fits%>%
-  left_join(AICs)%>%
-  group_by(subject,exp)%>%
-  mutate(best=AICc==min(AICc))%>%
-  filter(best==TRUE)%>%
-  dplyr::select(-best)%>%
-  print()
-```
-
-To investigate whether a shift if $\theta_{max}$ is different between the control and fatigue experiments, we can run the following ANOVA.
-```{r, message=TRUE}
-anova(lm(theta_max~exp,best.models))
-```
-
-Lastly, we should calculate the mean shift with SEM. To find the shift, we can pivot the `best.models` tibble to a wider format so we can have $\theta_{max}$ for each experiment in separate columns and find the difference with `mutate()`. Then, `summarise()` can be used to find the mean and SEM.
-
-```{r, message=TRUE}
-best.models%>%
-  pivot_wider(id_cols=subject,names_from = exp,values_from=theta_max)%>%
-  mutate(shift=fatigue-control)%>%
-  ungroup()%>%
-  summarise(mean.shift=mean(shift),se.shift=sd(shift)/sqrt(length(shift)))
+class(nh)
 
 ```
 
@@ -436,9 +356,10 @@ best.models%>%
 # Project Report
 
 Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following questions:
+  
+  * Is WTD spatially autocorellated?
+  * Does population and/or land-use patternspredict WTD harvest values?
 
-  * Do class-wide force-angle data for isometric MVC accord to a typical FL relationship both under control and fatigued conditions?
-  * Is there a significant shift between $\theta_{max}$ between the control and fatigue FL relationships?
   
 In answering these questions, be sure to use the visualization, modeling, and model-assessments tools we've used in the course so far.
   

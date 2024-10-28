@@ -362,15 +362,28 @@ Upon completion of this module, students will be able to:
 
 ---
 
-## Module 6:  Spatial Awareness: Mapping 
+## Module 6:  Spatial Awareness
 
 ### Important Dates
 
 Sunday, 11/10: Commit Module 6 Project Report
 
 ### Key Concepts
+  
+  + Spatial analysis
+  + Raster vs. shape data
+  + Spatial autocorrelation
+  + Linea modelling and k-means clusterings
+  
 
 ### Learning Objectives
+
+  + Understand the basics of map creation
+  + Plot raster and shape data 
+  + Combine raster and shape data to assess geospatial patterns
+  + Assess whether spatial data is random or autocorrelated
+  + Use proportion data in a linear modeling framework
+  
 
 ### Read/Watch 
 
