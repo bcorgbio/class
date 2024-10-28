@@ -69,6 +69,8 @@ Because `sf` plays nice with the `tidyverse`, to plot and `sf` object, we can us
 
 Raster data is presented in essentially pixel format. That is, each pixel in a spatial field represents 3 dimensions: some area of a particular 2D resolution (e.g., 30 x 30 m, 1 x 1 km) and some value of attribute, the color.
 
+Say for instance, we wanted to know the spatial distribution of population in Bermuda in 2020 at a resolution of 1 x 1 km, we could load a raster set from the [worldpop.org](https://www.worldpop.org/), and organization devoted to distributing such data. For this, we'll depend on the `R` raster powerhouse package, `stars`
+
 ```{r rastintro}
 library(stars)
 bermuda_pop <- read_stars("https://data.worldpop.org/GIS/Population_Density/Global_2000_2020_1km/2020/BMU/bmu_pd_2020_1km.tif") %>% st_crop(bermuda)
@@ -80,8 +82,19 @@ bermuda_pop <- read_stars("https://data.worldpop.org/GIS/Population_Density/Glob
 ```
 
 
+Here, we load the 1 km raster using `read_stars()` and cropped the data to the extent of our shape map using `st_crop()`. Plotting is simple as, like with `sf`, `stars` was designed to work well with `tidyverse` and `ggplot`. Here, we can make use of `geom_stars()` to plot a `stars` object in `ggplot`. Notice that, because Bermuda is a small island, the 1 km resolution is rather coarse.
+
 ### Combining shape and raster data
 
+Now, say we wanted to visually assess how these population tiles vary with the parish geopolitical values in the the Bermuda map. For this, we need to combine the shape and population data and calculate the total population in each parish. We can start with the `bermuda_pop` `stars` object and then:
+
+  + set the name of the first (and only) layer to an intiutive name, "population", with `setNames()`
+  + convert to `stars` object to an `sf` object with `st_as_sf()`
+  + join the `bermuda` shape data to this, now `sf`, object with `sf_join`. This nests the raster (i.e., populaiton) data within the extents of shape (i.e., parish) data
+  + use `dplyr`'s `group_by()` to group by the parish (`name`)
+  + and finally, sum the population based on this grouping.
+  
+What's left to do is plot with `geom_sf()` as before with the `bermuda` `sf` object.
 
 ```{r comb}
   
@@ -91,6 +104,11 @@ bermuda2 <-  bermuda_pop %>%
   st_join( bermuda) %>% 
   group_by(name) %>% 
   summarise(population=sum(population))
+
+bermuda %>% 
+  ggplot() +
+  geom_sf()+
+  geom_sf(data=bermuda2,aes(fill=population))
 
 ```
 
