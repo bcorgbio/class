@@ -83,7 +83,7 @@ bermuda_pop <- read_stars("https://data.worldpop.org/GIS/Population_Density/Glob
 ### Combining shape and raster data
 
 
-```{r comb,eval=F,include=F}
+```{r comb}
   
 bermuda2 <-  bermuda_pop %>% 
   setNames("population") %>% 
@@ -92,6 +92,9 @@ bermuda2 <-  bermuda_pop %>%
   group_by(name) %>% 
   summarise(population=sum(population))
 
+```
+
+```{r housedat, eval=F, include=F}
 home_col <- tibble(
   name=bermuda2 %>% 
   dplyr::pull(name),
@@ -101,7 +104,7 @@ home_col <- tibble(
 
 
 br <- raster("https://data.worldpop.org/GIS/Population_Density/Global_2000_2020_1km/2020/BMU/bmu_pd_2020_1km.tif")
-ss <- raster(resolution=c(0.001,0.001), crs=proj4string(br), ext=extent(br),) 
+ss <- raster(resolution=c(0.001,0.001), crs=proj4string(br), ext=extent(br)) 
 
 ss[] <- as.factor(sample(c("A","B","C","D"),ncell(ss),replace =T))
 
@@ -124,7 +127,7 @@ pop_par <- bermuda2 %>%
   summarize(tot_pop=sum(population)) %>% 
   ungroup %>% 
   arrange(-tot_pop) %>% 
-  mutate(col=c("green","green","green","blue","blue","purple","purple","pink","pink","white","white")) %>% 
+  mutate(col=c("green","green","green","blue","blue","purple","purple","pink","pink","white","orange")) %>% 
   st_drop_geometry() %>% dplyr::select(-tot_pop)
   
   
@@ -135,13 +138,13 @@ berm_house <- berm_house %>%
 
 fix_house <- function(n,favor){
    if(is.na(favor)){col_ <- NA}else{
-  col <- c("green","white","blue","purple","pink") 
+  col <- c("green","white","blue","purple","pink","orange") 
   which_n <- which(col==favor)
-  col2 <- c(sample(col[-which_n],4),col[which_n])
- prop <- sort( diff(c(0, sort(runif(4)), 1)))
+  col2 <- c(sample(col[-which_n],5),col[which_n])
+ prop <- sort( diff(c(0, sort(runif(6)), 1)))
 prop_n <- ceiling(prop*n)
-if(sum(prop_n)!=n) prop_n[5] <- prop_n[5]-diff(c(n,sum(prop_n)))
- col_ <-  sapply(1:5, function(x) rep(col2[x],prop_n[x])) %>% unlist()
+if(sum(prop_n)!=n) prop_n[6] <- prop_n[6]-diff(c(n,sum(prop_n)))
+ col_ <-  sapply(1:6, function(x) rep(col2[x],prop_n[x])) %>% unlist()
 }
  return(col_)
 }
@@ -161,26 +164,57 @@ berm_house <- berm_house %>%
 berm_house <- berm_house %>% 
   dplyr::select(house_color)
 
+# rasterize based on geometry housecolor.
+bh2<-st_rasterize(berm_house %>% dplyr::select(house_color, geometry) %>% mutate(house_color %>% as.factor))
 
-
-
-  write_stars(berm_house,"data/bermudae_house_colors.tiff")
-  
-plot(berm_house)
-
-t[] <- berm_house$house_color
-bh <- st_rasterize(berm_house %>% st_as_sf(), ) 
-  write_stars(bh,"data/bermuda_house_colors.tiff")
-
-t <- read_stars("data/bermuda_house_colors.tiff")
-
-plot(t)
-
-  ggplot(aes(fill=layer))+
-  geom_sf()
-
- plot(berm_house)
+# export as tiff
+write_stars(bh2, "data/bermuda_house_colors.tiff")
 ```
+
+```{r houscol2}
+bermuda_house <- read_stars("data/bermuda_house_colors.tiff") %>% setNames("house_color")
+
+  ggplot()+
+  geom_stars(data = bermuda_house,alpha=0.5)+
+    scale_fill_manual(values=c("blue","green","orange","pink","purple","grey90"))
+
+ 
+```
+
+```{r model,eval=F,include=F}
+
+bermuda_wide <- bermuda_house %>% 
+  st_as_sf() %>% 
+  st_join(bermuda2 %>% st_as_sf()) %>% 
+  as.data.frame() %>% 
+  group_by(name,house_color) %>% 
+  st_drop_geometry() %>% 
+  dplyr::select(name,house_color) %>% 
+  count %>% 
+  group_by(name) %>% 
+  mutate(house_per=n/sum(n)) %>% 
+  dplyr::select(-n) %>% 
+  pivot_wider(values_from = house_per,names_from = house_color) %>% 
+  left_join(bermuda2 %>% as.data.frame() %>% st_drop_geometry())
+  
+
+
+#first designation of major halohabitat
+library(randomForest)
+
+
+rf_dat <-  bermuda_wide %>%ungroup %>%  dplyr::select(-geometry,-name) %>% na.omit
+
+rf_dat <- rbind(rf_dat,rf_dat,rf_dat)+runif(33*7,0.10)
+
+rf <-randomForest(y=rf_dat[,7],x=rf_dat[,-7], mtry=5, importance=TRUE, ntree=1000) 
+
+varImpPlot(rf)
+#add predicitons
+rf_dat$rf_pred<-mht4$rf_pred<- rf$predicted
+
+```
+
 
 
 ### Plotting prety maps in R
@@ -202,7 +236,7 @@ OK, let's first address the obvious. We will be using deer harvest data as a pro
 
 Our deer harvest data comes from New Hampshire Department of Fish and Wildlife's last three [annual harvest summaries](https://www.wildlife.nh.gov/hunting-nh/hunting-reports-harvest-summaries) from 2021-2023. These
 
-```{r deerdat}
+```{r deerdat,eval=F,include=F}
 deer <- read_csv("data/NH_deer.txt") %>% 
   mutate(pbpNAME=
            str_replace(TOWN,"_"," ") %>% str_to_title(),
@@ -215,18 +249,8 @@ deer <- read_csv("data/NH_deer.txt") %>%
 
 ### Shape data
 
+Shape  data. Please ignore
 ```{r nhpol,eval=F,include=F}
-#intro:
-#https://r-spatial.org/book/07-Int/rosf.html
-
-#https://www.paulamoraga.com/book-spatial/spatial-autocorrelation.html
-
-library(rnaturalearth)
-
-library(sf)
-library(tidyverse)
-library(mapview)
-
 
 #change to URL
 nh <- read_sf("data/NH/New_Hampshire_Political_Boundaries.shp")
@@ -236,6 +260,8 @@ ggplot() +
 ```
 
 ### Raster data
+
+Land use data. Please ignore
 
 ```{r landuse,eval=F,include=F}
 library(raster)
@@ -259,6 +285,8 @@ plot(lu2)
 ```
 
 ### Adding custom data to shape data
+
+Ignore
 
 ```{r, eval=F,eval=F,include=F}
 
