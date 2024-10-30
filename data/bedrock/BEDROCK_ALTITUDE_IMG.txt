@@ -1,0 +1,225 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--Record created using version 2.0.7 of the USGS Metadata Wizard tool. (https://github.com/usgs/fort-pymdwizard)-->
+<metadata>
+  <idinfo>
+    <citation>
+      <citeinfo>
+        <origin>Stephen B. Mabee</origin>
+        <origin>Christopher C. Duncan</origin>
+        <origin>William P. Clement</origin>
+        <origin>Marshall A. Pontrelli</origin>
+        <pubdate>20230404</pubdate>
+        <title>Map of the Bedrock Altitude for Massachusetts at 100-meter Resolution</title>
+        <geoform>raster digital data</geoform>
+        <onlink>https://www.dropbox.com/sh/0cs18d17pe94zyx/AAAN4KFzkargmv4QdbRTY2bfa?dl=0</onlink>
+      </citeinfo>
+    </citation>
+    <descript>
+      <abstract>This raster image is a model of the altitude of the bedrock surface.  The model is based on a data set containing 678,836 data points used to model the altitude of the bedrock surface and the depth to bedrock. The data set has 61,467 bedrock wells, 111,495 bedrock outcrop polygons, 492,120 shallow to bedrock area polygons and 13,754 overburden wells. Each data point contains a bedrock altitude and depth along with a location used for the model. Details on how the model was created can be found here: https://www.dropbox.com/sh/hnbpwji3as575e3/AADjsQ0z-sW6gVa_Hez52f8Ma?dl=0</abstract>
+      <purpose>The purpose of this project is to compile subsurface data from a variety of sources and use this information to build a high resolution data layer of the altitude of the bedrock and depth to bedrock across the entire state. The overall goal is to help reduce the uncertainty in any project by providing a rational approach to clarifying bedrock depth during project planning and design development.</purpose>
+    </descript>
+    <timeperd>
+      <timeinfo>
+        <sngdate>
+          <caldate>20230404</caldate>
+        </sngdate>
+      </timeinfo>
+      <current>publication date</current>
+    </timeperd>
+    <status>
+      <progress>Complete</progress>
+      <update>None planned</update>
+    </status>
+    <spdom>
+      <bounding>
+        <westbc>-73.5255</westbc>
+        <eastbc>-69.7839</eastbc>
+        <northbc>42.9680</northbc>
+        <southbc>41.1619</southbc>
+      </bounding>
+    </spdom>
+    <keywords>
+      <theme>
+        <themekt>ISO 19115 Topic Category</themekt>
+        <themekey>geoscientificInformation</themekey>
+      </theme>
+      <place>
+        <placekt>None</placekt>
+        <placekey>Massachusetts</placekey>
+      </place>
+    </keywords>
+    <accconst>Data can be viewed best in GIS software</accconst>
+    <useconst>None. Users must provide proper attribution when using this data. Users are advised also to read the data set's metadata and accompanying explanatory reports cited above to understand appropriate use and data limitations.</useconst>
+    <ptcontac>
+      <cntinfo>
+        <cntperp>
+          <cntper>Stephen B. Mabee</cntper>
+          <cntorg>Massachusetts Geological Survey</cntorg>
+        </cntperp>
+        <cntpos>State Geologist</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>627 North Pleasant Street</address>
+          <city>Amherst</city>
+          <state>Massachusetts</state>
+          <postal>01003</postal>
+        </cntaddr>
+        <cntvoice>413-545-4814</cntvoice>
+        <cntemail>mabes@umass.edu</cntemail>
+      </cntinfo>
+    </ptcontac>
+    <datacred>This project was funded in part by the Massachusetts Department of Transportation (award number INTF00X02021A0113776), the Massachusetts Emergency Management Agency (award number ISACDAHM437905UM821A) and a USGS Water Use Data and Research Cooperative Agreement with the Massachusetts Department of Environmental Protection. We also want to acknowledge the contributions of others who provided data and assistance to the project: Dr. Laurie Baise, Tufts University, Peter Grace from MassGIS, Byron Stone, Janet Stone, John Mullaney, Laura Medalie, Mary DiGiacomo-Cohen and Greg Walsh from the USGS and students Patrick Scordato, Maya Pope, Keegan Moynaham, Hannah Davis, Ryan Miller, Alex Low, Claire Sullivan and Christian Sarro.</datacred>
+    <native>Computer used to build the data set was a desktop computer running Windows 10 Pro, version 21H1, OS Build 19043.1706, with a 64-bit operating system.  Software used to create the data set was ESRI ArcGIS Desktop version 10.8.1.14362.</native>
+  </idinfo>
+  <dataqual>
+    <attracc>
+      <attraccr>None</attraccr>
+    </attracc>
+    <logic>None</logic>
+    <complete>None</complete>
+    <lineage>
+      <procstep>
+        <procdesc>Details on how the data were collected, processed and validated are described in detail in two reports found at the link below:
+https://www.dropbox.com/sh/hnbpwji3as575e3/AADjsQ0z-sW6gVa_Hez52f8Ma?dl=0</procdesc>
+        <procdate>20230228</procdate>
+        <proccont>
+          <cntinfo>
+            <cntperp>
+              <cntper>Christopher C. Duncan</cntper>
+              <cntorg>GISmatters, Inc.</cntorg>
+            </cntperp>
+            <cntpos>President</cntpos>
+            <cntaddr>
+              <addrtype>mailing</addrtype>
+              <address>199 North Valley Road</address>
+              <city>Pelham</city>
+              <state>Massachusetts</state>
+              <postal>01002</postal>
+            </cntaddr>
+            <cntvoice>413-549-2052</cntvoice>
+            <cntemail>duncan@gismatters.com</cntemail>
+          </cntinfo>
+        </proccont>
+      </procstep>
+    </lineage>
+  </dataqual>
+  <spdoinfo>
+    <direct>Raster</direct>
+    <rastinfo>
+      <rasttype>Grid Cell</rasttype>
+      <rowcount>2000</rowcount>
+      <colcount>3100</colcount>
+      <vrtcount>1</vrtcount>
+    </rastinfo>
+  </spdoinfo>
+  <spref>
+    <horizsys>
+      <planar>
+        <gridsys>
+          <gridsysn>State Plane Coordinate System 1983</gridsysn>
+          <spcs>
+            <spcszone>2001</spcszone>
+            <transmer>
+              <sfctrmer>0.9996</sfctrmer>
+              <longcm>-71.5</longcm>
+              <latprjo>41</latprjo>
+              <feast>200000</feast>
+              <fnorth>750000</fnorth>
+            </transmer>
+          </spcs>
+        </gridsys>
+        <planci>
+          <plance>row and column</plance>
+          <coordrep>
+            <absres>100.0</absres>
+            <ordres>100.0</ordres>
+          </coordrep>
+          <plandu>meters</plandu>
+        </planci>
+      </planar>
+      <geodetic>
+        <horizdn>North_American_Datum_1983</horizdn>
+        <ellips>GRS 1980</ellips>
+        <semiaxis>6378137.0</semiaxis>
+        <denflat>298.257222101004</denflat>
+      </geodetic>
+    </horizsys>
+  </spref>
+  <eainfo>
+    <detailed>
+      <enttyp>
+        <enttypl>final_bedrock_altitude.tif</enttypl>
+        <enttypd>Raster geospatial data file.</enttypd>
+        <enttypds>Producer Defined</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>Value</attrlabl>
+        <attrdef>Unique numeric values contained in each raster cell.</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-511.77990722656</rdommin>
+            <rdommax>1058.8793945312</rdommax>
+            <attrunit>meters</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+    </detailed>
+  </eainfo>
+  <distinfo>
+    <distrib>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>Massachusetts Geological Survey</cntorg>
+          <cntper>Stephen B. Mabee</cntper>
+        </cntorgp>
+        <cntpos>State Geologist</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>Dept. Earth, Geographic, and Climate Sciences</address>
+          <address>University of Massachusetts</address>
+          <address>627  North Pleasant Street</address>
+          <city>Amherst</city>
+          <state>MA</state>
+          <postal>01003</postal>
+          <country>United States</country>
+        </cntaddr>
+        <cntvoice>413-54548148747</cntvoice>
+        <cntemail>mabes@umass.edu</cntemail>
+      </cntinfo>
+    </distrib>
+    <distliab>Unless otherwise stated, all data, metadata and related materials are considered to satisfy the quality standards relative to the purpose for which the data were collected. Although these data and associated metadata have been reviewed for accuracy and completeness and approved for release, no warranty expressed or implied is made regarding the display or utility of the data for other purposes, nor on all computer systems, nor shall the act of distribution constitute any such warranty.</distliab>
+    <stdorder>
+      <digform><digtinfo>
+          <formname>Digital Data</formname>
+        </digtinfo>
+        <digtopt><onlinopt><computer><networka><networkr>https://www.dropbox.com/sh/hnbpwji3as575e3/AADjsQ0z-sW6gVa_Hez52f8Ma?dl=0</networkr></networka></computer></onlinopt></digtopt></digform>
+      <fees>None</fees>
+    </stdorder>
+  </distinfo>
+  <metainfo>
+    <metd>20230404</metd>
+    <metc>
+      <cntinfo>
+        <cntperp>
+          <cntper>Stephen B. Mabee</cntper>
+          <cntorg>Massachusetts Geological Survey</cntorg>
+        </cntperp>
+        <cntpos>State Geologist</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>Dept. Earth, Geographic, and Climate Sciences</address>
+          <address>University of Massachusetts</address>
+          <address>627 North Pleasant Street</address>
+          <city>Amherst</city>
+          <state>Massachusetts</state>
+          <postal>01003</postal>
+        </cntaddr>
+        <cntvoice>413-545-4814</cntvoice>
+        <cntemail>mabes@umass.edu</cntemail>
+      </cntinfo>
+    </metc>
+    <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+    <metstdv>FGDC-STD-001-1998</metstdv>
+  </metainfo>
+</metadata>
