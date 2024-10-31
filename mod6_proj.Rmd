@@ -122,7 +122,7 @@ home_col <- tibble(
 
 
 br <- raster("https://data.worldpop.org/GIS/Population_Density/Global_2000_2020_1km/2020/BMU/bmu_pd_2020_1km.tif")
-ss <- raster(resolution=c(0.001,0.001), crs=proj4string(br), ext=extent(br)) 
+ss <- raster(resolution=c(0.005,0.005), crs=proj4string(br), ext=extent(br)) 
 
 ss[] <- as.factor(sample(c("A","B","C","D"),ncell(ss),replace =T))
 
@@ -187,7 +187,23 @@ bh2<-st_rasterize(berm_house %>% dplyr::select(house_color, geometry) %>% mutate
 
 # export as tiff
 write_stars(bh2, "data/bermuda_house_colors.tiff")
+
+bermuda_grid <- bermuda2 %>% group_by(name) %>% st_make_grid(cellsize = 0.01)
+
+
+bermuda_grid %>% 
+  ggplot()+
+  geom_sf()
+
+bermuda_grid <- bermuda_pop%>% 
+  setNames("population") %>% 
+  st_join(bermuda_grid)
+  
+ggplot()+
+  geom_stars(data=bermuda_grid)
+
 ```
+
 
 ```{r houscol2}
 bermuda_house <- read_stars("data/bermuda_house_colors.tiff") %>% setNames("house_color")
@@ -201,21 +217,98 @@ bermuda_house <- read_stars("data/bermuda_house_colors.tiff") %>% setNames("hous
 
 ```{r model,eval=F,include=F}
 
-bermuda_wide <- bermuda_house %>% 
-  st_as_sf() %>% 
-  st_join(bermuda2 %>% st_as_sf()) %>% 
+bermuda_wide 
+  
+bermuda_grid <- bermuda2 %>% group_by(name) %>% st_make_grid(cellsize = 0.01)
+
+bgp <- bermuda_house %>% 
+  st_as_sf() 
+
+bermuda_grid<-  bermuda_grid %>% 
+  st_as_sf%>% 
+  st_intersection(bermuda2) 
+
+
+
+fix_house <- function(n,favor){
+   if(is.na(favor)){col_ <- NA}else{
+  col <- c("green","white","blue","purple","pink","orange") 
+  which_n <- which(col==favor)
+  col2 <- c(sample(col[-which_n],5),col[which_n])
+ prop <- sort( diff(c(0, sort(runif(6)), 1)))
+prop_n <- ceiling(prop*n)
+if(sum(prop_n)!=n) prop_n[6] <- prop_n[6]-diff(c(n,sum(prop_n)))
+ col_ <-  sapply(1:6, function(x) rep(col2[x],prop_n[x])) %>% unlist()
+}
+ return(col_)
+}
+
+pop_par <- bermuda_grid %>% 
   as.data.frame() %>% 
-  group_by(name,house_color) %>% 
-  st_drop_geometry() %>% 
-  dplyr::select(name,house_color) %>% 
-  count %>% 
   group_by(name) %>% 
-  mutate(house_per=n/sum(n)) %>% 
-  dplyr::select(-n) %>% 
-  pivot_wider(values_from = house_per,names_from = house_color) %>% 
-  left_join(bermuda2 %>% as.data.frame() %>% st_drop_geometry())
+   mutate(subparish=paste0("subparish_",str_pad(1:n(), 2, pad = "0")
+)) %>%  
+  group_by(name) %>% 
+  mutate(tot_pop=round(rnorm(n(),mean=population/n(),sd=(population/n())*0.1),0)) 
+%>% 
+  ungroup %>% 
+  arrange(-tot_pop) %>% 
+  left_join(
+    tibble(
+      col=c("green","green","green","blue","blue","purple","purple","pink","pink","white","orange"),
+      name=bermuda2$name
+      )) %>% 
+  st_drop_geometry() 
+
+
+
+ pop_par %>% 
+  group_by(name) %>% 
+  st_drop_geometry() %>% 
+  mutate(n_house=round(tot_pop/6,0)) %>% 
+  summarise(house_color=fix_house(n=n_house,favor = col[1])) %>% 
+  group_by(name,house_color) %>% 
+   mutate(house_per=n/sum(n)) %>% 
+  count %>% 
+   group_by(name) %>% 
+   mutate(house_per=n/sum(n))%>% 
+   dplyr::select(-n) %>% 
+   pivot_wider(names_from = house_color,values_from = house_per)
+```
+
+
+  pivot_wider(names_from = house_col)
+   
+  
+bgp %>% 
+  ggplot() +
+  geom_sf(aes(fill=population))
+
+
   
 
+bgp %>% 
+  as.data.frame() %>% 
+  mutate(subparish=paste0("subparish_",str_pad(1:n(), 2, pad = "0")
+)) %>% 
+  st_drop_geometry() %>% 
+  dplyr::select(subparish,house_color,population) %>% 
+  group_by(subparish,house_color) %>% 
+  count
+
+%>% 
+  group_by(subparish) %>% 
+  mutate(house_per=n/sum(n)) %>% 
+  dplyr::select(-n) %>% 
+  pivot_wider(values_from = house_per,names_from = house_color)
+  
+
+  
+
+```
+%>% 
+  st_drop_geometry() %>% 
+ 
 
 #first designation of major halohabitat
 library(randomForest)

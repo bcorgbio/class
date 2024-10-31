@@ -87,6 +87,7 @@ p <- bermuda %>%
   ggplot()+
   geom_sf()
  
+mapview(p)
 ```
 ]
 
@@ -145,6 +146,7 @@ p <- bermuda %>%
   geom_sf(data=bermuda2,aes(fill=population))
 
   
+mapview(bermuda2, zcol = "population")
 ```
 ]
 
