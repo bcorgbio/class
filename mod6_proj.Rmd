@@ -1,5 +1,5 @@
 ---
-title: "Module 7 Project"
+title: "Module 6 Project"
 bibliography: class.bib
 ---
 <style>
@@ -21,7 +21,7 @@ However, the historical abundance of WTD in New England is largely different fro
 
 The question of what's driven this recent sharp increase in WTD abundance is the focus of this project. In particular, we'll ask:
 
-1. Is there spatial heterogeneity in WTD WTD harvest (number taken during hunting season, a proxy for abundance) 
+1. Is there spatial heterogeneity in WTD harvest (number taken during hunting season, a proxy for abundance) 
 
 2. If so, is spatial heterogeneity in WTD harvest associated with land-use patterns.
 
@@ -49,7 +49,7 @@ Spatial analysis is a sprawling field in data science. Although spatial data and
 
 This representation of data in shape or grid format marks an important framework within spatial analysis: in addition to point (coordinate) data, attributes are often aggregated within either shapes (e.g., lines, polygons, etc.) or grids. The former is considered shape information, the later raster information, an allusion to pixels of an image. We can obtain shape or raster data from myriad sources: state and federal agencies, universities and non-profit organizations, and even `R` packages that facilitate data download. 
 
-### Working with shape data 
+## Working with shape data 
 
 Shape data often contain geopolitical information (e.g.,city, state, or country boundaries) and even topological data (e.g., the boundaries of rivers, lakes, and oceans, and elevation contours). For instance, let's load a shape of the beautiful country of Bermuda using the `rnauturalearth` package and kick up `sf`, the package of choice that deals in shape data, to produce a simple map:
 
@@ -71,7 +71,7 @@ Notice here, that we have to convert the shape retireved from the `rnaturalearth
 
 Because `sf` plays nice with the `tidyverse`, to plot and `sf` object, we can use the `ggplot()` framework that's become so much of the class. For this we use `sf`'s `geom_sf()`.
 
-### Working with raster data
+## Working with raster data
 
 Raster data is presented in essentially pixel format. That is, each pixel in a spatial field represents 3 dimensions: some area of a particular 2D resolution (e.g., 30 x 30 m, 1 x 1 km) and some value of attribute, the color.
 
@@ -90,7 +90,7 @@ bermuda_pop <- read_stars("https://data.worldpop.org/GIS/Population_Density/Glob
 
 Here, we load the 1 km raster using `read_stars()` and cropped the data to the extent of our shape map using `st_crop()`. Plotting is simple as, like with `sf`, `stars` was designed to work well with `tidyverse` and `ggplot`. Here, we can make use of `geom_stars()` to plot a `stars` object in `ggplot`. Notice that, because Bermuda is a small island, the 1 km resolution is rather coarse.
 
-### Combining shape and raster data
+## Combining shape and raster data
 
 Now, say we wanted to visually assess how these population tiles vary with the parish geopolitical boundaries in the the Bermuda map. For this, we need to combine the shape and population data and calculate the total population in each parish. We can start with the `bermuda_pop` `stars` object and then:
 
@@ -125,12 +125,14 @@ Lovely! We see that population does vary according to parish across the island, 
 For this, we'll asses whether house color predicts population across the island as a much finer spatial scale.
 
 <center>
+
 <br>
 ![](https://i0.wp.com/www.shewenttospain.com/wp-content/uploads/2019/07/colorful-houses-1.jpg?w=1280&ssl=1)
 <br>
-<br>
+
 House color varies a lot in Bermuda, but, by law, the roofs must be white as a means to keep homes cool.
-<\center>
+
+</center>
 
 Prof. Kenaley has assembled (eeeehhhem, simulated) house colors across the island according to sections of each parish, i.e. "subparish", and created an `sf` shape file you can [download here](https://bcorgbio.github.io/class/data/bermuda_shape.zip). Be sure to download and unzip the folder. I've done so to my "data" folder in my project directory. NOTE: shape files (ending in ".shp") must have a bit of associate metadata files (e.g.,".proj",".shx",".dbf") in their directory to be loaded correctly. Make sure these are there.
 
@@ -162,6 +164,8 @@ bermuda_house %>%
     scale_fill_manual(values=c("blue","green","orange","pink","purple","grey90"))
 
 ```
+<br>
+
 As we can see, the predominant color varies spatially. We now have a reasonable spatial data set to commence with some formal statistical analysis. *How* to move ahead with analysis, grasshopper, is a very interesting problem indeed.  
 
 
@@ -246,12 +250,12 @@ You'll notice that in the `bermuda_house` `sf` object, we have relative proporti
 
 ```{r,warning=F}
 
-house_color %>% 
+bermuda_house %>% 
   ggplot(aes(pred_col,log(tot_pop),fill=pred_col))+
   geom_boxplot(alpha=0.5)+
     scale_fill_manual(values=c("blue","green","orange","pink","purple","grey90"))
 
-house_color %>% 
+bermuda_house %>% 
   pivot_longer(blue:white,names_to = "color") %>% 
   ggplot(aes(value,log(tot_pop)))+
   geom_point()+
@@ -266,9 +270,7 @@ In our case, each variable has it's pros and cons. `pred_col` is a factor, a dis
 
 We also have another problem, one much deeper and unrelated to the statistical approaches mentioned above. Over space, any attribute value at any location is more likely to be similar to a value at an adjacent or close location than it is to a value at a distant location. That is, spatial data are often [spatially autocorrelated](https://mgimond.github.io/Spatial/spatial-autocorrelation.html). This violates a major assumption in many statistical models that the data/observations be independent.
 
-So, what to do? Fortunately, we can leverage an evermore popular approach to estimating predictive power of highly correlated data: Random Forests, a relatively straight forward machine learning algorithm. Random forests are built on the same fundamental principles as decision trees and bagging. Bagging trees introduces a random component in to the tree building process that reduces the variance of a single tree’s prediction and improves predictive performance. However, the trees in bagging are not completely independent of each other since all the original predictors are considered at every split of every tree. Rather, trees from different bootstrap samples typically have similar structure to each other (especially at the top of the tree) due to underlying relationships.
-
-
+So, what to do? Fortunately, we can leverage an evermore popular approach to estimating predictive power of highly correlated data: Random Forests, a relatively straight forward machine learning algorithm. 
 
 
 <center>
@@ -291,12 +293,13 @@ Let's see how we can put this into action using the `R` package `randomForest`
 library(randomForest)
 
 
-rf_dat <-  house_color %>%ungroup %>%st_drop_geometry() %>%  na.omit  %>%  dplyr::select(-name,-pred_col,-subparish)
+rf_dat <-  bermuda_house %>%ungroup %>%st_drop_geometry() %>%  na.omit  %>%  dplyr::select(-name,-pred_col,-subparish)
 
 
 rf <-randomForest(tot_pop~.,data=rf_dat, mtry=5, importance=TRUE, ntree=1000) 
 
 varImpPlot(rf)
+
 #add predicitons
 rf_dat$pred_pop<- rf$predicted
 
@@ -311,7 +314,9 @@ rf_dat %>%
 
 
 
-### Plotting prety maps in R
+## Plotting prety maps in R
+
+Lastly, let's consider how to plot very nice trees in `R`. Many packages exist for this task, but perhaps none is more simple than the `mapview` package.
 
 ```{r}
 library(mapview)
@@ -320,129 +325,80 @@ mapview(bermuda_house, zcol = "pred_col")
 
 ```
 
-## Methods
+# Methods
 
-Back to the frozen enclave of NH.
+Back to the frozen enclave of NH. 
 
-### Data source
+Using our Bermuda examples as a model, let's perform a similar analysis. For this we'll need harvest, geopolitical shape, and land-use data.
+
+## Harvest data source
 
 OK, let's first address the obvious. We will be using deer harvest data as a proxy for WTD abundance. Understandably, for some this may be a difficult thing with which to grapple. After all, we're considering how many times a majestic animal has been killed, to put in plainly. There are many ethical considerations here and I'm happy to discuss them all in private. But, if we can, let's just take the data at face value: a measure of abundance. 
 
-Our deer harvest data comes from New Hampshire Department of Fish and Wildlife's last three [annual harvest summaries](https://www.wildlife.nh.gov/hunting-nh/hunting-reports-harvest-summaries) from 2021-2023. These
+Our deer harvest data comes from New Hampshire Department of Fish and Wildlife's last three [annual harvest summaries](https://www.wildlife.nh.gov/hunting-nh/hunting-reports-harvest-summaries) from 2021-2023. These data include a break down of harvest per square mile (`HSM`) in each NH town. These are available on our class site at this URL:
+
+<br>
+`"https://bcorgbio.github.io/class/data/NH_deer.txt"`
+<br>
+
 
 ```{r deerdat,eval=F,include=F}
-deer <- read_csv("data/NH_deer.txt") %>% 
-  mutate(TOWN=
-           str_replace(TOWN,"_"," ") %>% str_to_title(),
-         HSM=as.numeric(HSM),
-         TOTAL=as.numeric(TOTAL),
+deer <- read_csv("https://bcorgbio.github.io/class/data/NH_deer.txt") %>% 
+  mutate(TOWN=str_replace(TOWN,"_"," ") %>% str_to_title()
          ) %>% 
   group_by(TOWN) %>% 
-  summarise_at(c("HSM"),mean)
+  summarise_at("HSM",mean)
   
 
 ```
+Notice that we have undertaken an operation on the column `TOWN` to change the character strings to title case (i.e., capital first letters of each proper word). This is important later for joining to our spatial data which include town in the same format. Also notice we summarized the `HSM` data with a mean, that is, mean `HSM` over the last three years.
 
+## Geopolitical shape data
 
-### Shape data
+Because we're considering how harvest varies in each town according to land-use, we need shape data for each town in NH. Prof. Kenaley downloaded the shape files for these boundaries from one of NH's websites containing such data so that you can create an `sf` object. You can [download this here](https://bcorgbio.github.io/class/data/NH.zip). 
 
-Shape  data. Please ignore
-```{r nhpol,eval=F,include=F}
+Let's see what it looks like, with Prof. Kenaley's hometown labelled for reference with `geom_sf_text()`. Note that in loading the shape data, we also renamed the geopolitical name `pbppNAME` to `TOWN`, for obvious reasons.
+
+```{r nhpol}
 
 #change to URL
 nh <- read_sf("data/NH/New_Hampshire_Political_Boundaries.shp") %>%
   rename(TOWN=pbpNAME)
 
 ggplot() +
-  geom_sf(data = nh)+theme_void()
+  geom_sf(data = nh)+
+  geom_sf_text(data=nh %>% filter(TOWN=="Rochester"),aes(label=TOWN))+
+  theme_void() 
 ```
 
-### Raster data
+## Land-use data
 
-Land use data. Please ignore
+Land-use raster data come from the [Multi-Resolution Land Characteristics (MRLC) Consortium](https://www.mrlc.gov/viewer/). These data offer 30-m resolution (wow!) for the entirety of the continental US. but, Professor K has limited these data to an area covering NH. These data are available for [download from our class site](https://bcorgbio.github.io/class/data/land_use.zip).
 
-```{r landuse,eval=F,include=F}
-library(raster)
+
+Let's load the data and then create another object, `lu2`, that has the sets the attribute name to "land_use", transforms the coordinate system and extent of the data to that of the `nh` `sf` object, and finally, downsamples the data 30 times, making each pixel 30 times larger. This last operation, using `st_downsample()` makes the resolution much more coarse, but eminently more manageble in terms of size and time to work with. Ah, tradeoffs.  This could take a while, but it's worth it in the end.
+
+```{r landuse,cache=T}
+
 #large data set, 30m resolution
-lu <- stars::read_stars("ignore/data/land_use/NLCD_2021_Land_Cover_L48_20230630_qtPZ6zMaTAibmibqfd37.tiff")
+lu <- stars::read_stars("data/land_use/NLCD_2021_Land_Cover_L48_20230630_qtPZ6zMaTAibmibqfd37.tiff")
 
-
-#low res for plotting and handling
 lu2 <- lu %>% 
  setNames("land_use") %>% 
      st_transform( st_crs(nh)) %>% 
-st_downsample(30,mean) %>% 
-  st_crop(nh)
- 
-
+  st_downsample(30,mean) %>% 
+  st_crop(nh)  #lower res for plotting and handling
 
 ```
+## Next steps
 
-### Adding custom data to shape data
+You're tasked with combining all three data sets to undertake a random forest analysis. Here are some hints and requirements:
 
-```{r, eval=F,eval=F,include=F}
+1. use `left_join()` to join the `deer` object to the `nh` `sf` object. Please save this joined object as `nh_deer` and keep only the `TOWN` and `HSM` in addition to the geometry.
 
-nh_deer <- nh  %>% left_join(deer) %>%  dplyr::select(TOWN,HSM,PB_TOWN_16) 
- 
+2. Intersect the `nh` object with the `lu2` object  using `st_intersection()` This will subdivide the land-use data into the `TOWN` values in the `nh` object. 
 
-nh_deer %>% 
-  ggplot(aes(PB_TOWN_16 %>% as.numeric,HSM))+geom_point(alpha=0.3)+
-  geom_smooth(method="lm") + 
-  scale_x_log10()
-
-
-
-mapview(nh_deer, zcol = "HSM")
-
-
-
-```
-
-```{r scratch,eval=F,include=F}
-
-
-nh_lu <- lu2 %>% 
-   st_crop(nh) %>%
-  st_as_sf() %>% 
-     st_intersection(nh) %>% 
-  dplyr::select(land_use,TOWN)
-
-
-nh_dat <- nh_lu %>% 
-   as.data.frame() %>% 
-   group_by(TOWN,land_use) %>% 
-  count %>% 
-  group_by(TOWN) %>% 
-  mutate(lu_per=n/sum(n)) %>% 
-  dplyr::select(-n) %>%
-  pivot_wider(names_from = land_use,values_from = lu_per,values_fill = 0) %>% 
-  left_join(nh_deer %>% dplyr::select(TOWN,HSM)) 
-
- 
-
-
-rf_dat <-  nh_dat %>% st_as_sf()  %>% 
-  st_drop_geometry() %>% 
-  ungroup%>% 
-  dplyr::select(-TOWN) %>% na.omit #st_drop_geometry wont' work unles nh dat is sf
-colnames(rf_dat) <- str_replace_all(string=colnames(rf_dat), pattern=" |\\,|\\/", repl="")
-
-rf <-randomForest(HSM~.,data=rf_dat, mtry=5, importance=TRUE, ntree=1000) 
-
-varImpPlot(rf)
-#add predicitons
-rf_dat$pred_HSM<- rf$predicted
-
-rf_dat %>% 
-  mutate_at(c("HSM","pred_HSM"),log) %>% 
-  ggplot(aes(HSM,pred_HSM))+
-  geom_point()+
-  geom_smooth(method="lm")
-```
- 
- 
-
-
+3. 
 
 # Project Report
 
@@ -451,7 +407,8 @@ Please submit your report to your team GitHub repository as an .Rmd document wit
   * Is WTD spatially random, that is visually, does their abundance vary across the state?
     - In answering this question, please produce a pretty, interactive map.
   * Does land-use pattern predict WTD harvest values?
-    - 
+    - Please establish a data tibble bases on joining and intersecting the three data sources as outlined above.
+    - Using a random forest model, assess wether land-use poportion in each town predicts deer-harvest values.
   
 In anwering these questions, please also make sure to inlude 
 
