@@ -9,16 +9,25 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
  
 # Introduction
+<center>
+![](https://images.ctfassets.net/pujs1b1v0165/sTnbs2M49c9AgPZxp7rDZ/15d77d1064ae1a311ce2f04298e6928b/still_hunting_deer.jpg)
+</center>
 
-![](https://images.ctfassets.net/pujs1b1v0165/sTnbs2M49c9AgPZxp7rDZ/15d77d1064ae1a311ce2f04298e6928b/still_hunting_deer.jpg?w=2400)
+<br>
 
 White-tailed deer (WTD, *Odocoileus virginianus*) are native to much of North America and represent an ecologically important species across a diverse array of habitats, from dense mixed forest to open farm- and grasslands.  The currently estimated WTD population of 30 million in the United States is about the same as pre-colonization. Due to a combination of over hunting and poor resource management practices, the US population dipped to fewer than 2 million by about 1900, but the abundance of this species has been on a steady rebound for over the last 100 years. 
 
 However, the historical abundance of WTD in New England is largely different from the continental trend. New England marks the northern edge of the species' historical range and WTD were rare in the area, especially in northern New England. What's more, due to post-colonial land-use practices---particarly, near total deforestation for agricultural purposes--WTD were largely extirpated from the area by the late 18th century. With changes associated with a move away from an agrarian economy, reforestation, and the succession of mixed habitats, WTD abundance slowly increased through the last half of the 20th century. However, it's only recently, say within the last few decades, that New England WTD abundance has in increased sharply, particularly in suburban areas.
 
-The question of what's driven this recent sharp increase in WTD abundance is the focus of this project. In particualar, we'll ask if WTD harvest (number taken during hunting season, a proxy for abundance) is associated with land-use and population (a proxy for suburbanization). For this we'll focus on the great state of New Hampshire, Prof. Kenaley's birthplace.
+The question of what's driven this recent sharp increase in WTD abundance is the focus of this project. In particular, we'll ask:
 
-To answer such a question, one could,  of course, assemble harvest, land-use, and population data for the Granite State as a whole and commence with the typical statistical operations (e.g., linear modeling, a la `harvest~population*land-use`). However, NH is a rather diverse state in the two former, potentially predictive variables. In the north of the state, there are lots of forests. In the southern part of the state, there a lots more people, and a mix of developed, forested, and agricultural land. In between, we have a diversity variably populated scattered amongst forested, farmed, and forgotten (i.e., successional) areas.  That is, each of these attributes vary spatially across the landscape and focussing on this great state as a whole wouldn't account for the important variation across it. We therefore need to enter the realm of spatial analysis, specifically [spatial associate](https://en.wikipedia.org/wiki/Spatial_analysis#Spatial_association). By this, we mean the degree to which things are similarly arranged in space.
+1. Is there spatial heterogeneity in WTD WTD harvest (number taken during hunting season, a proxy for abundance) 
+
+2. If so, is spatial heterogeneity in WTD harvest associated with land-use patterns.
+
+For this we'll focus on the great state of New Hampshire, Prof. Kenaley's birthplace.
+
+To answer such a question, one could,  of course, assemble harvest and land-use data for the Granite State as a whole and commence with the typical statistical operations (e.g., linear modeling, a la `harvest~population*land-use`). However, NH is a rather diverse state in former, potentially predictive variable. In the north of the state, there are lots of forests. In the southern part of the state, there a lots more people, and a mix of developed, forested, and agricultural land. In between, we have a diversity of land uses, included forested, farmed, and forgotten (i.e., successional) areas.  That is, each of these attributes vary spatially across the landscape and focusing on this great state as a whole wouldn't account for the important variation across it. We therefore need to enter the realm of spatial analysis, specifically [spatial association](https://en.wikipedia.org/wiki/Spatial_analysis#Spatial_association). By this, we mean the degree to which things are similarly arranged in space.
 
 ![](https://dfzljdn9uc3pi.cloudfront.net/2020/8262/1/fig-1-2x.jpg)
 
@@ -26,12 +35,9 @@ To answer such a question, one could,  of course, assemble harvest, land-use, an
 
 ![](https://milliontrees.me/wp-content/uploads/2021/07/deer-population.jpg)
 
-This species is also the most popular large game animal on the continent
-
-
 Just a few decades ago, to assess such a spatial question would require buying extremely expensive pieces of [software](https://en.wikipedia.org/wiki/ArcGIS).
 
-Let's take a momentary break for the icy climes of the granite state and consider how spatial analysis might be undertaken in R. We'll consider examples from a much more beachy place, Bermuda, where, as far as I know, there are no WTD.
+Let's take a momentary break from the icy climes of the granite state and consider how spatial analysis might be undertaken in R. We'll consider examples from a much more beachy place, Bermuda, where, as far as I know, there are no WTD.
 
 ## Spatial Analysis in R
 
@@ -86,7 +92,7 @@ Here, we load the 1 km raster using `read_stars()` and cropped the data to the e
 
 ### Combining shape and raster data
 
-Now, say we wanted to visually assess how these population tiles vary with the parish geopolitical values in the the Bermuda map. For this, we need to combine the shape and population data and calculate the total population in each parish. We can start with the `bermuda_pop` `stars` object and then:
+Now, say we wanted to visually assess how these population tiles vary with the parish geopolitical boundaries in the the Bermuda map. For this, we need to combine the shape and population data and calculate the total population in each parish. We can start with the `bermuda_pop` `stars` object and then:
 
   + set the name of the first (and only) layer to an intiutive name, "population", with `setNames()`
   + convert to `stars` object to an `sf` object with `st_as_sf()`
@@ -94,7 +100,7 @@ Now, say we wanted to visually assess how these population tiles vary with the p
   + use `dplyr`'s `group_by()` to group by the parish (`name`)
   + and finally, sum the population based on this grouping.
   
-What's left to do is plot with `geom_sf()` as before with the `bermuda` `sf` object.
+What's left to do is plot with `geom_sf()` as before with the `bermuda` `sf` object. Note that we add some bells and whistles to make in prettier.
 
 ```{r comb}
   
@@ -108,125 +114,69 @@ bermuda2 <-  bermuda_pop %>%
 bermuda %>% 
   ggplot() +
   geom_sf()+
-  geom_sf(data=bermuda2,aes(fill=population))
+  geom_sf(data=bermuda2,aes(fill=population))+
+  geom_sf_text(aes(label=name),alpha=0.3)+
+  scale_fill_viridis_c(option="magma")
 
 ```
 
-```{r housedat, eval=F, include=F}
-home_col <- tibble(
-  name=bermuda2 %>% 
-  dplyr::pull(name),
-  population=bermuda2 %>% 
-  dplyr::pull(population)
-)
+Lovely! We see that population does vary according to parish across the island, with Devonshire containing the highest population. Doing something like this will absolutely help us assess whether WTD varies spatially in New Hampshire. But, what might predict population density in Bermuda, an identical question to our second goal, of the project, i.e., does a variable (land-use patterns) predict WTD abundance. In our example of Bermuda, we lack such a predictive variable.We also lack any serious spatial resolution. That is, in the example above, we only consider 11 polygons.
 
+For this, we'll asses whether house color predicts population across the island as a much finer spatial scale.
 
-br <- raster("https://data.worldpop.org/GIS/Population_Density/Global_2000_2020_1km/2020/BMU/bmu_pd_2020_1km.tif")
-ss <- raster(resolution=c(0.005,0.005), crs=proj4string(br), ext=extent(br)) 
+<center>
+<br>
+![](https://i0.wp.com/www.shewenttospain.com/wp-content/uploads/2019/07/colorful-houses-1.jpg?w=1280&ssl=1)
+<br>
+<br>
+House color varies a lot in Bermuda, but, by law, the roofs must be white as a means to keep homes cool.
+<\center>
 
-ss[] <- as.factor(sample(c("A","B","C","D"),ncell(ss),replace =T))
+Prof. Kenaley has assembled (eeeehhhem, simulated) house colors across the island according to sections of each parish, i.e. "subparish", and created an `sf` shape file you can [download here](https://bcorgbio.github.io/class/data/bermuda_shape.zip). Be sure to download and unzip the folder. I've done so to my "data" folder in my project directory. NOTE: shape files (ending in ".shp") must have a bit of associate metadata files (e.g.,".proj",".shx",".dbf") in their directory to be loaded correctly. Make sure these are there.
 
-ss2 <- st_as_stars(ss) %>%
-  st_crop(bermuda) 
+So let's use the `sf` function `read_sf()` to read in the shape file and have a look at the `sf` object that was loaded.
 
-bermuda2 %>% dplyr::select(name,population) %>% 
-  st_join(ss2 %>% 
-  st_as_sf) %>% ggplot(aes(fill=population))+
-  geom_sf()
-
-berm_house <- ss2 %>% 
-  st_as_sf %>% 
-  st_join(bermuda2 %>% dplyr::select(name,population)) %>% 
-  group_by(name) %>% 
-  mutate(tot_pop=sum(population))
-
-pop_par <- bermuda2 %>% 
-  group_by(name) %>% 
-  summarize(tot_pop=sum(population)) %>% 
-  ungroup %>% 
-  arrange(-tot_pop) %>% 
-  mutate(col=c("green","green","green","blue","blue","purple","purple","pink","pink","white","orange")) %>% 
-  st_drop_geometry() %>% dplyr::select(-tot_pop)
-  
-  
-berm_house <- berm_house %>% 
-  left_join(pop_par)
-
-#bar(berm_house$layer)
-
-fix_house <- function(n,favor){
-   if(is.na(favor)){col_ <- NA}else{
-  col <- c("green","white","blue","purple","pink","orange") 
-  which_n <- which(col==favor)
-  col2 <- c(sample(col[-which_n],5),col[which_n])
- prop <- sort( diff(c(0, sort(runif(6)), 1)))
-prop_n <- ceiling(prop*n)
-if(sum(prop_n)!=n) prop_n[6] <- prop_n[6]-diff(c(n,sum(prop_n)))
- col_ <-  sapply(1:6, function(x) rep(col2[x],prop_n[x])) %>% unlist()
-}
- return(col_)
-}
-
-new_col <- berm_house %>% 
-  group_by(name) %>% 
-  st_drop_geometry() %>% 
-  summarise(house_color=fix_house(n=n(),favor = col[1])) %>% 
-  mutate(n=1:n()) %>% 
-  mutate(n=sample(n,length(n)))
-
-berm_house <- berm_house %>% 
-  group_by(name) %>% 
-  mutate(n=1:n()) %>% 
-  left_join(new_col)
-
-berm_house <- berm_house %>% 
-  dplyr::select(house_color)
-
-# rasterize based on geometry housecolor.
-bh2<-st_rasterize(berm_house %>% dplyr::select(house_color, geometry) %>% mutate(house_color %>% as.factor))
-
-# export as tiff
-write_stars(bh2, "data/bermuda_house_colors.tiff")
-
-bermuda_grid <- bermuda2 %>% group_by(name) %>% st_make_grid(cellsize = 0.01)
-
-
-bermuda_grid %>% 
-  ggplot()+
-  geom_sf()
-
-bermuda_grid <- bermuda_pop%>% 
-  setNames("population") %>% 
-  st_join(bermuda_grid)
-  
-ggplot()+
-  geom_stars(data=bermuda_grid)
-
-```
 
 
 ```{r houscol2}
-bermuda_house <- read_stars("data/bermuda_house_colors.tiff") %>% setNames("house_color")
+bermuda_house <- read_sf("data/bermuda_dat.shp") 
 
+head(bermuda_house)
+```
+Note that we have several columns of interest. Namely:
+
+  - `name`: the name of the parish
+  - `subparish`: the subparish
+  - `tot_pop`: the total population in each subparish (i.e., parish population/`length(subparish)`)
+  - `pred_col`: the predominant color in each subparish.
+  - `blue`, `green`, `orange`, `pink`, `purple` and `white`: the proportion of each color house in the subparish.
+  - lastly, the `geometry`: the polygon list that circumscribes each subparish.
+
+Let's have a look at what these data all mean spatially by plotting. Note that color has been set manually to match those of the `pred_col` column
+
+```{r plotcol}
+
+bermuda_house %>% 
   ggplot()+
-  geom_stars(data = bermuda_house,alpha=0.5)+
+  geom_sf(aes(fill=pred_col),alpha=0.5) +
     scale_fill_manual(values=c("blue","green","orange","pink","purple","grey90"))
 
- 
 ```
+As we can see, the predominant color varies spatially. We now have a reasonable spatial data set to commence with some formal statistical analysis. *How* to move ahead with analysis, grasshopper, is a very interesting problem indeed.  
 
-```{r model,eval=F,include=F}
 
-bermuda_wide 
+```{r color,eval=F,include=F}
+
   
-bermuda_grid <- bermuda2 %>% group_by(name) %>% st_make_grid(cellsize = 0.01)
-
-bgp <- bermuda_house %>% 
-  st_as_sf() 
-
-bermuda_grid<-  bermuda_grid %>% 
-  st_as_sf%>% 
-  st_intersection(bermuda2) 
+bermuda_grid <- bermuda %>% 
+  group_by(name) %>% 
+  st_make_grid(cellsize = 0.01) %>% 
+  st_as_sf %>% 
+  st_intersection(bermuda)%>% 
+  st_join(bermuda_pop %>% 
+            setNames("population")%>% 
+            st_as_sf ) %>% 
+    dplyr::filter(st_geometry_type(.)=="POLYGON")
 
 
 
@@ -243,86 +193,119 @@ if(sum(prop_n)!=n) prop_n[6] <- prop_n[6]-diff(c(n,sum(prop_n)))
  return(col_)
 }
 
-pop_par <- bermuda_grid %>% 
-  as.data.frame() %>% 
+house_color <- bermuda_grid %>% 
+  as.data.frame()  %>%
+  dplyr::select(name) %>% 
+  left_join(bermuda2 %>% as.data.frame()) %>% 
+   na.omit() %>% 
   group_by(name) %>% 
-   mutate(subparish=paste0("subparish_",str_pad(1:n(), 2, pad = "0")
-)) %>%  
+   mutate(subparish=paste0("subparish_",str_pad(1:n(), 2, pad = "0"))) %>% 
   group_by(name) %>% 
-  mutate(tot_pop=round(rnorm(n(),mean=population/n(),sd=(population/n())*0.1),0)) 
-%>% 
+  mutate(tot_pop=round(rnorm(n(),mean=population/n(),sd=(population/n())*0.1),0)) %>% 
   ungroup %>% 
-  arrange(-tot_pop) %>% 
   left_join(
     tibble(
-      col=c("green","green","green","blue","blue","purple","purple","pink","pink","white","orange"),
+      col=c("green","green","blue","blue","purple","purple","pink","pink","white","white","orange"),
       name=bermuda2$name
       )) %>% 
-  st_drop_geometry() 
-
-
-
- pop_par %>% 
-  group_by(name) %>% 
-  st_drop_geometry() %>% 
-  mutate(n_house=round(tot_pop/6,0)) %>% 
-  summarise(house_color=fix_house(n=n_house,favor = col[1])) %>% 
-  group_by(name,house_color) %>% 
-   mutate(house_per=n/sum(n)) %>% 
+  group_by(name,subparish,tot_pop,col) %>% 
+  summarise(n_house=round(tot_pop/5,0))%>% 
+  summarise(house_color=fix_house(n=n_house,favor = col))%>% 
+  group_by(name,house_color,subparish,tot_pop) %>% 
   count %>% 
-   group_by(name) %>% 
-   mutate(house_per=n/sum(n))%>% 
+   group_by(name,subparish,tot_pop) %>% 
+   mutate(house_per=n/sum(n),
+          pred_col=house_color[which.max(house_per)])%>% 
    dplyr::select(-n) %>% 
-   pivot_wider(names_from = house_color,values_from = house_per)
-```
+   pivot_wider(names_from = house_color,values_from = house_per) %>%
+  ungroup %>% 
+  arrange(name,subparish)
+
+bermuda_dat<- bermuda_grid %>%
+  arrange(name) %>% 
+  st_as_sf() %>% 
+  dplyr::select(name) %>% 
+  cbind(house_color%>% ungroup %>% dplyr::select(subparish,tot_pop,pred_col:white)) %>% st_as_sf()
 
 
-  pivot_wider(names_from = house_col)
-   
+bermuda_dat%>% 
+  ggplot()+
+  geom_sf(aes(fill=pred_col),alpha=0.5)+
+    scale_fill_manual(values=c("blue","green","orange","pink","purple","grey90"))
+
+write_sf(bermuda_dat,"data/bermuda_dat.shp",layer_options = "GEOMETRY=AS_XY")
   
-bgp %>% 
-  ggplot() +
-  geom_sf(aes(fill=population))
-
-
-  
-
-bgp %>% 
-  as.data.frame() %>% 
-  mutate(subparish=paste0("subparish_",str_pad(1:n(), 2, pad = "0")
-)) %>% 
-  st_drop_geometry() %>% 
-  dplyr::select(subparish,house_color,population) %>% 
-  group_by(subparish,house_color) %>% 
-  count
-
-%>% 
-  group_by(subparish) %>% 
-  mutate(house_per=n/sum(n)) %>% 
-  dplyr::select(-n) %>% 
-  pivot_wider(values_from = house_per,names_from = house_color)
-  
-
-  
-
-```
-%>% 
-  st_drop_geometry() %>% 
  
 
-#first designation of major halohabitat
+```
+ 
+
+## Walking through random forests
+
+You'll notice that in the `bermuda_house` `sf` object, we have relative proportions of each house color for each subparish in addition to the predominant house color (`pred_color`). Indeed, the former was calculated from the latter. Plotting these quickly, it looks like there is some sort of pattern in the data. How we should assess these patterns is the problem at hand.
+
+```{r,warning=F}
+
+house_color %>% 
+  ggplot(aes(pred_col,log(tot_pop),fill=pred_col))+
+  geom_boxplot(alpha=0.5)+
+    scale_fill_manual(values=c("blue","green","orange","pink","purple","grey90"))
+
+house_color %>% 
+  pivot_longer(blue:white,names_to = "color") %>% 
+  ggplot(aes(value,log(tot_pop)))+
+  geom_point()+
+  geom_smooth(method="lm")+
+  facet_wrap(.~color)
+
+```
+
+[Many statistical approaches to spatial analysis](https://r-spatial.org/book/part-3.html) exist. Of course, the approach we choose must be appropriate to the data.  
+
+In our case, each variable has it's pros and cons. `pred_col` is a factor, a discrete variable with a finite set of levels (i.e. "blue", "white", etc.). One could use a logistical regression approach, but this is fraught and discrete predictors are rarely the only variable in the predictive mix. As for the proportion data with it's $>$2 categories, one could use [multinomial logistic or Dirichlet regression](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13234). There a paths for this in `R`, but again, they are fraught.
+
+We also have another problem, one much deeper and unrelated to the statistical approaches mentioned above. Over space, any attribute value at any location is more likely to be similar to a value at an adjacent or close location than it is to a value at a distant location. That is, spatial data are often [spatially autocorrelated](https://mgimond.github.io/Spatial/spatial-autocorrelation.html). This violates a major assumption in many statistical models that the data/observations be independent.
+
+So, what to do? Fortunately, we can leverage an evermore popular approach to estimating predictive power of highly correlated data: Random Forests, a relatively straight forward machine learning algorithm. Random forests are built on the same fundamental principles as decision trees and bagging. Bagging trees introduces a random component in to the tree building process that reduces the variance of a single tree’s prediction and improves predictive performance. However, the trees in bagging are not completely independent of each other since all the original predictors are considered at every split of every tree. Rather, trees from different bootstrap samples typically have similar structure to each other (especially at the top of the tree) due to underlying relationships.
+
+
+
+
+<center>
+![]https://miro.medium.com/v2/resize:fit:1400/format:webp/1*ZFuMI_HrI3jt2Wlay73IUQ.png)
+<\center>
+
+The figure above shows the structure of a Random Forest. Notice that the trees run in parallel with no interaction amongst them. A Random Forest operates by constructing several decision trees during training time and outputting the mean of the classes as the prediction of all the trees. To get a better understanding of the Random Forest algorithm, let’s walk through the steps:
+
+ - Pick at random k data points from the training set.
+ - Build a decision tree associated to these k data points.
+ - Choose the number N of trees you want to build and repeat steps 1 and 2.
+ - For a new data point, make each one of your N-tree trees predict the value of y for the data point in question and assign the new data point to the average across all of the predicted y values.
+
+A Random Forest Regression model is powerful and accurate. It usually performs well on many problems, including features with non-linear relationships (our problem!!). Disadvantages, however, include the that there is no interpretability (kinda), overfitting may easily occur, and one must choose the number of trees to include in the model.
+
+Let's see how we can put this into action using the `R` package `randomForest`
+
+
+```{r}
 library(randomForest)
 
 
-rf_dat <-  bermuda_wide %>%ungroup %>%  dplyr::select(-geometry,-name) %>% na.omit
+rf_dat <-  house_color %>%ungroup %>%st_drop_geometry() %>%  na.omit  %>%  dplyr::select(-name,-pred_col,-subparish)
 
-rf_dat <- rbind(rf_dat,rf_dat,rf_dat)+runif(33*7,0.10)
 
-rf <-randomForest(y=rf_dat[,7],x=rf_dat[,-7], mtry=5, importance=TRUE, ntree=1000) 
+rf <-randomForest(tot_pop~.,data=rf_dat, mtry=5, importance=TRUE, ntree=1000) 
 
 varImpPlot(rf)
 #add predicitons
-rf_dat$rf_pred<-mht4$rf_pred<- rf$predicted
+rf_dat$pred_pop<- rf$predicted
+
+rf_dat %>% 
+  mutate_at(c("tot_pop","pred_pop"),log) %>% 
+  ggplot(aes(tot_pop,pred_pop))+
+  geom_point()+
+  geom_smooth(method="lm")
+
 
 ```
 
@@ -333,13 +316,13 @@ rf_dat$rf_pred<-mht4$rf_pred<- rf$predicted
 ```{r}
 library(mapview)
 
-mapview(bermuda2, zcol = "population")
+mapview(bermuda_house, zcol = "pred_col")
 
 ```
 
 ## Methods
 
-Back to the frozen enclace of NH.
+Back to the frozen enclave of NH.
 
 ### Data source
 
@@ -349,11 +332,14 @@ Our deer harvest data comes from New Hampshire Department of Fish and Wildlife's
 
 ```{r deerdat,eval=F,include=F}
 deer <- read_csv("data/NH_deer.txt") %>% 
-  mutate(pbpNAME=
+  mutate(TOWN=
            str_replace(TOWN,"_"," ") %>% str_to_title(),
          HSM=as.numeric(HSM),
          TOTAL=as.numeric(TOTAL),
-         ) 
+         ) %>% 
+  group_by(TOWN) %>% 
+  summarise_at(c("HSM"),mean)
+  
 
 ```
 
@@ -364,7 +350,8 @@ Shape  data. Please ignore
 ```{r nhpol,eval=F,include=F}
 
 #change to URL
-nh <- read_sf("data/NH/New_Hampshire_Political_Boundaries.shp")
+nh <- read_sf("data/NH/New_Hampshire_Political_Boundaries.shp") %>%
+  rename(TOWN=pbpNAME)
 
 ggplot() +
   geom_sf(data = nh)+theme_void()
@@ -379,125 +366,94 @@ library(raster)
 #large data set, 30m resolution
 lu <- stars::read_stars("ignore/data/land_use/NLCD_2021_Land_Cover_L48_20230630_qtPZ6zMaTAibmibqfd37.tiff")
 
-nh_crs<- crs(nh)
-new_crs <-  st_crs(nh_crs)
 
-#low res for plotting
+#low res for plotting and handling
 lu2 <- lu %>% 
  setNames("land_use") %>% 
-     st_transform_proj( new_crs) %>% 
+     st_transform( st_crs(nh)) %>% 
 st_downsample(30,mean) %>% 
   st_crop(nh)
  
-plot(lu2)
-
 
 
 ```
 
 ### Adding custom data to shape data
 
-Ignore
-
 ```{r, eval=F,eval=F,include=F}
 
-nh_deer <- nh %>% left_join(deer) 
-nh_deer %>%filter(HSM==is.na(HSM)) %>%  dplyr::select(pbpNAME,year,HSM) 
+nh_deer <- nh  %>% left_join(deer) %>%  dplyr::select(TOWN,HSM,PB_TOWN_16) 
  
-ggplot() +
-  geom_sf(data=nh_deer %>% na.omit,aes(fill=HSM))+theme_void()+
-  facet_wrap(.~year)+
-  scale_fill_viridis_c(option = "magma",na.value = 0)
 
 nh_deer %>% 
-  ungroup %>% 
-  mutate(pop=PB_TOWN_16 %>% as.numeric()) %>% 
-  group_by(pbpNAME) %>% 
-  dplyr::summarise(pop=mean(pop) %>% log,KSM=mean(KSM,na.rm=T) %>% log) %>%
-  ggplot(aes(pop,KSM))+geom_point(alpha=0.3)+
-  geom_smooth(method="polyx")+ 
-  scale_x_log10()
-
-nh_deer %>% 
-  ggplot(aes(PB_TOWN_16 %>% as.numeric,KSM))+geom_point(alpha=0.3)+
-  geom_smooth(method="lm",formula=y ~ poly(x, 4, raw=TRUE)) + 
+  ggplot(aes(PB_TOWN_16 %>% as.numeric,HSM))+geom_point(alpha=0.3)+
+  geom_smooth(method="lm") + 
   scale_x_log10()
 
 
 
 mapview(nh_deer, zcol = "HSM")
+
+
+
 ```
 
 ```{r scratch,eval=F,include=F}
 
-#https://www.paulamoraga.com/book-spatial/spatial-autocorrelation.html
-# https://r-spatial.org/book/07-Introsf.html
-#javascript:alert('Sign-in to download data')
 
-#stars way
-lu <- stars::read_stars("ignore/data/land_use/NLCD_2021_Land_Cover_L48_20230630_qtPZ6zMaTAibmibqfd37.tiff")
-
-nh_crs<- crs(nh)
-new_crs <-  st_crs(nh_crs)
-
-
-
-
-
-
-plot(lu2)
-
-
-lu3 <- lu2 %>% 
-   st_crop(nh) %>% 
-  as.data.frame(xy=T)  %>% 
-  na.omit() 
-
-
-
-
- deer_lu <-  lu2 %>% 
+nh_lu <- lu2 %>% 
    st_crop(nh) %>%
   st_as_sf() %>% 
-     st_join(nh_deer)
- 
- library(units)
- deer_lu %>% 
-   mutate(area=st_area(deer_lu)) %>% 
+     st_intersection(nh) %>% 
+  dplyr::select(land_use,TOWN)
+
+
+nh_dat <- nh_lu %>% 
    as.data.frame() %>% 
-   group_by(pbpNAME) %>% 
-   mutate(area_tot=sum(area)) %>% 
-     group_by(pbpNAME,land_use) %>% 
-   summarize(area_lu=sum(area)/area_tot) %>% 
-   ungroup %>% 
-   filter(pbpNAME=="Rochester") %>% 
-   ggplot(aes(x=land_use,area_lu,fill=land_use)) +geom_bar(stat="identity") +facet_wrap(.~pbpNAME)+coord_flip()
-   
-   
-wlu2 %>% 
-  st_crop(nh) %>% 
-  as.data.frame(xy=T)  %>% 
-  na.omit() 
-  
+   group_by(TOWN,land_use) %>% 
+  count %>% 
+  group_by(TOWN) %>% 
+  mutate(lu_per=n/sum(n)) %>% 
+  dplyr::select(-n) %>%
+  pivot_wider(names_from = land_use,values_from = lu_per,values_fill = 0) %>% 
+  left_join(nh_deer %>% dplyr::select(TOWN,HSM)) 
 
-ggplot()+
-  geom_stars(data=lu2 %>% st_crop(nh))+
-    theme_void()+scale_fill_viridis_d(option = "C")
+ 
 
 
+rf_dat <-  nh_dat %>% st_as_sf()  %>% 
+  st_drop_geometry() %>% 
+  ungroup%>% 
+  dplyr::select(-TOWN) %>% na.omit #st_drop_geometry wont' work unles nh dat is sf
+colnames(rf_dat) <- str_replace_all(string=colnames(rf_dat), pattern=" |\\,|\\/", repl="")
 
+rf <-randomForest(HSM~.,data=rf_dat, mtry=5, importance=TRUE, ntree=1000) 
 
-class(nh)
+varImpPlot(rf)
+#add predicitons
+rf_dat$pred_HSM<- rf$predicted
 
+rf_dat %>% 
+  mutate_at(c("HSM","pred_HSM"),log) %>% 
+  ggplot(aes(HSM,pred_HSM))+
+  geom_point()+
+  geom_smooth(method="lm")
 ```
+ 
+ 
+
 
 
 # Project Report
 
 Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following questions:
   
-  * Is WTD spatially autocorellated?
-  * Does population and/or land-use patternspredict WTD harvest values?
+  * Is WTD spatially random, that is visually, does their abundance vary across the state?
+    - In answering this question, please produce a pretty, interactive map.
+  * Does land-use pattern predict WTD harvest values?
+    - 
+  
+In anwering these questions, please also make sure to inlude 
 
   
 In answering these questions, be sure to use the visualization, modeling, and model-assessments tools we've used in the course so far.
