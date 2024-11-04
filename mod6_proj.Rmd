@@ -29,11 +29,18 @@ For this we'll focus on the great state of New Hampshire, Prof. Kenaley's birthp
 
 To answer such a question, one could,  of course, assemble harvest and land-use data for the Granite State as a whole and commence with the typical statistical operations (e.g., linear modeling, a la `harvest~population*land-use`). However, NH is a rather diverse state in former, potentially predictive variable. In the north of the state, there are lots of forests. In the southern part of the state, there a lots more people, and a mix of developed, forested, and agricultural land. In between, we have a diversity of land uses, included forested, farmed, and forgotten (i.e., successional) areas.  That is, each of these attributes vary spatially across the landscape and focusing on this great state as a whole wouldn't account for the important variation across it. We therefore need to enter the realm of spatial analysis, specifically [spatial association](https://en.wikipedia.org/wiki/Spatial_analysis#Spatial_association). By this, we mean the degree to which things are similarly arranged in space.
 
+<br>
+<center>
+
+<br>
 ![](https://dfzljdn9uc3pi.cloudfront.net/2020/8262/1/fig-1-2x.jpg)
 
 <br>  The 1982 WTD densities (A) and 2001–2005 deer densities (B) in the continental United States.
 
 ![](https://milliontrees.me/wp-content/uploads/2021/07/deer-population.jpg)
+</center>
+
+<br>
 
 Just a few decades ago, to assess such a spatial question would require buying extremely expensive pieces of [software](https://en.wikipedia.org/wiki/ArcGIS).
 
@@ -41,7 +48,7 @@ Let's take a momentary break from the icy climes of the granite state and consid
 
 ## Spatial Analysis in R
 
-Many R packages have been developed for spatial analysis. Many are idiosyncratic, requiring one to work with particular object classes that don't work well with other data science frameworks like `tidyverse`. There are a few, namely `sf` and `stars` that do work well with the `tidyverse`. `sf` provides a table format for simple features, a spatial object class where feature geometries are stored in a list-column (i.e., each row in contains a column as a list of shapes). `stars` was written to support raster data, amongst other things (e.g., time series). The development of both packages came from the bottom up, with lots of input from the data science community that relies so much on `tidyverse`. The packages are designed to work together. Functions or methods operating on `sf` or `stars` objects start with `st_`, making it easy to recognize them as appropriate for spatial tasks in the `sf` and `stars` workflow.
+Many `R` packages have been developed for spatial analysis. Many are idiosyncratic, requiring one to work with particular object classes that don't work well with other data-science frameworks like `tidyverse`. There are a few, namely `sf` and `stars` that do work well with the `tidyverse`. `sf` provides a table format for simple features, a spatial object class where feature geometries are stored in a list-column (i.e., each row contains a column as a list of shape geometries). `stars` was written by several of the same `sf` authors to support raster data among other things (e.g., time series). The development of both packages came from the bottom up, with lots of input from the data science community that relies so much on `tidyverse`. The packages are designed to work together. Functions or methods operating on `sf` or `stars` objects start with `st_`, making it easy to recognize them as appropriate for spatial tasks in the `sf` and `stars` workflow.
 
 ## The Spatial Analysis Framework 
 
@@ -266,7 +273,7 @@ bermuda_house %>%
 
 [Many statistical approaches to spatial analysis](https://r-spatial.org/book/part-3.html) exist. Of course, the approach we choose must be appropriate to the data.  
 
-In our case, each variable has it's pros and cons. `pred_col` is a factor, a discrete variable with a finite set of levels (i.e. "blue", "white", etc.). One could use a logistical regression approach, but this is fraught and discrete predictors are rarely the only variable in the predictive mix. As for the proportion data with it's $>$2 categories, one could use [multinomial logistic or Dirichlet regression](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13234). There a paths for this in `R`, but again, they are fraught.
+In our case, each variable has it's pros and cons. `pred_col` is a factor, a discrete variable with a finite set of levels (i.e. "blue", "white", etc.). One could use a logistical regression approach, but this is fraught and discrete predictors are rarely the only variable in the predictive mix. As for the proportion data with it's $>$2 categories, one could use [multinomial logistic or Dirichlet regression](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13234). There are paths for this in `R`, but again, they are fraught.
 
 We also have another problem, one much deeper and unrelated to the statistical approaches mentioned above. Over space, any attribute value at any location is more likely to be similar to a value at an adjacent or close location than it is to a value at a distant location. That is, spatial data are often [spatially autocorrelated](https://mgimond.github.io/Spatial/spatial-autocorrelation.html). This violates a major assumption in many statistical models that the data/observations be independent.
 
@@ -274,41 +281,91 @@ So, what to do? Fortunately, we can leverage an evermore popular approach to est
 
 
 <center>
-![]https://miro.medium.com/v2/resize:fit:1400/format:webp/1*ZFuMI_HrI3jt2Wlay73IUQ.png)
-<\center>
+![](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*LjVAVEV4UYYsPMSsjDhkuQ.png)
+</center>
+<br>
 
-The figure above shows the structure of a Random Forest. Notice that the trees run in parallel with no interaction amongst them. A Random Forest operates by constructing several decision trees during training time and outputting the mean of the classes as the prediction of all the trees. To get a better understanding of the Random Forest algorithm, let’s walk through the steps:
+Random forest is a supervised learning algorithm that incorporates three basic principles: decision trees, ensemble learning, and bootstrapping.
 
- - Pick at random k data points from the training set.
- - Build a decision tree associated to these k data points.
- - Choose the number N of trees you want to build and repeat steps 1 and 2.
- - For a new data point, make each one of your N-tree trees predict the value of y for the data point in question and assign the new data point to the average across all of the predicted y values.
-
-A Random Forest Regression model is powerful and accurate. It usually performs well on many problems, including features with non-linear relationships (our problem!!). Disadvantages, however, include the that there is no interpretability (kinda), overfitting may easily occur, and one must choose the number of trees to include in the model.
-
-Let's see how we can put this into action using the `R` package `randomForest`
+**Decision trees**. These are decision paths in which binary choices are made. In RF regression, decision trees start at a root and follow splits based on variable outcomes until a leaf node is reached and the result is given. The figure above represents the concept of a single decision tree diagram which starts with the Var_1 and splits based off of specific criteria. When "yes", the decision tree follows the represented path, when ‘no’, the decision tree goes down the other path. This process repeats until the decision tree reaches the leaf node and the resulting outcome is decided. In RF regression, the values of a, b, c, or d could be any numeric value.
 
 
-```{r}
+**Ensemble learning**. This is the process of using multiple models built (i.e, trained) over the same data. Model results are averaged to estimate a prediction. For an ensemble prediction to be powerful and accurate, the errors of each model (in this case decision tree) must be independent and different from tree to tree.
+
+**Bootstrapping**. This is the process of randomly sampling subsets of a dataset over a given number of iterations and a given number of variables and repeating an analysis based on each resample of the data. Results of each analysis are then averaged together to obtain a more powerful result than one analysis alone. Bootstrapping is a common ensemble method to infer emergent patterns in data science and an the method upon which data for RF decision trees are generated.  
+
+RF regression models are powerful and accurate. They usually perform well on many problems, including features with non-linear relationships (our problem!!). Disadvantages, however, include the that there is no interpretability (kinda), overfitting may easily occur, and one must choose the number of variables to bootstrap and the number of trees to include in the model.
+
+Let's see how we can put this into action using the `R` package `randomForest`. First, let' load the pakckage and assemble the data.
+
+```{r rf,message=F}
 library(randomForest)
 
+rf_dat <-  bermuda_house %>%
+  ungroup %>%
+  st_drop_geometry() %>%  
+  na.omit  %>%  
+  dplyr::select(-name,-pred_col,-subparish)
 
-rf_dat <-  bermuda_house %>%ungroup %>%st_drop_geometry() %>%  na.omit  %>%  dplyr::select(-name,-pred_col,-subparish)
+head(rf_dat)
+```
+
+Here we simply dropped the geometry list column with `st_drop_geometry()`, omitted any `NA` values, and removed the other columns we don't need.
+
+To run a random forest regression model with `randomForest`, one needs to specify a model formula, the number of trees to construct, and the number of variables to randomly sample at each split (i.e., node) in the trees. Here we say we want `tot_pop` to be predict by all the other variables (i.e., proportion of each house color) with `tot_pop~.` `mtry`, the number of varibles to sample at the splits is set to 2 and the number of trees (`ntree`) to 1000. Note that we also set `importance=T` to calculate the importance of each predictor, something we'll use later.
+
+```{r}
+
+rf <-randomForest(tot_pop~.,data=rf_dat, mtry=2, ntree=1000,importance=T) 
+
+```
 
 
-rf <-randomForest(tot_pop~.,data=rf_dat, mtry=5, importance=TRUE, ntree=1000) 
+Great, now we have an RF model that predicts population based on house color proportion. But, how do we interpret such a model? That is, what can the model tell us? The most logical approach would be to assess if the model made reasonable predictions and then, assess what variables contribute most to the patterns of populations across the subparishes. This, together, would answer our original question, does house color predict population? 
 
-varImpPlot(rf)
+Let's first address if the model made an accurate prediction across all the subparishes. The function `randomForest()` returns the predicted values. So let's add them to our `rf_dat` object and compare them to the actual population in each subparish with a plot. 
 
+```{r}
 #add predicitons
 rf_dat$pred_pop<- rf$predicted
+
 
 rf_dat %>% 
   mutate_at(c("tot_pop","pred_pop"),log) %>% 
   ggplot(aes(tot_pop,pred_pop))+
   geom_point()+
   geom_smooth(method="lm")
+```
 
+Looks as though the predictions were somewhat accurate. Now, what variables were important in making these accurate predictions? `randForest` has a basic function to assess this: `varImpPlot()`. So let's run this on our model.
+
+
+```{r}
+varImpPlot(rf)
+```
+
+Here, we're interested in the '%IncMSE` value. This is pretty wonky, but, for each tree, each predictor in the sample is randomly chosen in the bootstrap and passed through the tree to obtain an error rate (mean square error--MSE) in the regression. The error rate from the unchosen variables is then subtracted from the error rate of the chosen trees, and averaged across all trees. When this value is large, it implies that a variable is highly correlated to the dependent variable. In short, this tells us blue and pink houses predict population best. And thus, we have answered our question.
+
+
+
+
+```{r}
+tuneRF(x=rf_dat[,-1],rf_dat$tot_pop,stepFactor=1,doBest=F,ntreeTry=1000)
+
+```
+
+
+
+
+<!-- rf_dat %>%  -->
+<!--   mutate_at(c("tot_pop","pred_pop"),log) %>%  -->
+<!--   ggplot(aes(tot_pop,pred_pop))+ -->
+<!--   geom_point()+ -->
+<!--   geom_smooth(method="lm") -->
+
+
+
+<!-- rf$importance -->
 
 ```
 
