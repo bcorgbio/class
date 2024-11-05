@@ -18,7 +18,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 White-tailed deer (WTD, *Odocoileus virginianus*) are native to much of North America and represent an ecologically important species across a diverse array of habitats, from dense mixed forest to open farm- and grasslands.  The currently estimated WTD population of 30 million in the United States is about the same as pre-colonization. Due to a combination of over hunting and poor resource management practices, the US population dipped to fewer than 2 million by about 1900, but the abundance of this species has been on a steady rebound for over the last 100 years. 
 
-However, the historical abundance of WTD in New England is largely different from the continental trend. New England marks the northern edge of the species' historical range and WTD were rare in the area, especially in northern New England. What's more, due to post-colonial land-use practices---particularly, near total deforestation for agricultural purposes--WTD were largely extirpated from the area by the late 18th century. With changes associated with a move away from an agrarian economy, reforestation, and the succession of mixed habitats, WTD abundance slowly increased through the last half of the 20th century. However, it's only recently, say within the last few decades, that New England WTD abundance has in increased sharply, particularly in suburban areas.
+However, the historical abundance of WTD in New England is largely different from the continental trend. New England marks the northern edge of the species' historical range and WTD were rare in the area, especially in northern New England. What's more, due to post-colonial land-use practices---particularly, near total deforestation for agricultural purposes--WTD were largely extirpated from the area by the late 18th century. With changes associated with a move away from an agrarian economy, reforestation, and the succession of mixed habitats, WTD abundance slowly increased through the last half of the 20th century. However, it's only recently, say within the last few decades, that New England WTD abundance has increased sharply, particularly in suburban areas.
 
 The question of what's driven this recent sharp increase in WTD abundance is the focus of this project. In particular, we'll ask:
 
@@ -28,7 +28,7 @@ The question of what's driven this recent sharp increase in WTD abundance is the
 
 For this we'll focus on the great state of New Hampshire, Prof. Kenaley's birthplace.
 
-To answer such a question, one could,  of course, assemble harvest and land-use data for the Granite State as a whole and commence with the typical statistical operations (e.g., linear modeling, a la `harvest~population*land-use`). However, NH is a rather diverse state in former, potentially predictive variable. In the north of the state, there are lots of forests. In the southern part of the state, there a lots more people, and a mix of developed, forested, and agricultural land. In between, we have a diversity of land uses, included forested, farmed, and forgotten (i.e., successional) areas.  That is, each of these attributes vary spatially across the landscape and focusing on this great state as a whole wouldn't account for the important variation across it. We therefore need to enter the realm of spatial analysis, specifically [spatial association](https://en.wikipedia.org/wiki/Spatial_analysis#Spatial_association). By this, we mean the degree to which things are similarly arranged in space.
+To answer such a question, one could,  of course, assemble harvest and land-use data for the Granite State as a whole and commence with the typical statistical operations (e.g., linear modeling, a la `harvest~population*land-use`). However, NH is a rather diverse state in the form, potentially predictive variable. In the north of the state, there are lots of forests. In the southern part of the state, there a lots more people, and a mix of developed, forested, and agricultural land. In between, we have a diversity of land uses, included forested, farmed, and forgotten (i.e., successional) areas.  That is, each of these attributes vary spatially across the landscape and focusing on this great state as a whole wouldn't account for the important variation across it. We therefore need to enter the realm of spatial analysis, specifically [spatial association](https://en.wikipedia.org/wiki/Spatial_analysis#Spatial_association). By this, we mean the degree to which things are similarly arranged in space.
 
 <br>
 <center>
@@ -79,13 +79,13 @@ bermuda %>%
 
 Notice here, that we have to convert the shape retrieved from the `rnaturalearth` package (an object of class "SpatialPolygonsDataFrame") to an `sf` object. This sort of conversion is perhaps the most vexing part of spatial analysis in R. That is, many spatial object classes exist depending on the `R` package used and to work with objects across functions of different origins, conversion needs to happen. Yet, we're often unsure of which conversion function to use. We'll try to keep conversion to a minimum in this project, but be ware. Fortunately, `sf` has the handy `st_as_sf()` that allows conversion of a spatial polygon data frame to an `sf` object.
 
-Because `sf` plays nice with the `tidyverse`, to plot and `sf` object, we can use the `ggplot()` framework that's become so much of the class. For this we use `sf`'s `geom_sf()`.
+Because `sf` plays nice with the `tidyverse`, to plot an `sf` object, we can use the `ggplot()` framework that's become so much of the class. For this we use `sf`'s `geom_sf()`.
 
 ## Working with raster data
 
-Raster data is presented in essentially pixel format. That is, each pixel in a spatial field represents 3 dimensions: some area of a particular 2D resolution (e.g., 30 x 30 m, 1 x 1 km) and some value of attribute, the color.
+Raster data is presented in essentially pixel format. That is, each pixel in a spatial field represents 3 dimensions: some area of a particular 2D resolution (e.g., 30 x 30 m, 1 x 1 km) and some value of an attribute, like the color of an image.
 
-Say for instance, we wanted to know the spatial distribution of population in Bermuda in 2020 at a resolution of 1 x 1 km, we could load a raster set from the [worldpop.org](https://www.worldpop.org/), and organization devoted to distributing such data. For this, we'll depend on the `R` raster powerhouse package, `stars`
+Say for instance, we wanted to know the spatial distribution of population in Bermuda in 2020 at a resolution of 1 x 1 km, we could load a raster set from the [worldpop.org](https://www.worldpop.org/), an organization devoted to distributing such data. For this, we'll depend on the `R` raster powerhouse package, `stars`
 
 ```{r rastintro}
 library(stars)
@@ -98,15 +98,15 @@ bermuda_pop <- read_stars("https://data.worldpop.org/GIS/Population_Density/Glob
 ```
 
 
-Here, we load the 1 km raster using `read_stars()` and cropped the data to the extent of our shape map using `st_crop()`. Plotting is simple as, like with `sf`, `stars` was designed to work well with `tidyverse` and `ggplot`. Here, we can make use of `geom_stars()` to plot a `stars` object in `ggplot`. Notice that, because Bermuda is a small island, the 1 km resolution is rather coarse.
+Here, we load the 1-km raster using `read_stars()` and cropped the data to the extent of our shape map using `st_crop()`. Plotting is simple as, like with `sf`, `stars` was designed to work well with `tidyverse` and `ggplot`. Here, we can make use of `geom_stars()` to plot a `stars` object in `ggplot`. Notice that, because Bermuda is a small island, the 1 km resolution is rather coarse.
 
 ## Combining shape and raster data
 
 Now, say we wanted to visually assess how these population tiles vary with the parish geopolitical boundaries in the the Bermuda map. For this, we need to combine the shape and population data and calculate the total population in each parish. We can start with the `bermuda_pop` `stars` object and then:
 
   + set the name of the first (and only) layer to an intuitive name, "population", with `setNames()`
-  + convert to `stars` object to an `sf` object with `st_as_sf()`
-  + join the `bermuda` shape data to this, now `sf`, object with `sf_join`. This nests the raster (i.e., population) data within the extents of shape (i.e., parish) data
+  + convert the `stars` object to an `sf` object with `st_as_sf()`
+  + join the `bermuda` shape data to this, now `sf`, object with `sf_join`. This nests the raster (i.e., population) data within the extents of shapes (i.e., parishes) data
   + use `dplyr`'s `group_by()` to group by the parish (`name`)
   + and finally, sum the population based on this grouping.
   
@@ -161,12 +161,12 @@ Note that we have several columns of interest. Namely:
 
   - `name`: the name of the parish
   - `subparish`: the subparish
-  - `tot_pop`: the total population in each subparish (i.e., parish population/`length(subparish)`)
+  - `tot_pop`: the total population in each subparish (i.e., roughly the parish population/`length(subparish)`)
   - `pred_col`: the predominant color in each subparish.
-  - `blue`, `green`, `orange`, `pink`, `purple` and `white`: the proportion of each color house in the subparish.
+  - `blue`, `green`, `orange`, `pink`, `purple` and `white`: the proportion of each house color in the subparish.
   - lastly, the `geometry`: the polygon list that circumscribes each subparish.
 
-Let's have a look at what these data all mean spatially by plotting. Note that color has been set manually to match those of the `pred_col` column
+Let's have a look at what these data all mean spatially by plotting. Note that color has been set manually to match those of the `pred_col` column.
 
 ```{r plotcol}
 
@@ -258,7 +258,7 @@ write_sf(bermuda_dat,"data/bermuda_dat.shp",layer_options = "GEOMETRY=AS_XY")
 
 ## Walking through random forests
 
-You'll notice that in the `bermuda_house` `sf` object, we have relative proportions of each house color for each subparish in addition to the predominant house color (`pred_color`). Indeed, the former was calculated from the latter. Plotting these quickly, it looks like there is some sort of pattern in the data. How we should assess these patterns is the problem at hand.
+You'll notice that in the `bermuda_house` `sf` object, we have relative proportions of each house color for each subparish in addition to the predominant house color (`pred_color`). Indeed, the former was calculated from the latter. Plotting these quickly, it looks like there is some general pattern in the data across the island. How we should assess these patterns according to it's spatial reach is the problem at hand.
 
 ```{r,warning=F}
 
@@ -278,9 +278,9 @@ bermuda_house %>%
 
 [Many statistical approaches to spatial analysis](https://r-spatial.org/book/part-3.html) exist. Of course, the approach we choose must be appropriate to the data.  
 
-In our case, each variable has its pros and cons. `pred_col` is a factor, a discrete variable with a finite set of levels (i.e. "blue", "white", etc.). One could use a logistical regression approach, but this is fraught and discrete predictors are rarely the only variable in the predictive mix. As for the proportion data with it's $>$2 categories, one could use [multinomial logistic or Dirichlet regression](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13234). There are paths for this in `R`, but again, they are fraught.
+In our case, each variable has its pros and cons. `pred_col` is a factor, a discrete variable with a finite set of levels (i.e. "blue", "white", etc.). One could use a logistical regression approach, but this is fraught and discrete predictors are rarely the only variable in the predictive mix. As for the proportion data with it's >2 categories, one could use [multinomial logistic or Dirichlet regression](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13234). There are paths for this in `R`, but again, they are fraught.
 
-We also have another problem, one much deeper and unrelated to the statistical approaches mentioned above. Over space, any attribute value at any location is more likely to be similar to a value at an adjacent or close location than it is to a value at a distant location. That is, spatial data are often [spatially autocorrelated](https://mgimond.github.io/Spatial/spatial-autocorrelation.html). This violates a major assumption in many statistical models that the data/observations be independent.
+We also have another problem, one much deeper and unrelated to the statistical approaches mentioned above. Over space, any attribute value at any location is more likely to be similar to a value at an adjacent or close location than it is to a value from a distant location. That is, spatial data are often [spatially autocorrelated](https://mgimond.github.io/Spatial/spatial-autocorrelation.html). This violates a major assumption in many statistical models that the data/observations be independent.
 
 So, what to do? Fortunately, we can leverage an evermore popular approach to estimating predictions from highly correlated data: Random Forests, a relatively straight forward machine learning algorithm. 
 
@@ -354,7 +354,7 @@ Here, we're interested in the `%IncMSE` value (from `type=1`, see `?importance`)
 
 OK, this superb. But, as mentioned above, one tricky aspect of RF models is that we have to specify values for important parameters, namely `mtry` and the number of trees.
 
-Let's first look at the effect of number of trees. If we plot the `rf` model object, what's returned is a trace of the model error as more trees were added to the sample. Note that `ntree` was set to 1000 and by tree 300, the error had stabilized. So it appears 1000 trees is enough.
+Let's first look at the effect of number of trees. If we plot the `rf` model object, what's returned is a trace of the model error as more trees were added to the sample. Note that `ntree` was set to 1000 and by tree 300, the error has stabilized. So it appears 1000 trees is enough.
 
 ```{r}
 plot(rf)
@@ -363,7 +363,7 @@ plot(rf)
 
 `randomForest`'s `tuneRF()` function permits quick and easy tuning assessment. One provides a starting value for `mtry` and an increment to change it by and the function performs the analysis changing `mtry` by this increment. It stops when there's no more improvement in the error.
 
-For example, what's below starts with `mtry = 1` and increases/decreases this value by a factor of 0.5 until the error stops improving by 1%. Note that `tuneRF()` requires a separate `x` and  `y` value. As you can see the optimal `mtry` value is 1. Perhaps the RF model should have been run with this value to start.
+For example, what's below starts with `mtry = 1` and increases/decreases this value by a factor of 0.5 until the error stops improving by 1%. Note that `tuneRF()` requires a separate `x` and  `y` value. As you can see, the optimal `mtry` value is 1. Perhaps the RF model should have been run with this value to start.
 
 .
 
