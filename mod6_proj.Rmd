@@ -424,7 +424,7 @@ Our deer harvest data comes from New Hampshire Department of Fish and Wildlife's
 <br>
 
 
-```{r deerdat,eval=F,include=F}
+```{r deerdat}
 deer <- read_csv("https://bcorgbio.github.io/class/data/NH_deer.txt") %>% 
   mutate(TOWN=str_replace(TOWN,"_"," ") %>% str_to_title()
          ) %>% 
