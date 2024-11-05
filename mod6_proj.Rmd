@@ -17,7 +17,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 White-tailed deer (WTD, *Odocoileus virginianus*) are native to much of North America and represent an ecologically important species across a diverse array of habitats, from dense mixed forest to open farm- and grasslands.  The currently estimated WTD population of 30 million in the United States is about the same as pre-colonization. Due to a combination of over hunting and poor resource management practices, the US population dipped to fewer than 2 million by about 1900, but the abundance of this species has been on a steady rebound for over the last 100 years. 
 
-However, the historical abundance of WTD in New England is largely different from the continental trend. New England marks the northern edge of the species' historical range and WTD were rare in the area, especially in northern New England. What's more, due to post-colonial land-use practices---particarly, near total deforestation for agricultural purposes--WTD were largely extirpated from the area by the late 18th century. With changes associated with a move away from an agrarian economy, reforestation, and the succession of mixed habitats, WTD abundance slowly increased through the last half of the 20th century. However, it's only recently, say within the last few decades, that New England WTD abundance has in increased sharply, particularly in suburban areas.
+However, the historical abundance of WTD in New England is largely different from the continental trend. New England marks the northern edge of the species' historical range and WTD were rare in the area, especially in northern New England. What's more, due to post-colonial land-use practices---particularly, near total deforestation for agricultural purposes--WTD were largely extirpated from the area by the late 18th century. With changes associated with a move away from an agrarian economy, reforestation, and the succession of mixed habitats, WTD abundance slowly increased through the last half of the 20th century. However, it's only recently, say within the last few decades, that New England WTD abundance has in increased sharply, particularly in suburban areas.
 
 The question of what's driven this recent sharp increase in WTD abundance is the focus of this project. In particular, we'll ask:
 
@@ -74,7 +74,7 @@ bermuda %>%
  
 ```
 
-Notice here, that we have to convert the shape retireved from the `rnaturalearth` package (an ojbect of class "SpatialPolygonsDataFrame") to an `sf` object. This sort of conversion is perhaps the most vexing part of spatial analysis in R. That is, many spatial object classes exist depending on the `R` package used and to work with objects across functions of different origins, conversion needs to happen. Yet, we're often unsure of which conversion function to use. We'll try to keep conversion to a minimum in this project, but be ware. Fortunately, `sf` has the handy `st_as_sf()` that allows conversion of a spatial polygon data frame to an `sf` object.
+Notice here, that we have to convert the shape retrieved from the `rnaturalearth` package (an object of class "SpatialPolygonsDataFrame") to an `sf` object. This sort of conversion is perhaps the most vexing part of spatial analysis in R. That is, many spatial object classes exist depending on the `R` package used and to work with objects across functions of different origins, conversion needs to happen. Yet, we're often unsure of which conversion function to use. We'll try to keep conversion to a minimum in this project, but be ware. Fortunately, `sf` has the handy `st_as_sf()` that allows conversion of a spatial polygon data frame to an `sf` object.
 
 Because `sf` plays nice with the `tidyverse`, to plot and `sf` object, we can use the `ggplot()` framework that's become so much of the class. For this we use `sf`'s `geom_sf()`.
 
@@ -101,9 +101,9 @@ Here, we load the 1 km raster using `read_stars()` and cropped the data to the e
 
 Now, say we wanted to visually assess how these population tiles vary with the parish geopolitical boundaries in the the Bermuda map. For this, we need to combine the shape and population data and calculate the total population in each parish. We can start with the `bermuda_pop` `stars` object and then:
 
-  + set the name of the first (and only) layer to an intiutive name, "population", with `setNames()`
+  + set the name of the first (and only) layer to an intuitive name, "population", with `setNames()`
   + convert to `stars` object to an `sf` object with `st_as_sf()`
-  + join the `bermuda` shape data to this, now `sf`, object with `sf_join`. This nests the raster (i.e., populaiton) data within the extents of shape (i.e., parish) data
+  + join the `bermuda` shape data to this, now `sf`, object with `sf_join`. This nests the raster (i.e., population) data within the extents of shape (i.e., parish) data
   + use `dplyr`'s `group_by()` to group by the parish (`name`)
   + and finally, sum the population based on this grouping.
   
@@ -141,14 +141,16 @@ House color varies a lot in Bermuda, but, by law, the roofs must be white as a m
 
 </center>
 
-Prof. Kenaley has assembled (eeeehhhem, simulated) house colors across the island according to sections of each parish, i.e. "subparish", and created an `sf` shape file you can [download here](https://bcorgbio.github.io/class/data/bermuda_shape.zip). Be sure to download and unzip the folder. I've done so to my "data" folder in my project directory. NOTE: shape files (ending in ".shp") must have a bit of associate metadata files (e.g.,".proj",".shx",".dbf") in their directory to be loaded correctly. Make sure these are there.
+Prof. Kenaley has assembled (eeeehhhem, simulated) house colors across the island according to sections of each parish, i.e. "subparish", and created an `sf` shape file you can [download here](https://bcorgbio.github.io/class/data/bermuda_shape.zip). Be sure to download and unzip the folder. I've done so to my "data" folder in my project directory so that the shape data are in "data/bermuda_shape".
+
+NOTE: shape files (ending in ".shp") must have a bit of associated metadata files (e.g.,".proj",".shx",".dbf") in their directory to be loaded correctly. Make sure these are there.
 
 So let's use the `sf` function `read_sf()` to read in the shape file and have a look at the `sf` object that was loaded.
 
 
 
 ```{r houscol2}
-bermuda_house <- read_sf("data/bermuda_dat.shp") 
+bermuda_house <- read_sf("data/bermuda_shape/bermuda_dat.shp") 
 
 head(bermuda_house)
 ```
@@ -277,7 +279,7 @@ In our case, each variable has it's pros and cons. `pred_col` is a factor, a dis
 
 We also have another problem, one much deeper and unrelated to the statistical approaches mentioned above. Over space, any attribute value at any location is more likely to be similar to a value at an adjacent or close location than it is to a value at a distant location. That is, spatial data are often [spatially autocorrelated](https://mgimond.github.io/Spatial/spatial-autocorrelation.html). This violates a major assumption in many statistical models that the data/observations be independent.
 
-So, what to do? Fortunately, we can leverage an evermore popular approach to estimating predictive power of highly correlated data: Random Forests, a relatively straight forward machine learning algorithm. 
+So, what to do? Fortunately, we can leverage an evermore popular approach to estimating predictions from highly correlated data: Random Forests, a relatively straight forward machine learning algorithm. 
 
 
 <center>
@@ -287,16 +289,16 @@ So, what to do? Fortunately, we can leverage an evermore popular approach to est
 
 Random forest is a supervised learning algorithm that incorporates three basic principles: decision trees, ensemble learning, and bootstrapping.
 
-**Decision trees**. These are decision paths in which binary choices are made. In RF regression, decision trees start at a root and follow splits based on variable outcomes until a leaf node is reached and the result is given. The figure above represents the concept of a single decision tree diagram which starts with the Var_1 and splits based off of specific criteria. When "yes", the decision tree follows the represented path, when ‘no’, the decision tree goes down the other path. This process repeats until the decision tree reaches the leaf node and the resulting outcome is decided. In RF regression, the values of a, b, c, or d could be any numeric value.
+**Decision trees**. These are decision paths in which binary choices are made. In RF regression, decision trees start at a root and follow splits based on variable outcomes until a leaf node is reached and the result is given. The figure above represents the concept of a single decision tree which starts with the variable "Var_1" and splits based off of specific criteria. When "yes", the decision tree follows the represented path, when ‘no’, the decision tree goes down the other path. This process repeats until the decision tree reaches the leaf node and the resulting outcome is decided. In RF regression, the values of a, b, c, or d could be any numeric value.
 
 
 **Ensemble learning**. This is the process of using multiple models built (i.e, trained) over the same data. Model results are averaged to estimate a prediction. For an ensemble prediction to be powerful and accurate, the errors of each model (in this case decision tree) must be independent and different from tree to tree.
 
-**Bootstrapping**. This is the process of randomly sampling subsets of a dataset over a given number of iterations and a given number of variables and repeating an analysis based on each resample of the data. Results of each analysis are then averaged together to obtain a more powerful result than one analysis alone. Bootstrapping is a common ensemble method to infer emergent patterns in data science and an the method upon which data for RF decision trees are generated.  
+**Bootstrapping**. This is the process of randomly sampling subsets of a data set over a given number of iterations and a given number of variables and repeating an analysis based on each resample of the data. Results of each analysis are then averaged together to obtain a more powerful result than one analysis alone. Bootstrapping is a common ensemble method to infer emergent patterns in data science and the method upon which data for RF decision trees are generated.  
 
-RF regression models are powerful and accurate. They usually perform well on many problems, including features with non-linear relationships (our problem!!). Disadvantages, however, include the that there is no interpretability (kinda), overfitting may easily occur, and one must choose the number of variables to bootstrap and the number of trees to include in the model.
+RF regression models are powerful and accurate. They usually perform well on many problems, including features with non-linear relationships (our problem!!). Disadvantages, however, include the that there often hard to interpret (though only kinda), overfitting may easily occur, and one must choose the number of variables to bootstrap and the number of trees to include in the model.
 
-Let's see how we can put this into action using the `R` package `randomForest`. First, let' load the pakckage and assemble the data.
+Let's see how we can put this into action using the `R` package `randomForest`. First, let' load the package and assemble the data.
 
 ```{r rf,message=F}
 library(randomForest)
@@ -312,11 +314,11 @@ head(rf_dat)
 
 Here we simply dropped the geometry list column with `st_drop_geometry()`, omitted any `NA` values, and removed the other columns we don't need.
 
-To run a random forest regression model with `randomForest`, one needs to specify a model formula, the number of trees to construct, and the number of variables to randomly sample at each split (i.e., node) in the trees. Here we say we want `tot_pop` to be predict by all the other variables (i.e., proportion of each house color) with `tot_pop~.` `mtry`, the number of variables to sample at the splits is set to 2 and the number of trees (`ntree`) to 1000. Note that we also set `importance=T` to calculate the importance of each predictor, something we'll use later.
+To run a random forest regression model with `randomForest`, one needs to specify a model formula, the number of trees to construct, and the number of variables to randomly sample at each split (i.e., node) in the trees. Here we say we want `tot_pop` to be predicted by all the other variables (i.e., proportion of each house color) with `tot_pop~.` `mtry`, the number of variables to sample at the splits is set to 2 and the number of trees (`ntree`) to 1000. Note that we also set `importance=T` to calculate the importance of each predictor, something we'll use later.
 
 ```{r}
 
-rf <-randomForest(tot_pop~.,data=rf_dat, mtry=2, ntree=1000,importance=T) 
+rf <-randomForest(tot_pop~.,data=rf_dat, mtry=2, ntree=1000,importance=T,localImp=T) 
 
 ```
 
@@ -341,18 +343,38 @@ Looks as though the predictions were somewhat accurate. Now, what variables were
 
 
 ```{r}
-varImpPlot(rf)
+varImpPlot(rf,type=1)
 ```
 
-Here, we're interested in the '%IncMSE` value. This is pretty wonky, so bare with. For each tree, each predictor in the sample is randomly chosen in the bootstrap and passed through the tree to obtain an error rate (mean square error--MSE) in the regression. The error rate from the unchosen variables is then subtracted from the error rate of the chosen trees, and averaged across all trees. When this value is large, it implies that a variable is highly correlated to the dependent variable. In short, this tells us blue and pink houses predict population best. And thus, we have answered our question.
+Here, we're interested in the `%IncMSE` value (from `type=1`, see `?importance`). This is pretty wonky, so bare with. For each tree, each predictor in the sample is randomly chosen in the bootstrap and passed through the tree to obtain an error rate (mean square error--MSE) in the regression. The error rate from the unchosen variables is then subtracted from the error rate of the chosen trees, and averaged across all trees. When this value is large, it implies that a variable is highly correlated to the dependent variable. In short, this tells us blue and pink houses predict population best. And thus, we have answered our question.
 
 
+OK, this superb. But, as mentioned above, one tricky aspect of RF models is that we have to specify values for important parameters, namely `mtry` and the number of trees.
 
+Let's first look at the effect of number of trees. If we plot the `rf` model object, what's returned is a trace of the model error as more trees were added to the sample. Note that `ntree` was set to 1000 and by tree 300, the error had stabilized. So it appears 1000 trees is enough.
 
 ```{r}
-tuneRF(x=rf_dat[,-1],rf_dat$tot_pop,stepFactor=1,doBest=F,ntreeTry=1000)
-
+plot(rf)
 ```
+`mtry`-the number of variables to sample at each node in a tree-can have the most profound effect on the analysis. Let's refine the model by tuning it according with the best value of `mtry`. 
+
+`randomForest`'s `tuneRF()` function permits quick and easy tuning assessment. One provides a starting value for `mtry` and an increment to change it by and the function performs the analysis changing `mtry` by this increment. It stops when there's no more improvement in the error.
+
+For example, what's below starts with `mtry = 1` and increases/decreases this value by a factor of 0.5 until the error stops improving by 1%. Note that `tuneRF()` requires a separate `x` and  `y` value. As you can see the optimal `mtry` value is 1. Perhaps the RF model should have been run with this value to start.
+
+.
+
+```{r tune, warning=F}
+tuneRF(x=rf_dat %>% select(-tot_pop),
+       y=rf_dat$tot_pop,
+       stepFactor=0.5,
+       ntreeTry=1000,
+       trace=F,
+       mtryStart = 1,
+       improve = 0.01,
+       )
+```
+
 
 
 
@@ -433,7 +455,7 @@ ggplot() +
 Land-use raster data come from the [Multi-Resolution Land Characteristics (MRLC) Consortium](https://www.mrlc.gov/viewer/). These data offer 30-m resolution (wow!) for the entirety of the continental US. but, Professor K has limited these data to an area covering NH. These data are available for [download from our class site](https://bcorgbio.github.io/class/data/land_use.zip).
 
 
-Let's load the data and then create another object, `lu2`, that has the sets the attribute name to "land_use", transforms the coordinate system and extent of the data to that of the `nh` `sf` object, and finally, downsamples the data 30 times, making each pixel 30 times larger. This last operation, using `st_downsample()` makes the resolution much more coarse, but eminently more manageble in terms of size and time to work with. Ah, tradeoffs.  This could take a while, but it's worth it in the end.
+Let's load the data and then create another object, `lu2`, that has the sets the attribute name to "land_use", transforms the coordinate system and extent of the data to that of the `nh` `sf` object, and finally, downsamples the data 30 times, making each pixel 30 times larger. This last operation, using `st_downsample()` makes the resolution much more coarse, but eminently more manageable in terms of size and time to work with. Ah, tradeoffs.  This could take a while, but it's worth it in the end.
 
 ```{r landuse,cache=T}
 
@@ -452,25 +474,26 @@ lu2 <- lu %>%
 
 You're tasked with combining all three data sets to undertake a random forest analysis. Here are some hints and requirements:
 
-1. use `left_join()` to join the `deer` object to the `nh` `sf` object. Please save this joined object as `nh_deer` and keep only the `TOWN` and `HSM` in addition to the geometry.
+1. Use `left_join()` to join the `deer` object to the `nh` `sf` object. Please save this joined object as `nh_deer` and keep only the `TOWN` and `HSM` in addition to the geometry.
 
-2. Intersect the `nh` object with the `lu2` object  using `st_intersection()` This will subdivide the land-use data into the `TOWN` values in the `nh` object. 
+2. Create an object named `nh_lu` that is the result of a spatial join of the `nh` object to the `lu2` object.  Keep only `land_use`, `TOWN`, and the geometry.
 
-3. 
+3. Create an object named `nh_dat` that contains the relative proportion of land use and `HSM` for each town. Hint: `dplyr::group_by(..., .drop = FALSE)` and `dplyr::count()` should help in establish counts, including 0's, on a per-Town basis.
+
+4. Based on `nh_dat`, create an object named `rf_dat` that contains only the data needed to run an RF model that predicts `HSM` based on land-use patterns. Note: please arcsine transform your proportions data, [a standard practice](http://stratigrafia.org/8370/rtips/proportions.html).
+
 
 # Project Report
 
 Please submit your report to your team GitHub repository as an .Rmd document with HTML output that addresses the following questions:
   
-  * Is WTD spatially random, that is visually, does their abundance vary across the state?
+  * Is WTD abundance spatially autocorellated, that is visually, are there pockets of higher or lower WTD harvest?
     - In answering this question, please produce a pretty, interactive map.
   * Does land-use pattern predict WTD harvest values?
-    - Please establish a data tibble bases on joining and intersecting the three data sources as outlined above.
-    - Using a random forest model, assess wether land-use poportion in each town predicts deer-harvest values.
-  
-In anwering these questions, please also make sure to inlude 
+    - Please establish a data tibble based on joining and intersecting the three data sources as outlined above.
+    - Using a tuned random forest model, assess whether land-use proportion in each town predicts deer-harvest values.
 
-  
+
 In answering these questions, be sure to use the visualization, modeling, and model-assessments tools we've used in the course so far.
   
 The answers and narrative in your .Rmd should include the following components:
