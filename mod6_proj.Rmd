@@ -10,7 +10,8 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
  
 # Introduction
 <center>
-![](https://images.ctfassets.net/pujs1b1v0165/sTnbs2M49c9AgPZxp7rDZ/15d77d1064ae1a311ce2f04298e6928b/still_hunting_deer.jpg)
+<img src="https://images.ctfassets.net/pujs1b1v0165/sTnbs2M49c9AgPZxp7rDZ/15d77d1064ae1a311ce2f04298e6928b/still_hunting_deer.jpg" alt="" width="400"/>
+
 </center>
 
 <br>
@@ -33,11 +34,13 @@ To answer such a question, one could,  of course, assemble harvest and land-use 
 <center>
 
 <br>
-![](https://dfzljdn9uc3pi.cloudfront.net/2020/8262/1/fig-1-2x.jpg)
+<img src="https://dfzljdn9uc3pi.cloudfront.net/2020/8262/1/fig-1-2x.jpg" alt="" width="400"/>
 
 <br>  The 1982 WTD densities (A) and 2001–2005 deer densities (B) in the continental United States.
 
-![](https://milliontrees.me/wp-content/uploads/2021/07/deer-population.jpg)
+
+<img src="https://milliontrees.me/wp-content/uploads/2021/07/deer-population.jpg" alt="" width="400"/>
+
 </center>
 
 <br>
@@ -275,7 +278,7 @@ bermuda_house %>%
 
 [Many statistical approaches to spatial analysis](https://r-spatial.org/book/part-3.html) exist. Of course, the approach we choose must be appropriate to the data.  
 
-In our case, each variable has it's pros and cons. `pred_col` is a factor, a discrete variable with a finite set of levels (i.e. "blue", "white", etc.). One could use a logistical regression approach, but this is fraught and discrete predictors are rarely the only variable in the predictive mix. As for the proportion data with it's $>$2 categories, one could use [multinomial logistic or Dirichlet regression](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13234). There are paths for this in `R`, but again, they are fraught.
+In our case, each variable has its pros and cons. `pred_col` is a factor, a discrete variable with a finite set of levels (i.e. "blue", "white", etc.). One could use a logistical regression approach, but this is fraught and discrete predictors are rarely the only variable in the predictive mix. As for the proportion data with it's $>$2 categories, one could use [multinomial logistic or Dirichlet regression](https://besjournals.onlinelibrary.wiley.com/doi/10.1111/2041-210X.13234). There are paths for this in `R`, but again, they are fraught.
 
 We also have another problem, one much deeper and unrelated to the statistical approaches mentioned above. Over space, any attribute value at any location is more likely to be similar to a value at an adjacent or close location than it is to a value at a distant location. That is, spatial data are often [spatially autocorrelated](https://mgimond.github.io/Spatial/spatial-autocorrelation.html). This violates a major assumption in many statistical models that the data/observations be independent.
 
@@ -455,7 +458,7 @@ ggplot() +
 Land-use raster data come from the [Multi-Resolution Land Characteristics (MRLC) Consortium](https://www.mrlc.gov/viewer/). These data offer 30-m resolution (wow!) for the entirety of the continental US. but, Professor K has limited these data to an area covering NH. These data are available for [download from our class site](https://bcorgbio.github.io/class/data/land_use.zip).
 
 
-Let's load the data and then create another object, `lu2`, that has the sets the attribute name to "land_use", transforms the coordinate system and extent of the data to that of the `nh` `sf` object, and finally, downsamples the data 30 times, making each pixel 30 times larger. This last operation, using `st_downsample()` makes the resolution much more coarse, but eminently more manageable in terms of size and time to work with. Ah, tradeoffs.  This could take a while, but it's worth it in the end.
+Let's load the data and then create another object, `lu2`, that sets the attribute name to "land_use", transforms the coordinate system and extent of the data to that of the `nh` `sf` object, and finally, downsamples the data 30 times, making each pixel 30 times larger. This last operation, using `st_downsample()` makes the resolution much more coarse, but eminently more manageable in terms of size and time to work with. Ah, tradeoffs.  This could take a while, but it's worth it in the end.
 
 ```{r landuse,cache=T}
 
@@ -491,7 +494,7 @@ Please submit your report to your team GitHub repository as an .Rmd document wit
     - In answering this question, please produce a pretty, interactive map.
   * Does land-use pattern predict WTD harvest values?
     - Please establish a data tibble based on joining and intersecting the three data sources as outlined above.
-    - Using a tuned random forest model, assess whether land-use proportion in each town predicts deer-harvest values.
+    - Using a tuned random forest model, assess whether land-use proportion in each town predicts deer-harvest values and which land-use pattern is important in this prediction.
 
 
 In answering these questions, be sure to use the visualization, modeling, and model-assessments tools we've used in the course so far.
