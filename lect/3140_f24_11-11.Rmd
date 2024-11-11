@@ -3,7 +3,7 @@ title: "Phase II: Using Our Toolbox"
 subtitle: "Module 7: Birds of a Feather"
 author: "Dr. Christopher Kenaley"
 institute: "Boston College"
-date: "2022/11/11"
+date: "2024/11/11"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -22,6 +22,9 @@ library(tidyverse)
 library(MuMIn)
 library(rnoaa)
 library(data.table)
+library(sf)
+library(stars)
+library(rnaturalearth)
 
 ```
 
@@ -167,7 +170,7 @@ class: inverse, top
 <br>
 
  ![](https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/48059747418/original/MdlFGFHDXSlH6KYSyi0rac0U4s6m9wIF4A.png?1600439615)
-)
+
 ]
 
 
@@ -190,20 +193,101 @@ class: inverse, top
 ## Module 8: Birds of a feather
 
 
-```{r}
-yw <-  occ_data(scientificName = "Setophaga petechia",
-                year=2021,
+```{r,cache=T}
+
+yr <- c(2021,2022,2023)
+
+yw_l <- list()
+
+for(i in yr){
+ yw_l[[i]] <- occ_data(scientificName = "Setophaga petechia",
+                year=i,
                 month="3,6",
                 limit=500,
                 country="US",
                 basisOfRecord = "HUMAN_OBSERVATION",
-                stateProvince="Massachusetts")[[2]]
+                stateProvince="Massachusetts")[[2]] %>% 
+   select(individualCount,year,month,day,decimalLongitude,decimalLatitude)
+}
+
+  
+yw <- do.call(rbind, yw_l)
  
+
 ```
 
 
 
 
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Module 8: Birds of a feather
+
+
+```{r}
+
+mass <- ne_states(country = "United States of America",returnclass = "sf") %>% 
+  filter(name=="Massachusetts") 
+
+
+mass %>% 
+  ggplot() +
+  geom_sf()+
+  geom_point(data=yw,aes(decimalLongitude,decimalLatitude,col=year))
+  
+```
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Module 8: Birds of a feather
+
+.pull-left[
+
+### The logistic curve
+  
+![](https://xaktly.com/Images/Mathematics/LogisticDiffEq/Example1Figure1.png)
+]
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Module 8: Birds of a feather
+
+.pull-left[
+
+### The logistic curve
+  
+```{r}
+yw_arrive <- yw%>%mutate(n=1:n()) %>% 
+  group_by(n) %>% 
+  mutate(date=as.Date(paste0(year,"-",month,"-",day)),
+         j.day=julian(date,origin=as.Date(paste0(unique(year),"-01-01")))
+  )%>%
+  na.omit() %>% 
+  group_by(year,j.day,date)%>%
+  summarise(day.tot=sum(individualCount,na.rm=T))%>%
+  group_by(year)%>%
+  mutate(prop=cumsum(day.tot/sum(day.tot,na.rm = T)))
+```
+]
+
+
+.pull-right[
+
+```{r}
+yw_arrive %>% 
+  ggplot(aes(j.day,prop,col=year)) +
+  geom_point()
+```
+]
 
 
 

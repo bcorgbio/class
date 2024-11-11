@@ -25,7 +25,7 @@ class: center, middle, inverse, title-slide
 ### Boston College
 ]
 .date[
-### 2022/11/11
+### 2024/11/11
 ]
 
 ---
@@ -180,7 +180,7 @@ class: inverse, top
 &lt;br&gt;
 
  ![](https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/48059747418/original/MdlFGFHDXSlH6KYSyi0rac0U4s6m9wIF4A.png?1600439615)
-)
+
 ]
 
 
@@ -205,18 +205,107 @@ class: inverse, top
 
 
 ``` r
-yw &lt;-  occ_data(scientificName = "Setophaga petechia",
-                year=2021,
+yr &lt;- c(2021,2022,2023)
+
+yw_l &lt;- list()
+
+for(i in yr){
+ yw_l[[i]] &lt;- occ_data(scientificName = "Setophaga petechia",
+                year=i,
                 month="3,6",
                 limit=500,
                 country="US",
                 basisOfRecord = "HUMAN_OBSERVATION",
-                stateProvince="Massachusetts")[[2]]
+                stateProvince="Massachusetts")[[2]] %&gt;% 
+   select(individualCount,year,month,day,decimalLongitude,decimalLatitude)
+}
+
+  
+yw &lt;- do.call(rbind, yw_l)
 ```
 
 
 
 
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+## Module 8: Birds of a feather
+
+
+
+``` r
+mass &lt;- ne_states(country = "United States of America",returnclass = "sf") %&gt;% 
+  filter(name=="Massachusetts") 
+
+
+mass %&gt;% 
+  ggplot() +
+  geom_sf()+
+  geom_point(data=yw,aes(decimalLongitude,decimalLatitude,col=year))
+```
+
+![](3140_f24_11-11_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+
+
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+## Module 8: Birds of a feather
+
+.pull-left[
+
+### The logistic curve
+  
+![](https://xaktly.com/Images/Mathematics/LogisticDiffEq/Example1Figure1.png)
+]
+
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+## Module 8: Birds of a feather
+
+.pull-left[
+
+### The logistic curve
+  
+
+``` r
+yw_arrive &lt;- yw%&gt;%mutate(n=1:n()) %&gt;% 
+  group_by(n) %&gt;% 
+  mutate(date=as.Date(paste0(year,"-",month,"-",day)),
+         j.day=julian(date,origin=as.Date(paste0(unique(year),"-01-01")))
+  )%&gt;%
+  na.omit() %&gt;% 
+  group_by(year,j.day,date)%&gt;%
+  summarise(day.tot=sum(individualCount,na.rm=T))%&gt;%
+  group_by(year)%&gt;%
+  mutate(prop=cumsum(day.tot/sum(day.tot,na.rm = T)))
+```
+
+```
+## `summarise()` has grouped output by 'year', 'j.day'. You can override using the
+## `.groups` argument.
+```
+]
+
+
+.pull-right[
+
+
+``` r
+yw_arrive %&gt;% 
+  ggplot(aes(j.day,prop,col=year)) +
+  geom_point()
+```
+
+![](3140_f24_11-11_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+]
 
 
 

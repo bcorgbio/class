@@ -1,5 +1,5 @@
 ---
-title: "Module 8 Project"
+title: "Module 7 Project"
 bibliography: class.bib
 ---
 <style>
@@ -11,7 +11,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 # Introduction
 
-Each spring in the northwesterern hemisphere (the Neartic), many neotropical passerines undertake long-distance migrations from Central and South America to temperate latitudes to forage and breed. Many of these species fly non-stop over the Gulf of Mexico and arrive on land between Texas and Florida. These species are therefore described as trans-Gulf migrants (TGMs). The date when any individual migrant arrives on its breeding grounds has important fitness consequences and the evolution of this phenological event is likely the result of balancing important tradeoffs. For instance, arriving early increases the chances of finding a mate and breeding multiple times, however later arrival ensures higher food availability in these temperate and seasonal ecosystems [@smith2005arrival; @newton2008ecology].
+Each spring in the northern hemisphere (the Neartic), many neotropical passerines undertake long-distance migrations from Central and South America to temperate latitudes to forage and breed. Many of these species fly non-stop over the Gulf of Mexico and arrive on land between Texas and Florida. These species are therefore described as trans-Gulf migrants (TGMs). The date when any individual migrant arrives on its breeding grounds has important fitness consequences and the evolution of this phenological event is likely the result of balancing important tradeoffs. For instance, arriving early increases the chances of finding a mate and breeding multiple times, however later arrival ensures higher food availability in these temperate and seasonal ecosystems [@smith2005arrival; @newton2008ecology].
 
 In the context of a changing climate, failure of TGMs to shift arrival date at breeding areas in response to warmer spring temperatures may result in population declines [@both2006climate]. If and how TGMs and other long-distance migrants shift their spring arrival in temperate North America in response to local temperature changes remains hotly debated [@smith2005arrival; @knudsen2011challenging]. In studying the effects of changes in local environmental parameters linked to climate change on migration phenology, scientists have traditionally relied on field, [banding](https://www.fws.gov/faq/bandingfaq.html), or tracking studies [e.g., @smith2005arrival; @askeyev2009earliest]. These studies are often limited in temporal scope and in scale due to the few experts who are trained in this work 
 
@@ -82,7 +82,7 @@ Before we get a GBIF search for TGMs started, I suggest first storing your speci
 
 species <- c("Myiarchus crinitus","Icterus galbula","Pheucticus ludovicianus","Coccyzus americanus","Setophaga caerulescens")
 
-y <- paste0("1990",",","2019")
+y <- paste0("1990",",","2023")
 m <- paste0("3",",","6")
 ```
 
@@ -459,7 +459,7 @@ To sum up this quick exploration of linear-mixed effects modeling for this one s
 
 Your task is to repeat data compilation and analysis for five species of your choosing from this [list of TGMs](tgms.csv). The analysis should include the following components:
   
-  1. A `for` loop that passes your five species through `occ_data()` to retrieve occurrence data in MA during April and May in the years 2000-2019.
+  1. A `for` loop that passes your five species through `occ_data()` to retrieve occurrence data in MA during April and May in the years 2000-2023.
   2. Logistic modeling operations to predict arrival time (the Julian day when 25% of the population has arrived) for each year and for each species.
   3. Operations that join offset single-day and two-week weather averages with your occurrence data. Both weather data sets should include minimum and maximum temperature and wind vectors (this will require operations on the weather data before these joins).
   4. Linear mixed-effect modeling of arrival day as it varies with these weather variables for both weather data sets (single-day and two-week average)
