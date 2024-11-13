@@ -142,7 +142,7 @@ After a large operation like this, it's best to save the data. Many in the R wor
 
 
 ```{r,eval=FALSE}
-saveRDS(data,"massbird.data.RDS")
+saveRDS(dat,"massbird.data.RDS")
 ```
 
 Now, if your script or markdown should be interrupted (e.g., a crash, freeze, etc.), you can access your data with `readRDS()`:
