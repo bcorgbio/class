@@ -94,7 +94,7 @@ All assignments are due at 11:59 on the specified date.
 
 || Monday <br> 11/11 |  Tuesday <br>11/12    | Wednesday<br>  11/13 | Thursday <br> 11/14 | Friday <br> 11/15 |Saturday<br> 11/16 | Sunday<br> 11/17
  |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 
-**Week 12** |[slides](lect\3140_f24_11-11.html) | | Post question to discussion board* <br> <br> [WCR 11](WCRs/WCR_11.html)|| Answer a question on discussion board* | | |
+**Week 12** |[slides](lect\3140_f24_11-11.html) | | Post question to discussion board* <br> <br> [WCR 11](WCRs/WCR_11.html)|| Answer a question on discussion board* <br> [slides](lect\3140_f24_11-14.html)| | |
 
 || Monday <br> 11/18 |  Tuesday <br>11/19    | Wednesday<br>  11/20 | Thursday <br> 11/21 | Friday <br> 11/22 |Saturday<br> 11/23 | Sunday<br> 11/24
   |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 
