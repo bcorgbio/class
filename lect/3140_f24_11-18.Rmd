@@ -1,0 +1,152 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 7: Birds of a Feather"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2024/18/11"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE}
+
+
+library(tidyverse)
+library(MuMIn)
+library(rnoaa)
+library(data.table)
+library(lme4)
+library(car)
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Consider Linear Mixed-effect Modeling
+
+
+]
+
+.pull-right[
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Mixedandfixedeffects.jpg/692px-Mixedandfixedeffects.jpg)
+]
+
+
+
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Linear Mixed-effect Modeling
+
+.pull-left[
+
+
+- Other models assume independence of data
+- LME included fixed and random effects
+- Often termed repeated measures
+- Same model formulae, but
+  + `+(1|random_effect)`
+
+
+]
+
+.pull-right[
+```{r}
+iris %>% group_by(Species) %>% summarise_all(.funs = mean)
+``` 
+]
+  
+  
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Linear Mixed-effect Modeling
+
+.pull-left[
+
+How do a determine what fixed and random effects are?
+
+- Depends on the question
+  + what is independent?
+  + what data are dependent, autocorrelated, linked, etc.?
+
+
+]
+
+.pull-right[
+```{r}
+iris %>% group_by(Species) %>% summarise_all(.funs = mean)
+``` 
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Linear Mixed-effect Modeling
+
+.pull-left[
+
+Say our question was, is sepal length different between species?
+
+- Species isn't random, it's part of the question
+
+
+
+]
+
+.pull-right[
+```{r}
+fit <- lm(Sepal.Length~Species,iris)
+
+anova(fit)
+``` 
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Linear Mixed-effect Modeling
+
+.pull-left[
+
+Say our question was, is sepal length a function of petal length?
+
+- Species is now random, it's not part of the question
+
+
+
+]
+
+.pull-right[
+```{r}
+fit <- lmer(Sepal.Length~Petal.Length+(1|Species),iris)
+
+library(car)
+Anova(fit)
+``` 
+
+  
+
+
+

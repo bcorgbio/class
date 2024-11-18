@@ -236,9 +236,9 @@ class: inverse, top
  
 ```{r,message=F}
 p <- bhv_pred %>% 
-  ggplot(aes(j.day,prop),alpha=0.3) +
+  ggplot(aes(j.day,prop,col=as.factor(year)),alpha=0.3) +
   geom_point()+
-  geom_line(aes(j.day,pred,group=year),col="blue")
+  geom_line(aes(j.day,pred,col=as.factor(year)))
 ```
 ]
 
