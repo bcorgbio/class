@@ -100,7 +100,7 @@ Constrain the `occ_data()` search by:
   
 This will be a rather labored search in that it might take 20 minutes to run through all five species, depending on the number of records. But, this is nothing like the hours one would spend working with `auk`. So run this and grab a sandwich and refresh your twitter feed. After that, we should have a many thousands of MA eBird records loaded to the list.
 
-To get get you started, here's what could be done . . .
+To get get you started, here's what could be done. But note, this will take a while and it this is an  [embarrassingly parallel](https://bcorgbio.github.io/class/mod5_proj.html#Analysis_Part_III:_Evolution_in_Parallel) operation that could be done with multiple cores.
 
 ```{r,eval=FALSE}
 dat.l <-list()
@@ -459,7 +459,7 @@ To sum up this quick exploration of linear-mixed effects modeling for this one s
 
 Your task is to repeat data compilation and analysis for five species of your choosing from this [list of TGMs](tgms.csv). The analysis should include the following components:
   
-  1. A `for` loop that passes your five species through `occ_data()` to retrieve occurrence data in MA during April and May in the years 2000-2023.
+  1. An operation that retrieves data for your five species through `occ_data()`. Keep the same values (i.e., state of MA during April and May, in the years 2000-2023). This can be a `for` loop, but you may want to explore using some parallel processing with something like `mclapply()` for example.
   2. Logistic modeling operations to predict arrival time (the Julian day when 25% of the population has arrived) for each year and for each species.
   3. Operations that join offset single-day and two-week weather averages with your occurrence data. Both weather data sets should include minimum and maximum temperature and wind vectors (this will require operations on the weather data before these joins).
   4. Linear mixed-effect modeling of arrival day as it varies with these weather variables for both weather data sets (single-day and two-week average)

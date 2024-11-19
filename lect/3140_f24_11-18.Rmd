@@ -45,6 +45,16 @@ Today we'll ....
 ]
 
 
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Congrats!
+
+  
+
+
+![](IMG_9780.png)
 
 
 
@@ -120,7 +130,7 @@ fit <- lm(Sepal.Length~Species,iris)
 
 anova(fit)
 ``` 
-
+]
 
 ---
 class: inverse, top
@@ -146,7 +156,7 @@ library(car)
 Anova(fit)
 ``` 
 
-  
+  ]
 
 
 

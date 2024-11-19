@@ -11,7 +11,7 @@
 
 
 
-<title>Module 8 Project</title>
+<title>Module 7 Project</title>
 
 <script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -67,6 +67,7 @@ if (window.hljs) {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -433,7 +434,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Module 8 Project</h1>
+<h1 class="title toc-ignore">Module 7 Project</h1>
 
 </div>
 
@@ -445,7 +446,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"></p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Each spring in the northwesterern hemisphere (the Neartic), many
+<p>Each spring in the northern hemisphere (the Neartic), many
 neotropical passerines undertake long-distance migrations from Central
 and South America to temperate latitudes to forage and breed. Many of
 these species fly non-stop over the Gulf of Mexico and arrive on land
@@ -620,7 +621,7 @@ years of interest (i.e., those with decent eBird data . . . &gt;1990 or
 so). Let’s store those values, too.</p>
 <pre class="r"><code>species &lt;- c(&quot;Myiarchus crinitus&quot;,&quot;Icterus galbula&quot;,&quot;Pheucticus ludovicianus&quot;,&quot;Coccyzus americanus&quot;,&quot;Setophaga caerulescens&quot;)
 
-y &lt;- paste0(&quot;1990&quot;,&quot;,&quot;,&quot;2019&quot;)
+y &lt;- paste0(&quot;1990&quot;,&quot;,&quot;,&quot;2023&quot;)
 m &lt;- paste0(&quot;3&quot;,&quot;,&quot;,&quot;6&quot;)</code></pre>
 <p>Notice how the year and month vectors, <code>y</code> and
 <code>m</code>, respectively, are each a character string with two
@@ -653,7 +654,10 @@ But, this is nothing like the hours one would spend working with
 <code>auk</code>. So run this and grab a sandwich and refresh your
 twitter feed. After that, we should have a many thousands of MA eBird
 records loaded to the list.</p>
-<p>To get get you started, here’s what could be done . . .</p>
+<p>To get get you started, here’s what could be done. But note, this
+will take a while and it this is an <a
+href="https://bcorgbio.github.io/class/mod5_proj.html#Analysis_Part_III:_Evolution_in_Parallel">embarrassingly
+parallel</a> operation that could be done with multiple cores.</p>
 <pre class="r"><code>dat.l &lt;-list()
 
 for(s in species){
@@ -706,7 +710,7 @@ in the R world prefer that large data objects be stored as serialized
 files. The <code>saveRDS()</code> function is exactly what we need for
 this. The following will save data as an R serialized file with the name
 “mass.bird.data.RDS”.</p>
-<pre class="r"><code>saveRDS(data,&quot;massbird.data.RDS&quot;)</code></pre>
+<pre class="r"><code>saveRDS(dat,&quot;massbird.data.RDS&quot;)</code></pre>
 <p>Now, if your script or markdown should be interrupted (e.g., a crash,
 freeze, etc.), you can access your data with <code>readRDS()</code>:</p>
 <pre class="r"><code>library(tidyverse)
@@ -718,9 +722,8 @@ from <code>occ_data()</code> searches for the 5 species above . . .</p>
   group_by(year,species)%&gt;%
   summarise(count=sum(individualCount,na.rm = T))%&gt;%
   ggplot(aes(x=year,y=count,col=species))+geom_point()</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;.
-## You can override using the `.groups`
-## argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <p><img src="mod7_proj_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>It looks like there’s not much data before 2000 for all species.
 We’ll keep this in mind as we move forward. Now let’s move on to
@@ -781,7 +784,7 @@ print(bos)</code></pre>
 ## 
 ## $data
 ##   elevation    mindate    maxdate latitude
-## 1       3.2 1936-01-01 2024-08-24 42.36057
+## 1       3.2 1936-01-01 2024-11-17 42.36057
 ##                                        name datacoverage                id
 ## 1 BOSTON LOGAN INTERNATIONAL AIRPORT, MA US            1 GHCND:USW00014739
 ##   elevationUnit longitude
@@ -932,9 +935,8 @@ variable, simply the day of the year. Let’s compute that and then . . .
   group_by(species,year)%&gt;%
   mutate(prop=cumsum(day.tot/sum(day.tot,na.rm = T)))%&gt;%
   filter(year&gt;1999)</code></pre>
-<pre><code>## `summarise()` has grouped output by
-## &#39;species&#39;, &#39;year&#39;, &#39;j.day&#39;. You can override
-## using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;species&#39;, &#39;year&#39;, &#39;j.day&#39;. You can
+## override using the `.groups` argument.</code></pre>
 <pre class="r"><code>mc%&gt;%
   ggplot(aes(j.day,prop))+geom_point()+facet_wrap(year~.)</code></pre>
 <p><img src="mod7_proj_files/figure-html/mc-1.png" width="672" /></p>
@@ -960,32 +962,25 @@ data.</p>
    j.day=min(j.day):max(j.day),
   )%&gt;%
   left_join(mc%&gt;%dplyr::select(j.day,date)) ## add date back to tibble</code></pre>
-<pre><code>## Warning: Returning more (or less) than 1 row per
-## `summarise()` group was deprecated in dplyr
-## 1.1.0.
+<pre><code>## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+## dplyr 1.1.0.
 ## ℹ Please use `reframe()` instead.
-## ℹ When switching from `summarise()` to
-##   `reframe()`, remember that `reframe()`
-##   always returns an ungrouped data frame and
-##   adjust accordingly.
-## Call `lifecycle::last_lifecycle_warnings()`
-## to see where this warning was generated.</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;.
-## You can override using the `.groups`
-## argument.
-## Adding missing grouping variables:
-## `species`, `year`
+## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
+##   always returns an ungrouped data frame and adjust accordingly.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the
+## `.groups` argument.
+## Adding missing grouping variables: `species`, `year`
 ## Joining with `by = join_by(year, j.day)`</code></pre>
 <pre class="r"><code>mc%&gt;%
   ggplot(aes(j.day,prop))+geom_point(aes=0.3)+geom_line(data=mc.pred,aes(x=j.day,y=pred),col=&quot;blue&quot;,size=2)+facet_wrap(year~.)</code></pre>
 <pre><code>## Warning in geom_point(aes = 0.3): Ignoring unknown parameters: `aes`</code></pre>
-<pre><code>## Warning: Using `size` aesthetic for lines was
-## deprecated in ggplot2 3.4.0.
+<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ## ℹ Please use `linewidth` instead.
-## This warning is displayed once every 8
-## hours.
-## Call `lifecycle::last_lifecycle_warnings()`
-## to see where this warning was generated.</code></pre>
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <p><img src="mod7_proj_files/figure-html/logistic%20model-1.png" width="672" /></p>
 <p>Seems our logistic models for arrival of this species estimate the
 arrival function really well. Now we’ll find the Julian day each year
@@ -1075,6 +1070,7 @@ reported as coming from a direction in degrees (rather than toward),
 we’ll multiply the vector by -1 to establish a vector that, if negative,
 represents a head wind and, if positive, represents a tailwind (Fig.
 3:B).</p>
+<pre><code>## Warning: package &#39;kableExtra&#39; was built under R version 4.2.3</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1199,8 +1195,7 @@ date.</p>
   left_join(mc%&gt;%dplyr::select(year,date,j.day))</code></pre>
 <pre><code>## Joining with `by = join_by(year, j.day)`
 ## Adding missing grouping variables: `species`
-## Joining with `by = join_by(year, j.day,
-## species, date)`</code></pre>
+## Joining with `by = join_by(year, j.day, species, date)`</code></pre>
 <pre class="r"><code>head(mc.arr.weath)</code></pre>
 <pre><code>## # A tibble: 6 × 12
 ## # Groups:   year [2]
@@ -1635,9 +1630,11 @@ vector are significant predictors.</p>
 of your choosing from this <a href="tgms.csv">list of TGMs</a>. The
 analysis should include the following components:</p>
 <ol style="list-style-type: decimal">
-<li>A <code>for</code> loop that passes your five species through
-<code>occ_data()</code> to retrieve occurrence data in MA during April
-and May in the years 2000-2019.</li>
+<li>An operation that retrieves data for your five species through
+<code>occ_data()</code>. Keep the same values (i.e., state of MA during
+April and May, in the years 2000-2023). This can be a <code>for</code>
+loop, but you may want to explore using some parallel processing with
+something like <code>mclapply()</code> for example.</li>
 <li>Logistic modeling operations to predict arrival time (the Julian day
 when 25% of the population has arrived) for each year and for each
 species.</li>
@@ -1703,7 +1700,8 @@ contributed to the project.</li>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
 <div id="ref-askeyev2009earliest" class="csl-entry">
 Askeyev, Oleg V, Tim H Sparks, and Igor V Askeyev. 2009. <span>“Earliest
 Recorded Tatarstan Skylark in 2008: Non-Linear Response to Temperature
