@@ -13,7 +13,7 @@
 
 <title>Module 2 Project</title>
 
-<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -450,7 +450,7 @@ data.</p>
 #load data
 pseed &lt;- read_csv(&quot;pseed.fin.amps.csv&quot;)</code></pre>
 <pre><code>## Rows: 73352 Columns: 7
-## ── Column specification ───────────────────────────────
+## ── Column specification ──────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (3): fish, date, fin
 ## dbl (4): speed, frame, amp, amp.bl
@@ -459,7 +459,7 @@ pseed &lt;- read_csv(&quot;pseed.fin.amps.csv&quot;)</code></pre>
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>pseed.bl &lt;- read_csv(&quot;pseed.lengths.csv&quot;)</code></pre>
 <pre><code>## Rows: 3 Columns: 2
-## ── Column specification ───────────────────────────────
+## ── Column specification ──────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (1): fish
 ## dbl (1): bl
@@ -468,7 +468,7 @@ pseed &lt;- read_csv(&quot;pseed.fin.amps.csv&quot;)</code></pre>
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>speeds &lt;- read_csv(&quot;pseed.calibration.csv&quot;)</code></pre>
 <pre><code>## Rows: 119 Columns: 3
-## ── Column specification ───────────────────────────────
+## ── Column specification ──────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (3): vol, m.s, cm.s
 ## 
@@ -617,9 +617,9 @@ data to the table. What is this key? It’s voltage, represented in the
 <code>pseed</code> table as <code>speed</code> and the
 <code>speeds</code> table as <code>vol</code>.</p>
 <center>
-<div class="figure">
-<img src="leftjoin.png" alt="" />
-<p class="caption">FigName</p>
+<div class="float">
+<img src="leftjoin.png" alt="FigName" />
+<div class="figcaption">FigName</div>
 </div>
 </center>
 <p><br></p>
@@ -866,9 +866,7 @@ gave us with the <code>fget()</code> function in <code>features</code>
 ##    0.08    0.00    0.18    0.06    0.00   18.47   -0.02    0.02    0.00   24.00 
 ## 
 ## $crit.pts
-##  [1]  19.92  42.16  61.53  85.99 105.65 127.95 148.53 170.62 190.30 212.76
-## [11] 232.17 254.97 274.77 296.66 319.31 342.19 360.95 362.58 363.14 386.29
-## [21] 406.06 429.80 449.15 471.88
+##  [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
 ## 
 ## $curvature
 ##  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -881,6 +879,8 @@ the curvature (i.e., second derivative) of the curve is 0) in the
 <pre class="r"><code>pseed2%&gt;%
   filter(date==&quot;2019-06-17-151149&quot;, fin==&quot;L&quot;)%&gt;%
   ggplot(aes(x=frame,y=amp.bl))+geom_point()+geom_vline(xintercept = fget(f1)$crit.pts)</code></pre>
+<pre><code>## Warning: Removed 24 rows containing missing values or values
+## outside the scale range (`geom_vline()`).</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>This is pretty good. We get all the peaks (the maxima of amplitude
 we’re after). We’re missing some troughs and have a few lines close to
@@ -905,9 +905,7 @@ while some are positive (the troughs). Let’s rerun
 ##    8.02    0.08   18.46    6.26    0.34   18.51   -2.20    1.60    0.15   24.00 
 ## 
 ## $crit.pts
-##  [1]  19.92  42.16  61.53  85.99 105.65 127.95 148.53 170.62 190.30 212.76
-## [11] 232.17 254.97 274.77 296.66 319.31 342.19 360.95 362.58 363.14 386.29
-## [21] 406.06 429.80 449.15 471.88
+##  [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
 ## 
 ## $curvature
 ##  [1]  0.15 -0.28  0.08 -0.32  0.13 -0.28  0.15 -0.26  0.14 -0.23  0.12 -0.28
@@ -927,17 +925,17 @@ points that are negative. Let’s make a tibble so we can use our
 <pre><code>## # A tibble: 11 × 3
 ##    crit.pts curvature peaks
 ##       &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
-##  1     42.2     -0.28    42
-##  2     86.0     -0.32    86
-##  3    128.      -0.28   128
-##  4    171.      -0.26   171
-##  5    213.      -0.23   213
-##  6    255.      -0.28   255
-##  7    297.      -0.28   297
-##  8    342.      -0.26   342
-##  9    386.      -0.29   386
-## 10    430.      -0.31   430
-## 11    472.      -0.27   472</code></pre>
+##  1       NA     -0.28    NA
+##  2       NA     -0.32    NA
+##  3       NA     -0.28    NA
+##  4       NA     -0.26    NA
+##  5       NA     -0.23    NA
+##  6       NA     -0.28    NA
+##  7       NA     -0.28    NA
+##  8       NA     -0.26    NA
+##  9       NA     -0.29    NA
+## 10       NA     -0.31    NA
+## 11       NA     -0.27    NA</code></pre>
 <p>Here we took the second and third elements—the critical points and
 curvatures, respectively—of the <code>f2</code> output from
 <code>features()</code> and passed it to a new tibble. Then
@@ -1207,7 +1205,8 @@ above to analyze the <code>amp.sum</code> data in our
 <code>pseed.wide</code> tibble in the same manner we analyzed amplitude
 data for each fin. You’ll also create your own custom function to add
 another piece of information to our analysis.</p>
-<p>For this project report, perform the following tasks.</p>
+<p>For this project report, each team member shoulf perform the
+following tasks.</p>
 <ol style="list-style-type: decimal">
 <li>In a script named “your_module2.R”, combine the code above so that
 you can establish the <code>pseed.wide</code> data tibble.</li>
@@ -1236,6 +1235,8 @@ fish vs. mean maximum of <code>amp.sum</code>.
 <!-- should be the mean metabolic power vs. mean maximum of amp.sum. This confused folks the first two--></li>
 <li>Include the code for all the tasks listed above in the
 “yourname_module2.R” script and push it to your teams repo.</li>
+<li>A commented section of text that serves as the <a
+href="phaseI_rubric.html">AI-use statement</a>.</li>
 </ol>
 <div class="green">
 <div class="row">
@@ -1262,7 +1263,9 @@ notice many of the same columns as our kinematic data and one new one:
 <code>met.rate</code>, the metabolic power output in W<span
 class="math inline">\(\cdot\)</span>kg<span
 class="math inline">\(^{-1}\)</span>.</p>
-<p>Submissions are due by 11:59 PM on Sunday, September 15th.</p>
+<p>Submissions are due by 11:59 PM on Sunday, September 14th. Each team
+member should push their submission to their team’s github directory,
+i.e., “Module2_Team1”, if in Team 1.</p>
 </div>
 
 

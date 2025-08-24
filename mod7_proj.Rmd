@@ -486,6 +486,10 @@ The answers and narrative in your .Rmd should include the following components:
       + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.
       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least two references to other relevant studies.** Note: circling back to the introduction will be helpful here.
       + Author contributions: Briefly outline what each team member contributed to the project.
+      + AI-use Statement: Briefly state how AI was used in the completion of the report requirements.
+      
+      **Each team should push one report Rmd**  as "Module7_TeamX.Rmd" where "X" is the each number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's github directory, i.e., "Module7_Team1", if in Team 1. Please push your submission by 11:59 pm, Sunday, November 23rd.
+      
 
 ```{r,eval=FALSE,echo=FALSE}
 dat<- dat%>%

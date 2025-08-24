@@ -13,7 +13,7 @@
 
 <title>Module 5 Project</title>
 
-<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -65,6 +65,7 @@ if (window.hljs) {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -625,20 +626,10 @@ each.The habitat data for our study come from <span
 class="citation">Compagno (1984)</span> and <span
 class="citation">Compagno (2001)</span>. Let’s load these data now so we
 have it handy.</p>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.1     ✔ readr     2.1.4
-## ✔ forcats   1.0.0     ✔ stringr   1.5.0
-## ✔ ggplot2   3.4.1     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-## ✔ purrr     1.0.1     
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;)</code></pre>
+<pre class="r"><code>library(tidyverse)
+shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 188 Columns: 8
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (5): sp, file_name, depth, habitat, ref
 ## dbl (3): id, size, depth_max
@@ -803,15 +794,16 @@ once.</p>
 
 f &lt;- list.files(&quot;shark_points&quot;,full.names = T,pattern=&quot;.csv&quot;)
 
+
 xy &lt;- read_csv(f,id=&quot;file&quot;) %&gt;% 
-  select(file,X,Y) %&gt;% 
+  dplyr::select(file,X,Y) %&gt;% 
   mutate(Y=abs(Y-max(Y))) %&gt;% 
   mutate(file_name=gsub(&quot;*_.csv&quot;,&quot;&quot;,basename(file))) %&gt;% 
   left_join(shark_dat) </code></pre>
 <pre><code>## New names:
 ## • `` -&gt; `...1`</code></pre>
 <pre><code>## Rows: 2632 Columns: 15
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ──────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (14): ...1, Area, Mean, Mode, X, Y, XM, YM, Perim., Circ., Slice, AR, Ro...
 ## 
@@ -859,7 +851,7 @@ shark_sp &lt;- xy$sp %&gt;% unique
 for(i in shark_sp){
   ldk_l[[i]] &lt;- xy %&gt;% 
     filter(sp==i) %&gt;% 
-    select(X,Y) %&gt;% 
+    dplyr::select(X,Y) %&gt;% 
     data.frame
 }
 
@@ -1094,7 +1086,7 @@ names.</p>
 in the PCA operation. The coordinates plotted in the PCA plots are
 contained in a matrix named <code>x</code> in our <code>pca</code>
 object. Notice the row names:</p>
-<pre class="r"><code>pca$x %&gt;% data.frame %&gt;% select(Comp1,Comp2) %&gt;% head</code></pre>
+<pre class="r"><code>pca$x %&gt;% data.frame %&gt;% dplyr::select(Comp1,Comp2) %&gt;% head</code></pre>
 <pre><code>##                               Comp1       Comp2
 ## Aculeola nigra          0.033229330  0.06321765
 ## Alopias pelagicus       0.073754120 -0.15999699
@@ -1112,7 +1104,7 @@ different morphospace is to combine this information with the PC scores
 in <code>pca$x</code>. This can be done thusly:</p>
 <pre class="r"><code>PCA &lt;- pca$x %&gt;% 
   data.frame %&gt;% 
-  select(Comp1:Comp4) %&gt;% 
+  dplyr::select(Comp1:Comp4) %&gt;% 
   mutate(sp=rownames(pca$x)) %&gt;% 
   left_join(shark_dat)</code></pre>
 <pre><code>## Joining with `by = join_by(sp)`</code></pre>
@@ -1131,8 +1123,8 @@ in <code>pca$x</code>. This can be done thusly:</p>
 ## 4 Alvul_u0.gif     0-366 pelagic  549 &lt;NA&gt;       366
 ## 5 Apbru_u1.gif     0-950 benthic   68 &lt;NA&gt;       950
 ## 6 Aplau_u0.gif 560 -1462 benthic   68 &lt;NA&gt;      1462</code></pre>
-<p>With that over with, we can dispence with the ugly PCA plots above
-and use <code>ggplot</code> to visualize our results with repsect to
+<p>With that over with, we can dispense with the ugly PCA plots above
+and use <code>ggplot</code> to visualize our results with respect to
 habitat.</p>
 <pre class="r"><code>PCA %&gt;% 
   ggplot(aes(Comp1,Comp2,col=habitat))+geom_point()</code></pre>
@@ -1197,7 +1189,7 @@ caudal fin along PC2.</p>
 PC_extremes &lt;- PCA %&gt;% 
   filter(Comp1 %in% range(Comp1)|
          Comp2 %in% range(Comp2)) %&gt;% 
-  select(Comp1,Comp2,sp,file_name) %&gt;% 
+  dplyr::select(Comp1,Comp2,sp,file_name) %&gt;% 
   mutate(pngs =paste0(&quot;data/shark_examples_photos/&quot;,file_name %&gt;% str_replace(&quot;.gif&quot;,&quot;.png&quot;)))
 
 p1 &lt;- PCA %&gt;% 
@@ -1205,6 +1197,13 @@ p1 &lt;- PCA %&gt;%
 
 
 p1 + geom_image(data=PC_extremes,aes(Comp1,Comp2,image=pngs), size=.30,inherit.aes = F)+theme_classic()+xlim(range(PC_extremes$Comp1)*1.5)+ylim(range(PC_extremes$Comp2)*1.25)+theme(legend.position = c(0.1,0.2))</code></pre>
+<pre><code>## Warning: A numeric `legend.position` argument in `theme()` was
+## deprecated in ggplot2 3.5.0.
+## ℹ Please use the `legend.position.inside` argument of
+##   `theme()` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see
+## where this warning was generated.</code></pre>
 <p><img src="mod5_proj_files/figure-html/shape%20change-1.png" width="672" /></p>
 </div>
 <div id="analysis-part-ii" class="section level3">
@@ -1303,21 +1302,8 @@ al. (2018)</span> mentioned above</a>. Once this tree file is
 downloaded, let’s load, read it, in and store it to an object named
 <code>phy</code>. Notice you’ll need the <code>phytools</code> package
 and the function <code>readNexus()</code>.</p>
-<pre class="r"><code>library(phytools)</code></pre>
-<pre><code>## Loading required package: ape</code></pre>
-<pre><code>## Warning: package &#39;ape&#39; was built under R version 4.2.3</code></pre>
-<pre><code>## 
-## Attaching package: &#39;ape&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     where</code></pre>
-<pre><code>## Loading required package: maps</code></pre>
-<pre><code>## 
-## Attaching package: &#39;maps&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     map</code></pre>
-<pre class="r"><code>phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
+<pre class="r"><code>library(phytools)
+phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
 length(phy)</code></pre>
 <pre><code>## [1] 500</code></pre>
 <p>Next let’s, restrict our tree file to those species in our data set.
@@ -1352,9 +1338,9 @@ print(er)</code></pre>
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 9.62278082022747e-06  
+## The rate for group benthic is 9.6227808202289e-06  
 ## 
-## The rate for group pelagic is 7.98043396197077e-06</code></pre>
+## The rate for group pelagic is 7.98043396197082e-06</code></pre>
 <p>So it appears the benthic group body shape has evolved 1.6 times
 faster than the pelagic group and this is significant
 (<em>p=0.002</em>). But, we have a problem. You may have noticed that
@@ -1407,7 +1393,7 @@ t &lt;- system.time(for(i in 1:length(phy_sample)){
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 1.31461646109894e-05  
+## The rate for group benthic is 1.31461646109893e-05  
 ## 
 ## The rate for group pelagic is 1.11693291558612e-05 
 ## Call:
@@ -1421,9 +1407,9 @@ t &lt;- system.time(for(i in 1:length(phy_sample)){
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 8.60727982114322e-06  
+## The rate for group benthic is 8.60727982114347e-06  
 ## 
-## The rate for group pelagic is 7.1993879834897e-06 
+## The rate for group pelagic is 7.19938798348969e-06 
 ## Call:
 ## 
 ## 
@@ -1435,9 +1421,9 @@ t &lt;- system.time(for(i in 1:length(phy_sample)){
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 7.95172596934326e-06  
+## The rate for group benthic is 7.9517259693447e-06  
 ## 
-## The rate for group pelagic is 6.81606423824803e-06 
+## The rate for group pelagic is 6.81606423824802e-06 
 ## Call:
 ## 
 ## 
@@ -1449,9 +1435,9 @@ t &lt;- system.time(for(i in 1:length(phy_sample)){
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 9.0751737409071e-06  
+## The rate for group benthic is 9.07517374090874e-06  
 ## 
-## The rate for group pelagic is 7.55671527836784e-06 
+## The rate for group pelagic is 7.5567152783678e-06 
 ## Call:
 ## 
 ## 
@@ -1463,9 +1449,9 @@ t &lt;- system.time(for(i in 1:length(phy_sample)){
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 6.95916367839786e-06  
+## The rate for group benthic is 6.95916367839887e-06  
 ## 
-## The rate for group pelagic is 5.90468327891935e-06 
+## The rate for group pelagic is 5.90468327891928e-06 
 ## Call:
 ## 
 ## 
@@ -1477,9 +1463,9 @@ t &lt;- system.time(for(i in 1:length(phy_sample)){
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 8.64844945414172e-06  
+## The rate for group benthic is 8.64844945414215e-06  
 ## 
-## The rate for group pelagic is 7.45965876223785e-06 
+## The rate for group pelagic is 7.4596587622378e-06 
 ## Call:
 ## 
 ## 
@@ -1491,9 +1477,9 @@ t &lt;- system.time(for(i in 1:length(phy_sample)){
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 8.0290667736721e-06  
+## The rate for group benthic is 8.02906677367201e-06  
 ## 
-## The rate for group pelagic is 6.56577547525828e-06 
+## The rate for group pelagic is 6.56577547525823e-06 
 ## Call:
 ## 
 ## 
@@ -1505,9 +1491,9 @@ t &lt;- system.time(for(i in 1:length(phy_sample)){
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 8.58865035249552e-06  
+## The rate for group benthic is 8.58865035249474e-06  
 ## 
-## The rate for group pelagic is 7.25453385522528e-06 
+## The rate for group pelagic is 7.2545338552253e-06 
 ## Call:
 ## 
 ## 
@@ -1519,9 +1505,9 @@ t &lt;- system.time(for(i in 1:length(phy_sample)){
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 8.14046831722275e-06  
+## The rate for group benthic is 8.14046831722389e-06  
 ## 
-## The rate for group pelagic is 6.7201649407581e-06 
+## The rate for group pelagic is 6.72016494075807e-06 
 ## Call:
 ## 
 ## 
@@ -1533,9 +1519,9 @@ t &lt;- system.time(for(i in 1:length(phy_sample)){
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 8.42606244272666e-06  
+## The rate for group benthic is 8.42606244272568e-06  
 ## 
-## The rate for group pelagic is 6.79794184918724e-06</code></pre>
+## The rate for group pelagic is 6.79794184918727e-06</code></pre>
 <p>Here we used <code>seet.seed()</code> to make the
 <code>sample()</code> function randomly sample the same set of 10 trees.
 This is important so that we can all perform the same exact analyses,
@@ -1594,6 +1580,14 @@ the 220 we hope to include. The figure below indicates that including
 all 220 species and using all 500 trees would take ~2500 s or about 40
 minutes!!!</p>
 <p><br></p>
+<pre><code>## Warning in geom_text(aes(50, 500, label = &quot;computed&quot;), inherit.aes = F): All aesthetics have length 1, but the data has 48
+## rows.
+## ℹ Please consider using `annotate()` or provide this
+##   layer with data containing a single row.</code></pre>
+<pre><code>## Warning in geom_text(aes(175, 2200, label = &quot;predicted&quot;), inherit.aes = F): All aesthetics have length 1, but the data has 48
+## rows.
+## ℹ Please consider using `annotate()` or provide this
+##   layer with data containing a single row.</code></pre>
 <img src="mod5_proj_files/figure-html/timescale-1.png" width="672" />
 <br>
 <center>
@@ -1682,7 +1676,7 @@ between different habitat types?
 <ol style="list-style-type: decimal">
 <li>Answer this question based on a posterior distribution of rates
 based on all 500 phylogenetic trees.</li>
-<li>Make sure the distribution of rate estimates is create through the
+<li>Make sure the distribution of rate estimates is created through the
 use of a parallelization of your analysis.</li>
 <li>Please assess the statistical significance of habitat on the
 distribution using a simple two-sided t-test
@@ -1700,7 +1694,7 @@ bibliography named “BIOL3140.bib”. <strong>Submit this bibliography as
 well!</strong></li>
 <li>Sections including an introduction, methods, results, discussion,
 author contributions, and references. Make sure that each, aside from
-the references, includes one to two short paragraphs. Specifially:
+the references, includes one to two short paragraphs. Specifically:
 <ul>
 <li>Introduction: Frame the questions, indicating why they are
 important, what background work has been done in this realm, and how you
@@ -1720,14 +1714,22 @@ introductions, both to this project description’s and yours, will be
 helpful here.</li>
 <li>Author contributions: Briefly outline what each team member
 contributed to the project.</li>
+<li>AI-use Statement: Briefly state how AI was used in the completion of
+the report requirements.</li>
 </ul></li>
 </ul>
-<p>Project reports should be uploaded by 11:59 PM on Sunday, October
-27th.</p>
+<p><strong>Each team should push one report Rmd</strong> as
+“Module5_TeamX.Rmd” where “X” is the each number. Please also submit
+<strong>all associated files and data</strong> (e.g., .bibtex files,
+.csv files, etc.). This means one team member should push the team’s
+submissions to their team’s github directory, i.e., “Module5_Team1”, if
+in Team 1. Project reports should be pushed by 11:59 PM on Sunday,
+October 19th.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
 <div id="ref-compagno1984sharks" class="csl-entry">
 Compagno, Leonard JV. 1984. <span>“Sharks of the World. An Annotated and
 Illustrated Catalogue of Sharks Species Known to Date.”</span> Food

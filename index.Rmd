@@ -47,7 +47,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 ## GitHub account
 
-Why a [GitHub account](https://github.com/join)? GitHub is a handy place for those developing code and offers free hosting of websites produced and maintained from a desktop (that's how this site was constructed). Our site is under the ``class" repository (i.e., a space where code resides) within the organization [bcorgbio](https://github.com/bcorgbio) on GitHub. To access our organization, create a team, and use bcorgbio discussion pages, you'll need an account. Once you have an account, I'll be able to add you to our [bcorgbio](https://github.com/bcorgbio) organization and the class-wide team for discussion purposes.
+Why a [GitHub account](https://github.com/join)? GitHub is a handy place for those developing code and offers free hosting of websites produced and maintained from a desktop (that's how this site was constructed). Our site is under the ``class" repository (i.e., a space where code resides) within the organization [bcorgbio](https://github.com/bcorgbio) and the team "orgbiof25" on GitHub. To access our organization and this semester's team, you'll need an account. Once you have an account, I'll be able to add you to our [bcorgbio](https://github.com/bcorgbio) organization and the class-wide team for discussion purposes.
 
 <!-- ## Course DAQPack -->
 
@@ -58,7 +58,7 @@ Why a [GitHub account](https://github.com/join)? GitHub is a handy place for tho
 
 To be an effective organismal biologist, one must prepare, analyze, visualize, and communicate data as we formulate answers to the questions we're asking. Despite the importance of these technological skills to our discipline, students often see the acquisition and analysis of data as technological black boxes. Countless times in previous courses, instructors have no doubt demonstrated foundational principles and concepts through the presentation of data, usually through figures in papers or lecture slides. However, where these data come from and how they have answered a question often remain a mystery. In turn, students must rely on the authority of their instructors rather than their own grasp of quantitative skills and data collection to make meaningful connections.
 
-The thrust of BIOL 3140 is to develop and hone meaninful quantitative skills relevant to organismal biology. 
+The thrust of BIOL 3140 is to develop and hone meaningful quantitative skills relevant to organismal biology. 
 
 <div class = "green">
 <div class="row">
@@ -115,8 +115,8 @@ To facilitate our team approach, I'll be assigning each student to a team of 3 s
 Upon being assigned, the team must do three things for each project:
 
   1. Pick a team nickname. Puns are welcome and encouraged (e.g., "R-tful Coders") 
-  2. Have a single team member create a github repository titled ProjectNumber_TeamNumber, e.g., "Project2_Team2" (directions [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository)). Note: only one person in the team should create a project repo.
-  4. Add Professor Kenaley (@ckenaley) and other team members as collaborator to this repository (directions [here](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository))
+  2. All team members should join and clone the appropriately named git directory, e.g., Project1_Team1.
+  3. Add Professor Kenaley (@ckenaley) and other team members as collaborator to this repository (directions [here](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository))
   5. A team representative must submit a question to our [discussion board](https://github.com/orgs/bcorgbio/discussions) and include the team handle in the question title.
   6. A team representative must answer a question on the discussion board and include the team handle in the response.
   
@@ -300,13 +300,43 @@ Find out more about BC’s commitment to accessibility at www.bc.edu/sites/acces
 
 # Scholarship and Academic Integrity
 
-Students in this course, as all others at BC, must produce original work and cite references appropriately. Failure to cite references is plagiarism. Academic dishonesty includes, but is not necessarily limited to, plagiarism, fabrication, facilitating academic dishonesty, cheating on exams or assignments, or submitting the same material or substantially similar material to meet the requirements of more than one course without seeking permission of all instructors concerned. Scholastic misconduct may also involve, but is not necessarily limited to, acts that violate the rights of other students, such as depriving another student of course materials or interfering with another student’s work. Please see the [Boston College policy on academic integrity](https://www.bc.edu/content/bc-web/academics/sites/university-catalog/policies-procedures.html#academic_integrity_policies) for more information.
+Students in this course, as all others at BC, must produce original work and cite references appropriately. Failure to cite references is plagiarism. Academic dishonesty includes, but is not necessarily limited to, the *use of AI* (see below) to produce work a student claims as their own, plagiarism, fabrication, facilitating academic dishonesty, cheating on exams or assignments, or submitting the same material or substantially similar material to meet the requirements of more than one course without seeking permission of all instructors concerned. Scholastic misconduct may also involve, but is not necessarily limited to, acts that violate the rights of other students, such as depriving another student of course materials or interfering with another student’s work. Please see the [Boston College policy on academic integrity](https://www.bc.edu/content/bc-web/academics/sites/university-catalog/policies-procedures.html#academic_integrity_policies) for more information.
+
+## Use of AI
+
+Generative AI can be an incredibly powerful tool for anyone interested in writing a little code---you can ask it to do so much for you, and most of the time, what it produces works relatively well. Thus, it may be tempting for anyone new to modeling and data science to rely on this tool, in part or whole, for many of the assignments for this course. In your instructor's opinion, relying on AI would make the learning goals and objectives of the course hard to reach. His opinion is that it can be helpful, but can often stifle learning and be used irresponsibly. So that we're all on the same page with regard to how AI fits into the course, students should read, understand, and follow this AI policy.
+
+
+### Requirements
+
+
+  + All students must attribute AI as the source of any work (i.e., you must cite your AI sources and specifically how they were used). Therefore, there must be a statement in every piece of submitted work that outlines how AI was used in the execution of the project. 
+  + Students may *NOT* submit AI-generated work as wholesale substitutes for the work expected of them. In other words, any work a student submits must be, by and large, produced by that student and not the direct output of AI. 
+ 
+
+### Guidelines for Acceptable Use
+
+  AI may be used for:
+  
+  + Brainstorming and  code-review preparation.
+  + Debugging code and error interpretations.
+  + Finding guidance concerning how to implement code in an analysis (e.g, appropriate functions, syntax, and logic).
+  + Background research on a topic or quantitative method.
+  + Generating a lists of potentially relevant sources to read.
+  + Editing text for clarity, spelling and grammar.
+  + Many other things.*
+ 
+*If you come to a point where you're using AI and unsure if this particular use falls in the "acceptable" category, please talk with Prof. K. He'll provide some guidance.
+
+### Penalties
+
+Any work submitted that violates this policy will be considered a breach of [the University's broader policy on academic integrity](https://www.bc.edu/content/bc-web/academics/sites/university-catalog/policies-procedures.html#academic_integrity_policies). Violations of the policy may incur penalties that include a grade of 0 for a violating assignment, a formal academic integrity inquiry, and failing grade for course. 
 
 # Email and Office Hours Policy
 
-If you write Professor Kenaley with a question, he’ll try to get back to you within 24 hours. Rather than write Prof. Kenaley with questions related to course mechanics and expectations, please post these in our [discussion board](https://github.com/orgs/bcorgbio/teams/orgbiof24), It’s probably the case that others have the same questions.
+If you write Professor Kenaley with a question, he’ll try to get back to you within 24 hours. Rather than write Prof. Kenaley with questions related to course mechanics and expectations, please post these in our [discussion board](https://github.com/orgs/bcorgbio/discussions), It’s probably the case that others have the same questions.
 
-Office hours can be arranged by appointment via email and will take place over Zoom or in person (Higgins 535). Office hours may involve more more than student or team, so please come equipped with poignant questions and expect that other students have questions as urgent as yours.
+Office hours can be arranged by appointment via email and will take in person (Higgins 535). Office hours may involve more more than student or team, so please come equipped with poignant questions and expect that other students have questions as urgent as yours.
 
 
 

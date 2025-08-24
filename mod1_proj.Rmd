@@ -42,11 +42,7 @@ Let's move on to another convention of writing an R script: setting the working 
 <div class = "green">
 <div class="row">
   <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
-  <div class="col-sm-9">`setwd()` is a command essential to working in R. It's hard to overstate just how important this component of a script is. Over the years, in working with students learning how to use R, I come to have them recite the three most important rules for beginners:
-
-  1. Always set the working directory!
-  2. Never forget to set the working directory!
-  3. Set the working directory always and forever!
+  <div class="col-sm-9">`setwd()` is a command essential to working in R. It's hard to overstate just how important this component of a script is. As we start using R projects (an integrated workflow in R and R Studio) and R markdown (an authoring framework that combines text, code, and graphics) in the course, the working directory gets set for you. But, always keep in mind, someone or something must tell R where to look.
 </div>
 </div>
 </div>
@@ -285,8 +281,9 @@ The goal of this project report is to submit an R script that runs the code pres
   4. Code that produces a summary of the number of scales punctured for each species.
   5. Code that produces a summary of the number of specimens sampled for each species.
   6. Code that produces a PDF file containing 6 figures, one for each species that includes a boxplot of puncture force verus quadrant. 
+  7. A commented section of text that serves as the [AI-use statement](phaseI_rubric.html).
     
-**Each team member must submit their own report.** Make sure each commits their code and PDF to your team's repo, appropriately named, e.g., "Jane_Doe_script.R", "Jane_Doe_species_quandrant.pdf". Submissions are due by 11:59 PM on Sunday, September 9th.
+**Each team member must submit their own report.** Make sure each commits their code and PDF to your team's repo, appropriately named, e.g., "Jane_Doe_script.R", "Jane_Doe_species_quandrant.pdf". This means each team member should push their submission to their team's github directory, i.e., "Module1_Team1", if in Team 1. Submissions are due by 11:59 PM on Sunday, September 7th. 
 
 <div class = "green">
 <div class="row">

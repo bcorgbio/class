@@ -372,7 +372,7 @@ You're now ready to take the rains and repeat our previous analyses using the `a
 
 In this project report, you'll use the principles and tools outlined above to analyze the `amp.sum` data in our `pseed.wide` tibble in the same manner we analyzed amplitude data for each fin. You'll also create your own custom function to add another piece of information to our analysis. 
 
-For this project report, perform the following tasks. 
+For this project report, each team member shoulf perform the following tasks. 
   
   1. In a script named "your_module2.R", combine the code above so that you can establish the `pseed.wide` data tibble. 
    2. Create a custom function that computes the standard error of the mean (SE). [see #3 and below]
@@ -383,7 +383,8 @@ For this project report, perform the following tasks.
   7. Use `ggplot` to plot the metabolic power output of each fish vs. mean maximum of `amp.sum`.
   <!-- should be the mean metabolic power vs. mean maximum of amp.sum. This confused folks the first two-->
   8. Include the code for all the tasks listed above in the "yourname_module2.R" script and push it to your teams repo.
-  
+  9. A commented section of text that serves as the [AI-use statement](phaseI_rubric.html).
+
   
 
 <div class = "green">
@@ -462,4 +463,6 @@ pseed.sum.max %>%
   
 ```
 
-Submissions are due by 11:59 PM on Sunday, September 15th.
+
+
+Submissions are due by 11:59 PM on Sunday, September 14th. Each team member should push their submission to their team's github directory, i.e., "Module2_Team1", if in Team 1.

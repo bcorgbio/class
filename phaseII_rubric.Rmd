@@ -17,3 +17,7 @@ Phase II is meant to develop and use the data analysis and prototypings skills w
 | Writing and Style | The writing is concise, clear, avoids passive constructions, and is in the past tense; grammar is appropriate <br>**(5 pts)**|   The writing is unclear or rambling in spots or uses passive constructions and future tense; grammar is shaky in spots <br>**(3 pts)** |   The writing is unclear, and/or uses passive constructions or future tense throughout; grammar is shaky for the most part <br>**(1 pt)**
 | Sources and References | Statements of scientific findings and fact are supported by references; references are contained in a [BibTex bibliography and inserted with `@` tags](mod4_proj.html#Inserting_References)  <br>**(5 pts)**| Some statements of scientific findings and fact are not supported by references; some references are not contained in a BibTex bibliography or inserted with `@` tags <br>**(3 pts)** |   Most statements of scientific findings and fact are not supported by references; references are not contained in a BibTex bibliography nor inserted with `@` tags <br>**(1 pt)**
 ||||
+
+# AI-use Statement
+
+As with Phase I, each submission must include an AI-use statement that outlines how AI was used in the execution of the project. This must include specific details concerning what type of AI was used and how the completion of tasks or report requirements were assisted with AI. Based on this, Prof. Kenaley will assess whether the use was appropriate.

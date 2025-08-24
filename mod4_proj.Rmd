@@ -568,7 +568,7 @@ Now click on the "BibTex" link at the bottom of the window. This will lead you t
 The goal of this project report is to produce an R Markdown in HTML that includes all the important components of the project reports you'll produce in Phases I and II of the course. You can think of this as a template that can be used when writing writing up your reports in all the subsequent modules. 
 
 
-For this project report, write an .Rmd document named "TEAMNAME_Module4.Rmd       " that includes the following:
+For this project report, write an .Rmd document named "TEAMNUMBER_Module4.Rmd       " that includes the following:
   
   1. A YAML header that specifies the author, title, date, output, and bibliography file. 
   2. The following section headers that organize your text and includes 2-3 short relevant sentences:
@@ -577,6 +577,7 @@ For this project report, write an .Rmd document named "TEAMNAME_Module4.Rmd     
       + Results: Briefly summarize the results.
       + Discussion: Briefly discuss the importance of the results (i.e., how they relate to the main question).
       + Author Contributions: Briefly state what the contributions of each team member to the project.
+      + AI-use Statement: Briefly state how AI was used in the completion of the report requirements.
       + References: Populate a bibliography section that includes the works cited in the text.
   3. A centered image from an online source of an *Anolis* lizard at the end of the introduction. Please make sure this is in the [creative commons](https://creativecommons.org/).]
   4. All the code chunks included in the [Adding Code with Chunks][Adding Code with Chunks] section.
@@ -586,7 +587,8 @@ For this project report, write an .Rmd document named "TEAMNAME_Module4.Rmd     
   8. A citation in the methods sections that identifies the source of the phylogenetic tree used in PGLS analysis (include in the References section as well).
 
 
-Submissions are due by 11:59 PM on Sunday, October 3th. Submission should be pushed to your team repo.
+**Each team should push one report Rmd**  as "Module4_TeamX.Rmd" where "X" is the each number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's github directory, i.e., "Module4_Team1", if in Team 1. Submissions are due by 11:59 PM on Sunday, September 28th. 
+
 
 ```{r,include=FALSE}
 anole.phylo.aic <- AICc(pgls.BM1,pgls.BM2,pgls.OU1,pgls.OU2)

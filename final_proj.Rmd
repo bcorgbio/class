@@ -35,10 +35,12 @@ The following components of the project report should be included in a markdown 
       + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.
       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. 
       + Author contributions: Briefly outline what each team member contributed to the project.
+      + AI-use Statement: Briefly state how AI was used in the completion of the report requirements.
   * The Introduction and Discussion sections should include no fewer than three references to primary literature sources (i.e., scientific papers) between them. These references should be integrated using `@` BibTex tags that automatically place the references in the document using the associated .bib file.
   
 The length of the report is expected to be longer than Phase II reports, however still concise. The focus here is on analysis and modeling. 
 
+**Each team should push one report Rmd**  as "Final_TeamX.Rmd" where "X" is the each number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's github directory, i.e., "Final_Team1", if in Team 1. Please push your submission by 11:59 pm, Monday, December 15th.
 
 # Peer evaluations
 

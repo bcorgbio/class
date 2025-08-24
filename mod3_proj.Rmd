@@ -512,7 +512,6 @@ lm.PD <- lm(HL~PD,dat)
 
 ```
 
-
-Submissions are due by 11:59 PM on Sunday, September 22nd.
+**Each team should push one report script**  as "Module3_TeamX.R" where "X" is the each number. This means one team member should push the team's submission to their team's github directory, i.e., "Module3_Team1", if in Team 1.  Submissions are due by 11:59 PM on Sunday, September 21st.
 
 # References

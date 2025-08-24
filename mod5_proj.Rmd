@@ -11,20 +11,19 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 
 ```{r images, include=FALSE,eval=FALSE}
-library(tidyverse)
 library(ape)
 library(treeio)
-library(rgbif)
 library(data.table)
 library(phytools)
-library(fishtree)
 library(rgbif)
 library(doParallel)
 library(foreach)
 library(parallel)
 library(dataRetrieval)
 library(geomorph)
+library(tidyverse)
 
+select <- dplyr::select
 
 ### sort image files
 
@@ -43,7 +42,7 @@ sapply(img %>% filter(is_gif) %>% pull(file),function(x) file.copy(x,paste0("ign
 #need lateral images of squatina sp.
 
 img %>% 
-  select(sp,is_gif) %>% 
+  dplyr::select(sp,is_gif) %>% 
   count() 
 ```
 
@@ -315,8 +314,9 @@ library(abind)
 
 f <- list.files("shark_points",full.names = T,pattern=".csv")
 
+
 xy <- read_csv(f,id="file") %>% 
-  select(file,X,Y) %>% 
+  dplyr::select(file,X,Y) %>% 
   mutate(Y=abs(Y-max(Y))) %>% 
   mutate(file_name=gsub("*_.csv","",basename(file))) %>% 
   left_join(shark_dat) 
@@ -344,7 +344,7 @@ shark_sp <- xy$sp %>% unique
 for(i in shark_sp){
   ldk_l[[i]] <- xy %>% 
     filter(sp==i) %>% 
-    select(X,Y) %>% 
+    dplyr::select(X,Y) %>% 
     data.frame
 }
 
@@ -397,7 +397,7 @@ head(dimnames(ldk)[[3]])
 These values were maintained throughout the superimpositon step and in the PCA operation. The coordinates plotted in the PCA plots are contained in a matrix named `x` in our `pca` object. Notice the row names:
 
 ```{r rownmaes}
-pca$x %>% data.frame %>% select(Comp1,Comp2) %>% head
+pca$x %>% data.frame %>% dplyr::select(Comp1,Comp2) %>% head
 ```
 
 So, we have the species names from whence the data, both land mark and PCA, came. Fortunately, Professor Kenaley assembled a table containing of all the the species  for landmarking, and the species and habitat for each. You can download [this file](data/shark_data.csv) and read in the data.
@@ -408,14 +408,14 @@ What's left to do in exploring if benthic and pelagic sharks occupy different mo
 ```{r combdat}
 PCA <- pca$x %>% 
   data.frame %>% 
-  select(Comp1:Comp4) %>% 
+  dplyr::select(Comp1:Comp4) %>% 
   mutate(sp=rownames(pca$x)) %>% 
   left_join(shark_dat)
 
 head(PCA)
 ```
 
-With that over with, we can dispence with the ugly PCA plots above and use `ggplot` to visualize our results with repsect to habitat.
+With that over with, we can dispense with the ugly PCA plots above and use `ggplot` to visualize our results with respect to habitat.
 
 ```{r ggpca}
 PCA %>% 
@@ -473,7 +473,7 @@ library(ggimage)
 PC_extremes <- PCA %>% 
   filter(Comp1 %in% range(Comp1)|
          Comp2 %in% range(Comp2)) %>% 
-  select(Comp1,Comp2,sp,file_name) %>% 
+  dplyr::select(Comp1,Comp2,sp,file_name) %>% 
   mutate(pngs =paste0("data/shark_examples_photos/",file_name %>% str_replace(".gif",".png")))
 
 p1 <- PCA %>% 
@@ -493,7 +493,7 @@ so <- rbind(tibble(superorder="Galeomorphii",order=c("Carcharhiniformes","Hetero
 tax <- wormsbynames((PCA$sp %>% unique)) %>% 
   left_join(so) %>% 
   dplyr::rename(sp=valid_name) %>% 
-  select(sp,genus,family,order,superorder)
+  dplyr::select(sp,genus,family,order,superorder)
 
 PCA <- PCA %>% 
   left_join(tax)
@@ -518,7 +518,7 @@ ggplot(elbow_df, aes(x = k, y = tot_withinss)) +
   geom_line() + geom_point()+
   scale_x_continuous(breaks = 1:10)
 
-km <-  kmeans(x = PCA %>% select(Comp1,Comp2,Comp3,Comp4), centers = 2,nstart=50)
+km <-  kmeans(x = PCA %>% dplyr::select(Comp1,Comp2,Comp3,Comp4), centers = 2,nstart=50)
 
 PCA$group <- km$cluster
 
@@ -750,7 +750,7 @@ for(i in 1:nrow(args)){
   
   ldk_i <- xy %>% 
   filter(sp %in% sp_i) %>%  
-  select(sp,X,Y) %>% 
+  dplyr::select(sp,X,Y) %>% 
   group_split(sp,.keep = F) %>% 
   lapply(.,as.data.frame) %>% 
   abind(., along=3)
@@ -786,7 +786,7 @@ args2 <- args %>% mutate(pred="no") %>%
   group_by(ntrees) %>% 
   dplyr::reframe(time=predict(lm(time~poly(sp,3)),newdata=data.frame(sp=c(100,150,220))),sp=c(100,150,220)) %>% 
   mutate(pred="yes") %>% 
-  select(sp,ntrees,time,pred)
+  dplyr::select(sp,ntrees,time,pred)
 )%>% 
   mutate(al=ifelse(pred=='yes',1,0.7)) 
 
@@ -842,7 +842,7 @@ Please submit your report and all associated data to your team GitHub repository
   * Is there morphological disparity between habitats?
   * Is the rate of morphological evolution significantly different between different habitat types?
     1. Answer this question based on a posterior distribution of rates based on all 500 phylogenetic trees.
-    2. Make sure the distribution of rate estimates is create through the use of a parallelization of your analysis.
+    2. Make sure the distribution of rate estimates is created through the use of a parallelization of your analysis.
     3. Please assess the statistical significance of habitat on the distribution using a simple two-sided t-test (i.e. `t.test()`).
     
   * What inferences with regards to ecology and behavior can you make concerning the relationship between habitat and both shape and rates of morphological evolution? 
@@ -852,14 +852,15 @@ Please submit your report and all associated data to your team GitHub repository
 In answering your questions, your .Rmd should include the following components:
 
    * A YAML header that specifies HTML output, the authors, and a bibliography named "BIOL3140.bib". **Submit this bibliography as well!**
-   * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifially:
+   * Sections including an introduction, methods, results, discussion, author contributions, and references. Make sure that each, aside from the references, includes one to two short paragraphs. Specifically:
       + Introduction: Frame the questions, indicating why they are important, what background work has been done in this realm, and how you will answer them. **Please include at least one reference to support the summary of previous work.** Note: this can be done easily by refiguring the introduction to this project report.
       + Methods: Explicitly state how you answered the questions, including a narrative of all the analyses both qualitative and quantitative.
       + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.
       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description's and yours, will be helpful here.
       + Author contributions: Briefly outline what each team member contributed to the project.
+      + AI-use Statement: Briefly state how AI was used in the completion of the report requirements.
 
-Project reports should be uploaded by 11:59 PM on Sunday, October 27th.
+**Each team should push one report Rmd**  as "Module5_TeamX.Rmd" where "X" is the each number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's github directory, i.e., "Module5_Team1", if in Team 1. Project reports should be pushed by 11:59 PM on Sunday, October 19th.
 
 # References
 

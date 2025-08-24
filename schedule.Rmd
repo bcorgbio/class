@@ -20,11 +20,11 @@ In this module we'll tackle where to find resource you'll need on a week-to-week
 
 ### Important Dates
 
-Wednesday, 8/28: Establish GitHub account and add your handle to [this form](https://forms.gle/zfoADunTt9E951Bt8) 
+**Wednesday, 8/27**: Establish GitHub account and add your handle to [this form](https://forms.gle/zfoADunTt9E951Bt8) 
 
-Wednesday 9/3: [WCR 1](WCRs/WCR_1.html)
+**Wednesday, 9/3**: [WCR 1](WCRs/WCR_1.html)
 
-Sunday, 9/8: Commit [Module 1 Project](mod1_proj.html) report
+**Sunday, 9/7**: Commit [Module 1 Project](mod1_proj.html) report
 
 All assignments are due at 11:59 on the specified date.
 
@@ -70,7 +70,10 @@ From [Happy Git with R](https://happygitwithr.com)
   + [Chapter 12](https://happygitwithr.com/rstudio-git-github.html)
 
 
-Be sure you're familiar with the [prerequsites](https://happygitwithr.com/rstudio-git-github.html#prerequisites) outlined in Chapter 12. We'll cover git and github in class on August 28th. Just introduce yourself to the concepts.
+And [this very helpful video](https://www.youtube.com/embed/QLFc9gw_Hfs?si=aM4hlKYhCyJcoX0V).
+
+
+Be sure you're familiar with the [prerequsites](https://happygitwithr.com/rstudio-git-github.html#prerequisites) outlined in Chapter 12. **We'll cover git and github in class on Wednesday, August 27th.** Just introduce yourself to the concepts.
 
 Check out the new [github access token requirements](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 
@@ -92,7 +95,7 @@ Check out the new [github access token requirements](https://docs.github.com/en/
 
   + Post one and respond to one question each week of Module 1 in our [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) 
   + [Install R and RStudio](https://rstudio-education.github.io/hopr/starting.html#starting)
-  + Clone a github team repository to a local directory (done in class with Prof. K's help on Wednesday, Aug 28th)
+  + Clone a github team repository to a local directory (done in class with Prof. K's help on **Wednesday, Aug 27th**)
   + Complete and commit a report for Module 1 Project 
 
 
@@ -116,7 +119,7 @@ This module is intended to give students the background and skills to begin simp
 
 ### Important dates
 
-Sunday, 9/15: commit [Module 2 Project](mod2_proj.html) report
+**Sunday, 9/14**: commit [Module 2 Project](mod2_proj.html) report
 
 
 ### Key Concepts
@@ -189,7 +192,7 @@ In Module 3, we'll cover the basics of visualizing and modeling data and hypothe
 
 ### Important Dates
 
-Sunday9/22: Commit Module 3 Project report
+**Sunday, 9/21**: Commit Module 3 Project report
 
 
 ### Key Concepts
@@ -253,7 +256,7 @@ In Module 4, we'll cover the basics of authoring reports in R Markdown, a markup
 
 ### Important dates
 
-Sunday, 9/29: Commit Module 4 Project Report
+**Sunday, 9/28**: Commit Module 4 Project Report
 
 
 ### Key Concepts
@@ -294,7 +297,7 @@ This module is very much learn as you go. Please dive right into the project and
 ### Do 
 
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) [10 points]
-  + Complete and commit a report for Module 3 Project 
+  + Complete and commit a report for Module 4 Project 
 
 
 ### Guiding Questions
@@ -319,8 +322,8 @@ This module puts our newly formed data analysis and markdown skills to use in an
 
 ### Important Dates:
 
-Thursday, 10/10: Upload data 
-Sunday, 10/20: Commit Module 5 Project Report
+**Wednesday, 10/8**: Upload data  
+**Sunday, 10/19**: Commit Module 5 Project Report
 
 ### Key Concepts
   + Geometic Morphometrics
@@ -350,7 +353,7 @@ Upon completion of this module, students will be able to:
 ### Do
   + Download and install [FIJI (**F**iji **Is** **J**ust **i**mageJ)](https://imagej.net/software/fiji/downloads)
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
-  + Upload team data files to [this directory](https://drive.google.com/drive/folders/1j7sod1NB1jmEiPiduYvOOIlukkMikfL5?usp=drive_link) by Tuesday, October 8th
+  + Upload team data files to [this directory](https://drive.google.com/drive/folders/1j7sod1NB1jmEiPiduYvOOIlukkMikfL5?usp=drive_link) by **Wednesday, October 8th**
   + Complete and commit Module 6 Project report
 
 
@@ -366,7 +369,7 @@ Upon completion of this module, students will be able to:
 
 ### Important Dates
 
-Sunday, 11/10: Commit Module 6 Project Report
+**Sunday, 11/9**: Commit Module 6 Project Report
 
 ### Key Concepts
   
@@ -393,7 +396,7 @@ Sunday, 11/10: Commit Module 6 Project Report
   
 ### Do
 
-11/10: Commit Module 6 Project Report
+**11/9**: Commit Module 6 Project Report
 
 ### Guiding Questions
 
@@ -410,7 +413,7 @@ In this module, we'll explore the phenology of spring arrival timing for neotrop
 
 ### Important Dates 
 
-Sunday, 11/24: Commit Module 7 Project report
+**Sunday, 11/23**: Commit Module 7 Project report
 
 ### Key Concepts
 
@@ -452,13 +455,8 @@ Upon completion of this week and module, students will be able to:
 
 ### Imporant Dates 
 
-Wednesday,12/16: Commit Final Project report
+**Monday, 12/8**: Commit Final Project report
 
 In Phase III, you'll be tasked with quickly developing a project of your own design that  either (1) requires the fabrication of a new or modified data acquisition system or (2) the acquisition of data from a peer-reviewed study or database. The goal of this project is to answer a question personal and interesting to your team. The question should be new within the context of the course and reflect a physiological focus (i.e., not ). This project will require you to first delve into the the scientific literature to set the stage and then leverage your new data-analysis and report-writing skills in the synthesis of 4-5 page markdown. This final project report should follow the same format and requirements of the reports produced in Phase II, but with expanded content. 
 
 More details about the final project and its expectations can be found [here](final_proj.html).
-
-  
-
-
-

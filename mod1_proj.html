@@ -13,7 +13,7 @@
 
 <title>Module 1 Project</title>
 
-<script src="site_libs/header-attrs-2.28/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -446,9 +446,9 @@ folder). Copy or move this file to a new directory, perhaps one named
 <p>Open R Studio and create a new script (File-&gt;New-&gt;R script, see
 below). Save it (File-&gt;Save) with an appropriate title in your new
 “scales” directory.</p>
-<div class="figure">
-<img src="newscript.png" alt="" />
-<p class="caption">FigName</p>
+<div class="float">
+<img src="newscript.png" alt="FigName" />
+<div class="figcaption">FigName</div>
 </div>
 </center>
 <p><br></p>
@@ -464,12 +464,12 @@ and working with HOPR. These initial lines of code would look like
 this:</p>
 <pre class="r"><code>library(ggplot2)
 library(tidyverse)</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ──────────────────
-## ✔ dplyr     1.1.1     ✔ readr     2.1.4
-## ✔ forcats   1.0.0     ✔ stringr   1.5.0
-## ✔ lubridate 1.9.2     ✔ tibble    3.2.1
-## ✔ purrr     1.0.1     ✔ tidyr     1.3.0
-## ── Conflicts ───────────────── tidyverse_conflicts() ──
+<pre><code>## ── Attaching core tidyverse packages ─────────────────
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ lubridate 1.9.4     ✔ tibble    3.3.0
+## ✔ purrr     1.0.4     ✔ tidyr     1.3.1
+## ── Conflicts ──────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
@@ -481,9 +481,9 @@ first line in this case) and pressing “enter” or compiling the entire
 script by clicking on the “run” icon at the top of the R Studio screen.
 Hit “run” and see what happens. In the console tab at the bottom of R
 Studio, you’ll see this:</p>
-<div class="figure">
-<img src="loadlib.png" alt="" />
-<p class="caption">FigName</p>
+<div class="float">
+<img src="loadlib.png" alt="FigName" />
+<div class="figcaption">FigName</div>
 </div>
 </center>
 <p><br></p>
@@ -511,14 +511,11 @@ important objects like data or figures, respectively.</p>
 </div>
 <div class="col-sm-9">
 <p><code>setwd()</code> is a command essential to working in R. It’s
-hard to overstate just how important this component of a script is. Over
-the years, in working with students learning how to use R, I come to
-have them recite the three most important rules for beginners:</p>
-<ol style="list-style-type: decimal">
-<li>Always set the working directory!</li>
-<li>Never forget to set the working directory!</li>
-<li>Set the working directory always and forever!</li>
-</ol>
+hard to overstate just how important this component of a script is. As
+we start using R projects (an integrated workflow in R and R Studio) and
+R markdown (an authoring framework that combines text, code, and
+graphics) in the course, the working directory gets set for you. But,
+always keep in mind, someone or something must tell R where to look.</p>
 </div>
 </div>
 </div>
@@ -607,9 +604,9 @@ scale</li>
 <li>“specimen” indicates from which specimen the scales came (several
 for each species)</li>
 </ul>
-<div class="figure">
-<img src="quad.png" alt="" />
-<p class="caption">FigName</p>
+<div class="float">
+<img src="quad.png" alt="FigName" />
+<div class="figcaption">FigName</div>
 </div>
 </center>
 <p><br></p>
@@ -976,11 +973,15 @@ each species.</li>
 each species.</li>
 <li>Code that produces a PDF file containing 6 figures, one for each
 species that includes a boxplot of puncture force verus quadrant.</li>
+<li>A commented section of text that serves as the <a
+href="phaseI_rubric.html">AI-use statement</a>.</li>
 </ol>
 <p><strong>Each team member must submit their own report.</strong> Make
 sure each commits their code and PDF to your team’s repo, appropriately
-named, e.g., “Jane_Doe_script.R”, “Jane_Doe_species_quandrant.pdf”.
-Submissions are due by 11:59 PM on Sunday, September 9th.</p>
+named, e.g., “Jane_Doe_script.R”, “Jane_Doe_species_quandrant.pdf”. This
+means each team member should push their submission to their team’s
+github directory, i.e., “Module1_Team1”, if in Team 1. Submissions are
+due by 11:59 PM on Sunday, September 7th.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">

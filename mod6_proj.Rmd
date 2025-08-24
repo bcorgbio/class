@@ -368,7 +368,7 @@ For example, what's below starts with `mtry = 1` and increases/decreases this va
 .
 
 ```{r tune, warning=F}
-tuneRF(x=rf_dat %>% select(-tot_pop),
+tuneRF(x=rf_dat %>% dplyr::select(-tot_pop),
        y=rf_dat$tot_pop,
        stepFactor=0.5,
        ntreeTry=1000,
@@ -508,14 +508,15 @@ The answers and narrative in your .Rmd should include the following components:
       + Results: Include any appropriate figures or tables and a narrative of the main results that are important to answering the questions.
       + Discussion: Succinctly declare how the results relate to the question and how they compare to previous work devoted to the topic. In addition, be sure to comment on the importance of your findings to the broader topic at hand. **Please include at least one reference to another relevant study.** Note: circling back to the introductions, both to this project description and yours, will be helpful here.
       + Author contributions: Briefly outline what each team member contributed to the project.
+      + AI-use Statement: Briefly state how AI was used in the completion of the report requirements.
 
-Project reports should be uploaded by 11:59 PM on Sunday, November 10th.
+**Each team should push one report Rmd**  as "Module6_TeamX.Rmd" where "X" is the each number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's github directory, i.e., "Module6_Team1", if in Team 1. Project reports should be uploaded by 11:59 PM on Sunday, November 9th.
 
 <div class = "green">
 <div class="row">
   <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
   <div class="col-sm-9">
-Please have a look at out [Phase II report rubric](phaseII_rubric.html) to get a sense of how this and other Phase II reports will be grade.
+Please have a look at out [Phase II report rubric](phaseII_rubric.html) to get a sense of how this and other Phase II reports will be graded.
 </div>
 </div>
 </div>
