@@ -135,7 +135,7 @@ class:  top
 ]
 
 .pull-right[
-![](https://memegenerator.net/img/instances/81812046.jpg)
+![](https://media.makeameme.org/created/flipped-classroom-is.jpg)
 ]
 
 
@@ -219,7 +219,7 @@ class:  top
 # Phase II topics
 
 .pull-left[
-- Evolution of head shape in ray-finned fishes.
+- **Evolution of body shape in sharks.**
 
 - Spatial analysis of species occurences.
 
@@ -227,7 +227,7 @@ class:  top
 ]
 
 .pull-right[
-![](https://media.springernature.com/full/springer-static/image/art%3A10.1007%2Fs11692-015-9322-y/MediaObjects/11692_2015_9322_Fig1_HTML.gif)
+![](sharkpca.png)
 ]
 
 
@@ -240,13 +240,13 @@ class:  top
 .pull-left[
 - Evolution of body shape in sharks.
 
-- Spatial analysis of species occurrences.
+- **Spatial analysis of species occurrences.**
 
 - Migration phenology of neotropical migrants in New England
 ]
 
 .pull-right[
-![](https://ourcodingclub.github.io/assets/img/tutorials/occurrence/beluga_panel.png)
+![](deer.png)
 ]
 
 
@@ -259,7 +259,7 @@ class:  top
 
 - Spatial analysis of species occurrences.
 
-- Migration phenology of neotropical migrants in New England
+- **Migration phenology of neotropical migrants in New England**
 ]
 
 .pull-right[
@@ -309,6 +309,54 @@ class:  top
 ![](https://argoshare.is.ed.ac.uk/healthyr_book/images/chapter01/example_script.png)
 
 ]
+
+---
+class:  top
+# Academic Inegrity and AI
+
+
+  + Generative AI is incredibly useful for writing a little code
+  + Can render usesful and in some cases complete results.
+  + IMO, relying on AI makes the learning goals of the course hard to reach. 
+  + Summary: it can be helpful, but stifle learning, and can be used irresponsibly. 
+  
+  So that we're all on the same page with regard to how AI fits into the course, students should read, understand, and follow following AI policy.
+
+---
+class:  top
+# Academic Inegrity and AI
+
+### Requirements
+
+
+  + **All students must attribute AI as the source of any work** (i.e., you must cite your AI sources and specifically how they were used). Therefore, there must be a statement in every piece of submitted work that outlines how AI was used in the execution of the project. 
+  + **Students may *NOT* submit AI-generated work as wholesale substitutes for the work expected of them.** In other words, any work a student submits must be, by and large, produced by that student and not the direct output of AI. 
+ 
+---
+class:  top
+# Academic Inegrity and AI
+
+### Guidelines for Acceptable Use
+
+  AI may be used for:
+  
+  + Brainstorming and  code-review preparation.
+  + Debugging code and error interpretations.
+  + Finding guidance concerning how to implement code in an analysis (e.g, appropriate functions, syntax, and logic).
+  + Background research on a topic or quantitative method.
+  + Generating a lists of potentially relevant sources to read.
+  + Editing text for clarity, spelling and grammar.
+  + Many other things.*
+ 
+*If you come to a point where you're using AI and unsure if this particular use falls in the "acceptable" category, please talk with Prof. K. He'll provide some guidance.
+
+---
+class:  top
+# Academic Inegrity and AI
+
+### AI-use Statement
+
+Each submission, whether a script or markdown document, must include a bried AI-use statement that outlines how AI was used in the execution of the project. This must include specific details concerning what type of AI was used and how the completion of tasks or report requirements were assisted with AI. Based on this, Prof. Kenaley will assess whether the use was appropriate.
 
 ---
 

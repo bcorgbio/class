@@ -49,6 +49,8 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 Why a [GitHub account](https://github.com/join)? GitHub is a handy place for those developing code and offers free hosting of websites produced and maintained from a desktop (that's how this site was constructed). Our site is under the ``class" repository (i.e., a space where code resides) within the organization [bcorgbio](https://github.com/bcorgbio) and the team "orgbiof25" on GitHub. To access our organization and this semester's team, you'll need an account. Once you have an account, I'll be able to add you to our [bcorgbio](https://github.com/bcorgbio) organization and the class-wide team for discussion purposes.
 
+You should also use github to create you're own private repository with a name that matches your BC username (e.g., "kenaley"). We'll use this repo to return feedback and corrected work. As a class, we'll make our private repositories in class.
+
 <!-- ## Course DAQPack -->
 
 <!-- This is pre-packaged assembly of hardware required for all the course instrumentation projects. Every student in the class will be issued a DAQPack on early in the course. **Take care of these components!!!** Put these items in a safe, dry place until you need to use them. All materials must be returned at the end of the class. -->
@@ -330,7 +332,7 @@ Generative AI can be an incredibly powerful tool for anyone interested in writin
 
 ### Penalties
 
-Any work submitted that violates this policy will be considered a breach of [the University's broader policy on academic integrity](https://www.bc.edu/content/bc-web/academics/sites/university-catalog/policies-procedures.html#academic_integrity_policies). Violations of the policy may incur penalties that include a grade of 0 for a violating assignment, a formal academic integrity inquiry, and failing grade for course. 
+Any work submitted that violates this policy will be considered a breach of [the University's broader policy on academic integrity](https://www.bc.edu/content/bc-web/academics/sites/university-catalog/policies-procedures.html#academic_integrity_policies). Violations of the policy may incur penalties that include a grade of 0 for a violating assignment, a formal academic integrity inquiry, and/or failing grade for course. 
 
 # Email and Office Hours Policy
 

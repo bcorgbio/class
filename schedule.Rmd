@@ -20,7 +20,9 @@ In this module we'll tackle where to find resource you'll need on a week-to-week
 
 ### Important Dates
 
-**Wednesday, 8/27**: Establish GitHub account and add your handle to [this form](https://forms.gle/zfoADunTt9E951Bt8) 
+**Wednesday, 8/27**: Establish GitHub account and add your handle to [this form](https://forms.gle/5Fx1B7P5hJEVUQUH7) 
+
+**Friday, 8/29**: Create a private GitHub repo and add Prof. K as a collaborator.
 
 **Wednesday, 9/3**: [WCR 1](WCRs/WCR_1.html)
 
