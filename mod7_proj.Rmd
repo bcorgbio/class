@@ -66,6 +66,9 @@ raven.p2 <- ggdraw() +
   draw_plot(raven.p)
 print(raven.p2)
 
+knitr::opts_chunk$set(eval = FALSE)
+
+
 ```
 Notice how `occ_data()` returns records as a list of different data types. See . . . 
 
@@ -237,7 +240,8 @@ plot_usmap(
 
 Voila! Looks like our sampling locations align with a decent NE migration path. Now let's get the weather data from these stations during the spring of the years we have decent eBird data for, since 2000 when we see an uptick in eBird data. For this we'll use `meteo_pull_monitors()` which returns a tidy tibble. Notice we pass the `sta.d$id` column to this function and it contains the station ID without the prefix.
 
-```{r, cache=TRUE,cache=TRUE}
+```{r weatherdat, cache=TRUE,cache=TRUE}
+#no data returned
 weather.d <- meteo_pull_monitors(sta.d$id,date_min = "2000-01-01")
 head(weather.d)
 ```
