@@ -1,4 +1,4 @@
-name: "Research Methods in Organismal Biology--Fall '24"
+name: "Research Methods in Organismal Biology--Fall '25"
 output_dir: "."
 output:  
   html_document:  
@@ -49,13 +49,13 @@ navbar:
     - text: "BIOL 3140 Discussion"
       href: https://github.com/orgs/bcorgbio/discussions
     - text: "Grades on Canvas"
-      href: https://bostoncollege.instructure.com/courses/1659476/gradebook
+      href: https://bostoncollege.instructure.com/courses/1672404/gradebook
     - text: "Peer Contribution Evaluations"
       menu:
       - text: "Peer Contribution Evaluation Guidelines"
         href: peer_contributions.html
       - text: "Author Contribution Evaluation Form"
-        href: https://forms.gle/ATeFa9wsV1t4g27g6
+        href: https://forms.gle/FirWiqsQGvANSWsG6
       
      
  

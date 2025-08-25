@@ -17,7 +17,7 @@ In the context of a changing climate, failure of TGMs to shift arrival date at b
 
 In recent decades, there has been a marked increase in public interest in species conservation. Coupled with this is the development of several online programs in which amateur birders can submit bird observations. The Cornell Laboratory of Ornithology and the National Audubon Society have established the most popular and far-reaching of these programs: [eBird](http://www.ebird.org). Since its launch in 2002, eBird has collected and compiled well over 100 million bird observations from many thousand contributors. In addition to new checklists, users have also entered historical observations, so that eBird includes data prior to 2002 as well. This great cache of data has enormous implications for the study of bird ecology. Although it is a relatively new platform and its temporal reach is limited, the taxonomic and geographic breadth of eBird data will no doubt make it an important tool in studying avian biology. 
 
-The goal of this project is to use eBird and meteorological data to study the effect of local weather conditions on the arrival time of TGMs in Massachusetts. To do this, we'll download eBird's species occurrence data from the Global Biodiversity Information Facility (GBIF) using [`rgif`](https://www.gbif.org/tool/81747/rgbif), an R package that permits access to GBIF's application programming interface (API). We'll also compile weather using another R package, `rnoa` which contains functions that interact with [NOAA's National Climatic Data Center's API](https://www.ncdc.noaa.gov/cdo-web/webservices/v2).
+The goal of this project is to use eBird and meteorological data to study the effect of local weather conditions on the arrival time of TGMs in Massachusetts. To do this, we'll download eBird's species occurrence data from the Global Biodiversity Information Facility (GBIF) using [`rgif`](https://www.gbif.org/tool/81747/rgbif), an R package that permits access to GBIF's application programming interface (API). We'll also compile weather using another R package, `noaa` which contains functions that interact with [NOAA's National Climatic Data Center's API](https://www.ncdc.noaa.gov/cdo-web/webservices/v2).
 
 # Methods
 
@@ -147,14 +147,14 @@ saveRDS(dat,"massbird.data.RDS")
 
 Now, if your script or markdown should be interrupted (e.g., a crash, freeze, etc.), you can access your data with `readRDS()`:
 
-```{r}
+```{r loaddat}
 library(tidyverse)
 dat <- readRDS("massbird.data.RDS")
 ```
 
 With a sense of how the bird data will be downloaded, let's see what sort of numbers we'll be dealing with. These are year-by-year totals from `occ_data()` searches for the 5 species above . . . 
 
-```{r}
+```{r plotdat}
 dat%>%
   group_by(year,species)%>%
   summarise(count=sum(individualCount,na.rm = T))%>%
@@ -165,11 +165,19 @@ It looks like there's not much data before 2000 for all species. We'll keep this
 
 ## Querying NOAA's NCDC API
 
-First off, let's think about what weather parameters and at which locations and time frames we'll compile data from. We're studying TGMs so we probably want to look at weather along the migration route. That is, weather in Massachusetts may not be the best predictor of migration timing because migrants arriving there have to fly through local weather conditions along the way. 
+As of late fall 2024, `rnoaa` is not maintained on the CRAN repostitory, where most R packages reside for installation. This under the promise that a replacement package would be released by the authors soon after. Alas, no replacement. Fortunately, we can still install `rnoaa` as long a we choose a different repository. That is, use the R Open Science repo instead of CRAN. 
+
+```{r rnoaainst, eval=F}
+install.packages('rnoaa', repos = 'https://ropensci.r-universe.dev')
+```
+
+
+Before we start using the `rnoaa` funcitons, let's think about what weather parameters and at which locations and time frames we'll compile data from. We're studying TGMs so we probably want to look at weather along the migration route. That is, weather in Massachusetts may not be the best predictor of migration timing because migrants arriving there have to fly through local weather conditions along the way. 
 
 Because nocturnal long-distance migrators fly about 200 km$^{-d}$ [@hall2008far], we can estimate that a bird that was 1000 km away from Massachusetts 5 days before arrival and 2000 km away 10 days before arrive. With this in mind, we can establish an assumed migration path from the Gulf of Mexico and sample weather from locations that are close to these distances from Massachusetts. If one draws a line from Mobile, AL on the Gulf Coast (about 2000 km from MA) to Boston, MA, Charlotte, NC sits along that line and half way along an assumed flight path (1000 km from MA). Thus, these locations represent logical sampling locations for our weather data. 
 
 NOAA's NCDC identifies weather stations by unique ID codes. The following vector, `sts`, represents the codes for stations in Mobile, Charlotte, and Boston that have relatively complete data sets for wind and temperature over our time frame (>1990 or so). 
+
 
 Before we start using `rnoaa` to access NOAA's NCDC API, we have to establish a key, a token of sorts that identifies the user and establishes a connection to the NCDC servers. Head on over to [this page on NOAA's NCDC site](https://www.ncdc.noaa.gov/cdo-web/token) to retrieve a token. It will require entering an email address, to which the token will be sent. Copy the token (a string of random letters and numbers) and paste it into the following where "token" is indicated. 
 
@@ -224,7 +232,7 @@ Now let's plot these locations on a map of the eastern US. We'll use `usmap`'s `
 ```{r,fig.cap="Fig. 2. Weather sampling locations for this project."}
 plot_usmap(
   include = c(.northeast_region,.south_region,.east_north_central)
-)+geom_point(data=sta.d,aes(x=longitude.1,y=latitude.1,col=name),size=5)+geom_label(data=sta.d,aes(x=longitude.1,y=latitude.1,col=name,label=name),size=5,nudge_x = 1e6*0.25)+theme(legend.position = "none")
+)+geom_point(data=sta.d,aes(x=longitude,y=latitude,col=name),size=5)+geom_label(data=sta.d,aes(x=longitude,y=latitude,col=name,label=name),size=5,nudge_x = 1e6*0.25)+theme(legend.position = "none")
 ```
 
 Voila! Looks like our sampling locations align with a decent NE migration path. Now let's get the weather data from these stations during the spring of the years we have decent eBird data for, since 2000 when we see an uptick in eBird data. For this we'll use `meteo_pull_monitors()` which returns a tidy tibble. Notice we pass the `sta.d$id` column to this function and it contains the station ID without the prefix.
