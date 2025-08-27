@@ -1,0 +1,189 @@
+---
+title: "Here We Go!"
+subtitle: "Starting Module 1"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2025/8/27"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# Hello! 
+
+```{r,echo=FALSE,message=FALSE}
+library(tidyverse)
+library(kableExtra)
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Get R and RStudio installed
+
+- Perform some basic operations in R
+
+- Peak under the hood of Module Project 1
+
+- Set up git on RStudio
+
+]
+
+.pull-right[
+![](https://www.analyticsvidhya.com/wp-content/uploads/2016/02/rstudio.jpg)
+]
+
+---
+class: inverse, top
+<!-- slide 1 -->
+# Announcements
+
+## TTD ASAP
+
+
+- Set up GitHub account (now if you haven't yet, ahum Reid, Neale)
+- Accept invite to join our class team
+- Check out discussion (first post = group assignments )
+- Reach out to group members
+- Accept invite to join repository for Module 1 Project (e.g., "Module1_Team1")
+
+---
+class: inverse, top
+<!-- slide 1 -->
+# On tap today
+
+-How R works
+
+```{r,eval=FALSE}
+any_function() #this is a comment: the "()" identify a function
+
+left_value <- rigth_value #storing a value in an object using " <- "
+```
+
+
+-Some simple operations in R
+
+```{r}
+foo <- 1:10
+
+mean(foo)
+```
+
+- Basic object classes
+
+```{r}
+class(foo)
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+# On tap today
+
+-Installing and loading packages
+
+```{r,eval=FALSE}
+install.packages("tidyverse")
+library(tidyverse)
+```
+
+
+- Get help
+
+```{r,eval=FALSE}
+?log
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+# GitHub
+
+- Accept my invite to our team ("orgbiof25")
+- Watch our team repo:
+  - https://github.com/bcorgbio/orgbiof25
+  - enables notifications re discussion
+
+---
+class: inverse, top
+<!-- slide 1 -->
+# GitHub
+
+### The git worflow with GitHub
+ .pull-left[
+ 
+ Clone = copy the entire contents of a GitHub repository to your local computer (done once)
+ 
+ Commit = move a changed local file to your local staging area (step 2)
+ 
+ Pull = get file(s) from the cloud to your local computer – opposite of a “push” (step 3)
+ 
+ Push = move file(s) to the cloud from your local computer – opposite of a “pull” (step 4)
+ 
+]
+
+.pull-right[
+<center>
+<img src="https://pages.github.nceas.ucsb.edu/lter/github-workshop/images/git-workflow.png" alt="drawing" width="400"/>
+]
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+# GitHub
+
+### Most MacOS users won't have git installed 
+
+### Xcode Command Line Tools (Recommended for basic Git usage):
+
+  + Open your Terminal application.
+  + Run: `xcode-select --install`
+  + Follow the prompts 
+
+### Using Homebrew
+
+  + Install Homebrew 
+    - Open Terminal and paste the installation script from the official Homebrew website ([brew.sh](https://brew.sh/)).
+    - `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)`
+  + Install Git: in terminal app, run: `brew install git` 
+
+---
+class: inverse, top
+<!-- slide 1 -->
+# GitHub
+
+## Generating a GitHub personal access token (PAT)
+  + Go to your GitHub profile settings.
+  + Go to Developer settings.
+  + Select Personal access tokens.
+  + Choose  Tokens (classic) 
+  + Click Generate new token.
+  + Provide a name for the token, set an expiration date, and select the desired scopes/permissions.
+  + Generate the token and copy it immediately---it will not be displayed again after you leave the page.
+  + Save as text file somewhere safe and accessible
+
+---
+class: inverse, top
+<!-- slide 1 -->
+# GitHub and RStudio
+
+### Start a New Project in RStudio:
+  + Open RStudio.
+  + Go to File -> New Project....
+  + Choose Version Control:
+  + In the "New Project" dialog, select "Version Control".
+  + Then, choose "Git" as the version control system.
+  + Paste Repository URL and Configure Project:
+  + In the "Clone Git Repository" dialog, paste the copied repository URL into the "Repository URL" field.
+  + Give repo a name.
+  + Browse and select the "Create project as a subdirectory of" location on your local machine where you want the cloned repository to reside.
+  + Click "Create Project".

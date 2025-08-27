@@ -3,7 +3,7 @@ title: "Here We Go!"
 subtitle: "Starting Module 1"
 author: "Dr. Christopher Kenaley"
 institute: "Boston College"
-date: "2024/8/28"
+date: "2025/8/27"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -109,7 +109,7 @@ class: inverse, top
 
 - Accept my invite to our team ("orgbiof24")
 - Watch our team repo:
-  - https://github.com/bcorgbio/orgbiof24
+  - https://github.com/bcorgbio/orgbiof25
   - enables notifications re discussion
 
 
