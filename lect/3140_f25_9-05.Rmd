@@ -1,0 +1,134 @@
+---
+title: "Module 1: The Basics"
+subtitle: "Module 1 Project"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2025/09/05"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# Today we'll .....
+```{r,echo=FALSE,message=FALSE,warning=F}
+library(tidyverse)
+library(kableExtra)
+```
+
+.pull-left[
+
+
+
+## Questions ahead of Module Project 1 
+
+  - Due Sunday 11:59 pm
+  
+  - Commit to assinged team repo
+  
+  - Each member commits own report (R script + figures)
+
+## The pip ` %>%`
+]
+
+.pull-right[
+![](https://www.citypng.com/public/uploads/preview/question-mark-red-vector-icon-symbol-png-701751694963817cwj1swemtb.png)
+]
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## What is the pipe (`%>%`)?
+
+- comes from the `magrittr` package
+
+- loaded automatically with the super package `tidyverse`
+
+- makes code concise:
+  * streamlining many operations into fewer LOC
+  
+  * reduces repetitive tasks
+
+
+```{r}
+iris <- group_by(iris,Species)
+summarise(iris,mean_length=mean(Sepal.Length))
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## What is the pipe (`%>%`)?
+
+```{r,eval=FALSE}
+iris <- group_by(iris,Species)
+summarise(iris,mean_length=mean(Sepal.Length))
+```
+
+
+```{r}
+iris%>%
+  group_by(Species)%>%
+  summarize(mean_length=mean(Sepal.Length))
+  
+```
+
+
+---
+
+## What is the pipe (`%>%`)?
+
+- more apparent when plotting (major piece of data science)
+
+```{r,fig.height=3,eval=FALSE}
+iris <- group_by(iris,Species)
+iris_mean <- summarise(iris,mean_length=mean(Sepal.Length))
+
+ggplot(data=iris_mean,aes(x=Species,y=mean_length))+geom_bar(stat="identity")
+
+```
+
+
+
+```{r,fig.height=3}
+iris%>%
+  group_by(Species)%>%
+  summarize(mean_length=mean(Sepal.Length))%>%
+  ggplot(aes(x=Species,y=mean_length))+geom_bar(stat="identity")
+  
+```
+
+
+---
+
+## Loading data
+
+- `readr` package has several handy functions.
+
+- `read_csv()` most handy
+
+```{r,fig.height=3,message=FALSE}
+d <- read_csv("https://bcorgbio.github.io/class/data/coyote.csv")
+head(d)
+```
+
+---
+
+## Loading data
+
+
+```{r,fig.height=3}
+d%>%
+  group_by(state)%>%
+  dplyr::summarize(n=n())%>%
+  ggplot(aes(x=state,y=n))+geom_bar(stat="identity")+coord_flip()
+  
+```
+
+
+
+
