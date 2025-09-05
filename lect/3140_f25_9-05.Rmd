@@ -31,7 +31,7 @@ library(kableExtra)
   
   - Each member commits own report (R script + figures)
 
-## The pip ` %>%`
+## The pipe ` %>%`
 ]
 
 .pull-right[
