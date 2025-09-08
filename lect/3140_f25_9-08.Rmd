@@ -1,0 +1,149 @@
+---
+title: "Module 2: Data Wrangling"
+subtitle: "Introduction to Tools of the Trade in Data Analysis"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2024/9/9"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE}
+library(tidyverse)
+library(kableExtra)
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+## Tidy data 
+
+- Shape of data (long vs wide)
+
+- Pivoting
+
+- Joining and relational data
+
+- Peak under the hood of Module Project 2
+
+]
+
+
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## Shape of data (`%>%`)?
+
+Wide: one row per sample; many columns for measurements
+
+Iris ships in wide form (4 measurement columns + Species)
+
+Pros: 
+
+ - Easy to read raw values
+ - Convenient for direct modeling/viz with specific columns
+
+```{r}
+head(iris, 6) 
+```
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## Shape of data (`%>%`)?
+
+Long: many rows per sample; fewer columns for measurements
+
+Iris ships in long form (4 measurement in one column)
+
+Pros: 
+
+ - Tidy structure enables grouped summaries, faceting, and tidy verbs (functions)
+
+```{r}
+iris_long <- iris %>%
+  pivot_longer(
+    cols =Sepal.Length:Petal.Width 
+  )
+
+iris_long %>% head(6)
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+
+```{r, out.height="30%", fig.align='center'}
+iris_long %>%
+  ggplot(aes(x = name, y = value, fill = Species)) +
+  geom_boxplot() +
+  facet_grid(.~Species)+
+  theme(axis.text.x = element_text(angle=60,hjust=1))
+```
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Merging/joining data
+
+Let's make some pH data
+
+```{r, out.height="30%", fig.align='center'}
+pH <- iris_long %>% 
+  group_by(Species,name) %>% 
+  reframe(pH=runif(1,5,8))
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Merging/joining data
+
+join based on species
+
+```{r, out.height="30%", fig.align='center'}
+
+iris_long %>% 
+  left_join(pH)
+```
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## Merging/joining data
+
+join based on species and plot
+
+```{r, out.height="30%", fig.align='center'}
+
+iris_long %>% 
+  left_join(pH) %>%
+  ggplot(aes(pH,value,col=name))+geom_point(alpha=0.1)+
+  facet_grid(.~Species)
+  
+```
+
+
+
+
+
+
