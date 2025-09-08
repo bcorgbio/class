@@ -3,7 +3,7 @@ title: "Module 2: Data Wrangling"
 subtitle: "Introduction to Tools of the Trade in Data Analysis"
 author: "Dr. Christopher Kenaley"
 institute: "Boston College"
-date: "2024/9/9"
+date: "2025/9/8"
 output:
   xaringan::moon_reader:
     lib_dir: libs
