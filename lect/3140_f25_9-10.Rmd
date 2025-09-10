@@ -1,0 +1,43 @@
+---
+title: "Module 2: Data Wrangling"
+subtitle: "Introduction to Tools of the Trade in Data Analysis"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2025/9/10"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE}
+library(tidyverse)
+library(kableExtra)
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+## Custom functions
+
+- `function()`
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## `functon()`
+
+To R studio
+
+
+
+
