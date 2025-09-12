@@ -443,14 +443,23 @@ href="pseed.calibration.csv">this link</a>.</li>
 </ul>
 <p>Let’s do so and then comment on the origin and importance of the
 data.</p>
-<pre class="r"><code>library(tidyverse) # Remember to load your libraries!
-
-#Remember to set your working directory, too!
+<pre class="r"><code>library(tidyverse) # Remember to load your libraries!</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.2     ✔ tibble    3.3.0
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>#Remember to set your working directory, too!
 
 #load data
 pseed &lt;- read_csv(&quot;pseed.fin.amps.csv&quot;)</code></pre>
 <pre><code>## Rows: 73352 Columns: 7
-## ── Column specification ──────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (3): fish, date, fin
 ## dbl (4): speed, frame, amp, amp.bl
@@ -459,7 +468,7 @@ pseed &lt;- read_csv(&quot;pseed.fin.amps.csv&quot;)</code></pre>
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>pseed.bl &lt;- read_csv(&quot;pseed.lengths.csv&quot;)</code></pre>
 <pre><code>## Rows: 3 Columns: 2
-## ── Column specification ──────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (1): fish
 ## dbl (1): bl
@@ -468,7 +477,7 @@ pseed &lt;- read_csv(&quot;pseed.fin.amps.csv&quot;)</code></pre>
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>speeds &lt;- read_csv(&quot;pseed.calibration.csv&quot;)</code></pre>
 <pre><code>## Rows: 119 Columns: 3
-## ── Column specification ──────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (3): vol, m.s, cm.s
 ## 
@@ -845,19 +854,136 @@ then load the <code>features</code> library:</p>
 <pre class="r"><code>#make sure features is installed first
 library(features)</code></pre>
 <pre><code>## Loading required package: lokern</code></pre>
-<p>Let’s first see what the <code>features()</code> function can do for
-us by running the first experiment through this function:</p>
+<p><em>NB:</em> After an update to the <code>features</code> package,
+the core function, <code>features()</code> has some issues. Namely, it
+doesn’t return the critical points (i.e., where the peaks are in wavy
+data). Professor Kenaley did some digging and fixed the bug. Please use
+this revised function, cleverly named <code>features2()</code> moving
+forward.</p>
+<pre class="r"><code>features2 &lt;- function(x, y, smoother=c(&quot;glkerns&quot;, &quot;smooth.spline&quot;), fits.return=TRUE, control=list( ), ...) 
+{
+
+ctrl &lt;- list(npts=max(100, length(y)), c.outlier=3, decim.out=2)
+
+namc &lt;- names(control)
+    if (!all(namc %in% names(ctrl))) 
+        stop(&quot;unknown names in control: &quot;, namc[!(namc %in% names(ctrl))])
+    ctrl[namc] &lt;- control
+    npts &lt;- ctrl$npts
+    plot.it &lt;- ctrl$plot.it
+    c.outlier &lt;- ctrl$c.outlier
+    decim.out &lt;- ctrl$decim.out
+
+trapezoid &lt;- function(x,y) sum(diff(x)*(y[-1] + y[-length(y)]))/2
+
+smoother &lt;- match.arg(smoother, c(&quot;glkerns&quot;, &quot;smooth.spline&quot;))
+
+if (smoother == &quot;glkerns&quot;) {
+    deriv1 &lt;- function(z, ...) glkerns(x, y, deriv=1, x.out=z, hetero=TRUE, ...)$est
+    deriv2 &lt;- function(z, ...) glkerns(x, y, deriv=2, x.out=z, hetero=TRUE, ...)$est
+}
+
+if (smoother == &quot;smooth.spline&quot;) {
+    deriv1 &lt;- function(z, ...) predict(fit, deriv=1, x=z)$y
+    deriv2 &lt;- function(z, ...) predict(fit, deriv=2, x=z)$y
+}
+
+n &lt;- length(x)
+cp &lt;- cv &lt;- ol &lt;- NA
+
+
+x.out &lt;- seq(min(x), max(x), length=max(npts, length(x)))
+
+if (smoother == &quot;glkerns&quot;) {
+fit &lt;- glkerns(x, y, deriv=0, x.out=x, hetero=FALSE, ...)
+fit0 &lt;- glkerns(x, y, deriv=0, x.out=x.out, hetero=TRUE, ...)$est
+fit1 &lt;- glkerns(x, y, deriv=1, x.out=x.out, hetero=TRUE, ...)$est
+fit2 &lt;- glkerns(x, y, deriv=2, x.out=x.out, hetero=TRUE, ...)$est
+resid &lt;- y - fit$est
+resid.scaled &lt;- abs(scale(resid))
+if (fits.return) {
+    fits &lt;- fit$est
+    fits1 &lt;- glkerns(x, y, deriv=1, x.out=x, hetero=TRUE, ...)$est
+    fits2 &lt;- glkerns(x, y, deriv=2, x.out=x, hetero=TRUE, ...)$est
+    }
+}
+
+if (smoother == &quot;smooth.spline&quot;) {
+fit &lt;- smooth.spline(x, y, cv=FALSE, ...)
+fit0 &lt;- predict(fit, deriv=0, x=x.out)$y
+fit1 &lt;- predict(fit, deriv=1, x=x.out)$y
+fit2 &lt;- predict(fit, deriv=2, x=x.out)$y
+resid &lt;- y - predict(fit)$y
+resid.scaled &lt;- abs(scale(resid))
+if (fits.return) {
+    fits &lt;- predict(fit)$y
+    fits1 &lt;- predict(fit, deriv=1)$y
+    fits2 &lt;- predict(fit, deriv=2)$y
+    }
+}
+
+fmean &lt;- trapezoid(x.out, fit0) / diff(range(x.out))
+fstar &lt;- sqrt(trapezoid(x.out, fit0^2) / diff(range(x.out)))
+fsd &lt;- sqrt(fstar^2 - fmean^2)
+noise &lt;- attr(resid.scaled, &quot;scaled:scale&quot;)
+snr &lt;- fsd/noise
+fwiggle &lt;- sqrt(trapezoid(x.out, fit2^2) / diff(range(x.out)))
+
+d0 &lt;- (fit1[-1] * fit1[-npts]) &lt; 0
+ncrt &lt;- sum(d0)
+if (ncrt == 0) crtpts &lt;- curv &lt;- NULL  else {
+    crtpts &lt;- curv &lt;- rep(NA, ncrt)
+    ind0 &lt;- (1:npts)[d0]
+    for (i in 1:ncrt) {
+    temp &lt;- try(uniroot(interval=c(x.out[ind0[i]], x.out[1 + ind0[i]]), f=deriv1), silent=TRUE)
+    if (class(temp) != &quot;try-error&quot;) {
+        crtpts[i] &lt;- temp$root
+        curv[i] &lt;- deriv2(temp$root)
+        }
+    }
+    }
+
+rm(fit)
+outl &lt;- resid.scaled &gt; c.outlier
+if (sum(outl) == 0) outliers &lt;- NULL else outliers &lt;- x[outl] 
+
+if (!is.null(crtpts) ) {
+    cp &lt;- crtpts
+    cv &lt;- curv
+    }
+
+if (!is.null(outliers) ) ol &lt;- outliers
+
+f &lt;- as.numeric(c(fmean, as.numeric(range(fit0)), fsd, noise, snr, as.numeric(range(fit1)), fwiggle, length(crtpts)))
+
+names(f) &lt;- c(&quot;fmean&quot;, &quot;fmin&quot;, &quot;fmax&quot;, &quot;fsd&quot;, &quot;noise&quot;, &quot;snr&quot;, &quot;d1min&quot;, &quot;d1max&quot;, &quot;fwiggle&quot;, &quot;ncpts&quot;)
+
+cp &lt;- round(cp, decim.out)
+cv &lt;- round(cv, decim.out)
+ol &lt;- round(ol, decim.out)
+
+ret.obj &lt;- list(f=round(f, decim.out), cpts=cp, curvature=cv, outliers=ol)
+if (fits.return) attr(ret.obj, &quot;fits&quot;) &lt;- list(x=x, y=y, fn=fits, d1=fits1, d2=fits2)
+class(ret.obj) &lt;- &quot;features&quot;
+return(ret.obj)
+}</code></pre>
+<p>Let’s first see what the <del><code>features()</code></del>
+<code>features()2</code> function can do for us by running the first
+experiment through this function:</p>
 <pre class="r"><code>exp1 &lt;- pseed2%&gt;%
   filter(date==&quot;2019-06-17-151149&quot;, fin==&quot;L&quot;)
 
- f1 &lt;-  features(x = exp1$frame,y=exp1$amp.bl)</code></pre>
-<p><code>features()</code> will only accept a vector for the x and y
+ f1 &lt;-  features2(x = exp1$frame,y=exp1$amp.bl)
+ sapply(f1,length)</code></pre>
+<pre><code>##         f      cpts curvature  outliers 
+##        10        24        24        11</code></pre>
+<p><code>features2()</code> will only accept a vector for the x and y
 data of a curvy relationship. So we have to break up our filtered
 <code>pseed2</code> table so that it can be used by the function. Here
 we made an <code>epx1</code> <code>data.frame</code> and passed the
 <code>frame</code> column to the x parameter and <code>amp.bl</code> to
-the y parameter. We saved the results of the <code>features()</code>
-operation to <code>f1</code>. Let’s see what <code>features()</code>
+the y parameter. We saved the results of the <code>features2()</code>
+operation to <code>f1</code>. Let’s see what <code>features2()</code>
 gave us with the <code>fget()</code> function in <code>features</code>
 (it simply extracts the important stuff from the results):</p>
 <pre class="r"><code>fget(f1)</code></pre>
@@ -866,7 +992,9 @@ gave us with the <code>fget()</code> function in <code>features</code>
 ##    0.08    0.00    0.18    0.06    0.00   18.47   -0.02    0.02    0.00   24.00 
 ## 
 ## $crit.pts
-##  [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+##  [1]  19.92  42.16  61.53  85.99 105.65 127.95 148.53 170.62 190.30 212.76
+## [11] 232.17 254.97 274.77 296.66 319.31 342.19 360.95 362.58 363.14 386.29
+## [21] 406.06 429.80 449.15 471.88
 ## 
 ## $curvature
 ##  [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -879,9 +1007,7 @@ the curvature (i.e., second derivative) of the curve is 0) in the
 <pre class="r"><code>pseed2%&gt;%
   filter(date==&quot;2019-06-17-151149&quot;, fin==&quot;L&quot;)%&gt;%
   ggplot(aes(x=frame,y=amp.bl))+geom_point()+geom_vline(xintercept = fget(f1)$crit.pts)</code></pre>
-<pre><code>## Warning: Removed 24 rows containing missing values or values
-## outside the scale range (`geom_vline()`).</code></pre>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>This is pretty good. We get all the peaks (the maxima of amplitude
 we’re after). We’re missing some troughs and have a few lines close to
 one another, likely due to noise. But, this isn’t a problem because
@@ -895,25 +1021,27 @@ point comes back as 0 in all cases. We’re getting 0 for the curvature
 values because the second derivative of our low specific amplitudes is
 really small and <code>features()</code> defaults to outputs of two
 decimal points, i.e., it rounds. If we merely multiply our amplitude
-values by 100, we’ll see that some curvatures are negative (the peaks),
-while some are positive (the troughs). Let’s rerun
-<code>features()</code>with this change and see what we get.</p>
-<pre class="r"><code> f2 &lt;-  features(x = exp1$frame,y=exp1$amp.bl*100)
+values by 100 or 1000, we’ll see that some curvatures are negative (the
+peaks), while some are positive (the troughs). Let’s rerun
+<code>features2()</code>with this change and see what we get.</p>
+<pre class="r"><code> f2 &lt;-  features2(x = exp1$frame,y=exp1$amp.bl*1000)
  fget(f2)</code></pre>
 <pre><code>## $f
 ##   fmean    fmin    fmax     fsd   noise     snr   d1min   d1max fwiggle   ncpts 
-##    8.02    0.08   18.46    6.26    0.34   18.51   -2.20    1.60    0.15   24.00 
+##   80.15    0.82  184.58   62.62    3.38   18.51  -22.04   15.98    1.54   24.00 
 ## 
 ## $crit.pts
-##  [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+##  [1]  19.92  42.16  61.53  85.99 105.65 127.95 148.53 170.62 190.30 212.76
+## [11] 232.17 254.97 274.77 296.66 319.31 342.19 360.95 362.58 363.14 386.29
+## [21] 406.06 429.80 449.15 471.88
 ## 
 ## $curvature
-##  [1]  0.15 -0.28  0.08 -0.32  0.13 -0.28  0.15 -0.26  0.14 -0.23  0.12 -0.28
-## [13]  0.18 -0.28  0.08 -0.26  0.05  0.06  0.07 -0.29  0.03 -0.31  0.12 -0.27
+##  [1]  1.49 -2.77  0.78 -3.19  1.30 -2.78  1.48 -2.62  1.38 -2.27  1.25 -2.82
+## [13]  1.83 -2.83  0.81 -2.65  0.50  0.60  0.70 -2.89  0.33 -3.09  1.21 -2.66
 ## 
 ## $outlier
 ##  [1]   3  45  92 118 137 138 174 175 177 218 304</code></pre>
-<p>Very good, we now get postive and negative curvatures for the
+<p>Very good, we now get positive and negative curvatures for the
 critical points. Now let’s pull out the peaks, choosing those critical
 points that are negative. Let’s make a tibble so we can use our
 <code>tidyverse</code> skillzzzz.</p>
@@ -925,31 +1053,31 @@ points that are negative. Let’s make a tibble so we can use our
 <pre><code>## # A tibble: 11 × 3
 ##    crit.pts curvature peaks
 ##       &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
-##  1       NA     -0.28    NA
-##  2       NA     -0.32    NA
-##  3       NA     -0.28    NA
-##  4       NA     -0.26    NA
-##  5       NA     -0.23    NA
-##  6       NA     -0.28    NA
-##  7       NA     -0.28    NA
-##  8       NA     -0.26    NA
-##  9       NA     -0.29    NA
-## 10       NA     -0.31    NA
-## 11       NA     -0.27    NA</code></pre>
+##  1     42.2     -2.77    42
+##  2     86.0     -3.19    86
+##  3    128.      -2.78   128
+##  4    171.      -2.62   171
+##  5    213.      -2.27   213
+##  6    255.      -2.82   255
+##  7    297.      -2.83   297
+##  8    342.      -2.65   342
+##  9    386.      -2.89   386
+## 10    430.      -3.09   430
+## 11    472.      -2.66   472</code></pre>
 <p>Here we took the second and third elements—the critical points and
 curvatures, respectively—of the <code>f2</code> output from
-<code>features()</code> and passed it to a new tibble. Then
+<code>features2()</code> and passed it to a new tibble. Then
 <code>filter()</code> is applied so that we output only the peaks to
 <code>f.tib</code>. Finally, the estimated critical points in terms of
-frame that were calculated by <code>freatures()</code> is not an integer
-value like frame should be. So we create a new column,
+frame that were calculated by <code>freatures2()</code> is not an
+integer value like frame should be. So we create a new column,
 <code>peaks</code> that has this discrete value based on a rounding
 operation of <code>crit.pts</code>.</p>
 <pre class="r"><code>pseed2%&gt;%
   filter(date==&quot;2019-06-17-151149&quot;, fin==&quot;L&quot;)%&gt;%
   mutate(peak=frame %in% f.tib$peaks)%&gt;%
   ggplot(aes(x=frame,y=amp.bl,col=peak))+geom_point()</code></pre>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>Looks like we have a rather sophisticated and reliable way to find
 peaks in the amplitude data that we can then use to calculate the max
 amplitude across a set of frames while the fin is oscillating. However,
@@ -972,8 +1100,8 @@ way: passing a custom function to the defined groups in our data set
 code we wrote to find the max amplitudes for the left fin in the first
 experiment. Let’s define this function <code>find.peaks()</code> thusly
 and break down its components with some comments:</p>
-<pre class="r"><code>find.peaks &lt;- function(x,y,mult=100){ #define the functions parameter/inputs:x,y, and how much we won&#39;t to multiple y by (remember the rounding issue)
-f &lt;- fget(features(x = x,y=y*mult))[2:3]%&gt;% #store results in `f` and compute the features for the x-y relationship, wrap in in fget to retrieve the important features, subset the results to take the 2nd and 3rd and  items, the critical points and curvature, then pass it to a tibble
+<pre class="r"><code>find.peaks &lt;- function(x,y,mult=1000){ #define the functions parameter/inputs:x,y, and how much we won&#39;t to multiple y by (remember the rounding issue)
+f &lt;- fget(features2(x = x,y=y*mult))[2:3]%&gt;% #store results in `f` and compute the features for the x-y relationship, wrap in in fget to retrieve the important features, subset the results to take the 2nd and 3rd and  items, the critical points and curvature, then pass it to a tibble
   as_tibble()%&gt;% # pass in through a filter that returns curvatures &lt;0
   filter(curvature&lt;0)%&gt;% #add a column that rounds the critical point to an integer that represents the frame
   mutate(peaks=round(crit.pts,0))
@@ -996,19 +1124,19 @@ run the following and break it down.</p>
   mutate(peak=frame %in% find.peaks(frame,amp.bl))%&gt;%
   ggplot(aes(x=frame,y=amp.bl,alpha=peak,col=peak))+geom_point()+facet_grid(date~fin)</code></pre>
 <pre><code>## Warning: Using alpha for a discrete variable is not advised.</code></pre>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>After the filter, we:</p>
 <ol style="list-style-type: decimal">
 <li>Grouped the data by <code>date</code> (experiment) and
 <code>fin</code></li>
 <li>We then added a column <code>peak</code> to the data set. This new
-column returned the results of a logical operation: *is the frame in a
+column returned the results of a logical operation: is the frame in a
 set of peaks found by <code>find.peaks</code>).</li>
 <li>Lastly, we plotted the amplitude over frame, controlling the
 transparency and color of the point according to whether it’s a peak or
 not.</li>
 </ol>
-<p>Notice the we added something new, a grid with
+<p>Notice that we added something new, a panel plot with
 <code>facet_grid()</code>. This breaks the plot up into a grid according
 values in the data. This function takes a formula as input which
 corresponds to “row facets ~ column facets”, that is, what should the
@@ -1024,9 +1152,9 @@ only return the frames that correspond to a peak. Check the weather and
 then come back after 90s or so.</p>
 <pre class="r"><code>pseed.max &lt;- pseed2%&gt;%
   group_by(date,fin)%&gt;%
-  mutate(peak=frame %in% find.peaks(frame,amp.bl))%&gt;%
-  filter(peak==T) #new filter</code></pre>
-<p>This produces a tibble of 3300 amplitudes representing those at the
+  mutate(peak=frame %in% find.peaks(frame,amp.bl)) %&gt;% 
+  filter(peak==T)</code></pre>
+<p>This produces a tibble of ~3300 amplitudes representing those at the
 peak of each oscillation. Let’s come back to our original question:
 <em>How does amplitude change with speed?</em> by plotting specific
 amplitude against specific swimming speed and adding a smooth line that
@@ -1034,15 +1162,15 @@ represents a linear regression model (<code>method="lm"</code>).</p>
 <pre class="r"><code>pseed.max%&gt;%
   ggplot(aes(x=bl.s,y=amp.bl))+geom_point()+geom_smooth(method=&quot;lm&quot;)</code></pre>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>There we have it. It’s a little noisy, but it looks like amplitude
-does indeed <em>decrease</em> with with speed! To confirm, maybe we want
-to run a simple statistical test on this model, an ANOVA, say:</p>
+does indeed <em>decrease</em> with speed! To confirm, maybe we want to
+run a simple statistical test on this model, an ANOVA, say:</p>
 <pre class="r"><code> amp.aov &lt;-  aov(amp.bl~bl.s,pseed.max)
 summary(amp.aov)</code></pre>
 <pre><code>##               Df Sum Sq Mean Sq F value Pr(&gt;F)    
-## bl.s           1  5.038   5.038    1658 &lt;2e-16 ***
-## Residuals   3300 10.027   0.003                   
+## bl.s           1  5.065   5.065    1639 &lt;2e-16 ***
+## Residuals   3381 10.448   0.003                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>We see in <code>Pr(&gt;F)</code> that the p value is much lower than
@@ -1077,10 +1205,10 @@ regression line for each fish. Something like:</p>
   group_by(fish, bl.s) %&gt;%
   summarize(mean.max=mean(amp.bl)) %&gt;%
   ggplot(aes(x=bl.s,y=mean.max,col=fish))+geom_point()+geom_smooth(method=&quot;lm&quot;)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;fish&#39;. You can
-## override using the `.groups` argument.
+<pre><code>## `summarise()` has grouped output by &#39;fish&#39;. You can override using the
+## `.groups` argument.
 ## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 </div>
 <div id="pivoting-to-different-questions" class="section level1">
 <h1>Pivoting to Different Questions</h1>

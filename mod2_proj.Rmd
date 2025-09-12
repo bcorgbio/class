@@ -173,15 +173,136 @@ The R package `features` is super handy here. It's main function `features()`, s
 library(features)
 ```
 
-Let's first see what the `features()` function can do for us by running the first experiment through this function:
+*NB:* After an update to the `features` package, the core function, `features()` has some issues. Namely, it doesn't return the critical points (i.e., where the peaks are in wavy data). Professor Kenaley did some digging and fixed the bug. Please use this revised function, cleverly named `features2()` moving forward.
+
+
+```{r}
+
+features2 <- function(x, y, smoother=c("glkerns", "smooth.spline"), fits.return=TRUE, control=list( ), ...) 
+{
+
+ctrl <- list(npts=max(100, length(y)), c.outlier=3, decim.out=2)
+
+namc <- names(control)
+    if (!all(namc %in% names(ctrl))) 
+        stop("unknown names in control: ", namc[!(namc %in% names(ctrl))])
+    ctrl[namc] <- control
+    npts <- ctrl$npts
+    plot.it <- ctrl$plot.it
+    c.outlier <- ctrl$c.outlier
+    decim.out <- ctrl$decim.out
+
+trapezoid <- function(x,y) sum(diff(x)*(y[-1] + y[-length(y)]))/2
+
+smoother <- match.arg(smoother, c("glkerns", "smooth.spline"))
+
+if (smoother == "glkerns") {
+	deriv1 <- function(z, ...) glkerns(x, y, deriv=1, x.out=z, hetero=TRUE, ...)$est
+	deriv2 <- function(z, ...) glkerns(x, y, deriv=2, x.out=z, hetero=TRUE, ...)$est
+}
+
+if (smoother == "smooth.spline") {
+	deriv1 <- function(z, ...) predict(fit, deriv=1, x=z)$y
+	deriv2 <- function(z, ...) predict(fit, deriv=2, x=z)$y
+}
+
+n <- length(x)
+cp <- cv <- ol <- NA
+
+
+x.out <- seq(min(x), max(x), length=max(npts, length(x)))
+
+if (smoother == "glkerns") {
+fit <- glkerns(x, y, deriv=0, x.out=x, hetero=FALSE, ...)
+fit0 <- glkerns(x, y, deriv=0, x.out=x.out, hetero=TRUE, ...)$est
+fit1 <- glkerns(x, y, deriv=1, x.out=x.out, hetero=TRUE, ...)$est
+fit2 <- glkerns(x, y, deriv=2, x.out=x.out, hetero=TRUE, ...)$est
+resid <- y - fit$est
+resid.scaled <- abs(scale(resid))
+if (fits.return) {
+	fits <- fit$est
+	fits1 <- glkerns(x, y, deriv=1, x.out=x, hetero=TRUE, ...)$est
+	fits2 <- glkerns(x, y, deriv=2, x.out=x, hetero=TRUE, ...)$est
+	}
+}
+
+if (smoother == "smooth.spline") {
+fit <- smooth.spline(x, y, cv=FALSE, ...)
+fit0 <- predict(fit, deriv=0, x=x.out)$y
+fit1 <- predict(fit, deriv=1, x=x.out)$y
+fit2 <- predict(fit, deriv=2, x=x.out)$y
+resid <- y - predict(fit)$y
+resid.scaled <- abs(scale(resid))
+if (fits.return) {
+	fits <- predict(fit)$y
+	fits1 <- predict(fit, deriv=1)$y
+	fits2 <- predict(fit, deriv=2)$y
+	}
+}
+
+fmean <- trapezoid(x.out, fit0) / diff(range(x.out))
+fstar <- sqrt(trapezoid(x.out, fit0^2) / diff(range(x.out)))
+fsd <- sqrt(fstar^2 - fmean^2)
+noise <- attr(resid.scaled, "scaled:scale")
+snr <- fsd/noise
+fwiggle <- sqrt(trapezoid(x.out, fit2^2) / diff(range(x.out)))
+
+d0 <- (fit1[-1] * fit1[-npts]) < 0
+ncrt <- sum(d0)
+if (ncrt == 0) crtpts <- curv <- NULL  else {
+	crtpts <- curv <- rep(NA, ncrt)
+	ind0 <- (1:npts)[d0]
+	for (i in 1:ncrt) {
+	temp <- try(uniroot(interval=c(x.out[ind0[i]], x.out[1 + ind0[i]]), f=deriv1), silent=TRUE)
+	if (class(temp) != "try-error") {
+		crtpts[i] <- temp$root
+		curv[i] <- deriv2(temp$root)
+		}
+	}
+    }
+
+rm(fit)
+outl <- resid.scaled > c.outlier
+if (sum(outl) == 0) outliers <- NULL else outliers <- x[outl] 
+
+if (!is.null(crtpts) ) {
+	cp <- crtpts
+	cv <- curv
+	}
+
+if (!is.null(outliers) ) ol <- outliers
+
+f <- as.numeric(c(fmean, as.numeric(range(fit0)), fsd, noise, snr, as.numeric(range(fit1)), fwiggle, length(crtpts)))
+
+names(f) <- c("fmean", "fmin", "fmax", "fsd", "noise", "snr", "d1min", "d1max", "fwiggle", "ncpts")
+
+cp <- round(cp, decim.out)
+cv <- round(cv, decim.out)
+ol <- round(ol, decim.out)
+
+ret.obj <- list(f=round(f, decim.out), cpts=cp, curvature=cv, outliers=ol)
+if (fits.return) attr(ret.obj, "fits") <- list(x=x, y=y, fn=fits, d1=fits1, d2=fits2)
+class(ret.obj) <- "features"
+return(ret.obj)
+}
+
+```
+
+
+Let's first see what the ~~`features()`~~ `features()2` function can do for us by running the first experiment through this function:
+
 ```{r}
 exp1 <- pseed2%>%
   filter(date=="2019-06-17-151149", fin=="L")
 
- f1 <-  features(x = exp1$frame,y=exp1$amp.bl)
+ f1 <-  features2(x = exp1$frame,y=exp1$amp.bl)
+ sapply(f1,length)
 ```
 
-`features()` will only accept a vector for the x and y data of a curvy relationship. So we have to break up our filtered `pseed2` table so that it can be used by the function. Here we made an `epx1` `data.frame` and passed the `frame` column to the x parameter and `amp.bl` to the y parameter. We saved the results of the `features()` operation to `f1`. Let's see what `features()` gave us with the `fget()` function in `features` (it simply extracts the important stuff from the results):
+`features2()` will only accept a vector for the x and y data of a curvy relationship. So we have to break up our filtered `pseed2` table so that it can be used by the function. Here we made an `epx1` `data.frame` and passed the `frame` column to the x parameter and `amp.bl` to the y parameter. We saved the results of the `features2()` operation to `f1`. Let's see what `features2()` gave us with the `fget()` function in `features` (it simply extracts the important stuff from the results):
+
+
+
 
 ```{r}
 fget(f1)
@@ -196,16 +317,15 @@ pseed2%>%
   ggplot(aes(x=frame,y=amp.bl))+geom_point()+geom_vline(xintercept = fget(f1)$crit.pts)
 ```
 
-This is pretty good. We get all the peaks (the maxima of amplitude we're after). We're missing some troughs and have a few lines close to one another, likely due to noise. But, this isn't a problem because we're after the peaks only. How to isolate the peaks? That's a matter of looking at the curvature form the `fget()` output: by convention, negative curvature indicates a convex line, positive curvature a concave line. Peaks, in other words, will have a negative curvature. There's a problem here. We see that from the `fget()` output above that the curvature for each critical point comes back as 0 in all cases. We're getting 0 for the curvature values because the second derivative of our low specific amplitudes is really small and `features()` defaults to outputs of two decimal points, i.e., it rounds. If we merely multiply our amplitude values by 100, we'll see that some curvatures are negative (the peaks), while some are positive (the troughs). Let's rerun `features()`with this change and see what we get.
+This is pretty good. We get all the peaks (the maxima of amplitude we're after). We're missing some troughs and have a few lines close to one another, likely due to noise. But, this isn't a problem because we're after the peaks only. How to isolate the peaks? That's a matter of looking at the curvature form the `fget()` output: by convention, negative curvature indicates a convex line, positive curvature a concave line. Peaks, in other words, will have a negative curvature. There's a problem here. We see that from the `fget()` output above that the curvature for each critical point comes back as 0 in all cases. We're getting 0 for the curvature values because the second derivative of our low specific amplitudes is really small and `features()` defaults to outputs of two decimal points, i.e., it rounds. If we merely multiply our amplitude values by 100 or 1000, we'll see that some curvatures are negative (the peaks), while some are positive (the troughs). Let's rerun `features2()`with this change and see what we get.
+
 
 ```{r}
-
- f2 <-  features(x = exp1$frame,y=exp1$amp.bl*100)
+ f2 <-  features2(x = exp1$frame,y=exp1$amp.bl*1000)
  fget(f2)
- 
 ```
 
-Very good, we now get postive and negative curvatures for the critical points. Now let's pull out the peaks, choosing those critical points that are negative. Let's make a tibble so we can use our `tidyverse` skillzzzz.
+Very good, we now get positive and negative curvatures for the critical points. Now let's pull out the peaks, choosing those critical points that are negative. Let's make a tibble so we can use our `tidyverse` skillzzzz.
 
 
 
@@ -219,7 +339,7 @@ f.tib <- fget(f2)[2:3]%>%
   
 ```
 
-Here we took the second and third elements---the critical points and curvatures, respectively---of the `f2` output from `features()` and passed it to a new tibble. Then `filter()` is applied so  that we output only the peaks to `f.tib`. Finally, the estimated critical points in terms of frame that were calculated by `freatures()` is not an integer value like frame should be. So we create a new column, `peaks` that has this discrete value based on a rounding operation of `crit.pts`.
+Here we took the second and third elements---the critical points and curvatures, respectively---of the `f2` output from `features2()` and passed it to a new tibble. Then `filter()` is applied so  that we output only the peaks to `f.tib`. Finally, the estimated critical points in terms of frame that were calculated by `freatures2()` is not an integer value like frame should be. So we create a new column, `peaks` that has this discrete value based on a rounding operation of `crit.pts`.
 
 ```{r}
 pseed2%>%
@@ -241,8 +361,9 @@ To accomplish this, we can construct this custom function from the code we wrote
 
 
 ```{r}
-find.peaks <- function(x,y,mult=100){ #define the functions parameter/inputs:x,y, and how much we won't to multiple y by (remember the rounding issue)
-f <- fget(features(x = x,y=y*mult))[2:3]%>% #store results in `f` and compute the features for the x-y relationship, wrap in in fget to retrieve the important features, subset the results to take the 2nd and 3rd and  items, the critical points and curvature, then pass it to a tibble
+
+find.peaks <- function(x,y,mult=1000){ #define the functions parameter/inputs:x,y, and how much we won't to multiple y by (remember the rounding issue)
+f <- fget(features2(x = x,y=y*mult))[2:3]%>% #store results in `f` and compute the features for the x-y relationship, wrap in in fget to retrieve the important features, subset the results to take the 2nd and 3rd and  items, the critical points and curvature, then pass it to a tibble
   as_tibble()%>% # pass in through a filter that returns curvatures <0
   filter(curvature<0)%>% #add a column that rounds the critical point to an integer that represents the frame
   mutate(peaks=round(crit.pts,0))
@@ -255,41 +376,43 @@ Here we define the function's parameters, and then between `{}`, ask r to perfor
 
 Let's now see how this function works on our data set `pseed2`. Remember, we have 50 experiments and two fins and even though passing a function to groups using `dplyr` is easier and faster than running a loop, it will still take a while. So let's use a filter to limit the operation at first, using only the first 3 unique values of the date column, i.e., the first 3 experiments. Let's run the following and break it down.
 
-```{r,cache=TRUE}
+```{r}
 pseed2%>%
   filter(date%in%unique(date)[1:3])%>%
   group_by(date,fin)%>%
   mutate(peak=frame %in% find.peaks(frame,amp.bl))%>%
   ggplot(aes(x=frame,y=amp.bl,alpha=peak,col=peak))+geom_point()+facet_grid(date~fin)
 
+
 ```
 
 After the filter, we:
 
   1. Grouped the data by `date` (experiment) and `fin`
-  2. We then added a column `peak` to the data set. This new column returned the results of a logical operation: *is the frame in a set of peaks found by `find.peaks`). 
+  2. We then added a column `peak` to the data set. This new column returned the results of a logical operation: is the frame in a set of peaks found by `find.peaks`). 
   3. Lastly, we plotted the amplitude over frame, controlling the transparency and color of the point according to whether it's a peak or not. 
   
-Notice the we added something new, a grid with `facet_grid()`. This breaks the plot up into a grid according  values in the data. This function takes a formula as input which corresponds to "row facets ~ column facets", that is, what should the rows and columns in the grid represent. Here make a grid of dates/experiments in the plot's rows and fin in the columns. As a result, we get a 3x2 plot.
+Notice that we added something new, a panel plot with `facet_grid()`. This breaks the plot up into a grid according  values in the data. This function takes a formula as input which corresponds to "row facets ~ column facets", that is, what should the rows and columns in the grid represent. Here make a grid of dates/experiments in the plot's rows and fin in the columns. As a result, we get a 3x2 plot.
 
 It looks like this new function of ours did a really nice job of finding the peaks in each of the experiments and fins. Let's do this for ALL the data. Remember, we have 100 individual groups to apply this function to and determine if the frame in each corresponds to a peak. So, run this code without the plotting operations and a final filter to only return the frames that correspond to a peak. Check the weather and then come back after 90s or so.
 
 
-```{r,cache=TRUE}
+```{r}
 pseed.max <- pseed2%>%
   group_by(date,fin)%>%
-  mutate(peak=frame %in% find.peaks(frame,amp.bl))%>%
-  filter(peak==T) #new filter
+  mutate(peak=frame %in% find.peaks(frame,amp.bl)) %>% 
+  filter(peak==T)
 ```
 
-This produces a tibble of 3300 amplitudes representing those at the peak of each oscillation. Let's come back to our original question: *How does amplitude change with speed?* by plotting specific amplitude against specific swimming speed and adding a smooth line that represents a linear regression model (`method="lm"`).
+
+This produces a tibble of ~3300 amplitudes representing those at the peak of each oscillation. Let's come back to our original question: *How does amplitude change with speed?* by plotting specific amplitude against specific swimming speed and adding a smooth line that represents a linear regression model (`method="lm"`).
 
 ```{r}
 pseed.max%>%
   ggplot(aes(x=bl.s,y=amp.bl))+geom_point()+geom_smooth(method="lm")
 ```
 
-There we have it. It's a little noisy, but it looks like amplitude does indeed *decrease* with with speed! To confirm, maybe we want to run a simple statistical test on this model, an ANOVA, say:
+There we have it. It's a little noisy, but it looks like amplitude does indeed *decrease* with speed! To confirm, maybe we want to run a simple statistical test on this model, an ANOVA, say:
 
 ```{r}
  amp.aov <-  aov(amp.bl~bl.s,pseed.max)
