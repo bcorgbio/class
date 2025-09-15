@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>The Whiz and Viz Bang of Data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Christopher Kenaley" />
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# The Whiz and Viz Bang of Data
+]
+.subtitle[
+## The Basics of Visualizaiton and Modeling
+]
+.author[
+### Dr. Christopher Kenaley
+]
+.institute[
+### Boston College
+]
+.date[
+### 2025/9/15
+]
+
+---
+
+class: inverse, top
+# In class today 
+
+
+
+&lt;!-- Add icon library --&gt;
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"&gt;
+
+
+.pull-left[
+Today we'll ....
+
+
+- Look at some models
+
+- Choose which models fit best
+
+- Peak under the hood of Module Project 3
+
+Next time . . . 
+
+- Account for phylogenetic history
+
+]
+
+.pull-right[
+![](https://cxl.com/wp-content/uploads/2015/08/bayesian2.png)
+]
+
+
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+## What is a model?
+
+- a mathematical explanation of a process or system
+
+- Predictions in R: `y~x`
+
+- but can me more complex: 
+
+  * `y~x+a`
+  * `y~x+a+b`
+  * `y~x+a+b+c`
+  * etc.
+  
+- Linear model: `lm(y~x)`
+
+  * But could be some other model
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+
+## What is a model?
+
+
+``` r
+set.seed(123)
+x.A=1:50
+y.A=x.A*2+runif(50,1,200)
+x.B=1:50
+y.B=x.B*3.5+runif(50,1,200)
+
+d &lt;- tibble(x=c(x.A,x.B),y=c(y.A,y.B),species=c(rep("A",50),rep("B",50)))
+
+d%&gt;%
+  ggplot(aes(x,y,col=species))+geom_point()+geom_smooth(method="lm")
+```
+
+```
+## `geom_smooth()` using formula = 'y ~ x'
+```
+
+![](3140_f25_9-15_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+## Approach 1: Do the data adhear to an *a priori* model?
+
+The frequentist approach
+
+
+``` r
+fit_1 &lt;- lm(y~x,data=d)
+
+anova(fit_1)
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: y
+##           Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+## x          1 103506  103506  28.016 7.36e-07 ***
+## Residuals 98 362063    3695                     
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+## Approach 1: Do the data adhear to an *a priori* model?
+
+The frequentist approach
+
+``` r
+summary(fit_1)
+```
+
+```
+## 
+## Call:
+## lm(formula = y ~ x, data = d)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -115.619  -47.956   -1.212   54.139  130.530 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 113.4884    12.3412   9.196 6.73e-15 ***
+## x             2.2294     0.4212   5.293 7.36e-07 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 60.78 on 98 degrees of freedom
+## Multiple R-squared:  0.2223,	Adjusted R-squared:  0.2144 
+## F-statistic: 28.02 on 1 and 98 DF,  p-value: 7.36e-07
+```
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+## Approach 1: Do the data adhear to an *a priori* model?
+
+The frequentist approach
+
+.pull-left[
+
+``` r
+fit_2 &lt;- lm(y~x+species,d)
+anova(fit_2)
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: y
+##           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## x          1 103506  103506 29.5261 4.099e-07 ***
+## species    1  22023   22023  6.2823   0.01386 *  
+## Residuals 97 340040    3506                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+]
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+## Approach 1: Do the data adhear to an *a priori* model?
+
+The frequentist approach
+
+.pull-left[
+
+``` r
+fit_3 &lt;- lm(y~x*species,d)
+anova(fit_3)
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: y
+##           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## x          1 103506  103506  32.631 1.247e-07 ***
+## species    1  22023   22023   6.943  0.009812 ** 
+## x:species  1  35530   35530  11.201  0.001168 ** 
+## Residuals 96 304510    3172                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+]
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+## Approach 1: Do the data adhear to an *a priori* model?
+
+Which model do we use? 
+
+
+
+``` r
+lapply(list(fit_1,fit_2,fit_3),
+       function(x) setNames(anova(x)$`Pr(&gt;F)`,rownames(anova(x))))
+```
+
+```
+## [[1]]
+##            x    Residuals 
+## 7.360104e-07           NA 
+## 
+## [[2]]
+##            x      species    Residuals 
+## 4.099474e-07 1.385842e-02           NA 
+## 
+## [[3]]
+##            x      species    x:species    Residuals 
+## 1.246589e-07 9.811668e-03 1.168171e-03           NA
+```
+
+
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+## Approach 2: Are models accurate descriptions of the data/process/system?
+
+Information theory
+
+  - What is the likelihood that the model fits the data?
+  - Treat each model like an hypothesis about the process.
+  - Find the model that explains the data best.
+
+
+.pull-left[
+
+Likelihood (aka, likelihood function):  How well does a statistical model explain observed data by calculating the probability of seeing that data under different parameter values of the model?
+
+
+``` r
+sapply(list(fit_1,fit_2,fit_3),
+       logLik)
+```
+
+```
+## [1] -551.6140 -548.4763 -542.9583
+```
+
+]
+
+.pull-right[
+![](
+https://theaisummer.com/static/052160ea37856767a70d005c35651c01/8d2ee/mle.png)
+]
+
+
+---
+class: inverse, top
+&lt;!-- slide 1 --&gt;
+## Approach 2: Are models accurate descriptions of the data/process/system?
+
+Information theory
+
+  - What is the likelihood that the model fits the data?
+  - Treat each model like an hypothesis about the process.
+  - Find the model that explains the data best **accounting for the number of parameters**.
+
+
+
+
+.pull-left[
+
+AIC: does any one model fit the data best given the number of parameters?
+
+
+``` r
+AIC(fit_1,fit_2,fit_3)
+```
+
+```
+##       df      AIC
+## fit_1  3 1109.228
+## fit_2  4 1104.953
+## fit_3  5 1095.917
+```
+
+]
+
+.pull-right[
+![](https://timeseriesreasoning.files.wordpress.com/2021/06/a6352-1nurn_wtjfpwin0mc6t7myq.png)
+]
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "highlightStyle": "github",
+  "highlightLines": true,
+  "countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

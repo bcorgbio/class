@@ -1,0 +1,221 @@
+---
+title: "The Whiz and Viz Bang of Data"
+subtitle: "The Basics of Visualizaiton and Modeling"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2025/9/15"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE, warning=F}
+library(tidyverse)
+library(kableExtra)
+library(ape)
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+
+- Look at some models
+
+- Choose which models fit best
+
+- Peak under the hood of Module Project 3
+
+Next time . . . 
+
+- Account for phylogenetic history
+
+]
+
+.pull-right[
+![](https://cxl.com/wp-content/uploads/2015/08/bayesian2.png)
+]
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## What is a model?
+
+- a mathematical explanation of a process or system
+
+- Predictions in R: `y~x`
+
+- but can me more complex: 
+
+  * `y~x+a`
+  * `y~x+a+b`
+  * `y~x+a+b+c`
+  * etc.
+  
+- Linear model: `lm(y~x)`
+
+  * But could be some other model
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+## What is a model?
+
+```{r,fig.height=3}
+set.seed(123)
+x.A=1:50
+y.A=x.A*2+runif(50,1,200)
+x.B=1:50
+y.B=x.B*3.5+runif(50,1,200)
+
+d <- tibble(x=c(x.A,x.B),y=c(y.A,y.B),species=c(rep("A",50),rep("B",50)))
+
+d%>%
+  ggplot(aes(x,y,col=species))+geom_point()+geom_smooth(method="lm")
+
+
+
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## Approach 1: Do the data adhear to an *a priori* model?
+
+The frequentist approach
+
+```{r}
+fit_1 <- lm(y~x,data=d)
+
+anova(fit_1)
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## Approach 1: Do the data adhear to an *a priori* model?
+
+The frequentist approach
+```{r,fig.height=3}
+summary(fit_1)
+
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## Approach 1: Do the data adhear to an *a priori* model?
+
+The frequentist approach
+
+.pull-left[
+```{r}
+fit_2 <- lm(y~x+species,d)
+anova(fit_2)
+```
+]
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## Approach 1: Do the data adhear to an *a priori* model?
+
+The frequentist approach
+
+.pull-left[
+```{r}
+fit_3 <- lm(y~x*species,d)
+anova(fit_3)
+```
+]
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## Approach 1: Do the data adhear to an *a priori* model?
+
+Which model do we use? 
+
+
+```{r}
+lapply(list(fit_1,fit_2,fit_3),
+       function(x) setNames(anova(x)$`Pr(>F)`,rownames(anova(x))))
+
+```
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## Approach 2: Are models accurate descriptions of the data/process/system?
+
+Information theory
+
+  - What is the likelihood that the model fits the data?
+  - Treat each model like an hypothesis about the process.
+  - Find the model that explains the data best.
+
+
+.pull-left[
+
+Likelihood (aka, likelihood function):  How well does a statistical model explain observed data by calculating the probability of seeing that data under different parameter values of the model?
+
+```{r}
+sapply(list(fit_1,fit_2,fit_3),
+       logLik)
+```
+
+]
+
+.pull-right[
+![](
+https://theaisummer.com/static/052160ea37856767a70d005c35651c01/8d2ee/mle.png)
+]
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+## Approach 2: Are models accurate descriptions of the data/process/system?
+
+Information theory
+
+  - What is the likelihood that the model fits the data?
+  - Treat each model like an hypothesis about the process.
+  - Find the model that explains the data best **accounting for the number of parameters**.
+
+
+
+
+.pull-left[
+
+AIC: does any one model fit the data best given the number of parameters?
+
+```{r}
+AIC(fit_1,fit_2,fit_3)
+```
+
+]
+
+.pull-right[
+![](https://timeseriesreasoning.files.wordpress.com/2021/06/a6352-1nurn_wtjfpwin0mc6t7myq.png)
+]
+
+
+
+
+
