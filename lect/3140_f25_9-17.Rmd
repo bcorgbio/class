@@ -261,20 +261,67 @@ class: inverse, top
 
 ### Phylogenetic Least Squares
 
+- Models that include process (mode) and relationships
 
-Models that include process (mode) and relationships
+- using `nlme::gls()`
 
-using `nlme::gls()`
+- correlation functions from `ape` package (e.g.`corBrownian()` for BM, `corMartins()` for OU)
 
 
-```{r eval=FALSE,tidy=TRUE,message=F}
-
+```{r, tidy=TRUE,message=F}
+library(nlme)
 #PGLS under BM,
-gls(y ~x, correlation = corBrownian(1,phy = tree,form=~Species),data = data, method = "ML")
+fit_bm <- gls(log(met) ~log(mass), correlation = corBrownian(1,phy = phy,form=~spec),data = d, method = "ML")
 
 #PGLS under OU
-pgls.OU1 <- gls(y ~x, correlation = corMartins(0,phy = tree,form=~Species),data =dat, method = "ML")
+fit_ou <- gls(log(met) ~log(mass), correlation = corMartins(1,phy = phy,form=~spec),data = d, method = "ML")
+
+d$pred_bm <- predict(fit_bm)
+d$pred_ou <- predict(fit_ou)
+
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+### Phylogenetic Least Squares
+
+```{r,message=F,out.height="350px"}
+d %>% 
+  pivot_longer(pred_ou:pred_bm,names_to = "evol_model") %>% 
+  ggplot(aes(log(mass),log(met)))+
+  geom_point() +
+  geom_smooth(method="lm")+
+  geom_smooth(method="lm",aes(y=value,col=evol_model))
+```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+### Phylogenetic Least Squares
+
+
+Which model should we interpret?
+
+```{r, tidy=TRUE,message=F}
 
 
 ```
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+### Phylogenetic Least Squares
+
+
+Which model should we interpret?
+
+```{r, tidy=TRUE,message=F}
+AIC(fit_bm,fit_ou)
+anova(fit_bm)
+```
+
 
