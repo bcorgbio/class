@@ -116,19 +116,25 @@ tidy(anova(d.lm))[,c(1,5,6)]
 class: inverse, top
 ## After Felsenstein (1985)
 
+Phylogenetic Independent Contrast (PIC)
+
 .pull-left[
 ```{r,fig.height=4,message=F,warning=F}
 mass.pic <- pic(log(mass),phy)
 met.pic <- pic(log(met),phy)
 
-qplot(mass.pic,met.pic)+geom_smooth(method = "lm")+theme_classic(20)
+qplot(mass.pic,met.pic)+
+  geom_smooth(method = "lm")+
+  theme_classic(20)
 ```
 ]
 
 .pull-right[
 ```{r}
 d.lm.pic <- lm(met.pic~mass.pic)
-tidy(anova(d.lm.pic))[,c(1,5,6)]
+tidy(
+  anova(d.lm.pic)
+  )[,c(1,5,6)]
 ```
 ]
 

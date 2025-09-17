@@ -118,13 +118,17 @@ class: inverse, top
 class: inverse, top
 ## After Felsenstein (1985)
 
+Phylogenetic Independent Contrast (PIC)
+
 .pull-left[
 
 ``` r
 mass.pic &lt;- pic(log(mass),phy)
 met.pic &lt;- pic(log(met),phy)
 
-qplot(mass.pic,met.pic)+geom_smooth(method = "lm")+theme_classic(20)
+qplot(mass.pic,met.pic)+
+  geom_smooth(method = "lm")+
+  theme_classic(20)
 ```
 
 ![](3140_f25_9-17_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
@@ -134,7 +138,9 @@ qplot(mass.pic,met.pic)+geom_smooth(method = "lm")+theme_classic(20)
 
 ``` r
 d.lm.pic &lt;- lm(met.pic~mass.pic)
-tidy(anova(d.lm.pic))[,c(1,5,6)]
+tidy(
+  anova(d.lm.pic)
+  )[,c(1,5,6)]
 ```
 
 ```
