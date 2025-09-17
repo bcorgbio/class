@@ -257,6 +257,10 @@ class: inverse, top
 
 
 Models that include process (mode) and relationships
+
+using `nlme::gls()`
+
+
 ```{r eval=FALSE,tidy=TRUE,message=F}
 
 #PGLS under BM,
