@@ -1,0 +1,216 @@
+---
+title: "The Whiz and Viz Bang of Data"
+subtitle: "The Basics of Visualizaiton and Modeling (part deux)"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2025/9/17"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE,warning=F}
+library(tidyverse)
+library(kableExtra)
+library(ape)
+library(phytools)
+library(broom)
+library(formatR)
+
+```
+
+<!-- qAdd icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+
+
+
+.pull-left[
+Today we'll ....
+
+- More on trees.
+
+- Trees as input in models.
+
+- Questions/Answers Module 3 project.
+
+]
+
+.pull-right[
+![](https://www.nature.com/scitable/content/33796/Baum1_F8_FULL.jpg)
+]
+
+---
+class: inverse, top
+# Trees: hard problems
+.pull-left[
+Estimating relationships/Making trees is hard!!
+
+For 30 species . . .
+
+$5 \cdot 10^{38}$ possible unique topologies
+
+
+
+- More solutions/topologies than stars in universe. 
+
+- NP complete: a class of problems that are the most computationally difficult in the world.
+
+]
+
+.pull-right[
+```{r, echo=F}
+log_double_factorial_formulas <- list(
+  # Unrooted, fully resolved (bifurcating) labeled trees:
+  # (2n - 5)!! = (2n - 5)! / ( 2^(n-3) * (n-3)! )
+  unrooted_log = function(n) {
+    if (n < 4) stop("Unrooted bifurcating trees defined for n >= 4")
+    lgamma(2*n - 4) - (n - 3)*log(2) - lgamma(n - 2)
+  },
+  # Rooted, fully resolved (bifurcating) labeled trees:
+  # (2n - 3)!! = (2n - 3)! / ( 2^(n-2) * (n-2)! )
+  rooted_log = function(n) {
+    if (n < 3) stop("Rooted bifurcating trees defined for n >= 3")
+    lgamma(2*n - 2) - (n - 2)*log(2) - lgamma(n - 1)
+  }
+)
+
+to_scientific_from_log10 <- function(log10x, digits = 3) {
+  expn <- floor(log10x)
+  mant <- 10^(log10x - expn)
+  paste0(format(round(mant, digits), nsmall = digits), " × 10^", expn)
+}
+
+## ---- Build a table of counts vs taxa ---------------------------
+Nmin <- 4
+Nmax <- 100  # adjust if you want a smaller or bigger range
+
+n_vals <- Nmin:Nmax
+log10_unrooted <- sapply(n_vals, function(n) log_double_factorial_formulas$unrooted_log(n) / log(10))
+log10_rooted   <- sapply(n_vals, function(n) log_double_factorial_formulas$rooted_log(n)   / log(10))
+
+# Multiplicative blow-up when adding 1 taxon (unrooted): T_n / T_{n-1} = (2n - 5)
+multiplier_unrooted <- c(NA, sapply(n_vals[-1], function(n) (2*n - 5)))
+
+tab <- data.frame(
+  n_taxa = n_vals,
+  log10_unrooted = log10_unrooted,
+  unrooted_scientific = sapply(log10_unrooted, to_scientific_from_log10),
+  log10_rooted = log10_rooted,
+  rooted_scientific = sapply(log10_rooted, to_scientific_from_log10),
+  add_one_taxon_multiplies_unrooted_by = multiplier_unrooted
+)
+
+# Show a few rows for sanity (4..12)
+#print(tab[tab$n_taxa <= 12, ], row.names = FALSE)
+
+## ---- Plot on log10 scale (both rooted & unrooted) --------------
+op <- par(no.readonly = TRUE)
+par(mar = c(4,4,1,1))
+plot(n_vals, log10_unrooted, type = "l", lwd = 2,
+     xlab = "Number of taxa (n)",
+     ylab = expression(log[10]*"(# topologies)"),
+     main = "Combinatorial explosion of tree topologies")
+lines(n_vals, log10_rooted, lwd = 2, lty = 2)
+legend("topleft",
+       legend = c("Unrooted bifurcating ( (2n-5)!! )",
+                  "Rooted bifurcating ( (2n-3)!! )"),
+       lwd = 2, lty = c(1,2), bty = "n")
+par(op)
+
+```
+]
+
+---
+class: inverse, top
+# Trees: storing tree information
+
+
+.pull-left[
+Even hard to represent tree information
+
+Newick format:
+
+
+"(Bovine:0.69395,((Gibbon: 0.36079,((Orang: 0.33636,(Gorilla:0.17147,(Chimp: 0.19268, Human:0.11927): 0.08386): 0.06124) :0.15057): 0.54939),Mouse: 1.21460));"
+
+![](https://media-cdn.tripadvisor.com/media/photo-s/14/b7/41/6d/front-view-of-newick.jpg)
+
+]
+
+.pull-right[
+```{r,warning=F}
+tre <- "(Bovine:0.69395,((Gibbon:0.36079,((Orang:0.33636,(Gorilla:0.17147,(Chimp:0.19268, Human:0.11927):0.08386):0.06124):0.15057):0.54939),Mouse:1.21460));
+"
+
+phy <- read.tree(text=tre)
+
+plot(phy)
+```
+]
+
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+### Brownian motion
+```{r,echo=F,message=F}
+sig2 <- 0.1
+nsim <- 100
+t <- 1:100
+
+sim.l <- list()
+for(i in c(1,5,10,20)){
+sim.i <- tibble(
+  sig2=i,
+  x=rnorm(n = nsim * (length(t) - 1), sd = sqrt(i)),
+  t=rep(t,nsim-1),
+  n.sim=unlist(lapply(1:99,function(x) rep(x,100)))
+)%>%
+  group_by(n.sim)%>%
+  mutate(sim.sum=cumsum(x))
+sim.l[[paste0(i)]] <- sim.i
+}
+
+sim <- do.call(rbind,sim.l)
+
+
+sim%>%
+  ggplot(aes(t,sim.sum,group=n.sim),alpha=0.01)+geom_line()+facet_wrap(sig2~.,ncol=2)+ylab("trait value")
+
+```
+
+
+---
+class: inverse, top
+<!-- slide 1 -->
+
+
+### Brownian motion
+<center>
+
+$V_{ij}= \gamma \times t_a$
+
+Variation-covariation matrix, e.g. `ape::corBrownian()`
+
+
+<img src="https://lukejharmon.github.io/pcm/images/figure3-5.jpeg" alt="drawing" width="500"/>
+
+
+
+
+
+
+
+
+
+
