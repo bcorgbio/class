@@ -25,7 +25,7 @@ class: center, middle, inverse, title-slide
 ### Boston College
 ]
 .date[
-### 2024/10/4
+### 2025/10/3
 ]
 
 ---
@@ -94,6 +94,7 @@ class: inverse, top
   - digitization/landmarking
   - superimposition (GPA)
   - analysis (PCA, comparative methods)
+  - comparative methods for MV data
   - visualization (plotting)
 
 - Landmark analysis based on non-intuitive arrays ("p x k x n")
@@ -141,6 +142,7 @@ class: inverse, top
   - digitization/landmarking
   - superimposition (GPA)
   - analysis (PCA, comparative methods)
+  - comparative methods for MV data
   - visualization (plotting)
 
 - Landmark analysis based on non-intuitive arrays ("p x k x n")
@@ -162,7 +164,7 @@ plethodon$land %&gt;%
   plot()
 ```
 
-![](3140_f24_10-4_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+![](3140_f25_10-3_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -179,12 +181,12 @@ class: inverse, top
   - digitization/landmarking
   - superimposition (GPA)
   - analysis (PCA, comparative methods)
+  - comparative methods for MV data
   - visualization (plotting)
 
 - Landmark analysis based on non-intuitive arrays ("p x k x n")
 - Functions not always pipe (`%&gt;%`) friendly
 - Graphical outputs use base graphics (ugly)
-
 
 
 ]
@@ -214,11 +216,13 @@ class: inverse, top
 .pull-left[
 
 - Reduces dimensions of data
+  - takes messy, high-dimensional dataset and rotates it until the biggest patterns emerge.
   - 10s, 100s variables into components
+  
 
 - Iterative
   - "draws" vectors through original data
-  - each successive vector represents a component of decreasing variance
+  - each successive vector represents an orthagonal component of decreasing variance
 
 
 ]
@@ -237,11 +241,13 @@ class: inverse, top
 .pull-left[
 
 - Reduces dimensions of data
+  - takes messy, high-dimensional dataset and rotates it until the biggest patterns emerge.
   - 10s, 100s variables into components
+  
 
 - Iterative
   - "draws" vectors through original data
-  - each successive vector represents a component of decreasing variance
+  - each successive vector represents an orthagonal component of decreasing variance
 
 
 ]
