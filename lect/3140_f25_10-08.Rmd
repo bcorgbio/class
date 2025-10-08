@@ -1,0 +1,118 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 5: SHARK!"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2025/10/09"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE,warning=F}
+library(tidyverse)
+library(kableExtra)
+library(ape)
+library(phytools)
+library(geomorph)
+library(abind)
+
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+
+
+## Workflow
+
+Data  $\rightarrow$  $p \times k \times n \times$ array $\rightarrow$ align $\rightarrow$ PCA
+
+<center>
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Full_Shot_of_a_Caribbean_Reef_Shark_at_Tiger_Beach_Bahamas.jpg/1600px-Full_Shot_of_a_Caribbean_Reef_Shark_at_Tiger_Beach_Bahamas.jpg" alt="drawing" width="500"/>
+
+<\center>
+
+
+
+
+
+
+
+---
+class: inverse, top
+## Workflow
+
+.pull-left[
+
+To R studio
+  
+
+]
+
+
+
+
+```{r, echo=F,include=F}
+
+library(geomorph)
+library(tidyverse)
+library(abind)
+#read in species data
+species_dat <- read_csv("habitat_data.csv")
+
+#list the files
+f <- list.files("landmarks",full.names = T,pattern=".csv")
+
+xy <- read_csv(f,id="file") %>% 
+  select(file,X,Y) %>% 
+  mutate(Y=abs(Y-max(Y))) %>% 
+  mutate(file_name=gsub("*_.csv","",basename(file))) %>% 
+  left_join(species_dat) 
+
+
+#save specie snames
+sp <- xy$sp %>% unique
+
+#make list
+ldk_l <- list()
+for(i in sp){
+  ldk_l[[i]] <- xy %>% 
+    filter(sp==i) %>% 
+    select(X,Y)
+    data.frame
+}
+
+
+#make array
+ldk <-  abind(ldk_l, along=3)
+
+#name array
+dimnames(ldk)[[3]] <-names(ldk_l)
+
+#GPA
+ldk_al <- gpagen(ldk)
+
+#
+#PCA
+pca <- gm.prcomp(ldk_al$coords)
+
+plot(pca)
+```
+
+
+
+
+
+
+
+
