@@ -626,10 +626,20 @@ each.The habitat data for our study come from <span
 class="citation">Compagno (1984)</span> and <span
 class="citation">Compagno (2001)</span>. Let’s load these data now so we
 have it handy.</p>
-<pre class="r"><code>library(tidyverse)
-shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;)</code></pre>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.2     ✔ tibble    3.3.0
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.4     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 188 Columns: 8
-## ── Column specification ──────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (5): sp, file_name, depth, habitat, ref
 ## dbl (3): id, size, depth_max
@@ -736,11 +746,11 @@ with same filname as the image file name and appends “_.csv”.
 landmarks to a species.</p>
 <p>After your team has completed landmarking the assigned species,
 upload your text files to <a
-href="https://drive.google.com/drive/folders/1j7sod1NB1jmEiPiduYvOOIlukkMikfL5?usp=sharing">this
+href="https://drive.google.com/drive/folders/1gjPJuq8aCaTBIHbJnmpHmxHi3TbVtaXl?usp=sharing">this
 directory</a>. Once all the data appear here, Prof. Kenaley will
 evaluate the quality of the landmarks and do some post-processing if
 required (i.e., file-name checks, quality, etc.). You can then download
-<a href="data/shark_points.zip">these evaluated data</a> for shape
+<a href="data/#shark_points.zip">these evaluated data</a> for shape
 analysis.</p>
 </div>
 <div id="superimposition" class="section level3">
@@ -803,7 +813,7 @@ xy &lt;- read_csv(f,id=&quot;file&quot;) %&gt;%
 <pre><code>## New names:
 ## • `` -&gt; `...1`</code></pre>
 <pre><code>## Rows: 2632 Columns: 15
-## ── Column specification ──────────────────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (14): ...1, Area, Mean, Mode, X, Y, XM, YM, Perim., Circ., Slice, AR, Ro...
 ## 
@@ -1197,13 +1207,12 @@ p1 &lt;- PCA %&gt;%
 
 
 p1 + geom_image(data=PC_extremes,aes(Comp1,Comp2,image=pngs), size=.30,inherit.aes = F)+theme_classic()+xlim(range(PC_extremes$Comp1)*1.5)+ylim(range(PC_extremes$Comp2)*1.25)+theme(legend.position = c(0.1,0.2))</code></pre>
-<pre><code>## Warning: A numeric `legend.position` argument in `theme()` was
-## deprecated in ggplot2 3.5.0.
-## ℹ Please use the `legend.position.inside` argument of
-##   `theme()` instead.
+<pre><code>## Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2
+## 3.5.0.
+## ℹ Please use the `legend.position.inside` argument of `theme()` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see
-## where this warning was generated.</code></pre>
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <p><img src="mod5_proj_files/figure-html/shape%20change-1.png" width="672" /></p>
 </div>
 <div id="analysis-part-ii" class="section level3">
@@ -1302,8 +1311,20 @@ al. (2018)</span> mentioned above</a>. Once this tree file is
 downloaded, let’s load, read it, in and store it to an object named
 <code>phy</code>. Notice you’ll need the <code>phytools</code> package
 and the function <code>readNexus()</code>.</p>
-<pre class="r"><code>library(phytools)
-phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
+<pre class="r"><code>library(phytools)</code></pre>
+<pre><code>## Loading required package: ape</code></pre>
+<pre><code>## 
+## Attaching package: &#39;ape&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     where</code></pre>
+<pre><code>## Loading required package: maps</code></pre>
+<pre><code>## 
+## Attaching package: &#39;maps&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     map</code></pre>
+<pre class="r"><code>phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
 length(phy)</code></pre>
 <pre><code>## [1] 500</code></pre>
 <p>Next let’s, restrict our tree file to those species in our data set.
@@ -1580,14 +1601,12 @@ the 220 we hope to include. The figure below indicates that including
 all 220 species and using all 500 trees would take ~2500 s or about 40
 minutes!!!</p>
 <p><br></p>
-<pre><code>## Warning in geom_text(aes(50, 500, label = &quot;computed&quot;), inherit.aes = F): All aesthetics have length 1, but the data has 48
-## rows.
-## ℹ Please consider using `annotate()` or provide this
-##   layer with data containing a single row.</code></pre>
-<pre><code>## Warning in geom_text(aes(175, 2200, label = &quot;predicted&quot;), inherit.aes = F): All aesthetics have length 1, but the data has 48
-## rows.
-## ℹ Please consider using `annotate()` or provide this
-##   layer with data containing a single row.</code></pre>
+<pre><code>## Warning in geom_text(aes(50, 500, label = &quot;computed&quot;), inherit.aes = F): All aesthetics have length 1, but the data has 48 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing
+##   a single row.</code></pre>
+<pre><code>## Warning in geom_text(aes(175, 2200, label = &quot;predicted&quot;), inherit.aes = F): All aesthetics have length 1, but the data has 48 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing
+##   a single row.</code></pre>
 <img src="mod5_proj_files/figure-html/timescale-1.png" width="672" />
 <br>
 <center>

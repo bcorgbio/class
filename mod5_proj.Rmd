@@ -293,7 +293,7 @@ saveAs("Results", dir+f+"_.csv");
 
 This script saves the results as a *tab-separated* text file with same filname as the image file name and appends "_.csv".  **This is super important!!** and how we'll link the landmarks to a species.
 
-After your team has completed landmarking the assigned species, upload your text files to [this directory](https://drive.google.com/drive/folders/1j7sod1NB1jmEiPiduYvOOIlukkMikfL5?usp=sharing).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required (i.e., file-name checks, quality, etc.). You can then download [these evaluated data](data/shark_points.zip) for shape analysis.
+After your team has completed landmarking the assigned species, upload your text files to [this directory](https://drive.google.com/drive/folders/1gjPJuq8aCaTBIHbJnmpHmxHi3TbVtaXl?usp=sharing).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required (i.e., file-name checks, quality, etc.). You can then download [these evaluated data](data/#shark_points.zip) for shape analysis.
 
 ### Superimposition
 
