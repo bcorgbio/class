@@ -3,7 +3,7 @@ title: "Phase II: Using Our Toolbox"
 subtitle: "Module 5: SHARK!"
 author: "Dr. Christopher Kenaley"
 institute: "Boston College"
-date: "2024/10/16"
+date: "2025/10/15"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -134,7 +134,7 @@ Many options for parallel in r
 - `parallel`*
 
 allows processing with multiple cores
-  - run a function in embarrasingly parallel way with `mcapply()`
+  - run a function in embarrassingly parallel way with `mcapply()`
 
 ```{r,eval=TRUE,cache=T}
 my_fun <- function(x){for(i in x) rnorm(1e7)}
