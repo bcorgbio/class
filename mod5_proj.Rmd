@@ -293,7 +293,7 @@ saveAs("Results", dir+f+"_.csv");
 
 This script saves the results as a *tab-separated* text file with same filname as the image file name and appends "_.csv".  **This is super important!!** and how we'll link the landmarks to a species.
 
-After your team has completed landmarking the assigned species, upload your text files to [this directory](https://drive.google.com/drive/folders/1gjPJuq8aCaTBIHbJnmpHmxHi3TbVtaXl?usp=sharing).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required (i.e., file-name checks, quality, etc.). You can then download [these evaluated data](data/#shark_points.zip) for shape analysis.
+After your team has completed landmarking the assigned species, upload your text files to [this directory](https://drive.google.com/drive/folders/1gjPJuq8aCaTBIHbJnmpHmxHi3TbVtaXl?usp=sharing).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required (i.e., file-name checks, quality, etc.). You can then download [these evaluated data](data/shark_points.zip) for shape analysis.
 
 ### Superimposition
 
@@ -700,8 +700,10 @@ t <- system.time(for(i in 1:length(phy_sample)){
 ```
 
 Here we used `seet.seed()` to make the `sample()` function randomly sample the same set of 10 trees. This is important so that we can all perform the same exact analyses, that is, our analyses are repeatable. You'll notice that the loop uses each random tree to repeat the analysis and store the summary of the model (i.e., the rate comparisons) to the list `er_l`. Notice also that the entire loop is wrapped in `system.time()`. This is done so that, in this preliminary analysis, we can record how much time the loop took. Printing `t` reveals that it took 7 seconds. 
+
 Because our results are stored in a list, we can use `lapply()` to extract the rate comparisons. `lapply()` takes a list and applies a function to. In our case, we need to encoded a custom function that extracts `sigma.d.gp` and `sigma.d.ratio`, the rate for each group and rate ratio between them, respectively. For this, we ask the function to work on every value of `er_l`, read it as `x`, then combine `sigma.d.gp` and `sigma.d.ratio` and store it in `er_` temporarily. We then apply a name to the third value "ratio", and return the vector. `lapply()` returns a list, so we combine all elements of it using `do.call()`. We apply the row-binding function `rbind()` to the list using the pipe and `.` and lastly, make the output a data frame.
 
+**NB:** `mclapply()` works just fin on Unix-like operating systems, but not on Window. Forking---a method by which tasks are distributed to the worker cores---is not permitted in Windows
 
 ```{r erlist}
 

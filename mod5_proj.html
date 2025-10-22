@@ -750,7 +750,7 @@ href="https://drive.google.com/drive/folders/1gjPJuq8aCaTBIHbJnmpHmxHi3TbVtaXl?u
 directory</a>. Once all the data appear here, Prof. Kenaley will
 evaluate the quality of the landmarks and do some post-processing if
 required (i.e., file-name checks, quality, etc.). You can then download
-<a href="data/#shark_points.zip">these evaluated data</a> for shape
+<a href="data/shark_points.zip">these evaluated data</a> for shape
 analysis.</p>
 </div>
 <div id="superimposition" class="section level3">
@@ -1552,7 +1552,8 @@ model (i.e., the rate comparisons) to the list <code>er_l</code>. Notice
 also that the entire loop is wrapped in <code>system.time()</code>. This
 is done so that, in this preliminary analysis, we can record how much
 time the loop took. Printing <code>t</code> reveals that it took 7
-seconds. Because our results are stored in a list, we can use
+seconds.</p>
+<p>Because our results are stored in a list, we can use
 <code>lapply()</code> to extract the rate comparisons.
 <code>lapply()</code> takes a list and applies a function to. In our
 case, we need to encoded a custom function that extracts
@@ -1566,6 +1567,10 @@ We then apply a name to the third value “ratio”, and return the vector.
 using <code>do.call()</code>. We apply the row-binding function
 <code>rbind()</code> to the list using the pipe and <code>.</code> and
 lastly, make the output a data frame.</p>
+<p><strong>NB:</strong> <code>mclapply()</code> works just fin on
+Unix-like operating systems, but not on Window. Forking—a method by
+which tasks are distributed to the worker cores—is not permitted in
+Windows</p>
 <pre class="r"><code>er &lt;- lapply(er_l,function(x) {
   er_ &lt;- c(x$sigma.d.gp,x$sigma.d.ratio)
   names(er_)[3] &lt;-&quot;ratio&quot;
