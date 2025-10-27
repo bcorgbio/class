@@ -1,0 +1,323 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 6: Spatial Awareness"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2025/10/27"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis"]
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+---
+class: top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE,warning=F}
+library(tidyverse)
+library(kableExtra)
+library(sf)
+library(stars)
+library(mapview)
+
+knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 40), tidy = TRUE)
+
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Intro to Spatial Analysis
+
+- Plotting maps in R
+
+- Raster vs Shape Data
+
+]
+
+.pull-right[
+
+
+<img src="https://dfzljdn9uc3pi.cloudfront.net/2020/8262/1/fig-1-2x.jpg" width="450">
+]
+
+---
+class: top
+<!-- slide 1 -->
+
+# 🌍 Spatial Analysis Framework
+
+.pull-left[
+
+- sprawling field in data science.
+  * Ecology, Natural resources, Economics, even Cell biology
+- more than longitude and latitude (X,Y coords)
+  * generally concerned with  patterns that vary with lat/long 
+- Data comes in 2 forms
+  * Raster (pixels)
+  * Shape/vector (lines, polygons, etc.)
+]
+
+
+.pull-right[
+
+<img src="https://gisinfo.hertfordshire.gov.uk/gisdata/images/VetorVSRasterFeatures_550_550.gif" width="450">
+
+]
+
+---
+class: top
+
+# 🌍 Spatial Analysis in R
+
+.pull-left[
+### The Core Workflow
+| Task | Package | Key Functions |
+|------|----------|----------------|
+| **Vector data** | `sf`* | `st_read()`, `st_union()`, `st_intersection()` |
+| **Raster data** | `terra`, `stars`* | `rast()`, `crop()`, `mask()` |
+| **Basemaps** | `rnaturalearth`* | `ne_countries()`, `ne_states()` |
+| **Static maps** | `ggplot2`*, `tmap` | `geom_sf()` |
+| **Interactive maps** | `mapview`*, `leaflet` | `mapview()`, |
+*packages we'll focus on
+]
+
+.pull-right[
+### Why `sf`?
+- Modern replacement for `sp`
+- Stores geometry + attributes together  
+- Works with the tidyverse  
+- Uses "simple features" standard (used worldwide)  
+
+```{r}
+library(sf)
+library(rnaturalearth)
+library(mapview)
+bermuda <- ne_states(country = "Bermuda", returnclass = "sf")
+
+```
+
+]
+
+---
+class: top
+# 🌍 First steps: Maps
+
+.pull-left[
+
+Usually with shape data
+
+```{r}
+bermuda %>% 
+  ggplot()+
+  geom_sf()
+```
+
+]
+
+.pull-right[
+  
+```{r}
+ 
+mapview::mapview(bermuda)
+
+```
+  
+]
+
+---
+
+# 🔄 `sf` + tidyverse: Spatial Pipelines
+
+.pull-left[
+### Why pipe it?
+- `sf` objects behave like data frames  
+- You can chain spatial operations with `%>%`  
+- Great for clear, readable workflows
+
+]
+
+.pull-right[
+
+
+- `%>%`	Pipes operations left → right
+- `st_buffer()`	Adds spatial buffer
+- `st_intersection()`/`st_join()`	Keeps/adds overlapping areas
+- `geom_sf()`	Plots sf objects directly
+- `theme_minimal()`	Clean map background
+
+🧭 This pattern works for any vector data — city points, river lines, habitat polygons, etc.
+]
+
+---
+class: top
+
+# 🌍 Raster/Grid data
+
+https://data.worldpop.org/GIS/Population_Density/Global_2000_2020_1km/2020/BMU/bmu_pd_2020_1km.tif
+
+.pull-left[
+
+```{r rastintro1}
+library(stars)
+bermuda_pop <- read_stars("https://data.worldpop.org/GIS/Population_Density/Global_2000_2020_1km/2020/BMU/bmu_pd_2020_1km.tif") %>% st_crop(bermuda)
+p <- ggplot()+
+  geom_stars(data=bermuda_pop)+coord_equal()
+```
+]
+
+.pull-right[
+```{r}
+  print(p)
+  
+```
+]
+
+
+---
+class: top
+
+# 🌍 Combining shape and raster 
+
+Note `st_join`
+
+.pull-left[
+```{r}
+bermuda2 <-  bermuda_pop %>% 
+  setNames("population") %>% 
+  st_as_sf() %>% 
+  st_join( bermuda) %>% 
+  group_by(name) %>% 
+  summarise(
+    population=sum(population))
+
+p <- bermuda %>% 
+  ggplot() +
+  geom_sf()+
+  geom_sf(data=bermuda2,
+          aes(fill=population))
+```
+]
+
+.pull-right[
+
+```{r}
+print(p)
+```
+]
+
+---
+
+# 🛰Raster: Working with the `stars` Package
+
+.pull-left[
+### What is `stars`?
+- Extends **`sf`** for **raster** and **multidimensional (x, y, time)** data  
+- Handles satellite imagery, climate grids, DEMs, etc.  
+- Integrates seamlessly with `sf` and `ggplot2`
+
+### Key functions
+| Function | Description |
+|-----------|--------------|
+| `read_stars()` | Read raster or NetCDF data |
+| `st_as_stars()` | Convert arrays → `stars` object |
+| `st_apply()` | Apply functions across dimensions |
+| `st_crop()` | Clip rasters with an `sf` polygon |
+| `st_transform()` | Reproject rasters |
+| `st_as_sf()` | Convert raster cells to polygons or points |
+]
+
+---
+class: top
+
+# 🛰Raster: Working with the `stars` Package
+
+
+.pull-left[
+
+```{r rastintro}
+library(stars)
+bermuda_pop <- read_stars("https://data.worldpop.org/GIS/Population_Density/Global_2000_2020_1km/2020/BMU/bmu_pd_2020_1km.tif") %>% 
+  st_crop(bermuda)
+
+p <- ggplot()+
+  geom_stars(data=bermuda_pop)+
+  coord_equal()
+```
+]
+
+.pull-right[
+```{r}
+  print(p)
+```
+]
+
+
+---
+class: top
+
+# 🌍 Combining shape and raster 
+
+Note `st_join`
+
+.pull-left[
+```{r}
+bermuda2 <-  bermuda_pop %>% 
+  setNames("population") %>% 
+  st_as_sf() %>% 
+  st_join( bermuda) %>% 
+  group_by(name) %>% 
+  summarise(
+    population=sum(population))
+
+p <- bermuda %>% 
+  ggplot() +
+  geom_sf()+
+  geom_sf(data=bermuda2,
+          aes(fill=population))
+```
+]
+
+.pull-right[
+
+```{r}
+mapview::mapview(bermuda2, zcol = "population")
+```
+]
+
+
+
+
+
+
+---
+
+# ⚠️ CRS Alignment: `sf` + `stars`
+
+.pull-left[
+### The problem
+`st_` operations (`_crop`, `_join`, etc.) can fail because  
+**the CRS of the `sf` (Bermuda)** and the **CRS of the `stars` raster** didn’t match.
+
+`stars` datasets often use **projected coordinates** (e.g. UTM or sinusoidal),  
+while `rnaturalearth` layers use **longitude/latitude (EPSG:4326)**.
+]
+
+.pull-right[
+### The fix
+Always transform one object so both share the same CRS:
+```{r,eval=F}
+#NOTE: convert projection (CRS)
+# Raster: population
+bermuda_pop <- read_stars("https://data.worldpop.org/GIS/Population_Density/Global_2000_2020_1km/2020/BMU/bmu_pd_2020_1km.tif") %>%
+  st_transform(st_crs(bermuda)) %>% 
+  st_crop(bermuda)
+
+```
+]
