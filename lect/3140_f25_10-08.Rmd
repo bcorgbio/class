@@ -68,7 +68,7 @@ library(geomorph)
 library(tidyverse)
 library(abind)
 #read in species data
-species_dat <- read_csv("habitat_data.csv")
+species_dat <- read_csv("https://bcorgbio.github.io/class/lect/habitat_data.csv")
 
 #list the files
 f <- list.files("landmarks",full.names = T,pattern=".csv")
@@ -80,7 +80,7 @@ xy <- read_csv(f,id="file") %>%
   left_join(species_dat) 
 
 
-#save specie snames
+#save specie names
 sp <- xy$sp %>% unique
 
 #make list
@@ -88,8 +88,8 @@ ldk_l <- list()
 for(i in sp){
   ldk_l[[i]] <- xy %>% 
     filter(sp==i) %>% 
-    select(X,Y)
-    data.frame
+    select(X,Y) %>% 
+    as.matrix
 }
 
 
@@ -101,12 +101,14 @@ dimnames(ldk)[[3]] <-names(ldk_l)
 
 #GPA
 ldk_al <- gpagen(ldk)
-
+plot(ldk_al)
 #
-#PCA
+#Procrustes
+class(ldk_al)
 pca <- gm.prcomp(ldk_al$coords)
 
-plot(pca)
+
+plot(pca,axis1 = 2,axis2 = 4)
 ```
 
 

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Phase II: Using Our Toolbox</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Christopher Kenaley" />
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Phase II: Using Our Toolbox
+]
+.subtitle[
+## Module 6: Spatial Awareness
+]
+.author[
+### Dr. Christopher Kenaley
+]
+.institute[
+### Boston College
+]
+.date[
+### 2025/10/31
+]
+
+---
+
+class: top
+# In class today 
+
+
+
+&lt;!-- Add icon library --&gt;
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"&gt;
+
+
+.pull-left[
+Today we'll ....
+
+- Intro to random forest models
+
+
+]
+
+.pull-right[
+
+
+&lt;img src="https://dfzljdn9uc3pi.cloudfront.net/2020/8262/1/fig-1-2x.jpg" width="450"&gt;
+]
+
+---
+
+# What is a Random Forest?
+
+.pull-left[
+- **Ensemble method** built from many decision trees  
+- Each tree trained on a **bootstrap sample** of the data  
+- Predictions are averaged (regression) or voted (classification)  
+- Reduces overfitting and improves generalization  
+]
+
+.pull-right[
+![](https://miro.medium.com/v2/resize:fit:1184/format:webp/1*i0o8mjFfCn-uD79-F1Cqkw.png)
+]
+
+---
+
+# 🌲 What is a Random Forest?
+
+.pull-left[
+### Think of it like a team of decision trees!
+
+- Each **tree** makes a prediction (like a vote).  
+- Trees are trained on **different random subsets** of the data.  
+- Each tree also sees **different random sets of variables**.  
+- The forest’s final prediction is the **average (regression)**  
+  or **majority vote (classification)** across all trees.
+
+💡 The idea:  
+&gt; Many weak but diverse trees together make a strong, stable model.
+]
+
+.pull-right[
+![](https://miro.medium.com/v2/resize:fit:1184/format:webp/1*i0o8mjFfCn-uD79-F1Cqkw.png)
+
+.small[Each tree sees a different sample of data and features.]
+]
+
+
+---
+
+# 🌲 Classification vs. Regression Forests
+
+.pull-left[
+### **Classification Forest**
+- Used when the **response variable is a category**  
+  (e.g., species, gender, habitat type, house color).
+- Each tree “votes” for a class label.
+- The **majority vote** across all trees = prediction.
+
+📘 **Example**
+
+``` r
+Species ~ Sepal.Length + Petal.Width
+```
+
+```
+## Species ~ Sepal.Length + Petal.Width
+```
+
+``` r
+# Predicts setosa, versicolor, or
+# virginica.
+```
+
+🎯 Goal: minimize misclassification error.
+]
+
+.pull-right[
+
+### **Regression Forest**
+- Used when the response variable is numeric
+(e.g., body mass, growth rate, temperature).
+- Each tree predicts a number.
+- The average across all trees = prediction.
+
+📘 Example
+
+
+``` r
+Sepal.Width ~ Sepal.Length + Petal.Width
+```
+
+```
+## Sepal.Width ~ Sepal.Length + Petal.Width
+```
+
+🎯 Goal: minimize mean squared error (MSE).
+]
+
+
+---
+
+# Installing and loading
+
+
+``` r
+# install.packages('randomForest')
+library(randomForest)
+
+# Example dataset:
+
+data(iris)
+head(iris)
+```
+
+```
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa
+```
+
+
+---
+
+# ⚙️ Fitting a Random Forest in R
+## 🔧 Steps
+.pull-left[
+
+### 1. Fit model
+
+``` r
+set.seed(123) #for reproducibility
+rf_model &lt;- randomForest(
+  Species ~ .,      # response ~ predictors
+  data = iris,
+  ntree = 500,      # number of trees
+  mtry = 2, # predictors per split
+  importance = TRUE # compute variable importance
+)
+```
+]
+
+.pull-right[
+
+### What these do
+
+- `ntree` → more trees = smoother, more stable forest
+- `mtry` → how many predictors are tested at each split
+- `importance` → tracks which variables matter most
+
+]
+
+---
+
+# ⚙️ Fitting a Random Forest in R
+
+.pull-left[
+### 2. Check the model output
+
+
+``` r
+rf_model
+```
+
+```
+## 
+## Call:
+##  randomForest(formula = Species ~ ., data = iris, ntree = 500,      mtry = 2, importance = TRUE) 
+##                Type of random forest: classification
+##                      Number of trees: 500
+## No. of variables tried at each split: 2
+## 
+##         OOB estimate of  error rate: 4.67%
+## Confusion matrix:
+##            setosa versicolor virginica class.error
+## setosa         50          0         0        0.00
+## versicolor      0         47         3        0.06
+## virginica       0          4        46        0.08
+```
+]
+
+.pull-right[
+
+### What these do
+- check model output
+
+]
+
+---
+
+# ⚙️ Fitting a Random Forest in R
+.pull-left[
+### 2. Check the model output
+
+
+``` r
+plot(rf_model)
+```
+
+![](3140_f25_10-31_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+
+### What these do
+- `plot()` → shows error rate vs. number of trees
+
+]
+
+---
+
+# 🌟 What Variables are Important?
+
+.pull-left[
+### 🧠 The big idea
+
+- A **Random Forest** learns from many predictors (features).  
+- But not all predictors help equally!  
+- **Variable importance** shows which ones matter most  
+  for making good predictions.
+
+💡 Imagine asking:  
+&gt; “If I hide this variable, does the forest get worse at predicting?”
+
+If accuracy drops a lot → that variable is **important**.  
+If accuracy stays the same → that variable probably isn’t helping much.
+]
+
+.pull-right[
+### 🔍 Assessing Importances
+
+
+``` r
+# Show how important each variable is
+importance(rf_model)
+```
+
+```
+##                 setosa versicolor virginica MeanDecreaseAccuracy
+## Sepal.Length  6.495113   7.588736  7.690949            11.098105
+## Sepal.Width   4.364415   1.038790  4.546158             5.144762
+## Petal.Length 22.157039  34.060864 27.853055            33.535680
+## Petal.Width  22.482214  32.571528 30.595022            32.839577
+##              MeanDecreaseGini
+## Sepal.Length         9.798189
+## Sepal.Width          2.236535
+## Petal.Length        43.093269
+## Petal.Width         44.042372
+```
+
+
+---
+
+# 🌟 What Variables are Important?
+
+.pull-left[
+### 🧠 The big idea
+
+- A **Random Forest** learns from many predictors (features).  
+- But not all predictors help equally!  
+- **Variable importance** shows which ones matter most  
+  for making good predictions.
+
+💡 Imagine asking:  
+&gt; “If I hide this variable, does the forest get worse at predicting?”
+
+If accuracy drops a lot → that variable is **important**.  
+If accuracy stays the same → that variable probably isn’t helping much.
+]
+
+.pull-right[
+### 🔍 Assessing Importances
+
+
+``` r
+# Make a quick plot
+varImpPlot(rf_model)
+```
+
+![](3140_f25_10-31_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+.small[
+  longer bars `=` variables that help the model the most.
+
+shorter bars `=` variables with little impact on predictions.
+]
+]
+
+---
+
+# 🎯 Making Predictions with a Random Forest
+
+.pull-left[
+### 🧠 The idea
+
+Once your forest is trained,  
+you can use it to **predict new outcomes**!
+
+- The model has “learned” patterns from training data.  
+- You give it new observations (with predictor values).  
+- Each tree makes a prediction →  
+  the forest combines them for a final answer.
+
+🌳 Many trees → one decision!
+]
+
+.pull-right[
+### 🔍 In R
+
+
+``` r
+# Make predictions
+new_obs &lt;- iris[1:5, -5]  # drop Species column
+predict(rf_model, new_obs)
+```
+
+```
+##      1      2      3      4      5 
+## setosa setosa setosa setosa setosa 
+## Levels: setosa versicolor virginica
+```
+🧩 For classification:
+
+Each tree votes for a class. The forest picks the majority vote.
+
+📈 For regression:
+
+Each tree predicts a number. The forest takes the average.
+
+
+]
+
+---
+
+# 🧩 Comparing Predictions to Actual Classes
+
+.pull-left[
+### 🎯 Why compare?
+- We want to see **how often the model gets it right!**  
+- Comparing predicted and actual classes tells us  
+  how accurate our Random Forest is.  
+- A **confusion matrix** summarizes correct vs. incorrect predictions.
+
+💡 The more predictions on the diagonal →  
+the better the model!
+]
+
+.pull-right[
+
+### Compare predictions to actual
+
+``` r
+pred &lt;- predict(rf_model, iris)
+# Confusion matrix
+table(Predicted = pred, Actual = iris$Species)
+```
+
+```
+##             Actual
+## Predicted    setosa versicolor virginica
+##   setosa         50          0         0
+##   versicolor      0         50         0
+##   virginica       0          0        50
+```
+
+``` r
+# Model accuracy
+mean(pred == iris$Species)
+```
+
+```
+## [1] 1
+```
+.small[
+
+The confusion matrix shows where the model is right or wrong.
+
+Accuracy = proportion of correct predictions.
+
+]
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
