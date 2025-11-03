@@ -1,0 +1,443 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 6: Spatial Awareness"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2025/11/03"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis"]
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+---
+class: top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE,warning=F}
+library(tidyverse)
+library(kableExtra)
+library(sf)
+library(stars)
+library(mapview)
+library(randomForest)
+
+knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 40), tidy = TRUE)
+
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Recap random forests
+- Apply regression forests in Bermuda
+
+
+]
+
+.pull-right[
+
+
+<img src="https://nowiknow.com/wp-content/uploads/59f257a793119.image_.jpg" width="450">
+]
+
+---
+
+# The Mystery of Bermuda’s Painted Houses
+
+.pull-left[
+- Bermuda’s parishes are famous for their **brightly colored homes** —  
+  pinks, blues, greens, purples, and oranges.  
+
+- But here’s the question:  
+  > Do neighborhood **color trends** tell us something deeper  
+  > about **who lives there**?
+
+- Could the **proportion of house colors** help predict  
+  population size or density?
+
+- Let’s use a **Random Forest model** to find out
+]
+
+.pull-right[
+<img src="https://nowiknow.com/wp-content/uploads/59f257a793119.image_.jpg" width="450">
+]
+
+---
+
+# Bermuda Data: A model for Project 6
+
+https://bcorgbio.github.io/class/data/bermuda_shape.zip
+
+### Step 1 — Load packages
+
+```{r}
+library(sf)        # spatial data
+library(dplyr)     # data wrangling
+library(ggplot2)   # plotting
+```
+
+### Step 2 — Read the shapefile
+
+```{r,message=F}
+bermuda_house <- st_read("bermuda_shape/bermuda_dat.shp")
+```
+
+
+
+
+---
+
+# Bermuda Data: A model for Project 6
+
+### Step 2 — Read the shapefile
+
+```{r,message=F,eval=F}
+bermuda_house <- st_read("bermuda_shape/bermuda_dat.shp")
+```
+
+`bermuda_house` is now an sf object (spatial data frame) that contains:
+
+- parish and subparish boundaries (shape data)
+
+- total population (`tot_pop`) [🦌]
+
+- color proportions (blue, green, orange, etc.) [land use]
+
+- a geometry column for plotting shapes
+
+---
+
+# Bermuda Data: A model for Project 6
+
+
+### Step 3 — Take a peek 
+
+```{r}
+
+head(bermuda_house,2)
+```
+.small[
+Each row = one subparish polygon,
+ready for analysis and visualization.
+]
+
+---
+
+# Bermuda Data: A model for Project 6
+
+### Step 4 — Plot subparishes by color
+
+```{r}
+# Define color palette
+color_map <- c(
+  "blue"   = "#0072B2",
+  "green"  = "#009E73",
+  "orange" = "#E69F00",
+  "pink"   = "#CC79A7",
+  "purple" = "#8A2BE2",
+  "white"  = "#F0F0F0"
+)
+
+# Plot predominant house colors
+p <- bermuda_house %>% 
+  ggplot() +
+  geom_sf(aes(fill = pred_col), 
+          color = "black", 
+          linewidth = 0.2) +
+  scale_fill_manual(values = color_map, 
+                    name = "Predominant Color") +
+  theme_minimal() +
+  labs(
+    title = "Predominant House Colors in Bermuda",
+    subtitle = "Each polygon represents a subparish"
+  )
+```
+
+
+---
+
+# Bermuda Data: A model for Project 6
+
+### Step 4 — Plot subparishes by color
+
+
+.pull-left[
+```{r,eval=F}
+plot(p)
+```
+
+
+**What this shows:**
+
+- Each polygon = one subparish
+
+- Fill color = predominant house color
+
+- Boundaries = spatial geometry
+
+
+]
+
+
+.pull.right[
+```{r,echo=F}
+plot(p)
+```
+]
+
+---
+
+# From Colors to Predictions
+
+.pull-left[
+### What we have
+For each **subparish** in Bermuda:
+
+| Variable | Description |
+|-----------|--------------|
+| `blue` | Proportion of blue houses |
+| `green` | Proportion of green houses |
+| `orange` | Proportion of orange houses |
+| `pink` | Proportion of pink houses |
+| `purple` | Proportion of purple houses |
+| `white` | Proportion of white houses |
+| `tot_pop` | Total population (our target) |
+
+We’ll train a **Random Forest regression** to predict `tot_pop`  
+based on all those color proportions.
+]
+
+.pull-right[
+### Concept:
+.center[
+<img src="https://miro.medium.com/v2/resize:fit:1184/format:webp/1*i0o8mjFfCn-uD79-F1Cqkw.png" width="350">
+
+]
+
+
+**Input:** house color proportions  
+**Model:** many decision trees → combined forest  
+**Output:** predicted population size  
+
+
+.small[
+Each tree finds patterns — together, the forest averages them  
+to make robust predictions.
+]
+]
+
+---
+
+# Bermuda's Random Forest 
+
+.pull-left[
+### Step 1: Create a clean, numeric dataset
+```{r}
+rf_dat <- bermuda_house %>%
+  ungroup() %>%
+  st_drop_geometry() %>%
+  na.omit() %>%
+  select(-name, -pred_col, -subparish)
+
+head(rf_dat)
+```
+]
+
+.pull-right[
+Removes: 
+- Geometry (spatial polygons)
+- Text columns (name, subparish, etc.)
+- Missing values
+
+Leaves:
+- tot_pop (target variable)
+- Color proportions, i.e. blue, green, orange, etc. (predictors)
+]
+
+---
+
+# Bermuda's Random Forest 
+
+.pull-left[
+### Step 2 -- Train a model
+```{r}
+library(randomForest)
+set.seed(123)
+
+rf_mod <- randomForest(
+  tot_pop ~ .,
+  data = rf_dat,
+  ntree = 500,       # number of trees
+  mtry = 3,          # predictors per split
+  importance = TRUE  # compute variable importance
+)
+```
+]
+
+.pull-right[
+
+Model "learns" how house color proportions relate to population size.
+
+- `tot_pop` ~ . → predict population using all remaining columns
+- `ntree = 500` → build 500 trees for stability
+- `mtry = 3` → randomly test 3 predictors per split
+- `importance = TRUE` → tell the forest to rank predictor importance
+
+.small[
+Remember: random forests produce averages of predictions and reduce overfitting by combining many weak "trees" into one strong "forest."
+]
+]
+
+
+---
+
+# Bermuda's Random Forest
+
+.pull-left[
+### Step 3 — Check performance
+.small[
+```{r,results='hold', max.print=8,eval=F}
+print(rf_mod)
+```
+]
+]
+
+.pull-right[
+Key outputs:
+- **MSE (Mean Squared Error):** average difference between predicted and actual populations
+
+- **% Variance Explained:** how much of the population variation the model captures
+
+- **OOB Error (Out-of-Bag):** built-in cross-validation — smaller = better fit
+]
+
+
+.small[
+```{r,results='hold', max.print=8,echo=F}
+print(rf_mod)
+```
+]
+
+---
+# Bermuda's Random Forest
+
+.pull-left[
+### What is Out-of-Bag (OOB) Error?
+
+When building each tree in the Random Forest:
+
+1. The model takes a **bootstrap sample**  
+   (a random subset of the data *with replacement*).
+
+2. About **2/3 of the data** are used to **train** that tree.
+
+3. The remaining **1/3 of the data** — the **Out-of-Bag (OOB)** cases —  
+   are **not seen** by that tree.
+
+Each tree predicts its OOB cases → we can test how well it generalizes!
+]
+
+.pull-right[
+### Why it matters
+- Acts like **built-in cross-validation**  
+- Measures model performance **without needing a test set**
+- Lower OOB error = better predictive accuracy
+
+.center[
+<img src="https://nowiknow.com/wp-content/uploads/59f257a793119.image_.jpg" width="450">
+]
+]
+
+.small[
+Each tree trains on a subset, tests on its “out-of-bag” data →  
+average of all errors = **OOB error rate**.
+]
+]
+---
+
+# Bermuda's Random Forest
+
+.pull-left[
+### Step 3 — Check performance
+
+Which colors matter most?
+```{r,fig.height=3.5}
+varImpPlot(rf_mod)
+```
+
+]
+
+.pull-right[
+Interpretation:
+
+Taller bars → stronger predictors of population
+
+Colors that vary a lot across space may explain more of the population pattern
+]
+
+---
+.pull-left[
+
+### Step 4 — Test predictions
+
+```{r}
+pred <- predict(rf_mod, rf_dat)
+
+# Compare to actual
+compare <- data.frame(
+  Actual = rf_dat$tot_pop,
+  Predicted = pred
+)
+
+head(compare)
+```
+]
+
+.pull-right[
+You can now use the model to:
+
+- estimate populations for new data (house color in other parishes)
+
+- compare predicted vs. observed populations
+
+- visualize prediction accuracy
+]
+
+---
+### Step 4 — Test predictions
+
+.pull-left[
+
+**Visualizing predictions**
+
+```{r,fig.height=4}
+
+p <- ggplot(compare, aes(x = Actual, y = Predicted)) +
+  geom_point(color = "darkgreen", size = 3) +
+  geom_abline(slope = 1, intercept = 0, color = "red", lwd = 1) +
+  theme_minimal() +
+  labs(
+    x = "Actual Population",
+    y = "Predicted Population",
+    title = "Predicted vs. Actual Population"
+  )
+
+```
+.center[
+Points close to the red 1:1 line = accurate predictions ✅
+]
+]
+
+.pull-right[
+
+```{r}
+print(p)
+```
+]
+

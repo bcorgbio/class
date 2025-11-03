@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Phase II: Using Our Toolbox</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Christopher Kenaley" />
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Phase II: Using Our Toolbox
+]
+.subtitle[
+## Module 6: Spatial Awareness
+]
+.author[
+### Dr. Christopher Kenaley
+]
+.institute[
+### Boston College
+]
+.date[
+### 2025/10/31
+]
+
+---
+
+class: top
+# In class today 
+
+
+
+&lt;!-- Add icon library --&gt;
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"&gt;
+
+
+.pull-left[
+Today we'll ....
+
+- Recap random forests
+- Apply regression forests in Bermuda
+
+
+]
+
+.pull-right[
+
+
+&lt;img src="https://nowiknow.com/wp-content/uploads/59f257a793119.image_.jpg" width="450"&gt;
+]
+
+---
+
+# The Mystery of Bermuda’s Painted Houses
+
+.pull-left[
+- Bermuda’s parishes are famous for their **brightly colored homes** —  
+  pinks, blues, greens, purples, and oranges.  
+
+- But here’s the question:  
+  &gt; Do neighborhood **color trends** tell us something deeper  
+  &gt; about **who lives there**?
+
+- Could the **proportion of house colors** help predict  
+  population size or density?
+
+- Let’s use a **Random Forest model** to find out
+]
+
+.pull-right[
+&lt;img src="https://nowiknow.com/wp-content/uploads/59f257a793119.image_.jpg" width="450"&gt;
+]
+
+---
+
+# Bermuda Data: A model for Project 6
+
+https://bcorgbio.github.io/class/data/bermuda_shape.zip
+
+### Step 1 — Load packages
+
+
+``` r
+library(sf)  # spatial data
+library(dplyr)  # data wrangling
+library(ggplot2)  # plotting
+```
+
+### Step 2 — Read the shapefile
+
+
+``` r
+bermuda_house &lt;- st_read("bermuda_shape/bermuda_dat.shp")
+```
+
+```
+## Reading layer `bermuda_dat' from data source 
+##   `/Users/Chris/Dropbox/Documents/bc (1)/3140.f25/lect/bermuda_shape/bermuda_dat.shp' 
+##   using driver `ESRI Shapefile'
+## Simple feature collection with 348 features and 10 fields
+## Geometry type: POLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -64.88471 ymin: 32.24808 xmax: -64.64763 ymax: 32.38866
+## Geodetic CRS:  WGS 84
+```
+
+
+
+
+---
+
+# Bermuda Data: A model for Project 6
+
+### Step 2 — Read the shapefile
+
+
+``` r
+bermuda_house &lt;- st_read("bermuda_shape/bermuda_dat.shp")
+```
+
+`bermuda_house` is now an sf object (spatial data frame) that contains:
+
+- parish and subparish boundaries (shape data)
+
+- total population (`tot_pop`) [🦌]
+
+- color proportions (blue, green, orange, etc.) [land use]
+
+- a geometry column for plotting shapes
+
+---
+
+# Bermuda Data: A model for Project 6
+
+
+### Step 3 — Take a peek 
+
+
+``` r
+head(bermuda_house, 2)
+```
+
+```
+## Simple feature collection with 2 features and 10 fields
+## Geometry type: POLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -64.79452 ymin: 32.28955 xmax: -64.78599 ymax: 32.29718
+## Geodetic CRS:  WGS 84
+##               name    subparish tot_pop pred_col       blue     green
+## 1 City of Hamilton subparish_01    1243    green 0.04278075 0.3101604
+## 2 City of Hamilton subparish_02    1348    green 0.31443299 0.3659794
+##       orange       pink     purple      white                       geometry
+## 1 0.20320856 0.05347594 0.25668449 0.13368984 POLYGON ((-64.78599 32.2904...
+## 2 0.08247423 0.07216495 0.08762887 0.07731959 POLYGON ((-64.78599 32.2904...
+```
+.small[
+Each row = one subparish polygon,
+ready for analysis and visualization.
+]
+
+---
+
+# Bermuda Data: A model for Project 6
+
+### Step 4 — Plot subparishes by color
+
+
+``` r
+# Define color palette
+color_map &lt;- c(blue = "#0072B2", green = "#009E73",
+    orange = "#E69F00", pink = "#CC79A7",
+    purple = "#8A2BE2", white = "#F0F0F0")
+
+# Plot predominant house colors
+p &lt;- bermuda_house %&gt;%
+    ggplot() + geom_sf(aes(fill = pred_col),
+    color = "black", linewidth = 0.2) + scale_fill_manual(values = color_map,
+    name = "Predominant Color") + theme_minimal() +
+    labs(title = "Predominant House Colors in Bermuda",
+        subtitle = "Each polygon represents a subparish")
+```
+
+
+---
+
+# Bermuda Data: A model for Project 6
+
+### Step 4 — Plot subparishes by color
+
+
+.pull-left[
+
+``` r
+plot(p)
+```
+
+
+**What this shows:**
+
+- Each polygon = one subparish
+
+- Fill color = predominant house color
+
+- Boundaries = spatial geometry
+
+
+]
+
+
+.pull.right[
+![](3140_f25_11-03_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# From Colors to Predictions
+
+.pull-left[
+### What we have
+For each **subparish** in Bermuda:
+
+| Variable | Description |
+|-----------|--------------|
+| `blue` | Proportion of blue houses |
+| `green` | Proportion of green houses |
+| `orange` | Proportion of orange houses |
+| `pink` | Proportion of pink houses |
+| `purple` | Proportion of purple houses |
+| `white` | Proportion of white houses |
+| `tot_pop` | Total population (our target) |
+
+We’ll train a **Random Forest regression** to predict `tot_pop`  
+based on all those color proportions.
+]
+
+.pull-right[
+### Concept:
+.center[
+&lt;img src="https://miro.medium.com/v2/resize:fit:1184/format:webp/1*i0o8mjFfCn-uD79-F1Cqkw.png" width="350"&gt;
+
+]
+
+
+**Input:** house color proportions  
+**Model:** many decision trees → combined forest  
+**Output:** predicted population size  
+
+
+.small[
+Each tree finds patterns — together, the forest averages them  
+to make robust predictions.
+]
+]
+
+---
+
+# Bermuda's Random Forest 
+
+.pull-left[
+### Step 1: Create a clean, numeric dataset
+
+``` r
+rf_dat &lt;- bermuda_house %&gt;%
+    ungroup() %&gt;%
+    st_drop_geometry() %&gt;%
+    na.omit() %&gt;%
+    select(-name, -pred_col, -subparish)
+
+head(rf_dat)
+```
+
+```
+##   tot_pop       blue     green     orange       pink     purple      white
+## 1    1243 0.04278075 0.3101604 0.20320856 0.05347594 0.25668449 0.13368984
+## 2    1348 0.31443299 0.3659794 0.08247423 0.07216495 0.08762887 0.07731959
+## 3    1208 0.25294118 0.3529412 0.07058824 0.09411765 0.21764706 0.01176471
+## 4    1212 0.08484848 0.2545455 0.06666667 0.20606061 0.14545455 0.24242424
+## 5    1271 0.15646259 0.2517007 0.08163265 0.24489796 0.16326531 0.10204082
+## 6     208 0.03846154 0.2307692 0.34615385 0.07692308 0.11538462 0.19230769
+```
+]
+
+.pull-right[
+Removes: 
+- Geometry (spatial polygons)
+- Text columns (name, subparish, etc.)
+- Missing values
+
+Leaves:
+- tot_pop (target variable)
+- Color proportions, i.e. blue, green, orange, etc. (predictors)
+]
+
+---
+
+# Bermuda's Random Forest 
+
+.pull-left[
+### Step 2 -- Train a model
+
+``` r
+library(randomForest)
+set.seed(123)
+
+rf_mod &lt;- randomForest(
+  tot_pop ~ .,
+  data = rf_dat,
+  ntree = 500,       # number of trees
+  mtry = 3,          # predictors per split
+  importance = TRUE  # compute variable importance
+)
+```
+]
+
+.pull-right[
+
+Model "learns" how house color proportions relate to population size.
+
+- `tot_pop` ~ . → predict population using all remaining columns
+- `ntree = 500` → build 500 trees for stability
+- `mtry = 3` → randomly test 3 predictors per split
+- `importance = TRUE` → tell the forest to rank predictor importance
+
+.small[
+Remember: random forests produce averages of predictions and reduce overfitting by combining many weak "trees" into one strong "forest."
+]
+]
+
+
+---
+
+# Bermuda's Random Forest
+
+.pull-left[
+### Step 3 — Check performance
+.small[
+
+``` r
+print(rf_mod)
+```
+]
+]
+
+.pull-right[
+Key outputs:
+- **MSE (Mean Squared Error):** average difference between predicted and actual populations
+
+- **% Variance Explained:** how much of the population variation the model captures
+
+- **OOB Error (Out-of-Bag):** built-in cross-validation — smaller = better fit
+]
+
+
+.small[
+
+```
+## 
+## Call:
+##  randomForest(formula = tot_pop ~ ., data = rf_dat, ntree = 500,      mtry = 3, importance = TRUE) 
+##                Type of random forest: regression
+##                      Number of trees: 500
+## No. of variables tried at each split: 3
+## 
+##           Mean of squared residuals: 23381.26
+##                     % Var explained: 12.56
+```
+]
+
+---
+# Bermuda's Random Forest
+
+.pull-left[
+### What is Out-of-Bag (OOB) Error?
+
+When building each tree in the Random Forest:
+
+1. The model takes a **bootstrap sample**  
+   (a random subset of the data *with replacement*).
+
+2. About **2/3 of the data** are used to **train** that tree.
+
+3. The remaining **1/3 of the data** — the **Out-of-Bag (OOB)** cases —  
+   are **not seen** by that tree.
+
+Each tree predicts its OOB cases → we can test how well it generalizes!
+]
+
+.pull-right[
+### Why it matters
+- Acts like **built-in cross-validation**  
+- Measures model performance **without needing a test set**
+- Lower OOB error = better predictive accuracy
+
+.center[
+&lt;img src="https://nowiknow.com/wp-content/uploads/59f257a793119.image_.jpg" width="450"&gt;
+]
+]
+
+.small[
+Each tree trains on a subset, tests on its “out-of-bag” data →  
+average of all errors = **OOB error rate**.
+]
+]
+---
+
+# Bermuda's Random Forest
+
+.pull-left[
+### Step 3 — Check performance
+
+Which colors matter most?
+
+``` r
+varImpPlot(rf_mod)
+```
+
+![](3140_f25_11-03_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+]
+
+.pull-right[
+Interpretation:
+
+Taller bars → stronger predictors of population
+
+Colors that vary a lot across space may explain more of the population pattern
+]
+
+---
+.pull-left[
+
+### Step 4 — Test predictions
+
+
+``` r
+pred &lt;- predict(rf_mod, rf_dat)
+
+# Compare to actual
+compare &lt;- data.frame(Actual = rf_dat$tot_pop,
+    Predicted = pred)
+
+head(compare)
+```
+
+```
+##   Actual Predicted
+## 1   1243  773.0464
+## 2   1348  970.7964
+## 3   1208  941.4578
+## 4   1212  820.1060
+## 5   1271  797.6134
+## 6    208  271.8791
+```
+]
+
+.pull-right[
+You can now use the model to:
+
+- estimate populations for new data (house color in other parishes)
+
+- compare predicted vs. observed populations
+
+- visualize prediction accuracy
+]
+
+---
+### Step 4 — Test predictions
+
+.pull-left[
+
+**Visualizing predictions**
+
+
+``` r
+p &lt;- ggplot(compare, aes(x = Actual, y = Predicted)) +
+    geom_point(color = "darkgreen", size = 3) +
+    geom_abline(slope = 1, intercept = 0,
+        color = "red", lwd = 1) + theme_minimal() +
+    labs(x = "Actual Population", y = "Predicted Population",
+        title = "Predicted vs. Actual Population")
+```
+.center[
+Points close to the red 1:1 line = accurate predictions ✅
+]
+]
+
+.pull-right[
+
+
+``` r
+print(p)
+```
+
+![](3140_f25_11-03_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+]
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

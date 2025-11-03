@@ -81,7 +81,7 @@ All assignments are due at 11:59 on the specified date.
 
 || Monday <br> 11/3 |  Tuesday <br>11/4    | Wednesday<br>  11/5 | Thursday <br> 11/6 | Friday <br> 11/7 |Saturday<br> 11/8 | Sunday<br> 11/9
  |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 
-**Week 11** | | | <br> <br> [WCR 10](WCRs/WCR_10.html) Post question to discussion board | |Answer a question on discussion board  | | Commit Module 6 Project Report| 
+**Week 11** | [slides](lect\3140_f25_11-03.html)| | <br> <br> [WCR 10](WCRs/WCR_10.html) Post question to discussion board | |Answer a question on discussion board  | | Commit Module 6 Project Report| 
 ||||||||
 
 ---
