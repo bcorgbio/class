@@ -3,16 +3,14 @@ title: "Phase II: Using Our Toolbox"
 subtitle: "Module 7: Birds of a Feather"
 author: "Dr. Christopher Kenaley"
 institute: "Boston College"
-date: "2024/14/11"
+date: "2025/10/11"
 output:
   xaringan::moon_reader:
+    css: ["default", "metropolis"]
     lib_dir: libs
     nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
+      ratio: 16:9
 ---
-class: inverse, top
 # In class today 
 
 ```{r,echo=FALSE,message=FALSE}
@@ -35,40 +33,209 @@ library(rnaturalearth)
 .pull-left[
 Today we'll ....
 
+- Kick off Project 7 (The last module)
+- Explore trans-Gulf migration (TGM)
 - Explore the logistic curve
 
-![](https://resources.tidal.com/images/585b7fda/ecf7/4b71/b24d/ac41523e5bb2/1280x720.jpg)
+
 ]
 
 .pull-right[
-
-<iframe width="460" height="315" src="https://www.youtube.com/embed/d5gf9dXbPi0?si=A6-tszCKpzgdF6nU"  frameborder="0" allowfullscreen></iframe>
-
-
+![](https://resources.tidal.com/images/585b7fda/ecf7/4b71/b24d/ac41523e5bb2/1280x720.jpg)
 ]
 
 
 
 
 
-
 ---
-class: inverse, top
-<!-- slide 1 -->
+# Module 8: Birds of a feather
 
-## Module 8: Birds of a feather
-
-
-  
-   ![](https://www.allaboutbirds.org/guide/assets/photo/302314881-1280px.jpg)
+<img src="https://besjournals.onlinelibrary.wiley.com/cms/asset/ea4ad5f9-720c-4baa-a22d-6aef4b1472f7/jane13670-fig-0004-m.jpg" width="400">
 
 
 ---
-class: inverse, top
-<!-- slide 1 -->
+#Module 8: Birds of a feather
+.pull-left[
 
-## Module 8: Birds of a feather
+**Overview of TGM**
 
+The Gulf of Mexico spans ~1,000 km across — a major ecological barrier.
+
+Many Neotropical–Nearctic migrants (e.g. warblers, thrushes, orioles) cross it twice yearly.
+
+Crossing requires continuous flight over open water (18–24 h).
+]
+
+.pull-right[
+**Energetic Demands**
+
+Birds accumulate large fat stores (up to 40% body mass) before departure.
+
+Departure timing depends on *wind assistance* and weather fronts.
+
+High mortality risk if headwinds, storms, or energy stores insufficient.
+
+]
+
+---
+#Module 8: Birds of a feather
+.pull-left[
+
+**Ecological Drivers**
+
+Spring migration: reach breeding grounds early; strong selection for speed.
+
+Fall migration: less time pressure; routes often longer but safer.
+
+Stopover sites (Yucatán, Louisiana) are critical for refueling and survival.
+]
+
+.pull-right[
+**Species & Strategies**
+
+Small passerines (warblers, buntings): nonstop nocturnal flight.
+
+Larger species (hawks, herons): circum-Gulf routes over land.
+
+Some shorebirds use coastal stepping stones (Cuba–Florida Keys chain).
+
+**Conservation Context**
+
+Habitat loss at stopover sites (e.g., coastal marshes) threatens populations.
+
+Predicting responses to climate change and storm frequency is a key focus.
+
+]
+
+
+---
+# eBird and GBIF
+
+.pull-left[
+
+**What is eBird?**
+
+- A global citizen science platform for bird observation data, freely available for research, etc.
+
+- Developed by the Cornell Lab of Ornithology (launched 2002).
+
+- Over 1.5 billion bird records from more than 800,000 contributors.
+
+**What Data Are Collected?**
+
+- Species observed
+
+- Count (abundance)
+
+- Location (GPS or hotspot), date, time, duration, and effort
+
+- Optional photos, audio, or breeding codes
+
+]
+
+.pull-right[
+<img src="https://s3.amazonaws.com/is-ebird-wordpress-prod-s3/wp-content/uploads/sites/70/eBird-2.0-Android-1040x592.jpg" width="500">
+]
+
+---
+# eBird and GBIF
+
+.pull-left[
+
+**Who Provides the Data?**
+
+- Birdwatchers (“citizen scientists”) log checklists via
+the eBird mobile app or website.
+
+- Submissions undergo automated filters and expert review.
+
+- Contributors gain feedback, stats, and maps of their observations.
+
+**Why It Matters**
+
+- Enables real-time (kinda) tracking of migration, abundance, and phenology.
+
+- Supports ecological and land-use modeling.
+
+- Bridges the gap between public engagement and scientific discovery.
+
+]
+
+
+.pull-right[
+<img src="https://s3.amazonaws.com/is-ebird-wordpress-prod-s3/wp-content/uploads/sites/70/eBird-2.0-Android-1040x592.jpg" width="500">
+]
+
+---
+# eBird and GBIF
+.pull-left[
+
+**What is GBIF?**
+
+- An international open-data infrastructure for biodiversity records.
+
+- Established in 2001 under the OECD Global Science Forum.
+
+- Provides free, standardized access to >2 billion species occurrence records worldwide.
+
+- Integrates data from museums, herbaria, research projects, and citizen science (including eBird).
+]
+
+.pull-right[
+**Core Mission**
+
+To make all biodiversity data findable, accessible, interoperable, and reusable (FAIR principles).
+
+Supports global monitoring, species distribution modeling, and policy frameworks like IPBES and the Convention on Biological Diversity.
+
+<img src="https://data-blog.gbif.org/post/2020-10-09-issues-and-flags_files/workflow1.png" width="300">
+
+]
+
+---
+# eBird and GBIF
+.pull-left[
+
+**What Data Are Included**
+
+- Species occurrences (presence records)
+
+- Taxonomic names & classifications
+
+- *Georeferenced* coordinates
+
+- *Temporal data* (collection dates)
+
+- Environmental & sampling metadata
+
+
+**Who Contributes**
+
+Museums, universities, government agencies, NGOs, and citizen-science platforms (e.g., iNaturalist, eBird, iDigBio).
+]
+
+.pull-right[
+**Why It Matters**
+
+- Enables global biodiversity synthesis and macroecological research (us!).
+
+- Informs conservation priorities, invasive species management, and climate change responses.
+
+<img src="https://data-blog.gbif.org/post/2020-10-09-issues-and-flags_files/workflow1.png" width="300">
+
+]
+---
+# When do birds arrive in Mass?
+
+<img src="https://www.allaboutbirds.org/guide/assets/photo/302314881-1280px.jpg" width="500">
+
+
+---
+
+# When do birds arrive in Mass?
+
+### eBird and GBIF
 
 ```{r,cache=T}
 
@@ -99,32 +266,28 @@ bhv <- do.call(rbind, bhv_l)
 
 
 ---
-class: inverse, top
-<!-- slide 1 -->
-
-## Module 8: Birds of a feather
-
+# When do birds arrive in Mass?
 
 .pull-left[
 ```{r,message=F}
-
 mass <- ne_states(country = 
                     "United States of America",
                   returnclass = "sf") %>% 
   filter(name=="Massachusetts") 
 
-```
-]
-
-.pull-right[
-```{r}
-mass %>% 
+p <- mass %>% 
   ggplot() +
   geom_sf()+
   geom_point(data=bhv,
              aes(decimalLongitude,
                  decimalLatitude,
                  col=year))
+```
+]
+
+.pull-right[
+```{r}
+print(p)
   
 ```
 ]
@@ -132,11 +295,9 @@ mass %>%
 
 
 
---
-class: inverse, top
+---
 <!-- slide 1 -->
-
-## Module 8: Birds of a feather
+# When do birds arrive in Mass?
 
 .pull-left[
 
@@ -146,19 +307,14 @@ class: inverse, top
 ]
 
 
---
-class: inverse, top
-<!-- slide 1 -->
-
-## Module 8: Birds of a feather
-
-.pull-left[
+---
+# When do birds arrive in Mass?
 
 ### The logistic curve
-  
 
 ```{r,message=F}
-bhv_arrive <- bhv%>%mutate(n=1:n()) %>%
+bhv_arrive <- bhv%>%
+  mutate(n=1:n()) %>%
   group_by(n) %>%
   mutate(date=as.Date(paste0(year,"-",month,"-",day)),
          j.day=julian(date,
@@ -170,39 +326,68 @@ bhv_arrive <- bhv%>%mutate(n=1:n()) %>%
   group_by(year)%>%
   mutate(prop=cumsum(day.tot/sum(day.tot,na.rm = T)))
 ```
-]
 
-.pull-right[
+
+---
+# When do birds arrive in Mass?
+
+.pull-left[
+### The logistic curve
+
 ```{r,message=F}
-bhv_arrive %>% 
+p <- bhv_arrive %>% 
   ggplot(aes(j.day,prop,col=as.factor(year))) +
   geom_point()
   
 ```
+]
+
+.pull-right[
+
+```{r}
+print(p)
+```
+]
+
 
 ---
-class: inverse, top
-<!-- slide 1 -->
+# When do birds arrive in Mass?
 
 
-## Module 8: Birds of a feather
+### The logistic curve
+  
+```{r,message=F,warning=F}
+bhv_pred <- bhv_arrive%>%
+  group_by(year)%>%
+ reframe(
+   pred=predict(
+     nls(prop~SSlogis(j.day,Asym, xmid, scal)),
+     newdata=data.frame(j.day=min(j.day):max(j.day))),
+   j.day=min(j.day):max(j.day),
+  )%>%
+  left_join(bhv_arrive%>%dplyr::select(j.day,date,prop)) 
+```
+
+
+---
+# When do birds arrive in Mass?
 
 .pull-left[
 
 ### The logistic curve
   
-```{r,message=F}
+```{r,message=F,warning=F}
 bhv_pred <- bhv_arrive%>%
   group_by(year)%>%
  reframe(
-   pred=predict(nls(prop~SSlogis(j.day,Asym, xmid, scal)),newdata=data.frame(j.day=min(j.day):max(j.day))),
+   pred=predict(
+     nls(prop~SSlogis(j.day,Asym, xmid, scal)),
+     newdata=data.frame(j.day=min(j.day):max(j.day))),
    j.day=min(j.day):max(j.day),
   )%>%
   left_join(bhv_arrive%>%dplyr::select(j.day,date,prop)) 
 ```
 ]
-
-
 
 
 .pull-right[
@@ -224,21 +409,19 @@ SSlogis(input,Asym, xmid, scal)
  ]
  
 ---
-class: inverse, top
-<!-- slide 1 -->
-
-## Module 8: Birds of a feather
+# When do birds arrive in Mass?
 
 .pull-left[
 
 ### The logistic curve
   
  
-```{r,message=F}
+```{r,message=F,warning=F}
 p <- bhv_pred %>% 
   ggplot(aes(j.day,prop),alpha=0.3) +
   geom_point()+
-  geom_line(aes(j.day,pred,group=year),col="blue")
+  geom_line(aes(j.day,pred,group=year),
+            col="blue")
 ```
 ]
 

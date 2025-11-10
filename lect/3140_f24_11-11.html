@@ -4,9 +4,9 @@
     <title>Phase II: Using Our Toolbox</title>
     <meta charset="utf-8" />
     <meta name="author" content="Dr. Christopher Kenaley" />
-    <script src="libs/header-attrs-2.28/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
-    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
   </head>
   <body>
     <textarea id="source">
@@ -25,18 +25,14 @@ class: center, middle, inverse, title-slide
 ### Boston College
 ]
 .date[
-### 2024/14/11
+### 2025/10/11
 ]
 
 ---
 
-class: inverse, top
 # In class today 
 
 
-```
-## Warning: package 'ggplot2' was built under R version 4.2.3
-```
 
 &lt;!-- Add icon library --&gt;
 &lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"&gt;
@@ -45,40 +41,209 @@ class: inverse, top
 .pull-left[
 Today we'll ....
 
+- Kick off Project 7 (The last module)
+- Explore trans-Gulf migration (TGM)
 - Explore the logistic curve
 
-![](https://resources.tidal.com/images/585b7fda/ecf7/4b71/b24d/ac41523e5bb2/1280x720.jpg)
+
 ]
 
 .pull-right[
-
-&lt;iframe width="460" height="315" src="https://www.youtube.com/embed/d5gf9dXbPi0?si=A6-tszCKpzgdF6nU"  frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
-
-
+![](https://resources.tidal.com/images/585b7fda/ecf7/4b71/b24d/ac41523e5bb2/1280x720.jpg)
 ]
 
 
 
 
 
-
 ---
-class: inverse, top
-&lt;!-- slide 1 --&gt;
+# Module 8: Birds of a feather
 
-## Module 8: Birds of a feather
-
-
-  
-   ![](https://www.allaboutbirds.org/guide/assets/photo/302314881-1280px.jpg)
+&lt;img src="https://besjournals.onlinelibrary.wiley.com/cms/asset/ea4ad5f9-720c-4baa-a22d-6aef4b1472f7/jane13670-fig-0004-m.jpg" width="400"&gt;
 
 
 ---
-class: inverse, top
-&lt;!-- slide 1 --&gt;
+#Module 8: Birds of a feather
+.pull-left[
 
-## Module 8: Birds of a feather
+**Overview of TGM**
 
+The Gulf of Mexico spans ~1,000 km across — a major ecological barrier.
+
+Many Neotropical–Nearctic migrants (e.g. warblers, thrushes, orioles) cross it twice yearly.
+
+Crossing requires continuous flight over open water (18–24 h).
+]
+
+.pull-right[
+**Energetic Demands**
+
+Birds accumulate large fat stores (up to 40% body mass) before departure.
+
+Departure timing depends on *wind assistance* and weather fronts.
+
+High mortality risk if headwinds, storms, or energy stores insufficient.
+
+]
+
+---
+#Module 8: Birds of a feather
+.pull-left[
+
+**Ecological Drivers**
+
+Spring migration: reach breeding grounds early; strong selection for speed.
+
+Fall migration: less time pressure; routes often longer but safer.
+
+Stopover sites (Yucatán, Louisiana) are critical for refueling and survival.
+]
+
+.pull-right[
+**Species &amp; Strategies**
+
+Small passerines (warblers, buntings): nonstop nocturnal flight.
+
+Larger species (hawks, herons): circum-Gulf routes over land.
+
+Some shorebirds use coastal stepping stones (Cuba–Florida Keys chain).
+
+**Conservation Context**
+
+Habitat loss at stopover sites (e.g., coastal marshes) threatens populations.
+
+Predicting responses to climate change and storm frequency is a key focus.
+
+]
+
+
+---
+# eBird and GBIF
+
+.pull-left[
+
+**What is eBird?**
+
+- A global citizen science platform for bird observation data, freely available for research, etc.
+
+- Developed by the Cornell Lab of Ornithology (launched 2002).
+
+- Over 1.5 billion bird records from more than 800,000 contributors.
+
+**What Data Are Collected?**
+
+- Species observed
+
+- Count (abundance)
+
+- Location (GPS or hotspot), date, time, duration, and effort
+
+- Optional photos, audio, or breeding codes
+
+]
+
+.pull-right[
+&lt;img src="https://s3.amazonaws.com/is-ebird-wordpress-prod-s3/wp-content/uploads/sites/70/eBird-2.0-Android-1040x592.jpg" width="500"&gt;
+]
+
+---
+# eBird and GBIF
+
+.pull-left[
+
+**Who Provides the Data?**
+
+- Birdwatchers (“citizen scientists”) log checklists via
+the eBird mobile app or website.
+
+- Submissions undergo automated filters and expert review.
+
+- Contributors gain feedback, stats, and maps of their observations.
+
+**Why It Matters**
+
+- Enables real-time (kinda) tracking of migration, abundance, and phenology.
+
+- Supports ecological and land-use modeling.
+
+- Bridges the gap between public engagement and scientific discovery.
+
+]
+
+
+.pull-right[
+&lt;img src="https://s3.amazonaws.com/is-ebird-wordpress-prod-s3/wp-content/uploads/sites/70/eBird-2.0-Android-1040x592.jpg" width="500"&gt;
+]
+
+---
+# eBird and GBIF
+.pull-left[
+
+**What is GBIF?**
+
+- An international open-data infrastructure for biodiversity records.
+
+- Established in 2001 under the OECD Global Science Forum.
+
+- Provides free, standardized access to &gt;2 billion species occurrence records worldwide.
+
+- Integrates data from museums, herbaria, research projects, and citizen science (including eBird).
+]
+
+.pull-right[
+**Core Mission**
+
+To make all biodiversity data findable, accessible, interoperable, and reusable (FAIR principles).
+
+Supports global monitoring, species distribution modeling, and policy frameworks like IPBES and the Convention on Biological Diversity.
+
+&lt;img src="https://data-blog.gbif.org/post/2020-10-09-issues-and-flags_files/workflow1.png" width="300"&gt;
+
+]
+
+---
+# eBird and GBIF
+.pull-left[
+
+**What Data Are Included**
+
+- Species occurrences (presence records)
+
+- Taxonomic names &amp; classifications
+
+- *Georeferenced* coordinates
+
+- *Temporal data* (collection dates)
+
+- Environmental &amp; sampling metadata
+
+
+**Who Contributes**
+
+Museums, universities, government agencies, NGOs, and citizen-science platforms (e.g., iNaturalist, eBird, iDigBio).
+]
+
+.pull-right[
+**Why It Matters**
+
+- Enables global biodiversity synthesis and macroecological research (us!).
+
+- Informs conservation priorities, invasive species management, and climate change responses.
+
+&lt;img src="https://data-blog.gbif.org/post/2020-10-09-issues-and-flags_files/workflow1.png" width="300"&gt;
+
+]
+---
+# When do birds arrive in Mass?
+
+&lt;img src="https://www.allaboutbirds.org/guide/assets/photo/302314881-1280px.jpg" width="500"&gt;
+
+
+---
+
+# When do birds arrive in Mass?
+
+### eBird and GBIF
 
 
 ``` r
@@ -107,11 +272,7 @@ bhv &lt;- do.call(rbind, bhv_l)
 
 
 ---
-class: inverse, top
-&lt;!-- slide 1 --&gt;
-
-## Module 8: Birds of a feather
-
+# When do birds arrive in Mass?
 
 .pull-left[
 
@@ -120,19 +281,21 @@ mass &lt;- ne_states(country =
                     "United States of America",
                   returnclass = "sf") %&gt;% 
   filter(name=="Massachusetts") 
-```
-]
 
-.pull-right[
-
-``` r
-mass %&gt;% 
+p &lt;- mass %&gt;% 
   ggplot() +
   geom_sf()+
   geom_point(data=bhv,
              aes(decimalLongitude,
                  decimalLatitude,
                  col=year))
+```
+]
+
+.pull-right[
+
+``` r
+print(p)
 ```
 
 ![](3140_f24_11-11_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
@@ -141,11 +304,9 @@ mass %&gt;%
 
 
 
---
-class: inverse, top
+---
 &lt;!-- slide 1 --&gt;
-
-## Module 8: Birds of a feather
+# When do birds arrive in Mass?
 
 .pull-left[
 
@@ -155,20 +316,15 @@ class: inverse, top
 ]
 
 
---
-class: inverse, top
-&lt;!-- slide 1 --&gt;
-
-## Module 8: Birds of a feather
-
-.pull-left[
+---
+# When do birds arrive in Mass?
 
 ### The logistic curve
-  
 
 
 ``` r
-bhv_arrive &lt;- bhv%&gt;%mutate(n=1:n()) %&gt;%
+bhv_arrive &lt;- bhv%&gt;%
+  mutate(n=1:n()) %&gt;%
   group_by(n) %&gt;%
   mutate(date=as.Date(paste0(year,"-",month,"-",day)),
          j.day=julian(date,
@@ -180,24 +336,55 @@ bhv_arrive &lt;- bhv%&gt;%mutate(n=1:n()) %&gt;%
   group_by(year)%&gt;%
   mutate(prop=cumsum(day.tot/sum(day.tot,na.rm = T)))
 ```
+
+
+---
+# When do birds arrive in Mass?
+
+.pull-left[
+### The logistic curve
+
+
+``` r
+p &lt;- bhv_arrive %&gt;% 
+  ggplot(aes(j.day,prop,col=as.factor(year))) +
+  geom_point()
+```
 ]
 
 .pull-right[
 
+
 ``` r
-bhv_arrive %&gt;% 
-  ggplot(aes(j.day,prop,col=as.factor(year))) +
-  geom_point()
+print(p)
 ```
 
-![](3140_f24_11-11_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+![](3140_f24_11-11_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+]
+
 
 ---
-class: inverse, top
-&lt;!-- slide 1 --&gt;
+# When do birds arrive in Mass?
 
 
-## Module 8: Birds of a feather
+### The logistic curve
+  
+
+``` r
+bhv_pred &lt;- bhv_arrive%&gt;%
+  group_by(year)%&gt;%
+ reframe(
+   pred=predict(
+     nls(prop~SSlogis(j.day,Asym, xmid, scal)),
+     newdata=data.frame(j.day=min(j.day):max(j.day))),
+   j.day=min(j.day):max(j.day),
+  )%&gt;%
+  left_join(bhv_arrive%&gt;%dplyr::select(j.day,date,prop)) 
+```
+
+
+---
+# When do birds arrive in Mass?
 
 .pull-left[
 
@@ -208,14 +395,14 @@ class: inverse, top
 bhv_pred &lt;- bhv_arrive%&gt;%
   group_by(year)%&gt;%
  reframe(
-   pred=predict(nls(prop~SSlogis(j.day,Asym, xmid, scal)),newdata=data.frame(j.day=min(j.day):max(j.day))),
+   pred=predict(
+     nls(prop~SSlogis(j.day,Asym, xmid, scal)),
+     newdata=data.frame(j.day=min(j.day):max(j.day))),
    j.day=min(j.day):max(j.day),
   )%&gt;%
   left_join(bhv_arrive%&gt;%dplyr::select(j.day,date,prop)) 
 ```
 ]
-
-
 
 
 .pull-right[
@@ -238,10 +425,7 @@ SSlogis(input,Asym, xmid, scal)
  ]
  
 ---
-class: inverse, top
-&lt;!-- slide 1 --&gt;
-
-## Module 8: Birds of a feather
+# When do birds arrive in Mass?
 
 .pull-left[
 
@@ -253,7 +437,8 @@ class: inverse, top
 p &lt;- bhv_pred %&gt;% 
   ggplot(aes(j.day,prop),alpha=0.3) +
   geom_point()+
-  geom_line(aes(j.day,pred,group=year),col="blue")
+  geom_line(aes(j.day,pred,group=year),
+            col="blue")
 ```
 ]
 
@@ -264,7 +449,7 @@ p &lt;- bhv_pred %&gt;%
 ## (`geom_point()`).
 ```
 
-![](3140_f24_11-11_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+![](3140_f24_11-11_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
 ]
 
 
@@ -274,9 +459,7 @@ p &lt;- bhv_pred %&gt;%
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-"highlightStyle": "github",
-"highlightLines": true,
-"countIncrementalSlides": false
+  "ratio": "16:9"
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
@@ -355,24 +538,7 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
       links[i].target = '_blank';
     }
   }
-})();
-// adds .remark-code-has-line-highlighted class to <pre> parent elements
-// of code chunks containing highlighted lines with class .remark-code-line-highlighted
-(function(d) {
-  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
-  const preParents = [];
-  const findPreParent = function(line, p = 0) {
-    if (p > 1) return null; // traverse up no further than grandparent
-    const el = line.parentElement;
-    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
-  };
-
-  for (let line of hlines) {
-    let pre = findPreParent(line);
-    if (pre && !preParents.includes(pre)) preParents.push(pre);
-  }
-  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
-})(document);</script>
+})();</script>
 
 <script>
 slideshow._releaseMath = function(el) {
