@@ -1,0 +1,338 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 7: Birds of a Feather"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2025/12/11"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis"]
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+---
+# In class today 
+
+```{r,echo=FALSE,message=FALSE}
+
+library(rgbif)
+library(tidyverse)
+library(MuMIn)
+library(rnoaa)
+library(data.table)
+library(sf)
+library(stars)
+library(rnaturalearth)
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Discuss `rgif` functions
+- Explore the logistic curve
+
+
+]
+
+.pull-right[
+![](https://www.billharlan.com/papers/logistic/fig1.png)
+]
+
+
+
+
+
+---
+# When do birds arrive in Mass?
+
+<img src="https://www.allaboutbirds.org/guide/assets/photo/302314881-1280px.jpg" width="500">
+
+
+---
+
+# When do birds arrive in Mass?
+
+### eBird and GBIF
+
+```{r,cache=T}
+
+yr <- c(2021,2022,2023)
+
+bhv_l <- list()
+
+for(i in yr){
+ bhv_l[[i]] <- occ_data(scientificName = "Vireo solitarius",
+                year=i,
+                month="3,6",
+                limit=1000,
+                country="US",
+                basisOfRecord = "HUMAN_OBSERVATION",
+                stateProvince="Massachusetts")[[2]] %>% 
+   select(individualCount,
+          year,month,day,
+          decimalLongitude,
+          decimalLatitude)
+}
+
+  
+bhv <- do.call(rbind, bhv_l)
+ 
+
+```
+
+
+---
+
+# When do birds arrive in Mass?
+
+### eBird and GBIF
+
+```{r}
+
+head(bhv %>% na.omit)
+
+```
+
+
+---
+# When do birds arrive in Mass?
+
+.pull-left[
+```{r,message=F}
+mass <- ne_states(country = 
+                    "United States of America",
+                  returnclass = "sf") %>% 
+  filter(name=="Massachusetts") 
+
+p <- mass %>% 
+  ggplot() +
+  geom_sf()+
+  geom_point(data=bhv,
+             aes(decimalLongitude,
+                 decimalLatitude,
+                 col=as.factor(year)))
+```
+]
+
+.pull-right[
+```{r}
+print(p)
+  
+```
+]
+
+
+
+
+---
+# When do birds arrive in Mass?
+
+.pull-left[
+
+### The logistic curve
+  
+![](https://www.billharlan.com/papers/logistic/fig1.png)
+]
+
+
+---
+# When do birds arrive in Mass?
+
+### The logistic curve
+
+```{r,message=F}
+bhv_arrive <- bhv%>%
+  mutate(n=1:n()) %>%
+  group_by(n) %>%
+  mutate(date=as.Date(paste0(year,"-",month,"-",day)),
+         j.day=julian(date,
+                      origin=as.Date(paste0(unique(year),"-01-01")))
+         )%>%
+  na.omit() %>%
+  group_by(year,j.day,date)%>%
+  reframe(day.tot=sum(individualCount,na.rm=T))%>%
+  group_by(year)%>%
+  mutate(prop=cumsum(day.tot/sum(day.tot,na.rm = T)))
+```
+
+---
+# When do birds arrive in Mass?
+
+### The logistic curve
+
+Let's break this down . . .
+
+```{r,eval=F}
+bhv_arrive <- bhv%>%
+  mutate(n=1:n()) %>% #so functions can work on each row
+  group_by(n) %>%
+  mutate(date=as.Date(paste0(year,"-",month,"-",day)), #create a date object
+         j.day=julian(date,
+                      origin=as.Date(paste0(unique(year),"-01-01"))) 
+         )%>% #julian day, why?
+  na.omit() %>%
+  group_by(year,j.day,date)%>%
+  reframe(day.tot=sum(individualCount,na.rm=T))%>% #summarize with arbitrary number of rows for each group level
+  group_by(year)%>%
+  mutate(prop=cumsum(day.tot/sum(day.tot,na.rm = T))) #compute the proportion
+```
+
+
+---
+# When do birds arrive in Mass?
+
+.pull-left[
+### The logistic curve
+
+```{r,message=F}
+p <- bhv_arrive %>% 
+  ggplot(aes(j.day,prop,col=as.factor(year))) +
+  geom_point()
+  
+```
+]
+
+.pull-right[
+
+```{r}
+print(p)
+```
+]
+
+
+---
+# When do birds arrive in Mass?
+
+
+### The logistic curve
+  
+```{r,message=F,warning=F}
+bhv_pred <- bhv_arrive%>%
+  group_by(year)%>%
+ reframe(
+   pred=predict(
+     nls(prop~SSlogis(j.day,Asym, xmid, scal)),
+     newdata=data.frame(j.day=min(j.day):max(j.day))),
+   j.day=min(j.day):max(j.day),
+  )%>%
+  left_join(bhv_arrive%>%dplyr::select(j.day,date,prop)) #to get date and original proportion
+```
+
+
+---
+# When do birds arrive in Mass?
+
+.pull-left[
+
+### The logistic curve
+  
+```{r,message=F,warning=F}
+bhv_pred <- bhv_arrive%>%
+  group_by(year)%>%
+ reframe(
+   pred=predict(
+     nls(prop~SSlogis(j.day,Asym, xmid, scal)),
+     newdata=data.frame(j.day=min(j.day):max(j.day))),
+   j.day=min(j.day):max(j.day),
+  )%>%
+  left_join(bhv_arrive%>%dplyr::select(j.day,date,prop)) 
+```
+]
+
+
+.pull-right[
+
+non-linear least squares using `nls` package
+
+`SSlogis`: 
+
+- vector `input` *
+
+function then estimates initial values of: 
+
+- asymptote `Asym`
+- inflection point `xmid` 
+- scale `scal` 
+
+```{r, eval=F}
+SSlogis(input,Asym, xmid, scal)
+```
+
+ ]
+ 
+---
+# When do birds arrive in Mass?
+
+.pull-left[
+
+### The logistic curve
+  
+ 
+```{r,message=F,warning=F}
+p <- bhv_pred %>% 
+  ggplot(aes(j.day,prop,col=as.factor(year)),alpha=0.3) +
+  geom_point()+
+  geom_line(aes(j.day,pred,))
+```
+]
+
+.pull-left[
+```{r, echo=F,warning=F,message=F}
+print(p)
+```
+]
+
+---
+# When do birds arrive in Mass?
+
+.pull-left[
+
+### The logistic curve
+  
+At what proportion have birds arrived?
+ 
+```{r,message=F,warning=F}
+p <- p+
+  geom_hline(yintercept = 0.1)+
+   geom_hline(yintercept = 0.25)+
+  geom_hline(yintercept = 0.5)
+```
+]
+
+.pull-left[
+```{r, echo=F,warning=F,message=F}
+print(p)
+```
+]
+
+---
+# When do birds arrive in Mass?
+
+.pull-left[
+
+### The logistic curve
+  
+At what proportion have birds arrived?
+
+```{r,message=F,warning=F}
+bhv_arrive <- bhv_pred %>% 
+  group_by(year)%>%
+  filter(j.day==j.day[which.min(abs(pred-0.25))]) #
+
+```
+]
+
+.pull-left[
+```{r, echo=F}
+bhv_arrive %>% 
+  ggplot(aes(year,j.day))+geom_point()
+```
+]
+
+
+
