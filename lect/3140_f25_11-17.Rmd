@@ -1,0 +1,237 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 7: Birds of a Feather"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2024/18/11"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis"]
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+---
+# In class today 
+
+```{r,echo=FALSE,message=FALSE}
+
+
+library(tidyverse)
+library(MuMIn)
+library(rnoaa)
+library(data.table)
+library(lme4)
+library(car)
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Review WCR 11
+- Consider Linear Mixed-effect Modeling
+
+
+]
+
+.pull-right[
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Mixedandfixedeffects.jpg/692px-Mixedandfixedeffects.jpg)
+]
+
+
+
+---
+
+# Linear Mixed-effect Modeling
+
+.pull-left[
+
+
+- Other models assume independence of data
+- LME included fixed and random effects
+- Often termed repeated measures
+- Same model formulae, but
+  + `+(1|random_effect)`
+
+
+]
+
+.pull-right[
+```{r}
+iris %>% group_by(Species) %>% summarise_all(.funs = mean)
+``` 
+]
+  
+  
+
+
+---
+# Linear Mixed-effect Modeling
+
+
+
+How do a determine what fixed and random effects are?
+
+- Depends on the question
+  + what is independent?
+  + what data are dependent, autocorrelated, linked, etc.?
+
+
+
+```{r}
+iris %>% group_by(Species) %>% summarise_all(.funs = mean)
+``` 
+
+---
+# Linear Mixed-effect Modeling
+
+
+Say our question was, is sepal length different between species?
+
+- Species isn't random, it's part of the question
+
+
+
+```{r}
+fit <- lm(Sepal.Length~Petal.Length+Species,iris)
+
+anova(fit)
+``` 
+
+
+---
+
+# Linear Mixed-effect Modeling
+
+Say our question was, is sepal length a function of petal length?
+
+- Species is now random, it's not part of the question
+- Random intercepts (`(1|Species)`) . . .
+
+```{r}
+fit_ri <- lmer(Sepal.Length~Petal.Length+(1|Species),iris)
+
+library(car)
+Anova(fit_ri)
+``` 
+---
+# Linear Mixed-effect Modeling
+.pull-left[
+Random intercepts (`(1|Species)`)
+
+  - All species respond to Petal.Length similarly
+  - BUT each species has its own baseline sepal length
+  - Random intercepts = vertical shifts
+
+
+```{r}
+fit_ri <- lmer(Sepal.Length~Petal.Length+(1|Species),iris)
+
+library(sjPlot)
+
+p<- plot_model(fit_ri, type = "re", show.values = TRUE) +
+ggtitle("Random Intercepts: Baseline Differences Among Species")
+
+```
+]
+
+
+.pull-right[
+```{r,fig.height=4}
+print(p)
+
+```
+]
+---
+# Linear Mixed-effect Modeling
+.pull-left[
+Random intercepts (`(1|Species)`)
+
+  - All species respond to Petal.Length similarly
+  - BUT each species has its own baseline sepal length
+  - Random intercepts = vertical shifts
+
+```{r}
+p <- iris %>% 
+  ggplot(aes(Petal.Length,Sepal.Length,col=Species))+
+  geom_point()+
+  geom_smooth(method="lm")
+
+```
+]
+
+.pull-right[
+```{r, fig.height=4}
+print(p)
+```
+]
+
+
+---
+
+# Linear Mixed-effect Modeling
+
+Say our question was, is sepal length a function of petal length?
+
+- Species is now random, it's not part of the question
+- Random slopes (`(Petal.Length|Species)`) . . .
+
+```{r}
+fit_rs <- lmer(Sepal.Length~Petal.Length+(Petal.Length|Species),iris)
+
+
+Anova(fit_rs)
+``` 
+---
+# Linear Mixed-effect Modeling
+.pull-left[
+Random slopes (`(Petal.Length|Species)`)
+
+  - All species respond to Petal.Length differently
+  - Species vary in how sepal length increases with petal length (slopes)
+
+
+```{r}
+fit_ri <- lmer(Sepal.Length~Petal.Length+(1|Species),iris)
+p<- plot_model(fit_rs, type = "re", show.values = TRUE) +
+ggtitle("Random Slopes: Petal-Length Effect Varies Among Species")
+```
+]
+
+
+.pull-right[
+```{r,fig.height=4}
+print(p)
+
+```
+]
+---
+# Linear Mixed-effect Modeling
+.pull-left[
+Random slopes (`(Petal.Length|Species)`)
+
+  - All species respond to Petal.Length differently
+  - Species vary in how sepal length increases with petal length (slopes)
+
+```{r}
+p <- iris %>% 
+  ggplot(aes(Petal.Length,Sepal.Length,col=Species))+
+  geom_point()+
+  geom_smooth(method="lm")
+
+```
+]
+
+.pull-right[
+```{r, fig.height=4}
+print(p)
+```
+]
+
+
+

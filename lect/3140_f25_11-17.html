@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Phase II: Using Our Toolbox</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Christopher Kenaley" />
+    <script src="libs/header-attrs-2.29/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Phase II: Using Our Toolbox
+]
+.subtitle[
+## Module 7: Birds of a Feather
+]
+.author[
+### Dr. Christopher Kenaley
+]
+.institute[
+### Boston College
+]
+.date[
+### 2024/18/11
+]
+
+---
+
+# In class today 
+
+
+
+&lt;!-- Add icon library --&gt;
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"&gt;
+
+
+.pull-left[
+Today we'll ....
+
+- Review WCR 11
+- Consider Linear Mixed-effect Modeling
+
+
+]
+
+.pull-right[
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Mixedandfixedeffects.jpg/692px-Mixedandfixedeffects.jpg)
+]
+
+
+
+---
+
+# Linear Mixed-effect Modeling
+
+.pull-left[
+
+
+- Other models assume independence of data
+- LME included fixed and random effects
+- Often termed repeated measures
+- Same model formulae, but
+  + `+(1|random_effect)`
+
+
+]
+
+.pull-right[
+
+``` r
+iris %&gt;% group_by(Species) %&gt;% summarise_all(.funs = mean)
+```
+
+```
+## # A tibble: 3 × 5
+##   Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
+##   &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+## 1 setosa             5.01        3.43         1.46       0.246
+## 2 versicolor         5.94        2.77         4.26       1.33 
+## 3 virginica          6.59        2.97         5.55       2.03
+```
+]
+  
+  
+
+
+---
+# Linear Mixed-effect Modeling
+
+
+
+How do a determine what fixed and random effects are?
+
+- Depends on the question
+  + what is independent?
+  + what data are dependent, autocorrelated, linked, etc.?
+
+
+
+
+``` r
+iris %&gt;% group_by(Species) %&gt;% summarise_all(.funs = mean)
+```
+
+```
+## # A tibble: 3 × 5
+##   Species    Sepal.Length Sepal.Width Petal.Length Petal.Width
+##   &lt;fct&gt;             &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+## 1 setosa             5.01        3.43         1.46       0.246
+## 2 versicolor         5.94        2.77         4.26       1.33 
+## 3 virginica          6.59        2.97         5.55       2.03
+```
+
+---
+# Linear Mixed-effect Modeling
+
+
+Say our question was, is sepal length different between species?
+
+- Species isn't random, it's part of the question
+
+
+
+
+``` r
+fit &lt;- lm(Sepal.Length~Petal.Length+Species,iris)
+
+anova(fit)
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: Sepal.Length
+##               Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## Petal.Length   1 77.643  77.643 679.544 &lt; 2.2e-16 ***
+## Species        2  7.843   3.922  34.323 6.053e-13 ***
+## Residuals    146 16.682   0.114                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+
+---
+
+# Linear Mixed-effect Modeling
+
+Say our question was, is sepal length a function of petal length?
+
+- Species is now random, it's not part of the question
+- Random intercepts (`(1|Species)`) . . .
+
+
+``` r
+fit_ri &lt;- lmer(Sepal.Length~Petal.Length+(1|Species),iris)
+
+library(car)
+Anova(fit_ri)
+```
+
+```
+## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: Sepal.Length
+##               Chisq Df Pr(&gt;Chisq)    
+## Petal.Length 193.96  1  &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+---
+# Linear Mixed-effect Modeling
+.pull-left[
+Random intercepts (`(1|Species)`)
+
+  - All species respond to Petal.Length similarly
+  - BUT each species has its own baseline sepal length
+  - Random intercepts = vertical shifts
+
+
+
+``` r
+fit_ri &lt;- lmer(Sepal.Length~Petal.Length+(1|Species),iris)
+
+library(sjPlot)
+
+p&lt;- plot_model(fit_ri, type = "re", show.values = TRUE) +
+ggtitle("Random Intercepts: Baseline Differences Among Species")
+```
+]
+
+
+.pull-right[
+
+``` r
+print(p)
+```
+
+![](3140_f25_11-17_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+]
+---
+# Linear Mixed-effect Modeling
+.pull-left[
+Random intercepts (`(1|Species)`)
+
+  - All species respond to Petal.Length similarly
+  - BUT each species has its own baseline sepal length
+  - Random intercepts = vertical shifts
+
+
+``` r
+p &lt;- iris %&gt;% 
+  ggplot(aes(Petal.Length,Sepal.Length,col=Species))+
+  geom_point()+
+  geom_smooth(method="lm")
+```
+]
+
+.pull-right[
+
+``` r
+print(p)
+```
+
+```
+## `geom_smooth()` using formula = 'y ~ x'
+```
+
+![](3140_f25_11-17_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+# Linear Mixed-effect Modeling
+
+Say our question was, is sepal length a function of petal length?
+
+- Species is now random, it's not part of the question
+- Random slopes (`(Petal.Length|Species)`) . . .
+
+
+``` r
+fit_rs &lt;- lmer(Sepal.Length~Petal.Length+(Petal.Length|Species),iris)
+```
+
+```
+## boundary (singular) fit: see help('isSingular')
+```
+
+``` r
+Anova(fit_rs)
+```
+
+```
+## Analysis of Deviance Table (Type II Wald chisquare tests)
+## 
+## Response: Sepal.Length
+##               Chisq Df Pr(&gt;Chisq)    
+## Petal.Length 37.082  1  1.133e-09 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+---
+# Linear Mixed-effect Modeling
+.pull-left[
+Random slopes (`(Petal.Length|Species)`)
+
+  - All species respond to Petal.Length differently
+  - Species vary in how sepal length increases with petal length (slopes)
+
+
+
+``` r
+fit_ri &lt;- lmer(Sepal.Length~Petal.Length+(1|Species),iris)
+p&lt;- plot_model(fit_rs, type = "re", show.values = TRUE) +
+ggtitle("Random Slopes: Petal-Length Effect Varies Among Species")
+```
+]
+
+
+.pull-right[
+
+``` r
+print(p)
+```
+
+![](3140_f25_11-17_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+]
+---
+# Linear Mixed-effect Modeling
+.pull-left[
+Random slopes (`(Petal.Length|Species)`)
+
+  - All species respond to Petal.Length differently
+  - Species vary in how sepal length increases with petal length (slopes)
+
+
+``` r
+p &lt;- iris %&gt;% 
+  ggplot(aes(Petal.Length,Sepal.Length,col=Species))+
+  geom_point()+
+  geom_smooth(method="lm")
+```
+]
+
+.pull-right[
+
+``` r
+print(p)
+```
+
+```
+## `geom_smooth()` using formula = 'y ~ x'
+```
+
+![](3140_f25_11-17_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+]
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
