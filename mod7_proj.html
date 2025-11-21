@@ -626,27 +626,7 @@ records loaded to the list.</p>
 will take a while and it this is an <a
 href="https://bcorgbio.github.io/class/mod5_proj.html#Analysis_Part_III:_Evolution_in_Parallel">embarrassingly
 parallel</a> operation that could be done with multiple cores.</p>
-<pre class="r"><code>dat.l &lt;-list()
-
-for(s in species){
-  
-  ## setting the limit=0 returns no records but can give you the number of observations if you access the meta data
-n.obs &lt;-  occ_data(scientificName = s,year=y,month=m,limit=0,country=&quot;US&quot;,basisOfRecord = &quot;HUMAN_OBSERVATION&quot;,stateProvince=&quot;Massachusetts&quot;)$meta$count 
-
-print(n.obs)
-
-
-dat.l[[paste0(s)]] &lt;- occ_data(scientificName = s,year=y,month=m,
-                               limit=n.obs,country=&quot;US&quot;,
-                               basisOfRecord = &quot;HUMAN_OBSERVATION&quot;,
-                               stateProvince=&quot;Massachusetts&quot;)[[2]]
-
-
-}
-
-dat &lt;- rbindlist(dat.l,fill=T)
-
-head(dat)</code></pre>
+<pre class="r"><code> %&gt;% </code></pre>
 <p>Note that we store the number of observations for each species,
 ripped from the meta data using <code>occ_data()</code> with
 <code>limit=0</code>. This won’t return records, but will return the
@@ -1077,9 +1057,9 @@ mc.lmer2 &lt;- lmer(j.day~wk.tmin*wk.tmax*wk.wvec+(1|name),mc.arr.weath2,na.acti
 Anova(mc.lmer2) </code></pre>
 <p>Notice that we specified the random effect of location using
 <code>(1|name)</code>, allowing each location to have a separate effect
-on the slope of the relationship between <code>j.day</code> and the
-weather variable, <code>tmin</code>, <code>tmax</code>, and
-<code>wvec</code>. Specifying a random effect on slope is usually
+on the intercept of the relationship between <code>j.day</code> and the
+weather variables, <code>tmin</code>, <code>tmax</code>, and
+<code>wvec</code>. Specifying a random effect on intercepts is usually
 sufficient, especially for more complicated data sets. Notice also that
 we included interactions between all the fixed effects with
 <code>*</code>. As we’ve explored before, this is a good place to start,
@@ -1094,8 +1074,8 @@ leave) does reveal significant fixed effects of weather.</p>
 <p>Also have a look at the interactions at the end of the anova tables.
 For analysis including two-weak averages of weather values, there is an
 important interactions between the averages for <code>tmin</code>,
-<code>tmax</code> and <code>mvec</code>, that is, the degree (i.e.,
-slope) of response varies according all three weather values.</p>
+<code>tmax</code> and <code>mvec</code>, that is, the mean (i.e.,
+intercept) of response varies according all three weather values.</p>
 <p>In keeping with one thrust of the course, any one model is just one
 way to explain data and, thus, we should consider other models using our
 model-choice framework. So let’s do that, dropping weather variables
@@ -1132,7 +1112,7 @@ vector are significant predictors.</p>
 <div id="additional-operations-and-analyses" class="section level2">
 <h2>Additional Operations and Analyses</h2>
 <p>Your task is to repeat data compilation and analysis for five species
-of your choosing from this <a href="tgms.csv">list of TGMs</a>. The
+of your choosing from this <a href="tgms.csv">list of TGMs</a>*. The
 analysis should include the following components:</p>
 <ol style="list-style-type: decimal">
 <li>An operation that retrieves data for your five species through
@@ -1154,6 +1134,12 @@ average)</li>
 <code>dredge()</code>.</li>
 <li>Anova testing of the best-fit models from both data sets.</li>
 </ol>
+<p>*Note: These are common names and your GBIF query should be based on
+scientific name. Ornithologists are a restless bunch when it come to
+taxonomic splitting and lumping and, therefore, scientific names seem to
+change with the seasons. Be advised to try a search with the most recent
+scientific name used and then, if no records are found, use an older
+binomial</p>
 </div>
 </div>
 <div id="project-report" class="section level1">

@@ -106,27 +106,7 @@ This will be a rather labored search in that it might take 20 minutes to run thr
 To get get you started, here's what could be done. But note, this will take a while and it this is an  [embarrassingly parallel](https://bcorgbio.github.io/class/mod5_proj.html#Analysis_Part_III:_Evolution_in_Parallel) operation that could be done with multiple cores.
 
 ```{r,eval=FALSE}
-dat.l <-list()
-
-for(s in species){
-  
-  ## setting the limit=0 returns no records but can give you the number of observations if you access the meta data
-n.obs <-  occ_data(scientificName = s,year=y,month=m,limit=0,country="US",basisOfRecord = "HUMAN_OBSERVATION",stateProvince="Massachusetts")$meta$count 
-
-print(n.obs)
-
-
-dat.l[[paste0(s)]] <- occ_data(scientificName = s,year=y,month=m,
-                               limit=n.obs,country="US",
-                               basisOfRecord = "HUMAN_OBSERVATION",
-                               stateProvince="Massachusetts")[[2]]
-
-
-}
-
-dat <- rbindlist(dat.l,fill=T)
-
-head(dat)
+ %>% 
 ```
 
 Note that we store the number of observations for each species, ripped from the meta data using `occ_data()` with `limit=0`. This won't return records, but will return the meta data. We can then pass this number to `limit` in the subsequent use of `occ_data` to bypass the limit of 500, which is the default.
@@ -246,9 +226,14 @@ weather.d <- meteo_pull_monitors(sta.d$id,date_min = "2000-01-01")
 head(weather.d)
 ```
 
+```{r,include=F}
+saveRDS(weather.d,"data/weather_data.RDS")
+```
 Also notice that this produces a series of messages that indicate you've queried the NCDC API and downloaded cached files to a local location.
 
 We'll be looking at fourish weather parameters, the minimum and maximum temperature in tenths of $^o$C (`tmin`), average wind velocity in m$^{-s}$ (`awnd`), and direction of fastest 2-minute wind (`wdf2`). With the weather and eBird data in place, we can move on to preparing the data for analysis and the analysis itself.
+
+NOTE: For this year's class (2025), we have a problem with using `rnoaa`. It seems, as feared, to be no longer supported and many users with updated `R` versions have trouble installing it. Prof. Kenaley has run all the weather code above and the data can now be accessed [here](data/weather_data.RDS). No need to run the weather code! Just download and run `weather.d <- readRDS("weather_data.RDS")`.
 
 ## Data Analysis
 
@@ -442,9 +427,9 @@ dredge(mc.lmer3,fixed = c("wk.tmin","wk.tmax","wk.wvec"),)
 
 ```
 
-Notice that we specified the random effect of location using `(1|name)`, allowing each location to have a separate effect on the slope of the relationship between `j.day` and the weather variable, `tmin`, `tmax`, and `wvec`. Specifying a random effect on slope is usually sufficient, especially for more complicated data sets. Notice also that we included interactions between all the fixed effects with `*`. As we've explored before, this is a good place to start, assuming interactions. To assesses the significance of the fixed effects we've used the `Anova()` function from the `car` package that suits mixed-effect models. As you can see from running `Anova()` over our two models, including only one day of data at each location doesn't reveal any significant relationships between weather and arrival day; however, an analysis including a two-week average at each location (offset to reflect the soonest a bird would leave) does reveal significant fixed effects of weather.   
+Notice that we specified the random effect of location using `(1|name)`, allowing each location to have a separate effect on the intercept of the relationship between `j.day` and the weather variables, `tmin`, `tmax`, and `wvec`. Specifying a random effect on intercepts is usually sufficient, especially for more complicated data sets. Notice also that we included interactions between all the fixed effects with `*`. As we've explored before, this is a good place to start, assuming interactions. To assesses the significance of the fixed effects we've used the `Anova()` function from the `car` package that suits mixed-effect models. As you can see from running `Anova()` over our two models, including only one day of data at each location doesn't reveal any significant relationships between weather and arrival day; however, an analysis including a two-week average at each location (offset to reflect the soonest a bird would leave) does reveal significant fixed effects of weather.   
 
-Also have a look at the interactions at the end of the anova tables. For analysis including two-weak averages of weather values, there is an important interactions between the averages for `tmin`, `tmax` and `mvec`, that is, the degree (i.e., slope) of response varies according all three weather values.
+Also have a look at the interactions at the end of the anova tables. For analysis including two-weak averages of weather values, there is an important interactions between the averages for `tmin`, `tmax` and `mvec`, that is, the mean (i.e., intercept) of response varies according all three weather values.
 
 In keeping with one thrust of the course, any one model is just one way to explain data and, thus, we should consider other models using our model-choice framework. So let's do that, dropping weather variables from the two-week average analysis. With three variables, we have at least 6 possible combinations when we include all the possible interactions, if we so choose. Fortunately, the `dredge()` from the `MuMIn` package allows one to decompose a model to all the combinations of the terms, including interactions, and report important model fit values (e.g., AICc, $\Delta$AIC, and AIC$_w$). We'll ask `dredge()` to consider the our weather variables only with `fixed= c("wk.tmin","wk.tmax","wk.wvec")`.
 
@@ -469,7 +454,7 @@ To sum up this quick exploration of linear-mixed effects modeling for this one s
 
 ## Additional Operations and Analyses
 
-Your task is to repeat data compilation and analysis for five species of your choosing from this [list of TGMs](tgms.csv). The analysis should include the following components:
+Your task is to repeat data compilation and analysis for five species of your choosing from this [list of TGMs](tgms.csv)*. The analysis should include the following components:
   
   1. An operation that retrieves data for your five species through `occ_data()`. Keep the same values (i.e., state of MA during April and May, in the years 2000-2023). This can be a `for` loop, but you may want to explore using some parallel processing with something like `mclapply()` for example.
   2. Logistic modeling operations to predict arrival time (the Julian day when 25% of the population has arrived) for each year and for each species.
@@ -478,6 +463,7 @@ Your task is to repeat data compilation and analysis for five species of your ch
   5. Model-testing operations of both data sets using `dredge()`.
   6. Anova testing of the best-fit models from both data sets. 
   
+*Note: These are common names and your GBIF query should be based on scientific name. Ornithologists are a restless bunch when it come to taxonomic splitting and lumping and, therefore, scientific names seem to change with the seasons. Be advised to try a search with the most recent scientific name used and then, if no records are found, use an older binomial
 
 # Project Report
 
