@@ -807,6 +807,13 @@ velocity in m<span class="math inline">\(^{-s}\)</span>
 (<code>awnd</code>), and direction of fastest 2-minute wind
 (<code>wdf2</code>). With the weather and eBird data in place, we can
 move on to preparing the data for analysis and the analysis itself.</p>
+<p>NOTE: For this year’s class (2025), we have a problem with using
+<code>rnoaa</code>. It seems, as feared, to be no longer supported and
+many users with updated <code>R</code> versions have trouble installing
+it. Prof. Kenaley has run all the weather code above and the data can
+now be accessed <a href="data/weather_data.RDS">here</a>. No need to run
+the weather code! Just download and run
+<code>weather.d &lt;- readRDS("weather_data.RDS")</code>.</p>
 </div>
 <div id="data-analysis" class="section level2">
 <h2>Data Analysis</h2>
