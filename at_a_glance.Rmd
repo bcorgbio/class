@@ -99,7 +99,7 @@ All assignments are due at 11:59 on the specified date.
 
 || Monday <br> 11/24 |  Tuesday <br>11/25    | Wednesday<br>  11/26 | Thursday <br> 11/27| Friday <br> 11/28 |Saturday<br> 11/29 | Sunday<br> 11/30
  |:--------:|:--------: |:--------:|:--------: |:--------:|:--------:|:--------:|:--------: 
-**Week 14** | | | Thanksgiving Break <br> <br>| Thanksgiving Break | Thanksgiving Break <br> <br>| | 
+**Week 14** |[slides](lect\3140_f25_11-24.html) | | Thanksgiving Break <br> <br>| Thanksgiving Break | Thanksgiving Break <br> <br>| | 
 ||||||||
 
 ---

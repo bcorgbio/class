@@ -1,0 +1,193 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 8: Final Countdown"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2024/24/11"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis"]
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+---
+# In class today 
+
+```{r,echo=FALSE,message=FALSE}
+
+
+library(tidyverse)
+library(MuMIn)
+library(rnoaa)
+library(data.table)
+library(lme4)
+library(car)
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Questions Re Proj 7
+- Think about Final Projects
+
+
+]
+
+.pull-right[
+
+![](https://upload.wikimedia.org/wikipedia/en/2/22/The_Final_Countdown_single.png)
+]
+
+
+
+---
+# Final Projects
+
+.pull-left[
+### Final Project Objectives/Goals
+
+- project of your own design
+- answer a question using data from previously published research/vetted database
+- comparative topic in organismal biology
+- scope that permits data collection, analysis, and write up withina few short weeks 
+- requires you to first delve into the the scientific literature
+- Follows the same format and requirements of previous reports (4-5 pages)
+
+]
+
+.pull-right[
+
+![](https://upload.wikimedia.org/wikipedia/en/2/22/The_Final_Countdown_single.png)
+
+]
+
+---
+# Final Projects
+
+.pull-left[
+### Final Project Timeline
+
+- Groups chosen by you and me in needed (today/tomorrow)
+- Group meets soon to ideate/devise questions
+- Group meets after break (Dec 1--5) with Prof. K to refine question and find data
+- Project due Monday, 12/15, 11:59 PM
+- Class from here on out devoted to final project work (meetings w Prof. K if needed)
+
+]
+
+.pull-right[
+
+![](https://upload.wikimedia.org/wikipedia/en/2/22/The_Final_Countdown_single.png)
+
+]
+  
+  
+
+---
+# Final Projects
+
+.pull-left[
+### Finding a question
+
+- Inspiration typically from previous projects
+- But, have a burning question in comparative biology? Time to shine!
+- Reading literature helps!! 
+- If all else fails, Prof. K has more questions than answers
+
+]
+
+.pull-right[
+
+![](https://upload.wikimedia.org/wikipedia/en/2/22/The_Final_Countdown_single.png)
+
+]
+  
+---
+# Final Projects
+
+.pull-left[
+### Finding a question
+
+**Is phenology of TGM  migration changing consistently across space?**
+  - Spatial analysis (counties? states?)
+  - Logistic models
+  - RF models
+  - Join lab and publish?
+]
+
+.pull-right[
+
+![](https://www.allaboutbirds.org/guide/assets/photo/297045621-720px.jpg)
+
+]
+
+
+---
+# Final Projects
+
+.pull-left[
+### Finding a question
+
+**Does [name body part] shape of [name lineage] vary by [name ecological or physiological trait]?**
+
+  - *Feeding mode/salinity habitat and body shape in fishes
+  - Ear bone (otolith) shape evolution in fishes
+  - Allometry of fins size in fishes
+  - Join lab and publish?
+]
+
+.pull-right[
+
+![](https://thefisheriesblog.com/wp-content/uploads/2016/09/centrarchid-genera.jpg?w=940&h=529)
+
+]
+
+---
+# Final Projects
+
+.pull-left[
+### Finding a question
+
+**Does [name body part] shape of [name lineage] vary by [name ecological or physiological trait]?**
+
+  - Feeding mode/salinity habitat and body shape in fishes
+  - *Ear bone (otolith) shape evolution in fishes
+  - Allometry of fins size in fishes
+  - Join lab and publish?
+]
+
+.pull-right[
+
+![](https://palaeo-electronica.org/content/images/1429/figure2.jpg)
+
+]
+
+
+
+---
+# Final Projects
+
+.pull-left[
+### Finding a question
+
+**Does [name body part] shape of [name lineage] vary by [name ecological or physiological trait]?**
+
+  - Feeding mode/salinity habitat and body shape in fishes
+  - Ear bone (otolith) shape evolution in fishes
+  - *Allometry of fins size in fishes
+  - Join lab and publish?
+]
+
+.pull-right[
+
+![](https://www.dnr.sc.gov/fish/assets/FishAnatomy.jpg)
+
+]
+
+
+
