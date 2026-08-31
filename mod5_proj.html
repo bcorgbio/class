@@ -13,7 +13,7 @@
 
 <title>Module 5 Project</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -403,7 +403,7 @@ div.tocify {
   <a href="https://github.com/orgs/bcorgbio/discussions">BIOL 3140 Discussion</a>
 </li>
 <li>
-  <a href="https://bostoncollege.instructure.com/courses/1672404/gradebook">Grades on Canvas</a>
+  <a href="https://bostoncollege.instructure.com/courses/1687164/gradebook">Grades on Canvas</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -416,7 +416,7 @@ div.tocify {
       <a href="peer_contributions.html">Peer Contribution Evaluation Guidelines</a>
     </li>
     <li>
-      <a href="https://forms.gle/FirWiqsQGvANSWsG6">Author Contribution Evaluation Form</a>
+      <a href="https://forms.gle/7uVJ3vMtvjFFNvsN8">Author Contribution Evaluation Form</a>
     </li>
   </ul>
 </li>
@@ -626,20 +626,10 @@ each.The habitat data for our study come from <span
 class="citation">Compagno (1984)</span> and <span
 class="citation">Compagno (2001)</span>. Let’s load these data now so we
 have it handy.</p>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.3.0
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;)</code></pre>
+<pre class="r"><code>library(tidyverse)
+shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;)</code></pre>
 <pre><code>## Rows: 188 Columns: 8
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ───────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (5): sp, file_name, depth, habitat, ref
 ## dbl (3): id, size, depth_max
@@ -792,8 +782,8 @@ have a folder named <code>shark_points</code>. Our first operation will
 be to list the files in that directory and then read them in, all at
 once.</p>
 <pre class="r"><code>library(geomorph)</code></pre>
+<pre><code>## Warning: package &#39;geomorph&#39; was built under R version 4.5.2</code></pre>
 <pre><code>## Loading required package: RRPP</code></pre>
-<pre><code>## Loading required package: rgl</code></pre>
 <pre><code>## Loading required package: Matrix</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;Matrix&#39;</code></pre>
@@ -813,7 +803,7 @@ xy &lt;- read_csv(f,id=&quot;file&quot;) %&gt;%
 <pre><code>## New names:
 ## • `` -&gt; `...1`</code></pre>
 <pre><code>## Rows: 2632 Columns: 15
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ───────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (14): ...1, Area, Mean, Mode, X, Y, XM, YM, Perim., Circ., Slice, AR, Ro...
 ## 
@@ -1030,7 +1020,7 @@ and superimposed landmarks for all the example specimens.</p>
 ## 
 ## Making projections... Finished!</code></pre>
 <pre class="r"><code>plot(ldk_al)</code></pre>
-<p><img src="mod5_proj_files/figure-html/gpa-1.png" width="672" /></p>
+<p><img src="mod5_proj_files/figure-html/gpa-1.png" alt="" width="672" /></p>
 </div>
 <div id="analysis-part-i-a-morphospace" class="section level3">
 <h3>Analysis Part I: A Morphospace</h3>
@@ -1066,7 +1056,7 @@ more.</p>
 result.</p>
 <pre class="r"><code>pca &lt;- gm.prcomp(ldk_al$coords)
 plot(pca)</code></pre>
-<p><img src="mod5_proj_files/figure-html/pca-1.png" width="672" /></p>
+<p><img src="mod5_proj_files/figure-html/pca-1.png" alt="" width="672" /></p>
 <p>Wow, now we’re getting close to the <span class="citation">Sternes
 and Shimada (2020)</span> results and answering, at least in part, one
 of our questions: <strong>Does habitat result in different body
@@ -1080,7 +1070,7 @@ specify a different combination of PCs, say 1 and 3, we get a different
 plot, of course. Notice the variance explained by PC3 is predictably
 less than that of PC2.</p>
 <pre class="r"><code>plot(pca,1,3)</code></pre>
-<p><img src="mod5_proj_files/figure-html/pc2-1.png" width="672" /></p>
+<p><img src="mod5_proj_files/figure-html/pc2-1.png" alt="" width="672" /></p>
 <p>OK, so based on our PC plots, it looks as if we have two groupings,
 just like <span class="citation">Sternes and Shimada (2020)</span>. But,
 do these groups correspond to largely pelagic vs. benthic species? It’s
@@ -1138,10 +1128,10 @@ and use <code>ggplot</code> to visualize our results with respect to
 habitat.</p>
 <pre class="r"><code>PCA %&gt;% 
   ggplot(aes(Comp1,Comp2,col=habitat))+geom_point()</code></pre>
-<p><img src="mod5_proj_files/figure-html/ggpca-1.png" width="672" /></p>
+<p><img src="mod5_proj_files/figure-html/ggpca-1.png" alt="" width="672" /></p>
 <pre class="r"><code>PCA %&gt;% 
   ggplot(aes(Comp1,Comp3,col=habitat))+geom_point()</code></pre>
-<p><img src="mod5_proj_files/figure-html/ggpca-2.png" width="672" /></p>
+<p><img src="mod5_proj_files/figure-html/ggpca-2.png" alt="" width="672" /></p>
 <p>Voila! For morphospace described by PCs 1, 2, and 3, it appeears that
 pelagic species inhabit a high PC1 score and never a low PC1 score.</p>
 <p>This is wonderful, but you may be asking, “What is PC1 (or any other)
@@ -1179,7 +1169,7 @@ title(&quot;min PC2 warp&quot;,cex=0.6)
 #plot the change form the concensus to max of PC2
 plotRefToTarget(M, ldk_al$coords[,,max_PC2], mag = 1,method=&quot;vector&quot;,label = T)
 title(&quot;max PC3 warp&quot;,cex=0.6)</code></pre>
-<p><img src="mod5_proj_files/figure-html/rw-1.png" width="672" /></p>
+<p><img src="mod5_proj_files/figure-html/rw-1.png" alt="" width="672" /></p>
 <p>So, it looks like PC1 describes a shape change involving the
 placement of the dorsal fin (points 2-4) and pelvic find (points 9 and
 10). Lower values represent of PC1 represent a dorsal and pelvic fin
@@ -1207,13 +1197,7 @@ p1 &lt;- PCA %&gt;%
 
 
 p1 + geom_image(data=PC_extremes,aes(Comp1,Comp2,image=pngs), size=.30,inherit.aes = F)+theme_classic()+xlim(range(PC_extremes$Comp1)*1.5)+ylim(range(PC_extremes$Comp2)*1.25)+theme(legend.position = c(0.1,0.2))</code></pre>
-<pre><code>## Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2
-## 3.5.0.
-## ℹ Please use the `legend.position.inside` argument of `theme()` instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
-<p><img src="mod5_proj_files/figure-html/shape%20change-1.png" width="672" /></p>
+<p><img src="mod5_proj_files/figure-html/shape%20change-1.png" alt="" width="672" /></p>
 </div>
 <div id="analysis-part-ii" class="section level3">
 <h3>Analysis: Part II</h3>
@@ -1311,20 +1295,8 @@ al. (2018)</span> mentioned above</a>. Once this tree file is
 downloaded, let’s load, read it, in and store it to an object named
 <code>phy</code>. Notice you’ll need the <code>phytools</code> package
 and the function <code>readNexus()</code>.</p>
-<pre class="r"><code>library(phytools)</code></pre>
-<pre><code>## Loading required package: ape</code></pre>
-<pre><code>## 
-## Attaching package: &#39;ape&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     where</code></pre>
-<pre><code>## Loading required package: maps</code></pre>
-<pre><code>## 
-## Attaching package: &#39;maps&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     map</code></pre>
-<pre class="r"><code>phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
+<pre class="r"><code>library(phytools)
+phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
 length(phy)</code></pre>
 <pre><code>## [1] 500</code></pre>
 <p>Next let’s, restrict our tree file to those species in our data set.
@@ -1590,7 +1562,7 @@ the posterior distribution of rates for each habitat like so.</p>
 <pre class="r"><code>er %&gt;% 
   pivot_longer(benthic:pelagic) %&gt;% 
   ggplot(aes(name,value)) + geom_boxplot()</code></pre>
-<p><img src="mod5_proj_files/figure-html/ploter-1.png" width="672" /></p>
+<p><img src="mod5_proj_files/figure-html/ploter-1.png" alt="" width="672" /></p>
 <p>Indeed it appears that when we estimate evolutionary rates for 10
 random trees, accounting for uncertainty in species relationships,
 pelagic species evolve slower than benthic ones.</p>
@@ -1606,13 +1578,17 @@ the 220 we hope to include. The figure below indicates that including
 all 220 species and using all 500 trees would take ~2500 s or about 40
 minutes!!!</p>
 <p><br></p>
-<pre><code>## Warning in geom_text(aes(50, 500, label = &quot;computed&quot;), inherit.aes = F): All aesthetics have length 1, but the data has 48 rows.
-## ℹ Please consider using `annotate()` or provide this layer with data containing
+<pre><code>## Warning in geom_text(aes(50, 500, label = &quot;computed&quot;), inherit.aes = F): All aesthetics have length 1, but the data
+## has 48 rows.
+## ℹ Please consider using `annotate()` or
+##   provide this layer with data containing
 ##   a single row.</code></pre>
-<pre><code>## Warning in geom_text(aes(175, 2200, label = &quot;predicted&quot;), inherit.aes = F): All aesthetics have length 1, but the data has 48 rows.
-## ℹ Please consider using `annotate()` or provide this layer with data containing
+<pre><code>## Warning in geom_text(aes(175, 2200, label = &quot;predicted&quot;), inherit.aes = F): All aesthetics have length 1, but the data
+## has 48 rows.
+## ℹ Please consider using `annotate()` or
+##   provide this layer with data containing
 ##   a single row.</code></pre>
-<img src="mod5_proj_files/figure-html/timescale-1.png" width="672" />
+<img src="mod5_proj_files/figure-html/timescale-1.png" alt="" width="672" />
 <br>
 <center>
 The polynomial relationship between time and number of taxa in

@@ -145,7 +145,7 @@ class:  top
 class:  top
 # Teams and team responsibilities
 
-## Teams of 4 students assigned randomly at the beginning of each module. 
+## Teams of 4 students assigned randomly at the beginning of each module 
 
 This team must establish two things:
 

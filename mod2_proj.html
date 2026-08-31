@@ -13,7 +13,7 @@
 
 <title>Module 2 Project</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -380,7 +380,7 @@ div.tocify {
   <a href="https://github.com/orgs/bcorgbio/discussions">BIOL 3140 Discussion</a>
 </li>
 <li>
-  <a href="https://bostoncollege.instructure.com/courses/1672404/gradebook">Grades on Canvas</a>
+  <a href="https://bostoncollege.instructure.com/courses/1687164/gradebook">Grades on Canvas</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -393,7 +393,7 @@ div.tocify {
       <a href="peer_contributions.html">Peer Contribution Evaluation Guidelines</a>
     </li>
     <li>
-      <a href="https://forms.gle/FirWiqsQGvANSWsG6">Author Contribution Evaluation Form</a>
+      <a href="https://forms.gle/7uVJ3vMtvjFFNvsN8">Author Contribution Evaluation Form</a>
     </li>
   </ul>
 </li>
@@ -443,23 +443,14 @@ href="pseed.calibration.csv">this link</a>.</li>
 </ul>
 <p>Let’s do so and then comment on the origin and importance of the
 data.</p>
-<pre class="r"><code>library(tidyverse) # Remember to load your libraries!</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.2     ✔ tibble    3.3.0
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.4     
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()
-## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>#Remember to set your working directory, too!
+<pre class="r"><code>library(tidyverse) # Remember to load your libraries!
+
+#Remember to set your working directory, too!
 
 #load data
 pseed &lt;- read_csv(&quot;pseed.fin.amps.csv&quot;)</code></pre>
 <pre><code>## Rows: 73352 Columns: 7
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ───────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (3): fish, date, fin
 ## dbl (4): speed, frame, amp, amp.bl
@@ -468,7 +459,7 @@ pseed &lt;- read_csv(&quot;pseed.fin.amps.csv&quot;)</code></pre>
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>pseed.bl &lt;- read_csv(&quot;pseed.lengths.csv&quot;)</code></pre>
 <pre><code>## Rows: 3 Columns: 2
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ───────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (1): fish
 ## dbl (1): bl
@@ -477,7 +468,7 @@ pseed &lt;- read_csv(&quot;pseed.fin.amps.csv&quot;)</code></pre>
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>speeds &lt;- read_csv(&quot;pseed.calibration.csv&quot;)</code></pre>
 <pre><code>## Rows: 119 Columns: 3
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ───────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (3): vol, m.s, cm.s
 ## 
@@ -785,7 +776,7 @@ included in <code>tidyverse</code> to plot specific fin amplitude
 (<code>bl.s</code>).</p>
 <pre class="r"><code>pseed2%&gt;%
   ggplot(aes(x=bl.s,y=amp.bl))+geom_point()</code></pre>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-7-1.png" alt="" width="672" />
 First of all, this is some sort of a mess: just a bunch of points for
 each speed. But, let’s briefly breakdown what we did with
 <code>ggplot</code> (in our next module, we’ll go into more specifics).
@@ -821,7 +812,7 @@ the geometry being plotted. Let’s try a really low <code>alpha</code> of
 0.01, something like:</p>
 <pre class="r"><code>pseed2%&gt;%
   ggplot(aes(x=bl.s,y=amp.bl))+geom_point(alpha=0.01)</code></pre>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-8-1.png" alt="" width="672" /></p>
 <p>One thing should be apparent here: there are a lot of low values for
 each speed and many fewer high values. Duh! This is a flapping fin! That
 is, it moves through a range of motion from a low amplitude to high and
@@ -832,7 +823,7 @@ each frame by plotting these values.</p>
 <pre class="r"><code>pseed2%&gt;%
   filter(date==&quot;2019-06-17-151149&quot;, fin==&quot;L&quot;)%&gt;%
   ggplot(aes(x=frame,y=amp.bl))+geom_point()</code></pre>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-9-1.png" alt="" width="672" /></p>
 <p>Yep, the fin amplitude is oscillating for sure, just like you would
 predict a flapping fin would. Maybe it’s not simply amplitude we should
 be looking at.</p>
@@ -1007,7 +998,7 @@ the curvature (i.e., second derivative) of the curve is 0) in the
 <pre class="r"><code>pseed2%&gt;%
   filter(date==&quot;2019-06-17-151149&quot;, fin==&quot;L&quot;)%&gt;%
   ggplot(aes(x=frame,y=amp.bl))+geom_point()+geom_vline(xintercept = fget(f1)$crit.pts)</code></pre>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-14-1.png" alt="" width="672" /></p>
 <p>This is pretty good. We get all the peaks (the maxima of amplitude
 we’re after). We’re missing some troughs and have a few lines close to
 one another, likely due to noise. But, this isn’t a problem because
@@ -1077,7 +1068,7 @@ operation of <code>crit.pts</code>.</p>
   filter(date==&quot;2019-06-17-151149&quot;, fin==&quot;L&quot;)%&gt;%
   mutate(peak=frame %in% f.tib$peaks)%&gt;%
   ggplot(aes(x=frame,y=amp.bl,col=peak))+geom_point()</code></pre>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-17-1.png" alt="" width="672" /></p>
 <p>Looks like we have a rather sophisticated and reliable way to find
 peaks in the amplitude data that we can then use to calculate the max
 amplitude across a set of frames while the fin is oscillating. However,
@@ -1123,8 +1114,9 @@ run the following and break it down.</p>
   group_by(date,fin)%&gt;%
   mutate(peak=frame %in% find.peaks(frame,amp.bl))%&gt;%
   ggplot(aes(x=frame,y=amp.bl,alpha=peak,col=peak))+geom_point()+facet_grid(date~fin)</code></pre>
-<pre><code>## Warning: Using alpha for a discrete variable is not advised.</code></pre>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<pre><code>## Warning: Using alpha for a discrete variable is not
+## advised.</code></pre>
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-20-1.png" alt="" width="672" /></p>
 <p>After the filter, we:</p>
 <ol style="list-style-type: decimal">
 <li>Grouped the data by <code>date</code> (experiment) and
@@ -1162,7 +1154,7 @@ represents a linear regression model (<code>method="lm"</code>).</p>
 <pre class="r"><code>pseed.max%&gt;%
   ggplot(aes(x=bl.s,y=amp.bl))+geom_point()+geom_smooth(method=&quot;lm&quot;)</code></pre>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-22-1.png" alt="" width="672" /></p>
 <p>There we have it. It’s a little noisy, but it looks like amplitude
 does indeed <em>decrease</em> with speed! To confirm, maybe we want to
 run a simple statistical test on this model, an ANOVA, say:</p>
@@ -1205,10 +1197,17 @@ regression line for each fish. Something like:</p>
   group_by(fish, bl.s) %&gt;%
   summarize(mean.max=mean(amp.bl)) %&gt;%
   ggplot(aes(x=bl.s,y=mean.max,col=fish))+geom_point()+geom_smooth(method=&quot;lm&quot;)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;fish&#39;. You can override using the
-## `.groups` argument.
-## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<pre><code>## `summarise()` has regrouped the output.
+## `geom_smooth()` using formula = &#39;y ~ x&#39;
+## ℹ Summaries were computed grouped by fish
+##   and bl.s.
+## ℹ Output is grouped by fish.
+## ℹ Use `summarise(.groups = &quot;drop_last&quot;)`
+##   to silence this message.
+## ℹ Use `summarise(.by = c(fish, bl.s))` for
+##   per-operation grouping
+##   (`?dplyr::dplyr_by`) instead.</code></pre>
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-24-1.png" alt="" width="672" /></p>
 </div>
 <div id="pivoting-to-different-questions" class="section level1">
 <h1>Pivoting to Different Questions</h1>

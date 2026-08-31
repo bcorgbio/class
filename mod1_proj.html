@@ -13,7 +13,7 @@
 
 <title>Module 1 Project</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -380,7 +380,7 @@ div.tocify {
   <a href="https://github.com/orgs/bcorgbio/discussions">BIOL 3140 Discussion</a>
 </li>
 <li>
-  <a href="https://bostoncollege.instructure.com/courses/1672404/gradebook">Grades on Canvas</a>
+  <a href="https://bostoncollege.instructure.com/courses/1687164/gradebook">Grades on Canvas</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -393,7 +393,7 @@ div.tocify {
       <a href="peer_contributions.html">Peer Contribution Evaluation Guidelines</a>
     </li>
     <li>
-      <a href="https://forms.gle/FirWiqsQGvANSWsG6">Author Contribution Evaluation Form</a>
+      <a href="https://forms.gle/7uVJ3vMtvjFFNvsN8">Author Contribution Evaluation Form</a>
     </li>
   </ul>
 </li>
@@ -464,12 +464,12 @@ and working with HOPR. These initial lines of code would look like
 this:</p>
 <pre class="r"><code>library(ggplot2)
 library(tidyverse)</code></pre>
-<pre><code>## ── Attaching core tidyverse packages ─────────────────
-## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ lubridate 1.9.4     ✔ tibble    3.3.0
-## ✔ purrr     1.0.4     ✔ tidyr     1.3.1
-## ── Conflicts ──────────────── tidyverse_conflicts() ──
+<pre><code>## ── Attaching core tidyverse packages ──────
+## ✔ dplyr     1.2.0     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ lubridate 1.9.5     ✔ tibble    3.3.1
+## ✔ purrr     1.2.1     ✔ tidyr     1.3.2
+## ── Conflicts ───── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
@@ -554,7 +554,8 @@ part of the directory path as in this code, I would’ve gotten the
 following output:</p>
 <pre class="r"><code>library(ggplot2)
 setwd(&quot;~/Chris/Documents/bc/3140/scale&quot;)</code></pre>
-<pre><code>## Error in setwd(&quot;~/Chris/Documents/bc/3140/scale&quot;): cannot change working directory</code></pre>
+<pre><code>## Error in `setwd()`:
+## ! cannot change working directory</code></pre>
 </div>
 <div id="loading-data" class="section level1">
 <h1>Loading Data</h1>
@@ -925,7 +926,7 @@ operation.</p>
  ggplot()+geom_boxplot(aes(x=quadrant,y=N))+ggtitle(i)
  print(p)
 }</code></pre>
-<p><img src="mod1_proj_files/figure-html/unnamed-chunk-18-1.png" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-2.png" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-3.png" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-4.png" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-5.png" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-6.png" width="672" /></p>
+<p><img src="mod1_proj_files/figure-html/unnamed-chunk-18-1.png" alt="" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-2.png" alt="" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-3.png" alt="" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-4.png" alt="" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-5.png" alt="" width="672" /><img src="mod1_proj_files/figure-html/unnamed-chunk-18-6.png" alt="" width="672" /></p>
 <p>Here, for each value <code>i</code> in <code>species</code> we passed
 <code>dat</code> through a filter where <code>species==i</code>, plotted
 a boxplot using <code>ggplot</code> where x is the quadrant, y is the

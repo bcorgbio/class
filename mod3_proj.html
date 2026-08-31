@@ -13,7 +13,7 @@
 
 <title>Module 3 Project</title>
 
-<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -403,7 +403,7 @@ div.tocify {
   <a href="https://github.com/orgs/bcorgbio/discussions">BIOL 3140 Discussion</a>
 </li>
 <li>
-  <a href="https://bostoncollege.instructure.com/courses/1672404/gradebook">Grades on Canvas</a>
+  <a href="https://bostoncollege.instructure.com/courses/1687164/gradebook">Grades on Canvas</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -416,7 +416,7 @@ div.tocify {
       <a href="peer_contributions.html">Peer Contribution Evaluation Guidelines</a>
     </li>
     <li>
-      <a href="https://forms.gle/FirWiqsQGvANSWsG6">Author Contribution Evaluation Form</a>
+      <a href="https://forms.gle/7uVJ3vMtvjFFNvsN8">Author Contribution Evaluation Form</a>
     </li>
   </ul>
 </li>
@@ -629,7 +629,7 @@ data set.</p>
 <pre class="r"><code>anole2%&gt;%
   ggplot(aes(SVL,HTotal))+geom_point()+geom_smooth(method=&quot;lm&quot;)</code></pre>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="mod3_proj_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="mod3_proj_files/figure-html/unnamed-chunk-3-1.png" alt="" width="672" /></p>
 <p>Remember from R4DS that we have to establish the aesthetic of the
 plot and then add geometries with <code>+</code> to plot. Here we
 established the aesthetic in <code>aes()</code> for our
@@ -656,7 +656,7 @@ coef(anole.lm)</code></pre>
 ##    4.005167    0.639719</code></pre>
 <pre class="r"><code>anole2%&gt;%
 ggplot(aes(SVL,HTotal))+geom_point()+geom_abline(slope=coef(anole.lm)[2],intercept=coef(anole.lm)[1],col=&quot;blue&quot;)</code></pre>
-<p><img src="mod3_proj_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="mod3_proj_files/figure-html/unnamed-chunk-4-1.png" alt="" width="672" /></p>
 <p>Notice how the model is represented by the relationship
 <code>HTotal~SVL</code> Using <code>~</code> is a standard convention in
 R for model formulae where a variable to the left of <code>~</code> is
@@ -677,7 +677,7 @@ pred.lm &lt;-tibble(
 
 anole2%&gt;%
 ggplot(aes(SVL,HTotal))+geom_point()+geom_point(data=pred.lm,aes(SVL,H.pred),col=&quot;blue&quot;)</code></pre>
-<p><img src="mod3_proj_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="mod3_proj_files/figure-html/unnamed-chunk-5-1.png" alt="" width="672" /></p>
 <pre class="r"><code>summary(anole.lm)</code></pre>
 <pre><code>## 
 ## Call:
@@ -896,7 +896,7 @@ for each ecomorph in <code>ggplot</code>:</p>
 <pre class="r"><code>anole.log%&gt;%
   ggplot(aes(HTotal,SVL,col=Ecomorph2))+geom_point()+geom_smooth(method=&quot;lm&quot;)</code></pre>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="mod3_proj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="mod3_proj_files/figure-html/unnamed-chunk-9-1.png" alt="" width="672" /></p>
 <p>Most of what we did here should be rather familiar by now. We passed
 our log-transformed data with the pipe to a <code>ggplot</code> call,
 specifying <code>SVL</code> for the x values and <code>HTotal</code> for
@@ -1048,7 +1048,7 @@ column that contains the residuals. Notice that we also redefined
 let’s plot the residuals against <code>Ecomorph2</code>.</p>
 <pre class="r"><code>anole.log%&gt;%
   ggplot(aes(Ecomorph2,res))+geom_point()</code></pre>
-<p><img src="mod3_proj_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="mod3_proj_files/figure-html/unnamed-chunk-13-1.png" alt="" width="672" /></p>
 <p>In this <code>ggplot()</code> operation, we established the x
 variable as <code>Ecomorph2</code> and y as the residual
 (<code>res</code>).</p>
@@ -1064,7 +1064,7 @@ range.</p>
 <pre class="r"><code>p.eco &lt;- anole.log%&gt;%
 ggplot(aes(x=Ecomorph2,y=res)) +geom_boxplot()
 print(p.eco)</code></pre>
-<p><img src="mod3_proj_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="mod3_proj_files/figure-html/unnamed-chunk-14-1.png" alt="" width="672" /></p>
 <p>This is a great summary of our hindlimb-SVL residual data according
 to ecomorph. But, often, as biologists, we prefer to visualize the mean
 of values in our a priori groups rather than median. One asset of
@@ -1073,7 +1073,7 @@ Because we saved out plot as <code>p.eco</code>, we can simply add a
 geometry that includes a representation of mean residual for each
 ecomorph.</p>
 <pre class="r"><code>p.eco+ geom_boxplot() +stat_summary(fun=mean, geom=&quot;point&quot;, size=3)</code></pre>
-<p><img src="mod3_proj_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="mod3_proj_files/figure-html/unnamed-chunk-15-1.png" alt="" width="672" /></p>
 <p>Here we added a point with the <code>stat_summary()</code> geometry.
 This applies a summarizing function to the already established group
 (established by <code>x=Ecomorph2</code>) and plots the value of the
@@ -1115,7 +1115,7 @@ tree under some evolutionary model.</p>
 <p>Let’s first have a look at the tree.</p>
 <pre class="r"><code>anole.tree &lt;- read.tree(&quot;anole.tre&quot;)
 plot(anole.tree,cex=0.4)</code></pre>
-<p><img src="mod3_proj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="mod3_proj_files/figure-html/unnamed-chunk-16-1.png" alt="" width="672" /></p>
 <p>Here we read in the tree using <code>read.tree</code> from the
 <code>ape</code> package. This stores the tree as a <code>phylo</code>
 object, a list of branch order, branch lengths, and tip labels. We’ll
@@ -1141,7 +1141,11 @@ class="math inline">\(\sigma^2\)</span> on the magnitude of change over
 time, consider the following 4 simulations each with a 100 simulations
 with different value of <span class="math inline">\(\sigma^2\)</span>
 ranging from 1 to 20:</p>
-<p><img src="mod3_proj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<pre><code>## Warning in fortify(data, ...): Arguments in `...` must be used.
+## ✖ Problematic argument:
+## • alpha = 0.01
+## ℹ Did you misspell an argument name?</code></pre>
+<p><img src="mod3_proj_files/figure-html/unnamed-chunk-17-1.png" alt="" width="672" /></p>
 <p>Notice, as Harmon pointed out in hist PCM book, this resembles a
 genetic drift model and indeed BM can be used to model a process of
 trait evolution under genetic drift.</p>
@@ -1295,7 +1299,7 @@ p.eco.phylo &lt;- anole.log%&gt;%
 ggplot(aes(x=Ecomorph2,y=phylo.res)) +geom_boxplot() +stat_summary(fun=mean, geom=&quot;point&quot;, size=3)
 
 print(p.eco.phylo)</code></pre>
-<p><img src="mod3_proj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="mod3_proj_files/figure-html/unnamed-chunk-21-1.png" alt="" width="672" /></p>
 </div>
 <div id="plotting-more-with-less" class="section level1">
 <h1>Plotting More with Less</h1>
@@ -1342,7 +1346,7 @@ with a boxplot. This is how it can be done:</p>
 ##  9 grass-bush   res        0.0980 
 ## 10 grass-bush   phylo.res  0.0868 
 ## # ℹ 82 more rows</code></pre>
-<p><img src="mod3_proj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p><img src="mod3_proj_files/figure-html/unnamed-chunk-22-1.png" alt="" width="672" /></p>
 <p>Here we selected the three columns of interest
 (<code>Ecomorph2</code>, <code>res</code> [the uncorrected residual],
 and <code>phylo.res</code> [the phylogenetically corrected residual]) in
