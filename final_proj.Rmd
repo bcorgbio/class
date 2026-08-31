@@ -40,7 +40,7 @@ The following components of the project report should be included in a markdown 
   
 The length of the report is expected to be longer than Phase II reports, however still concise. The focus here is on analysis and modeling. 
 
-**Each team should push one report Rmd**  as "Final_TeamX.Rmd" where "X" is the each number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's github directory, i.e., "Final_Team1", if in Team 1. Please push your submission by 11:59 pm, Monday, December 15th.
+**Each team should push one report Rmd**  as "Final_TeamX.Rmd" where "X" is the each number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's github directory, i.e., "Final_Team1", if in Team 1. Please push your submission by 11:59 pm, Friday, December 18th.
 
 # Peer evaluations
 

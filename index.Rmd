@@ -6,7 +6,7 @@ title: "BIOL 3140"
 
 Welcome to BIOL 3140, Experimental Methods in Organismal Biology!!! 
 
-Organismal biology is the study of living systems of all scales that shape the structure, function, ecology, and evolution of individual organisms. Experiments that elucidate how organisms respond t0 biotic and abiotic environmental stimulus over broad time scales—from changes in behavior to adaptation-are crucial to understanding biological diversity. In this course we’ll explore the concepts and experimental and analytical tools that frame research in organismal biology. Through group projects and active learning exercises, students will make hypotheses concerning how organisms respond in time, space, and behavior to changes in environment and then design experiments and instrument prototypes that produce data to evaluate these hypotheses. Topics covered will include reconstructing phylogenetic history and the evolution of organismal form and function, evaluating form-function relationships, and the correlates of spatial and temporal distribution of organisms. In addition, the development of an analytical toolbox—specifically, learning the principles of data science and statistical analysis-is a central theme of this course.
+Organismal biology is the study of living systems of all scales that shape the structure, function, ecology, and evolution of individual organisms. Experiments that elucidate how organisms respond to biotic and abiotic environmental stimulus over broad time scales—from changes in behavior to adaptation-are crucial to understanding biological diversity. In this course we’ll explore the concepts and experimental and analytical tools that frame research in organismal biology. Through group projects and active learning exercises, students will make hypotheses concerning how organisms respond in time, space, and behavior to changes in environment and analyze data to evaluate these hypotheses. Topics covered will include using phylogenetic history to uncover what drives the evolution of body shape, evaluating form-function relationships, and the correlates of spatial and temporal distribution of organisms. In addition, the development of an analytical toolbox—specifically, learning the principles of data science and statistical analysis-is a central theme of this course.
 
 <style>
 div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
@@ -32,14 +32,8 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 **Office hours:** By appointment
 
-**Class Zoom Link:** https://bccte.zoom.us/j/9533582156
-
 # Course materials
   + Personal computer [Required]
-  <!-- + A USB/USBc adapter for reading microSD cards [e.g.,for newer macs](https://www.amazon.com/dp/B07RL5L8ZL/ref=cm_sw_r_tw_dp_x_EE-oFbWCT79QA) [optional] -->
-  <!-- + A USBc adapter for USB2 connection [e.g.,for newer macs](https://www.amazon.com/dp/B07RL5L8ZL/ref=cm_sw_r_tw_dp_x_EE-oFbWCT79QA) [optional] -->
-  + [GitHub account](https://github.com/join) [Required]
-  <!-- + Course DAQpack (see blow) [Provided] -->
 
 <!-- ## Course hardware -->
 
@@ -47,7 +41,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 ## GitHub account
 
-Why a [GitHub account](https://github.com/join)? GitHub is a handy place for those developing code and offers free hosting of websites produced and maintained from a desktop (that's how this site was constructed). Our site is under the ``class" repository (i.e., a space where code resides) within the organization [bcorgbio](https://github.com/bcorgbio) and the team "orgbiof25" on GitHub. To access our organization and this semester's team, you'll need an account. Once you have an account, I'll be able to add you to our [bcorgbio](https://github.com/bcorgbio) organization and the class-wide team for discussion purposes.
+Why a [GitHub account](https://github.com/join)? GitHub is a handy place for those developing code and offers free hosting of websites produced and maintained from a desktop (that's how this site was constructed). Our site is under the ``class" repository (i.e., a space where code resides) within the organization [bcorgbio](https://github.com/bcorgbio) and the team "orgbiof26" on GitHub. To access our organization and this semester's team, you'll need an account. Once you have an account, I'll be able to add you to our [bcorgbio](https://github.com/bcorgbio) organization and the class-wide team for discussion purposes.
 
 You should also use github to create you're own private repository with a name that matches your BC username (e.g., "kenaley"). We'll use this repo to return feedback and corrected work. As a class, we'll make our private repositories in class.
 
@@ -58,7 +52,7 @@ You should also use github to create you're own private repository with a name t
 
 # Course scope, goals, and objectives
 
-To be an effective organismal biologist, one must prepare, analyze, visualize, and communicate data as we formulate answers to the questions we're asking. Despite the importance of these technological skills to our discipline, students often see the acquisition and analysis of data as technological black boxes. Countless times in previous courses, instructors have no doubt demonstrated foundational principles and concepts through the presentation of data, usually through figures in papers or lecture slides. However, where these data come from and how they have answered a question often remain a mystery. In turn, students must rely on the authority of their instructors rather than their own grasp of quantitative skills and data collection to make meaningful connections.
+To be an effective organismal biologist, one must prepare, analyze, visualize, and communicate data as we formulate answers to the questions we're asking. Despite the importance of these  skills to our discipline, students often see the analysis of data as black boxes. Countless times in previous courses, instructors have no doubt demonstrated foundational principles and concepts through the presentation of data, usually through figures in papers or lecture slides. However, where these data come from and how they have answered a question often remain a mystery. In turn, students must rely on the authority of their instructors rather than their own grasp of quantitative skills and data collection to make meaningful connections.
 
 The thrust of BIOL 3140 is to develop and hone meaningful quantitative skills relevant to organismal biology. 
 
@@ -108,19 +102,18 @@ All of these data-science learning goals will be realized in the framework of th
 
 ## Lectures
 
-Our course will be a semi-flipped, partially self-guided experience. This will require students to read and explore outside of class and meet in pre-assigned smaller groups (i.e., teams) on their own to work through the material. We will use class time to introduce concepts, tackle sticky problems, and answer specific questions. In addition, I will be available during office hours. 
+Our course will be a semi-flipped, partially self-guided experience. This will require students to read and explore outside of class and meet in pre-assigned smaller groups (i.e., teams) on their own to work through the material. We will use much of our class time to introduce concepts, tackle sticky problems, and answer specific questions. In addition, I will be available during office hours. 
 
 
 ## Teams and team responsibilities
-To facilitate our team approach, I'll be assigning each student to a team of 3 students for group projects. The teams will be number, i.e., "Team 1", "Team2", etc. 
+To facilitate our team approach, I'll be assigning each student to a team of 4 students for group projects. The teams will be number, i.e., "Team 1", "Team2", etc. 
 
 Upon being assigned, the team must do three things for each project:
 
-  1. Pick a team nickname. Puns are welcome and encouraged (e.g., "R-tful Coders") 
-  2. All team members should join and clone the appropriately named git directory, e.g., Project1_Team1.
-  3. Add Professor Kenaley (@ckenaley) and other team members as collaborator to this repository (directions [here](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository))
-  5. A team representative must submit a question to our [discussion board](https://github.com/orgs/bcorgbio/discussions) and include the team handle in the question title.
-  6. A team representative must answer a question on the discussion board and include the team handle in the response.
+  1. All team members should join and clone the appropriately named git directory, e.g., Project1_Team1.
+  2. Add Professor Kenaley (@ckenaley) and other team members as collaborator to this repository (directions [here](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository))
+  3. A team representative must submit a question to our [discussion board](https://github.com/orgs/bcorgbio/discussions) and include the team handle in the question title.
+  4. A team representative must answer a question on the discussion board and include the team handle in the response.
   
 
 <center>
@@ -134,7 +127,7 @@ A semi-flipped course, especially one of this technical nature, will require sub
 
   + You, the student, are responsible for reading and adhering to all aspects of the course syllabus as outlined here on this site.
   + You are responsible for organizing and completing all readings, discussions, exercises, and projects.
-  + You are responsible for becoming familiar with course-related software (R, RStudio, Arduino, etc.).
+  + You are responsible for becoming familiar with course-related software (R, RStudio, FiJI, etc.).
   + You must be aware of your own progress in the course.
   + It is up to you to pursue help and guidance when you feel you need it.
 
@@ -233,10 +226,10 @@ Modules for Phase I include:
 
 ## Phase II: Developing a Toolbox
 
-In Phase II, we'll use our new-found code-development skills to address key questions in organismal biology. These will be largely guided explorations of data analysis meant to challenge you to put these skills to good use in answering, for example, how size and phylogeny matters in physiological systems a changing climate impacts the distribution of vertebrates. Within this phase we'll break up into teams of 3 students to focus on 3 modules devoted to semi-independent analysis and/or modeling.
+In Phase II, we'll use our new-found code-development skills to address key questions in organismal biology. These will be largely guided explorations of data analysis meant to challenge you to put these skills to good use in answering, for example, how size and phylogeny matters in physiological systems a changing climate impacts the distribution of vertebrates. Within this phase we'll break up into teams of 3 or 4 students to focus on 3 modules devoted to semi-independent analysis and/or modeling.
 
-  1. **Rolly Polly Fish Heads:** Head shape evolution in the Actinopterygii 
-  2. **Spatial Awareness:** Historical Changes in New England Mammal Distribution.
+  1. **Puffer Shape:** Body shape evolution in the Tetraodontiformes 
+  2. **Spatial Awareness:** The influence of landscape characteristics in on the distribution of white tailed deer.
   3. **Birds of a Feather Migrate Together . . . Sometimes:** Using EBird data to Explore the Phenology of Passerine Migration  
  
 For each module of Phase II, you'll be asked to read one or two important topic papers to set the stage and provide crucial context and then move on to data acquisition, analysis, and synthesis. The end product of each module will be a short, 3-4 page markdown that includes some background, description of methods, results, and discussion within the context of the topic papers and other relevant research. 
@@ -248,7 +241,7 @@ In Phase III, you'll be tasked with quickly developing a project of your own des
 
 # Course Assessment
 
-Your grade will be based on five assignment components: Asking and answering questions on our discussion board, many in-class coding exercises, and a series of project reports: 4 for Phase I projects, 4 for Phase II projects, and one for the Phase III project. 
+Your grade will be based on five assignment components: Asking and answering questions on our discussion board, many in-class coding exercises, and a series of project reports: 4 for Phase I projects, 3 for Phase II projects, and one for the Phase III project. 
 
 ***
 
@@ -338,7 +331,7 @@ Any work submitted that violates this policy will be considered a breach of [the
 
 If you write Professor Kenaley with a question, he’ll try to get back to you within 24 hours. Rather than write Prof. Kenaley with questions related to course mechanics and expectations, please post these in our [discussion board](https://github.com/orgs/bcorgbio/discussions), It’s probably the case that others have the same questions.
 
-Office hours can be arranged by appointment via email and will take in person (Higgins 535). Office hours may involve more more than student or team, so please come equipped with poignant questions and expect that other students have questions as urgent as yours.
+Office hours can be arranged by appointment via email and will take in person (Higgins 425B). Office hours may involve more more than student or team, so please come equipped with poignant questions and expect that other students have questions as urgent as yours.
 
 
 

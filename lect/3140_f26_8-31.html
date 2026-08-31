@@ -6,7 +6,7 @@
     <meta name="author" content="Dr. Christopher Kenaley" />
     <script src="libs/header-attrs-2.31/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
-    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
     <script src="libs/kePrint-0.0.1/kePrint.js"></script>
     <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
   </head>
@@ -44,14 +44,16 @@ class: inverse, top
 .pull-left[
 Today we'll ....
 
+- Introduce ourselves
+
 - Learn what the course is about
 
-- See how the course  is organized
+- See how the course is organized
 
 ]
 
 .pull-right[
-![](https://you.stonybrook.edu/kevinfeng/files/2015/01/first-day-1ri5frl.png)
+![](https://www.bu.edu/files/2024/08/unnamed.png)
 ]
 ---
 class: inverse, top
@@ -71,7 +73,7 @@ Monday, Wednesday, Friday 10:00-10:50 for lecturing and lots of in-person **prob
 
 .pull-right[
 
-![](https://kenaleylabcom.files.wordpress.com/2017/09/cpk.png )
+![](https://kenaleylabcom.wordpress.com/wp-content/uploads/2023/12/6e6a993d-edf8-4a19-a971-c13222b23cfa.jpg)
 
 kenaley@bc.edu
 
@@ -91,7 +93,7 @@ office hours by appointment in Higgins 425B
 ---
 class: 
 
-# Meet and potatoes
+# Meat and potatoes
 
 
 &lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
@@ -142,13 +144,14 @@ class:
 
 Hard stuff:
 
-- Personal computer 
+- Personal computer (bring to class)
 
 
 Soft stuff: 
 - [GitHub account](https://github.com/join) 
 - [R](https://www.r-project.org/) installed 
 - [R Studio IDE](https://www.rstudio.com/) installed 
+- other software as needed
 
 
 ]
@@ -186,14 +189,14 @@ class:  top
 class:  top
 # Teams and team responsibilities
 
-- Teams of 4 students assigned at the beginning of each modules. 
+## Teams of 4 students assigned randomly at the beginning of each module. 
 
 This team must establish two things:
 
   1. Clone github repository appropriately named, e.g., "Module1_Team1" (directions [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository)). 
-  4. Professor Kenaley (@ckenaley) will add all team members as collaborator to their  repository (directions [here](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository))
-  5. A team representative must submit a question to our [discussion board](https://github.com/orgs/bcorgbio/discussions) and include the team name in the question title.
-  6. A team representative must answer a question on the discussion board and include the team name in the response.
+  2. Professor Kenaley (@ckenaley) will add all team members as collaborator to their  repository (directions [here](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository))
+  3. A team representative must submit a question to our [discussion board](https://github.com/orgs/bcorgbio/discussions) and include the team name in the question title.
+  4. A team representative must answer a question on the discussion board and include the team name in the response.
   
 
 
@@ -411,9 +414,7 @@ Slides created via the R package [**xaringan**](https://github.com/yihui/xaringa
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
-  "highlightStyle": "github",
-  "highlightLines": true,
-  "countIncrementalSlides": false
+  "ratio": "16:9"
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
@@ -492,24 +493,7 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
       links[i].target = '_blank';
     }
   }
-})();
-// adds .remark-code-has-line-highlighted class to <pre> parent elements
-// of code chunks containing highlighted lines with class .remark-code-line-highlighted
-(function(d) {
-  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
-  const preParents = [];
-  const findPreParent = function(line, p = 0) {
-    if (p > 1) return null; // traverse up no further than grandparent
-    const el = line.parentElement;
-    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
-  };
-
-  for (let line of hlines) {
-    let pre = findPreParent(line);
-    if (pre && !preParents.includes(pre)) preParents.push(pre);
-  }
-  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
-})(document);</script>
+})();</script>
 
 <script>
 slideshow._releaseMath = function(el) {

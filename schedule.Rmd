@@ -10,7 +10,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 # Phase I: The Basics
 
-In this phase, we'll learn the basics of data analysis by working through 5 learning modules devoted to core topics in the field. This will most likely be the most challenging part of the course because many, if not most of you will not have ever designed and built instruments and data acquisition systems, let alone analyzed data from them. Rest assured, your experience will be curated, sticking to the bare bones of instrument design and data science. This introductory phase will set the groundwork for Phase II, the independent development of sensors and data analysis.
+In this phase, we'll learn the basics of data science and analysis by working through four learning modules devoted to core topics in the field. This will most likely be the most challenging part of the course because many, if not most of you have not approached quantitative analysis in way similar to an organismal biologist. Rest assured, your experience will be curated, sticking to the bare bones of data science. This introductory phase will set the groundwork for Phase II, independent data analysis.
 
 ## Module 1: Data Pirates Code with. . . . R, Introduction to the Basics
 
@@ -20,13 +20,13 @@ In this module we'll tackle where to find resource you'll need on a week-to-week
 
 ### Important Dates
 
-**Wednesday, 8/27**: Establish GitHub account and add your handle to [this form](https://forms.gle/5Fx1B7P5hJEVUQUH7) 
+**Wednesday, 9/2**: Establish GitHub account and add your handle to [this form](https://forms.gle/5Fx1B7P5hJEVUQUH7) 
 
-**Friday, 8/29**: Create a private GitHub repo and add Prof. K as a collaborator.
+**Friday, 9/4**: Create a private GitHub repo and add Prof. K as a collaborator.
 
-**Wednesday, 9/3**: [WCR 1](WCRs/WCR_1.html)
+**Wednesday, 9/9**: [WCR 1](WCRs/WCR_1.html)
 
-**Sunday, 9/7**: Commit [Module 1 Project](mod1_proj.html) report
+**Sunday, 9/13**: Commit [Module 1 Project](mod1_proj.html) report
 
 All assignments are due at 11:59 on the specified date.
 
@@ -75,7 +75,7 @@ From [Happy Git with R](https://happygitwithr.com)
 And [this very helpful video](https://www.youtube.com/embed/QLFc9gw_Hfs?si=aM4hlKYhCyJcoX0V).
 
 
-Be sure you're familiar with the [prerequsites](https://happygitwithr.com/rstudio-git-github.html#prerequisites) outlined in Chapter 12. **We'll cover git and github in class on Wednesday, August 27th.** Just introduce yourself to the concepts.
+Be sure you're familiar with the [prerequsites](https://happygitwithr.com/rstudio-git-github.html#prerequisites) outlined in Chapter 12. **We'll cover git and github in class on Wednesday, September 2nd.** Just introduce yourself to the concepts.
 
 Check out the new [github access token requirements](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 
@@ -97,7 +97,7 @@ Check out the new [github access token requirements](https://docs.github.com/en/
 
   + Post one and respond to one question each week of Module 1 in our [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140) 
   + [Install R and RStudio](https://rstudio-education.github.io/hopr/starting.html#starting)
-  + Clone a github team repository to a local directory (done in class with Prof. K's help on **Wednesday, Aug 27th**)
+  + Clone a github team repository to a local directory (done in class with Prof. K's help on **Wednesday, Sept 2nd**)
   + Complete and commit a report for Module 1 Project 
 
 
@@ -121,7 +121,7 @@ This module is intended to give students the background and skills to begin simp
 
 ### Important dates
 
-**Sunday, 9/14**: commit [Module 2 Project](mod2_proj.html) report
+**Sunday, 9/20**: commit [Module 2 Project](mod2_proj.html) report
 
 
 ### Key Concepts
@@ -194,7 +194,7 @@ In Module 3, we'll cover the basics of visualizing and modeling data and hypothe
 
 ### Important Dates
 
-**Sunday, 9/21**: Commit Module 3 Project report
+**Sunday, 9/27**: Commit Module 3 Project report
 
 
 ### Key Concepts
@@ -258,7 +258,7 @@ In Module 4, we'll cover the basics of authoring reports in R Markdown, a markup
 
 ### Important dates
 
-**Sunday, 9/28**: Commit Module 4 Project Report
+**Sunday, 10/4**: Commit Module 4 Project Report
 
 
 ### Key Concepts
@@ -316,16 +316,16 @@ This module is very much learn as you go. Please dive right into the project and
 
 # Phase II: Developing a Toolbox
 
-In Phase II, we'll use our new-found instrument- and code-development skills to address key questions in organismal biology. These will be self-guided explorations of instrument design and use and data analysis meant to challenge you to put these skills to good use in answering how vertebrates muscles work, phylogeny matters in physiological systems, and how a changing climate impacts the distribution of vertebrates. Within this phase we'll break up into our teams to focus on 4 modules, some data driven, the others both data and instrument driven.
+In Phase II, we'll use our new-found instrument- and code-development skills to address key questions in organismal biology. These will be self-guided explorations meant to challenge you to put these skills to good use in answering how and why vertebrate shape has evolved, why phylogeny matters in comparative analysis, and how a landscape and changing climate impacts the distribution and phenology of species.  Within this phase we'll break up into our teams to focus on 4 modules, all very data driven.
 
-## Module 5: Shark!
+## Module 5: Puffer Shape
 
-This module puts our newly formed data analysis and markdown skills to use in answering how body shape evolved in the Selachii (i.e., sharks). Specifically, we'll test whether body shape has evolved differently between sharks inhabiting different habitats.
+This module puts our newly formed data analysis and markdown skills to use in answering how body shape evolved in the tetraodontiform fishes (i.e., pufferfish and allies). Specifically, we'll test whether body shape has evolved differently between species inhabiting different habitats.
 
 ### Important Dates:
 
-**Wednesday, 10/8**: Upload data  
-**Sunday, 10/19**: Commit Module 5 Project Report
+**Thursday, 10/15**: Upload data  
+**Sunday, 11/1**: Commit Module 5 Project Report
 
 ### Key Concepts
   + Geometic Morphometrics
@@ -347,7 +347,6 @@ Upon completion of this module, students will be able to:
   <!-- + ~~[Temp sensor with SDcard module tutorial](http://arduinolearning.com/projects/temperature-logger.php)~~ -->
   <!-- + [Temp sensor with SDcard module tutorial](https://maker.pro/arduino/tutorial/how-to-make-an-arduino-sd-card-data-logger-for-temperature-sensor-data) -->
   
-  + [Sternes, P.C. and Shimada, K., 2020. Body forms in sharks (Chondrichthyes: Elasmobranchii) and their functional, ecological, and evolutionary implications. Zoology, 140, p.125799.](https://doi.org/10.1016/j.zool.2020.125799)
   + [The Undergraduate Student's Guide of Geometric Morphometrics](https://digitalcommons.pace.edu/cgi/viewcontent.cgi?article=1003&context=oer)
   + This [tutorial on Principal Components Analysis](https://builtin.com/data-science/step-step-explanation-principal-component-analysis).
   + R Programming for Data Science: [Parallel-computation](https://bookdown.org/rdpeng/rprogdatascience/parallel-computation.html)
@@ -355,7 +354,7 @@ Upon completion of this module, students will be able to:
 ### Do
   + Download and install [FIJI (**F**iji **Is** **J**ust **i**mageJ)](https://imagej.net/software/fiji/downloads)
   + Post one and respond to one question in [discussion board](https://github.com/orgs/bcorgbio/teams/biol-3140)
-  + Upload team data files to [this directory](https://drive.google.com/drive/folders/1j7sod1NB1jmEiPiduYvOOIlukkMikfL5?usp=drive_link) by **Wednesday, October 8th**
+  + Upload team data files to [this directory](https://drive.google.com/drive/folders/1j7sod1NB1jmEiPiduYvOOIlukkMikfL5?usp=drive_link) by **Thursday, October 15th**
   + Complete and commit Module 6 Project report
 
 
@@ -369,9 +368,11 @@ Upon completion of this module, students will be able to:
 
 ## Module 6:  Spatial Awareness
 
+This module explores how landscape characteristics shape the distriubtion of white tail deer in the great state of New Hampshire. For this, we'll leverage a combination of geospatial and machine learning analysis.
+
 ### Important Dates
 
-**Sunday, 11/9**: Commit Module 6 Project Report
+**Sunday, 11/15**: Commit Module 6 Project Report
 
 ### Key Concepts
   
@@ -398,7 +399,7 @@ Upon completion of this module, students will be able to:
   
 ### Do
 
-**11/9**: Commit Module 6 Project Report
+**11/15**: Commit Module 6 Project Report
 
 ### Guiding Questions
 
@@ -415,7 +416,7 @@ In this module, we'll explore the phenology of spring arrival timing for neotrop
 
 ### Important Dates 
 
-**Sunday, 11/23**: Commit Module 7 Project report
+**Sunday, 12/6**: Commit Module 7 Project report
 
 ### Key Concepts
 
@@ -457,7 +458,7 @@ Upon completion of this week and module, students will be able to:
 
 ### Imporant Dates 
 
-**Monday, 12/8**: Commit Final Project report
+**Friday, 12/18**: Commit Final Project report
 
 In Phase III, you'll be tasked with quickly developing a project of your own design that  either (1) requires the fabrication of a new or modified data acquisition system or (2) the acquisition of data from a peer-reviewed study or database. The goal of this project is to answer a question personal and interesting to your team. The question should be new within the context of the course and reflect a physiological focus (i.e., not ). This project will require you to first delve into the the scientific literature to set the stage and then leverage your new data-analysis and report-writing skills in the synthesis of 4-5 page markdown. This final project report should follow the same format and requirements of the reports produced in Phase II, but with expanded content. 
 

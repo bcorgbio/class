@@ -6,11 +6,10 @@ institute: "Boston College"
 date: "2025/8/31"
 output:
   xaringan::moon_reader:
+    css: ["default", "metropolis"]
     lib_dir: libs
     nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
+      ratio: 16:9
 ---
 class: inverse, top
 # Hello! 
@@ -27,14 +26,16 @@ library(kableExtra)
 .pull-left[
 Today we'll ....
 
+- Introduce ourselves
+
 - Learn what the course is about
 
-- See how the course  is organized
+- See how the course is organized
 
 ]
 
 .pull-right[
-![](https://you.stonybrook.edu/kevinfeng/files/2015/01/first-day-1ri5frl.png)
+![](https://www.bu.edu/files/2024/08/unnamed.png)
 ]
 ---
 class: inverse, top
@@ -54,7 +55,7 @@ Monday, Wednesday, Friday 10:00-10:50 for lecturing and lots of in-person **prob
 
 .pull-right[
 
-![](https://kenaleylabcom.files.wordpress.com/2017/09/cpk.png )
+![](https://kenaleylabcom.wordpress.com/wp-content/uploads/2023/12/6e6a993d-edf8-4a19-a971-c13222b23cfa.jpg)
 
 kenaley@bc.edu
 
@@ -74,7 +75,7 @@ office hours by appointment in Higgins 425B
 ---
 class: 
 
-# Meet and potatoes
+# Meat and potatoes
 
 
 ```{r,echo=FALSE}
@@ -99,13 +100,14 @@ kbl(g)%>%row_spec(row = 1:nrow(g),background = "white")%>%kable_styling()
 
 Hard stuff:
 
-- Personal computer 
+- Personal computer (bring to class)
 
 
 Soft stuff: 
 - [GitHub account](https://github.com/join) 
 - [R](https://www.r-project.org/) installed 
 - [R Studio IDE](https://www.rstudio.com/) installed 
+- other software as needed
 
 
 ]
@@ -143,14 +145,14 @@ class:  top
 class:  top
 # Teams and team responsibilities
 
-- Teams of 4 students assigned at the beginning of each modules. 
+## Teams of 4 students assigned randomly at the beginning of each module. 
 
 This team must establish two things:
 
   1. Clone github repository appropriately named, e.g., "Module1_Team1" (directions [here](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository)). 
-  4. Professor Kenaley (@ckenaley) will add all team members as collaborator to their  repository (directions [here](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository))
-  5. A team representative must submit a question to our [discussion board](https://github.com/orgs/bcorgbio/discussions) and include the team name in the question title.
-  6. A team representative must answer a question on the discussion board and include the team name in the response.
+  2. Professor Kenaley (@ckenaley) will add all team members as collaborator to their  repository (directions [here](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository))
+  3. A team representative must submit a question to our [discussion board](https://github.com/orgs/bcorgbio/discussions) and include the team name in the question title.
+  4. A team representative must answer a question on the discussion board and include the team name in the response.
   
 
 
