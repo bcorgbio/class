@@ -7,6 +7,7 @@
     <script src="libs/header-attrs-2.31/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link rel="stylesheet" href="slides.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -16,7 +17,7 @@ class: center, middle, inverse, title-slide
 # Module 1: The Basics
 ]
 .subtitle[
-## WCR Review, Loops, and Loop Alternatives
+## WCR Review and the Pipe (<code>%&gt;%</code>)
 ]
 .author[
 ### Dr. Christopher Kenaley
@@ -30,7 +31,7 @@ class: center, middle, inverse, title-slide
 
 ---
 
-class: inverse, top
+
 # Today we'll .....
 
 
@@ -38,27 +39,23 @@ class: inverse, top
 
 - Review WCR
 
-- Subsetting data
+- the pipe (`%&gt;%`)
   
-- loop alternatives: `sapply`, `lapply`
-
 
 
 ]
 
 
 ---
-class: inverse, top
-# Reminder
+
+# Reminder 1
 
 .pull-left[
 
-- Post question to discussion board (today)
+- make personal repo
 
-- Post answer to discussion board (friday)
+- make me (@ckenaley) a collaborator
   
-
-
 
 ]
 
@@ -71,6 +68,205 @@ class: inverse, top
 
 ]
 
+---
+
+# Reminder 2
+
+.pull-left[
+
+- Post question to discussion board (today)
+
+- Post answer to discussion board (Friday)
+  
+
+
+]
+
+
+---
+
+
+# Questions ahead of Module Project 1 
+
+  - Due this Sunday 11:59 pm
+  
+  - Commit to assigned team repo
+  
+  - Each member commits own report (R script + figures)
+
+
+---
+
+&lt;!-- slide 1 --&gt;
+# What is the pipe (`%&gt;%`)?
+
+.pull-left[
+- comes from the `magrittr` package
+
+- loaded automatically with the super package `tidyverse`
+
+- makes code concise:
+  * streamlining many operations into fewer LOC
+  
+  * reduces repetitive tasks
+]
+
+.pull-right[ ![](https://upload.wikimedia.org/wikipedia/commons/8/8f/Trans-Alaska_Pipeline_System_Luca_Galuzzi_2005.jpg?utm_source=en.wikipedia.org&amp;utm_campaign=imageinfo&amp;utm_content=thumbnail_unscaled)
+]
+
+---
+
+&lt;!-- slide 1 --&gt;
+
+# What is the pipe (`%&gt;%`)?
+
+.pull-left[
+  
+- makes code concise:
+  * streamlining many operations into fewer LOC
+  
+  * reduces repetitive tasks
+  
+
+``` r
+iris &lt;- group_by(iris,Species)
+summarise(iris,mean_length=mean(Sepal.Length))
+```
+
+```
+## # A tibble: 3 × 2
+##   Species    mean_length
+##   &lt;fct&gt;            &lt;dbl&gt;
+## 1 setosa            5.01
+## 2 versicolor        5.94
+## 3 virginica         6.59
+```
+
+]
+
+.pull-right[
+
+]
+
+
+---
+# What is the pipe (`%&gt;%`)?
+
+.pull-left[
+
+- makes code concise:
+  * streamlining many operations into fewer LOC
+  
+  * reduces repetitive tasks
+  
+
+``` r
+iris &lt;- group_by(iris,Species)
+summarise(iris,mean_length=mean(Sepal.Length))
+```
+
+```
+## # A tibble: 3 × 2
+##   Species    mean_length
+##   &lt;fct&gt;            &lt;dbl&gt;
+## 1 setosa            5.01
+## 2 versicolor        5.94
+## 3 virginica         6.59
+```
+]
+
+.pull-right[
+
+``` r
+iris%&gt;%
+  group_by(Species)%&gt;%
+  summarize(mean_length=mean(Sepal.Length))
+```
+
+```
+## # A tibble: 3 × 2
+##   Species    mean_length
+##   &lt;fct&gt;            &lt;dbl&gt;
+## 1 setosa            5.01
+## 2 versicolor        5.94
+## 3 virginica         6.59
+```
+]
+
+
+
+---
+
+# What is the pipe (`%&gt;%`)?
+
+.pull-left[
+
+- more apparent when plotting (major piece of data science)
+
+
+
+``` r
+iris &lt;- group_by(iris,Species)
+iris_mean &lt;- summarise(iris,mean_length=mean(Sepal.Length))
+
+ggplot(data=iris_mean,aes(x=Species,y=mean_length))+geom_bar(stat="identity")
+```
+]
+
+
+.pull-right[
+
+``` r
+iris%&gt;%
+  group_by(Species)%&gt;%
+  summarize(mean_length=mean(Sepal.Length))%&gt;%
+  ggplot(aes(x=Species,y=mean_length))+
+  geom_bar(stat="identity")
+```
+
+![](3140_f26_9-09_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+]
+
+---
+
+# Loading data
+
+- `readr` package has several handy functions.
+
+- `read_csv()` most handy
+
+
+``` r
+d &lt;- read_csv("https://bcorgbio.github.io/class/data/coyote.csv")
+head(d)
+```
+
+```
+## # A tibble: 6 × 10
+##   id      species       Region    state  County Town  Locality   Lat  Long  Year
+##   &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 adk2706 Canis latrans northeast New Y… &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;      43.8 -75.0  2007
+## 2 adk2798 Canis latrans northeast New Y… &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;      43.9 -74.7    NA
+## 3 adk2801 Canis latrans northeast New Y… &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;      43.9 -74.7    NA
+## 4 adk2833 Canis latrans northeast New Y… &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;      43.9 -74.8    NA
+## 5 adk2845 Canis latrans northeast New Y… &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;      42.8 -73.8    NA
+## 6 adk2853 Canis latrans northeast New Y… Herkm… Lost… Lost Cr…  43.8 -75.0  2002
+```
+
+---
+
+# Loading data
+
+
+
+``` r
+d%&gt;%
+  group_by(state)%&gt;%
+  dplyr::summarize(n=n())%&gt;%
+  ggplot(aes(x=state,y=n))+geom_bar(stat="identity")+coord_flip()
+```
+
+![](3140_f26_9-09_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
 
 
 

@@ -1,17 +1,17 @@
 ---
 title: "Module 1: The Basics"
-subtitle: "WCR Review, Loops, and Loop Alternatives"
+subtitle: "WCR Review and the Pipe (`%>%`)"
 author: "Dr. Christopher Kenaley"
 institute: "Boston College"
 date: "2026/09/09"
 output:
   xaringan::moon_reader:
-    css: ["default", "metropolis"]
+    css: ["default", "metropolis","slides.css"]
     lib_dir: libs
     nature:
       ratio: 16:9
 ---
-class: inverse, top
+
 # Today we'll .....
 ```{r,echo=FALSE,message=FALSE,warning=F}
 library(tidyverse)
@@ -22,27 +22,23 @@ library(kableExtra)
 
 - Review WCR
 
-- Subsetting data
+- the pipe (`%>%`)
   
-- loop alternatives: `sapply`, `lapply`
-
 
 
 ]
 
 
 ---
-class: inverse, top
-# Reminder
+
+# Reminder 1
 
 .pull-left[
 
-- Post question to discussion board (today)
+- make personal repo
 
-- Post answer to discussion board (friday)
+- make me (@ckenaley) a collaborator
   
-
-
 
 ]
 
@@ -55,6 +51,159 @@ class: inverse, top
 
 ]
 
+---
+
+# Reminder 2
+
+.pull-left[
+
+- Post question to discussion board (today)
+
+- Post answer to discussion board (Friday)
+  
+
+
+]
+
+
+---
+
+
+# Questions ahead of Module Project 1 
+
+  - Due this Sunday 11:59 pm
+  
+  - Commit to assigned team repo
+  
+  - Each member commits own report (R script + figures)
+
+
+---
+
+<!-- slide 1 -->
+# What is the pipe (`%>%`)?
+
+.pull-left[
+- comes from the `magrittr` package
+
+- loaded automatically with the super package `tidyverse`
+
+- makes code concise:
+  * streamlining many operations into fewer LOC
+  
+  * reduces repetitive tasks
+]
+
+.pull-right[ ![](https://upload.wikimedia.org/wikipedia/commons/8/8f/Trans-Alaska_Pipeline_System_Luca_Galuzzi_2005.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled)
+]
+
+---
+
+<!-- slide 1 -->
+
+# What is the pipe (`%>%`)?
+
+.pull-left[
+  
+- makes code concise:
+  * streamlining many operations into fewer LOC
+  
+  * reduces repetitive tasks
+  
+```{r}
+iris <- group_by(iris,Species)
+summarise(iris,mean_length=mean(Sepal.Length))
+```
+
+]
+
+.pull-right[
+
+]
+
+
+---
+# What is the pipe (`%>%`)?
+
+.pull-left[
+
+- makes code concise:
+  * streamlining many operations into fewer LOC
+  
+  * reduces repetitive tasks
+  
+```{r}
+iris <- group_by(iris,Species)
+summarise(iris,mean_length=mean(Sepal.Length))
+```
+]
+
+.pull-right[
+```{r}
+iris%>%
+  group_by(Species)%>%
+  summarize(mean_length=mean(Sepal.Length))
+
+```
+]
+
+
+
+---
+
+# What is the pipe (`%>%`)?
+
+.pull-left[
+
+- more apparent when plotting (major piece of data science)
+
+
+```{r,fig.height=3,eval=FALSE}
+iris <- group_by(iris,Species)
+iris_mean <- summarise(iris,mean_length=mean(Sepal.Length))
+
+ggplot(data=iris_mean,aes(x=Species,y=mean_length))+geom_bar(stat="identity")
+
+```
+]
+
+
+.pull-right[
+```{r,fig.height=3}
+iris%>%
+  group_by(Species)%>%
+  summarize(mean_length=mean(Sepal.Length))%>%
+  ggplot(aes(x=Species,y=mean_length))+
+  geom_bar(stat="identity")
+  
+```
+]
+
+---
+
+# Loading data
+
+- `readr` package has several handy functions.
+
+- `read_csv()` most handy
+
+```{r,fig.height=3,message=FALSE}
+d <- read_csv("https://bcorgbio.github.io/class/data/coyote.csv")
+head(d)
+```
+
+---
+
+# Loading data
+
+
+```{r,fig.height=3}
+d%>%
+  group_by(state)%>%
+  dplyr::summarize(n=n())%>%
+  ggplot(aes(x=state,y=n))+geom_bar(stat="identity")+coord_flip()
+  
+```
 
 
 
