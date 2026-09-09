@@ -3,14 +3,13 @@ title: "Module 1: The Basics"
 subtitle: "WCR Review, Loops, and Loop Alternatives"
 author: "Dr. Christopher Kenaley"
 institute: "Boston College"
-date: "2025/09/03"
+date: "2026/09/09"
 output:
   xaringan::moon_reader:
+    css: ["default", "metropolis"]
     lib_dir: libs
     nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
+      ratio: 16:9
 ---
 class: inverse, top
 # Today we'll .....
@@ -22,6 +21,8 @@ library(kableExtra)
 .pull-left[
 
 - Review WCR
+
+- Subsetting data
   
 - loop alternatives: `sapply`, `lapply`
 
@@ -29,6 +30,30 @@ library(kableExtra)
 
 ]
 
+
+---
+class: inverse, top
+# Reminder
+
+.pull-left[
+
+- Post question to discussion board (today)
+
+- Post answer to discussion board (friday)
+  
+
+
+
+]
+
+.pull-right[
+
+![](discussion.png)
+  
+
+
+
+]
 
 
 
