@@ -1,6 +1,6 @@
 ---
 title: "Module 1: The Basics"
-subtitle: "Loading Data and Project Questions"
+subtitle: "Loading Data and Project Questions?"
 author: "Dr. Christopher Kenaley"
 institute: "Boston College"
 date: "2026/09/11"
