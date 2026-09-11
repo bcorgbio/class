@@ -1,0 +1,91 @@
+---
+title: "Module 1: The Basics"
+subtitle: "Loading Data and Project Questions"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2026/09/11"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis","slides.css"]
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+---
+
+# Today we'll .....
+```{r,echo=FALSE,message=FALSE,warning=F}
+library(tidyverse)
+library(kableExtra)
+```
+
+.pull-left[
+
+- the pipe (`%>%`) and loading data
+
+- open discussion Module Project 1
+  
+
+
+]
+
+
+---
+
+# Reminder 1
+
+.pull-left[
+
+- make personal repo
+
+- make me (@ckenaley) a collaborator
+
+- make it private!!
+  
+
+]
+
+
+---
+
+
+# Questions ahead of Module Project 1 
+
+  - Due this Sunday 11:59 pm
+  
+  - Commit to assigned team repo
+  
+  - Each member commits own report (R script + figures)
+
+
+
+
+---
+
+# Loading data
+
+- `readr` package has several handy functions.
+
+- `read_csv()` most handy
+
+```{r,fig.height=3,message=FALSE}
+d <- read_csv("https://bcorgbio.github.io/class/data/coyote.csv")
+head(d)
+```
+
+---
+
+# Loading data
+
+
+```{r,fig.height=3}
+d%>%
+  group_by(state)%>%
+  dplyr::summarize(n=n())%>%
+  ggplot(aes(x=state,y=n))+
+  geom_bar(stat="identity")+
+  coord_flip()
+  
+```
+
+
+
