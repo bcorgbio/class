@@ -393,7 +393,7 @@ div.tocify {
       <a href="peer_contributions.html">Peer Contribution Evaluation Guidelines</a>
     </li>
     <li>
-      <a href="https://forms.gle/7uVJ3vMtvjFFNvsN8">Author Contribution Evaluation Form</a>
+      <a href="https://forms.gle/7uVJ3vMtvjFFNvsN8">Peer Contribution Evaluation Form</a>
     </li>
   </ul>
 </li>
@@ -443,14 +443,21 @@ href="pseed.calibration.csv">this link</a>.</li>
 </ul>
 <p>Let’s do so and then comment on the origin and importance of the
 data.</p>
-<pre class="r"><code>library(tidyverse) # Remember to load your libraries!
-
-#Remember to set your working directory, too!
-
-#load data
+<pre class="r"><code>library(tidyverse) # Remember to load your libraries!</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.2.0     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.1     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>#load data
 pseed &lt;- read_csv(&quot;pseed.fin.amps.csv&quot;)</code></pre>
 <pre><code>## Rows: 73352 Columns: 7
-## ── Column specification ───────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (3): fish, date, fin
 ## dbl (4): speed, frame, amp, amp.bl
@@ -459,7 +466,7 @@ pseed &lt;- read_csv(&quot;pseed.fin.amps.csv&quot;)</code></pre>
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>pseed.bl &lt;- read_csv(&quot;pseed.lengths.csv&quot;)</code></pre>
 <pre><code>## Rows: 3 Columns: 2
-## ── Column specification ───────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (1): fish
 ## dbl (1): bl
@@ -468,7 +475,7 @@ pseed &lt;- read_csv(&quot;pseed.fin.amps.csv&quot;)</code></pre>
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <pre class="r"><code>speeds &lt;- read_csv(&quot;pseed.calibration.csv&quot;)</code></pre>
 <pre><code>## Rows: 119 Columns: 3
-## ── Column specification ───────────────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (3): vol, m.s, cm.s
 ## 
@@ -776,8 +783,8 @@ included in <code>tidyverse</code> to plot specific fin amplitude
 (<code>bl.s</code>).</p>
 <pre class="r"><code>pseed2%&gt;%
   ggplot(aes(x=bl.s,y=amp.bl))+geom_point()</code></pre>
-<p><img src="mod2_proj_files/figure-html/unnamed-chunk-7-1.png" alt="" width="672" />
-First of all, this is some sort of a mess: just a bunch of points for
+<p><img src="mod2_proj_files/figure-html/unnamed-chunk-7-1.png" alt="" width="672" /></p>
+<p>First of all, this is some sort of a mess: just a bunch of points for
 each speed. But, let’s briefly breakdown what we did with
 <code>ggplot</code> (in our next module, we’ll go into more specifics).
 We passed <code>pseed2</code> to a new plot with <code>ggplot()</code>
@@ -1114,8 +1121,7 @@ run the following and break it down.</p>
   group_by(date,fin)%&gt;%
   mutate(peak=frame %in% find.peaks(frame,amp.bl))%&gt;%
   ggplot(aes(x=frame,y=amp.bl,alpha=peak,col=peak))+geom_point()+facet_grid(date~fin)</code></pre>
-<pre><code>## Warning: Using alpha for a discrete variable is not
-## advised.</code></pre>
+<pre><code>## Warning: Using alpha for a discrete variable is not advised.</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-20-1.png" alt="" width="672" /></p>
 <p>After the filter, we:</p>
 <ol style="list-style-type: decimal">
@@ -1199,13 +1205,10 @@ regression line for each fish. Something like:</p>
   ggplot(aes(x=bl.s,y=mean.max,col=fish))+geom_point()+geom_smooth(method=&quot;lm&quot;)</code></pre>
 <pre><code>## `summarise()` has regrouped the output.
 ## `geom_smooth()` using formula = &#39;y ~ x&#39;
-## ℹ Summaries were computed grouped by fish
-##   and bl.s.
+## ℹ Summaries were computed grouped by fish and bl.s.
 ## ℹ Output is grouped by fish.
-## ℹ Use `summarise(.groups = &quot;drop_last&quot;)`
-##   to silence this message.
-## ℹ Use `summarise(.by = c(fish, bl.s))` for
-##   per-operation grouping
+## ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.
+## ℹ Use `summarise(.by = c(fish, bl.s))` for per-operation grouping
 ##   (`?dplyr::dplyr_by`) instead.</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-24-1.png" alt="" width="672" /></p>
 </div>
@@ -1390,7 +1393,7 @@ notice many of the same columns as our kinematic data and one new one:
 <code>met.rate</code>, the metabolic power output in W<span
 class="math inline">\(\cdot\)</span>kg<span
 class="math inline">\(^{-1}\)</span>.</p>
-<p>Submissions are due by 11:59 PM on Sunday, September 14th. Each team
+<p>Submissions are due by 11:59 PM on Sunday, September 20th. Each team
 member should push their submission to their team’s github directory,
 i.e., “Module2_Team1”, if in Team 1.</p>
 </div>
