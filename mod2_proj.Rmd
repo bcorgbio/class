@@ -25,8 +25,6 @@ There are several data sets that need to be loaded:
 ```{r,results='hide',warning=F}
 library(tidyverse) # Remember to load your libraries!
 
-#Remember to set your working directory, too!
-
 #load data
 pseed <- read_csv("pseed.fin.amps.csv")
 pseed.bl <- read_csv("pseed.lengths.csv")
@@ -134,6 +132,7 @@ Let's now use `ggplot`, our fantastic plotting package included in `tidyverse` t
 pseed2%>%
   ggplot(aes(x=bl.s,y=amp.bl))+geom_point()
 ```
+
 First of all, this is some sort of a mess: just a bunch of points for each speed. But, let's briefly breakdown what we did with `ggplot` (in our next module, we'll go into more specifics). We passed `pseed2` to a new plot with `ggplot()` and specified what it should look like with the `aes()` parameter. This is the aesthetic of the plot. Specifically, we want the x axis to reflect `bl.s` values in `pseed2` and the y axis to reflect `amp.bl`. To this we added a geometry layer, a specific type of plot, in this case, a scatter or point plot with `geom_point()`.
 
 <div class = "green">
@@ -588,4 +587,4 @@ pseed.sum.max %>%
 
 
 
-Submissions are due by 11:59 PM on Sunday, September 14th. Each team member should push their submission to their team's github directory, i.e., "Module2_Team1", if in Team 1.
+Submissions are due by 11:59 PM on Sunday, September 20th. Each team member should push their submission to their team's github directory, i.e., "Module2_Team1", if in Team 1.
