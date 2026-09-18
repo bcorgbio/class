@@ -1,0 +1,52 @@
+---
+title: "Module 2: Data Wrangling"
+subtitle: "Introduction to Tools of the Trade in Data Analysis"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2026/9/18"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis","slides.css"]
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+---
+# In class today 
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+library(tidyverse)
+library(kableExtra)
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+## Project management 
+
+  - Etiquette
+  - Workflow
+
+## Project 2 Q&A
+
+]
+
+---
+<!-- slide 1 -->
+#Project Management
+
+.pull-left[
+ 
+  -Shouldn't have to set working directory (`setwd()`)
+  
+  -Include all the data
+  
+  -Let the R project-git ecosystem work
+
+]
+
+
+
+
