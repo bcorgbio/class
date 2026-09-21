@@ -17,7 +17,8 @@ The central theme of this project will be to assess the morphological and allome
 
 <center>
 
-[![Alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg)
+![Alt text](https://upload.wikimedia.org/wikipedia/commons/4/4a/Anole_Lizard_Hilo_Hawaii_edit.jpg)
+
 
 </center>
 
@@ -144,7 +145,13 @@ pred.lm <-tibble(
 )
 
 anole2%>%
-ggplot(aes(SVL,HTotal))+geom_point()+geom_point(data=pred.lm,aes(SVL,H.pred),col="blue")
+ggplot(aes(SVL,HTotal))+
+  geom_point()+
+  geom_point(
+    data=pred.lm,
+    aes(SVL,H.pred),
+    col="blue"
+    )
   
 
 summary(anole.lm)
@@ -315,7 +322,7 @@ Here we added a point with the `stat_summary()` geometry. This applies a summari
 
 # Not So Fast: Phylogeny Matters
 
-So far we've concluded that ecomorph is an important explanatory variable when it comes to anole hinglimb-SVL relationships. But (and this is the biggest of buts), we've ignored an important and potentially confounding fact. These lizards, like every group of organisms, have an evolutionary history. Because of this, some species are more closely related than others and thus, they cannot be seen as independent samples in the statistical sense. In other words, any trait we seek to study likely covaries with phylogenetic position. For example, in the context of anole hindlimb-SVL data, it is entirely possible, perhaps probable, that more closely related species share a similar pattern. Thus, it may be that any patterns we've uncovered thus far are the result of phylogeny, not merely ecomorph alone.
+So far we've concluded that ecomorph is an important explanatory variable when it comes to anole hinglimb-SVL relationships. But (and this is the biggest of buts), we've ignored an important and potentially confounding fact. These lizards, like every group of organisms, have an evolutionary history. Because of this, some species are more closely related than others and thus, they cannot be seen as independent samples in the statistical sense. In other words, any trait we seek to study likely covaries with phylogenetic position. For example, in the context of anole hindlimb-SVL data, it is entirely possible, perhaps probable, that more closely related species share a similar pattern. Thus, it may be that any patterns we've uncovered so far are the result of phylogeny, not merely ecomorph alone.
 
 To account for phylogeny in statistical analysis, we must turn to an important toolbox used by organismal biologists, phylogenetic comparative methods (PCMs). PCMs have a long history and today they are defined as any statistical operations that include the use of phylogenies, that is, information from phylogenetic trees. For regression analysis, the modeling approach we've taken on in this project, there exist several PCM procedures that account for phylogeny. Phylogenetic generalized least squares (PGLS) is perhaps the most flexible and widely used among them. 
 
@@ -416,7 +423,7 @@ aicw(anole.phylo.aic$AICc)
 
 ```
 
-From the AIC results, we con safely say that a phyloggnetically corrected regression model that includes `Ecomorph2` with traits evolving under BM is the best fit. The OU models that specify a pull to some global optimum are rejected. We can interpret this to mean that the traits have evolved randomly, *but* randomly within each lineage.
+From the AIC results, we con safely say that a phylogenetically corrected regression model that includes `Ecomorph2` with traits evolving under BM is the best fit. The OU models that specify a pull to some global optimum are rejected. We can interpret this to mean that the traits have evolved randomly, *but* randomly within each lineage.
 
 Next, we can now consider whether `Ecomorph` is a significant factor in predicting the hinglimb-SVL relationship in a phylogenetic context by preforming an ANOVA on our best fitting model, `pgsl.BM2`
 
@@ -450,7 +457,11 @@ anole.log%>%
   dplyr::select(Ecomorph2,res,phylo.res)%>%
   pivot_longer(cols=c("res","phylo.res"))%>%
   print%>%
-  ggplot(aes(x=Ecomorph2,y=value)) +geom_boxplot() +stat_summary(fun=mean, geom="point", size=3)+facet_grid(name~.,scales = "free_y")+ylab("residual")
+  ggplot(aes(x=Ecomorph2,y=value))+
+  geom_boxplot()+
+  stat_summary(fun=mean, geom="point", size=3)+
+  facet_grid(name~.,scales = "free_y")+
+  ylab("residual")
 
 ```
 
@@ -485,11 +496,11 @@ For this project report, write a script named "groupname_module3.R" and undertak
   1. Combine the code above so that you can establish the `anole.log` data tibble.
   2. Using the log-transformed data, construct two simple linear models that assess the effect of perch diameter and height by including these as covariates in your models. Be sure to use `+` notation rather than `*`, assuming there is no interaction (there isn't, trust me!).
   3. Explore how both perch diameter and height effect the hindlimb-SVL relationship by plotting the residuals of your simple linear models against the discrete factor of ecomorph with a plot of your choice. This will require mutating a data tibble to include residuals from both models. Please produce two separate plots.
-  4. Under a BM model of trait evolution and using the tree provided, construct phylogenetic least squares models of the hindlimb-SVL relationships that include the unique combinations of these two covariates, i.e,
+  4. Under a BM model of trait evolution and using the tree provided, construct phylogenetic least squares models of the hindlimb-SVL relationships that include the unique combinations of these two covariates, i.e., PGLS models with the following: 
   
-    * A PGLS model with the hindlimb-SVL relationship + perch height
-    * A PGLS model with the hindlimb-SVL relationship + perch diameter
-    * A PGSL model with the hindlimb-SVL relationship + perch height + perch diameter
+  - hindlimb-SVL relationship + perch height
+  - hindlimb-SVL relationship + perch diameter
+  - hindlimb-SVL relationship + perch height + perch diameter
     
   5. Assess the fit of each of these three models using AICc and AICw and comment on (with comments in the script) whether one or both of the covariates is a significant predictor of hinglimb length in a phylogenetic context. 
   6. Produce a plot of your own design that concisely visualizes the effect of your covariate(s) and factors (i.e., ecomorph) on the hindlimb residuals of the best fitting PGLS model. 
@@ -512,6 +523,6 @@ lm.PD <- lm(HL~PD,dat)
 
 ```
 
-**Each team should push one report script**  as "Module3_TeamX.R" where "X" is the each number. This means one team member should push the team's submission to their team's github directory, i.e., "Module3_Team1", if in Team 1.  Submissions are due by 11:59 PM on Sunday, September 21st.
+**Each team should push one report script**  as "Module3_TeamX.R" where "X" is the each number. This means one team member should push the team's submission to their team's github directory, i.e., "Module3_Team1", if in Team 1.  Submissions are due by 11:59 PM on Sunday, September 27th.
 
 # References

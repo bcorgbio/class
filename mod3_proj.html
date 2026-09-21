@@ -416,7 +416,7 @@ div.tocify {
       <a href="peer_contributions.html">Peer Contribution Evaluation Guidelines</a>
     </li>
     <li>
-      <a href="https://forms.gle/7uVJ3vMtvjFFNvsN8">Author Contribution Evaluation Form</a>
+      <a href="https://forms.gle/7uVJ3vMtvjFFNvsN8">Peer Contribution Evaluation Form</a>
     </li>
   </ul>
 </li>
@@ -462,10 +462,12 @@ His model for this concept was the genus <em>Anolis</em>, although the
 ecomorph construct has been widely applied to many other species (think
 reef fish and Darwin’s Finches).</p>
 <center>
-<p><a
-href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"><img
-src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Green_anole.jpg/320px-Green_anole.jpg"
-alt="Alt text" /></a></p>
+<div class="float">
+<img
+src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Anole_Lizard_Hilo_Hawaii_edit.jpg"
+alt="Alt text" />
+<div class="figcaption">Alt text</div>
+</div>
 </center>
 <p>Our tasks will be to:</p>
 <ol style="list-style-type: decimal">
@@ -676,7 +678,13 @@ pred.lm &lt;-tibble(
 )
 
 anole2%&gt;%
-ggplot(aes(SVL,HTotal))+geom_point()+geom_point(data=pred.lm,aes(SVL,H.pred),col=&quot;blue&quot;)</code></pre>
+ggplot(aes(SVL,HTotal))+
+  geom_point()+
+  geom_point(
+    data=pred.lm,
+    aes(SVL,H.pred),
+    col=&quot;blue&quot;
+    )</code></pre>
 <p><img src="mod3_proj_files/figure-html/unnamed-chunk-5-1.png" alt="" width="672" /></p>
 <pre class="r"><code>summary(anole.lm)</code></pre>
 <pre><code>## 
@@ -1094,8 +1102,8 @@ in the statistical sense. In other words, any trait we seek to study
 likely covaries with phylogenetic position. For example, in the context
 of anole hindlimb-SVL data, it is entirely possible, perhaps probable,
 that more closely related species share a similar pattern. Thus, it may
-be that any patterns we’ve uncovered thus far are the result of
-phylogeny, not merely ecomorph alone.</p>
+be that any patterns we’ve uncovered so far are the result of phylogeny,
+not merely ecomorph alone.</p>
 <p>To account for phylogeny in statistical analysis, we must turn to an
 important toolbox used by organismal biologists, phylogenetic
 comparative methods (PCMs). PCMs have a long history and today they are
@@ -1265,7 +1273,7 @@ aicw(anole.phylo.aic$AICc)</code></pre>
 ## 2 -92.98036  0.000000 9.827289e-01
 ## 3 -57.31864 35.661714 1.772520e-08
 ## 4 -84.89770  8.082653 1.727062e-02</code></pre>
-<p>From the AIC results, we con safely say that a phyloggnetically
+<p>From the AIC results, we con safely say that a phylogenetically
 corrected regression model that includes <code>Ecomorph2</code> with
 traits evolving under BM is the best fit. The OU models that specify a
 pull to some global optimum are rejected. We can interpret this to mean
@@ -1331,7 +1339,11 @@ with a boxplot. This is how it can be done:</p>
   dplyr::select(Ecomorph2,res,phylo.res)%&gt;%
   pivot_longer(cols=c(&quot;res&quot;,&quot;phylo.res&quot;))%&gt;%
   print%&gt;%
-  ggplot(aes(x=Ecomorph2,y=value)) +geom_boxplot() +stat_summary(fun=mean, geom=&quot;point&quot;, size=3)+facet_grid(name~.,scales = &quot;free_y&quot;)+ylab(&quot;residual&quot;)</code></pre>
+  ggplot(aes(x=Ecomorph2,y=value))+
+  geom_boxplot()+
+  stat_summary(fun=mean, geom=&quot;point&quot;, size=3)+
+  facet_grid(name~.,scales = &quot;free_y&quot;)+
+  ylab(&quot;residual&quot;)</code></pre>
 <pre><code>## # A tibble: 92 × 3
 ##    Ecomorph2    name         value
 ##    &lt;chr&gt;        &lt;chr&gt;        &lt;dbl&gt;
@@ -1448,11 +1460,13 @@ models. Please produce two separate plots.</li>
 <li>Under a BM model of trait evolution and using the tree provided,
 construct phylogenetic least squares models of the hindlimb-SVL
 relationships that include the unique combinations of these two
-covariates, i.e,</li>
+covariates, i.e., PGLS models with the following:</li>
 </ol>
-<pre><code>* A PGLS model with the hindlimb-SVL relationship + perch height
-* A PGLS model with the hindlimb-SVL relationship + perch diameter
-* A PGSL model with the hindlimb-SVL relationship + perch height + perch diameter</code></pre>
+<ul>
+<li>hindlimb-SVL relationship + perch height</li>
+<li>hindlimb-SVL relationship + perch diameter</li>
+<li>hindlimb-SVL relationship + perch height + perch diameter</li>
+</ul>
 <ol start="5" style="list-style-type: decimal">
 <li>Assess the fit of each of these three models using AICc and AICw and
 comment on (with comments in the script) whether one or both of the
@@ -1480,7 +1494,7 @@ lm.PD &lt;- lm(HL~PD,dat)
 “Module3_TeamX.R” where “X” is the each number. This means one team
 member should push the team’s submission to their team’s github
 directory, i.e., “Module3_Team1”, if in Team 1. Submissions are due by
-11:59 PM on Sunday, September 21st.</p>
+11:59 PM on Sunday, September 27th.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
