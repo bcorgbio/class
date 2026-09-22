@@ -2,7 +2,7 @@
 title: "Course Schedule"
 ---
 
-All assignments are due at 11:59 on the specified date.
+All assignments are due by 11:59 p.m. on the specified date. Late reports will incur a 25% penalty for each 24-hour period, or portion thereof, beyond the deadline.
 
 ## Phase I
 

@@ -264,6 +264,7 @@ Your grade will be based on five assignment components: Asking and answering que
 
 ***
 Note: *the lowest two of the 12 WCRs will be dropped, for a total of 100 pts.
+
 <br>
 
 The discussion portion of your grade will be calculated by determining the percentage of times your team both asked and answered a question when assigned to (usually once per week) and multiplying this by 50. That is, if you are asked to submit 15 questions and answers over the course of the semester and post and answer 12, your discussion points will equal 40. A discussion assignment will be considered complete if and only if a question is posted AND another answered. 
@@ -271,6 +272,8 @@ The discussion portion of your grade will be calculated by determining the perce
 As the name implies, on Wednesday of most weeks, we'll have Wednesday Code Reviews (WCRs). These short exercises will assess your aptitude in scripting, data visualization, and modeling. 
 
 More details about the specific requirements of Phase I, II, and III projects can be found under our "Projects" tab at the top of this page. 
+
+**Late submission policy:** All assignments are due by 11:59 p.m. on the specified date. Late reports will incur a 25% penalty for each 24-hour period, or portion thereof, beyond the deadline.
 
 <div class = "green">
 <div class="row">
