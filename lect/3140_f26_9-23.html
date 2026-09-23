@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>The Whiz and Viz Bang of Data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Christopher Kenaley" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link rel="stylesheet" href="slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# The Whiz and Viz Bang of Data
+]
+.subtitle[
+## The Basics of Visualizaiton and Modeling (part deux)
+]
+.author[
+### Dr. Christopher Kenaley
+]
+.institute[
+### Boston College
+]
+.date[
+### 2026/9/23
+]
+
+---
+
+
+# In class today 
+
+
+
+&lt;!-- qAdd icon library --&gt;
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"&gt;
+
+
+
+
+
+.pull-left[
+Today we'll ....
+
+- Consider a little history
+
+- Consider the effect of phylogeny
+
+- More on the AIC: `\(AIC_c\)` and `\(AIC_w\)`
+
+]
+
+.pull-right[
+![](https://www.researchgate.net/profile/Theodore-Garland/publication/332160743/figure/fig2/AS:782068086738944@1563470970718/Photograph-of-Joe-Felsenstein-looking-over-a-back-fence-overly-serious-in-1985.png)
+]
+
+---
+
+# First, some history
+
+
+.pull-left[
+The comparative method:
+
+- Documenting diversity of traits 
+
+- Quantifying their covariation and intercorrelations 
+
+- Speculating on their evolution
+
+Before Felsenstein (1985), no theoretical method to account for phylogeny and this effect was largely ignored or explained away.
+]
+
+.pull-right[
+Cited &gt;10000 times!!!
+![](fel85.png)
+]
+
+
+---
+
+## Before Felsenstein (1985)
+
+.pull-left[
+- Sample a breadth of species
+
+- Document the phenotype (e.g., Met. rate vs. size)
+
+- Quantifying the contrast or trend between them (ANOVA, T-test, etc.)
+
+
+![](3140_f26_9-23_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+![](3140_f26_9-23_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+
+
+
+
+```
+## # A tibble: 1 × 3
+##   term      statistic p.value
+##   &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;
+## 1 log(mass)      14.4 0.00134
+```
+]
+
+
+---
+
+# After Felsenstein (1985)
+
+Phylogenetic Independent Contrast (PIC)
+
+.pull-left[
+
+``` r
+mass.pic &lt;- pic(log(mass),phy)
+met.pic &lt;- pic(log(met),phy)
+
+qplot(mass.pic,met.pic)+
+  geom_smooth(method = "lm")+
+  theme_classic(20)
+```
+
+![](3140_f26_9-23_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+
+``` r
+d.lm.pic &lt;- lm(met.pic~mass.pic)
+tidy(
+  anova(d.lm.pic)
+  )[1,c(1,5,6)]
+```
+
+```
+## # A tibble: 1 × 3
+##   term     statistic p.value
+##   &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;
+## 1 mass.pic    0.0191   0.892
+```
+]
+
+
+---
+
+# After Felsenstein (1985)
+
+
+.pull-left[
+
+Metabolic Rate
+
+![](3140_f26_9-23_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+]
+
+
+.pull-right[
+
+Mass
+
+![](3140_f26_9-23_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+]
+
+
+
+
+
+
+---
+
+&lt;!-- slide 1 --&gt;
+
+# Humble beginnings
+
+&gt; This paper addresses a complex and important issue, and provides a solution to part of the problem—a very unsatisfactory solution, as the author is well aware, given the degree to which our data will usually fall short of the quality required by the method he proposes. … Nevertheless, as far as I can tell the method does what is claimed, and it is probably worth publishing.
+              
+              -Anonymous reviewer of Felsenstein (1985)
+
+---
+
+&lt;!-- slide 1 --&gt;
+
+# More complex models
+
+## Brownian motion
+&lt;center&gt;
+![](pcmfigure3.png)
+&lt;/center&gt;
+&lt;br&gt;
+
+  `\(\sigma^2\)`
+
+the rate parameter
+
+---
+
+&lt;!-- slide 1 --&gt;
+
+# More complex models
+
+## Different values of `\(\sigma^2\)`, the rate parameter
+
+![](3140_f26_9-23_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+
+---
+
+&lt;!-- slide 1 --&gt;
+
+# More complex models
+
+## OU process
+
+.pull-left[
+&lt;center&gt;
+![](ou.png)
+&lt;/center&gt;
+&lt;br&gt;
+]
+
+.pull-right[
+`\(\sigma^2\)`
+the rate parameter
+
+`\(\theta\)`
+trait optimum
+
+`\(\alpha\)`
+strength of selection
+]
+
+
+---
+
+&lt;!-- slide 1 --&gt;
+
+# More complex models
+
+## Phylogenetic Least Squares
+
+- Models that include process (mode) and relationships
+
+- using `nlme::gls()`
+
+- correlation functions from `ape` package (e.g.`corBrownian()` for BM, `corMartins()` for OU)
+
+
+
+``` r
+library(nlme)
+# PGLS under BM,
+fit_bm &lt;- gls(log(met) ~ log(mass), correlation = corBrownian(1, phy = phy, form = ~spec),
+    data = d, method = "ML")
+
+# PGLS under OU
+fit_ou &lt;- gls(log(met) ~ log(mass), correlation = corMartins(1, phy = phy, form = ~spec),
+    data = d, method = "ML")
+
+d$pred_bm &lt;- predict(fit_bm)
+d$pred_ou &lt;- predict(fit_ou)
+```
+
+---
+
+&lt;!-- slide 1 --&gt;
+
+# Phylogenetic Least Squares
+
+
+``` r
+d %&gt;% 
+  pivot_longer(pred_ou:pred_bm,names_to = "evol_model") %&gt;% 
+  ggplot(aes(log(mass),log(met)))+
+  geom_point() +
+  geom_smooth(method="lm")+
+  geom_smooth(method="lm",aes(y=value,col=evol_model))
+```
+
+![](3140_f26_9-23_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+
+---
+
+&lt;!-- slide 1 --&gt;
+
+# Phylogenetic Least Squares: model choice
+
+Which model should we interpret?
+
+Using AIC: 
+
+
+``` r
+AIC(fit_bm, fit_ou)
+```
+
+```
+##        df       AIC
+## fit_bm  3 -18.34618
+## fit_ou  4 -14.01221
+```
+
+``` r
+anova(fit_bm)
+```
+
+```
+## Denom. DF: 18 
+##             numDF   F-value p-value
+## (Intercept)     1 146.33972  &lt;.0001
+## log(mass)       1   0.24361  0.6276
+```
+
+---
+
+&lt;!-- slide 1 --&gt;
+
+# Phylogenetic Least Squares: model choice
+
+Which model should we interpret?
+
+Using *corrected* AIC (`\(AIC_{c}\)`):
+
+.pull-left[]
+
+``` r
+library(MuMIn)
+AICc(fit_bm, fit_ou)
+```
+
+```
+##        df      AICc
+## fit_bm  3 -16.84618
+## fit_ou  4 -11.34554
+```
+
+``` r
+anova(fit_bm)
+```
+
+```
+## Denom. DF: 18 
+##             numDF   F-value p-value
+## (Intercept)     1 146.33972  &lt;.0001
+## log(mass)       1   0.24361  0.6276
+```
+]
+
+
+.pull-right[
+
+### AIC
+`\(\mathrm{AIC} = 2k - 2\ln(\hat{L})\)`
+
+### `\(AIC_c\)`
+
+`\(\mathrm{AIC}_c = \mathrm{AIC} + \frac{2k(k + 1)}{n - k - 1}\)`
+]
+
+---
+# Phylogenetic Least Squares: model choice
+
+Which model should we interpret?
+
+Using *corrected* AIC weights (`\(AIC_{cw}\)`):
+
+.pull-left[
+
+``` r
+library(MuMIn)
+AICc(fit_bm, fit_ou) %&gt;%
+    Weights()
+```
+
+```
+##  model weights 
+## [1] 0.94 0.06
+```
+
+``` r
+anova(fit_bm)
+```
+
+```
+## Denom. DF: 18 
+##             numDF   F-value p-value
+## (Intercept)     1 146.33972  &lt;.0001
+## log(mass)       1   0.24361  0.6276
+```
+]
+
+.pull-right[
+
+
+### `\(AIC_w\)`
+`\(w_{i}=\frac{\exp \left(-\frac{1}{2}\Delta _{i}\right)}{\sum _{R=1}^{R}\exp \left(-\frac{1}{2}\Delta _{R}\right)}\)`
+]
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
