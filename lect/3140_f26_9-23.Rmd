@@ -326,11 +326,12 @@ anova(fit_bm)
 
 # Phylogenetic Least Squares: model choice
 
+.pull-left[
 Which model should we interpret?
 
 Using *corrected* AIC ($AIC_{c}$):
 
-.pull-left[]
+
 ```{r, tidy=TRUE,message=F}
 library(MuMIn)
 AICc(fit_bm,fit_ou)

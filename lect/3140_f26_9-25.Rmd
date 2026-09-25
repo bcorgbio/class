@@ -6,13 +6,12 @@ institute: "Boston College"
 date: "2025/9/17"
 output:
   xaringan::moon_reader:
+    css: ["default", "metropolis","slides.css"]
     lib_dir: libs
     nature:
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
+      ratio: 16:9
 ---
-class: inverse, top
+
 # In class today 
 
 ```{r,echo=FALSE,message=FALSE,warning=F}
@@ -48,7 +47,7 @@ Today we'll ....
 ]
 
 ---
-class: inverse, top
+
 # Trees: hard problems
 .pull-left[
 Estimating relationships/Making trees is hard!!
@@ -128,7 +127,7 @@ par(op)
 ]
 
 ---
-class: inverse, top
+
 # Trees: storing tree information
 
 
@@ -145,7 +144,7 @@ Newick format:
 ]
 
 .pull-right[
-```{r,warning=F}
+```{r,warning=F, fig.height=4}
 tre <- "(Bovine:0.69395,((Gibbon:0.36079,((Orang:0.33636,(Gorilla:0.17147,(Chimp:0.19268, Human:0.11927):0.08386):0.06124):0.15057):0.54939),Mouse:1.21460));
 "
 
@@ -158,11 +157,11 @@ plot(phy)
 
 
 ---
-class: inverse, top
+
 <!-- slide 1 -->
 
 ### Brownian motion
-```{r,echo=F,message=F}
+```{r,echo=F,message=F,warning=F,fig.height=4}
 sig2 <- 0.1
 nsim <- 100
 t <- 1:100
@@ -190,7 +189,7 @@ sim%>%
 
 
 ---
-class: inverse, top
+
 <!-- slide 1 -->
 
 
