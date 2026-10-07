@@ -192,7 +192,7 @@ From @sternes2020body who found sharks could be assigned two morphotype groups: 
 
 Although the work of @thomson1977body and later @sternes2020body points to interesting patterns in shark body-shape, neither study explicitly studied the role habitat---that is, pelagic or benthic---had in influencing the evolution body-shape evolution. In particular, @sternes2020body merely observed that their two groups with different body shapes often varied in their habitat preference. In addition, @sternes2020body made no explicit, quantitative phylogenetic test of their patterns. This leaves open an important question: **Do pelagic and benthic sharks have significantly different body shape?** Subsequently, we might also ask, **Has the morphology of pelagic and benthic sharks evolved at the same rate?** These are the questions we will take on in this project.
 
-These questions represent two an important thrust of evolutionary research: what macroevolutionary events have contributed to diversity, whether in species or phenotype. To answer questions like these requires that we essentially recapitulate the @sternes2020body body-shape data set using landmark-based [geometric morphometrics](https://en.wikipedia.org/wiki/Morphometrics#Landmark-based_geometric_morphometrics). This is a relatively straightforward, if tedious, method of capturing shape variation in a group of interest. For this, you'll digitize 14 homologous landmarks on images of some 220 species of sharks. Using the best practices in the field of geometric morphometrics to align our landlandmarks and extract shape information, we'll assess morphological disparity in a phylogenetic framework and assess the difference in rates of morphological evolution between the groups between pelagic and benthic sharks. 
+These questions represent two an important thrust of evolutionary research: what macroevolutionary events have contributed to diversity, whether in species or phenotype. To answer questions like these requires that we essentially recapitulate the @sternes2020body body-shape data set using landmark-based [geometric morphometrics](https://en.wikipedia.org/wiki/Morphometrics#Landmark-based_geometric_morphometrics). This is a relatively straightforward, if tedious, method of capturing shape variation in a group of interest. For this, you'll digitize 14 homologous landmarks on images of some 265 species of sharks. Using the best practices in the field of geometric morphometrics to align our landlandmarks and extract shape information, we'll assess morphological disparity in a phylogenetic framework and assess the difference in rates of morphological evolution between the groups between pelagic and benthic sharks. 
 
 # Methods
 
@@ -200,24 +200,26 @@ These questions represent two an important thrust of evolutionary research: what
 
 A few decades ago, a morphometric project like this would require visiting museums collections from around the world to take images of the specimens and species of interest. In fact, this was a major part of Prof. Kenaley's PhD thesis, which included trips to natural history collections in France, Denmark, Great Britain, Taiwan, Japan, Monaco, New Zealand, and Australia. Ahhhhhh, the good ol' days. Fortunately (or unfortunately), travel to such wonderful places may be avoided several resources exist that contain a trove of images of fish-like vertebrates. 
 
-We'll make use of shark images in the [FishBase](https://www.fishbase.us/) catalog: a clearing house of all things fish that has amassed tons of data from the scientific literature. Prof. Kenaley used the `rfishbase` package to rip images of scientific drawings of sharks. This resulted in a cache of images for the ~220 species included in a recent phylogeny of the elasmobranchs (@stein2018global).
+We'll make use of shark images in  Prof. Kenaley and his students have collected in the course of a nearly identical research project. Real quickly, this how we did it.
+
+We first began with images of drawings from @compagno1984sharks, @compagno2001sharks, and @ebert2021sharks, all authoritative texts on the identification, ecology, and evolution of sharks. Now, if we relied on only these drawings, we might expect to take some heat from reasonable people who contend that drawings are abstractions of specimens rather than direct representations, like a photograph would be. So, we developed a custom R workflow to obtain images for many of our 265 species from three public biodiversity data sources: [iNaturalist](https://www.inaturalist.org/), [FishBase], and the [Global Biodiversity Information Facility (GBIF)](https://www.gbif.org/). iNaturalist images were retrieved using the `rinat` package, qyerying observations by scientific name and downloading photographs at the largest available resolution. FishBase images were scraped directly from species photo pages (https://www.fishbase.us/photos ) using HTML parsing, and GBIF images were accessed via the `rgbif` API, restricting searches to still images associated with preserved specimens.  This resulted in a cache of images for the ~265 species included in a recent phylogeny of the elasmobranchs (@stein2018global).
 
 ## Species list, phylogeny, and ecology
 
-The 200+ species we'll analyze in the study were chosen because they had decent images on FishBase and cover the nooks and crannies of the @stein2018global phylogeny, giving a broad sample of the group. As we move on, we'll use [this table](data/shark_data.csv) to keep track of images we need to landmark, the species the images belongs to, and the habitat for each.The habitat data for our study come from @compagno1984sharks and @compagno2001sharks. Let's load these data now so we have it handy.
+The 265 species we'll analyze in the study were chosen because they had decent images from the aforementioned sourcxes and cover the nooks and crannies of the @stein2018global phylogeny, giving a broad sample of the group. As we move on, we'll use [this table](data/shark_data.csv) to keep track of the size and  habitat for each species.The habitat data for our study come from @compagno1984sharks and @compagno2001sharks. Let's load these data now so we have it handy.
 
 
 
 
 ```{r sharkdat}
 library(tidyverse)
-shark_dat <- read_csv("shark_data.csv")
+shark_dat <- read_csv("shark_data.csv") 
 ```
 
 
-Because we'll be comparing body shape in sharks, this project is by definition a comparative one and we'll need a phylogeny for the group. Fortunately a relatviely recent phylogenomic analysis of over 500 species of elasmobranchs (sharks + batoids) has been published by @stein2018global. Unfortunately, there is some phylogenetic discordance in this study. Specifically, when researchers analyze phylogenetic relationships, they typically repeat their analysis in a process known as [bootstrapping](https://en.wikipedia.org/wiki/Computational_phylogenetics#Evaluating_tree_support). In phylogenetics, bootstrapping is conducted using the columns of the character matrix. Each pseudoreplicate contains the same number of species (rows) and characters (columns) randomly sampled from the original matrix, with replacement. A phylogeny is reconstructed from each pseudoreplicate, with the same methods used to reconstruct the phylogeny from the original data. This often results in a data set of trees that have conflicting relationships---that is, phylogenetic uncertainty---and this was the case for the @stein2018global study. We'll have to account for this in our analysis. But, more on that later . . .
+Because we'll be comparing body shape in sharks, this project is by definition a comparative one and we'll need a phylogeny for the group. Fortunately a relatviely recent phylogenomic analysis of over 500 species of elasmobranchs (sharks + batoids) has been published by @stein2018global. Unfortunately, there is some phylogenetic discordance in this study. Specifically, when researchers analyze phylogenetic relationships, they typically repeat their analysis in a process known as [bootstrapping](https://en.wikipedia.org/wiki/Computational_phylogenetics#Evaluating_tree_support). In phylogenetics, bootstrapping is conducted using the columns of the character matrix. Each pseudoreplicate contains the same number of species (rows) and characters (columns) randomly sampled from the original matrix, with replacement. A phylogeny is reconstructed from each pseudoreplicate, with the same methods used to reconstruct the phylogeny from the original data. This often results in a dataset of trees that have conflicting relationships---that is, phylogenetic uncertainty---and this was the case for the @stein2018global study. We'll have to account for this in our analysis. But, more on that later . . .
 
-In any case, we've used the taxa studied in this paper to find images in FishBase and we'll use [a tree file](data/shark_trees.nex) representing phylogeny for our comparative analysis. 
+In any case, we've used the taxa studied in this paper to find our images and we'll use [a tree file](data/shark_trees.nex) representing phylogeny for our comparative analysis. 
 
 <center>
 <br>
@@ -241,18 +243,111 @@ As we learned in class and what you've been reading, researchers interested in c
 
 ### Digitization and landmarking
 
-Our shape analysis will be based on 14 landmarks placed on images of shark bodies of our ~220 species. To landmarks on the body, we'll follow this generalize workflow below in the image analysis program FIJI (FIJI is just imageJ). 
+
+You and your team/group will be assigned around 75 images representing about 40 of the ~265 species to digitize. Your team's images have been pushed to your team's repo. With the images now in place, we're ready to commence digitizing. We'll do so in the `SteoroMorph` package, a library of functions designed for digitization and seamless integration with other R packages integral to geometric morphometrics (e.g., `geomorph`). In particular, we'll use `SteoroMorph`'s `digitizeImages()` which, when run, creates an interactive web browser session in which the user places a number of specified landmarks on all images in a specific directory. 
+
+Before we move on with this, some workflow hygene . . . For this part of the project, Prof. Kenaley recommends that each team member create their own script for digitizing, perhaps named something logical and unique, like "kenaley_stereomorph.R" It's in this script that we'll digitize and produce our landmarks, the essential data of this project, i.e., there's no need to include it in your submitted reports as a code chunk. Now, let's walk through how to assemble the script for digitization in `steroromorph`. 
+
+First, make sure you install `stereomorph` (i.e., `install.packages("StereoMorph")`). Prime the script with the appropriate `library()` calls.
+
+```{r scriptsetup}
+library(tidyverse)
+library(StereoMorph)
+```
+
+Next, we'll have to specify in what directory our images reside and to which directory the landmark data should be written. That is, our script will save the landmark images as modified text files that contain the coordinates of our landmarks and we need a place to store them. For instance, say I was working with team 4 in in our-version controlled R project, I might add these important lines.
+
+```{r dirs}
+image_directory <- "images_team_4"
+landmark_directory <- "landmarks_team_4"
+
+if (!dir.exists(landmark_directory)) { dir.create(landmark_directory) }
+```
+
+The `image_directory` object will tell our `StereoMorph` functions where to find the images (the images already on the repo) and the `landmark_directory` tells them where to store the landmarks. The next line creates the landmark directory, but only does so if it doesn't already exist---we'd hate to overwrite it if it had data in it. Note that this also allows one to commit and push landmark data to the repo.
+
+Next, we need to establish what landmarks we want to digitize. Our shape analysis will be based on 14 landmarks identified here.
 
 <br>
 <center>
-![](shark_points.png){width=70%}
+  ![](shark_points.png){width=70%}
 <br>
 </center>
 <br>
 
-You and your team/group should will be assigned about 20 of the ~200 species to outline. Images of these species can be accessed through [this directory](https://drive.google.com/drive/folders/1X8oHbgvaK_5-gzFtc2p2dS3nWXjFZeUc?usp=sharing). 
+We want to store the names of these 14 landmarks so that `StereoMorphs` digitizing function, `digitizeImates()`, will know how many landmarks should be placed on the images. If we make this vector of point names descriptive, we'll know where to place the points while we're digitizing. Something like this satisfies those two objectives nicely. 
 
-First gather your images to work on and follow the steps below for each. In FIJI:
+```{r landref}
+landmarks_ref <- c("1_snout", #tip of the snout
+                   "2_dorsal_base_ant", #where the anterior base of the dorsal fin meets the body
+                   "3_dorsal_tip", #apex of the dorsal fin
+                   "4_dorsal_base_post",#where the posterior base of the dorsal fin meets the body
+                   "5_cadual_base_dor",#where the anterior base of the caudal fin meets the body
+                   "6_cadual_tip_dor", #tip of the dorsal lobe of caudal fin
+                   "7_cadual_tip_vent", #tip of the ventral lobe of caudal fin
+                   "8_caudal_base_vental", #where the postrio base of the caudal fin meets the body
+                   "9_pelvic_base_post", #where the poster base of the pelvic fin meets the body
+                   "10_pelvic_base_ant", #where the anterior base of the pelvic fin meets the body
+                   "11_pect_base_post", #where the posterio base of the pectoral fin meets the body
+                   "12_pect_base_ant", #where the anterior base of the pector fin meets the body
+                   "13_mouth_post", #posterior margin of upper jaw/mouth
+                   "14_mouth_ant") #anerior margin of mouth
+```
+
+With these preliminaries out of the way, we can now start digitizing using `digitizeImages()`. Note that the `landmark.ref` argument takes the landmark vector we just created. Also note that the `image.file` and `shapes.file` argument take our image and landmark directories, respectively. Less, crucially, we can also control how the points will look in the session with these other arguments. Lastly, notice that we don't pass the output of `digitizeImages()` to any object. That's because the output is text files---we merely need to run this function to produce them. Let's do that.
+
+```{r digimages,eval=F}
+digitizeImages(image.file = image_directory,
+               shapes.file = landmark_directory, 
+               landmarks.ref = landmarks_ref, 
+               landmark.color.blur = "cyan", #colors for easy vieing.
+               landmark.color.focus = "yellow", 
+               control.point.color.blur = "orchid", 
+               control.point.color.focus = "hotpink", 
+               landmark.radius = 5)
+```
+
+Right away, you'll notice the function produced a browser window in RStudio (see below). `StereoMorph` uses the `shiny` package to create an application interface. T
+
+<br>
+<center>
+  ![](sm_session_R.png){width=70%}
+<br>
+</center>
+<br>
+
+his browser window is small and cumbersome. It's usually best to click on the "open in browser" button so that the same window will be loaded in your default web browers (e.g., Safari, Chrome, etc.)
+
+This looks a lot better. Notice that the app has a series of tabs to the upper right, one each for "settings", "landmarks", "curves" and "scaling". Click on the "settings" tab.
+
+<br>
+<center>
+  ![](sm_session_chrome.png){width=70%}
+<br>
+</center>
+<br>
+
+```{r}
+library(abind)
+library(geomorph)
+# load in original landmarks
+stereomorph_landmarks <- StereoMorph::readShapes(landmark_directory)
+
+#convert
+geomorph_landmarks <- geomorph::readland.shapes(stereomorph_landmarks)
+
+
+#make array
+lms <- abind(geomorph_landmarks$landmarks,along=3)
+
+apply(lms,3, function(x) any(is.na(x))) %>% which
+
+gpa <- gpagen(lms,ProcD = F )
+
+plot(gpa)
+pca <- gm.prcomp(gpa$coords)
+plot(pca)
+```
 
 1. Open am image.
 
@@ -268,32 +363,7 @@ First gather your images to work on and follow the steps below for each. In FIJI
 
 7. Close the results and image tab (don't save the image).
 
-This process is demonstrated here.
-<br>
-<br>
-<br>
-<center>
-<iframe width="460" height="315" src="https://www.youtube.com/embed/-yZu3FkJLzU" frameborder="0" allowfullscreen></iframe>
-</center>
-<br>
-
-
-
-**Note:** For the first image you outline, you will have to open the macro editor ("Plugins" $\rightarrow$ "New" $\Macro$). Paste the script command from below into the editor and save this new macro to an appropriate directory, perhaps your cloned repo. You'll want to access this later ("Plugins" $\rightarrow$ "Edit") so that you can automate the process of saving text files with the correct fielname.
-
-
-
-```{}
-f = getTitle();
-dir=getDirectory("Choose where to save data ");
-selectWindow("Results");
-saveAs("Results", dir+f+"_.csv");
-```
-
-
-This script saves the results as a *tab-separated* text file with same filname as the image file name and appends "_.csv".  **This is super important!!** and how we'll link the landmarks to a species.
-
-After your team has completed landmarking the assigned species, upload your text files to [this directory](https://drive.google.com/drive/folders/1gjPJuq8aCaTBIHbJnmpHmxHi3TbVtaXl?usp=sharing).  Once all the data appear here, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required (i.e., file-name checks, quality, etc.). You can then download [these evaluated data](data/shark_points.zip) for shape analysis.
+After your team has completed landmarking the assigned species, push them to your teams repo.  Once all the data appear across the repos, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required (i.e., file-name checks, quality, etc.). He'll them push the full dataset to all the team repos.
 
 ### Superimposition
 
@@ -730,7 +800,7 @@ Indeed it appears that when we estimate evolutionary rates for 10 random trees, 
 
 Now, this is all well and good. But, most comparative biologists would argue 10 random trees does not a posterior make. We should probably sample many more or, perhaps use the entire set of trees. 
 
-What's to stop us? Well, if we shoot for the stars and use all 500 trees in 500 separate analyses, we'd be looking at running a for loop 50 times longer than 10 trees took (roughly 350 s or 6 minutes, see figure below). In the world of comparative methods, this isn't such a long time, but remember, this is a preliminary analysis of only 90 or so of the 220 we hope to include. The figure below indicates that including all 220 species and using all 500 trees would take ~2500 s or about 40 minutes!!!
+What's to stop us? Well, if we shoot for the stars and use all 500 trees in 500 separate analyses, we'd be looking at running a for loop 50 times longer than 10 trees took (roughly 350 s or 6 minutes, see figure below). In the world of comparative methods, this isn't such a long time, but remember, this is a preliminary analysis of only 90 or so of the 265 we hope to include. The figure below indicates that including all 220 species and using all 500 trees would take ~2500 s or about 40 minutes!!!
 
 <br>
 
@@ -862,7 +932,7 @@ In answering your questions, your .Rmd should include the following components:
       + Author contributions: Briefly outline what each team member contributed to the project.
       + AI-use Statement: Briefly state how AI was used in the completion of the report requirements.
 
-**Each team should push one report Rmd**  as "Module5_TeamX.Rmd" where "X" is the each number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's github directory, i.e., "Module5_Team1", if in Team 1. Project reports should be pushed by 11:59 PM on Sunday, October 19th.
+**Each team should push one report Rmd**  as "Module5_TeamX.Rmd" where "X" is the each number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's github directory, i.e., "Module5_Team1", if in Team 1. Project reports should be pushed by 11:59 PM on Sunday, October 25th.
 
 # References
 
