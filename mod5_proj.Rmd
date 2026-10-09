@@ -360,10 +360,7 @@ So, we have the species names from whence the data, both landmark and PCA, came.
 
 What's left to do in exploring if benthic and pelagic sharks occupy different morphospace is to combine this information with the PC scores in `pca$x`. Let's first load the shark data and consider how we'll join it to our PCA data using species as the key.
 
-```{r sharkdat}
-#read
-shark_dat <- read_csv("shark_data.csv")
-
+```{r sharkdat2}
 #sneak a peak
 head(shark_dat)
 ```
@@ -471,14 +468,16 @@ sp <- intersect(phy[[1]]$tip.label,PCA$sp %>% unique)
 phy2 <- keep.tip(phy,PCA$sp)
 ```
 
-To undertake the analysis with `procD.pgls()`, we must input the tree of course and a `geomorph.dataframe`, a special data frame that includes the coordinates and variables (i.e., habitat) that will be in the model. But, as we've discussed above, we have several specimens per species and thus multiple observations for each tip in the tree. `procD.pgls()` can't handle that. A common solution to such a problem is to just calculate the mean values of each species. For this, we can turn to a custom function that uses `geomorph`'s `mshape` function to compute the mean shape of each species. It will compute the mean shape for each unique coordinate name, that is species.
+To undertake the analysis with `procD.pgls()`, we must input the tree of course and a `geomorph.dataframe`, a special data frame that includes the coordinates and variables (i.e., habitat) that will be in the model. But, as we've discussed above, we have several specimens per species and thus multiple observations for each tip in the tree. `procD.pgls()` can't handle that. A common solution to such a problem is to just calculate the mean values of each species. For this, we can turn to a custom function that uses `geomorph`'s `mshape` function to compute the mean shape of each species. It will compute the mean shape for each unique coordinate name, that is species. Notice here that we reorder the resulting array of mean shapes along its third dimension according to the order of species (`tip.label`) in the tree, a standard practice with comparative methods in R.
 
 
 ```{r morphdis,eval=T}
-
+#install abind package
+#install.packages("abind")
+library(abind)
 #mean shape of uniquely named coordinates
 mean_shape <- function(x){
-
+  array(dim=3)
   sp <- dimnames(x$coords)[[3]]
   m_shapes <- list()
   for(s in unique(sp)){
@@ -493,48 +492,40 @@ mean_shape <- function(x){
 #rename the coordinates
 dimnames(gpa$coords)[[3]] <- PCA$sp
 
-gpa$coords <- mean_shape(gpa)
+mean_coords <- mean_shape(gpa)[,,phy2[[1]]$tip.label]
 ```
 
-Let's now make that `geomorph.dataframe` the mean aligned coordinates (`gpa$coord`) and the habitat taken from the `PCA` object.
+For the habitat data we'll add to the `geomorph.data.frame`, we need to establish a vector that is also limited to our species and ordered according to the tip labels of the tree.
+
+
+```{r hab}
+hab <- setNames(shark_dat$habitat,shark_dat$sp)[phy2[[1]]$tip.label]
+```
+
+Now the `geomorph.data.frame`.
 
 ```{r gdf}
 gdf <- geomorph.data.frame(
-  gpa,
-  habitat=PCA$habitat,
-  phy=phy2
+  mean_coords,
+  habitat=hab,
+  phy=phy2[[1]] #just one tree!
   )
 
 ```
 
+We can now move on the the Procrustes PGLS. It will take as input the `geomorph.data.frame`, a model formula, and the tree object stored in it. The model formula follows model fitting conventions in R with `~` and should reflect our question, "Does shape vary accroding to habitat (i.e, `mean_coords ~ habitat`)?" Lastly, `procD.pgls()` relies on permutations to obtain statistical values, so we must specify the number of permutation with `iter`. A value of 10,0000 is plenty. Also note, messy progress messages are suppressed with `print.progress = F`. We can then run an ANOVA on this fitted model.
 
-
-To you use the `morphol.disparity()` function, we then need to establish a formula describing the  model to use and tell the function which groups the model should include. This is encoded with `coords ~ 1` which indicates we'll look at the differences in means and  `groups= ~ habitat`, indicating that we'll evaluate means between the habitat groups. `data = gdf` indicates we'll use the `gdf` data frame we established above, while `iter = 10000` indicates we'll be perform 10,000 radom permutations. Lastly, we just summarize the `md` object to return the results
-
-Notice the the pairwise differences are returned both for the Procrustes shape variance and the absolute differences along with the p values. As it turns out, at least for this limited data set of ~90 species, there's no significant morphological disparity between groups.
-
-We have a preliminary answer to our first question, "Does habitat use predict different body shape?". But this of course could change with a larger sample of species. 
-
-```{r phy,message=FALSE,eval=F,include=F}
-library(phytools)
-phy <- readNexus("data/shark_trees.nex")
-
-phy2 <- keep.tip(phy,PCA$sp)
-
-  gdf <- geomorph.data.frame(gpa,
-                             species = PCA$sp,
-                             habitat=PCA$habitat,
-                             phy=phy2[[1]]
-  )
-  
-
-library(parallel)  
-shark_pgls <- procD.pgls(coords ~ habitat, phy = phy, data = gdf, 
+```{r pgls}
+shark_pgls <- procD.pgls(mean_coords ~ habitat, phy = phy, data = gdf, 
 iter = 10000,print.progress = F)
 
-
-summary(shark_pgls)
+anova(shark_pgls)
 ```
+
+
+As it turns out, at least for this limited data set of ~50 species, there's no significant difference in mean shape between habitat groups.
+
+We have a preliminary answer to our first question, "Does habitat use predict different body shape?". But this of course could change with a larger sample of species. 
 
 ### Analysis Part III: Evolution in Parallel
 
@@ -542,38 +533,19 @@ Our secondary question was, if you remember, was, "**Has the body shape of pelag
 
 Because we're correcting for phylogeny in this analysis, we need the [tree from @stein2018global mentioned above](data/shark_trees.nex). Once this tree file is downloaded, let's load, read it, in and store it to an object named `phy`. Notice you'll need the `phytools` package and the function `readNexus()`.
 
-
-```{r readphy}
-library(phytools)
-phy <- readNexus("data/shark_trees.nex")
-length(phy)
-```
-
-Next let's, restrict our tree file to those species in our data set. For this, we'll used `ape`'s `keep.tip()` which keeps only the tips in a vector, in this case, the species in our PCA and landmark analysis.
-
-```{r phydrop}
-sp <- intersect(phy[[1]]$tip.label,PCA$sp %>% unique)
-phy2 <- keep.tip(phy,PCA$sp)
-```
-
-
-To undertake the analysis with `compare.evol.rates()`, we must specify `A`, the aligned coordinates in a lankmark array (`gpa$coord`), a tree (more in just a bit), and a named vector of groups descriping to which group each species in the array belongs.
-
-Let's establish the grouping vector by passing the `habitat` values in our `PCA` tibble to an object named `gp_hab` and then give the names of this vector the `species` values. Then we run the function.
+To undertake the analysis with `compare.evol.rates()`, we must specify `A`, the aligned coordinates in a landkmark array of mean shape (`mean_coords`), a tree (more in just a bit), and our previoously establish vector of habita groups describing to which group each species in the array belongs.
 
 
 ```{r evolrate}
-gp_hab <- PCA$habitat
-names(gp_hab) <- PCA$sp
 
-er <- compare.evol.rates(A=gpa$coords, phy=phy2[[1]], method="simulation",gp=gp_hab,print.progress = F)
+er <- compare.evol.rates(A=mean_coords, phy=phy2[[1]], method="simulation",gp=hab,print.progress = F)
 
 print(er)
 ```
 
-So it appears the benthic group body shape has evolved 1.6 times faster than the pelagic group and this is significant (*p=0.002*). But, we have a problem. You may have noticed that when we loaded our tree file, the length of this list of trees is 500. These are 500 trees produced by @stein2018global using the bootstrapping method mentioned earlier. Many of these trees are incongruent, that is, they represent different relationships for the sharks and this, in turn, represents some serious phylogenetic uncertainty. 
+So it appears the neither of the groups is faster than the other (*p=0.98*). But, we have a problem. You may have noticed that when we loaded our tree file, the length of this list of trees is 500. These are 500 trees produced by @stein2018global using the bootstrapping method mentioned earlier. Many of these trees are incongruent, that is, they represent different relationships for the sharks and this, in turn, represents some serious phylogenetic uncertainty. 
 
-Also notice that in our rate analysis above, we used only one tree in this list (`phy=phy2[[1]]`). There are 499 other trees we could have used, perhaps each representing a different phylogenetic hypothesis. The results of a comparative analysis like this could, and likely will, vary according to the phylogenetic hypothesis used in it. So what to do? 
+Also notice that in our rate analysis above (the Procrustes PGLS, too!), we used only one tree in this list (`phy=phy2[[1]]`). There are 499 other trees we could have used, perhaps each representing a different phylogenetic hypothesis. The results of a comparative analysis like this could, and likely will, vary according to the phylogenetic hypothesis used in it. So what to do? 
 
 This is a common problem faced by comparative biologists and, fortunately, there seems to be a consensus among us to repeat our comparative analysis using a random sample or, ambitiouslu, all of the trees in that represent the phylogenetic uncertainty. By repeating an analysis, we produce a series of results based on new parameters (i.e., phylogenetic distance) to our model. In this case, the new parameters would include by using any or all of the trees. This establishes what is akin to a [posterior sample](https://en.wikipedia.org/wiki/Posterior_probability) and from this we can extract a posterior distribution of estimates, in our case, a distribution of evolutionary rates.
 
@@ -588,7 +560,7 @@ er_l <- list()
 
 
 t <- system.time(for(i in 1:length(phy_sample)){
- er_l[[i]] <-compare.evol.rates(A=ldk_al$coords, phy=phy_sample[[i]], method="simulation",gp=gp_hab,print.progress = F) %>% summary
+ er_l[[i]] <-compare.evol.rates(A=mean_coords, phy=phy_sample[[i]], method="simulation",gp=hab,print.progress = F) %>% summary
 }
 )
 
@@ -622,7 +594,7 @@ er %>%
 
 ```
 
-Indeed it appears that when we estimate evolutionary rates for 10 random trees, accounting for uncertainty in species relationships, pelagic species evolve slower than benthic ones.
+Indeed it appears that when we estimate evolutionary rates for 10 random trees, accounting for uncertainty in species relationships, pelagic species about as fast as benthic ones.
 
 Now, this is all well and good. But, most comparative biologists would argue 10 random trees does not a posterior make. We should probably sample many more or, perhaps use the entire set of trees. 
 
@@ -736,12 +708,12 @@ Please submit your report and all associated data to your team GitHub repository
 
 
   * Establish an array suitable for analysis using the `geomorph` functions outlined above. Construct this from all specimens digitized in [this compressed directory](data/shark_points.zip) and Procrustes align them (**note:** this will be available soon after all landmark data is collected).
-  * Does habitat result in the occupation of a different morphospace? Please answer this question using a `ggplot`-rendered morphospace based on the first two PCs from a principal components analysis of your alignment.
-  * Is there morphological disparity between habitats?
+  * Does habitat result in the occupation of a different morphospace? Please qualitatively answer this question using a `ggplot`-rendered morphospace based on the first two PCs from a principal components analysis of your alignment.
+  * Is there a shape difference between habitats?
   * Is the rate of morphological evolution significantly different between different habitat types?
-    1. Answer this question based on a posterior distribution of rates based on all 500 phylogenetic trees.
-    2. Make sure the distribution of rate estimates is created through the use of a parallelization of your analysis.
-    3. Please assess the statistical significance of habitat on the distribution using a simple two-sided t-test (i.e. `t.test()`).
+    1. Answer both questions emperically based on a posterior distribution of rates based on all 500 phylogenetic trees.
+    2. Make sure the distribution Z values from the Procrustes PGLS and  rate estimates and  are created through the use of a parallelization of your analysis.
+    3. Please assess the statistical significance of habitat on both distributions using a simple two-sided t-test (i.e. `t.test()`).
     
   * What inferences with regards to ecology and behavior can you make concerning the relationship between habitat and both shape and rates of morphological evolution? 
 

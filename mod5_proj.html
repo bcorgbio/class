@@ -416,7 +416,7 @@ div.tocify {
       <a href="peer_contributions.html">Peer Contribution Evaluation Guidelines</a>
     </li>
     <li>
-      <a href="https://forms.gle/7uVJ3vMtvjFFNvsN8">Author Contribution Evaluation Form</a>
+      <a href="https://forms.gle/7uVJ3vMtvjFFNvsN8">Peer Contribution Evaluation Form</a>
     </li>
   </ul>
 </li>
@@ -586,7 +586,7 @@ Shimada (2020)</span> body-shape data set using landmark-based <a
 href="https://en.wikipedia.org/wiki/Morphometrics#Landmark-based_geometric_morphometrics">geometric
 morphometrics</a>. This is a relatively straightforward, if tedious,
 method of capturing shape variation in a group of interest. For this,
-you’ll digitize 14 homologous landmarks on images of some 220 species of
+you’ll digitize 14 homologous landmarks on images of some 265 species of
 sharks. Using the best practices in the field of geometric morphometrics
 to align our landlandmarks and extract shape information, we’ll assess
 morphological disparity in a phylogenetic framework and assess the
@@ -606,33 +606,68 @@ New Zealand, and Australia. Ahhhhhh, the good ol’ days. Fortunately (or
 unfortunately), travel to such wonderful places may be avoided several
 resources exist that contain a trove of images of fish-like
 vertebrates.</p>
-<p>We’ll make use of shark images in the <a
-href="https://www.fishbase.us/">FishBase</a> catalog: a clearing house
-of all things fish that has amassed tons of data from the scientific
-literature. Prof. Kenaley used the <code>rfishbase</code> package to rip
-images of scientific drawings of sharks. This resulted in a cache of
-images for the ~220 species included in a recent phylogeny of the
-elasmobranchs (<span class="citation">Stein et al. (2018)</span>).</p>
+<p>We’ll make use of shark images in Prof. Kenaley and his students have
+collected in the course of a nearly identical research project. Real
+quickly, this how we did it.</p>
+<p>We first began with images of drawings from <span
+class="citation">Compagno (1984)</span>, <span class="citation">Compagno
+(2001)</span>, and <span class="citation">Ebert, Dando, and Fowler
+(2021)</span>, all authoritative texts on the identification, ecology,
+and evolution of sharks. Now, if we relied on only these drawings, we
+might expect to take some heat from reasonable people who contend that
+drawings are abstractions of specimens rather than direct
+representations, like a photograph would be. So, we developed a custom R
+workflow to obtain images for many of our 265 species from three public
+biodiversity data sources: <a
+href="https://www.inaturalist.org/">iNaturalist</a>, [FishBase], and the
+<a href="https://www.gbif.org/">Global Biodiversity Information Facility
+(GBIF)</a>. iNaturalist images were retrieved using the
+<code>rinat</code> package, qyerying observations by scientific name and
+downloading photographs at the largest available resolution. FishBase
+images were scraped directly from species photo pages (<a
+href="https://www.fishbase.us/photos"
+class="uri">https://www.fishbase.us/photos</a> ) using HTML parsing, and
+GBIF images were accessed via the <code>rgbif</code> API, restricting
+searches to still images associated with preserved specimens. This
+resulted in a cache of images for the ~265 species included in a recent
+phylogeny of the elasmobranchs (<span class="citation">Stein et al.
+(2018)</span>).</p>
 </div>
 <div id="species-list-phylogeny-and-ecology" class="section level2">
 <h2>Species list, phylogeny, and ecology</h2>
-<p>The 200+ species we’ll analyze in the study were chosen because they
-had decent images on FishBase and cover the nooks and crannies of the
-<span class="citation">Stein et al. (2018)</span> phylogeny, giving a
-broad sample of the group. As we move on, we’ll use <a
-href="data/shark_data.csv">this table</a> to keep track of images we
-need to landmark, the species the images belongs to, and the habitat for
-each.The habitat data for our study come from <span
-class="citation">Compagno (1984)</span> and <span
+<p>The 265 species we’ll analyze in the study were chosen because they
+had decent images from the aforementioned sourcxes and cover the nooks
+and crannies of the <span class="citation">Stein et al. (2018)</span>
+phylogeny, giving a broad sample of the group. As we move on, we’ll use
+<a href="data/shark_data.csv">this table</a> to keep track of the size
+and habitat for each species.The habitat data for our study come from
+<span class="citation">Compagno (1984)</span> and <span
 class="citation">Compagno (2001)</span>. Let’s load these data now so we
 have it handy.</p>
-<pre class="r"><code>library(tidyverse)
-shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;)</code></pre>
-<pre><code>## Rows: 188 Columns: 8
-## ── Column specification ───────────────────
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.5.2</code></pre>
+<pre><code>## Warning: package &#39;tibble&#39; was built under R version 4.5.2</code></pre>
+<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 4.5.2</code></pre>
+<pre><code>## Warning: package &#39;readr&#39; was built under R version 4.5.2</code></pre>
+<pre><code>## Warning: package &#39;purrr&#39; was built under R version 4.5.2</code></pre>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 4.5.2</code></pre>
+<pre><code>## Warning: package &#39;lubridate&#39; was built under R version 4.5.2</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.2.0     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.1     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>shark_dat &lt;- read_csv(&quot;shark_data.csv&quot;) </code></pre>
+<pre><code>## Rows: 288 Columns: 3
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
-## chr (5): sp, file_name, depth, habitat, ref
-## dbl (3): id, size, depth_max
+## chr (2): sp, habitat
+## dbl (1): PCL
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
@@ -650,13 +685,13 @@ character matrix. Each pseudoreplicate contains the same number of
 species (rows) and characters (columns) randomly sampled from the
 original matrix, with replacement. A phylogeny is reconstructed from
 each pseudoreplicate, with the same methods used to reconstruct the
-phylogeny from the original data. This often results in a data set of
+phylogeny from the original data. This often results in a dataset of
 trees that have conflicting relationships—that is, phylogenetic
 uncertainty—and this was the case for the <span class="citation">Stein
 et al. (2018)</span> study. We’ll have to account for this in our
 analysis. But, more on that later . . .</p>
-<p>In any case, we’ve used the taxa studied in this paper to find images
-in FishBase and we’ll use <a href="data/shark_trees.nex">a tree file</a>
+<p>In any case, we’ve used the taxa studied in this paper to find our
+images and we’ll use <a href="data/shark_trees.nex">a tree file</a>
 representing phylogeny for our comparative analysis.</p>
 <center>
 <p><br> <img
@@ -685,63 +720,197 @@ assess the original questions.</li>
 </ol>
 <div id="digitization-and-landmarking" class="section level3">
 <h3>Digitization and landmarking</h3>
-<p>Our shape analysis will be based on 14 landmarks placed on images of
-shark bodies of our ~220 species. To landmarks on the body, we’ll follow
-this generalize workflow below in the image analysis program FIJI (FIJI
-is just imageJ).</p>
+<p>You and your team/group will be assigned around 50–60 images
+representing about 40 of the ~265 species to digitize. Your team’s
+images have been pushed to your team’s repo. With the images now in
+place, we’re ready to commence digitizing. We’ll do so in the
+<code>SteoroMorph</code> package, a library of functions designed for
+digitization and seamless integration with other R packages integral to
+geometric morphometrics (e.g., <code>geomorph</code>). In particular,
+we’ll use <code>SteoroMorph</code>’s <code>digitizeImages()</code>
+which, when run, creates an interactive web browser session in which the
+user places a number of specified landmarks on all images in a specific
+directory.</p>
+<p>Before we move on with this, some workflow hygene . . . For this part
+of the project, Prof. Kenaley recommends that each team member create
+their own script for digitizing, perhaps named something logical and
+unique, like “kenaley_stereomorph.R” It’s in this script that we’ll
+digitize and produce our landmarks, the essential data of this project,
+i.e., there’s no need to include it in your submitted reports as a code
+chunk. Now, let’s walk through how to assemble the script for
+digitization in <code>StereoMorph</code>.</p>
+<p>First, make sure you install <code>StereoMorph</code> (i.e.,
+<code>install.packages("StereoMorph")</code>). Prime the script with the
+appropriate <code>library()</code> calls.</p>
+<pre class="r"><code>library(tidyverse) #always
+library(StereoMorph)</code></pre>
+<p>Next, we’ll have to specify in what directory our images reside and
+to which directory the landmark data should be written. That is, our
+script will save the landmark images as modified text files that contain
+the coordinates of our landmarks and we need a place to store them. For
+instance, say my images were in a directory named “shark_images” and I
+want the landmarks I generate to reside in a directory
+“shark_landmarks”, I might add these important lines.</p>
+<pre class="r"><code>image_directory &lt;- &quot;shark_images&quot;
+landmark_directory &lt;- &quot;shark_landmarks&quot;
+
+if (!dir.exists(landmark_directory)) { dir.create(landmark_directory) }</code></pre>
+<p>The first two lines generate those character objects we’ll pass on
+the our digitizing function. The third creates the landmark directory,
+but only does so if it doesn’t already exist—we’d hate to overwrite it
+if it had data in it.</p>
+<p>Next, we need to establish what landmarks we want to digitize. Our
+shape analysis will be based on 14 landmarks identified here.</p>
 <br>
 <center>
 <img src="shark_points.png" style="width:70.0%" /> <br>
 </center>
 <p><br></p>
-<p>You and your team/group should will be assigned about 20 of the ~200
-species to outline. Images of these species can be accessed through <a
-href="https://drive.google.com/drive/folders/1X8oHbgvaK_5-gzFtc2p2dS3nWXjFZeUc?usp=sharing">this
-directory</a>.</p>
-<p>First gather your images to work on and follow the steps below for
-each. In FIJI:</p>
-<ol style="list-style-type: decimal">
-<li><p>Open am image.</p></li>
-<li><p>Select the multipoint tool.</p></li>
-<li><p>Digitize the 14 landmarks you see above.</p></li>
-<li><p>Measure the XY positions of these points
-(<code>cmd/ctrl+m</code>).</p></li>
-<li><p>Select the macro tab and run the macro
-(<code>cmd/ctrl+r</code>).</p></li>
-<li><p>Save the results to the appropriate directory.</p></li>
-<li><p>Close the results and image tab (don’t save the image).</p></li>
-</ol>
-This process is demonstrated here. <br> <br> <br>
+<p>We want to store the names of these 14 landmarks so that
+<code>StereoMorphs</code> digitizing function,
+<code>digitizeImates()</code>, will know how many landmarks should be
+placed on the images. If we make this vector of point names descriptive,
+we’ll know where to place the points while we’re digitizing. Something
+like this satisfies those two objectives nicely.</p>
+<pre class="r"><code>landmarks_ref &lt;- c(&quot;1_snout&quot;, #tip of the snout
+                   &quot;2_dorsal_base_ant&quot;, #where the anterior base of the dorsal fin meets the body
+                   &quot;3_dorsal_tip&quot;, #apex of the dorsal fin
+                   &quot;4_dorsal_base_post&quot;,#where the posterior base of the dorsal fin meets the body
+                   &quot;5_cadual_base_dor&quot;,#where the anterior base of the caudal fin meets the body
+                   &quot;6_cadual_tip_dor&quot;, #tip of the dorsal lobe of caudal fin
+                   &quot;7_cadual_tip_vent&quot;, #tip of the ventral lobe of caudal fin
+                   &quot;8_caudal_base_vental&quot;, #where the postrio base of the caudal fin meets the body
+                   &quot;9_pelvic_base_post&quot;, #where the poster base of the pelvic fin meets the body
+                   &quot;10_pelvic_base_ant&quot;, #where the anterior base of the pelvic fin meets the body
+                   &quot;11_pect_base_post&quot;, #where the posterio base of the pectoral fin meets the body
+                   &quot;12_pect_base_ant&quot;, #where the anterior base of the pector fin meets the body
+                   &quot;13_mouth_post&quot;, #posterior margin of upper jaw/mouth
+                   &quot;14_mouth_ant&quot;) #anerior margin of mouth</code></pre>
+<p>With these preliminaries out of the way, we can now start digitizing
+using <code>digitizeImages()</code>. Note that the
+<code>landmark.ref</code> argument takes the landmark vector we just
+created. Also note that the <code>image.file</code> and
+<code>shapes.file</code> argument take our image and landmark
+directories, respectively. Less crucially, we can also control how the
+points will look in the session with these other arguments. Lastly,
+notice that we don’t pass the output of <code>digitizeImages()</code> to
+any object. That’s because the output is text files—we merely need to
+run this function to produce the app we run to get them. Let’s do
+that.</p>
+<pre class="r"><code>digitizeImages(image.file = image_directory,
+               shapes.file = landmark_directory, 
+               landmarks.ref = landmarks_ref, 
+               landmark.color.blur = &quot;cyan&quot;, #colors for easy vieing.
+               landmark.color.focus = &quot;yellow&quot;, 
+               control.point.color.blur = &quot;orchid&quot;, 
+               control.point.color.focus = &quot;hotpink&quot;, 
+               landmark.radius = 5)</code></pre>
+<p>Right away, you’ll notice the function produced a browser window in
+RStudio (see below). <code>StereoMorph</code> uses the
+<code>shiny</code> package to create an application interface.</p>
+<br>
 <center>
-<iframe width="460" height="315" src="https://www.youtube.com/embed/-yZu3FkJLzU" frameborder="0" allowfullscreen>
-</iframe>
+<img src="sm_session_R.png" style="width:70.0%" /> <br>
 </center>
 <p><br></p>
-<p><strong>Note:</strong> For the first image you outline, you will have
-to open the macro editor (“Plugins” <span
-class="math inline">\(\rightarrow\)</span> “New” <span
-class="math inline">\(\Macro\)</span>). Paste the script command from
-below into the editor and save this new macro to an appropriate
-directory, perhaps your cloned repo. You’ll want to access this later
-(“Plugins” <span class="math inline">\(\rightarrow\)</span> “Edit”) so
-that you can automate the process of saving text files with the correct
-fielname.</p>
-<pre><code>f = getTitle();
-dir=getDirectory(&quot;Choose where to save data &quot;);
-selectWindow(&quot;Results&quot;);
-saveAs(&quot;Results&quot;, dir+f+&quot;_.csv&quot;);</code></pre>
-<p>This script saves the results as a <em>tab-separated</em> text file
-with same filname as the image file name and appends “_.csv”.
-<strong>This is super important!!</strong> and how we’ll link the
-landmarks to a species.</p>
-<p>After your team has completed landmarking the assigned species,
-upload your text files to <a
-href="https://drive.google.com/drive/folders/1gjPJuq8aCaTBIHbJnmpHmxHi3TbVtaXl?usp=sharing">this
-directory</a>. Once all the data appear here, Prof. Kenaley will
-evaluate the quality of the landmarks and do some post-processing if
-required (i.e., file-name checks, quality, etc.). You can then download
-<a href="data/shark_points.zip">these evaluated data</a> for shape
-analysis.</p>
+<p>This browser window is small and cumbersome. It’s usually best to
+click on the “Open in Browser” button so that the same window will be
+loaded in your default web browers (e.g., Safari, Chrome, etc.)</p>
+<p>This looks a lot better. Notice that the app displays the first image
+from you image directory as well as a series of tabs to the upper right,
+one each for “settings”, “landmarks”, “curves” and “scaling”. Click on
+the “settings” tab so that we can have a closer look and set some
+options that will make our digitizing easier.</p>
+<br>
+<center>
+<img src="sm_session_chrome.png" style="width:70.0%" /> <br>
+</center>
+<p><br></p>
+<br>
+<center>
+<img src="sm_settings.png" style="width:40.0%" /> <br>
+</center>
+<p><br></p>
+<p>You’ll want select “Auto-advance”. This setting automatically
+advances to the next landmark after you place one on the image. Other
+options may be important for other projects, but autoadvance is perhaps
+the only beneficial one. Let’s now have a look at the landmarks tab, the
+business end of the app.</p>
+<br>
+<center>
+<img src="sm_landmarks.png" style="width:40.0%" /> <br>
+</center>
+<p><br></p>
+<p>Notice that the character strings in our <code>landmark_ref</code>
+vector populates a landmark list and the first “1_snout” is bolded,
+indicating that this is the active point. That is, where you put the
+cursor on the image and keystoke “x”, a coordinate will appear in that
+bolded landmark line. Give it a shot: put the cursor somewhere near
+where you want to mark the snout and type “x”. You’ll see that when you
+type “x”, <em>x-y</em> coordinates appear, and, due to the autoadvance
+setting, the next landmark, “2_dorsal_base_ant”, becomes bolded and
+active. Continue on like this and you’ll very quickly have all 14
+landmarks digitized. Once you’ve done this, click on “Save”. This will
+tell the app to use some nifty R coded to output you landmark
+coordinates as text file and do so in you chosen “shark_landmarks”
+directory. Click “Next image” and you’re ready to do this again. You’ll
+repeat this process for all the images your team is responsible for. In
+the end, you’ll end up with 50 or so landmark files,</p>
+<pre class="r"><code>list.files(&quot;shark_landmarks&quot;) </code></pre>
+<pre><code>##  [1] &quot;Aculeola_nigra_1.txt&quot;              &quot;Aculeola_nigra_5.txt&quot;             
+##  [3] &quot;Alopias_vulpinus_2.txt&quot;            &quot;Apristurus_australis_5.txt&quot;       
+##  [5] &quot;Apristurus_australis_7.txt&quot;        &quot;Apristurus_manis_2.txt&quot;           
+##  [7] &quot;Apristurus_sinensis_1.txt&quot;         &quot;Asymbolus_rubiginosus_1.txt&quot;      
+##  [9] &quot;Atelomycterus_baliensis_2.txt&quot;     &quot;Atelomycterus_baliensis_3.txt&quot;    
+## [11] &quot;Atelomycterus_marmoratus_2.txt&quot;    &quot;Bythaelurus_canescens_3.txt&quot;      
+## [13] &quot;Carcharhinus_amblyrhynchos_10.txt&quot; &quot;Carcharhinus_falciformis_2.txt&quot;   
+## [15] &quot;Carcharhinus_fitzroyensis_1.txt&quot;   &quot;Carcharhinus_limbatus_1.txt&quot;      
+## [17] &quot;Carcharhinus_macloti_1.txt&quot;        &quot;Carcharhinus_obscurus_1.txt&quot;      
+## [19] &quot;Carcharias_taurus_2.txt&quot;           &quot;Centrophorus_granulosus_4.txt&quot;    
+## [21] &quot;Centrophorus_moluccensis_1.txt&quot;    &quot;Centroscyllium_granulatum_5.txt&quot;  
+## [23] &quot;Centroscymnus_owstonii_3.txt&quot;      &quot;Cephaloscyllium_albipinnum_1.txt&quot; 
+## [25] &quot;Chiloscyllium_hasseltii_1.txt&quot;     &quot;Chlamydoselachus_anguineus_4.txt&quot; 
+## [27] &quot;Deania_calcea_5.txt&quot;               &quot;Echinorhinus_brucus_2.txt&quot;        
+## [29] &quot;Etmopterus_granulosus_4.txt&quot;       &quot;Galeocerdo_cuvier_5.txt&quot;          
+## [31] &quot;Galeorhinus_galeus_1.txt&quot;          &quot;Galeus_polli_1.txt&quot;               
+## [33] &quot;Ginglymostoma_cirratum_3.txt&quot;      &quot;Halaelurus_lineatus_1.txt&quot;        
+## [35] &quot;Hemipristis_elongata_1.txt&quot;        &quot;Hemitriakis_leucoperiptera_1.txt&quot; 
+## [37] &quot;Heptranchias_perlo_7.txt&quot;          &quot;Heterodontus_mexicanus_1.txt&quot;     
+## [39] &quot;Hexanchus_griseus_1.txt&quot;           &quot;Iago_omanensis_1.txt&quot;             
+## [41] &quot;Mitsukurina_owstoni_3.txt&quot;         &quot;Mustelus_lunulatus_1.txt&quot;         
+## [43] &quot;Mustelus_mosis_3.txt&quot;              &quot;Nasolamia_velox_1.txt&quot;            
+## [45] &quot;Negaprion_acutidens_4.txt&quot;         &quot;Orectolobus_ornatus_1.txt&quot;        
+## [47] &quot;Oxynotus_centrina_3.txt&quot;           &quot;Prionace_glauca_4.txt&quot;            
+## [49] &quot;Pseudocarcharias_kamoharai_1.txt&quot;  &quot;Rhizoprionodon_taylori_1.txt&quot;     
+## [51] &quot;Scoliodon_laticaudus_2.txt&quot;        &quot;Scyliorhinus_canicula_6.txt&quot;      
+## [53] &quot;Somniosus_antarcticus_1.txt&quot;       &quot;Sphyrna_zygaena_1.txt&quot;            
+## [55] &quot;Squalus_megalops_2.txt&quot;            &quot;Triaenodon_obesus_1.txt&quot;</code></pre>
+<pre class="r"><code>list.files(&quot;shark_landmarks&quot;) %&gt;%  length</code></pre>
+<pre><code>## [1] 56</code></pre>
+<p>Note that the text files are automatically named according to the
+image on which the landmarks are based. This is important for at least
+two reasons. First, it’s easy keep link the landmarks back to the image,
+leaving us capable of assessing the quality of the landmarks and images
+later. Second, with the images in their directory and the landmarks in a
+directory of their own, if you run <code>digitizeImages()</code> again,
+exactly as before, the function links the landmarks files to the images
+via the file names. Thus, this workflow establishes something like a
+landmarking project that you can come back to, refining landmarks as
+needed.</p>
+<p>When digitizing with <code>digitizeImages()</code> and the app, a few
+key strokes will be import for navigating through the landmark list:</p>
+<ul>
+<li>“x” produces a set of landmark coordinates</li>
+<li>“n” advances to the next landmark making it active</li>
+<li>“p” goes back to the previous landmark making it active</li>
+<li>“d” deletes the active landmark</li>
+</ul>
+<p>After your team has completed landmarking the assigned species, push
+them to your teams repo in a “shark_landmarks” directory. Once all the
+data appear across the repos, Prof. Kenaley will evaluate the quality of
+the landmarks and do some post-processing if required (i.e., file-name
+checks, quality, etc.). He’ll them push the full dataset to all the team
+repos.</p>
 </div>
 <div id="superimposition" class="section level3">
 <h3>Superimposition</h3>
@@ -767,20 +936,23 @@ analyses</p>
 <p>To perform a Procrustes superimposition on our landmark data—along
 with many other analyses—we will turn the the <code>geomorph</code>
 package. Please install and load <code>geomorph</code>. But, before we
-do, let’s download and read in about 90 or so landmark files that
+do, let’s download and read in about 55 or so landmark files that
 Prof. Kenaley produced ahead of this project. You can find these example
-files <a href="data/sharks/shark_points.zip">here</a>. You’ll have to
+files <a href="data/sharks/shark_landmarks">here</a>. You’ll have to
 download this compressed directory and unzip it to your project
 directory. You’ll also have to download and install the
-<code>abind</code> package as well.</p>
-<p>Note: <strong>these are just examples</strong>. You will need to
-download the full data set evaluated by Prof. K. form this location.</p>
-<p>To get started with superimposition, let’s load the packages
-<code>geomorph</code> and <code>abind</code>. When you unzip the
-<code>shark_points.zip</code> directory to you project directory, you
-have a folder named <code>shark_points</code>. Our first operation will
-be to list the files in that directory and then read them in, all at
-once.</p>
+<code>abind</code> package as well. <strong>Note:</strong> You can skip
+this step if you’ve already completed your landmarking. Also note,
+<strong>these are just your landmarks</strong>. You will need to
+download the full data set evaluated by Prof. K.</p>
+<p>To get started with superimposition, let’s load the package
+<code>geomorph</code>. Weather you unzip the “shark_landmarks.zip”
+directory to you project directory, or you’re working with the full
+dataset, you have a folder named “shark_landmarks”, just as before. Our
+first operation will be to read in the landmark in the “shark_landmarks”
+directory using <code>StereoMorph</code>’s <code>readShapes()</code>
+function. For work in <code>geomorph</code>, we need to convert this
+object to a <code>geomorphShapes</code> object.</p>
 <pre class="r"><code>library(geomorph)</code></pre>
 <pre><code>## Warning: package &#39;geomorph&#39; was built under R version 4.5.2</code></pre>
 <pre><code>## Loading required package: RRPP</code></pre>
@@ -790,242 +962,1010 @@ once.</p>
 <pre><code>## The following objects are masked from &#39;package:tidyr&#39;:
 ## 
 ##     expand, pack, unpack</code></pre>
-<pre class="r"><code>library(abind)
+<pre class="r"><code># load in landmarks
+stereomorph_landmarks &lt;- StereoMorph::readShapes(landmark_directory)
 
-f &lt;- list.files(&quot;shark_points&quot;,full.names = T,pattern=&quot;.csv&quot;)
-
-
-xy &lt;- read_csv(f,id=&quot;file&quot;) %&gt;% 
-  dplyr::select(file,X,Y) %&gt;% 
-  mutate(Y=abs(Y-max(Y))) %&gt;% 
-  mutate(file_name=gsub(&quot;*_.csv&quot;,&quot;&quot;,basename(file))) %&gt;% 
-  left_join(shark_dat) </code></pre>
-<pre><code>## New names:
-## • `` -&gt; `...1`</code></pre>
-<pre><code>## Rows: 2632 Columns: 15
-## ── Column specification ───────────────────
-## Delimiter: &quot;,&quot;
-## dbl (14): ...1, Area, Mean, Mode, X, Y, XM, YM, Perim., Circ., Slice, AR, Ro...
+#convert
+geomorph_landmarks &lt;- geomorph::readland.shapes(stereomorph_landmarks)</code></pre>
+<pre><code>## Warning in GMfromShapes0(Shapes): No specimens have scaling.  Unscaled landmarks imported, as a result</code></pre>
+<pre class="r"><code>#take a peak
+head(geomorph_landmarks)</code></pre>
+<pre><code>## $landmarks
+## $landmarks$Aculeola_nigra_1
+##                      [,1] [,2]
+## 1_snout                10  186
+## 2_dorsal_base_ant     256  134
+## 3_dorsal_tip          329  118
+## 4_dorsal_base_post    338  109
+## 5_cadual_base_dor     524   92
+## 6_cadual_tip_dor      640  122
+## 7_cadual_tip_vent     576  149
+## 8_caudal_base_vental  519  115
+## 9_pelvic_base_post    456  132
+## 10_pelvic_base_ant    408  173
+## 11_pect_base_post     193  210
+## 12_pect_base_ant      171  228
+## 13_mouth_post          56  214
+## 14_mouth_ant           32  209
 ## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-## Joining with `by = join_by(file_name)`</code></pre>
-<p>Here we used <code>list.files()</code> with
-<code>pattern=pattern=".csv"</code> to find all the files in the
-<code>shark_points</code> directory. We also set
-<code>full.names = T</code> so that the full file path is saved to the
-object <code>f</code>.</p>
-<pre class="r"><code>head(f)</code></pre>
-<pre><code>## [1] &quot;shark_points/Acnig_u0.gif_.csv&quot; &quot;shark_points/Alpel_u0.gif_.csv&quot;
-## [3] &quot;shark_points/Alsup_u0.gif_.csv&quot; &quot;shark_points/Alvul_u0.gif_.csv&quot;
-## [5] &quot;shark_points/Apbru_u1.gif_.csv&quot; &quot;shark_points/Aplau_u0.gif_.csv&quot;</code></pre>
-<p>This made reading all the files and adding them to one tibble in a
-single operation possible with <code>read_csv()</code>. Notice we added
-a <code>file</code> column to the tibble with <code>id="file"</code> and
-then selected only the columns <code>file</code>, <code>X</code>,
-<code>Y</code>. This operation is saved to an object logically named
-<code>xy</code>.</p>
-<p>For landmarks to used in <code>geomorph</code>, they must be stored
-as a 3-dimensional array, that is, essentially a list of similarly sized
+## $landmarks$Aculeola_nigra_5
+##                      [,1] [,2]
+## 1_snout                91  269
+## 2_dorsal_base_ant     446  200
+## 3_dorsal_tip          536  201
+## 4_dorsal_base_post    508  212
+## 5_cadual_base_dor     824  236
+## 6_cadual_tip_dor      991  213
+## 7_cadual_tip_vent     884  301
+## 8_caudal_base_vental  790  264
+## 9_pelvic_base_post    662  285
+## 10_pelvic_base_ant    622  298
+## 11_pect_base_post     368  306
+## 12_pect_base_ant      333  283
+## 13_mouth_post         189  286
+## 14_mouth_ant          150  288
+## 
+## $landmarks$Alopias_vulpinus_2
+##                      [,1] [,2]
+## 1_snout                38  225
+## 2_dorsal_base_ant     157  190
+## 3_dorsal_tip          185  144
+## 4_dorsal_base_post    191  193
+## 5_cadual_base_dor     319  206
+## 6_cadual_tip_dor      608  153
+## 7_cadual_tip_vent     331  263
+## 8_caudal_base_vental  313  230
+## 9_pelvic_base_post    248  239
+## 10_pelvic_base_ant    220  245
+## 11_pect_base_post     134  249
+## 12_pect_base_ant      107  245
+## 13_mouth_post          65  238
+## 14_mouth_ant           52  237
+## 
+## $landmarks$Apristurus_australis_5
+##                      [,1] [,2]
+## 1_snout                16  124
+## 2_dorsal_base_ant     309  102
+## 3_dorsal_tip          340   92
+## 4_dorsal_base_post    331  101
+## 5_cadual_base_dor     440  109
+## 6_cadual_tip_dor      626  116
+## 7_cadual_tip_vent     469  150
+## 8_caudal_base_vental  419  134
+## 9_pelvic_base_post    294  140
+## 10_pelvic_base_ant    256  149
+## 11_pect_base_post     184  147
+## 12_pect_base_ant      151  151
+## 13_mouth_post          52  135
+## 14_mouth_ant           28  134
+## 
+## $landmarks$Apristurus_australis_7
+##                      [,1] [,2]
+## 1_snout                50  171
+## 2_dorsal_base_ant     500  146
+## 3_dorsal_tip          546  140
+## 4_dorsal_base_post    523  150
+## 5_cadual_base_dor     672  163
+## 6_cadual_tip_dor      949  169
+## 7_cadual_tip_vent     741  217
+## 8_caudal_base_vental  671  198
+## 9_pelvic_base_post    481  202
+## 10_pelvic_base_ant    420  209
+## 11_pect_base_post     317  208
+## 12_pect_base_ant      265  212
+## 13_mouth_post         150  203
+## 14_mouth_ant          112  198
+## 
+## $landmarks$Apristurus_manis_2
+##                      [,1] [,2]
+## 1_snout                40   72
+## 2_dorsal_base_ant     490   96
+## 3_dorsal_tip          578   72
+## 4_dorsal_base_post    552   90
+## 5_cadual_base_dor     701   73
+## 6_cadual_tip_dor      955  157
+## 7_cadual_tip_vent     738  140
+## 8_caudal_base_vental  677  108
+## 9_pelvic_base_post    515  169
+## 10_pelvic_base_ant    451  175
+## 11_pect_base_post     286  165
+## 12_pect_base_ant      251  163
+## 13_mouth_post         147  137
+## 14_mouth_ant          108  125
+## 
+## $landmarks$Apristurus_sinensis_1
+##                      [,1] [,2]
+## 1_snout                39  227
+## 2_dorsal_base_ant     596  183
+## 3_dorsal_tip          642  170
+## 4_dorsal_base_post    626  188
+## 5_cadual_base_dor     787  184
+## 6_cadual_tip_dor     1001  196
+## 7_cadual_tip_vent     855  247
+## 8_caudal_base_vental  772  227
+## 9_pelvic_base_post    584  250
+## 10_pelvic_base_ant    494  269
+## 11_pect_base_post     316  275
+## 12_pect_base_ant      273  279
+## 13_mouth_post         156  267
+## 14_mouth_ant          123  268
+## 
+## $landmarks$Asymbolus_rubiginosus_1
+##                      [,1] [,2]
+## 1_snout                38  339
+## 2_dorsal_base_ant     314  315
+## 3_dorsal_tip          353  292
+## 4_dorsal_base_post    350  318
+## 5_cadual_base_dor     524  341
+## 6_cadual_tip_dor      617  341
+## 7_cadual_tip_vent     553  368
+## 8_caudal_base_vental  522  355
+## 9_pelvic_base_post    321  350
+## 10_pelvic_base_ant    272  363
+## 11_pect_base_post     158  365
+## 12_pect_base_ant      127  365
+## 13_mouth_post          68  358
+## 14_mouth_ant           54  355
+## 
+## $landmarks$Atelomycterus_baliensis_2
+##                      [,1] [,2]
+## 1_snout                53  234
+## 2_dorsal_base_ant     661  182
+## 3_dorsal_tip          800   85
+## 4_dorsal_base_post    790  192
+## 5_cadual_base_dor    1154  197
+## 6_cadual_tip_dor     1435  140
+## 7_cadual_tip_vent    1206  273
+## 8_caudal_base_vental 1126  246
+## 9_pelvic_base_post    678  269
+## 10_pelvic_base_ant    593  286
+## 11_pect_base_post     344  268
+## 12_pect_base_ant      283  277
+## 13_mouth_post         144  261
+## 14_mouth_ant          107  262
+## 
+## $landmarks$Atelomycterus_baliensis_3
+##                      [,1] [,2]
+## 1_snout                22   94
+## 2_dorsal_base_ant     319   72
+## 3_dorsal_tip          370   44
+## 4_dorsal_base_post    361   80
+## 5_cadual_base_dor     513   86
+## 6_cadual_tip_dor      614   65
+## 7_cadual_tip_vent     544  115
+## 8_caudal_base_vental  507  104
+## 9_pelvic_base_post    321  117
+## 10_pelvic_base_ant    288  121
+## 11_pect_base_post     156  114
+## 12_pect_base_ant      128  111
+## 13_mouth_post          64  112
+## 14_mouth_ant           47  110
+## 
+## $landmarks$Atelomycterus_marmoratus_2
+##                      [,1] [,2]
+## 1_snout                37  159
+## 2_dorsal_base_ant     279  132
+## 3_dorsal_tip          329   96
+## 4_dorsal_base_post    321  133
+## 5_cadual_base_dor     486  143
+## 6_cadual_tip_dor      592  147
+## 7_cadual_tip_vent     502  178
+## 8_caudal_base_vental  473  164
+## 9_pelvic_base_post    297  175
+## 10_pelvic_base_ant    257  176
+## 11_pect_base_post     162  174
+## 12_pect_base_ant      131  173
+## 13_mouth_post          79  174
+## 14_mouth_ant           70  173
+## 
+## $landmarks$Bythaelurus_canescens_3
+##                      [,1] [,2]
+## 1_snout                 4  201
+## 2_dorsal_base_ant     529  168
+## 3_dorsal_tip          595  124
+## 4_dorsal_base_post    593  166
+## 5_cadual_base_dor     833  190
+## 6_cadual_tip_dor     1022  186
+## 7_cadual_tip_vent     868  243
+## 8_caudal_base_vental  820  219
+## 9_pelvic_base_post    583  226
+## 10_pelvic_base_ant    530  253
+## 11_pect_base_post     244  261
+## 12_pect_base_ant      161  243
+## 13_mouth_post          71  226
+## 14_mouth_ant           47  224
+## 
+## $landmarks$Carcharhinus_amblyrhynchos_10
+##                      [,1] [,2]
+## 1_snout                26  189
+## 2_dorsal_base_ant     222  161
+## 3_dorsal_tip          275  104
+## 4_dorsal_base_post    281  172
+## 5_cadual_base_dor     462  182
+## 6_cadual_tip_dor      613  130
+## 7_cadual_tip_vent     525  259
+## 8_caudal_base_vental  464  201
+## 9_pelvic_base_post    366  224
+## 10_pelvic_base_ant    340  235
+## 11_pect_base_post     175  224
+## 12_pect_base_ant      150  227
+## 13_mouth_post          93  223
+## 14_mouth_ant           70  215
+## 
+## $landmarks$Carcharhinus_falciformis_2
+##                      [,1] [,2]
+## 1_snout                20  119
+## 2_dorsal_base_ant     222   92
+## 3_dorsal_tip          265   44
+## 4_dorsal_base_post    269   98
+## 5_cadual_base_dor     459  129
+## 6_cadual_tip_dor      610   86
+## 7_cadual_tip_vent     506  192
+## 8_caudal_base_vental  459  150
+## 9_pelvic_base_post    340  157
+## 10_pelvic_base_ant    324  164
+## 11_pect_base_post     188  162
+## 12_pect_base_ant      151  161
+## 13_mouth_post          81  143
+## 14_mouth_ant           58  142
+## 
+## $landmarks$Carcharhinus_fitzroyensis_1
+##                      [,1] [,2]
+## 1_snout                65  272
+## 2_dorsal_base_ant     519  142
+## 3_dorsal_tip          689   13
+## 4_dorsal_base_post    687  158
+## 5_cadual_base_dor    1107  210
+## 6_cadual_tip_dor     1447   90
+## 7_cadual_tip_vent    1226  349
+## 8_caudal_base_vental 1103  268
+## 9_pelvic_base_post    837  312
+## 10_pelvic_base_ant    780  333
+## 11_pect_base_post     472  297
+## 12_pect_base_ant      397  313
+## 13_mouth_post         260  312
+## 14_mouth_ant          188  311
+## 
+## $landmarks$Carcharhinus_limbatus_1
+##                      [,1] [,2]
+## 1_snout                17  152
+## 2_dorsal_base_ant     218  105
+## 3_dorsal_tip          286   43
+## 4_dorsal_base_post    275  115
+## 5_cadual_base_dor     459  148
+## 6_cadual_tip_dor      616   76
+## 7_cadual_tip_vent     534  206
+## 8_caudal_base_vental  459  173
+## 9_pelvic_base_post    358  185
+## 10_pelvic_base_ant    335  196
+## 11_pect_base_post     197  194
+## 12_pect_base_ant      158  183
+## 13_mouth_post          88  170
+## 14_mouth_ant           63  170
+## 
+## $landmarks$Carcharhinus_macloti_1
+##                      [,1] [,2]
+## 1_snout               571  157
+## 2_dorsal_base_ant     703   51
+## 3_dorsal_tip          706  169
+## 4_dorsal_base_post   1190  224
+## 5_cadual_base_dor    1499  120
+## 6_cadual_tip_dor     1283  365
+## 7_cadual_tip_vent    1178  274
+## 8_caudal_base_vental  893  297
+## 9_pelvic_base_post    827  322
+## 10_pelvic_base_ant    500  292
+## 11_pect_base_post     437  301
+## 12_pect_base_ant      298  291
+## 13_mouth_post         241  283
+## 14_mouth_ant          118  239
+## 
+## $landmarks$Carcharhinus_obscurus_1
+##                      [,1] [,2]
+## 1_snout               504  177
+## 2_dorsal_base_ant     635   59
+## 3_dorsal_tip          638  209
+## 4_dorsal_base_post   1085  277
+## 5_cadual_base_dor    1404   51
+## 6_cadual_tip_dor     1241  450
+## 7_cadual_tip_vent    1082  329
+## 8_caudal_base_vental  843  358
+## 9_pelvic_base_post    747  369
+## 10_pelvic_base_ant    435  337
+## 11_pect_base_post     335  355
+## 12_pect_base_ant      192  355
+## 13_mouth_post         132  346
+## 14_mouth_ant           25  299
+## 
+## $landmarks$Carcharias_taurus_2
+##                      [,1] [,2]
+## 1_snout               264  131
+## 2_dorsal_base_ant     309  105
+## 3_dorsal_tip          304  142
+## 4_dorsal_base_post    438  153
+## 5_cadual_base_dor     592  133
+## 6_cadual_tip_dor      491  202
+## 7_cadual_tip_vent     447  178
+## 8_caudal_base_vental  350  199
+## 9_pelvic_base_post    316  203
+## 10_pelvic_base_ant    208  209
+## 11_pect_base_post     171  203
+## 12_pect_base_ant      102  191
+## 13_mouth_post          68  193
+## 14_mouth_ant           40  181
+## 
+## $landmarks$Centrophorus_granulosus_4
+##                      [,1] [,2]
+## 1_snout               209   60
+## 2_dorsal_base_ant     269   29
+## 3_dorsal_tip          283   64
+## 4_dorsal_base_post    510   90
+## 5_cadual_base_dor     623   64
+## 6_cadual_tip_dor      542  142
+## 7_cadual_tip_vent     491  107
+## 8_caudal_base_vental  400  108
+## 9_pelvic_base_post    379  119
+## 10_pelvic_base_ant    170  109
+## 11_pect_base_post     145  108
+## 12_pect_base_ant      121  118
+## 13_mouth_post          93  125
+## 14_mouth_ant           11  106
+## 
+## $landmarks$Centrophorus_moluccensis_1
+##                      [,1] [,2]
+## 1_snout               209  128
+## 2_dorsal_base_ant     267   93
+## 3_dorsal_tip          274  131
+## 4_dorsal_base_post    489  160
+## 5_cadual_base_dor     586  120
+## 6_cadual_tip_dor      527  207
+## 7_cadual_tip_vent     476  176
+## 8_caudal_base_vental  381  183
+## 9_pelvic_base_post    357  196
+## 10_pelvic_base_ant    189  185
+## 11_pect_base_post     163  186
+## 12_pect_base_ant      110  182
+## 13_mouth_post          93  187
+## 14_mouth_ant           46  168
+## 
+## $landmarks$Centroscyllium_granulatum_5
+##                      [,1] [,2]
+## 1_snout               382  223
+## 2_dorsal_base_ant     485  204
+## 3_dorsal_tip          464  238
+## 4_dorsal_base_post    797  253
+## 5_cadual_base_dor     993  227
+## 6_cadual_tip_dor      860  321
+## 7_cadual_tip_vent     781  288
+## 8_caudal_base_vental  652  300
+## 9_pelvic_base_post    604  324
+## 10_pelvic_base_ant    311  317
+## 11_pect_base_post     267  326
+## 12_pect_base_ant      148  335
+## 13_mouth_post         115  332
+## 14_mouth_ant           37  294
+## 
+## $landmarks$Centroscymnus_owstonii_3
+##                      [,1] [,2]
+## 1_snout               227   81
+## 2_dorsal_base_ant     290   71
+## 3_dorsal_tip          285   85
+## 4_dorsal_base_post    513  125
+## 5_cadual_base_dor     613   89
+## 6_cadual_tip_dor      554  178
+## 7_cadual_tip_vent     511  145
+## 8_caudal_base_vental  444  145
+## 9_pelvic_base_post    395  148
+## 10_pelvic_base_ant    183  133
+## 11_pect_base_post     159  131
+## 12_pect_base_ant       83  134
+## 13_mouth_post          62  141
+## 14_mouth_ant           19  124
+## 
+## $landmarks$Cephaloscyllium_albipinnum_1
+##                      [,1] [,2]
+## 1_snout               802  157
+## 2_dorsal_base_ant     918   85
+## 3_dorsal_tip          893  176
+## 4_dorsal_base_post   1158  184
+## 5_cadual_base_dor    1441  104
+## 6_cadual_tip_dor     1274  279
+## 7_cadual_tip_vent    1151  237
+## 8_caudal_base_vental  803  253
+## 9_pelvic_base_post    712  274
+## 10_pelvic_base_ant    373  249
+## 11_pect_base_post     307  283
+## 12_pect_base_ant      191  263
+## 13_mouth_post         130  268
+## 14_mouth_ant           61  241
+## 
+## $landmarks$Chiloscyllium_hasseltii_1
+##                      [,1] [,2]
+## 1_snout                31   95
+## 2_dorsal_base_ant     265   74
+## 3_dorsal_tip          306   56
+## 4_dorsal_base_post    311   81
+## 5_cadual_base_dor     438   93
+## 6_cadual_tip_dor      598   95
+## 7_cadual_tip_vent     499  123
+## 8_caudal_base_vental  429  114
+## 9_pelvic_base_post    271  116
+## 10_pelvic_base_ant    238  121
+## 11_pect_base_post     170  129
+## 12_pect_base_ant      134  128
+## 13_mouth_post          61  116
+## 14_mouth_ant           51  116
+## 
+## $landmarks$Chlamydoselachus_anguineus_4
+##                      [,1] [,2]
+## 1_snout                10  139
+## 2_dorsal_base_ant     668   28
+## 3_dorsal_tip          765   36
+## 4_dorsal_base_post    744   48
+## 5_cadual_base_dor     798   61
+## 6_cadual_tip_dor      985   87
+## 7_cadual_tip_vent     806  130
+## 8_caudal_base_vental  752   84
+## 9_pelvic_base_post    588   90
+## 10_pelvic_base_ant    495  105
+## 11_pect_base_post     177  109
+## 12_pect_base_ant      142  124
+## 13_mouth_post          64  139
+## 14_mouth_ant            8  145
+## 
+## $landmarks$Deania_calcea_5
+##                      [,1] [,2]
+## 1_snout                24  320
+## 2_dorsal_base_ant     438  240
+## 3_dorsal_tip          618  253
+## 4_dorsal_base_post    562  260
+## 5_cadual_base_dor     824  314
+## 6_cadual_tip_dor      974  259
+## 7_cadual_tip_vent     873  365
+## 8_caudal_base_vental  817  341
+## 9_pelvic_base_post    723  344
+## 10_pelvic_base_ant    684  357
+## 11_pect_base_post     331  317
+## 12_pect_base_ant      291  332
+## 13_mouth_post         186  353
+## 14_mouth_ant          157  356
+## 
+## $landmarks$Echinorhinus_brucus_2
+##                      [,1] [,2]
+## 1_snout                49  202
+## 2_dorsal_base_ant     353  174
+## 3_dorsal_tip          405  155
+## 4_dorsal_base_post    385  178
+## 5_cadual_base_dor     461  183
+## 6_cadual_tip_dor      606  156
+## 7_cadual_tip_vent     507  236
+## 8_caudal_base_vental  436  218
+## 9_pelvic_base_post    401  218
+## 10_pelvic_base_ant    341  227
+## 11_pect_base_post     228  218
+## 12_pect_base_ant      184  217
+## 13_mouth_post         119  215
+## 14_mouth_ant           93  216
+## 
+## $landmarks$Etmopterus_granulosus_4
+##                      [,1] [,2]
+## 1_snout                43  181
+## 2_dorsal_base_ant     232  159
+## 3_dorsal_tip          274  138
+## 4_dorsal_base_post    264  159
+## 5_cadual_base_dor     454  177
+## 6_cadual_tip_dor      607  170
+## 7_cadual_tip_vent     517  217
+## 8_caudal_base_vental  446  193
+## 9_pelvic_base_post    364  200
+## 10_pelvic_base_ant    336  218
+## 11_pect_base_post     209  204
+## 12_pect_base_ant      176  198
+## 13_mouth_post         126  198
+## 14_mouth_ant           99  206
+## 
+## $landmarks$Galeocerdo_cuvier_5
+##                      [,1] [,2]
+## 1_snout                37  120
+## 2_dorsal_base_ant     206   86
+## 3_dorsal_tip          262   56
+## 4_dorsal_base_post    262   93
+## 5_cadual_base_dor     473  148
+## 6_cadual_tip_dor      630  140
+## 7_cadual_tip_vent     520  201
+## 8_caudal_base_vental  465  171
+## 9_pelvic_base_post    341  162
+## 10_pelvic_base_ant    325  166
+## 11_pect_base_post     162  163
+## 12_pect_base_ant      131  162
+## 13_mouth_post          72  156
+## 14_mouth_ant           52  140
+## 
+## $landmarks$Galeorhinus_galeus_1
+##                      [,1] [,2]
+## 1_snout                34  198
+## 2_dorsal_base_ant     209  159
+## 3_dorsal_tip          254  116
+## 4_dorsal_base_post    266  162
+## 5_cadual_base_dor     483  185
+## 6_cadual_tip_dor      613  153
+## 7_cadual_tip_vent     537  239
+## 8_caudal_base_vental  481  206
+## 9_pelvic_base_post    350  216
+## 10_pelvic_base_ant    321  221
+## 11_pect_base_post     191  216
+## 12_pect_base_ant      158  217
+## 13_mouth_post         103  211
+## 14_mouth_ant           83  211
+## 
+## $landmarks$Galeus_polli_1
+##                      [,1] [,2]
+## 1_snout                47  195
+## 2_dorsal_base_ant     309  164
+## 3_dorsal_tip          348  143
+## 4_dorsal_base_post    336  164
+## 5_cadual_base_dor     471  178
+## 6_cadual_tip_dor      601  154
+## 7_cadual_tip_vent     483  222
+## 8_caudal_base_vental  438  202
+## 9_pelvic_base_post    325  214
+## 10_pelvic_base_ant    270  219
+## 11_pect_base_post     215  216
+## 12_pect_base_ant      171  208
+## 13_mouth_post         114  210
+## 14_mouth_ant           90  211
+## 
+## $landmarks$Ginglymostoma_cirratum_3
+##                      [,1] [,2]
+## 1_snout                55  646
+## 2_dorsal_base_ant     795  522
+## 3_dorsal_tip          948  421
+## 4_dorsal_base_post    912  553
+## 5_cadual_base_dor    1227  560
+## 6_cadual_tip_dor     1562  355
+## 7_cadual_tip_vent    1347  601
+## 8_caudal_base_vental 1235  618
+## 9_pelvic_base_post    877  656
+## 10_pelvic_base_ant    762  677
+## 11_pect_base_post     470  664
+## 12_pect_base_ant      371  675
+## 13_mouth_post          92  678
+## 14_mouth_ant           76  674
+## 
+## $landmarks$Halaelurus_lineatus_1
+##                      [,1] [,2]
+## 1_snout                44  195
+## 2_dorsal_base_ant     274  172
+## 3_dorsal_tip          315  149
+## 4_dorsal_base_post    310  178
+## 5_cadual_base_dor     493  181
+## 6_cadual_tip_dor      600  170
+## 7_cadual_tip_vent     539  204
+## 8_caudal_base_vental  489  196
+## 9_pelvic_base_post    284  209
+## 10_pelvic_base_ant    241  216
+## 11_pect_base_post     156  212
+## 12_pect_base_ant      128  213
+## 13_mouth_post          82  205
+## 14_mouth_ant           72  207
+## 
+## $landmarks$Hemipristis_elongata_1
+##                      [,1] [,2]
+## 1_snout                50  197
+## 2_dorsal_base_ant     200  160
+## 3_dorsal_tip          264  116
+## 4_dorsal_base_post    264  164
+## 5_cadual_base_dor     463  191
+## 6_cadual_tip_dor      604  171
+## 7_cadual_tip_vent     512  239
+## 8_caudal_base_vental  461  206
+## 9_pelvic_base_post    336  221
+## 10_pelvic_base_ant    294  219
+## 11_pect_base_post     181  220
+## 12_pect_base_ant      155  224
+## 13_mouth_post          97  210
+## 14_mouth_ant           80  212
+## 
+## $landmarks$Hemitriakis_leucoperiptera_1
+##                      [,1] [,2]
+## 1_snout                34  209
+## 2_dorsal_base_ant     207  150
+## 3_dorsal_tip          268  113
+## 4_dorsal_base_post    261  157
+## 5_cadual_base_dor     490  208
+## 6_cadual_tip_dor      609  173
+## 7_cadual_tip_vent     538  244
+## 8_caudal_base_vental  493  224
+## 9_pelvic_base_post    332  222
+## 10_pelvic_base_ant    295  224
+## 11_pect_base_post     171  220
+## 12_pect_base_ant      148  230
+## 13_mouth_post          84  222
+## 14_mouth_ant           70  222
+## 
+## $landmarks$Heptranchias_perlo_7
+##                      [,1] [,2]
+## 1_snout                15   94
+## 2_dorsal_base_ant     311   94
+## 3_dorsal_tip          348   73
+## 4_dorsal_base_post    341   98
+## 5_cadual_base_dor     436  111
+## 6_cadual_tip_dor      619   94
+## 7_cadual_tip_vent     468  159
+## 8_caudal_base_vental  438  139
+## 9_pelvic_base_post    288  138
+## 10_pelvic_base_ant    260  146
+## 11_pect_base_post     147  135
+## 12_pect_base_ant      128  135
+## 13_mouth_post          85  126
+## 14_mouth_ant           45  117
+## 
+## $landmarks$Heterodontus_mexicanus_1
+##                      [,1] [,2]
+## 1_snout                68  228
+## 2_dorsal_base_ant      49  219
+## 3_dorsal_tip          223  143
+## 4_dorsal_base_post    277  106
+## 5_cadual_base_dor     270  147
+## 6_cadual_tip_dor      482  196
+## 7_cadual_tip_vent     593  170
+## 8_caudal_base_vental  527  249
+## 9_pelvic_base_post    488  220
+## 10_pelvic_base_ant    334  217
+## 11_pect_base_post     293  232
+## 12_pect_base_ant      196  226
+## 13_mouth_post         173  233
+## 14_mouth_ant           83  228
+## 
+## $landmarks$Hexanchus_griseus_1
+##                      [,1] [,2]
+## 1_snout                41   90
+## 2_dorsal_base_ant      14   71
+## 3_dorsal_tip          355   54
+## 4_dorsal_base_post    396   32
+## 5_cadual_base_dor     403   63
+## 6_cadual_tip_dor      442   62
+## 7_cadual_tip_vent     631   44
+## 8_caudal_base_vental  490  112
+## 9_pelvic_base_post    449   89
+## 10_pelvic_base_ant    420   92
+## 11_pect_base_post     389  106
+## 12_pect_base_ant      176  106
+## 13_mouth_post         137   99
+## 14_mouth_ant           78   93
+## 
+## $landmarks$Iago_omanensis_1
+##                      [,1] [,2]
+## 1_snout                26  218
+## 2_dorsal_base_ant     182  169
+## 3_dorsal_tip          243  123
+## 4_dorsal_base_post    248  180
+## 5_cadual_base_dor     484  202
+## 6_cadual_tip_dor      609  169
+## 7_cadual_tip_vent     513  239
+## 8_caudal_base_vental  477  220
+## 9_pelvic_base_post    322  234
+## 10_pelvic_base_ant    282  242
+## 11_pect_base_post     206  234
+## 12_pect_base_ant      172  233
+## 13_mouth_post          88  232
+## 14_mouth_ant           66  229
+## 
+## $landmarks$Mitsukurina_owstoni_3
+##                      [,1] [,2]
+## 1_snout                23  195
+## 2_dorsal_base_ant     230  187
+## 3_dorsal_tip          280  176
+## 4_dorsal_base_post    264  191
+## 5_cadual_base_dor     425  198
+## 6_cadual_tip_dor      618  195
+## 7_cadual_tip_vent     470  243
+## 8_caudal_base_vental  428  218
+## 9_pelvic_base_post    345  225
+## 10_pelvic_base_ant    300  230
+## 11_pect_base_post     215  222
+## 12_pect_base_ant      192  224
+## 13_mouth_post         113  223
+## 14_mouth_ant           55  217
+## 
+## $landmarks$Mustelus_lunulatus_1
+##                      [,1] [,2]
+## 1_snout                63  250
+## 2_dorsal_base_ant     458  145
+## 3_dorsal_tip          594   22
+## 4_dorsal_base_post    620  161
+## 5_cadual_base_dor    1163  225
+## 6_cadual_tip_dor     1445  187
+## 7_cadual_tip_vent    1258  330
+## 8_caudal_base_vental 1155  267
+## 9_pelvic_base_post    767  277
+## 10_pelvic_base_ant    700  293
+## 11_pect_base_post     378  279
+## 12_pect_base_ant      331  298
+## 13_mouth_post         210  292
+## 14_mouth_ant          171  292
+## 
+## $landmarks$Mustelus_mosis_3
+##                      [,1] [,2]
+## 1_snout                22  148
+## 2_dorsal_base_ant     195  111
+## 3_dorsal_tip          256   56
+## 4_dorsal_base_post    256  119
+## 5_cadual_base_dor     511  139
+## 6_cadual_tip_dor      616   81
+## 7_cadual_tip_vent     564  167
+## 8_caudal_base_vental  513  158
+## 9_pelvic_base_post    325  169
+## 10_pelvic_base_ant    303  176
+## 11_pect_base_post     166  165
+## 12_pect_base_ant      146  166
+## 13_mouth_post          84  166
+## 14_mouth_ant           74  166
+## 
+## $landmarks$Nasolamia_velox_1
+##                      [,1] [,2]
+## 1_snout                41  238
+## 2_dorsal_base_ant     228  198
+## 3_dorsal_tip          297  159
+## 4_dorsal_base_post    284  203
+## 5_cadual_base_dor     445  226
+## 6_cadual_tip_dor      594  207
+## 7_cadual_tip_vent     504  286
+## 8_caudal_base_vental  451  244
+## 9_pelvic_base_post    339  254
+## 10_pelvic_base_ant    317  259
+## 11_pect_base_post     214  252
+## 12_pect_base_ant      185  255
+## 13_mouth_post         114  252
+## 14_mouth_ant           99  251
+## 
+## $landmarks$Negaprion_acutidens_4
+##                      [,1] [,2]
+## 1_snout                19  145
+## 2_dorsal_base_ant     253  105
+## 3_dorsal_tip          322   51
+## 4_dorsal_base_post    313  113
+## 5_cadual_base_dor     518  103
+## 6_cadual_tip_dor      634   30
+## 7_cadual_tip_vent     580  144
+## 8_caudal_base_vental  517  124
+## 9_pelvic_base_post    397  152
+## 10_pelvic_base_ant    358  161
+## 11_pect_base_post     192  165
+## 12_pect_base_ant      162  167
+## 13_mouth_post          78  164
+## 14_mouth_ant           41  163
+## 
+## $landmarks$Orectolobus_ornatus_1
+##                      [,1] [,2]
+## 1_snout                43  211
+## 2_dorsal_base_ant     322  196
+## 3_dorsal_tip          358  160
+## 4_dorsal_base_post    365  204
+## 5_cadual_base_dor     481  209
+## 6_cadual_tip_dor      601  207
+## 7_cadual_tip_vent     491  239
+## 8_caudal_base_vental  456  234
+## 9_pelvic_base_post    327  236
+## 10_pelvic_base_ant    279  253
+## 11_pect_base_post     190  234
+## 12_pect_base_ant      144  243
+## 13_mouth_post          78  235
+## 14_mouth_ant           48  225
+## 
+## $landmarks$Oxynotus_centrina_3
+##                      [,1] [,2]
+## 1_snout                26  219
+## 2_dorsal_base_ant     185  164
+## 3_dorsal_tip          257  100
+## 4_dorsal_base_post    260  176
+## 5_cadual_base_dor     479  206
+## 6_cadual_tip_dor      605  145
+## 7_cadual_tip_vent     544  248
+## 8_caudal_base_vental  477  236
+## 9_pelvic_base_post    424  241
+## 10_pelvic_base_ant    378  259
+## 11_pect_base_post     172  245
+## 12_pect_base_ant      135  239
+## 13_mouth_post          70  243
+## 14_mouth_ant           58  241
+## 
+## $landmarks$Prionace_glauca_4
+##                      [,1] [,2]
+## 1_snout                41  200
+## 2_dorsal_base_ant     242  176
+## 3_dorsal_tip          283  133
+## 4_dorsal_base_post    285  176
+## 5_cadual_base_dor     464  199
+## 6_cadual_tip_dor      601  163
+## 7_cadual_tip_vent     517  265
+## 8_caudal_base_vental  461  218
+## 9_pelvic_base_post    349  225
+## 10_pelvic_base_ant    321  230
+## 11_pect_base_post     190  227
+## 12_pect_base_ant      161  222
+## 13_mouth_post         104  215
+## 14_mouth_ant           83  219
+## 
+## $landmarks$Pseudocarcharias_kamoharai_1
+##                      [,1] [,2]
+## 1_snout                12   90
+## 2_dorsal_base_ant     261   60
+## 3_dorsal_tip          302   44
+## 4_dorsal_base_post    315   63
+## 5_cadual_base_dor     502   76
+## 6_cadual_tip_dor      629   51
+## 7_cadual_tip_vent     549  134
+## 8_caudal_base_vental  503   96
+## 9_pelvic_base_post    431  104
+## 10_pelvic_base_ant    392  113
+## 11_pect_base_post     165  108
+## 12_pect_base_ant      144  115
+## 13_mouth_post          83  106
+## 14_mouth_ant           54  112
+## 
+## $landmarks$Rhizoprionodon_taylori_1
+##                      [,1] [,2]
+## 1_snout                21  134
+## 2_dorsal_base_ant     214   80
+## 3_dorsal_tip          262   34
+## 4_dorsal_base_post    267   89
+## 5_cadual_base_dor     495  121
+## 6_cadual_tip_dor      620  107
+## 7_cadual_tip_vent     525  173
+## 8_caudal_base_vental  485  140
+## 9_pelvic_base_post    331  148
+## 10_pelvic_base_ant    307  154
+## 11_pect_base_post     188  149
+## 12_pect_base_ant      149  152
+## 13_mouth_post          86  147
+## 14_mouth_ant           69  146
+## 
+## $landmarks$Scoliodon_laticaudus_2
+##                      [,1] [,2]
+## 1_snout                18  106
+## 2_dorsal_base_ant     231   74
+## 3_dorsal_tip          279   36
+## 4_dorsal_base_post    288   80
+## 5_cadual_base_dor     476  106
+## 6_cadual_tip_dor      605   88
+## 7_cadual_tip_vent     504  156
+## 8_caudal_base_vental  469  130
+## 9_pelvic_base_post    330  144
+## 10_pelvic_base_ant    302  150
+## 11_pect_base_post     177  142
+## 12_pect_base_ant      146  139
+## 13_mouth_post          79  123
+## 14_mouth_ant           66  122
+## 
+## $landmarks$Scyliorhinus_canicula_6
+##                      [,1] [,2]
+## 1_snout                17  495
+## 2_dorsal_base_ant     974  430
+## 3_dorsal_tip         1149  349
+## 4_dorsal_base_post   1122  446
+## 5_cadual_base_dor    1606  446
+## 6_cadual_tip_dor     1906  257
+## 7_cadual_tip_vent    1736  529
+## 8_caudal_base_vental 1595  509
+## 9_pelvic_base_post    929  567
+## 10_pelvic_base_ant    811  591
+## 11_pect_base_post     442  564
+## 12_pect_base_ant      336  564
+## 13_mouth_post         183  565
+## 14_mouth_ant          150  564
+## 
+## $landmarks$Somniosus_antarcticus_1
+##                      [,1] [,2]
+## 1_snout                 5  180
+## 2_dorsal_base_ant     352  140
+## 3_dorsal_tip          384  133
+## 4_dorsal_base_post    387  147
+## 5_cadual_base_dor     559  165
+## 6_cadual_tip_dor      617  131
+## 7_cadual_tip_vent     617  232
+## 8_caudal_base_vental  553  191
+## 9_pelvic_base_post    486  203
+## 10_pelvic_base_ant    477  212
+## 11_pect_base_post     247  245
+## 12_pect_base_ant      214  230
+## 13_mouth_post          94  223
+## 14_mouth_ant           58  226
+## 
+## $landmarks$Sphyrna_zygaena_1
+##                      [,1] [,2]
+## 1_snout                16  132
+## 2_dorsal_base_ant     205  107
+## 3_dorsal_tip          270   49
+## 4_dorsal_base_post    265  112
+## 5_cadual_base_dor     466  130
+## 6_cadual_tip_dor      621  109
+## 7_cadual_tip_vent     503  196
+## 8_caudal_base_vental  463  153
+## 9_pelvic_base_post    353  165
+## 10_pelvic_base_ant    334  174
+## 11_pect_base_post     195  181
+## 12_pect_base_ant      166  175
+## 13_mouth_post          86  153
+## 14_mouth_ant           73  155
+## 
+## $landmarks$Squalus_megalops_2
+##                      [,1] [,2]
+## 1_snout                30   94
+## 2_dorsal_base_ant     203   68
+## 3_dorsal_tip          252   42
+## 4_dorsal_base_post    242   77
+## 5_cadual_base_dor     500  119
+## 6_cadual_tip_dor      610  112
+## 7_cadual_tip_vent     531  177
+## 8_caudal_base_vental  498  135
+## 9_pelvic_base_post    326  117
+## 10_pelvic_base_ant    299  128
+## 11_pect_base_post     168  105
+## 12_pect_base_ant      151  105
+## 13_mouth_post          79  105
+## 14_mouth_ant           67  108
+## 
+## $landmarks$Triaenodon_obesus_1
+##                      [,1] [,2]
+## 1_snout                16  121
+## 2_dorsal_base_ant     226   99
+## 3_dorsal_tip          294   51
+## 4_dorsal_base_post    270  104
+## 5_cadual_base_dor     466  133
+## 6_cadual_tip_dor      621   77
+## 7_cadual_tip_vent     530  187
+## 8_caudal_base_vental  461  150
+## 9_pelvic_base_post    314  156
+## 10_pelvic_base_ant    290  162
+## 11_pect_base_post     150  150
+## 12_pect_base_ant      125  153
+## 13_mouth_post          59  145
+## 14_mouth_ant           39  143
+## 
+## 
+## $fixed
+##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14
+## 
+## $sliders
+## NULL
+## 
+## $curves
+## NULL
+## 
+## $n
+## [1] 56
+## 
+## $p
+## [1] 14</code></pre>
+<p>Landmarks stored in a <code>geomorphShapes</code> object are done so
+in a 3-dimensional array, that is, essentially a list of similarly sized
 2D matrices, where the position the <span
 class="math inline">\(i^{th}\)</span> matrix is in the <span
 class="math inline">\(i^{th}\)</span> index of the third dimension,
-i.e., <code>array[,,i]</code>. To massage our large tibble into such an
-array, we have to split the tibble into a bunch of lists for this, we
-can simply run a <code>for</code> loop, breaking the data up into a list
-of data frames according to species. Notice how we use
-<code>filter()</code> to split the large tibble into into small
-data.frames that will reside in <code>ldk_l</code>. This will leave us
-with a list of data.frames as long as all our files. We then use
-<code>abind</code>’s <code>abind()</code> function to bind the list of
-data.frames in <code>ldk_l</code> into an array, with each data.frame
-taking a position in the third dimension. This array is saved in the
-object <code>ldk</code>. Lastly, we’ll specify that the names of this
-third dimension should be the unique values of <code>species</code> in
-the original tibble. <strong>Note: this is how we’ll retrieve species
-information.</strong></p>
-<pre class="r"><code>ldk_l &lt;- list()
-
-shark_sp &lt;- xy$sp %&gt;% unique
-
-for(i in shark_sp){
-  ldk_l[[i]] &lt;- xy %&gt;% 
-    filter(sp==i) %&gt;% 
-    dplyr::select(X,Y) %&gt;% 
-    data.frame
-}
-
-names(ldk_l)</code></pre>
-<pre><code>##   [1] &quot;Aculeola nigra&quot;                    &quot;Alopias pelagicus&quot;                
-##   [3] &quot;Alopias superciliosus&quot;             &quot;Alopias vulpinus&quot;                 
-##   [5] &quot;Apristurus brunneus&quot;               &quot;Apristurus laurussonii&quot;           
-##   [7] &quot;Apristurus macrorhynchus&quot;          &quot;Apristurus manis&quot;                 
-##   [9] &quot;Apristurus melanoasper&quot;            &quot;Apristurus platyrhynchus&quot;         
-##  [11] &quot;Apristurus profundorum&quot;            &quot;Apristurus sinensis&quot;              
-##  [13] &quot;Atelomycterus baliensis&quot;           &quot;Atelomycterus fasciatus&quot;          
-##  [15] &quot;Atelomycterus marnkalha&quot;           &quot;Atelomycterus marmoratus&quot;         
-##  [17] &quot;Aulohalaelurus labiosus&quot;           &quot;Brachaelurus waddi&quot;               
-##  [19] &quot;Carcharhinus albimarginatus&quot;       &quot;Carcharhinus amblyrhynchos&quot;       
-##  [21] &quot;Carcharhinus brachyurus&quot;           &quot;Carcharodon carcharias&quot;           
-##  [23] &quot;Carcharhinus falciformis&quot;          &quot;Carcharhinus leucas&quot;              
-##  [25] &quot;Carcharhinus limbatus&quot;             &quot;Carcharhinus melanopterus&quot;        
-##  [27] &quot;Carcharhinus plumbeus&quot;             &quot;Carcharhinus sorrah&quot;              
-##  [29] &quot;Carcharias taurus&quot;                 &quot;Carcharhinus tilstoni&quot;            
-##  [31] &quot;Centrophorus atromarginatus&quot;       &quot;Centroscymnus coelolepis&quot;         
-##  [33] &quot;Centroselachus crepidater&quot;         &quot;Centroscyllium fabricii&quot;          
-##  [35] &quot;Centrophorus granulosus&quot;           &quot;Centroscyllium granulatum&quot;        
-##  [37] &quot;Centrophorus harrissoni&quot;           &quot;Cephaloscyllium hiscosellum&quot;      
-##  [39] &quot;Centrophorus isodon&quot;               &quot;Cephaloscyllium laticeps&quot;         
-##  [41] &quot;Cetorhinus maximus&quot;                &quot;Centroscyllium nigrum&quot;            
-##  [43] &quot;Centroscymnus owstonii&quot;            &quot;Centroscyllium ritteri&quot;           
-##  [45] &quot;Cephaloscyllium silasi&quot;            &quot;Centrophorus squamosus&quot;           
-##  [47] &quot;Cephaloscyllium variegatum&quot;        &quot;Cephaloscyllium ventriosum&quot;       
-##  [49] &quot;Chlamydoselachus anguineus&quot;        &quot;Chiloscyllium griseum&quot;            
-##  [51] &quot;Chiloscyllium hasseltii&quot;           &quot;Chiloscyllium indicum&quot;            
-##  [53] &quot;Chaenogaleus macrostoma&quot;           &quot;Chiloscyllium plagiosum&quot;          
-##  [55] &quot;Chiloscyllium punctatum&quot;           &quot;Cirrhigaleus barbifer&quot;            
-##  [57] &quot;Dalatias licha&quot;                    &quot;Deania hystricosa&quot;                
-##  [59] &quot;Deania profundorum&quot;                &quot;Deania quadrispinosa&quot;             
-##  [61] &quot;Echinorhinus brucus&quot;               &quot;Echinorhinus cookei&quot;              
-##  [63] &quot;Etmopterus brachyurus&quot;             &quot;Etmopterus granulosus&quot;            
-##  [65] &quot;Etmopterus molleri&quot;                &quot;Etmopterus polli&quot;                 
-##  [67] &quot;Etmopterus princeps&quot;               &quot;Etmopterus schultzi&quot;              
-##  [69] &quot;Etmopterus spinax&quot;                 &quot;Etmopterus unicolor&quot;              
-##  [71] &quot;Euprotomicrus bispinatus&quot;          &quot;Eusphyra blochii&quot;                 
-##  [73] &quot;Eucrossorhinus dasypogon&quot;          &quot;Furgaleus macki&quot;                  
-##  [75] &quot;Figaro boardmani&quot;                  &quot;Galeocerdo cuvier&quot;                
-##  [77] &quot;Galeus eastmani&quot;                   &quot;Galeus melastomus&quot;                
-##  [79] &quot;Galeus murinus&quot;                    &quot;Galeus polli&quot;                     
-##  [81] &quot;Galeus sauteri&quot;                    &quot;Pseudoginglymostoma brevicaudatum&quot;
-##  [83] &quot;Ginglymostoma cirratum&quot;            &quot;Glyphis gangeticus&quot;               
-##  [85] &quot;Glyphis glyphis&quot;                   &quot;Bythaelurus canescens&quot;            
-##  [87] &quot;Bythaelurus dawsoni&quot;               &quot;Haploblepharus edwardsii&quot;         
-##  [89] &quot;Brachaelurus colcloughi&quot;           &quot;Hemipristis elongata&quot;             
-##  [91] &quot;Heterodontus francisci&quot;            &quot;Heterodontus galeatus&quot;            
-##  [93] &quot;Hexanchus griseus&quot;                 &quot;Hemitriakis japanica&quot;             
-##  [95] &quot;Hemitriakis leucoperiptera&quot;        &quot;Heterodontus mexicanus&quot;           
-##  [97] &quot;Hemigaleus microstoma&quot;             &quot;Hemigaleus australiensis&quot;         
-##  [99] &quot;Hemiscyllium ocellatum&quot;            &quot;Heptranchias perlo&quot;               
-## [101] &quot;Heterodontus portusjacksoni&quot;       &quot;Heterodontus zebra&quot;               
-## [103] &quot;Holohalaelurus regani&quot;             &quot;Hypogaleus hyugaensis&quot;            
-## [105] &quot;Iago garricki&quot;                     &quot;Iago omanensis&quot;                   
-## [107] &quot;Isistius brasiliensis&quot;             &quot;Isurus oxyrinchus&quot;                
-## [109] &quot;Isurus paucus&quot;                     &quot;Lamna ditropis&quot;                   
-## [111] &quot;Lamna nasus&quot;                       &quot;Lamiopsis temminckii&quot;             
-## [113] &quot;Loxodon macrorhinus&quot;               &quot;Megachasma pelagios&quot;              
-## [115] &quot;Mitsukurina owstoni&quot;               &quot;Mustelus antarcticus&quot;             
-## [117] &quot;Mustelus asterias&quot;                 &quot;Mustelus californicus&quot;            
-## [119] &quot;Mustelus canis&quot;                    &quot;Mustelus henlei&quot;                  
-## [121] &quot;Mustelus lenticulatus&quot;             &quot;Mustelus manazo&quot;                  
-## [123] &quot;Mustelus mustelus&quot;                 &quot;Mustelus punctulatus&quot;             
-## [125] &quot;Mustelus schmitti&quot;                 &quot;Nasolamia velox&quot;                  
-## [127] &quot;Negaprion acutidens&quot;               &quot;Negaprion brevirostris&quot;           
-## [129] &quot;Nebrius ferrugineus&quot;               &quot;Notorynchus cepedianus&quot;           
-## [131] &quot;Odontaspis noronhai&quot;               &quot;Orectolobus maculatus&quot;            
-## [133] &quot;Orectolobus ornatus&quot;               &quot;Oxynotus bruniensis&quot;              
-## [135] &quot;Oxynotus centrina&quot;                 &quot;Oxynotus paradoxus&quot;               
-## [137] &quot;Parascyllium collare&quot;              &quot;Paragaleus pectoralis&quot;            
-## [139] &quot;Parmaturus xaniurus&quot;               &quot;Pliotrema warreni&quot;                
-## [141] &quot;Poroderma africanum&quot;               &quot;Poroderma pantherinum&quot;            
-## [143] &quot;Prionace glauca&quot;                   &quot;Proscyllium habereri&quot;             
-## [145] &quot;Pristiophorus japonicus&quot;           &quot;Pseudocarcharias kamoharai&quot;       
-## [147] &quot;Pseudotriakis microdon&quot;            &quot;Rhizoprionodon acutus&quot;            
-## [149] &quot;Rhizoprionodon lalandii&quot;           &quot;Rhizoprionodon longurio&quot;          
-## [151] &quot;Rhizoprionodon oligolinx&quot;          &quot;Rhizoprionodon porosus&quot;           
-## [153] &quot;Rhizoprionodon taylori&quot;            &quot;Rhizoprionodon terraenovae&quot;       
-## [155] &quot;Rhincodon typus&quot;                   &quot;Schroederichthys bivius&quot;          
-## [157] &quot;Scyliorhinus canicula&quot;             &quot;Scyliorhinus capensis&quot;            
-## [159] &quot;Scoliodon laticaudus&quot;              &quot;Zameus squamulosus&quot;               
-## [161] &quot;Scylliogaleus quecketti&quot;           &quot;Scyliorhinus retifer&quot;             
-## [163] &quot;Scymnodon ringens&quot;                 &quot;Scyliorhinus stellaris&quot;           
-## [165] &quot;Scyliorhinus torazame&quot;             &quot;Somniosus microcephalus&quot;          
-## [167] &quot;Somniosus pacificus&quot;               &quot;Somniosus rostratus&quot;              
-## [169] &quot;Sphyrna corona&quot;                    &quot;Sphyrna lewini&quot;                   
-## [171] &quot;Sphyrna media&quot;                     &quot;Sphyrna mokarran&quot;                 
-## [173] &quot;Sphyrna tiburo&quot;                    &quot;Sphyrna tudes&quot;                    
-## [175] &quot;Sphyrna zygaena&quot;                   &quot;Squalus acanthias&quot;                
-## [177] &quot;Cirrhigaleus asper&quot;                &quot;Squatina australis&quot;               
-## [179] &quot;Squalus japonicus&quot;                 &quot;Squaliolus laticaudus&quot;            
-## [181] &quot;Squalus megalops&quot;                  &quot;Squalus mitsukurii&quot;               
-## [183] &quot;Squatina squatina&quot;                 &quot;Sutorectus tentaculatus&quot;          
-## [185] &quot;Triakis megalopterus&quot;              &quot;Triaenodon obesus&quot;                
-## [187] &quot;Triakis scyllium&quot;                  &quot;Triakis semifasciata&quot;</code></pre>
-<pre class="r"><code>ldk &lt;-  abind(ldk_l, along=3)
-
-dimnames(ldk)[[3]] &lt;-names(ldk_l)
-
-ldk[,,1:3] #the first few </code></pre>
-<pre><code>## , , Aculeola nigra
-## 
-##           X       Y
-##  [1,]  39.5 423.333
-##  [2,] 260.0 467.333
-##  [3,] 292.0 472.333
-##  [4,] 293.5 448.833
-##  [5,] 464.0 436.333
-##  [6,] 596.0 446.333
-##  [7,] 522.0 386.833
-##  [8,] 454.5 414.333
-##  [9,] 380.0 410.333
-## [10,] 341.0 394.333
-## [11,] 209.0 406.333
-## [12,] 180.0 414.333
-## [13,] 100.5 406.333
-## [14,]  74.5 399.833
-## 
-## , , Alopias pelagicus
-## 
-##           X       Y
-##  [1,]  38.0 442.833
-##  [2,] 162.5 467.333
-##  [3,] 186.5 507.333
-##  [4,] 192.5 470.333
-##  [5,] 295.5 456.333
-##  [6,] 606.5 514.333
-##  [7,] 321.5 402.333
-##  [8,] 300.5 427.333
-##  [9,] 249.5 425.333
-## [10,] 228.5 421.333
-## [11,] 135.5 423.333
-## [12,] 103.5 420.333
-## [13,]  69.0 429.000
-## [14,]  59.5 428.500
-## 
-## , , Alopias superciliosus
-## 
-##           X       Y
-##  [1,]  38.5 435.333
-##  [2,] 221.5 473.833
-##  [3,] 257.0 519.333
-##  [4,] 261.5 472.833
-##  [5,] 364.0 456.833
-##  [6,] 604.5 537.333
-##  [7,] 389.5 403.333
-##  [8,] 363.0 431.333
-##  [9,] 310.0 424.833
-## [10,] 282.5 411.833
-## [11,] 168.5 414.833
-## [12,] 138.5 412.333
-## [13,]  82.5 418.333
-## [14,]  67.5 419.833</code></pre>
-<p>With a proper array in place as <code>ldk</code>, we’re now free to
-move on the superimposition with the <code>geomorph</code> function
-<code>gpagen()</code>. We’ll do this saving the output to
-<code>ldk_al</code> (for landmark alignment) and plot the the 14 aligned
-and superimposed landmarks for all the example specimens.</p>
-<pre class="r"><code>ldk_al &lt;- gpagen(ldk)</code></pre>
+i.e., <code>array[,,i]</code>. This is a little wonky, but it’s how
+<code>geomorph</code> functions expect landmarks to be arranged.</p>
+<p>With a proper <code>geomorphShapes</code> object in place, we’re now
+free to move on the superimposition with the <code>geomorph</code>
+function <code>gpagen()</code>. We’ll do this saving the output to
+<code>gpa</code> and plot the the 14 aligned and superimposed landmarks
+for all the specimens.</p>
+<pre class="r"><code>#gpa
+gpa &lt;- gpagen(geomorph_landmarks,ProcD = F )</code></pre>
 <pre><code>## 
 ## Performing GPA
 ##   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%
 ## 
 ## Making projections... Finished!</code></pre>
-<pre class="r"><code>plot(ldk_al)</code></pre>
+<pre class="r"><code>#plot superimposition
+plot(gpa)</code></pre>
 <p><img src="mod5_proj_files/figure-html/gpa-1.png" alt="" width="672" /></p>
+<p>We’re now read to start analyzing the data.</p>
 </div>
 <div id="analysis-part-i-a-morphospace" class="section level3">
 <h3>Analysis Part I: A Morphospace</h3>
 <p>In geometric morphometric analysis, researchers first turn to
-describing the axes of shape variation.Indeed, this is what <span
+describing the axes of shape variation. Indeed, this is what <span
 class="citation">Sternes and Shimada (2020)</span> did to produce the
 figure above. This and what we’re after is often termed a <a
 href="https://en.wiktionary.org/wiki/morphospace">morphospace</a>, a
@@ -1052,9 +1992,14 @@ captured, resulting in scores of PCs. The first two or three, however,
 are usually enough to describe a health amount of variance, say 90% or
 more.</p>
 <p>To perform PCA, we’ll use <code>geomorph</code>s
-<code>gm.prcomp()</code> function like so. Plotting reveals our first
+<code>gm.prcomp()</code> function like so, working the the
+<code>gpa</code> object’s coordinates, that is the 3-D array that
+contains the Procrustes aligned landmakrs. Plotting reveals our first
 result.</p>
-<pre class="r"><code>pca &lt;- gm.prcomp(ldk_al$coords)
+<pre class="r"><code>#PCA
+pca &lt;- gm.prcomp(gpa$coords)
+
+#visualize
 plot(pca)</code></pre>
 <p><img src="mod5_proj_files/figure-html/pca-1.png" alt="" width="672" /></p>
 <p>Wow, now we’re getting close to the <span class="citation">Sternes
@@ -1065,7 +2010,7 @@ default, when we plot a PCA object, the first two PCs are plotted, PC1
 on the x axis, PC2 on the y. Each point represents the PC scores for a
 specimen in the data set. Notice that the amount of variance explained
 by our PCs is given and, as expected, PC1 contains most of the variance
-(54%) and PC2 considerably less less (19%). If we plot again, but
+(55%) and PC2 considerably less less (19%). If we plot again, but
 specify a different combination of PCs, say 1 and 3, we get a different
 plot, of course. Notice the variance explained by PC3 is predictably
 less than that of PC2.</p>
@@ -1077,52 +2022,76 @@ do these groups correspond to largely pelagic vs. benthic species? It’s
 hard to tell. We don’t really know because we don’t know which species
 belong to each point in our plots, nor their habitat.</p>
 <p>Notice, however, that the names of the coordinates in
-<code>ldk</code> were pegged in a previous operation to the species
-names.</p>
-<pre class="r"><code>head(dimnames(ldk)[[3]])</code></pre>
-<pre><code>## [1] &quot;Aculeola nigra&quot;         &quot;Alopias pelagicus&quot;      &quot;Alopias superciliosus&quot; 
-## [4] &quot;Alopias vulpinus&quot;       &quot;Apristurus brunneus&quot;    &quot;Apristurus laurussonii&quot;</code></pre>
+<code>gpa$coords</code> are pegged to the image and landmark file names.
+These names, are in fact, important metadata: data about the data. In
+this case, the metadata are species names and, because we have images of
+multiple specimens for each species, the specimen number</p>
+<pre class="r"><code>head(dimnames(gpa$coords)[[3]])</code></pre>
+<pre><code>## [1] &quot;Aculeola_nigra_1&quot;       &quot;Aculeola_nigra_5&quot;       &quot;Alopias_vulpinus_2&quot;    
+## [4] &quot;Apristurus_australis_5&quot; &quot;Apristurus_australis_7&quot; &quot;Apristurus_manis_2&quot;</code></pre>
 <p>These values were maintained throughout the superimpositon step and
 in the PCA operation. The coordinates plotted in the PCA plots are
 contained in a matrix named <code>x</code> in our <code>pca</code>
 object. Notice the row names:</p>
 <pre class="r"><code>pca$x %&gt;% data.frame %&gt;% dplyr::select(Comp1,Comp2) %&gt;% head</code></pre>
 <pre><code>##                               Comp1       Comp2
-## Aculeola nigra          0.033229330  0.06321765
-## Alopias pelagicus       0.073754120 -0.15999699
-## Alopias superciliosus   0.003639515 -0.04236310
-## Alopias vulpinus        0.084399920 -0.18088863
-## Apristurus brunneus    -0.166824169  0.10883149
-## Apristurus laurussonii -0.144591823 -0.04019980</code></pre>
-<p>So, we have the species names from whence the data, both land mark
-and PCA, came. Fortunately, Professor Kenaley assembled a table
-containing of all the the species for landmarking, and the species and
-habitat for each. You can download <a href="data/shark_data.csv">this
-file</a> and read in the data.</p>
+## Aculeola_nigra_1       -0.075506918 -0.04270842
+## Aculeola_nigra_5       -0.120792377 -0.01107569
+## Alopias_vulpinus_2     -0.125778471  0.06951712
+## Apristurus_australis_5  0.022652374  0.15989950
+## Apristurus_australis_7 -0.005494344  0.16647518
+## Apristurus_manis_2      0.019040037  0.14422777</code></pre>
+<p>So, we have the species names from whence the data, both landmark and
+PCA, came. Fortunately, Professor Kenaley assembled a table containing
+of all the the species for landmarking, and the species and habitat for
+each. You can download <a href="data/shark_data.csv">this file</a> and
+read in the data.</p>
 <p>What’s left to do in exploring if benthic and pelagic sharks occupy
 different morphospace is to combine this information with the PC scores
-in <code>pca$x</code>. This can be done thusly:</p>
+in <code>pca$x</code>. Let’s first load the shark data and consider how
+we’ll join it to our PCA data using species as the key.</p>
+<pre class="r"><code>#sneak a peak
+head(shark_dat)</code></pre>
+<pre><code>## # A tibble: 6 × 3
+##   sp                      PCL habitat
+##   &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;  
+## 1 Aculeola nigra         40.4 benthic
+## 2 Alopias pelagicus     164.  pelagic
+## 3 Alopias superciliosus 272.  pelagic
+## 4 Alopias vulpinus      290.  pelagic
+## 5 Apristurus albisoma    42.9 benthic
+## 6 Apristurus ampliceps   85.5 benthic</code></pre>
+<p>So here we have a tibble that contains species, precaudal length
+(PCL), and habitat data. Our goal is to join these data to our PCA, and
+later, coordinate data. But how. Our PCA and coordinated data have the
+species information, but that name also included the specimen number.
+That is, “Aculeola nigra” in our shark data won’t match
+“Aculeola_nigra_1” in our PCA and landmark data. To rip the species name
+out of the the PCA and coordinate data, let’s turn to ‘grep’ (general
+regular expressions) functions.</p>
 <pre class="r"><code>PCA &lt;- pca$x %&gt;% 
-  data.frame %&gt;% 
+  data.frame %&gt;%
   dplyr::select(Comp1:Comp4) %&gt;% 
-  mutate(sp=rownames(pca$x)) %&gt;% 
+  rownames_to_column(&quot;sp_spec&quot;) %&gt;%
+  mutate(sp=gsub(&quot;(.*)_(.*)_.*&quot;,&quot;\\1 \\2&quot;,sp_spec),
+         spec=gsub(&quot;.*_.*_(.*)&quot;,&quot;\\1&quot;,sp_spec)) %&gt;% 
   left_join(shark_dat)</code></pre>
 <pre><code>## Joining with `by = join_by(sp)`</code></pre>
 <pre class="r"><code>head(PCA)</code></pre>
-<pre><code>##          Comp1       Comp2      Comp3        Comp4                     sp   id
-## 1  0.033229330  0.06321765 0.02410686 -0.035963797         Aculeola nigra  644
-## 2  0.073754120 -0.15999699 0.28772956 -0.063594425      Alopias pelagicus 5891
-## 3  0.003639515 -0.04236310 0.22531399 -0.006848063  Alopias superciliosus 2534
-## 4  0.084399920 -0.18088863 0.25902203 -0.040036910       Alopias vulpinus 2535
-## 5 -0.166824169  0.10883149 0.17237370 -0.052693603    Apristurus brunneus  763
-## 6 -0.144591823 -0.04019980 0.06016726 -0.013332985 Apristurus laurussonii  770
-##      file_name     depth habitat size  ref depth_max
-## 1 Acnig_u0.gif   110-560 benthic   60 &lt;NA&gt;       560
-## 2 Alpel_u0.gif     0-152 pelagic  330 &lt;NA&gt;       152
-## 3 Alsup_u0.gif     0-500 pelagic  461 &lt;NA&gt;       500
-## 4 Alvul_u0.gif     0-366 pelagic  549 &lt;NA&gt;       366
-## 5 Apbru_u1.gif     0-950 benthic   68 &lt;NA&gt;       950
-## 6 Aplau_u0.gif 560 -1462 benthic   68 &lt;NA&gt;      1462</code></pre>
+<pre><code>##                  sp_spec        Comp1       Comp2       Comp3         Comp4
+## 1       Aculeola_nigra_1 -0.075506918 -0.04270842 -0.09005305 -0.1045345209
+## 2       Aculeola_nigra_5 -0.120792377 -0.01107569 -0.02855598 -0.0708372690
+## 3     Alopias_vulpinus_2 -0.125778471  0.06951712  0.22911336 -0.0006552325
+## 4 Apristurus_australis_5  0.022652374  0.15989950 -0.03293028  0.0455306233
+## 5 Apristurus_australis_7 -0.005494344  0.16647518 -0.04562222  0.0604060521
+## 6     Apristurus_manis_2  0.019040037  0.14422777 -0.07646664  0.0218615481
+##                     sp spec   PCL habitat
+## 1       Aculeola nigra    1  40.4 benthic
+## 2       Aculeola nigra    5  40.4 benthic
+## 3     Alopias vulpinus    2 289.8 pelagic
+## 4 Apristurus australis    5  43.4 benthic
+## 5 Apristurus australis    7  43.4 benthic
+## 6     Apristurus manis    2  51.5 benthic</code></pre>
 <p>With that over with, we can dispense with the ugly PCA plots above
 and use <code>ggplot</code> to visualize our results with respect to
 habitat.</p>
@@ -1133,7 +2102,7 @@ habitat.</p>
   ggplot(aes(Comp1,Comp3,col=habitat))+geom_point()</code></pre>
 <p><img src="mod5_proj_files/figure-html/ggpca-2.png" alt="" width="672" /></p>
 <p>Voila! For morphospace described by PCs 1, 2, and 3, it appeears that
-pelagic species inhabit a high PC1 score and never a low PC1 score.</p>
+benthic species inhabit a specific region of morphospace.</p>
 <p>This is wonderful, but you may be asking, “What is PC1 (or any other)
 describing?” Our PCs points are abstractions of shape, but they don’t
 represent explicitly what shape that is. To get a sense of what our PCs
@@ -1149,29 +2118,29 @@ max_PC2 &lt;- which.max(pca$x[,2])
 min_PC2 &lt;- which.min(pca$x[,2])
 
 #get the concesus, the mean shape of all data.
-M &lt;- ldk_al$consensus
+M &lt;- gpa$consensus
 
 #plot
 par(mfrow=c(2,2))
 
 #plot the change form the concensus to min of PC1
-plotRefToTarget(M, ldk_al$coords[,,min_PC1], mag = 1,method=&quot;vector&quot;,label = T)
+plotRefToTarget(M, gpa$coords[,,min_PC1], mag = 1,method=&quot;vector&quot;,label = T)
 title(&quot;min PC1 warp&quot;,cex=0.6)
 
 #plot the change form the concensus to max of PC1
-plotRefToTarget(M, ldk_al$coords[,,max_PC1], mag = 1,method=&quot;vector&quot;,label = T)
+plotRefToTarget(M, gpa$coords[,,max_PC1], mag = 1,method=&quot;vector&quot;,label = T)
 title(&quot;max PC1 warp&quot;,cex=0.6)
 
 #plot the change form the concensus to min of PC2
-plotRefToTarget(M, ldk_al$coords[,,min_PC2], mag = 1,method=&quot;vector&quot;,label = T)
+plotRefToTarget(M, gpa$coords[,,min_PC2], mag = 1,method=&quot;vector&quot;,label = T)
 title(&quot;min PC2 warp&quot;,cex=0.6)
 
 #plot the change form the concensus to max of PC2
-plotRefToTarget(M, ldk_al$coords[,,max_PC2], mag = 1,method=&quot;vector&quot;,label = T)
+plotRefToTarget(M, gpa$coords[,,max_PC2], mag = 1,method=&quot;vector&quot;,label = T)
 title(&quot;max PC3 warp&quot;,cex=0.6)</code></pre>
 <p><img src="mod5_proj_files/figure-html/rw-1.png" alt="" width="672" /></p>
 <p>So, it looks like PC1 describes a shape change involving the
-placement of the dorsal fin (points 2-4) and pelvic find (points 9 and
+placement of the dorsal fin (points 2-4) and pelvic fin (points 9 and
 10). Lower values represent of PC1 represent a dorsal and pelvic fin
 that’re displaced posteriorly while higher values represent anterior
 placements. PC2 largely describes a shape change involving a the size of
@@ -1188,15 +2157,16 @@ caudal fin along PC2.</p>
 <pre class="r"><code>library(ggimage)
 PC_extremes &lt;- PCA %&gt;% 
   filter(Comp1 %in% range(Comp1)|
-         Comp2 %in% range(Comp2)) %&gt;% 
+         Comp2 %in% range(Comp2)) %&gt;%
+  mutate(file_name=paste0(sp_spec,&quot;.jpg&quot;)) %&gt;% 
   dplyr::select(Comp1,Comp2,sp,file_name) %&gt;% 
-  mutate(pngs =paste0(&quot;data/shark_examples_photos/&quot;,file_name %&gt;% str_replace(&quot;.gif&quot;,&quot;.png&quot;)))
+  mutate(imgs =paste0(&quot;shark_images/&quot;,file_name))
 
 p1 &lt;- PCA %&gt;% 
   ggplot(aes(Comp1,Comp2,col=habitat))+geom_point()
 
 
-p1 + geom_image(data=PC_extremes,aes(Comp1,Comp2,image=pngs), size=.30,inherit.aes = F)+theme_classic()+xlim(range(PC_extremes$Comp1)*1.5)+ylim(range(PC_extremes$Comp2)*1.25)+theme(legend.position = c(0.1,0.2))</code></pre>
+p1 + geom_image(data=PC_extremes,aes(Comp1,Comp2,image=imgs), size=.30,inherit.aes = F)+theme_classic()+xlim(range(PC_extremes$Comp1)*1.5)+ylim(range(PC_extremes$Comp2)*1.25)+theme(legend.position = c(0.1,0.2))</code></pre>
 <p><img src="mod5_proj_files/figure-html/shape%20change-1.png" alt="" width="672" /></p>
 </div>
 <div id="analysis-part-ii" class="section level3">
@@ -1207,67 +2177,119 @@ qualitative result and not dissimilar to the qualitative results
 reported by <span class="citation">Sternes and Shimada (2020)</span>.
 Several quantitative frameworks for assessing differences in shape
 exist. The <code>geomorph</code> package contains several, but we’ll use
-just one: morphological disparity. The function
-<code>morphol.disparity()</code> will do this for us by making pairwise
-comparisons of residuals of a linear fit to identify differences among
-groups. It’s essentially an ANOVA for shape. The statistical
-significance of the calculated Procrustes variances between the
-different growth stages is assessed using a randomized residual
-permutation, that is random set residuals from all groups are chosen in
-each iteration.</p>
-<p><code>morphol.disparity()</code> requires a special data structure, a
-<code>geomorph</code> <code>data.frame</code> and this can be
-constructed using the <code>geomorph.data.frame()</code> function. It
-takes the landmark data and other variables of interest (i.e., in our
-case, habitat). First, we’ll establish the special data frame using our
-aligned landmarks and habitat data from the <code>PCA</code> tibble.</p>
-<pre class="r"><code>gdf &lt;- geomorph.data.frame(ldk_al,
-                             habitat=PCA$habitat
-)</code></pre>
-<p>To you use the <code>morphol.disparity()</code> function, we then
-need to establish a formula describing the model to use and tell the
-function which groups the model should include. This is encoded with
-<code>coords ~ 1</code> which indicates we’ll look at the differences in
-means and <code>groups= ~ habitat</code>, indicating that we’ll evaluate
-means between the habitat groups. <code>data = gdf</code> indicates
-we’ll use the <code>gdf</code> data frame we established above, while
-<code>iter = 10000</code> indicates we’ll be perform 10,000 radom
-permutations. Lastly, we just summarize the <code>md</code> object to
-return the results</p>
-<pre class="r"><code>md &lt;- morphol.disparity(coords ~ 1, groups= ~ habitat, data = gdf, iter = 10000, print.progress = FALSE)
-
-summary(md)</code></pre>
+just one: a phylogenetically informed Procrustes ANOVA. The function
+<code>procD.pgls()</code> will do this for us. Like with our anole
+project in which we fit univariate traits with PGLS,
+<code>procD.pgls()</code> fits a phylogenetic generalized least-squares
+model for multivariatedata under a Brownian motion model of
+evolution.</p>
+<p>As with out PGLS model fitting in the anole project, we need a tree
+and the <a href="data/shark_trees.nex">tree from <span
+class="citation">Stein et al. (2018)</span> mentioned above</a> is the
+most comprehensive. Once this tree file is downloaded, let’s load, read
+it, in and store it to an object named <code>phy</code>. Notice you’ll
+need the <code>phytools</code> package and the function
+<code>readNexus()</code>.</p>
+<pre class="r"><code>library(phytools)</code></pre>
+<pre><code>## Loading required package: ape</code></pre>
 <pre><code>## 
-## Call:
-## morphol.disparity(f1 = coords ~ 1, groups = ~habitat, iter = 10000,  
-##     data = gdf, print.progress = FALSE) 
+## Attaching package: &#39;ape&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
 ## 
+##     where</code></pre>
+<pre><code>## Loading required package: maps</code></pre>
+<pre><code>## 
+## Attaching package: &#39;maps&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
 ## 
+##     map</code></pre>
+<pre class="r"><code>phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
+length(phy)</code></pre>
+<pre><code>## [1] 500</code></pre>
+<p>Next let’s, restrict our tree file to those species in our data set.
+For this, we’ll used <code>ape</code>’s <code>keep.tip()</code> which
+keeps only the tips in a vector, in this case, the species in our PCA
+and landmark analysis.</p>
+<pre class="r"><code>sp &lt;- intersect(phy[[1]]$tip.label,PCA$sp %&gt;% unique)
+phy2 &lt;- keep.tip(phy,PCA$sp)</code></pre>
+<p>To undertake the analysis with <code>procD.pgls()</code>, we must
+input the tree of course and a <code>geomorph.dataframe</code>, a
+special data frame that includes the coordinates and variables (i.e.,
+habitat) that will be in the model. But, as we’ve discussed above, we
+have several specimens per species and thus multiple observations for
+each tip in the tree. <code>procD.pgls()</code> can’t handle that. A
+common solution to such a problem is to just calculate the mean values
+of each species. For this, we can turn to a custom function that uses
+<code>geomorph</code>’s <code>mshape</code> function to compute the mean
+shape of each species. It will compute the mean shape for each unique
+coordinate name, that is species. Notice here that we reorder the
+resulting array of mean shapes along its third dimension according to
+the order of species (<code>tip.label</code>) in the tree, a standard
+practice with comparative methods in R.</p>
+<pre class="r"><code>#install abind package
+#install.packages(&quot;abind&quot;)
+library(abind)
+#mean shape of uniquely named coordinates
+mean_shape &lt;- function(x){
+  array(dim=3)
+  sp &lt;- dimnames(x$coords)[[3]]
+  m_shapes &lt;- list()
+  for(s in unique(sp)){
+    sp_n &lt;- which(sp==s)
+    
+    m_shapes[[s]] &lt;- mshape(x$coords[,,sp_n])
+  }
+  m_ &lt;- abind(m_shapes,along=3)
+  return(coord=m_)
+}
+
+#rename the coordinates
+dimnames(gpa$coords)[[3]] &lt;- PCA$sp
+
+mean_coords &lt;- mean_shape(gpa)[,,phy2[[1]]$tip.label]</code></pre>
+<p>For the habitat data we’ll add to the
+<code>geomorph.data.frame</code>, we need to establish a vector that is
+also limited to our species and ordered according to the tip labels of
+the tree.</p>
+<pre class="r"><code>hab &lt;- setNames(shark_dat$habitat,shark_dat$sp)[phy2[[1]]$tip.label]</code></pre>
+<p>Now the <code>geomorph.data.frame</code>.</p>
+<pre class="r"><code>gdf &lt;- geomorph.data.frame(
+  mean_coords,
+  habitat=hab,
+  phy=phy2[[1]] #just one tree!
+  )</code></pre>
+<p>We can now move on the the Procrustes PGLS. It will take as input the
+<code>geomorph.data.frame</code>, a model formula, and the tree object
+stored in it. The model formula follows model fitting conventions in R
+with <code>~</code> and should reflect our question, “Does shape vary
+accroding to habitat (i.e, <code>mean_coords ~ habitat</code>)?” Lastly,
+<code>procD.pgls()</code> relies on permutations to obtain statistical
+values, so we must specify the number of permutation with
+<code>iter</code>. A value of 10,0000 is plenty. Also note, messy
+progress messages are suppressed with <code>print.progress = F</code>.
+We can then run an ANOVA on this fitted model.</p>
+<pre class="r"><code>shark_pgls &lt;- procD.pgls(mean_coords ~ habitat, phy = phy, data = gdf, 
+iter = 10000,print.progress = F)
+
+anova(shark_pgls)</code></pre>
+<pre><code>## 
+## Analysis of Variance, using Residual Randomization
+## Permutation procedure: Randomization of null model residuals 
+## Number of permutations: 10001 
+## Estimation method: Generalized Least-Squares (via OLS projection) 
+## Sums of Squares and Cross-products: Type I 
+## Effect sizes (Z) based on F distributions
 ## 
-## Randomized Residual Permutation Procedure Used
-## 10001 Permutations
+##           Df       SS         MS   Rsq      F       Z Pr(&gt;F)
+## habitat    1 0.000247 0.00024727 0.005 0.2563 -1.0319 0.8342
+## Residuals 51 0.049208 0.00096485 0.995                      
+## Total     52 0.049455                                       
 ## 
-## Procrustes variances for defined groups
-##    benthic         NA    pelagic 
-## 0.02950302 0.03244622 0.02504977 
-## 
-## 
-## Pairwise absolute differences between variances
-##             benthic          NA     pelagic
-## benthic 0.000000000 0.002943198 0.004453246
-## NA      0.002943198 0.000000000 0.007396444
-## pelagic 0.004453246 0.007396444 0.000000000
-## 
-## 
-## P-Values
-##           benthic        NA   pelagic
-## benthic 1.0000000 0.8759124 0.2679732
-## NA      0.8759124 1.0000000 0.6607339
-## pelagic 0.2679732 0.6607339 1.0000000</code></pre>
-<p>Notice the the pairwise differences are returned both for the
-Procrustes shape variance and the absolute differences along with the p
-values. As it turns out, at least for this limited data set of ~90
-species, there’s no significant morphological disparity between
+## Call: procD.lm(f1 = mean_coords ~ habitat, iter = iter, seed = seed,  
+##     RRPP = TRUE, SS.type = SS.type, effect.type = effect.type,  
+##     int.first = int.first, Cov = Cov, data = data, print.progress = print.progress)</code></pre>
+<p>As it turns out, at least for this limited data set of ~50 species,
+there’s no significant difference in mean shape between habitat
 groups.</p>
 <p>We have a preliminary answer to our first question, “Does habitat use
 predict different body shape?”. But this of course could change with a
@@ -1295,60 +2317,43 @@ al. (2018)</span> mentioned above</a>. Once this tree file is
 downloaded, let’s load, read it, in and store it to an object named
 <code>phy</code>. Notice you’ll need the <code>phytools</code> package
 and the function <code>readNexus()</code>.</p>
-<pre class="r"><code>library(phytools)
-phy &lt;- readNexus(&quot;data/shark_trees.nex&quot;)
-length(phy)</code></pre>
-<pre><code>## [1] 500</code></pre>
-<p>Next let’s, restrict our tree file to those species in our data set.
-For this, we’ll used <code>ape</code>’s <code>keep.tip()</code> which
-keeps only the tips in a vector, in this case, the species in our PCA
-and landmark analysis.</p>
-<pre class="r"><code>phy2 &lt;- keep.tip(phy,PCA$sp)</code></pre>
 <p>To undertake the analysis with <code>compare.evol.rates()</code>, we
-must specify <code>A</code>, the aligned coordinates in a lankmark array
-(<code>ldk_al$coord</code>), a tree (more in just a bit), and a named
-vector of groups descriping to which group each species in the array
-belongs.</p>
-<p>Let’s establish the grouping vector by passing the
-<code>habitat</code> values in our <code>PCA</code> tibble to an object
-named <code>gp_hab</code> and then give the names of this vector the
-<code>species</code> values. Then we run the function.</p>
-<pre class="r"><code>gp_hab &lt;- PCA$habitat
-names(gp_hab) &lt;- PCA$sp
-
-er &lt;- compare.evol.rates(A=ldk_al$coords, phy=phy2[[1]], method=&quot;simulation&quot;,gp=gp_hab,print.progress = F)
+must specify <code>A</code>, the aligned coordinates in a landkmark
+array of mean shape (<code>mean_coords</code>), a tree (more in just a
+bit), and our previoously establish vector of habita groups describing
+to which group each species in the array belongs.</p>
+<pre class="r"><code>er &lt;- compare.evol.rates(A=mean_coords, phy=phy2[[1]], method=&quot;simulation&quot;,gp=hab,print.progress = F)
 
 print(er)</code></pre>
 <pre><code>## 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.2058
+## Observed Rate Ratio: 1.0072
 ## 
-## P-value: 0.033
+## P-value: 0.98
 ## 
-## Effect Size: 1.936
+## Effect Size: -1.62
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 9.6227808202289e-06  
+## The rate for group benthic is 3.32846307948097e-05  
 ## 
-## The rate for group pelagic is 7.98043396197082e-06</code></pre>
-<p>So it appears the benthic group body shape has evolved 1.6 times
-faster than the pelagic group and this is significant
-(<em>p=0.002</em>). But, we have a problem. You may have noticed that
+## The rate for group pelagic is 3.35243043537108e-05</code></pre>
+<p>So it appears the neither of the groups is faster than the other
+(<em>p=0.98</em>). But, we have a problem. You may have noticed that
 when we loaded our tree file, the length of this list of trees is 500.
 These are 500 trees produced by <span class="citation">Stein et al.
 (2018)</span> using the bootstrapping method mentioned earlier. Many of
 these trees are incongruent, that is, they represent different
 relationships for the sharks and this, in turn, represents some serious
 phylogenetic uncertainty.</p>
-<p>Also notice that in our rate analysis above, we used only one tree in
-this list (<code>phy=phy2[[1]]</code>). There are 499 other trees we
-could have used, perhaps each representing a different phylogenetic
-hypothesis. The results of a comparative analysis like this could, and
-likely will, vary according to the phylogenetic hypothesis used in it.
-So what to do?</p>
+<p>Also notice that in our rate analysis above (the Procrustes PGLS,
+too!), we used only one tree in this list (<code>phy=phy2[[1]]</code>).
+There are 499 other trees we could have used, perhaps each representing
+a different phylogenetic hypothesis. The results of a comparative
+analysis like this could, and likely will, vary according to the
+phylogenetic hypothesis used in it. So what to do?</p>
 <p>This is a common problem faced by comparative biologists and,
 fortunately, there seems to be a consensus among us to repeat our
 comparative analysis using a random sample or, ambitiouslu, all of the
@@ -1371,150 +2376,150 @@ er_l &lt;- list()
 
 
 t &lt;- system.time(for(i in 1:length(phy_sample)){
- er_l[[i]] &lt;-compare.evol.rates(A=ldk_al$coords, phy=phy_sample[[i]], method=&quot;simulation&quot;,gp=gp_hab,print.progress = F) %&gt;% summary
+ er_l[[i]] &lt;-compare.evol.rates(A=mean_coords, phy=phy_sample[[i]], method=&quot;simulation&quot;,gp=hab,print.progress = F) %&gt;% summary
 }
 )</code></pre>
 <pre><code>## 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.177
+## Observed Rate Ratio: 1.0345
 ## 
-## P-value: 0.054
+## P-value: 0.88
 ## 
-## Effect Size: 1.7463
+## Effect Size: -1.296
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 1.31461646109893e-05  
+## The rate for group benthic is 4.7800253274568e-05  
 ## 
-## The rate for group pelagic is 1.11693291558612e-05 
+## The rate for group pelagic is 4.94486673715434e-05 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.1956
+## Observed Rate Ratio: 1.0071
 ## 
-## P-value: 0.04
+## P-value: 0.968
 ## 
-## Effect Size: 1.8541
+## Effect Size: -1.598
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 8.60727982114347e-06  
+## The rate for group benthic is 3.04942291875336e-05  
 ## 
-## The rate for group pelagic is 7.19938798348969e-06 
+## The rate for group pelagic is 3.07122517690472e-05 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.1666
+## Observed Rate Ratio: 1.0557
 ## 
-## P-value: 0.075
+## P-value: 0.8
 ## 
-## Effect Size: 1.5424
+## Effect Size: -1.0364
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 7.9517259693447e-06  
+## The rate for group benthic is 2.80733113831796e-05  
 ## 
-## The rate for group pelagic is 6.81606423824802e-06 
+## The rate for group pelagic is 2.96370580022488e-05 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.2009
+## Observed Rate Ratio: 1.0113
 ## 
-## P-value: 0.035
+## P-value: 0.954
 ## 
-## Effect Size: 1.9108
+## Effect Size: -1.5328
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 9.07517374090874e-06  
+## The rate for group benthic is 3.31688343621666e-05  
 ## 
-## The rate for group pelagic is 7.5567152783678e-06 
+## The rate for group pelagic is 3.3542406391386e-05 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.1786
+## Observed Rate Ratio: 1.047
 ## 
-## P-value: 0.056
+## P-value: 0.833
 ## 
-## Effect Size: 1.6672
+## Effect Size: -1.1279
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 6.95916367839887e-06  
+## The rate for group benthic is 2.44163930631603e-05  
 ## 
-## The rate for group pelagic is 5.90468327891928e-06 
+## The rate for group pelagic is 2.55648268359911e-05 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.1594
+## Observed Rate Ratio: 1.0772
 ## 
-## P-value: 0.09
+## P-value: 0.755
 ## 
-## Effect Size: 1.4537
+## Effect Size: -0.8238
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 8.64844945414215e-06  
+## The rate for group benthic is 3.0580605791243e-05  
 ## 
-## The rate for group pelagic is 7.4596587622378e-06 
+## The rate for group pelagic is 3.29404859728413e-05 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.2229
+## Observed Rate Ratio: 1.0046
 ## 
-## P-value: 0.025
+## P-value: 0.986
 ## 
-## Effect Size: 2.0892
+## Effect Size: -1.6477
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 8.02906677367201e-06  
+## The rate for group benthic is 2.8463390264619e-05  
 ## 
-## The rate for group pelagic is 6.56577547525823e-06 
+## The rate for group pelagic is 2.83334448660593e-05 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.1839
+## Observed Rate Ratio: 1.0531
 ## 
-## P-value: 0.05
+## P-value: 0.803
 ## 
-## Effect Size: 1.7563
+## Effect Size: -1.0401
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 8.58865035249474e-06  
+## The rate for group benthic is 3.11335256983834e-05  
 ## 
-## The rate for group pelagic is 7.2545338552253e-06 
+## The rate for group pelagic is 3.27877360500613e-05 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.2113
+## Observed Rate Ratio: 1.0082
 ## 
-## P-value: 0.03
+## P-value: 0.974
 ## 
-## Effect Size: 1.9885
+## Effect Size: -1.604
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 8.14046831722389e-06  
+## The rate for group benthic is 2.87038934503169e-05  
 ## 
-## The rate for group pelagic is 6.72016494075807e-06 
+## The rate for group pelagic is 2.89406603610779e-05 
 ## Call:
 ## 
 ## 
-## Observed Rate Ratio: 1.2395
+## Observed Rate Ratio: 1.0196
 ## 
-## P-value: 0.018
+## P-value: 0.927
 ## 
-## Effect Size: 2.2313
+## Effect Size: -1.4508
 ## 
 ## Based on 1000 random permutations
 ## 
-## The rate for group benthic is 8.42606244272568e-06  
+## The rate for group benthic is 2.86049523507358e-05  
 ## 
-## The rate for group pelagic is 6.79794184918727e-06</code></pre>
+## The rate for group pelagic is 2.91664371767795e-05</code></pre>
 <p>Here we used <code>seet.seed()</code> to make the
 <code>sample()</code> function randomly sample the same set of 10 trees.
 This is important so that we can all perform the same exact analyses,
@@ -1551,12 +2556,12 @@ Windows</p>
 
 head(er)</code></pre>
 <pre><code>##        benthic      pelagic    ratio
-## 1 1.314616e-05 1.116933e-05 1.176988
-## 2 8.607280e-06 7.199388e-06 1.195557
-## 3 7.951726e-06 6.816064e-06 1.166615
-## 4 9.075174e-06 7.556715e-06 1.200942
-## 5 6.959164e-06 5.904683e-06 1.178584
-## 6 8.648449e-06 7.459659e-06 1.159363</code></pre>
+## 1 4.780025e-05 4.944867e-05 1.034485
+## 2 3.049423e-05 3.071225e-05 1.007150
+## 3 2.807331e-05 2.963706e-05 1.055702
+## 4 3.316883e-05 3.354241e-05 1.011263
+## 5 2.441639e-05 2.556483e-05 1.047035
+## 6 3.058061e-05 3.294049e-05 1.077169</code></pre>
 <p>With a little massaging with <code>pivot_longer()</code>, we can plot
 the posterior distribution of rates for each habitat like so.</p>
 <pre class="r"><code>er %&gt;% 
@@ -1565,7 +2570,7 @@ the posterior distribution of rates for each habitat like so.</p>
 <p><img src="mod5_proj_files/figure-html/ploter-1.png" alt="" width="672" /></p>
 <p>Indeed it appears that when we estimate evolutionary rates for 10
 random trees, accounting for uncertainty in species relationships,
-pelagic species evolve slower than benthic ones.</p>
+pelagic species about as fast as benthic ones.</p>
 <p>Now, this is all well and good. But, most comparative biologists
 would argue 10 random trees does not a posterior make. We should
 probably sample many more or, perhaps use the entire set of trees.</p>
@@ -1574,19 +2579,15 @@ trees in 500 separate analyses, we’d be looking at running a for loop 50
 times longer than 10 trees took (roughly 350 s or 6 minutes, see figure
 below). In the world of comparative methods, this isn’t such a long
 time, but remember, this is a preliminary analysis of only 90 or so of
-the 220 we hope to include. The figure below indicates that including
+the 265 we hope to include. The figure below indicates that including
 all 220 species and using all 500 trees would take ~2500 s or about 40
 minutes!!!</p>
 <p><br></p>
-<pre><code>## Warning in geom_text(aes(50, 500, label = &quot;computed&quot;), inherit.aes = F): All aesthetics have length 1, but the data
-## has 48 rows.
-## ℹ Please consider using `annotate()` or
-##   provide this layer with data containing
+<pre><code>## Warning in geom_text(aes(50, 500, label = &quot;computed&quot;), inherit.aes = F): All aesthetics have length 1, but the data has 48 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing
 ##   a single row.</code></pre>
-<pre><code>## Warning in geom_text(aes(175, 2200, label = &quot;predicted&quot;), inherit.aes = F): All aesthetics have length 1, but the data
-## has 48 rows.
-## ℹ Please consider using `annotate()` or
-##   provide this layer with data containing
+<pre><code>## Warning in geom_text(aes(175, 2200, label = &quot;predicted&quot;), inherit.aes = F): All aesthetics have length 1, but the data has 48 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing
 ##   a single row.</code></pre>
 <img src="mod5_proj_files/figure-html/timescale-1.png" alt="" width="672" />
 <br>
@@ -1667,19 +2668,20 @@ specimens digitized in <a href="data/shark_points.zip">this compressed
 directory</a> and Procrustes align them (<strong>note:</strong> this
 will be available soon after all landmark data is collected).</li>
 <li>Does habitat result in the occupation of a different morphospace?
-Please answer this question using a <code>ggplot</code>-rendered
-morphospace based on the first two PCs from a principal components
-analysis of your alignment.</li>
-<li>Is there morphological disparity between habitats?</li>
+Please qualitatively answer this question using a
+<code>ggplot</code>-rendered morphospace based on the first two PCs from
+a principal components analysis of your alignment.</li>
+<li>Is there a shape difference between habitats?</li>
 <li>Is the rate of morphological evolution significantly different
 between different habitat types?
 <ol style="list-style-type: decimal">
-<li>Answer this question based on a posterior distribution of rates
-based on all 500 phylogenetic trees.</li>
-<li>Make sure the distribution of rate estimates is created through the
-use of a parallelization of your analysis.</li>
-<li>Please assess the statistical significance of habitat on the
-distribution using a simple two-sided t-test
+<li>Answer both questions emperically based on a posterior distribution
+of rates based on all 500 phylogenetic trees.</li>
+<li>Make sure the distribution Z values from the Procrustes PGLS and
+rate estimates and are created through the use of a parallelization of
+your analysis.</li>
+<li>Please assess the statistical significance of habitat on both
+distributions using a simple two-sided t-test
 (i.e. <code>t.test()</code>).</li>
 </ol></li>
 <li>What inferences with regards to ecology and behavior can you make
@@ -1724,7 +2726,7 @@ the report requirements.</li>
 .csv files, etc.). This means one team member should push the team’s
 submissions to their team’s github directory, i.e., “Module5_Team1”, if
 in Team 1. Project reports should be pushed by 11:59 PM on Sunday,
-October 19th.</p>
+October 25th.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>
@@ -1739,6 +2741,10 @@ Illustrated Catalogue of Sharks Species Known to Date.”</span> Food
 ———. 2001. <em>Sharks of the World: An Annotated and Illustrated
 Catalogue of Shark Species Known to Date</em>. Vol. 4–Pt 2. Food &amp;
 Agriculture Org.
+</div>
+<div id="ref-ebert2021sharks" class="csl-entry">
+Ebert, David A, Marc Dando, and Sarah Fowler. 2021. <em>Sharks of the
+World: A Complete Guide</em>. Vol. 19. Princeton University Press.
 </div>
 <div id="ref-grogan2012origin" class="csl-entry">
 Grogan, Eileen D, Richard Lund, and Emily Greenfest-Allen. 2012.
