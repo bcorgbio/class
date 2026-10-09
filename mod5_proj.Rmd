@@ -9,87 +9,6 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
 
 
-
-```{r images, include=FALSE,eval=FALSE}
-library(ape)
-library(treeio)
-library(data.table)
-library(phytools)
-library(rgbif)
-library(doParallel)
-library(foreach)
-library(parallel)
-library(dataRetrieval)
-library(geomorph)
-library(tidyverse)
-
-select <- dplyr::select
-
-### sort image files
-
-f <- list.files("ignore/shark_photos",full.names = T,include.dirs = F,recursive = T)
-
-gifs <- f[grepl(".gif$",f)]
-
-img <- tibble(
-  file=f,
-  sp=basename(dirname(f)),
-  is_gif=grepl(".gif$",f)
-) 
-
-sapply(img %>% filter(is_gif) %>% pull(file),function(x) file.copy(x,paste0("ignore/class_shark_images/",basename(x))))
-
-#need lateral images of squatina sp.
-
-img %>% 
-  dplyr::select(sp,is_gif) %>% 
-  count() 
-```
-
-
-```{r data, include=F,message=F,eval=F}
-shark_dat_ <- read_csv("data/shark_hab_added.csv") 
-fb_res <- readRDS("data/shark_fb_res.RDS") %>% 
-   add_row(sp=c("Squatina squatina","Squatina australis"),
-          file_name=c("Sqsq1.jpg","Sqaus1.jpg"))
-
-##sources
-###https://bilderreich.de/1634/fact-sheet-angelshark-squatina-squatina.html
-###https://fishesofaustralia.net.au/home/species/3283
- 
-f_student <- gsub("_.csv","",list.files("data/shark_points"))
-
-shark_dat <- fb_res %>% 
-  left_join(shark_dat_) %>% 
-  filter(file_name %in% f_student) %>% 
-  mutate(habitat=ifelse(habitat=="demersal","benthic",habitat))
-
-write_csv(shark_dat,"data/shark_data.csv")
-write_csv(shark_dat,"shark_data.csv")
-
-dir.create("ignore/class_shark_images/for_upload")
-
-f_img <- list.files("ignore/class_shark_images",full.names = T)
-
-# groups <- rep(paste0("group_",1:9),each=23)
-# groups <- sample(groups,length(f_img))
-# img_dat <- tibble(file_path=f_img,file_name=basename(f_img)) %>% 
-#   left_join(fb_res) %>% 
-#   left_join(shark_dat_) %>% 
-#   mutate(group=groups)
-# 
-# sapply(groups %>% unique,function(x) dir.create(paste0("ignore/class_shark_images/for_upload/",x)))
-#   
-# for(i in 1:nrow(img_dat)){
-# file.copy(img_dat[i,]$file_path,paste0("ignore/class_shark_images/for_upload/",img_dat[i,]$group,"/",img_dat[i,]$file_name))
-# }
-
-
-
-```
-
-
-
 # Introduction
 
 Sharks are an ancient group of cartilaginous fishes in the class Chondrichthyes, subclass Elasmobranchii, and subdivision Selachimorpha. The selachians include over 500 species that are further placed in in two superorders: Squalomorphii and Galeomorphii. Modern sharks originated nearly 200 million years ago (@grogan2012origin) and, since then, have diversified into nearly every major marine ecosystem. This evolutionary success has been attributed to the diversity of their locomotor modes and associated body shape (@lauder2015swimming,@thomson1977body). A modest body of work devoted to the [ecomorphology](https://en.wikipedia.org/wiki/Ecomorphology) of sharks has focused largely on caudal find shape as it relates to ecology and locomotor modes [@thomson1976heterocercal,@wilga2004biomechanics]. Sharks have a heterocercal tails in which the caudal part of notochord flexes dorsally and supports a large dorsal lobe of the fin, while, with more than a few exceptions, the ventral lobe is small.
@@ -244,27 +163,27 @@ As we learned in class and what you've been reading, researchers interested in c
 ### Digitization and landmarking
 
 
-You and your team/group will be assigned around 75 images representing about 40 of the ~265 species to digitize. Your team's images have been pushed to your team's repo. With the images now in place, we're ready to commence digitizing. We'll do so in the `SteoroMorph` package, a library of functions designed for digitization and seamless integration with other R packages integral to geometric morphometrics (e.g., `geomorph`). In particular, we'll use `SteoroMorph`'s `digitizeImages()` which, when run, creates an interactive web browser session in which the user places a number of specified landmarks on all images in a specific directory. 
+You and your team/group will be assigned around 50--60 images representing about 40 of the ~265 species to digitize. Your team's images have been pushed to your team's repo. With the images now in place, we're ready to commence digitizing. We'll do so in the `SteoroMorph` package, a library of functions designed for digitization and seamless integration with other R packages integral to geometric morphometrics (e.g., `geomorph`). In particular, we'll use `SteoroMorph`'s `digitizeImages()` which, when run, creates an interactive web browser session in which the user places a number of specified landmarks on all images in a specific directory. 
 
-Before we move on with this, some workflow hygene . . . For this part of the project, Prof. Kenaley recommends that each team member create their own script for digitizing, perhaps named something logical and unique, like "kenaley_stereomorph.R" It's in this script that we'll digitize and produce our landmarks, the essential data of this project, i.e., there's no need to include it in your submitted reports as a code chunk. Now, let's walk through how to assemble the script for digitization in `steroromorph`. 
+Before we move on with this, some workflow hygene . . . For this part of the project, Prof. Kenaley recommends that each team member create their own script for digitizing, perhaps named something logical and unique, like "kenaley_stereomorph.R" It's in this script that we'll digitize and produce our landmarks, the essential data of this project, i.e., there's no need to include it in your submitted reports as a code chunk. Now, let's walk through how to assemble the script for digitization in `StereoMorph`. 
 
-First, make sure you install `stereomorph` (i.e., `install.packages("StereoMorph")`). Prime the script with the appropriate `library()` calls.
+First, make sure you install `StereoMorph` (i.e., `install.packages("StereoMorph")`). Prime the script with the appropriate `library()` calls.
 
 ```{r scriptsetup}
-library(tidyverse)
+library(tidyverse) #always
 library(StereoMorph)
 ```
 
-Next, we'll have to specify in what directory our images reside and to which directory the landmark data should be written. That is, our script will save the landmark images as modified text files that contain the coordinates of our landmarks and we need a place to store them. For instance, say I was working with team 4 in in our-version controlled R project, I might add these important lines.
+Next, we'll have to specify in what directory our images reside and to which directory the landmark data should be written. That is, our script will save the landmark images as modified text files that contain the coordinates of our landmarks and we need a place to store them. For instance, say my images were in a directory named "shark_images" and I want the landmarks I generate to reside in a directory "shark_landmarks", I might add these important lines.
 
 ```{r dirs}
-image_directory <- "images_team_4"
-landmark_directory <- "landmarks_team_4"
+image_directory <- "shark_images"
+landmark_directory <- "shark_landmarks"
 
 if (!dir.exists(landmark_directory)) { dir.create(landmark_directory) }
 ```
 
-The `image_directory` object will tell our `StereoMorph` functions where to find the images (the images already on the repo) and the `landmark_directory` tells them where to store the landmarks. The next line creates the landmark directory, but only does so if it doesn't already exist---we'd hate to overwrite it if it had data in it. Note that this also allows one to commit and push landmark data to the repo.
+The first two lines generate those character objects we'll pass on the our digitizing function. The third  creates the landmark directory, but only does so if it doesn't already exist---we'd hate to overwrite it if it had data in it. 
 
 Next, we need to establish what landmarks we want to digitize. Our shape analysis will be based on 14 landmarks identified here.
 
@@ -294,7 +213,7 @@ landmarks_ref <- c("1_snout", #tip of the snout
                    "14_mouth_ant") #anerior margin of mouth
 ```
 
-With these preliminaries out of the way, we can now start digitizing using `digitizeImages()`. Note that the `landmark.ref` argument takes the landmark vector we just created. Also note that the `image.file` and `shapes.file` argument take our image and landmark directories, respectively. Less, crucially, we can also control how the points will look in the session with these other arguments. Lastly, notice that we don't pass the output of `digitizeImages()` to any object. That's because the output is text files---we merely need to run this function to produce them. Let's do that.
+With these preliminaries out of the way, we can now start digitizing using `digitizeImages()`. Note that the `landmark.ref` argument takes the landmark vector we just created. Also note that the `image.file` and `shapes.file` argument take our image and landmark directories, respectively. Less crucially, we can also control how the points will look in the session with these other arguments. Lastly, notice that we don't pass the output of `digitizeImages()` to any object. That's because the output is text files---we merely need to run this function to produce the app we run to get them. Let's do that.
 
 ```{r digimages,eval=F}
 digitizeImages(image.file = image_directory,
@@ -307,7 +226,7 @@ digitizeImages(image.file = image_directory,
                landmark.radius = 5)
 ```
 
-Right away, you'll notice the function produced a browser window in RStudio (see below). `StereoMorph` uses the `shiny` package to create an application interface. T
+Right away, you'll notice the function produced a browser window in RStudio (see below). `StereoMorph` uses the `shiny` package to create an application interface. 
 
 <br>
 <center>
@@ -316,9 +235,9 @@ Right away, you'll notice the function produced a browser window in RStudio (see
 </center>
 <br>
 
-his browser window is small and cumbersome. It's usually best to click on the "open in browser" button so that the same window will be loaded in your default web browers (e.g., Safari, Chrome, etc.)
+This browser window is small and cumbersome. It's usually best to click on the "Open in Browser" button so that the same window will be loaded in your default web browers (e.g., Safari, Chrome, etc.)
 
-This looks a lot better. Notice that the app has a series of tabs to the upper right, one each for "settings", "landmarks", "curves" and "scaling". Click on the "settings" tab.
+This looks a lot better. Notice that the app displays the first image from you image directory as well as a series of tabs to the upper right, one each for "settings", "landmarks", "curves" and "scaling". Click on the "settings" tab so that we can have a closer look and set some options that will make our digitizing easier.
 
 <br>
 <center>
@@ -327,43 +246,39 @@ This looks a lot better. Notice that the app has a series of tabs to the upper r
 </center>
 <br>
 
-```{r}
-library(abind)
-library(geomorph)
-# load in original landmarks
-stereomorph_landmarks <- StereoMorph::readShapes(landmark_directory)
+<br>
+<center>
+  ![](sm_settings.png){width=40%}
+<br>
+</center>
+<br>
 
-#convert
-geomorph_landmarks <- geomorph::readland.shapes(stereomorph_landmarks)
+You'll want select "Auto-advance". This setting automatically advances to the next landmark after you place one on the image. Other options may be important for other projects, but autoadvance is perhaps the only beneficial one. Let's now have a look at the landmarks tab, the business end of the app. 
 
+<br>
+<center>
+  ![](sm_landmarks.png){width=40%}
+<br>
+</center>
+<br>
 
-#make array
-lms <- abind(geomorph_landmarks$landmarks,along=3)
+Notice that the character strings in our `landmark_ref` vector populates a landmark list and the first "1_snout" is bolded, indicating that this is the active point. That is, where you put the cursor on the image and keystoke "x", a coordinate will appear in that bolded landmark line. Give it a shot: put the cursor somewhere near where you want to mark the snout and type "x". You'll see that when you type "x", *x-y* coordinates appear, and, due to the autoadvance setting, the next landmark, "2_dorsal_base_ant", becomes bolded and active. Continue on like this and you'll very quickly have all 14 landmarks digitized. Once you've done this, click on "Save". This will tell the app to use some nifty R coded to output you landmark coordinates as text file and do so in you chosen "shark_landmarks" directory. Click "Next image" and you're ready to do this again. You'll repeat this process for all the images your team is responsible for. In the end, you'll end up with 50 or so landmark files,
 
-apply(lms,3, function(x) any(is.na(x))) %>% which
-
-gpa <- gpagen(lms,ProcD = F )
-
-plot(gpa)
-pca <- gm.prcomp(gpa$coords)
-plot(pca)
+```{r lmfiles}
+list.files("shark_landmarks") 
+list.files("shark_landmarks") %>%  length
 ```
 
-1. Open am image.
+Note that the text files are automatically named according to the image on which the landmarks are based. This is important for at least two reasons. First, it's easy keep link the landmarks back to the image, leaving us capable of assessing the quality of the landmarks and images later. Second, with the images in their directory and the landmarks in a directory of their own, if you run `digitizeImages()` again, exactly as before, the function links the landmarks files to the images via the file names. Thus, this workflow establishes something like a landmarking project that you can come back to, refining landmarks as needed.
 
-2. Select the multipoint tool.
+When digitizing with  `digitizeImages()` and the app, a few key strokes will be import for navigating through the landmark list:
 
-3. Digitize the 14 landmarks you see above.
+  - "x" produces a set of landmark coordinates
+  - "n" advances  to the next landmark making it active
+  - "p" goes back to the previous landmark making it active
+  - "d" deletes the active landmark
 
-4. Measure the XY positions of these points (`cmd/ctrl+m`). 
-
-5. Select the macro tab and run the macro (`cmd/ctrl+r`).
-
-6. Save the results to the appropriate directory.
-
-7. Close the results and image tab (don't save the image).
-
-After your team has completed landmarking the assigned species, push them to your teams repo.  Once all the data appear across the repos, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required (i.e., file-name checks, quality, etc.). He'll them push the full dataset to all the team repos.
+After your team has completed landmarking the assigned species, push them to your teams repo in a "shark_landmarks" directory. Once all the data appear across the repos, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required (i.e., file-name checks, quality, etc.). He'll them push the full dataset to all the team repos.
 
 ### Superimposition
 
@@ -372,85 +287,56 @@ After digitizing landmarks, we must remove the distracting variations of size, o
 
 ![](gpa.png)
 
-To perform a Procrustes superimposition on our landmark data---along with many other analyses---we will turn the the `geomorph` package. Please install and load `geomorph`. But, before we do, let's download and read in about 90 or so landmark files that Prof. Kenaley produced ahead of this project. You can find these example files [here](data/sharks/shark_points.zip). You'll have to download this compressed directory and unzip it to your project directory.  You'll also have to download and install the `abind` package as well. 
+To perform a Procrustes superimposition on our landmark data---along with many other analyses---we will turn the the `geomorph` package. Please install and load `geomorph`. But, before we do, let's download and read in about 55 or so landmark files that Prof. Kenaley produced ahead of this project. You can find these example files [here](data/sharks/shark_landmarks). You'll have to download this compressed directory and unzip it to your project directory.  You'll also have to download and install the `abind` package as well. **Note:** You can skip this step if you've already completed your landmarking. Also note, **these are just your landmarks**. You will need to download the full data set evaluated by Prof. K.
 
-Note: **these are just examples**. You will need to download the full data set evaluated by Prof. K. form this location.
+To get started with superimposition, let's load the package `geomorph`. Weather you unzip the "shark_landmarks.zip" directory to you project directory, or you're working with the full dataset, you have a folder named "shark_landmarks", just as before.  Our first operation will be to read in the landmark in the "shark_landmarks" directory using `StereoMorph`'s `readShapes()` function. For work in `geomorph`, we need to convert this object to a `geomorphShapes` object.
 
-To get started with superimposition, let's load the packages `geomorph` and `abind`. When you unzip the `shark_points.zip` directory to you project directory, you have a folder named `shark_points`. Our first operation will be to list the files in that directory and then read them in, all at once.
-
-```{r, exdata}
+```{r exdata}
 library(geomorph)
-library(abind)
+# load in landmarks
+stereomorph_landmarks <- StereoMorph::readShapes(landmark_directory)
 
-f <- list.files("shark_points",full.names = T,pattern=".csv")
+#convert
+geomorph_landmarks <- geomorph::readland.shapes(stereomorph_landmarks)
 
-
-xy <- read_csv(f,id="file") %>% 
-  dplyr::select(file,X,Y) %>% 
-  mutate(Y=abs(Y-max(Y))) %>% 
-  mutate(file_name=gsub("*_.csv","",basename(file))) %>% 
-  left_join(shark_dat) 
-```
-
-Here we used `list.files()` with `pattern=pattern=".csv"` to find all the files in the `shark_points` directory. We also set `full.names = T` so that the full file path is saved to the object `f`. 
-
-```{r fewf}
-head(f)
+#take a peak
+head(geomorph_landmarks)
 ```
 
 
-This made reading all the files and adding them to one tibble in a single operation possible with `read_csv()`. Notice we added a `file` column to the tibble with `id="file"` and then selected only the columns `file`, `X`, `Y`. This operation is saved to an object logically named `xy`. 
 
-For landmarks to used in `geomorph`, they must be stored as a 3-dimensional array, that is, essentially a list of similarly sized 2D matrices, where the position the $i^{th}$ matrix is in the $i^{th}$ index of the third dimension, i.e., `array[,,i]`.  To massage our large tibble into such an array, we have to split the tibble into a bunch of lists for this, we can simply run a `for` loop, breaking the data up into a list of data frames according to species. Notice how we use `filter()` to split the large tibble into into small data.frames that will reside in `ldk_l`. This will leave us with a list of data.frames as long as all our files. We then use `abind`'s `abind()` function to bind the list of data.frames in `ldk_l` into an array, with each data.frame taking a position in the third dimension. This array is saved in the object `ldk`. Lastly, we'll specify that the names of this third dimension should be the unique values of `species` in the original tibble. **Note: this is how we'll retrieve species information.**
+Landmarks stored in a `geomorphShapes` object are done so in a 3-dimensional array, that is, essentially a list of similarly sized 2D matrices, where the position the $i^{th}$ matrix is in the $i^{th}$ index of the third dimension, i.e., `array[,,i]`.  This is a little wonky, but it's how `geomorph` functions expect landmarks to be arranged.
 
+With a proper `geomorphShapes` object in place, we're now free to move on the superimposition with the `geomorph` function `gpagen()`. We'll do this saving the output to `gpa` and plot the the 14 aligned and superimposed landmarks for all the specimens.
 
+```{r gpa}
+#gpa
+gpa <- gpagen(geomorph_landmarks,ProcD = F )
 
-
-```{r ldk}
-ldk_l <- list()
-
-shark_sp <- xy$sp %>% unique
-
-for(i in shark_sp){
-  ldk_l[[i]] <- xy %>% 
-    filter(sp==i) %>% 
-    dplyr::select(X,Y) %>% 
-    data.frame
-}
-
-names(ldk_l)
-
-ldk <-  abind(ldk_l, along=3)
-
-dimnames(ldk)[[3]] <-names(ldk_l)
-
-ldk[,,1:3] #the first few 
+#plot superimposition
+plot(gpa)
 ```
 
-
-With a proper array in place as `ldk`, we're now free to move on the superimposition with the `geomorph` function `gpagen()`. We'll do this saving the output to `ldk_al` (for landmark alignment) and plot the the 14 aligned and superimposed landmarks for all the example specimens.
-
-```{r, gpa}
-ldk_al <- gpagen(ldk)
-plot(ldk_al)
-```
-
+We're now read to start analyzing the data.
 
 ### Analysis Part I: A Morphospace
 
-In geometric morphometric analysis, researchers first turn to describing the axes of shape variation.Indeed, this is what @sternes2020body did to produce the figure above. This and what we're after is often termed a [morphospace](https://en.wiktionary.org/wiki/morphospace), a representation of the shape the study group does and does not have. 
+In geometric morphometric analysis, researchers first turn to describing the axes of shape variation. Indeed, this is what @sternes2020body did to produce the figure above. This and what we're after is often termed a [morphospace](https://en.wiktionary.org/wiki/morphospace), a representation of the shape the study group does and does not have. 
 
 To develop such a thing, biologist usually turn to Principal Components Analysis (PCA) whereby a very complicated suite of variables is distilled into a set of fewer variables that describe the important variance among the original variables. The coordinates contained in our `ldk_al` object describe dozens of variables: scaled distances between all the landmarks. So we have many variable to consider and this becomes, very quickly, a serious [multivariate problem](https://en.wikipedia.org/wiki/Multivariate_statistics). PCA is suited to multivariate analysis because it reduces the complexity of the data, taking many variables and distilling them into just a few. At its core, PCA produces a series of regressions, or vectors, that pass through the values of the original variables. This operation is performed iteratively, with the first vector (the first principal component, PC1), drawn through the variable space that accounts for the most variance in the data set. After the combination of variables forming PC1 is removed, a subsequent vector (PC2) is drawn through another unique variable space that describes the second most amount of variance. This continues until most of the variance is captured, resulting in scores of PCs. The first two or three, however, are usually enough to describe a health amount of variance, say 90% or more.
 
-To perform PCA, we'll use `geomorph`s `gm.prcomp()` function like so. Plotting reveals our first result.
+To perform PCA, we'll use `geomorph`s `gm.prcomp()` function like so, working the the `gpa` object's coordinates, that is the 3-D array that contains the Procrustes aligned landmakrs. Plotting reveals our first result.
 
 
 ```{r pca,message=F,eval=T}
-pca <- gm.prcomp(ldk_al$coords)
+#PCA
+pca <- gm.prcomp(gpa$coords)
+
+#visualize
 plot(pca)
 ```
 
-Wow, now we're getting close to the @sternes2020body results and answering, at least in part, one of our questions: **Does habitat result in different body shapes**. But let's break down what this plot means first. By default, when we plot a PCA object, the first two PCs are plotted, PC1 on the x axis, PC2 on the y. Each point represents the PC scores for a specimen in the data set. Notice that the amount of variance explained by our PCs is given and, as expected, PC1 contains most of the variance (54%) and PC2 considerably less less (19%). If we plot again, but specify a different combination of PCs, say 1 and 3, we get a different plot, of course. Notice the variance explained by PC3 is predictably less than that of PC2.
+Wow, now we're getting close to the @sternes2020body results and answering, at least in part, one of our questions: **Does habitat result in different body shapes**. But let's break down what this plot means first. By default, when we plot a PCA object, the first two PCs are plotted, PC1 on the x axis, PC2 on the y. Each point represents the PC scores for a specimen in the data set. Notice that the amount of variance explained by our PCs is given and, as expected, PC1 contains most of the variance (55%) and PC2 considerably less less (19%). If we plot again, but specify a different combination of PCs, say 1 and 3, we get a different plot, of course. Notice the variance explained by PC3 is predictably less than that of PC2.
 
 ```{r, pc2}
 plot(pca,1,3)
@@ -458,10 +344,10 @@ plot(pca,1,3)
 
 OK, so based on our PC plots, it looks as if we have two groupings, just like @sternes2020body. But, do these groups correspond to largely pelagic vs. benthic species? It's hard to tell. We don't really know because we don't know which species belong to each point in our plots, nor their habitat.
 
-Notice, however, that the names of the coordinates in `ldk` were pegged in a previous operation to the species names. 
+Notice, however, that the names of the coordinates in `gpa$coords` are pegged to the image and landmark file names. These names, are in fact, important metadata: data about the data. In this case, the metadata are species names and, because we have images of multiple specimens for each species, the specimen number
 
 ```{r names}
-head(dimnames(ldk)[[3]])
+head(dimnames(gpa$coords)[[3]])
 ```
 
 These values were maintained throughout the superimpositon step and in the PCA operation. The coordinates plotted in the PCA plots are contained in a matrix named `x` in our `pca` object. Notice the row names:
@@ -470,16 +356,27 @@ These values were maintained throughout the superimpositon step and in the PCA o
 pca$x %>% data.frame %>% dplyr::select(Comp1,Comp2) %>% head
 ```
 
-So, we have the species names from whence the data, both land mark and PCA, came. Fortunately, Professor Kenaley assembled a table containing of all the the species  for landmarking, and the species and habitat for each. You can download [this file](data/shark_data.csv) and read in the data.
+So, we have the species names from whence the data, both landmark and PCA, came. Fortunately, Professor Kenaley assembled a table containing of all the the species  for landmarking, and the species and habitat for each. You can download [this file](data/shark_data.csv) and read in the data.
 
+What's left to do in exploring if benthic and pelagic sharks occupy different morphospace is to combine this information with the PC scores in `pca$x`. Let's first load the shark data and consider how we'll join it to our PCA data using species as the key.
 
-What's left to do in exploring if benthic and pelagic sharks occupy different morphospace is to combine this information with the PC scores in `pca$x`. This can be done thusly:
+```{r sharkdat}
+#read
+shark_dat <- read_csv("shark_data.csv")
 
-```{r combdat}
+#sneak a peak
+head(shark_dat)
+```
+
+So here we have a tibble that contains species, precaudal length (PCL), and habitat data. Our goal is to join these data to our PCA, and later, coordinate data. But how. Our PCA and coordinated data have the species information, but that name also included the specimen number. That is, "Aculeola nigra" in our shark data won't match "Aculeola_nigra_1" in our PCA and landmark data. To rip the species name out of the the PCA and coordinate data, let's turn to 'grep' (general regular expressions) functions.
+
+```{r grep}
 PCA <- pca$x %>% 
-  data.frame %>% 
+  data.frame %>%
   dplyr::select(Comp1:Comp4) %>% 
-  mutate(sp=rownames(pca$x)) %>% 
+  rownames_to_column("sp_spec") %>%
+  mutate(sp=gsub("(.*)_(.*)_.*","\\1 \\2",sp_spec),
+         spec=gsub(".*_.*_(.*)","\\1",sp_spec)) %>% 
   left_join(shark_dat)
 
 head(PCA)
@@ -495,7 +392,7 @@ PCA %>%
   ggplot(aes(Comp1,Comp3,col=habitat))+geom_point()
 ```
 
-Voila! For morphospace described by PCs 1, 2, and 3, it appeears that pelagic species inhabit a high PC1 score and never a low PC1 score. 
+Voila! For morphospace described by PCs 1, 2, and 3, it appeears that benthic species inhabit a specific region of morphospace. 
 
 This is wonderful, but you may be asking, "What is PC1 (or any other) describing?" Our PCs points are abstractions of shape, but they don't represent explicitly what shape that is. To get a sense of what our PCs represent in terms of shape values, we can turn to thin-plate spline analysis.
 
@@ -510,30 +407,30 @@ max_PC2 <- which.max(pca$x[,2])
 min_PC2 <- which.min(pca$x[,2])
 
 #get the concesus, the mean shape of all data.
-M <- ldk_al$consensus
+M <- gpa$consensus
 
 #plot
 par(mfrow=c(2,2))
 
 #plot the change form the concensus to min of PC1
-plotRefToTarget(M, ldk_al$coords[,,min_PC1], mag = 1,method="vector",label = T)
+plotRefToTarget(M, gpa$coords[,,min_PC1], mag = 1,method="vector",label = T)
 title("min PC1 warp",cex=0.6)
 
 #plot the change form the concensus to max of PC1
-plotRefToTarget(M, ldk_al$coords[,,max_PC1], mag = 1,method="vector",label = T)
+plotRefToTarget(M, gpa$coords[,,max_PC1], mag = 1,method="vector",label = T)
 title("max PC1 warp",cex=0.6)
 
 #plot the change form the concensus to min of PC2
-plotRefToTarget(M, ldk_al$coords[,,min_PC2], mag = 1,method="vector",label = T)
+plotRefToTarget(M, gpa$coords[,,min_PC2], mag = 1,method="vector",label = T)
 title("min PC2 warp",cex=0.6)
 
 #plot the change form the concensus to max of PC2
-plotRefToTarget(M, ldk_al$coords[,,max_PC2], mag = 1,method="vector",label = T)
+plotRefToTarget(M, gpa$coords[,,max_PC2], mag = 1,method="vector",label = T)
 title("max PC3 warp",cex=0.6)
 
 ```
 
-So, it looks like PC1 describes a shape change involving the placement of the dorsal fin (points 2-4) and pelvic find (points 9 and 10). Lower values represent of PC1 represent a dorsal and pelvic fin that're displaced posteriorly while higher values represent anterior placements. PC2 largely describes a shape change involving a the size of the cadual fin (points 5-8). Notice how low PC2 values represent shifts of points 5 and 8 (the start of the caudal fin) and 7 (the ventral lobe) to the anterior and a shift of point 8 (the dorsal lobe) to the posterior (i.e. elongation). High PC2 values represent a compression of the caudal fin length with point 8 (the dorsal lobe) shifted anteriorly.
+So, it looks like PC1 describes a shape change involving the placement of the dorsal fin (points 2-4) and pelvic fin (points 9 and 10). Lower values represent of PC1 represent a dorsal and pelvic fin that're displaced posteriorly while higher values represent anterior placements. PC2 largely describes a shape change involving a the size of the cadual fin (points 5-8). Notice how low PC2 values represent shifts of points 5 and 8 (the start of the caudal fin) and 7 (the ventral lobe) to the anterior and a shift of point 8 (the dorsal lobe) to the posterior (i.e. elongation). High PC2 values represent a compression of the caudal fin length with point 8 (the dorsal lobe) shifted anteriorly.
 
 And, with a little help from the package `ggimage` we can plot images representing the extrema of the first two PCs. Notice the anterior shift of the dorsal fin along PC1 and the shortening of the caudal fin along PC2.
 
@@ -542,149 +439,77 @@ And, with a little help from the package `ggimage` we can plot images representi
 library(ggimage)
 PC_extremes <- PCA %>% 
   filter(Comp1 %in% range(Comp1)|
-         Comp2 %in% range(Comp2)) %>% 
+         Comp2 %in% range(Comp2)) %>%
+  mutate(file_name=paste0(sp_spec,".jpg")) %>% 
   dplyr::select(Comp1,Comp2,sp,file_name) %>% 
-  mutate(pngs =paste0("data/shark_examples_photos/",file_name %>% str_replace(".gif",".png")))
+  mutate(imgs =paste0("shark_images/",file_name))
 
 p1 <- PCA %>% 
   ggplot(aes(Comp1,Comp2,col=habitat))+geom_point()
 
 
-p1 + geom_image(data=PC_extremes,aes(Comp1,Comp2,image=pngs), size=.30,inherit.aes = F)+theme_classic()+xlim(range(PC_extremes$Comp1)*1.5)+ylim(range(PC_extremes$Comp2)*1.25)+theme(legend.position = c(0.1,0.2))
+p1 + geom_image(data=PC_extremes,aes(Comp1,Comp2,image=imgs), size=.30,inherit.aes = F)+theme_classic()+xlim(range(PC_extremes$Comp1)*1.5)+ylim(range(PC_extremes$Comp2)*1.25)+theme(legend.position = c(0.1,0.2))
 ```
 
-```{r, eval=F,include=F}
-library(worms)
-
-so <- rbind(tibble(superorder="Galeomorphii",order=c("Carcharhiniformes","Heterodontiformes","Orectolobiformes","Lamniformes")),
-            tibble(superorder="Squalomorphii",order=c("Hexanchiformes","Pristiophoriformes","Squaliformes","Squatiniformes","Echinorhiniformes")))
-
-
-tax <- wormsbynames((PCA$sp %>% unique)) %>% 
-  left_join(so) %>% 
-  dplyr::rename(sp=valid_name) %>% 
-  dplyr::select(sp,genus,family,order,superorder)
-
-PCA <- PCA %>% 
-  left_join(tax)
-
-p1 <- PCA %>% 
-  ggplot(aes(Comp1,Comp2,shape=habitat,col=order))+geom_point()
-
-
-
-# Use map_dbl to run many models with varying value of k (centers)
-tot_withinss <- map_dbl(1:5,  function(k){
-  model <- kmeans(x = PCA %>% select(Comp1,Comp2,Comp3,Comp4), centers = k,nstart=50)
-  model$tot.withinss
-})
-# Generate a data frame containing both k and tot_withinss
-elbow_df <- data.frame(
-  k = 1:5,
-  tot_withinss = tot_withinss
-)
-# Plot the elbow plot
-ggplot(elbow_df, aes(x = k, y = tot_withinss)) +
-  geom_line() + geom_point()+
-  scale_x_continuous(breaks = 1:10)
-
-km <-  kmeans(x = PCA %>% dplyr::select(Comp1,Comp2,Comp3,Comp4), centers = 2,nstart=50)
-
-PCA$group <- km$cluster
-
-
-hull <- PCA %>%
-  group_by(group) %>% 
-  slice(chull(Comp1,Comp2))
-
-p1 + geom_image(data=PC_extremes,aes(Comp1,Comp2,image=pngs), size=.30,inherit.aes = F)+theme_classic()+xlim(range(PC_extremes$Comp1)*1.5)+ylim(range(PC_extremes$Comp2)*1.25)+theme(legend.position = c(0.1,0.2))+geom_polygon(data=hull,aes(Comp1,Comp2,lty=as.factor(group)),inherit.aes = F,alpha=0.3)
-
-
-gp1 <- which(PCA$group==1)
-gp2 <- which(PCA$group==2)
-
-
-
-#get the concesus, the mean shape of all data.
-M <- ldk_al$consensus
-
-
-gp1_shp <- mshape(ldk_al$coords[,,gp1])
-gp2_shp <- mshape(ldk_al$coords[,,gp2])
-
-
-#plot the change form the concensus to min of PC1
-plotRefToTarget(gp1_shp, gp2_shp, mag = 1,method="vector",label = T)
-title("gp1 to gp2 warp",cex=0.6)
-
-plotRefToTarget(gp2_shp, gp1_shp, mag = 1,method="vector",label = T)
-title("gp2 to gp1 warp",cex=0.6)
-
-
-gdf <- geomorph.data.frame(ldk_al,
-                             morphogroup=PCA$group,
-                           so=PCA$superorder,
-                           habitat=PCA$habitat,
-                           or=PCA$order
-)
-
-md <- morphol.disparity(coords ~ 1, groups= ~ morphogroup*or*habitat, data = gdf, iter = 10000, print.progress = FALSE)
-
-order_disp <- md$PV.dist  %>% 
-  data.frame %>% 
-  mutate(from=rownames(md$PV.dist.Pval)) %>% 
-  pivot_longer(-from,names_to = "to") %>% 
-  mutate(order_fr=gsub("\\d\\.(.*)\\.\\w*","\\1",from),
-         order_to=gsub("X\\d\\.(.*)\\.\\w*","\\1",to),
-         group_fr=gsub("(\\d)\\.(.*)\\.\\w*","\\1",from),
-         group_to=gsub("X(\\d)\\.(.*)\\.\\w*","\\1",to),
-         hab_to=gsub("X(\\d)\\.(.*)\\.(\\w*)","\\3",to),
-         hab_from=gsub("(\\d)\\.(.*)\\.(\\w*)","\\3",from)
-         ) %>% 
-  mutate(order=ifelse(order_fr==order_to,order_fr,NA)) %>% 
-  filter(!is.na(order)) 
-
-order_disp %>% 
-  filter(order=="Carcharhiniformes") %>% 
-  filter(value!=1) %>% 
-  ggplot(aes(hab_to,hab_from))+
-  geom_tile(aes(fill=value))+facet_grid
-gp_morph<- PCA$group
-names(gp_morph) <- PCA$sp
-
-
-er <- compare.evol.rates(A=ldk_al$coords, phy=phy2[[1]], method="simulation",gp=gp_morph,print.progress = F)
-
-print(er)
-
-
-
-```
-
-```{r,eval=F,include=F}
-
-```
 ### Analysis: Part II
 
-Our PCA analysis reveals an interesting pattern. This, however, is not quantitative assessment *per se*, merely a visual and qualitative result and not dissimilar to the qualitative results reported by @sternes2020body. Several quantitative frameworks for assessing differences in shape exist. The `geomorph` package contains several, but we'll use just one: morphological disparity. The function `morphol.disparity()` will do this for us by making pairwise comparisons of residuals of a linear fit to identify differences among groups. It's essentially an ANOVA for shape. The statistical significance of the calculated Procrustes variances between the different growth stages is assessed using a randomized residual permutation, that is random set residuals from all groups are chosen in each iteration.
+Our PCA analysis reveals an interesting pattern. This, however, is not quantitative assessment *per se*, merely a visual and qualitative result and not dissimilar to the qualitative results reported by @sternes2020body. Several quantitative frameworks for assessing differences in shape exist. The `geomorph` package contains several, but we'll use just one: a phylogenetically informed Procrustes ANOVA. The function `procD.pgls()` will do this for us. Like with our anole project in which we fit univariate traits with PGLS, `procD.pgls()` fits a phylogenetic generalized least-squares model for multivariatedata under a Brownian motion model of evolution.
 
-`morphol.disparity()` requires a special data structure, a `geomorph` `data.frame` and this can be constructed using the `geomorph.data.frame()` function. It takes the landmark data and other variables of interest (i.e., in our case, habitat). First, we'll establish the special data frame using our aligned landmarks and habitat data from the `PCA` tibble.
+As with out PGLS model fitting in the anole project, we need a tree and the [tree from @stein2018global mentioned above](data/shark_trees.nex) is the most comprehensive. Once this tree file is downloaded, let's load, read it, in and store it to an object named `phy`. Notice you'll need the `phytools` package and the function `readNexus()`.
+
+
+```{r readphy}
+library(phytools)
+phy <- readNexus("data/shark_trees.nex")
+length(phy)
+```
+
+Next let's, restrict our tree file to those species in our data set. For this, we'll used `ape`'s `keep.tip()` which keeps only the tips in a vector, in this case, the species in our PCA and landmark analysis.
+
+```{r phydrop}
+sp <- intersect(phy[[1]]$tip.label,PCA$sp %>% unique)
+phy2 <- keep.tip(phy,PCA$sp)
+```
+
+To undertake the analysis with `procD.pgls()`, we must input the tree of course and a `geomorph.dataframe`, a special data frame that includes the coordinates and variables (i.e., habitat) that will be in the model. But, as we've discussed above, we have several specimens per species and thus multiple observations for each tip in the tree. `procD.pgls()` can't handle that. A common solution to such a problem is to just calculate the mean values of each species. For this, we can turn to a custom function that uses `geomorph`'s `mshape` function to compute the mean shape of each species. It will compute the mean shape for each unique coordinate name, that is species.
+
 
 ```{r morphdis,eval=T}
 
-gdf <- geomorph.data.frame(ldk_al,
-                             habitat=PCA$habitat
-)
+#mean shape of uniquely named coordinates
+mean_shape <- function(x){
+
+  sp <- dimnames(x$coords)[[3]]
+  m_shapes <- list()
+  for(s in unique(sp)){
+    sp_n <- which(sp==s)
+    
+    m_shapes[[s]] <- mshape(x$coords[,,sp_n])
+  }
+  m_ <- abind(m_shapes,along=3)
+  return(coord=m_)
+}
+
+#rename the coordinates
+dimnames(gpa$coords)[[3]] <- PCA$sp
+
+gpa$coords <- mean_shape(gpa)
 ```
+
+Let's now make that `geomorph.dataframe` the mean aligned coordinates (`gpa$coord`) and the habitat taken from the `PCA` object.
+
+```{r gdf}
+gdf <- geomorph.data.frame(
+  gpa,
+  habitat=PCA$habitat,
+  phy=phy2
+  )
+
+```
+
+
 
 To you use the `morphol.disparity()` function, we then need to establish a formula describing the  model to use and tell the function which groups the model should include. This is encoded with `coords ~ 1` which indicates we'll look at the differences in means and  `groups= ~ habitat`, indicating that we'll evaluate means between the habitat groups. `data = gdf` indicates we'll use the `gdf` data frame we established above, while `iter = 10000` indicates we'll be perform 10,000 radom permutations. Lastly, we just summarize the `md` object to return the results
-
-```{r morphdis2}
-md <- morphol.disparity(coords ~ 1, groups= ~ habitat, data = gdf, iter = 10000, print.progress = FALSE)
-
-summary(md)
-
-```
 
 Notice the the pairwise differences are returned both for the Procrustes shape variance and the absolute differences along with the p values. As it turns out, at least for this limited data set of ~90 species, there's no significant morphological disparity between groups.
 
@@ -696,7 +521,7 @@ phy <- readNexus("data/shark_trees.nex")
 
 phy2 <- keep.tip(phy,PCA$sp)
 
-  gdf <- geomorph.data.frame(ldk_al,
+  gdf <- geomorph.data.frame(gpa,
                              species = PCA$sp,
                              habitat=PCA$habitat,
                              phy=phy2[[1]]
@@ -727,11 +552,12 @@ length(phy)
 Next let's, restrict our tree file to those species in our data set. For this, we'll used `ape`'s `keep.tip()` which keeps only the tips in a vector, in this case, the species in our PCA and landmark analysis.
 
 ```{r phydrop}
+sp <- intersect(phy[[1]]$tip.label,PCA$sp %>% unique)
 phy2 <- keep.tip(phy,PCA$sp)
 ```
 
 
-To undertake the analysis with `compare.evol.rates()`, we must specify `A`, the aligned coordinates in a lankmark array (`ldk_al$coord`), a tree (more in just a bit), and a named vector of groups descriping to which group each species in the array belongs.
+To undertake the analysis with `compare.evol.rates()`, we must specify `A`, the aligned coordinates in a lankmark array (`gpa$coord`), a tree (more in just a bit), and a named vector of groups descriping to which group each species in the array belongs.
 
 Let's establish the grouping vector by passing the `habitat` values in our `PCA` tibble to an object named `gp_hab` and then give the names of this vector the `species` values. Then we run the function.
 
@@ -740,7 +566,7 @@ Let's establish the grouping vector by passing the `habitat` values in our `PCA`
 gp_hab <- PCA$habitat
 names(gp_hab) <- PCA$sp
 
-er <- compare.evol.rates(A=ldk_al$coords, phy=phy2[[1]], method="simulation",gp=gp_hab,print.progress = F)
+er <- compare.evol.rates(A=gpa$coords, phy=phy2[[1]], method="simulation",gp=gp_hab,print.progress = F)
 
 print(er)
 ```
