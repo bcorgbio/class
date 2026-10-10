@@ -817,10 +817,10 @@ RStudio (see below). <code>StereoMorph</code> uses the
 click on the “Open in Browser” button so that the same window will be
 loaded in your default web browers (e.g., Safari, Chrome, etc.)</p>
 <p>This looks a lot better. Notice that the app displays the first image
-from you image directory as well as a series of tabs to the upper right,
-one each for “settings”, “landmarks”, “curves” and “scaling”. Click on
-the “settings” tab so that we can have a closer look and set some
-options that will make our digitizing easier.</p>
+from your image directory as well as a series of tabs to the upper
+right, one each for “settings”, “landmarks”, “curves” and “scaling”.
+Click on the “settings” tab so that we can have a closer look and set
+some options that will make our digitizing easier.</p>
 <br>
 <center>
 <img src="sm_session_chrome.png" style="width:70.0%" /> <br>
@@ -851,7 +851,7 @@ type “x”, <em>x-y</em> coordinates appear, and, due to the autoadvance
 setting, the next landmark, “2_dorsal_base_ant”, becomes bolded and
 active. Continue on like this and you’ll very quickly have all 14
 landmarks digitized. Once you’ve done this, click on “Save”. This will
-tell the app to use some nifty R coded to output you landmark
+tell the app to use some nifty R code to output your landmark
 coordinates as text file and do so in you chosen “shark_landmarks”
 directory. Click “Next image” and you’re ready to do this again. You’ll
 repeat this process for all the images your team is responsible for. In
@@ -889,7 +889,7 @@ the end, you’ll end up with 50 or so landmark files,</p>
 <pre><code>## [1] 56</code></pre>
 <p>Note that the text files are automatically named according to the
 image on which the landmarks are based. This is important for at least
-two reasons. First, it’s easy keep link the landmarks back to the image,
+two reasons. First, it’s easy link the landmarks back to the image,
 leaving us capable of assessing the quality of the landmarks and images
 later. Second, with the images in their directory and the landmarks in a
 directory of their own, if you run <code>digitizeImages()</code> again,
@@ -898,7 +898,8 @@ via the file names. Thus, this workflow establishes something like a
 landmarking project that you can come back to, refining landmarks as
 needed.</p>
 <p>When digitizing with <code>digitizeImages()</code> and the app, a few
-key strokes will be import for navigating through the landmark list:</p>
+key strokes will be important for navigating through the landmark
+list:</p>
 <ul>
 <li>“x” produces a set of landmark coordinates</li>
 <li>“n” advances to the next landmark making it active</li>
@@ -908,9 +909,8 @@ key strokes will be import for navigating through the landmark list:</p>
 <p>After your team has completed landmarking the assigned species, push
 them to your teams repo in a “shark_landmarks” directory. Once all the
 data appear across the repos, Prof. Kenaley will evaluate the quality of
-the landmarks and do some post-processing if required (i.e., file-name
-checks, quality, etc.). He’ll them push the full dataset to all the team
-repos.</p>
+the landmarks and do some post-processing if required. He’ll then push
+the full dataset to all the team repos.</p>
 </div>
 <div id="superimposition" class="section level3">
 <h3>Superimposition</h3>

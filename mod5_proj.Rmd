@@ -237,7 +237,7 @@ Right away, you'll notice the function produced a browser window in RStudio (see
 
 This browser window is small and cumbersome. It's usually best to click on the "Open in Browser" button so that the same window will be loaded in your default web browers (e.g., Safari, Chrome, etc.)
 
-This looks a lot better. Notice that the app displays the first image from you image directory as well as a series of tabs to the upper right, one each for "settings", "landmarks", "curves" and "scaling". Click on the "settings" tab so that we can have a closer look and set some options that will make our digitizing easier.
+This looks a lot better. Notice that the app displays the first image from your image directory as well as a series of tabs to the upper right, one each for "settings", "landmarks", "curves" and "scaling". Click on the "settings" tab so that we can have a closer look and set some options that will make our digitizing easier.
 
 <br>
 <center>
@@ -262,23 +262,23 @@ You'll want select "Auto-advance". This setting automatically advances to the ne
 </center>
 <br>
 
-Notice that the character strings in our `landmark_ref` vector populates a landmark list and the first "1_snout" is bolded, indicating that this is the active point. That is, where you put the cursor on the image and keystoke "x", a coordinate will appear in that bolded landmark line. Give it a shot: put the cursor somewhere near where you want to mark the snout and type "x". You'll see that when you type "x", *x-y* coordinates appear, and, due to the autoadvance setting, the next landmark, "2_dorsal_base_ant", becomes bolded and active. Continue on like this and you'll very quickly have all 14 landmarks digitized. Once you've done this, click on "Save". This will tell the app to use some nifty R coded to output you landmark coordinates as text file and do so in you chosen "shark_landmarks" directory. Click "Next image" and you're ready to do this again. You'll repeat this process for all the images your team is responsible for. In the end, you'll end up with 50 or so landmark files,
+Notice that the character strings in our `landmark_ref` vector populates a landmark list and the first "1_snout" is bolded, indicating that this is the active point. That is, where you put the cursor on the image and keystoke "x", a coordinate will appear in that bolded landmark line. Give it a shot: put the cursor somewhere near where you want to mark the snout and type "x". You'll see that when you type "x", *x-y* coordinates appear, and, due to the autoadvance setting, the next landmark, "2_dorsal_base_ant", becomes bolded and active. Continue on like this and you'll very quickly have all 14 landmarks digitized. Once you've done this, click on "Save". This will tell the app to use some nifty R code to output your landmark coordinates as text file and do so in you chosen "shark_landmarks" directory. Click "Next image" and you're ready to do this again. You'll repeat this process for all the images your team is responsible for. In the end, you'll end up with 50 or so landmark files,
 
 ```{r lmfiles}
 list.files("shark_landmarks") 
 list.files("shark_landmarks") %>%  length
 ```
 
-Note that the text files are automatically named according to the image on which the landmarks are based. This is important for at least two reasons. First, it's easy keep link the landmarks back to the image, leaving us capable of assessing the quality of the landmarks and images later. Second, with the images in their directory and the landmarks in a directory of their own, if you run `digitizeImages()` again, exactly as before, the function links the landmarks files to the images via the file names. Thus, this workflow establishes something like a landmarking project that you can come back to, refining landmarks as needed.
+Note that the text files are automatically named according to the image on which the landmarks are based. This is important for at least two reasons. First, it's easy link the landmarks back to the image, leaving us capable of assessing the quality of the landmarks and images later. Second, with the images in their directory and the landmarks in a directory of their own, if you run `digitizeImages()` again, exactly as before, the function links the landmarks files to the images via the file names. Thus, this workflow establishes something like a landmarking project that you can come back to, refining landmarks as needed.
 
-When digitizing with  `digitizeImages()` and the app, a few key strokes will be import for navigating through the landmark list:
+When digitizing with  `digitizeImages()` and the app, a few key strokes will be important for navigating through the landmark list:
 
   - "x" produces a set of landmark coordinates
   - "n" advances  to the next landmark making it active
   - "p" goes back to the previous landmark making it active
   - "d" deletes the active landmark
 
-After your team has completed landmarking the assigned species, push them to your teams repo in a "shark_landmarks" directory. Once all the data appear across the repos, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required (i.e., file-name checks, quality, etc.). He'll them push the full dataset to all the team repos.
+After your team has completed landmarking the assigned species, push them to your teams repo in a "shark_landmarks" directory. Once all the data appear across the repos, Prof. Kenaley will evaluate the quality of the landmarks and do some post-processing if required. He'll then push the full dataset to all the team repos.
 
 ### Superimposition
 
