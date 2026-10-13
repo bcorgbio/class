@@ -163,7 +163,7 @@ As you have learned in class and in your reading, researchers interested in comp
 ### Digitization and landmarking
 
 
-You and your team/group will be assigned around 50--60 images representing about 40 of the ~265 species to digitize. Your team's images have been pushed to your team's repo. With the images now in place, we're ready to commence digitizing. We'll do so in the `StereoMorph` package, a library of functions designed for digitization and seamless integration with other R packages integral to geometric morphometrics (e.g., `geomorph`). In particular, we'll use `StereoMorph`'s `digitizeImages()` which, when run, creates an interactive web browser session in which the user places a number of specified landmarks on all images in a specific directory. 
+You and your team/group will be assigned around approximately 100 images representing about 40 of the ~265 species to digitize. Your team's images have been pushed to your team's repo. With the images now in place, we're ready to commence digitizing. We'll do so in the `StereoMorph` package, a library of functions designed for digitization and seamless integration with other R packages integral to geometric morphometrics (e.g., `geomorph`). In particular, we'll use `StereoMorph`'s `digitizeImages()` which, when run, creates an interactive web browser session in which the user places a number of specified landmarks on all images in a specific directory. 
 
 Before we move on with this, some workflow hygiene . . . For this part of the project, Prof. Kenaley recommends that each team member create their own script for digitizing, perhaps named something logical and unique, like "kenaley_stereomorph.R". It's in this script that we'll digitize and produce our landmarks, the essential data of this project, i.e., there's no need to include it in your submitted reports as a code chunk. Now, let's walk through how to assemble the script for digitization in `StereoMorph`. 
 
@@ -224,6 +224,7 @@ digitizeImages(image.file = image_directory,
                control.point.color.blur = "orchid", 
                control.point.color.focus = "hotpink", 
                landmark.radius = ```
+```
 
 Right away, you'll notice the function produced a browser window in RStudio (see below). `StereoMorph` uses the `shiny` package to create an application interface. 
 
@@ -261,7 +262,7 @@ You'll want to select "Auto-advance". This setting automatically advances to the
 </center>
 <br>
 
-Notice that the character strings in our `landmarks_ref` vector populate a landmark list and the first "1_snout" is bolded, indicating that this is the active point. That is, where you put the cursor on the image and press "x", a coordinate will appear in that bolded landmark line. Give it a shot: put the cursor somewhere near where you want to mark the snout and type "x". You'll see that when you type "x", *x-y* coordinates appear, and, due to the autoadvance setting, the next landmark, "2_dorsal_base_ant", becomes bolded and active. Continue on like this and you'll very quickly have all 14 landmarks digitized. Once you've done this, click on "Save". This will tell the app to use some nifty R code to output your landmark coordinates as a text file and do so in your chosen "shark_landmarks" directory. Click "Next image" and you're ready to do this again. You'll repeat this process for all the images your team is responsible for. In the end, you'll end up with 50 or so landmark files,
+Notice that the character strings in our `landmarks_ref` vector populate a landmark list and the first "1_snout" is bolded, indicating that this is the active point. That is, where you put the cursor on the image and press "x", a coordinate will appear in that bolded landmark line. Give it a shot: put the cursor somewhere near where you want to mark the snout and type "x". You'll see that when you type "x", *x-y* coordinates appear, and, due to the autoadvance setting, the next landmark, "2_dorsal_base_ant", becomes bolded and active. Continue on like this and you'll very quickly have all 14 landmarks digitized. Once you've done this, click on "Save". This will tell the app to use some nifty R code to output your landmark coordinates as a text file and do so in your chosen "shark_landmarks" directory. Click "Next image" and you're ready to do this again. You'll repeat this process for all the images your team is responsible for. In the end, you'll end up with 100 or so landmark files,
 
 ```{r lmfiles}
 list.files("shark_landmarks") 

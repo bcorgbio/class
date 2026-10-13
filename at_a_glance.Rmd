@@ -10,11 +10,11 @@ All assignments are due by 11:59 p.m. on the specified date. Late reports will i
 
 || Monday <br> 8/31 | Tuesday <br>9/1 | Wednesday<br> 9/2 | Thursday <br> 9/3 | Friday <br> 9/4 | Saturday<br> 9/5 | Sunday<br> 9/6
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-**Week 1** | [slides](lect\3140_f26_8-31.html) ||[slides](lect\3140_f26_9-02.html) <br><br> Teams for Module 1 assigned <br><br> Establish GitHub account and add your handle to [this form](https://forms.gle/ZXpK8uvhDWEDRZMv9) | | [slides](lect\3140_f26_9-04.html)<br><br> Create a private GitHub repo| | |
+**Week 1** | [slides](lect/3140_f26_8-31.html) ||[slides](lect/3140_f26_9-02.html) <br><br> Teams for Module 1 assigned <br><br> Establish GitHub account and add your handle to [this form](https://forms.gle/ZXpK8uvhDWEDRZMv9) | | [slides](lect/3140_f26_9-04.html)<br><br> Create a private GitHub repo| | |
 
 || Monday <br> 9/7* | Tuesday <br>9/8 | Wednesday<br> 9/9 | Thursday <br> 9/10 | Friday <br> 9/11 | Saturday<br> 9/12 | Sunday<br> 9/13
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-**Week 2**||| [slides](lect\3140_f26_9-09.html) <br><br> Post question to discussion board <br><br> [WCR 1](WCRs/WCR_1.html)| | [slides](lect\3140_f26_9-11.html) <br><br> Answer a question on discussion board | | commit Module 1 project report
+**Week 2**||| [slides](lect/3140_f26_9-09.html) <br><br> Post question to discussion board <br><br> [WCR 1](WCRs/WCR_1.html)| | [slides](lect/3140_f26_9-11.html) <br><br> Answer a question on discussion board | | commit Module 1 project report
 ||||||||
 
 *No class, Labor Day
@@ -25,7 +25,7 @@ All assignments are due by 11:59 p.m. on the specified date. Late reports will i
 
 || Monday <br> 9/14 | Tuesday <br>9/15 | Wednesday<br> 9/16 | Thursday <br> 9/17 | Friday <br> 9/18 | Saturday<br> 9/19 | Sunday<br> 9/20
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-**Week 3** | [slides](lect\3140_f26_9-14.html) | | [slides](lect\3140_f26_9-16.html)<br><br> Post question to discussion board <br><br> [WCR 2](WCRs/WCR_2.html)|| [slides](lect\3140_f26_9-18.html)<br><br> Answer a question on discussion board | | commit Module 2 Project Report
+**Week 3** | [slides](lect/3140_f26_9-14.html) | | [slides](lect/3140_f26_9-16.html)<br><br> Post question to discussion board <br><br> [WCR 2](WCRs/WCR_2.html)|| [slides](lect/3140_f26_9-18.html)<br><br> Answer a question on discussion board | | commit Module 2 Project Report
 ||||||||
 
 ---
@@ -34,7 +34,7 @@ All assignments are due by 11:59 p.m. on the specified date. Late reports will i
 
 || Monday <br> 9/21 | Tuesday <br>9/22 | Wednesday<br> 9/23 | Thursday <br> 9/24 | Friday <br> 9/25 | Saturday<br> 9/26 | Sunday<br> 9/27
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-**Week 4** |[slides](lect\3140_f26_9-21.html) | | [slides](lect\3140_f26_9-23.html)<br><br> Post question to discussion board <br><br> [WCR 3](WCRs/WCR_3.html) || [slides](lect\3140_f26_9-25.html)<br> Answer a question on discussion board | | commit Module 3 Project Report
+**Week 4** |[slides](lect/3140_f26_9-21.html) | | [slides](lect/3140_f26_9-23.html)<br><br> Post question to discussion board <br><br> [WCR 3](WCRs/WCR_3.html) || [slides](lect/3140_f26_9-25.html)<br> Answer a question on discussion board | | commit Module 3 Project Report
 ||||||||
 
 ---
@@ -43,7 +43,7 @@ All assignments are due by 11:59 p.m. on the specified date. Late reports will i
 
 || Monday <br> 9/28 | Tuesday <br>9/29 | Wednesday<br> 9/30 | Thursday <br> 10/1 | Friday <br> 10/2 | Saturday<br> 10/3 | Sunday<br> 10/4
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-**Week 5** | [slides](lect\3140_f26_9-28.html) <br><br> | | Post question to discussion board <br><br> [WCR 4](WCRs/WCR_4.html)| |Answer a question on discussion board | | commit Module 4 Project Report
+**Week 5** | [slides](lect/3140_f26_9-28.html) <br><br> | | Post question to discussion board <br><br> [WCR 4](WCRs/WCR_4.html)| |Answer a question on discussion board | | commit Module 4 Project Report
 ||||||||
 
 ---
@@ -54,19 +54,19 @@ All assignments are due by 11:59 p.m. on the specified date. Late reports will i
 
 || Monday <br> 10/5 | Tuesday <br>10/6 | Wednesday<br> 10/7 | Thursday <br> 10/8 | Friday <br> 10/9 | Saturday<br> 10/10 | Sunday<br> 10/11
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-**Week 6** || | Post question to discussion board <br><br>[slides](lect\3140_f26_10-07.html) | | [slides](lect\3140_f26_10-09.html) <br> Answer a question on discussion board | |
+**Week 6** || | Post question to discussion board <br><br>[slides](lect/3140_f26_10-07.html) | | [slides](lect/3140_f26_10-09.html) <br> Answer a question on discussion board | |
 ||||||||
 
 || Monday <br> 10/12* | Tuesday <br>10/13† | Wednesday<br> 10/14 | Thursday <br> 10/15 | Friday <br> 10/16 | Saturday<br> 10/17 | Sunday<br> 10/18
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-**Week 7** | || Post question to discussion board <br><br> ~~[WCR 6](WCRs/WCR_6.html)~~ [slides](lect\3140_f26_10-14.html)| Upload shape data | [WCR 6](WCRs/WCR_6.html) <br><br> [slides](lect\3140_f26_10-16.html)<br><br>Answer a question on discussion board | |
+**Week 7** | |[slides](lect/3140_f26_10-13.html)| Post question to discussion board <br><br> [WCR 6](WCRs/WCR_6.html)<br><br> [slides](lect/3140_f26_10-14.html)|  | [slides](lect/3140_f26_10-16.html)<br><br>Answer a question on discussion board | |Push shape data
 
 *No class, Fall Break  
 †Boston College follows a substitute Monday class schedule on Tuesday, 10/13.
 
 || Monday <br> 10/19 | Tuesday <br>10/20 | Wednesday<br> 10/21 | Thursday <br> 10/22 | Friday <br> 10/23 | Saturday<br> 10/24 | Sunday<br> 10/25
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-**Week 8** | | | [slides](lect\3140_f26_10-21.html) <br>Post question to discussion board | | Answer a question on discussion board <br><br> [WCR 7](WCRs/WCR_7.html) | ||
+**Week 8** | | | [slides](lect/3140_f26_10-21.html) <br>Post question to discussion board | | Answer a question on discussion board <br><br> [WCR 7](WCRs/WCR_7.html) | ||
 
 || Monday <br> 10/26 | Tuesday <br>10/27 | Wednesday<br> 10/28 | Thursday <br> 10/29 | Friday <br> 10/30 | Saturday<br> 10/31 | Sunday<br> 11/1
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
@@ -78,11 +78,11 @@ All assignments are due by 11:59 p.m. on the specified date. Late reports will i
 
 || Monday <br> 11/2 | Tuesday <br>11/3 | Wednesday<br> 11/4 | Thursday <br> 11/5 | Friday <br> 11/6 | Saturday<br> 11/7 | Sunday<br> 11/8
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-**Week 10** |[slides](lect\3140_f26_11-02.html) | | Post question to discussion board <br><br> [WCR 9](WCRs/WCR_9.html)| |Answer a question on discussion board <br><br> [slides](lect\3140_f26_11-06.html)| | |
+**Week 10** |[slides](lect/3140_f26_11-02.html) | | Post question to discussion board <br><br> [WCR 9](WCRs/WCR_9.html)| |Answer a question on discussion board <br><br> [slides](lect/3140_f26_11-06.html)| | |
 
 || Monday <br> 11/9 | Tuesday <br>11/10 | Wednesday<br> 11/11 | Thursday <br> 11/12 | Friday <br> 11/13 | Saturday<br> 11/14 | Sunday<br> 11/15
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-**Week 11** | [slides](lect\3140_f26_11-09.html)| | <br><br> [WCR 10](WCRs/WCR_10.html) Post question to discussion board | |Answer a question on discussion board | | Commit Module 6 Project Report|
+**Week 11** | [slides](lect/3140_f26_11-09.html)| | <br><br> [WCR 10](WCRs/WCR_10.html) Post question to discussion board | |Answer a question on discussion board | | Commit Module 6 Project Report|
 ||||||||
 
 ---
@@ -91,16 +91,16 @@ All assignments are due by 11:59 p.m. on the specified date. Late reports will i
 
 || Monday <br> 11/16 | Tuesday <br>11/17 | Wednesday<br> 11/18 | Thursday <br> 11/19 | Friday <br> 11/20 | Saturday<br> 11/21 | Sunday<br> 11/22
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-**Week 12** |[slides](lect\3140_f26_11-16.html) | | Post question to discussion board <br><br>[slides](lect\3140_f26_11-18.html) || Answer a question on discussion board <br><br>[WCR 11](WCRs/WCR_11.html)| | |
+**Week 12** |[slides](lect/3140_f26_11-16.html) | | Post question to discussion board <br><br>[slides](lect/3140_f26_11-18.html) || Answer a question on discussion board <br><br>[WCR 11](WCRs/WCR_11.html)| | |
 
 || Monday <br> 11/23 | Tuesday <br>11/24 | Wednesday<br> 11/25 | Thursday <br> 11/26 | Friday <br> 11/27 | Saturday<br> 11/28 | Sunday<br> 11/29
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-**Week 13** | [slides](lect\3140_f26_11-23.html) | | Thanksgiving Break | Thanksgiving Break | Thanksgiving Break | | |
+**Week 13** | [slides](lect/3140_f26_11-23.html) | | Thanksgiving Break | Thanksgiving Break | Thanksgiving Break | | |
 ||||||||
 
 || Monday <br> 11/30 | Tuesday <br>12/1 | Wednesday<br> 12/2 | Thursday <br> 12/3 | Friday <br> 12/4 | Saturday<br> 12/5 | Sunday<br> 12/6
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-**Week 14** |[slides](lect\3140_f26_11-30.html) | | [WCR 12](WCRs/WCR_12.html) <br>Post question to discussion board | | Answer a question on discussion board | | Commit Module 7 Project Report
+**Week 14** |[slides](lect/3140_f26_11-30.html) | | [WCR 12](WCRs/WCR_12.html) <br>Post question to discussion board | | Answer a question on discussion board | | Commit Module 7 Project Report
 ||||||||
 
 ---
