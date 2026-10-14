@@ -159,7 +159,29 @@ anova(pgls)
 ]
 
 
+---
+# Rsq: variation accounted for
 
+.pull-left[
+In this sequential table:
+
+
+$R^2_{\mathrm{habitat}}=SS_{\mathrm{habitat}}/SS_{\mathrm{total}}$
+
+
+Habitat accounts for **10% of total  variation**.
+
+
+This does not mean that shapes differ by 10%.
+
+]
+
+.pull-right[
+
+```{r}
+anova(pgls)
+```
+]
 
 
 

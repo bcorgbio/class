@@ -192,7 +192,49 @@ anova(pgls)
 ]
 
 
+---
+# Rsq: variation accounted for
 
+.pull-left[
+In this sequential table:
+
+
+`\(R^2_{\mathrm{habitat}}=SS_{\mathrm{habitat}}/SS_{\mathrm{total}}\)`
+
+
+Habitat accounts for **10% of total  variation**.
+
+
+This does not mean that shapes differ by 10%.
+
+]
+
+.pull-right[
+
+
+``` r
+anova(pgls)
+```
+
+```
+## 
+## Analysis of Variance, using Residual Randomization
+## Permutation procedure: Randomization of null model residuals 
+## Number of permutations: 10001 
+## Estimation method: Generalized Least-Squares (via OLS projection) 
+## Sums of Squares and Cross-products: Type I 
+## Effect sizes (Z) based on F distributions
+## 
+##           Df       SS        MS     Rsq      F       Z Pr(&gt;F)
+## hab        1 0.004381 0.0043808 0.10117 0.7879 0.33226 0.3873
+## Residuals  7 0.038921 0.0055602 0.89883                      
+## Total      8 0.043302                                        
+## 
+## Call: procD.lm(f1 = coords ~ hab, iter = iter, seed = seed, RRPP = TRUE,  
+##     SS.type = SS.type, effect.type = effect.type, int.first = int.first,  
+##     Cov = Cov, data = data, print.progress = print.progress)
+```
+]
 
 
 
