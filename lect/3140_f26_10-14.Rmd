@@ -1,0 +1,165 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 5: SHARK!"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2025/10/14"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis","slides.css"]
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+      
+---
+# In class today 
+
+```{r,echo=FALSE,message=FALSE,warning=F}
+library(tidyverse)
+library(kableExtra)
+library(ape)
+library(phytools)
+library(geomorph)
+library(abind)
+
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Review WCR6 
+
+- Procrustes PGLS
+
+
+]
+
+.pull-right[
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Full_Shot_of_a_Caribbean_Reef_Shark_at_Tiger_Beach_Bahamas.jpg/1600px-Full_Shot_of_a_Caribbean_Reef_Shark_at_Tiger_Beach_Bahamas.jpg)
+]
+
+---
+
+<!-- slide 1 -->
+
+## WCR6
+
+.pull-left[
+
+- To R studio
+
+
+]
+
+
+
+
+---
+
+# Shark question
+
+**Does shark body shape differ among habitats after accounting shared ancestry?**
+
+Response: Procrustes-aligned landmark coordinates.
+
+Predictors: Habitat.
+
+Phylogeny: evolutionary relationships among sampled species.
+
+---
+# Example: Salamander head shape
+
+.pull-left[
+The bundled `plethspecies` dataset includes landmarks and a phylogeny.
+
+
+**Question: does head shape covary with habitat?**
+
+```{r prepare}
+data(plethspecies)
+gpa <- gpagen(plethspecies$land, print.progress = FALSE)
+```
+
+]
+
+.pull-right[
+
+**Habitat**
+
+```{r}
+hab <- setNames(
+  c("A","B","B","A","B","A","B","A","B"),
+  plethspecies$phy$tip.label)
+```
+]
+
+
+
+---
+
+# The model
+
+The test evaluates the **overall shape response**, across coordinates.
+ 
+  - `proc.gpls()`
+
+
+$\mathbf{Y}=\mathbf{X}\mathbf{B}+\mathbf{E}$
+
+
+- **Y:** species × shape-coordinate matrix.
+- **X:** intercept and predictor columns.
+- **B:** coefficients describing predicted shape changes.
+- **E:** residual shape variation with phylogenetic covariance.
+
+The function combines a multivariate GLS fit with permutation tests.
+
+---
+# Implementation
+
+`geomorph.data.frame()`
+
+```{r}
+gdf <- geomorph.data.frame(
+  coords=gpa$coords,
+  habitat=hab,
+  phy=plethspecies$phy #just one tree!
+  )
+
+```
+
+---
+
+# Implementation
+
+`proc.gpls()`
+
+
+.pull-left[
+```{r}
+pgls <- procD.pgls(
+  coords ~ hab, 
+  phy = phy, 
+  data = gdf,
+  iter = 10000,
+  print.progress = F)
+```
+]
+
+.pull-right[
+
+```{r}
+anova(pgls)
+```
+]
+
+
+
+
+
+
