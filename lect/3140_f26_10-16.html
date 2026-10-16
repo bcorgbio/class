@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Phase II: Using Our Toolbox</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dr. Christopher Kenaley" />
+    <script src="libs/header-attrs-2.31/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link rel="stylesheet" href="slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Phase II: Using Our Toolbox
+]
+.subtitle[
+## Module 5: SHARK!
+]
+.author[
+### Dr. Christopher Kenaley
+]
+.institute[
+### Boston College
+]
+.date[
+### 2026/10/16
+]
+
+---
+
+# In class today 
+
+
+
+&lt;!-- Add icon library --&gt;
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"&gt;
+
+
+.pull-left[
+Today we'll ....
+
+
+- Procrustes PGLS
+
+- Break down parallel processing
+
+
+]
+
+.pull-right[
+![](https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/Corl0207_%2828225976491%29.jpg/3840px-Corl0207_%2828225976491%29.jpg)
+]
+
+
+
+---
+
+# Shark question
+
+**Does shark body shape differ among habitats after accounting shared ancestry?**
+
+Response: Procrustes-aligned landmark coordinates.
+
+Predictors: Habitat.
+
+Phylogeny: evolutionary relationships among sampled species.
+
+---
+# Example: Salamander head shape
+
+.pull-left[
+The bundled `plethspecies` dataset includes landmarks and a phylogeny.
+
+
+**Question: does head shape covary with habitat?**
+
+
+``` r
+data(plethspecies)
+gpa &lt;- gpagen(plethspecies$land, print.progress = FALSE)
+```
+
+]
+
+.pull-right[
+
+**Habitat**
+
+
+``` r
+hab &lt;- setNames(
+  c("A","B","B","A","B","A","B","A","B"),
+  plethspecies$phy$tip.label)
+```
+]
+
+
+
+---
+
+# The model
+
+The test evaluates the **overall shape response**, across coordinates.
+ 
+  - `proc.gpls()`
+
+
+`\(\mathbf{Y}=\mathbf{X}\mathbf{B}+\mathbf{E}\)`
+
+
+- **Y:** species × shape-coordinate matrix.
+- **X:** intercept and predictor columns.
+- **B:** coefficients describing predicted shape changes.
+- **E:** residual shape variation with phylogenetic covariance.
+
+The function combines a multivariate GLS fit with permutation tests.
+
+---
+# Implementation
+
+`geomorph.data.frame()`
+
+
+``` r
+gdf &lt;- geomorph.data.frame(
+  coords=gpa$coords,
+  habitat=hab,
+  phy=plethspecies$phy #just one tree!
+  )
+```
+
+---
+
+# Implementation
+
+`proc.gpls()`
+
+
+.pull-left[
+
+``` r
+pgls &lt;- procD.pgls(
+  coords ~ hab, 
+  phy = phy, 
+  data = gdf,
+  iter = 10000,
+  print.progress = F)
+```
+]
+
+.pull-right[
+
+
+``` r
+anova(pgls)
+```
+
+```
+## 
+## Analysis of Variance, using Residual Randomization
+## Permutation procedure: Randomization of null model residuals 
+## Number of permutations: 10001 
+## Estimation method: Generalized Least-Squares (via OLS projection) 
+## Sums of Squares and Cross-products: Type I 
+## Effect sizes (Z) based on F distributions
+## 
+##           Df       SS        MS     Rsq      F       Z Pr(&gt;F)
+## hab        1 0.004381 0.0043808 0.10117 0.7879 0.33226 0.3873
+## Residuals  7 0.038921 0.0055602 0.89883                      
+## Total      8 0.043302                                        
+## 
+## Call: procD.lm(f1 = coords ~ hab, iter = iter, seed = seed, RRPP = TRUE,  
+##     SS.type = SS.type, effect.type = effect.type, int.first = int.first,  
+##     Cov = Cov, data = data, print.progress = print.progress)
+```
+]
+
+
+---
+# Rsq: variation accounted for
+
+.pull-left[
+In this sequential table:
+
+
+`\(R^2_{\mathrm{habitat}}=SS_{\mathrm{habitat}}/SS_{\mathrm{total}}\)`
+
+
+Habitat accounts for **10% of total  variation**.
+
+
+This does not mean that shapes differ by 10%.
+
+]
+
+.pull-right[
+
+
+``` r
+anova(pgls)
+```
+
+```
+## 
+## Analysis of Variance, using Residual Randomization
+## Permutation procedure: Randomization of null model residuals 
+## Number of permutations: 10001 
+## Estimation method: Generalized Least-Squares (via OLS projection) 
+## Sums of Squares and Cross-products: Type I 
+## Effect sizes (Z) based on F distributions
+## 
+##           Df       SS        MS     Rsq      F       Z Pr(&gt;F)
+## hab        1 0.004381 0.0043808 0.10117 0.7879 0.33226 0.3873
+## Residuals  7 0.038921 0.0055602 0.89883                      
+## Total      8 0.043302                                        
+## 
+## Call: procD.lm(f1 = coords ~ hab, iter = iter, seed = seed, RRPP = TRUE,  
+##     SS.type = SS.type, effect.type = effect.type, int.first = int.first,  
+##     Cov = Cov, data = data, print.progress = print.progress)
+```
+]
+
+---
+# How does `procD.pgls()` estimate a p-value?
+
+**Question:** Is the observed effect larger than expected under the null hypothesis,
+after accounting for shared ancestry?
+
+1. **Calculate the observed F-statistic.**  
+   Compare models with and without the effect being tested.
+
+2. **Account for phylogeny.**  
+   Use the phylogenetic covariance matrix to transform the data and model
+   into a space where the assumed phylogenetic dependence is removed.
+
+3. **Randomize under the null hypothesis.**  
+   Shuffle the reduced-model residuals among species in this transformed
+   space, keeping each species' entire residual vector together.
+   Add them to the reduced-model fitted values.
+
+4. **Refit and repeat.**  
+   Recalculate F for each randomized dataset to build a null distribution.
+
+$$
+p = \frac{1 + \text{number of randomized } F \geq F_{\mathrm{observed}}}
+         {1 + \text{number of randomizations}}
+$$
+
+**Example:** With 999 randomizations, 19 values at least as large as the
+observed F give **p = 20/1000 = 0.020**.
+
+
+---
+# Evolutionary Rates
+
+.pull-left[
+
+Do groups evolve at similar rates?
+  
+ `compare.evol.rates()`
+ 
+- estimated as net rates of Procrustes shape evolution:
+  - Brownian motion model
+  - GPA aligned data (`A`)
+  - names groups vector (`gp`)
+  - phylogeny (`phy`)
+  - outputs ratio
+  
+]
+
+
+.pull-right[
+
+
+``` r
+phy &lt;- readNexus("shark_trees.nex")
+phy2 &lt;- keep.tip(phy,PCA$sp)
+gp_hab &lt;- PCA$habitat
+names(gp_hab) &lt;- PCA$sp
+er &lt;- compare.evol.rates(
+  A=ldk_al$coords, 
+  phy=phy2[[1]], 
+  method="simulation",
+  gp=gp_hab)
+}
+```
+]
+
+---
+
+# Sloooooow
+
+.pull-left[
+
+comparative analyses can be really slow!
+  
+- we have ~200 sp
+- 500 different trees to consider
+]
+
+.pull-right[
+
+
+![](https://bcorgbio.github.io/class/mod5_proj_files/figure-html/timescale-1.png)
+  
+
+]
+
+
+
+---
+# Let's go parallel
+.pull-left[
+Many options for parallel in r
+  
+- `doParallel`
+- `parallel`
+- `future`*
+
+allows processing with multiple cores
+  - run a function in embarrassingly parallel way with `mcapply()`
+
+
+``` r
+library(future)
+library(future.apply)
+
+# a function
+my_fun &lt;- function(x){for(i in x) rnorm(1e7)}
+```
+]
+
+.pull-right[
+
+``` r
+# Run sequentially
+set.seed(1234) #for repetition
+
+t_nomc &lt;- system.time(
+  lapply(1:50, my_fun)
+)
+
+# Set up parallel R sessions, leaving two cores available
+plan(
+  multisession,
+  workers = availableCores(omit = 2)
+)
+
+t_mc &lt;- system.time(
+  future_lapply(1:50, my_fun, future.seed = TRUE)
+)
+
+# Shut down the background workers
+plan(sequential)
+```
+]
+
+---
+
+.pull-left[
+
+``` r
+# Run sequentially
+set.seed(1234) #for repetition
+
+t_nomc &lt;- system.time(
+  lapply(1:50, my_fun)
+)
+
+# Set up parallel R sessions, leaving two cores available
+plan(
+  multisession,
+  workers = availableCores(omit = 2)
+)
+
+t_mc &lt;- system.time(
+  future_lapply(1:50, my_fun, future.seed = TRUE)
+)
+
+# Shut down the background workers
+plan(sequential)
+```
+]
+
+.pull-right[
+
+``` r
+print(t_nomc)
+```
+
+```
+##    user  system elapsed 
+##  12.789   0.340  13.209
+```
+
+``` r
+print(t_mc)
+```
+
+```
+##    user  system elapsed 
+##   1.045   0.172   6.869
+```
+]
+
+
+---
+# Let's go parallel
+
+allows processing with multiple cores
+  - Need a custom function that receives `X`
+  - What should `X` be?
+  
+
+``` r
+er_fun &lt;- function(x){
+  er &lt;- compare.evol.rates(
+    A=ldk_al$coords, 
+    phy=x, 
+    method="simulation",
+    gp=gp_hab)
+}
+
+er_l &lt;- future_lapply(phy2[1:2],er_fun,mc.cores = detectCores()-2)
+```
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+  "ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

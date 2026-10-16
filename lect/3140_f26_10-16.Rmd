@@ -1,0 +1,360 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 5: SHARK!"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2026/10/16"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis","slides.css"]
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+      
+---
+# In class today 
+
+```{r,echo=FALSE,message=FALSE,warning=F}
+library(tidyverse)
+library(kableExtra)
+library(ape)
+library(phytools)
+library(geomorph)
+library(abind)
+library(future)
+
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+
+- Procrustes PGLS
+
+- Break down parallel processing
+
+
+]
+
+.pull-right[
+![](https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/Corl0207_%2828225976491%29.jpg/3840px-Corl0207_%2828225976491%29.jpg)
+]
+
+
+
+---
+
+# Shark question
+
+**Does shark body shape differ among habitats after accounting shared ancestry?**
+
+Response: Procrustes-aligned landmark coordinates.
+
+Predictors: Habitat.
+
+Phylogeny: evolutionary relationships among sampled species.
+
+---
+# Example: Salamander head shape
+
+.pull-left[
+The bundled `plethspecies` dataset includes landmarks and a phylogeny.
+
+
+**Question: does head shape covary with habitat?**
+
+```{r prepare}
+data(plethspecies)
+gpa <- gpagen(plethspecies$land, print.progress = FALSE)
+```
+
+]
+
+.pull-right[
+
+**Habitat**
+
+```{r}
+hab <- setNames(
+  c("A","B","B","A","B","A","B","A","B"),
+  plethspecies$phy$tip.label)
+```
+]
+
+
+
+---
+
+# The model
+
+The test evaluates the **overall shape response**, across coordinates.
+ 
+  - `proc.gpls()`
+
+
+$\mathbf{Y}=\mathbf{X}\mathbf{B}+\mathbf{E}$
+
+
+- **Y:** species × shape-coordinate matrix.
+- **X:** intercept and predictor columns.
+- **B:** coefficients describing predicted shape changes.
+- **E:** residual shape variation with phylogenetic covariance.
+
+The function combines a multivariate GLS fit with permutation tests.
+
+---
+# Implementation
+
+`geomorph.data.frame()`
+
+```{r}
+gdf <- geomorph.data.frame(
+  coords=gpa$coords,
+  habitat=hab,
+  phy=plethspecies$phy #just one tree!
+  )
+
+```
+
+---
+
+# Implementation
+
+`proc.gpls()`
+
+
+.pull-left[
+```{r}
+pgls <- procD.pgls(
+  coords ~ hab, 
+  phy = phy, 
+  data = gdf,
+  iter = 10000,
+  print.progress = F)
+```
+]
+
+.pull-right[
+
+```{r}
+anova(pgls)
+```
+]
+
+
+---
+# Rsq: variation accounted for
+
+.pull-left[
+In this sequential table:
+
+
+$R^2_{\mathrm{habitat}}=SS_{\mathrm{habitat}}/SS_{\mathrm{total}}$
+
+
+Habitat accounts for **10% of total  variation**.
+
+
+This does not mean that shapes differ by 10%.
+
+]
+
+.pull-right[
+
+```{r}
+anova(pgls)
+```
+]
+
+---
+# How does `procD.pgls()` estimate a p-value?
+
+**Question:** Is the observed effect larger than expected under the null hypothesis,
+after accounting for shared ancestry?
+
+1. **Calculate the observed F-statistic.**  
+   Compare models with and without the effect being tested.
+
+2. **Account for phylogeny.**  
+   Use the phylogenetic covariance matrix to transform the data and model
+   into a space where the assumed phylogenetic dependence is removed.
+
+3. **Randomize under the null hypothesis.**  
+   Shuffle the reduced-model residuals among species in this transformed
+   space, keeping each species' entire residual vector together.
+   Add them to the reduced-model fitted values.
+
+4. **Refit and repeat.**  
+   Recalculate F for each randomized dataset to build a null distribution.
+
+$$
+p = \frac{1 + \text{number of randomized } F \geq F_{\mathrm{observed}}}
+         {1 + \text{number of randomizations}}
+$$
+
+**Example:** With 999 randomizations, 19 values at least as large as the
+observed F give **p = 20/1000 = 0.020**.
+
+
+---
+# Evolutionary Rates
+
+.pull-left[
+
+Do groups evolve at similar rates?
+  
+ `compare.evol.rates()`
+ 
+- estimated as net rates of Procrustes shape evolution:
+  - Brownian motion model
+  - GPA aligned data (`A`)
+  - names groups vector (`gp`)
+  - phylogeny (`phy`)
+  - outputs ratio
+  
+]
+
+
+.pull-right[
+
+```{r,eval=F, tidy=TRUE}
+phy <- readNexus("shark_trees.nex")
+phy2 <- keep.tip(phy,PCA$sp)
+gp_hab <- PCA$habitat
+names(gp_hab) <- PCA$sp
+er <- compare.evol.rates(
+  A=ldk_al$coords, 
+  phy=phy2[[1]], 
+  method="simulation",
+  gp=gp_hab)
+}
+
+```
+]
+
+---
+
+# Sloooooow
+
+.pull-left[
+
+comparative analyses can be really slow!
+  
+- we have ~200 sp
+- 500 different trees to consider
+]
+
+.pull-right[
+
+
+![](https://bcorgbio.github.io/class/mod5_proj_files/figure-html/timescale-1.png)
+  
+
+]
+
+
+
+---
+# Let's go parallel
+.pull-left[
+Many options for parallel in r
+  
+- `doParallel`
+- `parallel`
+- `future`*
+
+allows processing with multiple cores
+  - run a function in embarrassingly parallel way with `mcapply()`
+
+```{r,cache=F}
+library(future)
+library(future.apply)
+
+# a function
+my_fun <- function(x){for(i in x) rnorm(1e7)}
+```
+]
+
+.pull-right[
+```{r}
+# Run sequentially
+set.seed(1234) #for repetition
+
+t_nomc <- system.time(
+  lapply(1:50, my_fun)
+)
+
+# Set up parallel R sessions, leaving two cores available
+plan(
+  multisession,
+  workers = availableCores(omit = 2)
+)
+
+t_mc <- system.time(
+  future_lapply(1:50, my_fun, future.seed = TRUE)
+)
+
+# Shut down the background workers
+plan(sequential)
+```
+]
+
+---
+
+.pull-left[
+```{r eval=F}
+# Run sequentially
+set.seed(1234) #for repetition
+
+t_nomc <- system.time(
+  lapply(1:50, my_fun)
+)
+
+# Set up parallel R sessions, leaving two cores available
+plan(
+  multisession,
+  workers = availableCores(omit = 2)
+)
+
+t_mc <- system.time(
+  future_lapply(1:50, my_fun, future.seed = TRUE)
+)
+
+# Shut down the background workers
+plan(sequential)
+```
+]
+
+.pull-right[
+```{r}
+print(t_nomc)
+print(t_mc)
+```
+]
+
+
+---
+# Let's go parallel
+
+allows processing with multiple cores
+  - Need a custom function that receives `X`
+  - What should `X` be?
+  
+```{r,eval=F}
+er_fun <- function(x){
+  er <- compare.evol.rates(
+    A=ldk_al$coords, 
+    phy=x, 
+    method="simulation",
+    gp=gp_hab)
+}
+
+er_l <- future_lapply(phy2[1:2],er_fun,mc.cores = detectCores()-2)
+
+```
+
