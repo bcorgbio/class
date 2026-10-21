@@ -66,7 +66,7 @@ All assignments are due by 11:59 p.m. on the specified date. Late reports will i
 
 || Monday <br> 10/19 | Tuesday <br>10/20 | Wednesday<br> 10/21 | Thursday <br> 10/22 | Friday <br> 10/23 | Saturday<br> 10/24 | Sunday<br> 10/25
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:
-**Week 8** | | | [slides](lect/3140_f26_10-21.html) <br>Post question to discussion board | | Answer a question on discussion board <br><br> [WCR 7](WCRs/WCR_7.html) | ||
+**Week 8** | | | [WCR 7](WCRs/WCR_7.html) <br> <br>[slides](lect/3140_f26_10-21.html) <br>Post question to discussion board | | Answer a question on discussion board <br><br>  | ||
 
 || Monday <br> 10/26 | Tuesday <br>10/27 | Wednesday<br> 10/28 | Thursday <br> 10/29 | Friday <br> 10/30 | Saturday<br> 10/31 | Sunday<br> 11/1
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:

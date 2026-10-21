@@ -464,7 +464,7 @@ Next, let's restrict our tree file to those species in our data set. For this, w
 
 ```{r phydrop}
 sp <- intersect(phy[[1]]$tip.label,PCA$sp %>% unique)
-phy2 <- keep.tip(phy,PCA$sp)
+phy2 <- keep.tip(phy,sp)
 ```
 
 To undertake the analysis with `procD.pgls()`, we must input the tree of course and a `geomorph.dataframe`, a special data frame that includes the coordinates and variables (i.e., habitat) that will be in the model. But, as we've discussed above, we have several specimens per species and thus multiple observations for each tip in the tree. `procD.pgls()` can't handle that. A common solution to such a problem is to just calculate the mean values of each species. For this, we can turn to a custom function that uses `geomorph`'s `mshape` function to compute the mean shape of each species. It will compute the mean shape for each unique coordinate name, that is, species. Notice here that we reorder the resulting array of mean shapes along its third dimension according to the order of species (`tip.label`) in the tree, a standard practice with comparative methods in R.
@@ -765,13 +765,12 @@ Please submit your report and all associated data to your team GitHub repository
   * Is there a shape difference between habitats?
   * Is the rate of morphological evolution significantly different between different habitat types?
 
-Answer both questions empirically based on results produced through parallelization of your analyses including each of 500 phylogenetic trees. 
+Answer these last two questions empirically based on results produced through parallelization of your analyses including each of 500 phylogenetic trees. 
 
 Specifically . . .
-    1. For Procrustes PGLS, plot the distribution of $R^2$, report its median and 0.25 and 00.95 range and the proportion of trees yielding ANOVA p-values below 0.05. 
-    2. Make sure the distributions of Z values from the Procrustes PGLS and of rate estimates are created through parallelization of your analyses.
-    3. Please assess the statistical significance of habitat on both distributions using a simple two-sided t-test (i.e. `t.test()`).
-    
+    1. For Procrustes PGLS, plot the distribution of $R^2$ and report the proportion of trees yielding ANOVA p-values below 0.05. 
+    2. Plot the distribution of evolutionary rate estimates created through parallelization of your analyses.
+  
     
   * What inferences regarding ecology and behavior can you make concerning the relationship between habitat and both shape and rates of morphological evolution? 
 

@@ -1,0 +1,20 @@
+<shapes type=list>
+	<scaling type=logical names=FALSE length=1 as.numeric=FALSE >NA</scaling>
+	<landmarks.pixel type=matrix rownames=TRUE colnames=FALSE nrow=14 ncol=2 as.numeric=TRUE >
+		1_snout	34	321
+		2_dorsal_base_ant	736	255
+		3_dorsal_tip	848	162
+		4_dorsal_base_post	843	288
+		5_caudal_base_dor	1088	299
+		6_caudal_tip_dor	1401	284
+		7_caudal_tip_vent	1157	392
+		8_caudal_base_vent	1046	349
+		9_pelvic_base_post	717	342
+		10_pelvic_base_ant	628	368
+		11_pect_base_post	429	350
+		12_pect_base_ant	304	358
+		13_mouth_post	153	349
+		14_mouth_ant	51	347
+	</landmarks.pixel>
+</shapes>
+
