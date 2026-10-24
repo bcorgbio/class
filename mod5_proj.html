@@ -803,8 +803,7 @@ that.</p>
                landmark.color.blur = &quot;cyan&quot;, #colors for easy vieing.
                landmark.color.focus = &quot;yellow&quot;, 
                control.point.color.blur = &quot;orchid&quot;, 
-               control.point.color.focus = &quot;hotpink&quot;, 
-               landmark.radius = ```</code></pre>
+               control.point.color.focus = &quot;hotpink&quot;)</code></pre>
 <p>Right away, you’ll notice the function produced a browser window in
 RStudio (see below). <code>StereoMorph</code> uses the
 <code>shiny</code> package to create an application interface.</p>
@@ -1311,8 +1310,11 @@ p1 &lt;- PCA %&gt;%
 p1 + geom_image(data=PC_extremes,aes(Comp1,Comp2,image=imgs), size=.30,inherit.aes = F)+theme_classic()+xlim(range(PC_extremes$Comp1)*1.5)+ylim(range(PC_extremes$Comp2)*1.25)+theme(legend.position = c(0.1,0.2))</code></pre>
 <p><img src="mod5_proj_files/figure-html/shape%20change-1.png" alt="" width="672" /></p>
 </div>
-<div id="analysis-part-ii" class="section level3">
-<h3>Analysis: Part II</h3>
+<div
+id="analysis-part-ii-emperical-assessments-of-habitat-driven-shape-differences"
+class="section level3">
+<h3>Analysis: Part II: Emperical Assessments of Habitat-driven Shape
+Differences</h3>
 <p>Our PCA analysis reveals an interesting pattern. This, however, is
 not a quantitative assessment <em>per se</em>, merely a visual and
 qualitative result and not dissimilar to the qualitative results
@@ -1353,7 +1355,7 @@ For this, we’ll use <code>ape</code>’s <code>keep.tip()</code> which
 keeps only the tips in a vector, in this case, the species in our PCA
 and landmark analysis.</p>
 <pre class="r"><code>sp &lt;- intersect(phy[[1]]$tip.label,PCA$sp %&gt;% unique)
-phy2 &lt;- keep.tip(phy,PCA$sp)</code></pre>
+phy2 &lt;- keep.tip(phy,sp)</code></pre>
 <p>To undertake the analysis with <code>procD.pgls()</code>, we must
 input the tree of course and a <code>geomorph.dataframe</code>, a
 special data frame that includes the coordinates and variables (i.e.,
@@ -1362,12 +1364,12 @@ have several specimens per species and thus multiple observations for
 each tip in the tree. <code>procD.pgls()</code> can’t handle that. A
 common solution to such a problem is to just calculate the mean values
 of each species. For this, we can turn to a custom function that uses
-<code>geomorph</code>’s <code>mshape</code> function to compute the mean
-shape of each species. It will compute the mean shape for each unique
-coordinate name, that is, species. Notice here that we reorder the
-resulting array of mean shapes along its third dimension according to
-the order of species (<code>tip.label</code>) in the tree, a standard
-practice with comparative methods in R.</p>
+<code>geomorph</code>’s <code>mshape()</code> to compute the mean shape
+of each species. It will compute the mean shape for each coordinates
+with the same unique coordinate, that is, species. Notice here that we
+reorder the resulting array of mean shapes along its third dimension
+according to the order of species (<code>tip.label</code>) in the tree,
+a standard practice with comparative methods in R.</p>
 <pre class="r"><code>#install abind package
 #install.packages(&quot;abind&quot;)
 library(abind)
@@ -1401,7 +1403,7 @@ the tree.</p>
   phy=phy2[[1]] #just one tree!
   )</code></pre>
 <p>We can now move on to the Procrustes PGLS. It will take as input the
-<code>geomorph.data.frame</code>, a model formula, and the tree object
+<code>geomorph.data.frame</code>, a model formula, and the tree objects
 stored in it. The model formula follows model fitting conventions in R
 with <code>~</code> and should reflect our question, “Does shape vary
 according to habitat (i.e., <code>mean_coords ~ habitat</code>)?”
@@ -1435,7 +1437,6 @@ summarizes the relationship between habitat and body shape while
 accounting for phylogenetic relatedness. Our main interest is the
 habitat row, which tests whether benthic and pelagic sharks differ in
 mean shape. Several columns help us interpret this result.</p>
-<p>Column</p>
 <p>What does it tell us?</p>
 <ul>
 <li><p><code>Df</code> The degrees of freedom associated with each
@@ -1447,14 +1448,16 @@ attributed to habitat.</p></li>
 in the fitted phylogenetic model.</p></li>
 <li><p><code>F</code> The ratio of the habitat mean square to the
 residual mean square.</p></li>
+<li><p><code>Z</code> How far the observed test statistic lies above or
+below its randomized expectation, measured in standard
+deviations.</p></li>
+<li><p><code>Pr(&gt;F)</code> The permutation p-value: how often
+randomized results are at least as large as the observed F
+statistic.</p></li>
 </ul>
-<p>-<code>Z</code> How far the observed test statistic lies above or
-below its randomized expectation, measured in standard deviations.</p>
-<p><code>Pr(&gt;F)</code> The permutation p-value: how often randomized
-results are at least as large as the observed F statistic.</p>
 <p>To assess the magnitude of the habitat effect, look first at
 <code>Rsq</code>, or <span class="math inline">\(R^2\)</span>. For
-example, an R² of <span class="math inline">\(R^2\)</span> would
+example, an <span class="math inline">\(R^2\)</span> of 0.08 would
 indicate that habitat accounts for 8% of shape variation in the fitted
 model, with the remaining 92% left in the residuals. This does not
 establish that habitat causes those differences, but it tells us how
@@ -1468,7 +1471,7 @@ randomized expectation. A negative <code>Z</code> indicates a
 smaller-than-expected statistic.</p>
 <p>Finally, <code>Pr(&gt;F)</code>, the vaunted p value, provides the
 permutation test of statistical significance. A small p value indicates
-that an F statistic as large as ours is unlikele under the null
+that an F statistic as large as ours is unlikely under the null
 hypothesis. However, statistical significance and effect magnitude are
 different properties. Habitat could explain a small proportion of shape
 variation and still yield a significant result. Therefore, its wise to
@@ -1543,7 +1546,7 @@ fortunately, there seems to be a consensus among us to repeat our
 comparative analysis using a random sample or, ambitiously, all of the
 trees that represent the phylogenetic uncertainty. By repeating an
 analysis, we produce a series of results based on new parameters (i.e.,
-phylogenetic distance) to our model. In this case, the new parameters
+phylogenetic discordence) to our model. In this case, the new parameters
 would come from using any or all of the trees. This establishes what is
 akin to a <a
 href="https://en.wikipedia.org/wiki/Posterior_probability">posterior
@@ -1887,33 +1890,32 @@ repository as an .Rmd document with HTML output that addresses the
 following:</p>
 <ul>
 <li>Establish an array suitable for analysis using the
-<code>geomorph</code> functions outlined above. Construct this from all
-specimens digitized in <a href="data/shark_points.zip">this compressed
-directory</a> and Procrustes align them (<strong>note:</strong> this
-will be available soon after all landmark data are collected).</li>
+<code>StereoMorph</code> and <code>geomorph</code> functions outlined
+above. Construct this from all landmark files in the “shark_landmark”
+directory in your team’s repo. Procrustes align them.</li>
 <li>Does habitat result in the occupation of a different regions of
 morphospace? Please qualitatively answer this question using a
 <code>ggplot</code>-rendered morphospace based on the first two PCs from
 a principal components analysis of your alignment.</li>
-<li>Is there a shape difference between habitats?</li>
+<li>Is there an emperical shape difference between habitats? Please
+assess this emperically using <code>proc.pgls()</code>.<br />
+</li>
 <li>Is the rate of morphological evolution significantly different
 between different habitat types?</li>
 </ul>
-<p>Answer both questions empirically based on results produced through
+<p>Answer these last two questions based on results produced through
 parallelization of your analyses including each of 500 phylogenetic
 trees.</p>
-<p>Specifically . . . 1. For Procrustes PGLS, plot the distribution of
-<span class="math inline">\(R^2\)</span>, report its median and 0.25 and
-00.95 range and the proportion of trees yielding ANOVA p-values below
-0.05. 2. Make sure the distributions of Z values from the Procrustes
-PGLS and of rate estimates are created through parallelization of your
-analyses. 3. Please assess the statistical significance of habitat on
-both distributions using a simple two-sided t-test
-(i.e. <code>t.test()</code>).</p>
+<p>Specifically . . .</p>
 <ul>
-<li>What inferences regarding ecology and behavior can you make
-concerning the relationship between habitat and both shape and rates of
-morphological evolution?</li>
+<li><p>For Procrustes PGLS, plot the distribution of <span
+class="math inline">\(R^2\)</span> and report the proportion of trees
+yielding ANOVA p-values below 0.05.</p></li>
+<li><p>Plot the distribution of evolutionary rate estimates created
+through parallelization of your analyses.</p></li>
+<li><p>Lastly, what inferences regarding ecology and behavior can you
+make concerning the relationship between habitat and both shape and
+rates of morphological evolution?</p></li>
 </ul>
 <p>In answering your questions, your .Rmd should include the following
 components:</p>
@@ -1953,7 +1955,7 @@ the report requirements.</li>
 .csv files, etc.). This means one team member should push the team’s
 submissions to their team’s GitHub directory, i.e., “Module5_Team1”, if
 in Team 1. Project reports should be pushed by 11:59 PM on Sunday,
-October 25th.</p>
+November 1st.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="unnumbered">References</h1>

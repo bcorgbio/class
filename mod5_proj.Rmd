@@ -447,7 +447,7 @@ p1 <- PCA %>%
 p1 + geom_image(data=PC_extremes,aes(Comp1,Comp2,image=imgs), size=.30,inherit.aes = F)+theme_classic()+xlim(range(PC_extremes$Comp1)*1.5)+ylim(range(PC_extremes$Comp2)*1.25)+theme(legend.position = c(0.1,0.2))
 ```
 
-### Analysis: Part II
+### Analysis: Part II: Emperical Assessments of Habitat-driven Shape Differences
 
 Our PCA analysis reveals an interesting pattern. This, however, is not a quantitative assessment *per se*, merely a visual and qualitative result and not dissimilar to the qualitative results reported by @sternes2020body. Several quantitative frameworks for assessing differences in shape exist. The `geomorph` package contains several, but we'll use just one: a phylogenetically informed Procrustes ANOVA. The function `procD.pgls()` will do this for us. Like with our anole project in which we fit univariate traits with PGLS, `procD.pgls()` fits a phylogenetic generalized least-squares model for multivariate data under a Brownian motion model of evolution.
 
@@ -467,7 +467,7 @@ sp <- intersect(phy[[1]]$tip.label,PCA$sp %>% unique)
 phy2 <- keep.tip(phy,sp)
 ```
 
-To undertake the analysis with `procD.pgls()`, we must input the tree of course and a `geomorph.dataframe`, a special data frame that includes the coordinates and variables (i.e., habitat) that will be in the model. But, as we've discussed above, we have several specimens per species and thus multiple observations for each tip in the tree. `procD.pgls()` can't handle that. A common solution to such a problem is to just calculate the mean values of each species. For this, we can turn to a custom function that uses `geomorph`'s `mshape` function to compute the mean shape of each species. It will compute the mean shape for each unique coordinate name, that is, species. Notice here that we reorder the resulting array of mean shapes along its third dimension according to the order of species (`tip.label`) in the tree, a standard practice with comparative methods in R.
+To undertake the analysis with `procD.pgls()`, we must input the tree of course and a `geomorph.dataframe`, a special data frame that includes the coordinates and variables (i.e., habitat) that will be in the model. But, as we've discussed above, we have several specimens per species and thus multiple observations for each tip in the tree. `procD.pgls()` can't handle that. A common solution to such a problem is to just calculate the mean values of each species. For this, we can turn to a custom function that uses `geomorph`'s `mshape()` to compute the mean shape of each species. It will compute the mean shape for each coordinates with the same unique coordinate, that is, species. Notice here that we reorder the resulting array of mean shapes along its third dimension according to the order of species (`tip.label`) in the tree, a standard practice with comparative methods in R.
 
 
 ```{r morphdis,eval=T}
@@ -512,7 +512,7 @@ gdf <- geomorph.data.frame(
 
 ```
 
-We can now move on to the Procrustes PGLS. It will take as input the `geomorph.data.frame`, a model formula, and the tree object stored in it. The model formula follows model fitting conventions in R with `~` and should reflect our question, "Does shape vary according to habitat (i.e., `mean_coords ~ habitat`)?" Lastly, `procD.pgls()` relies on permutations to obtain statistical values, so we must specify the number of permutations with `iter`. A value of 10,000 is plenty. Also note, messy progress messages are suppressed with `print.progress = F`. We can then run an ANOVA on this fitted model.
+We can now move on to the Procrustes PGLS. It will take as input the `geomorph.data.frame`, a model formula, and the tree objects stored in it. The model formula follows model fitting conventions in R with `~` and should reflect our question, "Does shape vary according to habitat (i.e., `mean_coords ~ habitat`)?" Lastly, `procD.pgls()` relies on permutations to obtain statistical values, so we must specify the number of permutations with `iter`. A value of 10,000 is plenty. Also note, messy progress messages are suppressed with `print.progress = F`. We can then run an ANOVA on this fitted model.
 
 ```{r pgls}
 shark_pgls <- procD.pgls(mean_coords ~ habitat, phy = phy, data = gdf, 
@@ -522,8 +522,6 @@ anova(shark_pgls)
 ```
 
 Running `anova(shark_pgls)` produces a table that summarizes the relationship between habitat and body shape while accounting for phylogenetic relatedness. Our main interest is the habitat row, which tests whether benthic and pelagic sharks differ in mean shape. Several columns help us interpret this result.
-
-Column
 
 What does it tell us?
 
@@ -537,15 +535,15 @@ What does it tell us?
 
   - `F` The ratio of the habitat mean square to the residual mean square.
 
-  -`Z` How far the observed test statistic lies above or below its randomized expectation, measured in standard deviations.
+  - `Z` How far the observed test statistic lies above or below its randomized expectation, measured in standard deviations.
 
-  `Pr(>F)` The permutation p-value: how often randomized results are at least as large as the observed F statistic.
+  - `Pr(>F)` The permutation p-value: how often randomized results are at least as large as the observed F statistic.
 
-To assess the magnitude of the habitat effect, look first at `Rsq`, or $R^2$. For example, an R² of $R^2$ would indicate that habitat accounts for 8% of shape variation in the fitted model, with the remaining 92% left in the residuals. This does not establish that habitat causes those differences, but it tells us how much variation is associated with habitat.
+To assess the magnitude of the habitat effect, look first at `Rsq`, or $R^2$. For example, an $R^2$ of 0.08 would indicate that habitat accounts for 8% of shape variation in the fitted model, with the remaining 92% left in the residuals. This does not establish that habitat causes those differences, but it tells us how much variation is associated with habitat.
 
 The `Z` column addresses a much different question: How unusual is the observed effect relative to what we would expect without a habitat effect? A `Z` score of 2 means that the observed log-F statistic is two standard deviations above the mean randomized value. A `Z` near zero indicates a result close to the randomized expectation. A negative `Z` indicates a smaller-than-expected statistic.
 
-Finally, `Pr(>F)`, the vaunted p value, provides the permutation test of statistical significance. A small p value indicates that an F statistic as large as ours is unlikele under the null hypothesis. However, statistical significance and effect magnitude are different properties. Habitat could explain a small proportion of shape variation and still yield a significant result. Therefore, its wise to interpret $R^2$ alongside `Z` and p values
+Finally, `Pr(>F)`, the vaunted p value, provides the permutation test of statistical significance. A small p value indicates that an F statistic as large as ours is unlikely under the null hypothesis. However, statistical significance and effect magnitude are different properties. Habitat could explain a small proportion of shape variation and still yield a significant result. Therefore, its wise to interpret $R^2$ alongside `Z` and p values
 
 Because our analysis includes 500 alternative phylogenetic trees, we should also ask whether these conclusions depend on the tree used. More on that later. Nonetheless, based on analysis using one of the trees and for this limited data set of ~50 species, there's no significant difference in mean shape between habitat groups.
 
@@ -571,7 +569,7 @@ So it appears that neither of the groups is faster than the other (*p=0.98*). Bu
 
 Also notice that in our rate analysis and Procrustes PGLS, we used only one tree in this list (`phy=phy2[[1]]`). There are 499 other trees we could have used, perhaps each representing a different phylogenetic hypothesis. The results of a comparative analysis like this could, and likely will, vary according to the phylogenetic hypothesis used in it. So what to do? 
 
-This is a common problem faced by comparative biologists and, fortunately, there seems to be a consensus among us to repeat our comparative analysis using a random sample or, ambitiously, all of the trees that represent the phylogenetic uncertainty. By repeating an analysis, we produce a series of results based on new parameters (i.e., phylogenetic distance) to our model. In this case, the new parameters would come from using any or all of the trees. This establishes what is akin to a [posterior sample](https://en.wikipedia.org/wiki/Posterior_probability) and from this we can extract a posterior distribution of estimates, in our case, a distribution of evolutionary rates.
+This is a common problem faced by comparative biologists and, fortunately, there seems to be a consensus among us to repeat our comparative analysis using a random sample or, ambitiously, all of the trees that represent the phylogenetic uncertainty. By repeating an analysis, we produce a series of results based on new parameters (i.e., phylogenetic discordence) to our model. In this case, the new parameters would come from using any or all of the trees. This establishes what is akin to a [posterior sample](https://en.wikipedia.org/wiki/Posterior_probability) and from this we can extract a posterior distribution of estimates, in our case, a distribution of evolutionary rates.
 
 Therefore, we have before us the proposition of repeating our analysis, let's say 10 times. To do this, we could randomly sample 10 of the trees and build a posterior distribution of evolutionary rates using a `for` loop. 
 
@@ -759,20 +757,20 @@ Thus, this framework looks like it could really speed up our estimation of body 
 
 Please submit your report and all associated data to your team GitHub repository as an .Rmd document with HTML output that addresses the following:
 
-
-  * Establish an array suitable for analysis using the `geomorph` functions outlined above. Construct this from all specimens digitized in [this compressed directory](data/shark_points.zip) and Procrustes align them (**note:** this will be available soon after all landmark data are collected).
+  * Establish an array suitable for analysis using the `StereoMorph` and `geomorph` functions outlined above. Construct this from all landmark files in the "shark_landmark" directory in your team's repo. Procrustes align them.
   * Does habitat result in the occupation of a different regions of morphospace? Please qualitatively answer this question using a `ggplot`-rendered morphospace based on the first two PCs from a principal components analysis of your alignment.
-  * Is there a shape difference between habitats?
+  * Is there an emperical shape difference between habitats? Please assess this emperically using `proc.pgls()`.  
   * Is the rate of morphological evolution significantly different between different habitat types?
 
-Answer these last two questions empirically based on results produced through parallelization of your analyses including each of 500 phylogenetic trees. 
+Answer these last two questions based on results produced through parallelization of your analyses including each of 500 phylogenetic trees. 
 
 Specifically . . .
-    1. For Procrustes PGLS, plot the distribution of $R^2$ and report the proportion of trees yielding ANOVA p-values below 0.05. 
-    2. Plot the distribution of evolutionary rate estimates created through parallelization of your analyses.
+
+  * For Procrustes PGLS, plot the distribution of $R^2$ and report the proportion of trees yielding ANOVA p-values below 0.05. 
+  * Plot the distribution of evolutionary rate estimates created through parallelization of your analyses.
   
     
-  * What inferences regarding ecology and behavior can you make concerning the relationship between habitat and both shape and rates of morphological evolution? 
+  * Lastly, what inferences regarding ecology and behavior can you make concerning the relationship between habitat and both shape and rates of morphological evolution? 
 
 
 
@@ -787,7 +785,7 @@ In answering your questions, your .Rmd should include the following components:
       + Author contributions: Briefly outline what each team member contributed to the project.
       + AI-use statement: Briefly state how AI was used in the completion of the report requirements.
 
-**Each team should push one report Rmd**  as "Module5_TeamX.Rmd" where "X" is the team number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's GitHub directory, i.e., "Module5_Team1", if in Team 1. Project reports should be pushed by 11:59 PM on Sunday, October 25th.
+**Each team should push one report Rmd**  as "Module5_TeamX.Rmd" where "X" is the team number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's GitHub directory, i.e., "Module5_Team1", if in Team 1. Project reports should be pushed by 11:59 PM on Sunday, November 1st.
 
 # References
 
