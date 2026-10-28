@@ -485,20 +485,20 @@ pseed &lt;- read_csv(&quot;pseed.fin.amps.csv&quot;)</code></pre>
 data files rather than <code>read.csv()</code>. <code>read_csv()</code>
 from the <code>tidyverse</code> package <code>readr</code> is identical
 to <code>read.csv()</code>. However, it loads data as a tibble, an
-object like a data.frame but one that works seamlessly with the other
+object like a data frame, but one that works seamlessly with the other
 functions contained in <code>tidyverse</code>.</p>
 <center>
 <iframe width="460" height="315" src="https://www.youtube.com/embed/xYEJThBVoXM" frameborder="0" allowfullscreen>
 </iframe>
 </center>
 <p><br></p>
-<p>The data loaded to <code>pseed</code> are amplitudes of pectoral fin
-oscillations (i.e., fin beats) from two pumpkinseeds swimming across a
-range of speeds in a swim tunnel. Points on the pectoral fin (red dots
-in the video above) were tracked frame by frame automatically from video
-files in R with the package <code>trackter</code>. The video above
-represents 100 frames or so from one experiment. The data set includes
-the following columns:</p>
+<p>The data loaded to <code>pseed</code> are time-resolved amplitudes of
+pectoral fin oscillations (i.e., fin beats) from two pumpkinseeds
+swimming across a range of speeds in a swim tunnel. Points on the
+pectoral fin (red dots in the video above) were tracked frame by frame
+automatically from video files in R with the package
+<code>trackter</code>. The video above represents 100 frames or so from
+one experiment. The data set includes the following columns:</p>
 <ul>
 <li><code>fish</code>: The fish number in the experiment.</li>
 <li><code>speed</code>: The voltage sent to the motor driving the prop
@@ -516,10 +516,10 @@ recorded.</li>
 body length (BL<span class="math inline">\(^{-1}\)</span>).</li>
 </ul>
 <p>This data set doesn’t include important information about the data,
-including the size of each specimen and what water speeds the motor
-speeds resulted in. These are critical data. For instance, data for
-locomotor speed are often reported as <em>specific speeds</em>, i.e.,
-body lengths per second (BL<span
+including the size of each specimen and what water (i.e., locomotor)
+speeds the motor speeds produced. These are critical data. For instance,
+data for locomotor speed are often reported as <em>specific speeds</em>,
+i.e., body lengths per second (BL<span
 class="math inline">\(\cdot\)</span>s<span
 class="math inline">\(^{-1}\)</span>) by physiologists to control for
 the difference in size between organisms. Using motor voltage wouldn’t
@@ -536,8 +536,8 @@ columns <code>fish</code>, the specimen number, and <code>bl</code>, the
 body length in cm. The calibrated speed in cm<span
 class="math inline">\(\cdot\)</span>s<span
 class="math inline">\(^{-1}\)</span> of the flow tank according to motor
-RPM is contained in the “pseed.calibration.csv” file that we passed to
-the <code>speeds</code> variable. The columns in <code>speeds</code>
+voltage is contained in the “pseed.calibration.csv” file that we passed
+to the <code>speeds</code> variable. The columns in <code>speeds</code>
 include <code>vol</code>, the motor voltage, <code>m.s</code> and
 <code>cm.s</code> the water speed inside the flow tank resulting from
 that voltage in in m<span class="math inline">\(\cdot\)</span>s<span
@@ -565,7 +565,7 @@ common attributes, known as keys, we can combine data to ask and answer
 a more expansive array of questions. In the context of analysis of data
 from scientific experiments, we often have many data files, including
 one that contains the results of the experiments and others that contain
-important data not recorded in the course of the experiments but that
+important data not recorded in the course of the experiments, but that
 are essential to analysis.</p>
 <p>Consider the pectoral-fin data we loaded and the goals we have. Our
 main results table in <code>pseed</code> contains the the amplitude of
@@ -638,25 +638,23 @@ table that, based on the key values will add the remaining
 table on its left.</p>
 <p>Fortunately, the powerful data analysis package <code>dplyr</code> in
 the <code>tidyverse</code> has a join function for just such an
-operation: <code>join_left()</code>, joining new data to left data.
+operation: <code>left_join()</code>, joining new data to left data.
 Here’s how this works:</p>
 <pre class="r"><code>pseed2 &lt;- pseed%&gt;%
-  left_join(speeds,by=c(&quot;speed&quot;=&quot;vol&quot;))%&gt;%
+  left_join(speeds,by=c(&quot;speed&quot;=&quot;vol&quot;))
+
+pseed2 %&gt;% 
+  head %&gt;% 
   print()</code></pre>
-<pre><code>## # A tibble: 73,352 × 9
-##    fish   speed frame date                amp fin   amp.bl   m.s  cm.s
-##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Pseed5    43     0 2019-06-17-151149  88.3 L      0.167  0.11    11
-##  2 Pseed5    43     0 2019-06-17-151149 101.  R      0.190  0.11    11
-##  3 Pseed5    43     1 2019-06-17-151149  83.2 L      0.157  0.11    11
-##  4 Pseed5    43     1 2019-06-17-151149  99.4 R      0.188  0.11    11
-##  5 Pseed5    43     2 2019-06-17-151149  81.1 L      0.154  0.11    11
-##  6 Pseed5    43     2 2019-06-17-151149  97.0 R      0.184  0.11    11
-##  7 Pseed5    43     3 2019-06-17-151149  66.2 L      0.125  0.11    11
-##  8 Pseed5    43     3 2019-06-17-151149  92.9 R      0.176  0.11    11
-##  9 Pseed5    43     4 2019-06-17-151149  68.6 L      0.130  0.11    11
-## 10 Pseed5    43     4 2019-06-17-151149  88.8 R      0.168  0.11    11
-## # ℹ 73,342 more rows</code></pre>
+<pre><code>## # A tibble: 6 × 9
+##   fish   speed frame date                amp fin   amp.bl   m.s  cm.s
+##   &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Pseed5    43     0 2019-06-17-151149  88.3 L      0.167  0.11    11
+## 2 Pseed5    43     0 2019-06-17-151149 101.  R      0.190  0.11    11
+## 3 Pseed5    43     1 2019-06-17-151149  83.2 L      0.157  0.11    11
+## 4 Pseed5    43     1 2019-06-17-151149  99.4 R      0.188  0.11    11
+## 5 Pseed5    43     2 2019-06-17-151149  81.1 L      0.154  0.11    11
+## 6 Pseed5    43     2 2019-06-17-151149  97.0 R      0.184  0.11    11</code></pre>
 <p>Here we create a new tibble by passing <code>pseed</code> with the
 pipe <code>%&gt;%</code> to a <code>left_join()</code> function. The
 <code>left_join()</code> operation takes the <code>speeds</code> table
@@ -664,11 +662,11 @@ and joins it leftward to the <code>pseed</code> table. The
 <code>by</code> parameter specifies by what columns to join the tables,
 i.e., the key values for each. Notice that the names of the key values
 are different because the key columns have different names in
-<code>pseed</code> and <code>speeds</code>. With <code>print()</code>,
-we printed the new table, complete with <code>m.s</code> and
-<code>cm.s</code> columns. Notice that there’s no <code>vol</code>
-column added from the <code>speeds</code> table. Voila, almost
-there.</p>
+<code>pseed</code> and <code>speeds</code>. With <code>head()</code> and
+<code>print()</code>, we printed the first few rows of the new table,
+complete with <code>m.s</code> and <code>cm.s</code> columns. Notice
+that there’s no <code>vol</code> column added from the
+<code>speeds</code> table. Voila, almost there.</p>
 </div>
 <div id="mutation-adding-data-to-data-from-its-own-data"
 class="section level1">
@@ -729,22 +727,20 @@ with the results tibble <code>pseed2</code> using
 <code>left_join()</code> again. Notice we’ll redefine
 <code>pseed2</code> as this new merged tibble:</p>
 <pre class="r"><code>pseed2 &lt;- pseed2%&gt;%
-  left_join(pseed.bl,by=&quot;fish&quot;)%&gt;%
+  left_join(pseed.bl,by=&quot;fish&quot;)
+
+pseed2 %&gt;% 
+  head() %&gt;% 
   print()</code></pre>
-<pre><code>## # A tibble: 73,352 × 10
-##    fish   speed frame date                amp fin   amp.bl   m.s  cm.s    bl
-##    &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Pseed5    43     0 2019-06-17-151149  88.3 L      0.167  0.11    11  12.7
-##  2 Pseed5    43     0 2019-06-17-151149 101.  R      0.190  0.11    11  12.7
-##  3 Pseed5    43     1 2019-06-17-151149  83.2 L      0.157  0.11    11  12.7
-##  4 Pseed5    43     1 2019-06-17-151149  99.4 R      0.188  0.11    11  12.7
-##  5 Pseed5    43     2 2019-06-17-151149  81.1 L      0.154  0.11    11  12.7
-##  6 Pseed5    43     2 2019-06-17-151149  97.0 R      0.184  0.11    11  12.7
-##  7 Pseed5    43     3 2019-06-17-151149  66.2 L      0.125  0.11    11  12.7
-##  8 Pseed5    43     3 2019-06-17-151149  92.9 R      0.176  0.11    11  12.7
-##  9 Pseed5    43     4 2019-06-17-151149  68.6 L      0.130  0.11    11  12.7
-## 10 Pseed5    43     4 2019-06-17-151149  88.8 R      0.168  0.11    11  12.7
-## # ℹ 73,342 more rows</code></pre>
+<pre><code>## # A tibble: 6 × 10
+##   fish   speed frame date                amp fin   amp.bl   m.s  cm.s    bl
+##   &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Pseed5    43     0 2019-06-17-151149  88.3 L      0.167  0.11    11  12.7
+## 2 Pseed5    43     0 2019-06-17-151149 101.  R      0.190  0.11    11  12.7
+## 3 Pseed5    43     1 2019-06-17-151149  83.2 L      0.157  0.11    11  12.7
+## 4 Pseed5    43     1 2019-06-17-151149  99.4 R      0.188  0.11    11  12.7
+## 5 Pseed5    43     2 2019-06-17-151149  81.1 L      0.154  0.11    11  12.7
+## 6 Pseed5    43     2 2019-06-17-151149  97.0 R      0.184  0.11    11  12.7</code></pre>
 <p>We now have BL in cm stored in a <code>bl</code> column. Now we need
 to compute specific speed in BL<span
 class="math inline">\(\cdot\)</span>s<span
@@ -782,16 +778,17 @@ included in <code>tidyverse</code> to plot specific fin amplitude
 (<code>amp.bl</code>) against specific swimming speed
 (<code>bl.s</code>).</p>
 <pre class="r"><code>pseed2%&gt;%
-  ggplot(aes(x=bl.s,y=amp.bl))+geom_point()</code></pre>
+  ggplot(aes(x=bl.s,y=amp.bl))+
+  geom_point()</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-7-1.png" alt="" width="672" /></p>
 <p>First of all, this is some sort of a mess: just a bunch of points for
 each speed. But, let’s briefly breakdown what we did with
 <code>ggplot</code> (in our next module, we’ll go into more specifics).
 We passed <code>pseed2</code> to a new plot with <code>ggplot()</code>
 and specified what it should look like with the <code>aes()</code>
-parameter. This is the aesthetic of the plot. Specifically, we want the
-x axis to reflect <code>bl.s</code> values in <code>pseed2</code> and
-the y axis to reflect <code>amp.bl</code>. To this we added a geometry
+function. This is the aesthetic of the plot. Specifically, we want the x
+axis to reflect <code>bl.s</code> values in <code>pseed2</code> and the
+y axis to reflect <code>amp.bl</code>. To this, we added a geometry
 layer, a specific type of plot, in this case, a scatter or point plot
 with <code>geom_point()</code>.</p>
 <div class="green">
@@ -803,7 +800,8 @@ with <code>geom_point()</code>.</p>
 <div class="col-sm-9">
 <p>We haven’t spent much time discussing the ins and out of
 <code>ggplot</code>. That will come in the next module. So for now,
-don’t worry too much about it’s grammar and seemingly odd mechanics.</p>
+don’t worry too much about it’s grammar and seemingly odd mechanics.
+This will make much more sense very soon.</p>
 </div>
 </div>
 </div>
@@ -829,22 +827,23 @@ the <code>filter()</code> function. Let’s look at the amplitude over
 each frame by plotting these values.</p>
 <pre class="r"><code>pseed2%&gt;%
   filter(date==&quot;2019-06-17-151149&quot;, fin==&quot;L&quot;)%&gt;%
-  ggplot(aes(x=frame,y=amp.bl))+geom_point()</code></pre>
+  ggplot(aes(x=frame,y=amp.bl))+
+  geom_point()</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-9-1.png" alt="" width="672" /></p>
 <p>Yep, the fin amplitude is oscillating for sure, just like you would
-predict a flapping fin would. Maybe it’s not simply amplitude we should
-be looking at.</p>
+predict a flapping fin would. Maybe it’s not simply all amplitudes we
+should be looking at.</p>
 </div>
 <div id="using-customized-functions" class="section level1">
 <h1>Using Customized Functions</h1>
-<p>Maybe it’s not simply amplitude we care about. In the the plot above,
-we see that the pectoral fin is oscillating like a sine wave. Perhaps we
-should look at the <em>max</em> amplitude across speeds. The max
-amplitude corresponds to the peak of each wave. But how do we find this
-value? One part of the power of scripting in R is that someone has
+<p>Maybe it’s not simply all amplitudes we care about. In the the plot
+above, we see that the pectoral fin is oscillating like a sine wave.
+Perhaps we should look at the <em>max</em> amplitude across speeds. The
+max amplitude corresponds to the peak of each wave. But how do we find
+this value? One part of the power of scripting in R is that someone has
 probably written a package to do just what you want to do. Another
-powerful aspect of R is that you can write customized functions from
-these packages to suit your needs.</p>
+powerful aspect of R is that you can write customized functions that use
+fuctions from these packages to suit your needs.</p>
 <p>The R package <code>features</code> is super handy here. It’s main
 function <code>features()</code>, so cleverly named, can find local
 minima and maxima (i.e., peaks and troughs) of curvy data. Install and
@@ -1000,11 +999,15 @@ gave us with the <code>fget()</code> function in <code>features</code>
 ## $outlier
 ##  [1]   3  45  92 118 137 138 174 175 177 218 304</code></pre>
 <p><code>fget()</code> tells us that there are 24 critical points (where
-the curvature (i.e., second derivative) of the curve is 0) in the
-“crit.pts<code>output. Let's plot  vertical lines that correspond to the critical points over our original plot of the first experimnet's</code>amp.bl<code>vs.</code>frame`:</p>
+the curvature, i.e., second derivative, of the curve is 0) in the
+<code>crit.pts</code> output. Let’s plot vertical lines that correspond
+to the critical points over our original plot of the first experimnet’s
+<code>amp.bl</code> vs. <code>frame</code>:</p>
 <pre class="r"><code>pseed2%&gt;%
   filter(date==&quot;2019-06-17-151149&quot;, fin==&quot;L&quot;)%&gt;%
-  ggplot(aes(x=frame,y=amp.bl))+geom_point()+geom_vline(xintercept = fget(f1)$crit.pts)</code></pre>
+  ggplot(aes(x=frame,y=amp.bl))+
+  geom_point()+
+  geom_vline(xintercept = fget(f1)$crit.pts)</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-14-1.png" alt="" width="672" /></p>
 <p>This is pretty good. We get all the peaks (the maxima of amplitude
 we’re after). We’re missing some troughs and have a few lines close to
@@ -1074,7 +1077,8 @@ operation of <code>crit.pts</code>.</p>
 <pre class="r"><code>pseed2%&gt;%
   filter(date==&quot;2019-06-17-151149&quot;, fin==&quot;L&quot;)%&gt;%
   mutate(peak=frame %in% f.tib$peaks)%&gt;%
-  ggplot(aes(x=frame,y=amp.bl,col=peak))+geom_point()</code></pre>
+  ggplot(aes(x=frame,y=amp.bl,col=peak))+
+  geom_point()</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-17-1.png" alt="" width="672" /></p>
 <p>Looks like we have a rather sophisticated and reliable way to find
 peaks in the amplitude data that we can then use to calculate the max
@@ -1082,7 +1086,8 @@ amplitude across a set of frames while the fin is oscillating. However,
 we’ve just done this for one experiment and there are how many
 experiments?</p>
 <pre class="r"><code>pseed2%&gt;%
-  summarize(n=length(unique(date)))</code></pre>
+  distinct(date) %&gt;% 
+  count()</code></pre>
 <pre><code>## # A tibble: 1 × 1
 ##       n
 ##   &lt;int&gt;
@@ -1105,10 +1110,10 @@ f &lt;- fget(features2(x = x,y=y*mult))[2:3]%&gt;% #store results in `f` and com
   mutate(peaks=round(crit.pts,0))
  return(f$peaks) # return the peaks from tibble
 }</code></pre>
-<p>Here we define the function’s parameters, and then between
-<code>{}</code>, ask r to perform some operations on these inputs.
-Lastly, before the <code>}</code>, we ask R to return some value (the
-peaks).</p>
+<p>Here we define the function’s arguments (i.e. the inputs), and then
+between <code>{}</code>, ask r to perform some operations on these
+inputs. Lastly, before the <code>}</code>, we ask R to return some value
+(the peaks).</p>
 <p>Let’s now see how this function works on our data set
 <code>pseed2</code>. Remember, we have 50 experiments and two fins and
 even though passing a function to groups using <code>dplyr</code> is
@@ -1120,7 +1125,9 @@ run the following and break it down.</p>
   filter(date%in%unique(date)[1:3])%&gt;%
   group_by(date,fin)%&gt;%
   mutate(peak=frame %in% find.peaks(frame,amp.bl))%&gt;%
-  ggplot(aes(x=frame,y=amp.bl,alpha=peak,col=peak))+geom_point()+facet_grid(date~fin)</code></pre>
+  ggplot(aes(x=frame,y=amp.bl,alpha=peak,col=peak))+
+  geom_point()+
+  facet_grid(date~fin)</code></pre>
 <pre><code>## Warning: Using alpha for a discrete variable is not advised.</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-20-1.png" alt="" width="672" /></p>
 <p>After the filter, we:</p>
@@ -1158,7 +1165,9 @@ peak of each oscillation. Let’s come back to our original question:
 amplitude against specific swimming speed and adding a smooth line that
 represents a linear regression model (<code>method="lm"</code>).</p>
 <pre class="r"><code>pseed.max%&gt;%
-  ggplot(aes(x=bl.s,y=amp.bl))+geom_point()+geom_smooth(method=&quot;lm&quot;)</code></pre>
+  ggplot(aes(x=bl.s,y=amp.bl))+
+  geom_point()+
+  geom_smooth(method=&quot;lm&quot;)</code></pre>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
 <p><img src="mod2_proj_files/figure-html/unnamed-chunk-22-1.png" alt="" width="672" /></p>
 <p>There we have it. It’s a little noisy, but it looks like amplitude
@@ -1202,7 +1211,9 @@ regression line for each fish. Something like:</p>
 <pre class="r"><code>pseed.max %&gt;%
   group_by(fish, bl.s) %&gt;%
   summarize(mean.max=mean(amp.bl)) %&gt;%
-  ggplot(aes(x=bl.s,y=mean.max,col=fish))+geom_point()+geom_smooth(method=&quot;lm&quot;)</code></pre>
+  ggplot(aes(x=bl.s,y=mean.max,col=fish))+
+  geom_point()+
+  geom_smooth(method=&quot;lm&quot;)</code></pre>
 <pre><code>## `summarise()` has regrouped the output.
 ## `geom_smooth()` using formula = &#39;y ~ x&#39;
 ## ℹ Summaries were computed grouped by fish and bl.s.
@@ -1323,7 +1334,7 @@ amplitude data, <code>L</code> and <code>R</code>.</li>
 <li>Lastly, we add our new column <code>amp.sum</code> using
 <code>mutate()</code>.</li>
 </ol>
-<p>You’re now ready to take the rains and repeat our previous analyses
+<p>You’re now ready to take the reins and repeat our previous analyses
 using the <code>amp.sum</code> data to answer the question, <strong>How
 does the sum of amplitude of both fins vary over our range of
 speeds?</strong></p>
@@ -1344,15 +1355,15 @@ you can establish the <code>pseed.wide</code> data tibble.</li>
 mean (SE). [see #3 and below]</li>
 <li>Compute the mean <strong>maximum</strong>* of <strong>all</strong>
 the <code>amp.sum</code>s across all fin-beat cycles for each specific
-swimming speed for each fish just like we did for mean maximum amplitude
-of each fin (i.e., the mean of all the max amplitudes across all cycles
-for each experiment for each fish). Make sure this is contained in a new
+swimming speed and fish just like we did for mean maximum amplitude of
+each fin (i.e., the mean of all the max amplitudes across all cycles for
+each experiment for each fish). Make sure this is contained in a new
 tibble named <code>pseed.sum.max</code>. Call this column
 <code>amp.sum.mean</code>.</li>
 <li>While establishing <code>pseed.sum.max</code>, add a column to your
 summary table <code>pseed.sum.max</code> for SE and call it
 <code>amp.sum.se</code>.</li>
-<li>Using <code>ggplot</code>, plot the mean <code>amp.sum</code>
+<li>Using <code>ggplot</code>, plot the mean <code>amp.sum.mean</code>
 vs. specific swimming speed and <a
 href="http://www.cookbook-r.com/Graphs/Plotting_means_and_error_bars_(ggplot2)/">add
 error bars</a> that correspond to the SE of <code>amp.sum</code>. Be
@@ -1364,7 +1375,7 @@ tibble and merge it with the your new <code>pseed.sum.max</code> tibble.
 fish vs. mean maximum of <code>amp.sum</code>.
 <!-- should be the mean metabolic power vs. mean maximum of amp.sum. This confused folks the first two--></li>
 <li>Include the code for all the tasks listed above in the
-“yourname_module2.R” script and push it to your teams repo.</li>
+“Firts_Last_module2.R” script and push it to your teams repo.</li>
 <li>A commented section of text that serves as the <a
 href="phaseI_rubric.html">AI-use statement</a>.</li>
 </ol>

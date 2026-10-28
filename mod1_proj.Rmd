@@ -10,9 +10,10 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 # Introduction
 
-Now that we've been introduced to R and its important properties, lets now explore how this knowledge can be put to use in the context of data and a workflow more typical in organismal biology. For this project, we'll be looking at scale puncture data from Prof. Kenaley's lab. Briefly, these data come from experiments in which we used a motorized probe and force transducer to study how much force it takes to puncture fish scales from various locations on several species of fishes. The goal of analyzing these data is to assess if the magnitude of scale puncture resistance varies over the body and according to species. This data set is rather large (>1800 experiments!), but eminently suited for work in R (i.e., your head would spin trying to any of the following operations in Excel, say).  
+Now that we've been introduced to R and its important properties, let's explore how this knowledge can be put to use in the context of data and a workflow more typical in organismal biology. For this project, we'll be looking at scale puncture data from Prof. Kenaley's lab. Briefly, these data come from experiments in which we used a motorized probe and force transducer to study how much force it takes to puncture fish scales. The goal of analyzing these data is to assess if the magnitude of scale puncture resistance varies over the body and according to species. This data set is rather large (>1800 experiments!), but eminently suited for work in R (i.e., your head would spin trying to any of the following operations in Excel, say).  
 
 # Set Up
+
 Let's first download these data as .csv file from [this link](scales.csv). **Don't open the file in Excel** or some other program. If your OS does so automatically, just close the file without making any changes. The file in most cases will be automatically downloaded to a "downloads" directory (i.e., folder). Copy or move this file to a new directory, perhaps one named "scales" in a folder for this and other BIOL 3140 projects.
 
 Open R Studio and create a new script (File->New->R script, see below). Save it (File->Save) with an appropriate title in your new "scales" directory. 
@@ -21,7 +22,7 @@ Open R Studio and create a new script (File->New->R script, see below). Save it 
 </center>
 <br>
 
-To this new R script, let's add our first lines of code. It's a general convention that we load the libraries of R packages that we want to use in the R session (i.e., when R Studio is running R). Without doing so, if you call functions that aren't loaded in base R, you'll encounter an error. For this project and script, we need `ggplot`, a handy plotting package and `tidyverse`, a collection of data analysis packages. Make sure you've installed them, something you should have done will reading and working with HOPR. These initial lines of code would look like this:
+To this new R script, let's add our first lines of code. It's a general convention that we load the libraries of R packages that we want to use in the R session (i.e., when R Studio is running R). Without doing so, if you call functions that aren't loaded in base R, you'll encounter an error. For this project and script, we need `ggplot2`, a handy plotting package and `tidyverse`, a collection of data analysis packages. Make sure you've installed them, something you should have done will reading and working with HOPR. These initial lines of code would look like this:
 
 ```{r,results="hide",warning=FALSE}
 library(ggplot2)
@@ -37,7 +38,7 @@ Go ahead and just copy and paste these line into your script at line 1.  Notice 
 
 The console is where you see what's happening or has happened in the R session. Go to the console and type in `library(ggplot2)` and hit return. You've just asked R to load the `ggplot2` library, but because it's already loaded, you won't get any red text in response. Working in the console rather than running code line by line in the script or compiling the whole script can be handy, especially when you just want to do simple things that you don't want saved in the script. For instance, type `5000/3` into the console and hit return. Notice you get your answer: 1666.667.
 
-Let's move on to another convention of writing an R script: setting the working directory. This is perhaps the most important step when working with external data in R (and doing so many other important tasks, like saving outputs from analyses, e.g., figures, tables, etc.). The working directory is a way of telling R where to find and save things. Without this input, R won't know where to find or place important objects like data or figures, respectively. 
+Let's move on to another convention of writing an R script: setting the working directory. This is an important step when working with external data in R (and doing so many other important tasks, like saving outputs from analyses, e.g., figures, tables, etc.). The working directory is a way of telling R where to find and save things. Without this input, R won't know where to find or place important objects like data or figures, respectively. 
 
 <div class = "green">
 <div class="row">
@@ -50,7 +51,7 @@ Let's move on to another convention of writing an R script: setting the working 
 
 To perform this all important task, we'll include a `setwd()` command. This function merely needs a text string that stipulates the path of the directory you want to work in. The path may look something like, "~/Chris/Documents/bc/3140/scales". **Note: This will be unique to almost everyone**, that is, we all have different naming conventions for our folders on our computers. My name is Chris, I have a documents folder that contains a "bc" directory, which contains a "3140" directory, which, in turn, contains the "scales" directory I want to work in.
 
-At first, typing in the text of a path may be confusing and less than intuitive. If this is the case, there's a hack. In R studio, just click on "Session->Set Working Directory->Choose Directory" and, in the file browser window, select the directory you want to work in (say "scales" in this case) and press the "OPEN" icon. This will set the working directory to "scales". Notice that in the console, a `setwd()` command has been entered and run, complete with the file path. This file path will be the working directory for the script until you change it through the same approach or close R Studio. When you open your script in R Studio again, you'll have to set the directory again as well. To avoid this cumbersome step each time you start up R and R Studio, just copy and paste the `setwd()` command from the console into you script. Now your script should look something like the following but with your own unique directory path to the working directory:
+At first, typing in the text of a path may be confusing and less than intuitive. If this is the case, there's a hack. In R studio, just click on "Session->Set Working Directory->Choose Directory" and, in the file browser window, select the directory you want to work in (say "scales" in this case) and press the "OPEN" icon. This will set the working directory to "scales". Notice that in the console, a `setwd()` command has been entered and run, complete with the file path. This file path will be the working directory for the script until you change it through the same approach or close R Studio and your R session. When you open your script in R Studio again, you'll have to set the directory again as well. To avoid this cumbersome step each time you start up R and R Studio, just copy and paste the `setwd()` command from the console into you script. Now your script should look something like the following but with your own unique directory path to the working directory:
 
 
 ```{r,eval=FALSE}
@@ -123,13 +124,13 @@ mean(dat$quadrant)
 
 Notice that R tells you that mean can't be computed on "quadrant" because it is not numeric. 
 
-OK, so now we've learned what classes of data we have, but we've done so in no fewer than four lines of code representing operations on each of the columns. The power or R and other programming languages is that there's almost always a faster and simpler way of doing things. In this case, we can inspect the class of out data in just one line using `sapply()`.
+OK, so now we've learned what classes of data we have, but we've done so in no fewer than four lines of code representing operations on each of the columns. The power of R and other programming languages is that there's almost always a faster and simpler way of doing things. In this case, we can inspect the class of out data in just one line using `sapply()`.
 
 ```{r}
 sapply(dat,class)
 ```
 
-Easy peasy with `sapply()`. Have a look at `?sapply()`, the help entry, which explains that this function applies another function over a vector. In the case of data frames, `sapply()` applies a functions over a vector of columns by default. This is considerably more tidy and speedy than subsetting columns and repeating procedures over each. 
+Easy peasy. Have a look at `?sapply()`, the help entry, which explains that this function applies another function over a vector. In the case of data frames, `sapply()` applies a functions over a vector of columns by default. This is considerably more tidy and speedy than subsetting columns and repeating procedures over each. 
 
 <div class = "green">
 <div class="row">
@@ -142,7 +143,7 @@ Easy peasy with `sapply()`. Have a look at `?sapply()`, the help entry, which ex
 
 # Simple Operations: Summarizing
 
-Now that we know what sort of data and how much of it we have, let's do some simple operations that a biologist might perform ahead of any analysis. Consider what additional and important things we want to know about our data. How many species are in our data set? How many specimens per species were included? How many observations (punctures) are there for each species? Yes, Yes, and Yes. These and other questions about the make up of your data can be answered through summarizations.
+Now that we know what sort of data and how much of it we have, let's do some simple operations that a biologist might perform ahead of an analysis. Consider what additional and important things we want to know about our data, for instance: How many species are in our data set? How many specimens per species were included? How many observations (punctures) are there for each species? Yes, Yes, and Yes. These and other questions about your data can be answered through summarizations.
 
 Let's start with how many species we have. Because we're working with a character class for the species column, we first want to change that to a factor. As we've learned from HOPR, factors have levels,i.e., unqique values. This is exaclty what we want: to find the unique values for species. So let's convert this column to a factor, then we can inspect the levels. To change the column class to a factor and then reveal the levels in factor-type data, we simply redefine the column and then pass those data through `levels`:
 
@@ -165,7 +166,7 @@ Because we have the levels (all unique values) of species stored, let's use that
 dat$species==species[1]
 ```
 
-Have a look at the result in the console (I'm not showing the output here, because . . .). You should see hundreds of logical values, `TRUE` and `FALSE` with many `TRUE`'s at first. This indicates that the first 300 or so values for the "species" column matches "A. rupestris". Now we can nest these logical values within the "species" vector (column) to return only those values that match "A. rupestris", like so:
+Have a look at the result in the console. You should see hundreds of logical values, `TRUE` and `FALSE` with many `TRUE`'s at first. This indicates that the first 300 or so values for the "species" column matches "A. rupestris". Now we can nest these logical values within the "species" vector (column) to return only those values that match "A. rupestris", like so:
 
 ```{r,results='hide'}
 dat$species[dat$species==species[1]]
@@ -186,35 +187,45 @@ species.obs <- data.frame(sp=species,n=c(A.rup,L.gib,L.mac,M.sal,M.sax,P.fla))
 species.obs
 ``` 
 
-There we have it, the number of observations/punctures for each species. Pretty evenly distributed, so not to worry about widely uneven sample sizes. This is great, but, this took many lines of code and some "hard coding", that is, explicitly inputting a value. The hard coding issue here is with typing in the numeric potion ("1", "2", "3", etc.) for each entry in our "species" variable. This is a drag and opens the door to mistakes. Why not let R do the iterations for you? 
+There we have it, the number of observations/punctures for each species. Pretty evenly distributed, so not to worry about widely uneven sample sizes. This is great, but, this took many lines of code and some "hard coding", that is, explicitly inputting values (e.g., `species[1]`, etc.) rather than using the code to find those values. The hard coding issue here is with typing in the numeric potion ("1", "2", "3", etc.) for each entry in our "species" variable. This is a drag and opens the door to mistakes. Why not let R do the iterations for you? 
 
-As we're learning, summarizing data is an important step in any analysis. Fortunately, succinct methods and operations in R for summarizing exist in several popular packages. Perhaps the most widely used are those curated in "tidyverse", a set of R packages designed for data science. All the packages in tidyverse share an underlying design philosophy, grammar (what the functions looks like and ask for), and data structures, making it a one stop shopping experience for data analysis. We'll introduce how to summarize data using functions from tidyverse here and move on to more involved operations using tidyverse in the next module. Should should already have tidyverse installed and loaded.
+As we're learning, summarizing data is an important step in any analysis. Fortunately, succinct methods and operations in R for summarizing exist in several popular packages. Perhaps the most widely used are those curated in `tidyverse`, a set of R packages designed for data science. All the packages in `tidyverse` share an underlying design philosophy, grammar (what the functions looks like and ask for), and data structures, making it a one stop shopping experience for data analysis. We'll introduce how to summarize data using functions from `tidyverse` here and move on to more involved operations using `tidyverse` in the next module. We should already have `tidyverse` installed and loaded.
 
-tidyverse includes the `dplyr` package, a super helpful library of functions for data analysis. Let's use its `summarise()` and `group_by()` functions and pipe convention (`%>%`) to find the number of punctures per species. The `summarise()` function creates variables that summarize the data according to variables of interest. We set these variables of interest using `group_by()`. The pipe, `%>%`, is used to combine data with these functions. As we'll see in more detail later, the pipe `%>%` passes results from left to right.  Using the pipe with the data and the functions `group_by()` and  `summarize()`, we summarize our data by species rather succinctly. 
+`tidyverse` includes the `dplyr` package, a super helpful library of functions for data analysis. Let's use its `summarise()` and `group_by()` functions and pipe convention (`%>%`) to find the number of punctures per species. The `summarise()` function creates variables that summarize the data according to variables of interest. We set these variables of interest using `group_by()`. The pipe, `%>%`, is used to combine data with these functions. As we'll see in more detail later, the pipe `%>%` passes results from left to right.  Using the pipe with the data and the functions `group_by()` and  `summarize()`, we summarize our data by species rather succinctly. 
 
 ```{r}
 dat %>%
   group_by(species) %>%
   summarise(n = n())
 ```
+
 What this code essentially means is *pass the data through the function `group_by()`, grouping it by the "species" column, and summarize it according to group with a count, `n()`*. Notice the result is a tibble, a particular type of data object, akin to a data frame. We'll discuss tibbles more in the next module.
 
 Of course, we can save these results to a variable.
 
 ```{r}
-species.n<- dat %>%
+species_n<- dat %>%
   group_by(species) %>%
   summarise(n = n())
-species.n
+species_n
 ```
 
-Now we haven't answered one of our questions, *How many specimens for each species?*. This, again is super easy with `dplyr` and the pipe. Here, we pass our data to a `count()` function that counts observations according to groups ("species" and "specimen" in this case), use `print()` so you can see the output, and then we count this output of observations by "species" to find the unique values of "specimen".
+Now we haven't answered one of our questions, *How many specimens for each species?*. This, again is super easy with `dplyr` and the pipe. Here, we pass our data to a `n_distinct` function that counts the unique observations of "specimen" according to the group "species". 
+
 
 ```{r}
-dat %>% 
-  count(species,specimen) %>%
-  print() %>%
-  count(species,name = "n.specimens")
+dat %>%
+  group_by(species,specimen) %>%
+  count(species)
+  
+```
+
+As you may be noticing, there's always more than one way to skin a cat in R. For the same task, we could even avoide grouping and summarizing and use `dply`'s `distinct()` and `count()` functions. This first function returns only the distinct rows from a data frame and the latter  counts all the unique values of a column. In this case, if we get all the unique values of "specimen" and "species", counting "species" will return the number of specimens.
+
+```{r withcount}
+dat %>%
+  distinct(species, specimen) %>%
+  count(species, name = "n_specimens")
 ```
 
 
@@ -229,9 +240,9 @@ dat %>%
 
 # Loop When You Can
 
-Phew! You're almost there, the end of the Module 1 Project. Just one last important concept to work through, the loop, specifically, the `for` loop. This is a great device for iterating through operations for which there aren't dedicated functions. Important examples of this in the context of organismal biology include loading data from many files into one data set and producing a bunch of figures all at once from a large data set, among other things. Since we have a large data set loaded, why don't we use a `for()` loop to produce a bunch of figures.
+Phew! You're almost there, the end of the Module 1 Project. Just one last important concept to work through: the loop, specifically, the `for()` loop. This is a great device for iterating through operations for which there aren't dedicated functions. Important examples of this in the context of organismal biology include loading data from many files into one data set and producing a bunch of figures all at once from a large data set, among other things. Because we have a large data set loaded, why don't we use a `for()` loop to produce a bunch of figures.
 
-A `for()` loop essentially tells R to do something over a set of things in a vector. For instance, for "i" in 1 to 10, print each  "i":
+A `for()` loop essentially tells R to do something over a set of things in a vector. For instance, for `i` in a vector of 1 to 10, print each  `i`:
 
 ```{r}
 for(i in 1:10) print(i)
@@ -268,12 +279,12 @@ list.files(pattern=".pdf")
 
 
   
-The wrapping function `pdf()` prints graphic output to a file, in this case one named "species_quadrant.pdf". Any plot printed with `p()` after `pdf()` and before `dev.off()` saves the plots in the named file. The `list.files()` command with `pattern=".pdf"`  confirms that a PDF file was saved to our working directory.
+The wrapping function `pdf()` prints graphic output to a file, in this case one named "species_quadrant.pdf". Any plot printed with `p()` after `pdf()` and before `dev.off()` saves the plots in the named file. That is, `pdf()` begins the figure-writing process, `dev.off()` shuts down the graphics device and ends the process. The `list.files()` command with `pattern=".pdf"`  confirms that a PDF file was saved to our working directory.
 
   
 # Project Report
 
-The goal of this project report is to submit an R script that runs the code presented above and produces the PDF of mean puncture force across each quadrant for each species. For the project to be complete, the script must include the following:
+The goal of this project report is to submit an R script that runs the code presented above and produces a .pdf file of mean puncture force across each quadrant for each species. For the project to be complete, the script must include the following:
       
   1. A `dat` variable containing the scales dataset.
   2. A line of code which reports the class of each column in the dataset.

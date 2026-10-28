@@ -393,7 +393,7 @@ div.tocify {
       <a href="peer_contributions.html">Peer Contribution Evaluation Guidelines</a>
     </li>
     <li>
-      <a href="https://forms.gle/7uVJ3vMtvjFFNvsN8">Author Contribution Evaluation Form</a>
+      <a href="https://forms.gle/7uVJ3vMtvjFFNvsN8">Peer Contribution Evaluation Form</a>
     </li>
   </ul>
 </li>
@@ -422,17 +422,16 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <p>Now that we’ve been introduced to R and its important properties,
-lets now explore how this knowledge can be put to use in the context of
+let’s explore how this knowledge can be put to use in the context of
 data and a workflow more typical in organismal biology. For this
 project, we’ll be looking at scale puncture data from Prof. Kenaley’s
 lab. Briefly, these data come from experiments in which we used a
 motorized probe and force transducer to study how much force it takes to
-puncture fish scales from various locations on several species of
-fishes. The goal of analyzing these data is to assess if the magnitude
-of scale puncture resistance varies over the body and according to
-species. This data set is rather large (&gt;1800 experiments!), but
-eminently suited for work in R (i.e., your head would spin trying to any
-of the following operations in Excel, say).</p>
+puncture fish scales. The goal of analyzing these data is to assess if
+the magnitude of scale puncture resistance varies over the body and
+according to species. This data set is rather large (&gt;1800
+experiments!), but eminently suited for work in R (i.e., your head would
+spin trying to any of the following operations in Excel, say).</p>
 </div>
 <div id="set-up" class="section level1">
 <h1>Set Up</h1>
@@ -457,7 +456,7 @@ general convention that we load the libraries of R packages that we want
 to use in the R session (i.e., when R Studio is running R). Without
 doing so, if you call functions that aren’t loaded in base R, you’ll
 encounter an error. For this project and script, we need
-<code>ggplot</code>, a handy plotting package and
+<code>ggplot2</code>, a handy plotting package and
 <code>tidyverse</code>, a collection of data analysis packages. Make
 sure you’ve installed them, something you should have done will reading
 and working with HOPR. These initial lines of code would look like
@@ -497,12 +496,12 @@ when you just want to do simple things that you don’t want saved in the
 script. For instance, type <code>5000/3</code> into the console and hit
 return. Notice you get your answer: 1666.667.</p>
 <p>Let’s move on to another convention of writing an R script: setting
-the working directory. This is perhaps the most important step when
-working with external data in R (and doing so many other important
-tasks, like saving outputs from analyses, e.g., figures, tables, etc.).
-The working directory is a way of telling R where to find and save
-things. Without this input, R won’t know where to find or place
-important objects like data or figures, respectively.</p>
+the working directory. This is an important step when working with
+external data in R (and doing so many other important tasks, like saving
+outputs from analyses, e.g., figures, tables, etc.). The working
+directory is a way of telling R where to find and save things. Without
+this input, R won’t know where to find or place important objects like
+data or figures, respectively.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
@@ -537,13 +536,13 @@ file browser window, select the directory you want to work in (say
 working directory to “scales”. Notice that in the console, a
 <code>setwd()</code> command has been entered and run, complete with the
 file path. This file path will be the working directory for the script
-until you change it through the same approach or close R Studio. When
-you open your script in R Studio again, you’ll have to set the directory
-again as well. To avoid this cumbersome step each time you start up R
-and R Studio, just copy and paste the <code>setwd()</code> command from
-the console into you script. Now your script should look something like
-the following but with your own unique directory path to the working
-directory:</p>
+until you change it through the same approach or close R Studio and your
+R session. When you open your script in R Studio again, you’ll have to
+set the directory again as well. To avoid this cumbersome step each time
+you start up R and R Studio, just copy and paste the
+<code>setwd()</code> command from the console into you script. Now your
+script should look something like the following but with your own unique
+directory path to the working directory:</p>
 <pre class="r"><code>library(ggplot2)
 setwd(&quot;~/Chris/Documents/bc/3140/scales&quot;)</code></pre>
 <p>Select these lines in your script and run them or click on “run”. If
@@ -653,19 +652,19 @@ same:</p>
 because it is not numeric.</p>
 <p>OK, so now we’ve learned what classes of data we have, but we’ve done
 so in no fewer than four lines of code representing operations on each
-of the columns. The power or R and other programming languages is that
+of the columns. The power of R and other programming languages is that
 there’s almost always a faster and simpler way of doing things. In this
 case, we can inspect the class of out data in just one line using
 <code>sapply()</code>.</p>
 <pre class="r"><code>sapply(dat,class)</code></pre>
 <pre><code>##           N    quadrant     species    specimen 
 ##   &quot;numeric&quot; &quot;character&quot; &quot;character&quot; &quot;character&quot;</code></pre>
-<p>Easy peasy with <code>sapply()</code>. Have a look at
-<code>?sapply()</code>, the help entry, which explains that this
-function applies another function over a vector. In the case of data
-frames, <code>sapply()</code> applies a functions over a vector of
-columns by default. This is considerably more tidy and speedy than
-subsetting columns and repeating procedures over each.</p>
+<p>Easy peasy. Have a look at <code>?sapply()</code>, the help entry,
+which explains that this function applies another function over a
+vector. In the case of data frames, <code>sapply()</code> applies a
+functions over a vector of columns by default. This is considerably more
+tidy and speedy than subsetting columns and repeating procedures over
+each.</p>
 <div class="green">
 <div class="row">
 <div class="col-sm-2">
@@ -687,12 +686,13 @@ Googling the error is often a huge help.</p>
 <div id="simple-operations-summarizing" class="section level1">
 <h1>Simple Operations: Summarizing</h1>
 <p>Now that we know what sort of data and how much of it we have, let’s
-do some simple operations that a biologist might perform ahead of any
+do some simple operations that a biologist might perform ahead of an
 analysis. Consider what additional and important things we want to know
-about our data. How many species are in our data set? How many specimens
-per species were included? How many observations (punctures) are there
-for each species? Yes, Yes, and Yes. These and other questions about the
-make up of your data can be answered through summarizations.</p>
+about our data, for instance: How many species are in our data set? How
+many specimens per species were included? How many observations
+(punctures) are there for each species? Yes, Yes, and Yes. These and
+other questions about your data can be answered through
+summarizations.</p>
 <p>Let’s start with how many species we have. Because we’re working with
 a character class for the species column, we first want to change that
 to a factor. As we’ve learned from HOPR, factors have levels,i.e.,
@@ -734,13 +734,12 @@ right?</em> In this specific case, we use <code>==</code> to ask <em>Do
 the values in <code>dat$species</code> equal the first value in the
 “species” variable?</em></p>
 <pre class="r"><code>dat$species==species[1]</code></pre>
-<p>Have a look at the result in the console (I’m not showing the output
-here, because . . .). You should see hundreds of logical values,
-<code>TRUE</code> and <code>FALSE</code> with many <code>TRUE</code>’s
-at first. This indicates that the first 300 or so values for the
-“species” column matches “A. rupestris”. Now we can nest these logical
-values within the “species” vector (column) to return only those values
-that match “A. rupestris”, like so:</p>
+<p>Have a look at the result in the console. You should see hundreds of
+logical values, <code>TRUE</code> and <code>FALSE</code> with many
+<code>TRUE</code>’s at first. This indicates that the first 300 or so
+values for the “species” column matches “A. rupestris”. Now we can nest
+these logical values within the “species” vector (column) to return only
+those values that match “A. rupestris”, like so:</p>
 <pre class="r"><code>dat$species[dat$species==species[1]]</code></pre>
 <p>From here, we can find the length of this subsetted vector, save the
 results in a new variable name that resembles that particular level of
@@ -768,23 +767,25 @@ species.obs</code></pre>
 <p>There we have it, the number of observations/punctures for each
 species. Pretty evenly distributed, so not to worry about widely uneven
 sample sizes. This is great, but, this took many lines of code and some
-“hard coding”, that is, explicitly inputting a value. The hard coding
-issue here is with typing in the numeric potion (“1”, “2”, “3”, etc.)
-for each entry in our “species” variable. This is a drag and opens the
-door to mistakes. Why not let R do the iterations for you?</p>
+“hard coding”, that is, explicitly inputting values (e.g.,
+<code>species[1]</code>, etc.) rather than using the code to find those
+values. The hard coding issue here is with typing in the numeric potion
+(“1”, “2”, “3”, etc.) for each entry in our “species” variable. This is
+a drag and opens the door to mistakes. Why not let R do the iterations
+for you?</p>
 <p>As we’re learning, summarizing data is an important step in any
 analysis. Fortunately, succinct methods and operations in R for
 summarizing exist in several popular packages. Perhaps the most widely
-used are those curated in “tidyverse”, a set of R packages designed for
-data science. All the packages in tidyverse share an underlying design
-philosophy, grammar (what the functions looks like and ask for), and
-data structures, making it a one stop shopping experience for data
-analysis. We’ll introduce how to summarize data using functions from
-tidyverse here and move on to more involved operations using tidyverse
-in the next module. Should should already have tidyverse installed and
-loaded.</p>
-<p>tidyverse includes the <code>dplyr</code> package, a super helpful
-library of functions for data analysis. Let’s use its
+used are those curated in <code>tidyverse</code>, a set of R packages
+designed for data science. All the packages in <code>tidyverse</code>
+share an underlying design philosophy, grammar (what the functions looks
+like and ask for), and data structures, making it a one stop shopping
+experience for data analysis. We’ll introduce how to summarize data
+using functions from <code>tidyverse</code> here and move on to more
+involved operations using <code>tidyverse</code> in the next module. We
+should already have <code>tidyverse</code> installed and loaded.</p>
+<p><code>tidyverse</code> includes the <code>dplyr</code> package, a
+super helpful library of functions for data analysis. Let’s use its
 <code>summarise()</code> and <code>group_by()</code> functions and pipe
 convention (<code>%&gt;%</code>) to find the number of punctures per
 species. The <code>summarise()</code> function creates variables that
@@ -813,10 +814,10 @@ and summarize it according to group with a count, <code>n()</code></em>.
 Notice the result is a tibble, a particular type of data object, akin to
 a data frame. We’ll discuss tibbles more in the next module.</p>
 <p>Of course, we can save these results to a variable.</p>
-<pre class="r"><code>species.n&lt;- dat %&gt;%
+<pre class="r"><code>species_n&lt;- dat %&gt;%
   group_by(species) %&gt;%
   summarise(n = n())
-species.n</code></pre>
+species_n</code></pre>
 <pre><code>## # A tibble: 6 × 2
 ##   species            n
 ##   &lt;fct&gt;          &lt;int&gt;
@@ -829,41 +830,38 @@ species.n</code></pre>
 <p>Now we haven’t answered one of our questions, <em>How many specimens
 for each species?</em>. This, again is super easy with
 <code>dplyr</code> and the pipe. Here, we pass our data to a
-<code>count()</code> function that counts observations according to
-groups (“species” and “specimen” in this case), use <code>print()</code>
-so you can see the output, and then we count this output of observations
-by “species” to find the unique values of “specimen”.</p>
-<pre class="r"><code>dat %&gt;% 
-  count(species,specimen) %&gt;%
-  print() %&gt;%
-  count(species,name = &quot;n.specimens&quot;)</code></pre>
-<pre><code>##           species specimen   n
-## 1    A. rupestris   Arup_1 100
-## 2    A. rupestris   Arup_2  83
-## 3    A. rupestris   Arup_3  78
-## 4    A. rupestris   Arup_4 102
-## 5     L. gibbosus   Lgib_1  52
-## 6     L. gibbosus   Lgib_2  53
-## 7     L. gibbosus   Lgib_3  53
-## 8     L. gibbosus   Lgib_4  55
-## 9     L. gibbosus   Lgib_5  39
-## 10 L. macrochirus   Lmac_1 115
-## 11 L. macrochirus   Lmac_2  74
-## 12 L. macrochirus   Lmac_3  58
-## 13 L. macrochirus   Lmac_4  61
-## 14 L. macrochirus   Lmac_5  60
-## 15  Mi. salmoides   Msal_1 136
-## 16  Mi. salmoides   Msal_2  57
-## 17  Mi. salmoides   Msal_3  76
-## 18  Mi. salmoides   Msal_4  41
-## 19  Mo. saxatilis   Msax_1 100
-## 20  Mo. saxatilis   Msax_2  97
-## 21  Mo. saxatilis   Msax_3  92
-## 22  P. flavescens   Pfla_1  83
-## 23  P. flavescens   Pfla_2  62
-## 24  P. flavescens   Pfla_3  66
-## 25  P. flavescens   Pfla_4  49</code></pre>
-<pre><code>##          species n.specimens
+<code>n_distinct</code> function that counts the unique observations of
+“specimen” according to the group “species”.</p>
+<pre class="r"><code>dat %&gt;%
+  group_by(species,specimen) %&gt;%
+  count(species)</code></pre>
+<pre><code>## # A tibble: 25 × 3
+## # Groups:   species, specimen [25]
+##    species        specimen     n
+##    &lt;fct&gt;          &lt;chr&gt;    &lt;int&gt;
+##  1 A. rupestris   Arup_1     100
+##  2 A. rupestris   Arup_2      83
+##  3 A. rupestris   Arup_3      78
+##  4 A. rupestris   Arup_4     102
+##  5 L. gibbosus    Lgib_1      52
+##  6 L. gibbosus    Lgib_2      53
+##  7 L. gibbosus    Lgib_3      53
+##  8 L. gibbosus    Lgib_4      55
+##  9 L. gibbosus    Lgib_5      39
+## 10 L. macrochirus Lmac_1     115
+## # ℹ 15 more rows</code></pre>
+<p>As you may be noticing, there’s always more than one way to skin a
+cat in R. For the same task, we could even avoide grouping and
+summarizing and use <code>dply</code>’s <code>distinct()</code> and
+<code>count()</code> functions. This first function returns only the
+distinct rows from a data frame and the latter counts all the unique
+values of a column. In this case, if we get all the unique values of
+“specimen” and “species”, counting “species” will return the number of
+specimens.</p>
+<pre class="r"><code>dat %&gt;%
+  distinct(species, specimen) %&gt;%
+  count(species, name = &quot;n_specimens&quot;)</code></pre>
+<pre><code>##          species n_specimens
 ## 1   A. rupestris           4
 ## 2    L. gibbosus           5
 ## 3 L. macrochirus           5
@@ -891,17 +889,17 @@ in the future.</p>
 <div id="loop-when-you-can" class="section level1">
 <h1>Loop When You Can</h1>
 <p>Phew! You’re almost there, the end of the Module 1 Project. Just one
-last important concept to work through, the loop, specifically, the
-<code>for</code> loop. This is a great device for iterating through
+last important concept to work through: the loop, specifically, the
+<code>for()</code> loop. This is a great device for iterating through
 operations for which there aren’t dedicated functions. Important
 examples of this in the context of organismal biology include loading
 data from many files into one data set and producing a bunch of figures
-all at once from a large data set, among other things. Since we have a
+all at once from a large data set, among other things. Because we have a
 large data set loaded, why don’t we use a <code>for()</code> loop to
 produce a bunch of figures.</p>
 <p>A <code>for()</code> loop essentially tells R to do something over a
-set of things in a vector. For instance, for “i” in 1 to 10, print each
-“i”:</p>
+set of things in a vector. For instance, for <code>i</code> in a vector
+of 1 to 10, print each <code>i</code>:</p>
 <pre class="r"><code>for(i in 1:10) print(i)</code></pre>
 <pre><code>## [1] 1
 ## [1] 2
@@ -953,14 +951,17 @@ dev.off()</code></pre>
 <p>The wrapping function <code>pdf()</code> prints graphic output to a
 file, in this case one named “species_quadrant.pdf”. Any plot printed
 with <code>p()</code> after <code>pdf()</code> and before
-<code>dev.off()</code> saves the plots in the named file. The
-<code>list.files()</code> command with <code>pattern=".pdf"</code>
-confirms that a PDF file was saved to our working directory.</p>
+<code>dev.off()</code> saves the plots in the named file. That is,
+<code>pdf()</code> begins the figure-writing process,
+<code>dev.off()</code> shuts down the graphics device and ends the
+process. The <code>list.files()</code> command with
+<code>pattern=".pdf"</code> confirms that a PDF file was saved to our
+working directory.</p>
 </div>
 <div id="project-report" class="section level1">
 <h1>Project Report</h1>
 <p>The goal of this project report is to submit an R script that runs
-the code presented above and produces the PDF of mean puncture force
+the code presented above and produces a .pdf file of mean puncture force
 across each quadrant for each species. For the project to be complete,
 the script must include the following:</p>
 <ol style="list-style-type: decimal">

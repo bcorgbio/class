@@ -11,7 +11,7 @@ div.green { background-color:#c7d1c0; border-radius: 5px; padding: 20px;}
 
 # Introduction
 
-After having learned the basics of working in R and using the `tidyverse` to perform operations on data, we'll now move on to visualizing data and assessing assumptions (i.e., models) and hypotheses (based on models) concerning our data. We'll do so in the context of the ecomorphology of [anoles](https://en.wikipedia.org/wiki/Anolis), an exceptionally diverse genus of iguanian reptiles that comprises well over 400 species.
+After having learned the basics of working in R and using the `tidyverse` to perform operations on data, we'll now move on to visualizing data and assessing assumptions (i.e., models) and hypotheses (based on models) concerning our data. We'll do so in the context of the ecomorphology of [anoles](https://en.wikipedia.org/wiki/Anolis), an exceptionally diverse genus of iguanian squamates that comprises well over 400 species.
 
 The central theme of this project will be to assess the morphological and allometric differences between ecomorphs within the genus *Anolis*. First coined by the famous evolutionary biologist and herpetologist Ernest Williams, the term ecomorph describes a group of species, perhaps not sharing a most recent common  ancestor, with a similar ecological niche and behavior within the context of this niche. His model for this concept was the genus *Anolis*, although the ecomorph construct has been widely applied to many other species (think reef fish and Darwin's Finches). 
 
@@ -27,7 +27,7 @@ Our tasks will be to:
   1. Visualize how hind limb length varies with size (i.e., allometry!).
   2. Visualize and asses how hind limb length vs. size relationship covary with ecological niche.
   3. Learn more complex operations in `ggplot` than we've undertaken so far. 
-  4. Evaluate this hindlimb-size relationship using standard frequentist models within and without a phylogenetic context.
+  4. Evaluate this hindlimb-size relationship using standard frequentist models with and without a phylogenetic context.
   5. Using an information theory approach, assess the fit of phylogenetically corrected models of hind-limb variation under different modes of character evolution.
 
 # Set up
@@ -75,9 +75,6 @@ anole2 <- anole%>%
 left_join(anole.eco)%>%
   filter(!Ecomorph%in%c("U","CH"))%>%
   na.omit()%>%
-  print()
-
-anole.log <- anole2%>%
   mutate_at(c("SVL", "HTotal","PH","ArbPD"),log)
   
 ```
@@ -105,34 +102,45 @@ Why have we log-transformed our size and ecological data? This, from Luke Harmon
 
 # Visualizing Data, Forming and Refining Hypotheses
 
-As we've learned in our readings of R4DS, before we undertake any analysis of data, we must first visualize it so that we can begin to evaluate what reasonable questions about the data set can be asked. After that, we apply a model to see how best to describe the relationships we care about. In the context of this project, we have before us an important initial question: does hind limb length vary with size? Let's assess this initially by plotting hind limb length vs size in anoles with `ggplot`. We'll start with the untransformed data set.
+## Visuallization as a First Stab
+
+Before we undertake any analysis of data, we should first visualize it so that we can begin to evaluate what reasonable questions about the data set can be asked. After that, we apply a model to see how best to describe the relationships we care about. 
+
+In the context of this project, we have before us an important initial question: does hind limb length vary with size? This may seem like a no-brainer. A larger animal almost always has larger legs, longer toes, and bigger muscles simply because it is larger. Thus, we must account for body size (i.e., SVL) if we're to explore whether  groups of species evolved any specific adaptation for living in different niches. That is, controlling for **allometry** isolates the important stuff, pehaps specialization in form that differ from baseline differences in growth. So, let's assess this initially by plotting hind limb length vs size in anoles with `ggplot`. We'll start with the log-transformed data set.
 
 ```{r}
-
 anole2%>%
-  ggplot(aes(SVL,HTotal))+geom_point()+geom_smooth(method="lm")
+  ggplot(aes(SVL,HTotal))+
+  geom_point()+
+  geom_smooth(method="lm")
 ```
 
 
-Remember from R4DS that we have to establish the aesthetic of the plot and then add geometries with `+` to plot. Here we established the aesthetic in `aes()` for our `ggplot` as `SVL` for the x values and `HTotal` for the y, then added two geometries, points and a smooth line built on a linear model using `method="lm"`. For two continuous variables, a linear model is a good place to start. And, as you see from the plot, the data look to have a linear relationship, that is `HTotal` can be modeled as a linear response to `SVL` or 
+Remember that we have to establish the aesthetic of the plot and then add geometries with `+` to plot. Here we established the aesthetic in `aes()` for our `ggplot` as `SVL` for the x values and `HTotal` for the y (remeber that these are log-transformed valued), then added two geometries, points and a smooth line built on a linear model using `method="lm"`. 
 
-$$Htotal=\alpha{\cdot}SVL+\beta$$,
+
+Based on this simple plot, it appears size does predict HTotal. 
+
+## Modeling: Formulations of Questions and Hypothesis
+
+Now that we've spotted a conspicuous pattern, it's time to test the empirical robustness with our first model. To reframe where we stand we may perhaps put it this way: HTotal varies with SVL. That is, we have  one continuous variable influencing another. For this sort of question, a linear model is a good place to start. 
+
+
+Specifically, as you see from the plot, the data look to have a linear relationship, that is `HTotal` can be modeled as a linear response to `SVL` or 
+
+$$log(Htotal)=\alpha{\cdot}log(SVL)+log(\beta)$$,
 
 where, $\alpha$ is the slope and $\beta$ the y intercept.
 
-Although the `geom_smooth` geometry adds predictions based on this simple linear model and it looks to be a good fit, let's evaluate just how good this fit is with establishing a simple linear model using the `lm()` function from the `stats` package which loads automatically with R. 
+Although the `geom_smooth` geometry adds predictions based on this simple linear model and it looks to be a good fit, lets evaluate the robustness of this fit by establishing a simple linear model using the `lm()` function from the `stats` package which loads automatically with R. 
 
-```{r}
+```{r fit1}
 
-anole.lm <- lm(HTotal~SVL,anole2)
+fit1 <- lm(HTotal~SVL,anole2)
 
-coef(anole.lm)
-
-anole2%>%
-ggplot(aes(SVL,HTotal))+geom_point()+geom_abline(slope=coef(anole.lm)[2],intercept=coef(anole.lm)[1],col="blue")
 ```
 
-Notice how the model is represented by the relationship `HTotal~SVL` Using `~` is a standard convention in R for model formulae where a variable to the left of `~` is predicted by one or more variables to the right. So here where asking R to build a linear model with `HTotal` predicted by `SVL`. The second parameter specifies what data the variables are coming from, in this case, `anole2`.
+Notice how the model is represented by the relationship `HTotal~SVL`. Using `~` is a standard convention in R for model formulae where a variable to the left of `~` is predicted by one or more variables to the right. So here where asking R to build a linear model with `HTotal` predicted by `SVL`. The second argument specifies what data the variables are coming from, in this case, `anole2`.
 
 Now that we have our linear model, we can use this to predict `HTotal` for a range of snout vent lengths rather than have `geom_smooth` do it for us. Let's do this by creating a tibble with predictions:
 
@@ -141,41 +149,79 @@ SVL2 <- seq(min(anole2$SVL),max(anole2$SVL),0.1)
 
 pred.lm <-tibble(
   SVL=SVL2,
-  H.pred=predict(anole.lm,newdata = data.frame(SVL=SVL2))
+  H.pred=predict(fit1,newdata = data.frame(SVL=SVL2))
 )
 
 anole2%>%
 ggplot(aes(SVL,HTotal))+
   geom_point()+
-  geom_point(
+  geom_line(
     data=pred.lm,
     aes(SVL,H.pred),
     col="blue"
     )
   
-
-summary(anole.lm)
-
+summary(fit1)
 ```
 
-From calling `summary(anole.lm)` we retrieved important information about the model, including that the estimated response of `HTotal` to `SVL` (i.e., the slope, a value of 0.63972) is a significant term at p<2e-16. With `summary()`, we also retrieve the r squared value, the percentage of the response variable variation that is explained by our linear model. At 0.93, this model performs pretty well. However, maybe data would fit another model at least as well. 
+From calling `summary(fit1)` we retrieved important information about the model, including that the estimated response of `HTotal` to `SVL` (i.e., the slope, a value of 0.63972) is a significant term at p<2e-16. With `summary()`, we also retrieve the r squared value, the percentage of the response variable variation that is explained by our linear model. At 0.88, hindlimb length appears to be explained by SVL. 
 
-Because we're assessing how a variable relates to size, we should consider another model, a non-linear allometric one. Perhaps the icremental increase in hind-limb length decreases or increase with SVL, that is, the slope of this relationship is not stable with respect to SVL. Recall that an allometric model is a simple case of an exponential equation that, in this case, can be expressed thusly:
+
+Because we're assessing how a variable relates to size, we have, as was mentioned previously, a question of allometry. In allometry, the log-log slope represents the scaling exponent, the value of which tells what sort of allometry we have. Furthermore, allometry is often modelled as a simple power function of the non-log transformed variables, that is:
+
 
 $$Htotal={\alpha\cdot}SVL^{\beta}$$,
 
 where $\alpha$ is the intercept and $\beta$ is the scaling exponent. 
 
+In any case, whether we use the power function or log-log linear relationship, $\beta$ tells us if we have a scaling relationship or a linear one:  $\beta$<1 represents negative scaling, $\beta$>1 positive scaling, and $\beta$=1 no scaling, or simply a linear relationship.
 
-To express such a model in R, we can turn to non-linear least squares with `nls()` from the `stats` package. Least squares analysis is a standard approach in regression modeling which approximates the relationship by minimizing the sum of the squares of the residuals. In it's simplest case, this is how the model in our basic `lm` model is fit. In the case of non-linear least squares, the model is fit based on a non-linear relationship, i.e., an equation with the parameters $\alpha$ and $\beta$. Thus we can fit an allometric model with `nls` by:
+Looking above, $\beta$=1.00, indicating a distinct linear between Htotal and SVL. No matter, for the reasons explained above, it's best to keep the log transformation and move on with our analysis. 
 
-```{r}
 
-anole.allo <- nls(HTotal~a*SVL^b, start=list(b=1, a=1),data = anole2)
+## Refining Hypotheses With More Complex Visualization and Models
 
-summary(anole.allo)
+Now that we've modeled this conspicuous pattern and found that it is robust (i.e., high $R^2$ value, low p value), it's time to pivot to more complicated questions relate to ecomorph. We've established that HTotal varies with SVL, but does ecomorphology influence patterns in this relationship?  Again, let's turn to visualization first and then, depending on what we see, refine out models.
 
+If we're interested in whether ecomorph affects the relationship between Htotal and SVL, a good place to start visually is to color our points in a scatter plot representing the HTotal vs. SVL relationship. This is easily done by adjusting the `aes()` of our `ggplot` operations by adding a color argument, one that tracks with our `Ecomorph2` column in our date. One can  use `color=Ecomorph2`, `col=Ecomorph2`, or, if you're British, `colour=Ecomorph2`. These are synonymous.
+
+```{r coloreco}
+anole2%>%
+  ggplot(aes(SVL,HTotal,col=Ecomorph2))+
+  geom_point()+
+  geom_smooth(method="lm")
 ```
+
+
+Well, indeed, it appears ecomorph does, at least qualitatively, affect the relationship between HTotal and SVL. For instance, the trunk-ground and grass-bush tend to have higher HTtotal values when considering SVL compared to other ecomorphs (i.e., the intercepts appear different). The response (i.e., the slope) of HTotal vs SVL may indeed be different between some of the ecomorphs as well (e.g., the twig and the trunk-crown ecomorphs versus the others).
+
+As another iteration in our visual-then-model framework, we can turn to linear models to assess how robust this visual pattern is. Reframing where we stand once more, we may perhaps state the following as a way to implement a new, more explicit model: HTotal varies with SVL, and ecomorphology likely influences not only the overall magnitude of HTotal relative to body size, but also the slope of that scaling relationship.
+
+Given this potentially new understanding of the HTotal-SVL relationship, how do we construct models that reflect these patterns, which, by and large, constitute new hypotheses?  The answer is to alter our bare-bones linear model defined by the `HTotal~SVL` in `fit1`. Specifically, we can expand our simple linear model (`HTotal~SV`) by incorporating ecomorph as a categorical predictor that is:
+
+1. Simply additive, a case in which ecomorph shifts each group's intercept and assumes identical, parallel slopes for each.
+
+Or
+
+2. Interacting, a case in which both the intercepts and slopes of the HTotal-SVL relationship are allowed to vary by ecomorph.
+
+In the parlance of statisticians, we are seeking to fit models without and with interactions, respectively. R has standard syntax for such models. In our first case, without interactions, we can take our `HTotal~SV` formula and simply add `+Ecomorph2` to arrive at `HTotal~SV+Ecomorph2`. To include interactions, rather than additive effects, we use at `*` rather than `+`, to arrive at `HTotal~SV*Ecomorph2`.
+
+Let's implement both and evaluate the output with `summary()` and then the robustness of the model with `anova()`.
+
+```{r fits}
+
+#without interactions/additive
+fit2 <- lm(HTotal~SVL+Ecomorph2,anole2)
+
+#with interactions
+fit3 <- lm(HTotal~SVL*Ecomorph2,anole2)
+
+anova(fit2)
+anova(fit3)
+```
+
+
 
 <div class = "green">
 <div class="row">
@@ -188,9 +234,15 @@ What is a residual you ask? A residual is a measure of how well a prediction or 
 <br>
 
 
-Notice that, unlike in the use of `lm()`, we must specify starting values for parameters in our model with a list that's specified by `start`. With `nls()`, the function conducts a search of the model parameter values to find those that reduce the sum of squares of the residuals. The starting points here are estimated on the basis that the scaling coefficient $\beta$ will probably be around 1 because the data fit a linear model pretty well and the intercept $\alpha$ will be close to but not zero (a reasonable assumption).
 
-When we call the summary of our allometric model, we see that the parameters `a` and `b`, $\alpha$ and $\beta$, respectively, are significant, so both are likely explanatory parameters. But, how well do the data fit our model? Is it a better fit than the `lm()` model? Well this is tough to say. Notice that `summary()` doesn't produce an r squared value like it did for our simple linear model. This, for tortuous reasons, is because it's [not applicable to non-linear regression](https://statisticsbyjim.com/regression/r-squared-invalid-nonlinear-regression/). So what to do?
+```{r}
+anole.lm <- lm(HTotal~SVL,anole2)
+```
+ 
+ 
+ 
+ 
+ But, how well do the data fit our model? Is it a better fit than the `lm()` model? Well this is tough to say. Notice that `summary()` doesn't produce an r squared value like it did for our simple linear model. This, for tortuous reasons, is because it's [not applicable to non-linear regression](https://statisticsbyjim.com/regression/r-squared-invalid-nonlinear-regression/). So what to do?
 
 Let's go back to our readings in PCM, specifically, where the author, Luke Harmon, points out that standard frequentist approaches to comparative data are often limiting. The standard approach places a premium on evaluating null hypotheses and finding p values that, if low, reject the null, or if high, don't reject it. In the context of what we've covered so far, we've assessed the null hypothesis that `SVL` has no effect on `HTotal` and rejected it based on two statistical tests under different models, one linear, the other allometric. This shouldn't be a surprise: limbs get longer as individual lizards grow longer . . . duh. But, this is only part of our question: more than asking whether hind-limb length varies with size, we also want to know whether it varies linearly or allometrically.
 
