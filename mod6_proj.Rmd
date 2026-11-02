@@ -396,15 +396,32 @@ tuneRF(x=rf_dat %>% dplyr::select(-tot_pop),
 
 
 
-## Plotting prety maps in R
+## Plotting pretty maps in R
 
 Lastly, let's consider how to plot very nice trees in `R`. Many packages exist for this task, but perhaps none is more simple than the `mapview` package.
+
+```{r,mapvfix,include=F}
+mapview::mapviewOptions(
+  basemaps = c("Esri.WorldGrayCanvas", "OpenStreetMap", "Esri.WorldImagery", "OpenTopoMap")
+)
+```
+
 
 ```{r}
 library(mapview)
 
 mapview(bermuda_house, zcol = "pred_col")
 
+```
+
+**UPDATE**: The provider of the default basemaps for `mapview` now requires an API key in order to use those basemaps. Unless we avert those basemaps, we could get an error. Here's a solution you might implement *before* running any `mapview()` operation.
+
+
+```{r,mapviee}
+# Override the default basemaps in your active session
+mapview::mapviewOptions(
+  basemaps = c("Esri.WorldGrayCanvas", "OpenStreetMap", "Esri.WorldImagery", "OpenTopoMap")
+)
 ```
 
 # Methods
@@ -510,7 +527,7 @@ The answers and narrative in your .Rmd should include the following components:
       + Author contributions: Briefly outline what each team member contributed to the project.
       + AI-use Statement: Briefly state how AI was used in the completion of the report requirements.
 
-**Each team should push one report Rmd**  as "Module6_TeamX.Rmd" where "X" is the each number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's github directory, i.e., "Module6_Team1", if in Team 1. Project reports should be uploaded by 11:59 PM on Sunday, November 9th.
+**Each team should push one report Rmd**  as "Module6_TeamX.Rmd" where "X" is the each number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's github directory, i.e., "Module6_Team1", if in Team 1. Project reports should be uploaded by 11:59 PM on Sunday, November 15th.
 
 <div class = "green">
 <div class="row">

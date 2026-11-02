@@ -197,7 +197,7 @@ Well, indeed, it appears ecomorph does, at least qualitatively, affect the relat
 
 As another iteration in our visual-then-model framework, we can turn to linear models to assess how robust this visual pattern is. Reframing where we stand once more, we may perhaps state the following as a way to implement a new, more explicit model: HTotal varies with SVL, and ecomorphology likely influences not only the overall magnitude of HTotal relative to body size, but also the slope of that scaling relationship.
 
-Given this potentially new understanding of the HTotal-SVL relationship, how do we construct models that reflect these patterns, which, by and large, constitute new hypotheses?  The answer is to alter our bare-bones linear model defined by the `HTotal~SVL` in `fit1`. Specifically, we can expand our simple linear model (`HTotal~SV`) by incorporating ecomorph as a categorical predictor that is:
+Given this potentially new understanding of the HTotal-SVL relationship, how do we construct models that reflect these patterns, which, by and large, constitute new hypotheses?  The answer is to alter our bare-bones linear model defined by the `HTotal~SVL` in `fit1`. Specifically, we can expand our simple linear model (`HTotal~SVL`) by incorporating ecomorph as a categorical predictor that is:
 
 1. Simply additive, a case in which ecomorph shifts each group's intercept and assumes identical, parallel slopes for each.
 
@@ -205,9 +205,9 @@ Or
 
 2. Interacting, a case in which both the intercepts and slopes of the HTotal-SVL relationship are allowed to vary by ecomorph.
 
-In the parlance of statisticians, we are seeking to fit models without and with interactions, respectively. R has standard syntax for such models. In our first case, without interactions, we can take our `HTotal~SV` formula and simply add `+Ecomorph2` to arrive at `HTotal~SV+Ecomorph2`. To include interactions, rather than additive effects, we use at `*` rather than `+`, to arrive at `HTotal~SV*Ecomorph2`.
+In the parlance of statisticians, we are seeking to fit models without and with interactions, respectively. R has standard syntax for such models. In our first case, without interactions, we can take our `HTotal~SVL` formula and simply add `+Ecomorph2` to arrive at `HTotal~SV+Ecomorph2`. To include interactions, rather than additive effects, we use at `*` rather than `+`, to arrive at `HTotal~SVL*Ecomorph2`.
 
-Let's implement both and evaluate the output with `summary()` and then the robustness of the model with `anova()`.
+Let's implement both and then evaluate how well the data fit these alternative models with `anova()`, considering first `anova(fit2)`.
 
 ```{r fits}
 
@@ -218,10 +218,21 @@ fit2 <- lm(HTotal~SVL+Ecomorph2,anole2)
 fit3 <- lm(HTotal~SVL*Ecomorph2,anole2)
 
 anova(fit2)
-anova(fit3)
 ```
+There's lot's to untangle here. Let's look at what `anova()` is doing column-by-column, when it's run on `fit2`, that is, on a model that includes `HTotal ~ SVL + Ecomorph2`. 
 
+  + `Df` (Degrees of Freedom). `SVL`: This is 1 (because SVL is a continuous numeric covariate). `Ecomorph2`: Equal to $k - 1$, where $k$ is the number of distinct Ecomorph2 levels present in the dataset (trunk-ground, crown-giant, grass-bush, etc.).Residuals: $N - 1 - \text{Df}_{\text{SVL}} - \text{Df}_{\text{Ecomorph2}}$, where $N$ is the total number of anole observations.
+  
+  + `Sum Sq` (Sum of Squares). `SVL`: the variation in HTotal accounted for by SVL alone. `Ecomorph2`: the additional variation in HTotal explained by Ecomorph2, after controlling for SVL. Residuals: Unexplained variation (i.e., error) remaining in HTotal after accounting for both SVL and Ecomorph2.
+  
+  + `Mean Sq` (Mean Squares). Calculated as $\text{Mean Sq} = \frac{\text{Sum Sq}}{\text{Df}}$ for each row. `Residual Mean Sq` represents the estimated residual variance of the model.
+  
+  + `F value` (the $F$-Statistic). Calculated as $F = \frac{\text{Mean Sq}_{\text{Term}}}{\text{Mean Sq}_{\text{Residuals}}}$. This is a measure how much larger the variance explained by a specific predictor (SVL or Ecomorph2) is relative to the unexplained random noise.
+  
+  + `Pr(>F)` (the $p$-value). The probability of observing an $F$-statistic as extreme as (or more extreme than) the calculated value if the variable had no effect on HTotal. As you may have assumed, $p < 0.05$ generally suggests a statistically significant effect.
 
+  
+The sum of squares and F value are pretty high, while the p-values are well below 0.5 for each term (SVL and Ecomorph2) indicating each has a strong effect on Htotal and that these effects are statistically insignificant. 
 
 <div class = "green">
 <div class="row">
@@ -233,24 +244,29 @@ What is a residual you ask? A residual is a measure of how well a prediction or 
 </div>
 <br>
 
+Let's now look at the output of `anova(fit3)` to assess the fit of a model with interactions. 
 
-
-```{r}
-anole.lm <- lm(HTotal~SVL,anole2)
+```{r interactions}
+anova(fit3)
 ```
- 
- 
- 
- 
- But, how well do the data fit our model? Is it a better fit than the `lm()` model? Well this is tough to say. Notice that `summary()` doesn't produce an r squared value like it did for our simple linear model. This, for tortuous reasons, is because it's [not applicable to non-linear regression](https://statisticsbyjim.com/regression/r-squared-invalid-nonlinear-regression/). So what to do?
 
-Let's go back to our readings in PCM, specifically, where the author, Luke Harmon, points out that standard frequentist approaches to comparative data are often limiting. The standard approach places a premium on evaluating null hypotheses and finding p values that, if low, reject the null, or if high, don't reject it. In the context of what we've covered so far, we've assessed the null hypothesis that `SVL` has no effect on `HTotal` and rejected it based on two statistical tests under different models, one linear, the other allometric. This shouldn't be a surprise: limbs get longer as individual lizards grow longer . . . duh. But, this is only part of our question: more than asking whether hind-limb length varies with size, we also want to know whether it varies linearly or allometrically.
+Note that it looks much the same as `anova(fit2)`, but has an additional row for the interactions. When R constructs a model with interactions, it add an interaction term (indicated by `:`) to the a simpler model with an additive term. That is, `HTotal ~ SVL * Ecomorph2` is really `HTotal ~ SVL + Ecomorph2 + SVL:Ecomorph2`. For this new row, we have the same things to consider as before:
+
+
+  + Degrees of Freedom (`Df`). Calculated as $\text{Df}_{\text{SVL}} \times \text{Df}_{\text{Ecomorph2}} = 1 \times (k - 1) = k - 1$. This represents the number of additional slopes being estimated. Remember, this model allows each Ecomorph2 group to have its own unique slope.
+  + Sum of Squares (`Sum Sq`). This is th additional variation in HTotal explained by allowing the slope of HTotal versus SVL to vary across Ecomorph2 categories, after accounting for both main effects (SVL and Ecomorph2).
+  + `F value`. This indicates how how much more variance is explained by these interactions (separate slopes) compared to the unexplained random noise.
+  + `Pr(>F)`. This indicates the probability of the `F value` if no interactions existed.
+  
+The sum of squares and F value are pretty low, while the p-value is 0.1, indicating that interactions are weak and statistically insignificant. 
+
+Let's go back to our readings in PCM, specifically, where the author, Luke Harmon, points out that standard frequentist approaches to comparative data are often limiting. The standard approach places a premium on evaluating null hypotheses and finding p values that, if low, reject the null, or if high, don't reject it. In the context of what we've covered so far, we've assessed the null hypothesis that `SVL` has no effect on `HTotal` and rejected it based on two statistical tests under several different models one with and one without interactions. 
 
 To answer this second part of the question, we must switch approaches and ask the question in a different way. Let's first tackle this different way of asking our question. At first, we applied linear and non-linear models to the data and asked: "How well do my data fit the model? That is, specifically in the context of least-squares regression, how much do our points vary from the predictions of our models, i.e, what is the magnitude of the residuals? In both cases, the points in our data fit pretty well. However, this isn't the question we really want to be asking. We're asking *which model fits out data best?* See the difference?
 
-To ask this question, we must take a different approach. As outlined in PCM, we could perform likelihood ratio tests. In this approach, we compare the likelihood of two **nested** models. The statistical property of likelihood is defined as the probability, given a model and a set of parameter values, of obtaining a particular set of data. Or, as Harmon put it,  . . . "given a mathematical description of the world, what is the probability that we would see the actual data that we have collected?" This is the right approach for us---find the model, linear or allometric, with a higher likelihood of describing our morphological data better and therefore is a better mathematical approximation of the hindlimb-size relationship. 
+To ask this question, we must take a different approach. As outlined in PCM, we could perform likelihood ratio tests. In this approach, we compare the likelihood of two **nested** models. The statistical property of likelihood is defined as the probability, given a model and a set of parameter values, of obtaining a particular set of data. Or, as Harmon put it,  . . . "given a mathematical description of the world, what is the probability that we would see the actual data that we have collected?" This is the right approach for us---find the model, with or without interaction, with a higher likelihood of describing our morphological data better and therefore is a better mathematical approximation of the hindlimb-size relationship. 
 
-However, as we learned in PCM, likelihood ratio tests can only be used in limited cases, specifically to compare two models, one of which is a special case of the other. In other words, one model is exactly the same as the other, except that it is more complex, adding one or more parameters, which, in most cases means other independent variables. In our case, we don't have nested models, but different model families all together---one linear, one allometric. 
+However, as we learned in PCM, likelihood ratio tests can only be used in limited cases, specifically to compare two models, one of which is a special case of the other. In other words, one model is exactly the same as the other, except that it is more complex, adding one or more parameters, which, in most cases means other independent variables. 
 
 To compare models of most any type, nested or not, we have an alternative, the information theory approach. Specifically, we can use the Akaike Information Criterion (AIC). This description of the model fit compares the likelihood of the model against the number of parameters estimated. The AIC can be described as favoring the model that provides the best fit to the data with as few parameters as possible. 
 
@@ -260,50 +276,23 @@ Fortunately, from a few of our packages loaded above, we can compute the $AIC_c$
 
 
 ```{r}
+library(MuMIn)
+library(geiger)
 #AICc from the MuMIn package
-anole.aic <- AICc(anole.lm,anole.allo)
+anole_aic <- AICc(fit1, fit2, fit3)
 
 #aicw from the geiger package
-anole.aicw <- aicw(anole.aic$AICc)
+anole_aicw <- aicw(anole_aic$AICc)
 
-print(anole.aicw)
+print(anole_aicw)
 
 ```
 
-From our `anole.aic`, we see that the second model, `anole.allo` has a lower AIC score, and **lower scores indicate a better fit**. Although the relative fit is three times better for our allometric model, the difference in $AIC_c$ is somewhat small ($\Delta AIC$=2.2). A general rule of thumb is that a $\Delta AIC$ of less the 4 indicates roughly equivalent models, 4--8 little support for a lesser fit, and over 10 a poor fit and the model can be ignored. So, because we have  $\Delta AIC$<4, there's little difference between our linear and allometric models of hind-limb growth; thus, we can say that **allometry and isometry are roughly equivalent models**. This  was almost expected given that, after that calling `summary(anole.allo)` we see that the estimate for `b` the scaling exponent, is pretty close to 1 at b  0.92.
-
-<div class = "green">
-<div class="row">
-  <div class="col-sm-2"><a class="far fa-sticky-note fa-5x" style="color:#939681"></a> <!-- regular style --></div>
-  <div class="col-sm-9">
-You might be wondering, "If both the allometric and linear models have the same number of parameters (both have `SVL` and two other parameters), why not just look at the likelihood?" We can certainly do that: 
-
-```{r}
-logLik(anole.lm)
-logLik(anole.allo)
-```
-Here, the allometric model has the  **highest** likelihood and, because the models have the same number of parameters, is the model that fits best.
-
-</div>
-</div>
-</div>
-<br>
+From our `anole_aic`, we see that the second model, `fit2`, has the lowest AIC score, and **lower scores indicate a better fit**. Note also that `fit3` is too far off of `fit2` with a difference ($\Delta AIC$) of 5.6. A general rule of thumb is that a $\Delta AIC$ of less the 4 indicates roughly equivalent models, 4--8 little support for a lesser fit, and over 10 a poor fit and the model can be ignored. So, because we have$\Delta AIC$ around 6, there's a marginal difference between the better fitting models. 
 
 
-# More Complex Visualizations and Models 
 
-So now that we understand the basics of visualizing data, applying models, and choosing which fit our data best, let's consider a more complicated relationship among our data. Specifically, we'll consider the effect of ecomorph on the hindlimb-SVL relationships.
 
-For this we'll use our log-transformed data for the reasons outlined in the note above. We'll begin by visualizing hindlimb-SVL relationships for each ecomorph in `ggplot`:
-
-```{r}
-anole.log%>%
-  ggplot(aes(HTotal,SVL,col=Ecomorph2))+geom_point()+geom_smooth(method="lm")
-```
-
-Most of what we did here should be rather familiar by now. We passed our log-transformed data with the pipe to a `ggplot` call, specifying `SVL` for the x values and `HTotal` for the y, then added point and line (of type `"lm"`) geometries to the plot. Notice that we added another argument to the `aes` of the `ggplot`, specifically `col=Ecomorph2`. This colors all the added geometries according to the column values in `Ecomorph2`, a longer description of ecomorph than the abbreviations one `Ecomorph`. In addition, this establishes groups of data to compute multiple regression lines for `geom_smooth()'.
-
-By plotting out data in this way, it's clear we should consider ecomorph as an important variable explaining the hindlimb-SVL relationship. So let's now construct a model that includes this new variable:
 
 ```{r}
 anole.log.eco.lm <- lm(HTotal~SVL*Ecomorph2,anole.log)
