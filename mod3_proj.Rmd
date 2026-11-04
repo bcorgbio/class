@@ -83,7 +83,7 @@ Notice that, before the mutate operation, we filtered the data, removing any row
 
 Notice that we also omitted any rows of the tibble that had missing values (i.e., `NA`) in any of the columns with `na.omit`. That is, we only want to work with a complete data set. We've saved this filtered tibble to a new name, `anole2`
 
-In the last operation, we have mutated our collective tibble containing morphological and ecological data so that we changed our columns containing size and ecological data to log transformations of their values, each for `SVL`, `HTotal`, `PH` and `ArbPD`. These are continuous data, i.e., they are not discrete and log transformation converts these data to proportional representations. This will be important for both our analysis of allometry and use in a phylogenetic comparative framework. We did this with `mutate_at`, a function that allows us to mutate columns in place, replacing each that we identify with the names wrapped in `c()`. The second argument in `mutate_at` specifies what we'll do to the columns, in this case `log`, the natural log (*ln*). 
+In the last operation, we have mutated our collective tibble containing morphological and ecological data so that we changed our columns containing size and ecological data to natural log transformations of their values, each for `SVL`, `HTotal`, `PH` and `ArbPD`. These are continuous data, i.e., they are not discrete and log transformation converts these data to proportional representations. This will be important for both our analysis of allometry and use in a phylogenetic comparative framework. We did this with `mutate_at`, a function that allows us to mutate columns in place, replacing each that we identify with the names wrapped in `c()`. The second argument in `mutate_at` specifies what we'll do to the columns, in this case `log`, the natural log (*ln*). 
 
 
 <div class = "green">
@@ -106,7 +106,7 @@ Why have we log-transformed our size and ecological data? This, from Luke Harmon
 
 Before we undertake any analysis of data, we should first visualize it so that we can begin to evaluate what reasonable questions about the data set can be asked. After that, we apply a model to see how best to describe the relationships we care about. 
 
-In the context of this project, we have before us an important initial question: does hind limb length vary with size? This may seem like a no-brainer. A larger animal almost always has larger legs, longer toes, and bigger muscles simply because it is larger. Thus, we must account for body size (i.e., SVL) if we're to explore whether  groups of species evolved any specific adaptation for living in different niches. That is, controlling for **allometry** isolates the important stuff, pehaps specialization in form that differ from baseline differences in growth. So, let's assess this initially by plotting hind limb length vs size in anoles with `ggplot`. We'll start with the log-transformed data set.
+In the context of this project, we have before us an important initial question: does hind limb length vary with size? This may seem like a no-brainer. A larger animal almost always has larger legs, longer toes, and bigger muscles simply because it is larger. Thus, we must account for body size (i.e., SVL) if we're to explore whether  groups of species evolved any specific adaptation for living in different niches. That is, controlling for **allometry** isolates the important stuff, perhaps specialization in form that differ from baseline differences in growth. So, let's assess this initially by plotting hind limb length vs size in anoles with `ggplot`. We'll start with the log-transformed data set.
 
 ```{r}
 anole2%>%
@@ -123,14 +123,14 @@ Based on this simple plot, it appears size does predict HTotal.
 
 ## Modeling: Formulations of Questions and Hypothesis
 
-Now that we've spotted a conspicuous pattern, it's time to test the empirical robustness with our first model. To reframe where we stand we may perhaps put it this way: HTotal varies with SVL. That is, we have  one continuous variable influencing another. For this sort of question, a linear model is a good place to start. 
+Now that we've spotted a conspicuous pattern, it's time to test the empirical robustness with our first model. To reframe where we stand, we may perhaps put it this way: HTotal varies with SVL. That is, we have one continuous variable, a covariate, influencing another. For this sort of question, a linear model is a good place to start. 
 
 
 Specifically, as you see from the plot, the data look to have a linear relationship, that is `HTotal` can be modeled as a linear response to `SVL` or 
 
-$$log(Htotal)=\alpha{\cdot}log(SVL)+log(\beta)$$,
+$$log(Htotal)=log(\beta_0)+\beta_1{\cdot}log(SVL)+\epsilon$$,
 
-where, $\alpha$ is the slope and $\beta$ the y intercept.
+where, $\beta_1$ is the slope and $\beta_0$ the intercept.
 
 Although the `geom_smooth` geometry adds predictions based on this simple linear model and it looks to be a good fit, lets evaluate the robustness of this fit by establishing a simple linear model using the `lm()` function from the `stats` package which loads automatically with R. 
 
@@ -160,28 +160,48 @@ ggplot(aes(SVL,HTotal))+
     aes(SVL,H.pred),
     col="blue"
     )
-  
+```
+
+Our predictions match those made by `geom_smooth()`. But, how good are these predictions. For this, let's turn to `summarize()`
+
+```{r summ}
 summary(fit1)
 ```
 
-From calling `summary(fit1)` we retrieved important information about the model, including that the estimated response of `HTotal` to `SVL` (i.e., the slope, a value of 0.63972) is a significant term at p<2e-16. With `summary()`, we also retrieve the r squared value, the percentage of the response variable variation that is explained by our linear model. At 0.88, hindlimb length appears to be explained by SVL. 
+From calling `summary(fit1)` we retrieved important information about the model. Let
+s briefly discuss what's in each section. 
+
+  + The `Residuals`. This section summarizes the distribution of prediction errors, that is, how far the real HTotal data are from the prediction based on SVL. The median, at close to 0, indicates a relatively balanced spread of residuals around the regression line.
+
+  + The `Coefficients`. This table includes information about the coefficients (i.e., slope and intercept). For `Intercept`, `Estimate` gives the estimated value of Htotal when SVL=0 ($\beta_0$). The standard error (`Std. Error`) indicates how much uncertainly there is to this estimated value. The test statistic (`t value`), calculated as $\text{Estimate} / \text{Std. Error}$, is a signal to noise ratio. In a way, this also indicates how many noisy "steps" our slope estimate is from the baseline of 0. Lastly, the p value (`Pr(>|t|)`) reports the probability of getting a `t value` this large under the assumption that the true slope is actually 0.
+  
+For `SVL`, we have the same columns, including the estimate, standard error, its t value, and p-value. They more or less give us the same thing, but these value's concern the effect of log SVL on log HTotal, that is, the slope of the allometric relationship ($\beta_1$). `Estimate` reports the slope value, `Std. Error` reports the standard error, an important measure of uncertainty. `t value` again represents the signal-to-noise ratio and `Pr(>|t|)` tells us the probability of observing a slope as steep or steeper than this the true slope were zero ($\beta_1 = 0$).
+
+Lastly, the `summary()` output contains overall model fit statistics.
+`Residual standard error` reports distance that observed data points fall from the regression line. That is, on average, how much the actual values of HTotal deviate from the predicted values in original log units of HTotal. You can think of this as the remaining unexplained variation of the model. The degress of freedom represent total sample size minus the number of parameters estimated estimated by the model, that is the intercept ($\beta_0$) and the slope ($\beta_1$), + 1 slope = 2 parameters) `Multiple R-squared` represents the proportion of variance explained by the model while the Adjusted R-squared ($R^2_{\text{adj}} = 0.8776$) is a  $R^2$ value that penalize it for adding unnecessary predictor variables to a model. In simple linear regression (1 predictor), $R^2$ and $R^2_{\text{adj}}$ are always very close 
+The `F-statistic` is a test statistic that compares your fitted regression model to a "null" model (a flat horizontal line representing just the mean of log HTotal. It's calculated as $\text{Mean Square Model} / \text{Mean Square Residuals}$. 
 
 
-Because we're assessing how a variable relates to size, we have, as was mentioned previously, a question of allometry. In allometry, the log-log slope represents the scaling exponent, the value of which tells what sort of allometry we have. Furthermore, allometry is often modelled as a simple power function of the non-log transformed variables, that is:
+
+
+From this we can gather there's a very strong relationship between log HTotal and log SVL: the error is low (0.056) and the p value of the slope is well below the magic threshold of 0.05. In addition, we don't find any evidence that the slope isn't 0 (`Pr(>|t|)`=0.097. We should also emphasize that the `F-statistic` value of 323.5 indicates the regression line explains far more variance than background noise and the the proportion of variance explained by the model is high (both $R^2$ values are over 0.8).
+
+
+Because we're assessing how a variable relates to size, we have, as was mentioned previously, a question of allometry. In allometry, the log-log slope represents the scaling exponent, the value of which tells what sort of allometry we have. Furthermore, allometry is often modeled as a simple power function of the non-log transformed variables, that is:
 
 
 $$Htotal={\alpha\cdot}SVL^{\beta}$$,
 
 where $\alpha$ is the intercept and $\beta$ is the scaling exponent. 
 
-In any case, whether we use the power function or log-log linear relationship, $\beta$ tells us if we have a scaling relationship or a linear one:  $\beta$<1 represents negative scaling, $\beta$>1 positive scaling, and $\beta$=1 no scaling, or simply a linear relationship.
+In any case, whether we use the power function or log-log linear relationship as we did in `fit1`, $\beta$ tells us if we have a scaling relationship or a linear one:  $\beta$<1 represents negative scaling, $\beta$>1 positive scaling, and $\beta$=1 no scaling, or simply a linear relationship.
 
 Looking above, $\beta$=1.00, indicating a distinct linear between Htotal and SVL. No matter, for the reasons explained above, it's best to keep the log transformation and move on with our analysis. 
 
 
 ## Refining Hypotheses With More Complex Visualization and Models
 
-Now that we've modeled this conspicuous pattern and found that it is robust (i.e., high $R^2$ value, low p value), it's time to pivot to more complicated questions relate to ecomorph. We've established that HTotal varies with SVL, but does ecomorphology influence patterns in this relationship?  Again, let's turn to visualization first and then, depending on what we see, refine out models.
+Now that we've modeled this conspicuous pattern and found that it is robust (i.e., high $R^2$ value, low p value), it's time to pivot to more complicated questions that relate to ecomorph. We've established that HTotal varies with SVL, but does ecomorphology influence patterns in this relationship?  Again, let's turn to visualization first and then, depending on what we see, refine out models.
 
 If we're interested in whether ecomorph affects the relationship between Htotal and SVL, a good place to start visually is to color our points in a scatter plot representing the HTotal vs. SVL relationship. This is easily done by adjusting the `aes()` of our `ggplot` operations by adding a color argument, one that tracks with our `Ecomorph2` column in our date. One can  use `color=Ecomorph2`, `col=Ecomorph2`, or, if you're British, `colour=Ecomorph2`. These are synonymous.
 

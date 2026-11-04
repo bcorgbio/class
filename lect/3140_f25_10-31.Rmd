@@ -112,13 +112,12 @@ Species ~ Sepal.Length + Petal.Width
 - Each tree predicts a number.
 - The average across all trees = prediction.
 
-📘 Example
+Example
 
 ```{r}
 Sepal.Width ~ Sepal.Length + Petal.Width
 ```
-
-🎯 Goal: minimize mean squared error (MSE).
+ Goal: minimize mean squared error (MSE).
 ]
 
 
@@ -139,7 +138,7 @@ head(iris)
 
 ---
 
-# ⚙️ Fitting a Random Forest in R
+#  Fitting a Random Forest in R
 ## 🔧 Steps
 .pull-left[
 
@@ -168,7 +167,7 @@ rf_model <- randomForest(
 
 ---
 
-# ⚙️ Fitting a Random Forest in R
+# Fitting a Random Forest in R
 
 .pull-left[
 ### 2. Check the model output
@@ -188,7 +187,7 @@ rf_model
 
 ---
 
-# ⚙️ Fitting a Random Forest in R
+# Fitting a Random Forest in R
 .pull-left[
 ### 2. Check the model output
 
@@ -209,22 +208,22 @@ plot(rf_model)
 # 🌟 What Variables are Important?
 
 .pull-left[
-### 🧠 The big idea
+### The big idea
 
 - A **Random Forest** learns from many predictors (features).  
 - But not all predictors help equally!  
 - **Variable importance** shows which ones matter most  
   for making good predictions.
 
-💡 Imagine asking:  
+Imagine asking:  
 > “If I hide this variable, does the forest get worse at predicting?”
 
-If accuracy drops a lot → that variable is **important**.  
+If accuracy drops a lot, that variable is **important**.  
 If accuracy stays the same → that variable probably isn’t helping much.
 ]
 
 .pull-right[
-### 🔍 Assessing Importances
+### Assessing Importances
 
 ```{r}
 # Show how important each variable is
@@ -236,17 +235,17 @@ importance(rf_model)
 
 ---
 
-# 🌟 What Variables are Important?
+# What Variables are Important?
 
 .pull-left[
-### 🧠 The big idea
+### The big idea
 
 - A **Random Forest** learns from many predictors (features).  
 - But not all predictors help equally!  
 - **Variable importance** shows which ones matter most  
   for making good predictions.
 
-💡 Imagine asking:  
+ Imagine asking:  
 > “If I hide this variable, does the forest get worse at predicting?”
 
 If accuracy drops a lot → that variable is **important**.  
@@ -254,7 +253,7 @@ If accuracy stays the same → that variable probably isn’t helping much.
 ]
 
 .pull-right[
-### 🔍 Assessing Importances
+###  Assessing Importances
 
 ```{r,fig.height=4}
 # Make a quick plot
@@ -269,10 +268,10 @@ shorter bars `=` variables with little impact on predictions.
 
 ---
 
-# 🎯 Making Predictions with a Random Forest
+#  Making Predictions with a Random Forest
 
 .pull-left[
-### 🧠 The idea
+###  The idea
 
 Once your forest is trained,  
 you can use it to **predict new outcomes**!
@@ -282,11 +281,11 @@ you can use it to **predict new outcomes**!
 - Each tree makes a prediction →  
   the forest combines them for a final answer.
 
-🌳 Many trees → one decision!
+ Many trees → one decision!
 ]
 
 .pull-right[
-### 🔍 In R
+
 
 ```{r}
 # Make predictions
