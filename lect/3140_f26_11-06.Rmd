@@ -3,10 +3,10 @@ title: "Phase II: Using Our Toolbox"
 subtitle: "Module 6: Spatial Awareness"
 author: "Dr. Christopher Kenaley"
 institute: "Boston College"
-date: "2025/10/31"
+date: "2026/11/06"
 output:
   xaringan::moon_reader:
-    css: ["default", "metropolis"]
+    css: ["default", "metropolis","slides.css"]
     lib_dir: libs
     nature:
       ratio: 16:9
@@ -62,7 +62,7 @@ Today we'll ....
 
 ---
 
-# 🌲 What is a Random Forest?
+# What is a Random Forest?
 
 .pull-left[
 ### Think of it like a team of decision trees!
@@ -73,7 +73,7 @@ Today we'll ....
 - The forest’s final prediction is the **average (regression)**  
   or **majority vote (classification)** across all trees.
 
-💡 The idea:  
+The idea:  
 > Many weak but diverse trees together make a strong, stable model.
 ]
 
@@ -86,7 +86,7 @@ Today we'll ....
 
 ---
 
-# 🌲 Classification vs. Regression Forests
+# Classification vs. Regression Forests
 
 .pull-left[
 ### **Classification Forest**
@@ -95,13 +95,13 @@ Today we'll ....
 - Each tree “votes” for a class label.
 - The **majority vote** across all trees = prediction.
 
-📘 **Example**
+ **Example**
 ```{r}
 Species ~ Sepal.Length + Petal.Width
 #Predicts setosa, versicolor, or virginica.
 ```
 
-🎯 Goal: minimize misclassification error.
+ Goal: minimize misclassification error.
 ]
 
 .pull-right[
@@ -139,7 +139,7 @@ head(iris)
 ---
 
 #  Fitting a Random Forest in R
-## 🔧 Steps
+##  Steps
 .pull-left[
 
 ### 1. Fit model
@@ -205,9 +205,10 @@ plot(rf_model)
 
 ---
 
-# 🌟 What Variables are Important?
+#  What Variables are Important?
 
 .pull-left[
+
 ### The big idea
 
 - A **Random Forest** learns from many predictors (features).  
@@ -220,6 +221,7 @@ Imagine asking:
 
 If accuracy drops a lot, that variable is **important**.  
 If accuracy stays the same → that variable probably isn’t helping much.
+
 ]
 
 .pull-right[
@@ -232,6 +234,7 @@ importance(rf_model)
 
 ```
 
+]
 
 ---
 
@@ -292,11 +295,11 @@ you can use it to **predict new outcomes**!
 new_obs <- iris[1:5, -5]    # drop Species column
 predict(rf_model, new_obs)
 ```
-🧩 For classification:
+For classification:
 
 Each tree votes for a class. The forest picks the majority vote.
 
-📈 For regression:
+For regression:
 
 Each tree predicts a number. The forest takes the average.
 
@@ -305,7 +308,7 @@ Each tree predicts a number. The forest takes the average.
 
 ---
 
-# 🧩 Comparing Predictions to Actual Classes
+#  Comparing Predictions to Actual Classes
 
 .pull-left[
 ### 🎯 Why compare?
