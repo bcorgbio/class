@@ -34,8 +34,8 @@ knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 40), tidy = TRUE)
 .pull-left[
 Today we'll ....
 
-- Recap random forests
-- Apply regression forests in Bermuda
+- Look at how to assemble our data
+- Tune an RF model
 
 
 ]
@@ -43,7 +43,7 @@ Today we'll ....
 .pull-right[
 
 
-<img src="https://nowiknow.com/wp-content/uploads/59f257a793119.image_.jpg" width="450">
+<img src="https://cdn.britannica.com/40/109040-050-62EEDEA6/Male-white-tailed-deer.jpg" width="450">
 ]
 
 ---

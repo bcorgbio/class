@@ -1,0 +1,174 @@
+---
+title: "Phase II: Using Our Toolbox"
+subtitle: "Module 6: Spatial Awareness"
+author: "Dr. Christopher Kenaley"
+institute: "Boston College"
+date: "2026/11/11"
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis","slides.css"]
+    lib_dir: libs
+    nature:
+      ratio: 16:9
+---
+class: top
+# In class today 
+
+```{r,echo=FALSE,message=FALSE,warning=F}
+library(tidyverse)
+library(kableExtra)
+library(sf)
+library(stars)
+library(mapview)
+library(randomForest)
+
+knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 40), tidy = TRUE)
+
+
+```
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+
+.pull-left[
+Today we'll ....
+
+- Look at how to assemble our data
+- Tune an RF model
+
+
+]
+
+.pull-right[
+
+
+<img src="https://cdn.britannica.com/40/109040-050-62EEDEA6/Male-white-tailed-deer.jpg" width="450">
+]
+
+---
+
+# What are we up against?
+
+.pull-left[
+- Deer data
+  + NH_deer.txt (.csv)
+  
+- Shape file
+  + New_Hampshire_Political_Boundaries.shp 
+  + `sf` object
+  
+- Land use: 
+  + NLCD_2021_Land_Cover_L48_20230630_qtPZ6zMaTAibmibqfd37.tiff 
+  + raster -> `stars` object
+]
+
+
+.pull-right[
+
+
+<img src="https://cdn.britannica.com/40/109040-050-62EEDEA6/Male-white-tailed-deer.jpg" width="450">
+]
+
+---
+
+# What are we up against?
+.pull-left[
+- Create an object named `deer`: 
+  + `read_csv()`
+  + modify values removing "_"
+  + group by `TOWN`
+  + summarize with mean of `HSM`
+  
+- Create an object named `nh`: 
+  + `read_sf()`
+  + rename the political unit (`pbpNAME`) to match the same in `deer`
+
+- Create an object named `lu`
+  + `stars::read_stars()` 
+]
+
+.pull-right[
+
+<img src="https://cdn.britannica.com/40/109040-050-62EEDEA6/Male-white-tailed-deer.jpg" width="450">
+]
+
+
+
+]
+
+---
+# What are we up against?
+
+.pull-left[
+- Create `nh_dat`: 
+  + relative proportion of land use
+  + HSM for each town (Hint: `dplyr::group_by(..., .drop = FALSE)` and `dplyr::count()`
+  + establishes counts, including 0’s, on a per-Town basis
+
+- Create `rf_dat`:
+  + Based on `nh_dat`
+  + contains only the data needed to run an RF model 
+  + predicts HSM based on land-use proportions. 
+  + arcsine transform your proportions data
+  + `arc_sin <- function(x) asin(sqrt(x))`
+]
+
+.pull-right[
+
+<img src="https://cdn.britannica.com/40/109040-050-62EEDEA6/Male-white-tailed-deer.jpg" width="450">
+]
+
+
+---
+
+# Tuning a RF model
+
+
+
+.pull-left[
+```{r}
+bermuda_house <- st_read("bermuda_shape/bermuda_dat.shp")
+
+rf_dat <- bermuda_house %>%
+  ungroup() %>%
+  st_drop_geometry() %>%
+  na.omit() %>%
+  select(-name, -pred_col, -subparish)
+
+head(rf_dat)
+
+```
+]
+
+.pull-right[
+
+<img src="https://images.pexels.com/photos/38006677/pexels-photo-38006677.jpeg
+" width="400">
+
+]
+
+---
+
+.pull-left[
+```{r,fig.height=2}
+tuneRF(x=rf_dat %>% dplyr::select(-tot_pop),
+       y=rf_dat$tot_pop,
+       stepFactor=0.5,
+       ntreeTry=1000,
+       trace=F,
+       mtryStart = 1,
+       improve = 0.01,
+       )
+
+```
+]
+
+.pull-right[
+
+<img src="https://images.pexels.com/photos/38006677/pexels-photo-38006677.jpeg
+" width="400">
+
+]
+
+
