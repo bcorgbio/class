@@ -62,12 +62,9 @@ raven.p <- ggplot(ME, aes(long,lat,group=subregion) )+
 
 #and add image to the map with cowplot
 raven.p2 <- ggdraw() +
-  draw_image("https://www.allaboutbirds.org/guide/assets/photo/63739491-480px.jpg",scale = 0.3,halign=0,valign=1) +
+  draw_image("https://media.audubon.org/nas_birdapi_hero/h_a1_4767_1_common_raven_andrew_lunt_kk_adult.jpg",scale = 0.3,halign=0,valign=1) +
   draw_plot(raven.p)
 print(raven.p2)
-
-knitr::opts_chunk$set(eval = FALSE)
-
 
 ```
 Notice how `occ_data()` returns records as a list of different data types. See . . . 
@@ -105,8 +102,39 @@ This will be a rather labored search in that it might take 20 minutes to run thr
 
 To get get you started, here's what could be done. But note, this will take a while and it this is an  [embarrassingly parallel](https://bcorgbio.github.io/class/mod5_proj.html#Analysis_Part_III:_Evolution_in_Parallel) operation that could be done with multiple cores.
 
-```{r,eval=FALSE}
- %>% 
+
+```{r occsearch,cache=T,eval=F}
+dat.l <-list()
+
+for(s in species){
+  
+  ## setting the limit=0 returns no records but can give you the number of observations if you access the meta data
+n.obs <-  occ_data(
+  scientificName = s,
+  year=y,
+  month=m,
+  limit=0,
+  country="US",
+  basisOfRecord = "HUMAN_OBSERVATION",
+  stateProvince="Massachusetts")$meta$count 
+
+print(n.obs)
+
+
+dat.l[[paste0(s)]] <- occ_data(
+  scientificName = s,
+  year=y,month=m,
+  limit=n.obs,
+  country="US",
+  basisOfRecord = "HUMAN_OBSERVATION",
+  stateProvince="Massachusetts")[[2]]
+
+
+}
+
+dat <- rbindlist(dat.l,fill=T)
+
+head(dat)
 ```
 
 Note that we store the number of observations for each species, ripped from the meta data using `occ_data()` with `limit=0`. This won't return records, but will return the meta data. We can then pass this number to `limit` in the subsequent use of `occ_data` to bypass the limit of 500, which is the default.
@@ -131,7 +159,6 @@ saveRDS(dat,"massbird.data.RDS")
 Now, if your script or markdown should be interrupted (e.g., a crash, freeze, etc.), you can access your data with `readRDS()`:
 
 ```{r loaddat}
-library(tidyverse)
 dat <- readRDS("massbird.data.RDS")
 ```
 
@@ -141,7 +168,8 @@ With a sense of how the bird data will be downloaded, let's see what sort of num
 dat%>%
   group_by(year,species)%>%
   summarise(count=sum(individualCount,na.rm = T))%>%
-  ggplot(aes(x=year,y=count,col=species))+geom_point()
+  ggplot(aes(x=year,y=count,col=species))+
+  geom_point()
 ```
 
 It looks like there's not much data before 2000 for all species. We'll keep this in mind as we move forward. Now let's move on to compiling weather data.
@@ -263,11 +291,11 @@ mc%>%
 
 So as we can see, arrival of these migrants follows a logistic process when we consider the proportion of the population that has arrived. Now we can model this with a logistic model in R. We'll add predictions based on `nls()` and `SSlogis()` functions from the `stats` package. This is similar to something we did in the project for [Module 3](https://bcorgbio.github.io/class/mod3_proj.html#More_Complex_Visualizations_and_Models). A logistic model requires a few parameter: the asymptote (`Asym`), the x value (`j.day` in our case) at the inflection point of the curve (`xmid`), and the scale (`scale`). We'll use `SSlogis()`, a self-starting model that creates initial estimates of the parameters. After modeling the logistic curves, let's add the date back to the tibble (it'll be important later) and then plot the predictions along with the original data.
 
-```{r, logistic model}
+```{r, logistic model,warning=F,message=F}
 mc.pred <- mc%>%
   group_by(year)%>%
- summarize(
-   pred=predict(nls(prop~SSlogis(j.day,Asym, xmid, scal)),newdata=data.frame(j.day=min(j.day):max(j.day))),#predict the logistic curve for each species
+ reframe(
+   pred=predict(nls(prop~SSlogis(j.day,Asym, xmid, scal)),newdata=data.frame(j.day=min(j.day):max(j.day))),#predict the logistic curve for each species and a range of days
    j.day=min(j.day):max(j.day),
   )%>%
   left_join(mc%>%dplyr::select(j.day,date)) ## add date back to tibble
@@ -398,7 +426,7 @@ With two joined tibbles each containing eBird and weather data, we're finally re
 
 ## Linear Mixed-effect Modeling
 
-To evaluate the effect of weather parameters on arrival time, one could undertake analysis using simple linear models. But, we have a rather complicated data set, including parameters (i.e., covariates) we see as important and explanatory  that may contribute to a slope and intercept of the model and others that may be the reason that some groups within the data set have different slopes and intercepts. The variables that contribute to the slope and intercept are termed fixed effects, while those that contribute to distinct slopes and intercepts are termed random effects, and thus an analysis that accounts for both fixed and random effects is called a mixed effect model. In our case, we are interested in how the fixed effects of temperature and wind vector explains arrival and are OK with the fact that the location of these weather variables (a random effect) may contribute differently to the relationship. **In subsequent analysis, you'll also consider species as a random effect, allowing the response of arrival time may vary according to species.**  
+To evaluate the effect of weather parameters on arrival time, one could undertake analysis using simple linear models. But, we have a rather complicated data set, variables we see as important and explanatory  that may contribute to a slope and intercept of the model and others that may be the reason that some groups within the data set have different slopes and intercepts. The variables that contribute to the slope and intercept are termed fixed effects, while those that contribute to distinct slopes and intercepts are termed random effects, and thus an analysis that accounts for both fixed and random effects is called a mixed effect model. In our case, we are interested in how the fixed effects of temperature and wind vector explains arrival and are OK with the fact that the location of these weather variables (a random effect) may contribute differently to the relationship. **In subsequent analysis, you'll also consider species as a random effect, allowing the response of arrival time may vary according to species.**  
 
 Undertaking linear mixed-effect analysis in R is rather straightforward using the `lme4` package, specifically the `lme()` function. Any formula for `lme()` is similar to other model choices in R, except that we must specify a random effect. This takes the form of `+(1|variable)` or `+(y|variable)` where  `variable` is a random effect and `y` is the response. The first of these constructions stipulates that the slope may vary according to the random effect, while the second stipulates that the slope *and* intercept may vary according to the random effect. With this in mind, let's kick the tires on linear mixed-effects models using `lme()` with our two data tibbles, one with a single weather-day sample and another with a two week-average of the weather.
 
@@ -407,7 +435,7 @@ Undertaking linear mixed-effect analysis in R is rather straightforward using th
 mc.lmer <- lmer(j.day~tmin*tmax*wvec+(1|name),mc.arr.weath,na.action = "na.fail")
 Anova(mc.lmer) #Anova from the car package
 
-#0Mean two week weather preceding arrival
+#0Mean two week weather preceeding arrival
 mc.lmer2 <- lmer(j.day~wk.tmin*wk.tmax*wk.wvec+(1|name),mc.arr.weath2,na.action = "na.fail")
 Anova(mc.lmer2) 
 
@@ -486,141 +514,7 @@ The answers and narrative in your .Rmd should include the following components:
       + Author contributions: Briefly outline what each team member contributed to the project.
       + AI-use Statement: Briefly state how AI was used in the completion of the report requirements.
       
-      **Each team should push one report Rmd**  as "Module7_TeamX.Rmd" where "X" is the each number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's github directory, i.e., "Module7_Team1", if in Team 1. Please push your submission by 11:59 pm, Sunday, November 23rd.
+      **Each team should push one report Rmd**  as "Module7_TeamX.Rmd" where "X" is the each number. Please also submit **all associated files and data** (e.g., .bibtex files, .csv files, etc.). This means one team member should push the team's submissions to their team's github directory, i.e., "Module7_Team1", if in Team 1. Please push your submission by 11:59 pm, Sunday, December 6th.
       
 
-```{r,eval=FALSE,echo=FALSE}
-dat<- dat%>%
-  group_by(species,year)%>%
-  mutate(date=as.Date(paste0(year,"-",month,"-",day)),
-         j.day=julian(date,origin=as.Date(paste0(unique(year),"-01-01")))
-  )%>%
-  group_by(species,year,j.day,date)%>%
-  summarise(day.tot=sum(individualCount,na.rm=T))%>%
-  group_by(species,year)%>%
-  mutate(prop=cumsum(day.tot/sum(day.tot,na.rm = T)))%>%
-  filter(year>1999)
-
-dat%>%
-  ggplot(aes(j.day,prop,col=species))+geom_point()+facet_wrap(year~.)
-
-
-dat.pred <- dat%>%
-  group_by(species,year)%>%
- summarize(
-   pred=predict(nls(prop~SSlogis(j.day,Asym, xmid, scal)),newdata=data.frame(j.day=min(j.day):max(j.day))),#predict the logistic curve for each species
-   j.day=min(j.day):max(j.day),
-  )%>%
-  left_join(mc%>%dplyr::select(species,year,j.day,date)) ## add date back to tibble
-
-
-dat%>%
-  ggplot(aes(j.day,prop,col=species))+geom_point(alpha=0.3)+geom_line(data=dat.pred,aes(x=j.day,y=pred,col=species),size=2)+facet_wrap(year~.)
-
-
-arrive.date <-dat.pred%>%
-  group_by(species,year)%>%
-  filter(j.day==j.day[which.min(abs(pred-0.25))])
-
-arrive.date%>%
-  ggplot(aes(year,j.day,col=species))+geom_point()
-
-arr.weath <- arrive.date%>%
-  left_join(weather.d)%>%
-  left_join(dat%>%dplyr:select(species,year,date,j.day))
-
-head(arr.weath)
-
-#weekly
-weather.wk <-weather.d %>% 
-  group_by(year,name) %>% 
-  mutate(wk.tmin = frollmean(tmin, n=14,align="right"),
-         wk.tmax = frollmean(tmax, n=14,align="right"),
-         wk.wvec = frollmean(wvec, n=14,align="right")
-         )%>%
- select(j.day,date2,name,wk.tmin,wk.tmax,wk.wvec)
-
-arr.weath2 <- arrive.date%>%
-  left_join(weather.wk)%>%
- select(-date)%>%
-  na.omit()
-
-head(arr.weath2)
-
-#another way with mean across all locals
-arr.weath3 <- arr.weath2%>%
-  ungroup()%>%
-  group_by(species,year,j.day)%>%
- summarize_at(.vars = c("wk.tmin","wk.tmax","wk.wvec"),mean)%>%
-  na.omit()
-
-#weather at 0, 5, and 10 days away from arrival
-lmer <- lmer(j.day~tmin*tmax*wvec+(1|name)+(1|species),arr.weath)
-Anova(mc.lmer) #Anova from the car package
-
-#0Mean two week weather preceding arrival
-lmer2 <- lmer(j.day~wk.tmin*wk.tmax*wk.wvec+(1|name)+(1|species),arr.weath2,na.action = "na.fail")
-Anova(lmer2) 
-
-# lmer with 1|species
-lmer3 <- lmer(j.day~wk.tmin*wk.tmax*wk.wvec+(1|species),arr.weath3,na.action = "na.fail")
-Anova(lmer3)
-
-dredge(lmer3,fixed = c("wk.tmin","wk.tmax","wk.wvec"),)
-
-lmer.best <- lmer(j.day~wk.tmin+wk.tmax+wk.wvec+(1|species),arr.weath3,na.action = "na.fail")
-Anova(lmer.best)
-
-
-#prsim data
-
-#install.packages("prism")
-
-library(prism)
-
-get_prism_dailys(
-  type = "tmean", 
-  minDate = "2013-05-01", 
-  maxDate = "2013-05-1", 
-  keepZip = FALSE
-)
-
-
-
-prism_set_dl_dir("~/prismtmp")
-
-
-mnlon <- min(sta.d$longitude)
-mnlat <- min(sta.d$latitude)
-mxlon <- max(sta.d$longitude)
-mxlat <- max(sta.d$latitude)
-
-library(trackter)
-
-al2bos <- dist.2d(mnlon,mxlon,mnlat,mxlat)
-
-ew.d <- dist.2d(mxlon,mnlon,mnlat,mnlat)
-
-ns.d <-  dist.2d(mxlon,mxlon,mnlat,mxlat)
-
-ang.ne <- cosine.ang(al2bos,ew.d,ns.d)
-deg(ang.ne)
-
-point.ang.r <- function(p,r,theta){x.2 <-p[1]+r*cos(theta); y.2 <- p[2]+r*sin(theta);return(data.frame(x=x.2,y=y.2))}
-
-trans <- lapply(seq(0,1,.01),function(x) point.ang.r(c(mnlon,mnlat),r=x*al2bos,theta=ang.ne))
-trans <-as_tibble(do.call(rbind,trans))
-
-trans <- trans%>%
-  mutate(
-    longitude=round(x,1),
-    latitude=round(y,1))%>%
-   left_join(usmap_transform(.[,c("longitude","latitude")]))
-
-plot_usmap(
-  include = c(.northeast_region,.south_region,.east_north_central)
-)+geom_point(data=trans,aes(x=longitude.1,y=latitude.1),size=1)
-
-#https://github.com/mikejohnson51/climateR
-```
 # References
